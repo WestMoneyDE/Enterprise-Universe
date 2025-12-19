@@ -3,633 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GTz Ecosystem - Enterprise Universe Platform">
-    <meta name="author" content="Ömer Hüseyin Coşkun">
-    
-    <!-- DSGVO: No external tracking, all fonts self-hosted concept -->
     <title>GTz Ecosystem | West Money OS</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            /* Core Colors - Cyber/Tech Theme */
-            --primary: #00f0ff;
-            --primary-dark: #00a8b3;
-            --secondary: #ff006e;
-            --accent: #8b5cf6;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666;
+            --primary: #00d4aa;
+            --primary-dark: #00b894;
+            --accent-blue: #4a9eff;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            
-            /* Background Layers */
-            --bg-deep: #0a0a0f;
-            --bg-base: #0d0d14;
-            --bg-elevated: #13131d;
-            --bg-surface: #1a1a28;
-            --bg-hover: #222233;
-            
-            /* Text */
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --text-muted: #606070;
-            
-            /* Borders & Effects */
-            --border: rgba(255, 255, 255, 0.08);
-            --border-bright: rgba(0, 240, 255, 0.3);
-            --glow: 0 0 20px rgba(0, 240, 255, 0.3);
-            --glow-strong: 0 0 40px rgba(0, 240, 255, 0.5);
-            
-            /* Spacing */
-            --space-xs: 0.25rem;
-            --space-sm: 0.5rem;
-            --space-md: 1rem;
-            --space-lg: 1.5rem;
-            --space-xl: 2rem;
-            --space-2xl: 3rem;
-            
-            /* Radius */
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-            
-            /* Transitions */
-            --transition-fast: 150ms ease;
-            --transition-base: 250ms ease;
-            --transition-slow: 400ms ease;
+            --border: rgba(255,255,255,0.1);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--bg-deep);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
         }
-
-        /* Animated Background */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-glow-1 {
-            top: -200px;
-            right: -200px;
-            background: var(--primary);
-        }
-
-        .bg-glow-2 {
-            bottom: -200px;
-            left: -200px;
-            background: var(--secondary);
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           DSGVO COOKIE CONSENT BANNER
-           ═══════════════════════════════════════════════════════════════ */
-        .gdpr-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-bright);
-            padding: var(--space-lg) var(--space-xl);
-            z-index: 10000;
-            transform: translateY(100%);
-            transition: transform var(--transition-slow);
-            backdrop-filter: blur(20px);
-        }
-
-        .gdpr-banner.visible {
-            transform: translateY(0);
-        }
-
-        .gdpr-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: var(--space-xl);
-            flex-wrap: wrap;
-        }
-
-        .gdpr-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .gdpr-text h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            color: var(--primary);
-            margin-bottom: var(--space-sm);
-        }
-
-        .gdpr-text p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .gdpr-text a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .gdpr-buttons {
-            display: flex;
-            gap: var(--space-md);
-            flex-wrap: wrap;
-        }
-
-        .gdpr-btn {
-            padding: var(--space-sm) var(--space-lg);
-            border-radius: var(--radius-md);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            border: none;
-        }
-
-        .gdpr-btn-accept {
-            background: var(--primary);
-            color: var(--bg-deep);
-        }
-
-        .gdpr-btn-accept:hover {
-            box-shadow: var(--glow);
-            transform: translateY(-2px);
-        }
-
-        .gdpr-btn-settings {
-            background: transparent;
-            border: 1px solid var(--border-bright);
-            color: var(--primary);
-        }
-
-        .gdpr-btn-reject {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           PRIVACY SETTINGS MODAL
-           ═══════════════════════════════════════════════════════════════ */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 10001;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-lg);
-        }
-
-        .modal-overlay.visible {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-bright);
-            border-radius: var(--radius-xl);
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: modalIn 0.3s ease;
-        }
-
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: var(--space-xl);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.25rem;
-            color: var(--primary);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: var(--space-sm);
-            line-height: 1;
-        }
-
-        .modal-body {
-            padding: var(--space-xl);
-        }
-
-        .consent-category {
-            padding: var(--space-lg);
-            background: var(--bg-elevated);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-md);
-        }
-
-        .consent-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-sm);
-        }
-
-        .consent-header h4 {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .consent-header span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            padding: 2px 8px;
-            background: var(--bg-surface);
-            border-radius: var(--radius-sm);
-        }
-
-        .consent-category p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Toggle Switch */
-        .toggle {
-            position: relative;
-            width: 50px;
-            height: 26px;
-        }
-
-        .toggle input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--bg-hover);
-            border-radius: 26px;
-            transition: var(--transition-base);
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background: var(--text-secondary);
-            border-radius: 50%;
-            transition: var(--transition-base);
-        }
-
-        .toggle input:checked + .toggle-slider {
-            background: var(--primary);
-        }
-
-        .toggle input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-            background: var(--bg-deep);
-        }
-
-        .toggle input:disabled + .toggle-slider {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .modal-footer {
-            padding: var(--space-xl);
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: var(--space-md);
-            justify-content: flex-end;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           MAIN LAYOUT
-           ═══════════════════════════════════════════════════════════════ */
+        
+        /* Layout */
         .app-container {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
             display: flex;
+            min-height: 100vh;
         }
-
+        
         /* Sidebar */
         .sidebar {
-            width: 280px;
-            background: var(--bg-base);
+            width: 260px;
+            background: var(--bg-secondary);
             border-right: 1px solid var(--border);
-            padding: var(--space-lg);
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
         }
-
-        .logo {
+        
+        .sidebar-logo {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-md) 0;
-            margin-bottom: var(--space-xl);
+            gap: 12px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
         }
-
+        
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: var(--radius-md);
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--accent-blue));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.25rem;
-            color: var(--bg-deep);
+            font-weight: bold;
+            font-size: 14px;
         }
-
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .logo-text h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-        .logo-text span {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        .nav-section {
-            margin-bottom: var(--space-xl);
-        }
-
+        
+        .logo-text h2 { font-size: 16px; color: var(--text-primary); }
+        .logo-text p { font-size: 11px; color: var(--text-muted); }
+        
+        .nav-section { margin-bottom: 25px; }
         .nav-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 10px;
             color: var(--text-muted);
-            margin-bottom: var(--space-md);
-            padding-left: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 12px;
         }
-
+        
         .nav-item {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-md) var(--space-md);
-            border-radius: var(--radius-md);
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all var(--transition-fast);
-            color: var(--text-secondary);
+            transition: all 0.2s;
+            margin-bottom: 5px;
             text-decoration: none;
-            margin-bottom: 2px;
+            color: var(--text-secondary);
         }
-
+        
         .nav-item:hover {
-            background: var(--bg-hover);
+            background: rgba(255,255,255,0.05);
             color: var(--text-primary);
         }
-
+        
         .nav-item.active {
-            background: rgba(0, 240, 255, 0.1);
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.2), rgba(74, 158, 255, 0.1));
             color: var(--primary);
             border-left: 3px solid var(--primary);
         }
-
-        .nav-item .icon {
-            font-size: 1.25rem;
-            width: 24px;
-            text-align: center;
-        }
-
-        .nav-item .label {
-            font-weight: 500;
-        }
-
+        
+        .nav-item .icon { font-size: 18px; }
+        .nav-item .label { font-size: 13px; }
         .nav-item .badge {
             margin-left: auto;
-            background: var(--secondary);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 6px;
+            background: var(--primary);
+            color: var(--bg-primary);
+            padding: 2px 8px;
             border-radius: 10px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: bold;
         }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: var(--space-lg);
-            border-top: 1px solid var(--border);
-        }
-
-        .user-card {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-md);
-            background: var(--bg-elevated);
-            border-radius: var(--radius-md);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        .user-info h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .user-info span {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
+        
         /* Main Content */
         .main-content {
             flex: 1;
-            margin-left: 280px;
-            padding: var(--space-xl);
+            margin-left: 260px;
+            padding: 25px;
+            min-height: 100vh;
         }
-
+        
         /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--space-xl);
-            padding-bottom: var(--space-lg);
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
         }
-
-        .header-left h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: var(--space-xs);
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
         }
-
-        .header-left p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
+        
+        .header p { color: var(--text-secondary); font-size: 14px; }
+        
         .header-right {
             display: flex;
+            gap: 15px;
             align-items: center;
-            gap: var(--space-lg);
         }
-
+        
         .search-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: var(--space-sm) var(--space-md);
+            gap: 10px;
+            width: 250px;
         }
-
+        
         .search-box input {
             background: none;
             border: none;
             color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.9rem;
-            width: 200px;
             outline: none;
+            width: 100%;
         }
-
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .icon-btn {
+        
+        .header-icon {
             width: 40px;
             height: 40px;
-            border-radius: var(--radius-md);
-            background: var(--bg-surface);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            color: var(--text-secondary);
-            cursor: pointer;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            transition: all var(--transition-fast);
-            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-
-        .icon-btn:hover {
-            border-color: var(--border-bright);
-            color: var(--primary);
-        }
-
-        .icon-btn .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: var(--secondary);
-            border-radius: 50%;
-        }
-
-        /* Stats Cards */
+        
+        .header-icon:hover { border-color: var(--primary); }
+        
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: var(--space-lg);
-            margin-bottom: var(--space-xl);
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
-
+        
         .stat-card {
-            background: var(--bg-surface);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            transition: all var(--transition-base);
+            border-radius: 16px;
+            padding: 20px;
             position: relative;
             overflow: hidden;
         }
-
+        
         .stat-card::before {
             content: '';
             position: absolute;
@@ -637,1827 +207,986 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            opacity: 0;
-            transition: opacity var(--transition-base);
         }
-
-        .stat-card:hover {
-            border-color: var(--border-bright);
-            transform: translateY(-2px);
-        }
-
-        .stat-card:hover::before {
-            opacity: 1;
-        }
-
+        
+        .stat-card.green::before { background: linear-gradient(90deg, var(--primary), var(--success)); }
+        .stat-card.blue::before { background: linear-gradient(90deg, var(--accent-blue), #06b6d4); }
+        .stat-card.purple::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+        .stat-card.orange::before { background: linear-gradient(90deg, var(--accent-orange), var(--warning)); }
+        
         .stat-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: var(--space-md);
+            margin-bottom: 15px;
         }
-
+        
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-md);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 20px;
         }
-
-        .stat-icon.blue { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
-        .stat-icon.purple { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
-        .stat-icon.pink { background: rgba(255, 0, 110, 0.15); color: var(--secondary); }
-        .stat-icon.green { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-
-        .stat-trend {
-            font-size: 0.8rem;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
+        
+        .stat-card.green .stat-icon { background: rgba(0, 212, 170, 0.2); }
+        .stat-card.blue .stat-icon { background: rgba(74, 158, 255, 0.2); }
+        .stat-card.purple .stat-icon { background: rgba(168, 85, 247, 0.2); }
+        .stat-card.orange .stat-icon { background: rgba(249, 115, 22, 0.2); }
+        
+        .stat-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
         }
-
-        .stat-trend.up {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-        }
-
-        .stat-trend.down {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--danger);
-        }
-
+        
+        .stat-badge.up { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        
         .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: var(--space-xs);
+            margin-bottom: 5px;
         }
-
+        
+        .stat-card.green .stat-value { color: var(--primary); }
+        .stat-card.blue .stat-value { color: var(--accent-blue); }
+        .stat-card.purple .stat-value { color: var(--accent-purple); }
+        .stat-card.orange .stat-value { color: var(--accent-orange); }
+        
         .stat-label {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
         }
-
+        
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h3 { font-size: 16px; }
+        
+        .card-body { padding: 20px; }
+        
         /* Content Grid */
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: var(--space-xl);
+            gap: 25px;
         }
-
-        .card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: var(--space-lg);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .card-header h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .card-body {
-            padding: var(--space-lg);
-        }
-
+        
         /* Pipeline */
-        .pipeline {
+        .pipeline-stages {
             display: flex;
-            gap: var(--space-md);
-            margin-bottom: var(--space-lg);
+            gap: 10px;
+            margin-bottom: 20px;
         }
-
+        
         .pipeline-stage {
             flex: 1;
             text-align: center;
         }
-
+        
         .pipeline-bar {
             height: 8px;
-            background: var(--bg-hover);
-            border-radius: 4px;
-            margin-bottom: var(--space-sm);
-            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
-
-        .pipeline-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width var(--transition-slow);
-        }
-
-        .pipeline-stage:nth-child(1) .pipeline-fill { background: var(--primary); width: 85%; }
-        .pipeline-stage:nth-child(2) .pipeline-fill { background: var(--accent); width: 65%; }
-        .pipeline-stage:nth-child(3) .pipeline-fill { background: var(--secondary); width: 45%; }
-        .pipeline-stage:nth-child(4) .pipeline-fill { background: var(--success); width: 30%; }
-
-        .pipeline-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .pipeline-value {
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        /* Lead Table */
-        .lead-table {
-            width: 100%;
-        }
-
-        .lead-row {
+        
+        .pipeline-stage:nth-child(1) .pipeline-bar { background: var(--accent-blue); }
+        .pipeline-stage:nth-child(2) .pipeline-bar { background: var(--accent-purple); }
+        .pipeline-stage:nth-child(3) .pipeline-bar { background: var(--accent-orange); }
+        .pipeline-stage:nth-child(4) .pipeline-bar { background: var(--success); }
+        
+        .pipeline-label { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; }
+        .pipeline-value { font-size: 18px; font-weight: bold; }
+        
+        /* Lead Item */
+        .lead-item {
             display: flex;
             align-items: center;
-            padding: var(--space-md);
-            border-bottom: 1px solid var(--border);
-            transition: background var(--transition-fast);
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
-
-        .lead-row:hover {
-            background: var(--bg-hover);
-        }
-
+        
         .lead-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--bg-hover);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-right: var(--space-md);
+            font-weight: bold;
+            font-size: 14px;
         }
-
-        .lead-info {
-            flex: 1;
-        }
-
-        .lead-name {
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .lead-company {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
+        
+        .lead-info { flex: 1; }
+        .lead-name { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+        .lead-company { font-size: 12px; color: var(--text-muted); }
+        
         .lead-value {
-            font-family: 'Space Mono', monospace;
-            font-weight: 600;
-            color: var(--success);
-            margin-right: var(--space-lg);
+            font-weight: bold;
+            color: var(--primary);
         }
-
+        
         .lead-status {
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 11px;
             font-weight: 600;
         }
-
-        .lead-status.qualified { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
-        .lead-status.proposal { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
-        .lead-status.negotiation { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-
-        /* WhatsApp Consent Indicator */
-        .consent-indicator {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-left: var(--space-md);
-        }
-
-        .consent-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .consent-dot.granted { background: var(--success); }
-        .consent-dot.pending { background: var(--warning); }
-        .consent-dot.denied { background: var(--danger); }
-
-        /* Activity Feed */
+        
+        .lead-status.qualified { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); }
+        .lead-status.new { background: rgba(74, 158, 255, 0.2); color: var(--accent-blue); }
+        .lead-status.won { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        
+        /* Activity Item */
         .activity-item {
             display: flex;
-            gap: var(--space-md);
-            padding: var(--space-md) 0;
+            gap: 15px;
+            padding: 15px 0;
             border-bottom: 1px solid var(--border);
         }
-
-        .activity-item:last-child {
-            border-bottom: none;
-        }
-
+        
+        .activity-item:last-child { border-bottom: none; }
+        
         .activity-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 14px;
             flex-shrink: 0;
         }
-
-        .activity-icon.lead { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
-        .activity-icon.payment { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-        .activity-icon.document { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
-        .activity-icon.consent { background: rgba(255, 0, 110, 0.15); color: var(--secondary); }
-
-        .activity-content {
-            flex: 1;
-        }
-
-        .activity-text {
-            font-size: 0.9rem;
-            margin-bottom: 2px;
-        }
-
-        .activity-text strong {
-            color: var(--primary);
-        }
-
-        .activity-time {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
+        
+        .activity-icon.lead { background: rgba(74, 158, 255, 0.2); }
+        .activity-icon.consent { background: rgba(16, 185, 129, 0.2); }
+        .activity-icon.payment { background: rgba(168, 85, 247, 0.2); }
+        
+        .activity-content { flex: 1; }
+        .activity-text { font-size: 13px; margin-bottom: 3px; }
+        .activity-time { font-size: 11px; color: var(--text-muted); }
+        
         /* Buttons */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: var(--space-sm) var(--space-lg);
-            border-radius: var(--radius-md);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all var(--transition-fast);
+            padding: 10px 20px;
             border: none;
-            text-decoration: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
-
+        
         .btn-primary {
-            background: var(--primary);
-            color: var(--bg-deep);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--bg-primary);
         }
-
-        .btn-primary:hover {
-            box-shadow: var(--glow);
-            transform: translateY(-2px);
-        }
-
+        
         .btn-ghost {
             background: transparent;
             border: 1px solid var(--border);
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
-
-        .btn-ghost:hover {
-            border-color: var(--border-bright);
-            color: var(--primary);
-        }
-
-        /* Page Sections (hidden by default) */
+        
+        .btn:hover { transform: translateY(-2px); }
+        
+        /* Page Sections */
         .page-section {
             display: none;
         }
-
+        
         .page-section.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Compliance Section */
-        .compliance-grid {
+        
+        /* Finance Page */
+        .finance-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-md);
-            margin-bottom: var(--space-xl);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
-
-        .entity-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: var(--space-lg);
-            text-align: center;
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
         }
-
-        .entity-card h4 {
-            font-size: 0.9rem;
-            margin-bottom: var(--space-xs);
-        }
-
-        .entity-card .country {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: var(--space-sm);
-        }
-
-        .entity-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-        }
-
-        .entity-status.compliant {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-        }
-
-        .entity-status.warning {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning);
-        }
-
-        /* Health Dashboard */
-        .health-score {
-            text-align: center;
-            padding: var(--space-2xl);
-        }
-
-        .score-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: conic-gradient(var(--primary) 0deg 310deg, var(--bg-hover) 310deg 360deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto var(--space-lg);
-            position: relative;
-        }
-
-        .score-inner {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: var(--bg-surface);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .score-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .score-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .health-metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--space-md);
-        }
-
-        .health-metric {
-            background: var(--bg-elevated);
-            padding: var(--space-lg);
-            border-radius: var(--radius-md);
-            text-align: center;
-        }
-
-        .health-metric .icon {
-            font-size: 1.5rem;
-            margin-bottom: var(--space-sm);
-        }
-
-        .health-metric .value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .health-metric .label {
-            font-size: 0.8rem;
+        
+        .data-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.3);
+            font-size: 11px;
+            text-transform: uppercase;
             color: var(--text-muted);
         }
-
-        /* Projects */
-        .project-card {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: var(--space-lg);
-            margin-bottom: var(--space-md);
-            transition: all var(--transition-fast);
+        
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
         }
-
-        .project-card:hover {
-            border-color: var(--border-bright);
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: var(--space-md);
-        }
-
-        .project-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .project-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .project-progress {
-            margin-bottom: var(--space-md);
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: var(--bg-hover);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: var(--space-xs);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 3px;
-        }
-
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .project-team {
-            display: flex;
-            gap: -8px;
-        }
-
-        .team-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--bg-surface);
-            border: 2px solid var(--bg-elevated);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: -8px;
-        }
-
-        .team-avatar:first-child {
-            margin-left: 0;
-        }
-
-        /* Meta Console */
-        .meta-command {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-bright);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            margin-bottom: var(--space-xl);
-        }
-
-        .meta-command h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary);
-            margin-bottom: var(--space-md);
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .command-input {
-            display: flex;
-            gap: var(--space-md);
-        }
-
-        .command-input input {
-            flex: 1;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: var(--space-md) var(--space-lg);
-            color: var(--text-primary);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9rem;
-        }
-
-        .command-input input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
-        }
-
-        .god-mode-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-sm);
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--bg-deep);
-            padding: var(--space-sm) var(--space-md);
-            border-radius: var(--radius-md);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
+        
+        .data-table tr:hover { background: rgba(255,255,255,0.02); }
+        
         /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 80px;
-                padding: var(--space-md);
-            }
-            
-            .logo-text, .nav-title, .nav-item .label, .nav-item .badge, .user-info {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 80px;
-            }
-            
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-grid { grid-template-columns: 1fr; }
         }
-
+        
         @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .health-metrics {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="bg-grid"></div>
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
 
-    <!-- DSGVO Cookie Consent Banner -->
-    <div class="gdpr-banner" id="gdprBanner">
-        <div class="gdpr-content">
-            <div class="gdpr-text">
-                <h3>🔒 Datenschutz & Cookie-Einstellungen</h3>
-                <p>
-                    Wir verwenden nur technisch notwendige Cookies, um diese Anwendung zu betreiben. 
-                    Ihre Daten werden gemäß DSGVO verarbeitet und niemals an Dritte weitergegeben.
-                    <a href="#" onclick="showPrivacyPolicy()">Datenschutzerklärung</a>
-                </p>
-            </div>
-            <div class="gdpr-buttons">
-                <button class="gdpr-btn gdpr-btn-accept" onclick="acceptAllCookies()">Alle akzeptieren</button>
-                <button class="gdpr-btn gdpr-btn-settings" onclick="showCookieSettings()">Einstellungen</button>
-                <button class="gdpr-btn gdpr-btn-reject" onclick="rejectOptionalCookies()">Nur notwendige</button>
+<div class="app-container">
+    
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">GTz</div>
+            <div class="logo-text">
+                <h2>GTz ECOSYSTEM</h2>
+                <p>West Money OS</p>
             </div>
         </div>
-    </div>
-
-    <!-- Cookie Settings Modal -->
-    <div class="modal-overlay" id="cookieModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>🔧 Cookie-Einstellungen</h2>
-                <button class="modal-close" onclick="closeCookieSettings()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="consent-category">
-                    <div class="consent-header">
-                        <h4>📋 Notwendige Cookies</h4>
-                        <span>Erforderlich</span>
+        
+        <div class="nav-section">
+            <div class="nav-title">Hauptmodule</div>
+            <a class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
+                <span class="icon">📊</span>
+                <span class="label">Dashboard</span>
+            </a>
+            <a class="nav-item" data-page="finance" onclick="showPage('finance')">
+                <span class="icon">💰</span>
+                <span class="label">GTzHub Finance</span>
+                <span class="badge">12</span>
+            </a>
+            <a class="nav-item" data-page="projects" onclick="showPage('projects')">
+                <span class="icon">📁</span>
+                <span class="label">ProjectHubZ</span>
+            </a>
+            <a class="nav-item" data-page="health" onclick="showPage('health')">
+                <span class="icon">❤️</span>
+                <span class="label">HealthSync</span>
+            </a>
+            <a class="nav-item" data-page="meta" onclick="showPage('meta')">
+                <span class="icon">🌐</span>
+                <span class="label">GTzMeta</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Compliance</div>
+            <a class="nav-item" data-page="compliance" onclick="showPage('compliance')">
+                <span class="icon">🛡️</span>
+                <span class="label">Compliance</span>
+            </a>
+            <a class="nav-item" data-page="consent" onclick="showPage('consent')">
+                <span class="icon">✅</span>
+                <span class="label">Consent Manager</span>
+            </a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">System</div>
+            <a class="nav-item" data-page="settings" onclick="showPage('settings')">
+                <span class="icon">⚙️</span>
+                <span class="label">Einstellungen</span>
+            </a>
+            <a class="nav-item" data-page="integrations" onclick="showPage('integrations')">
+                <span class="icon">🔗</span>
+                <span class="label">Integrationen</span>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- ========== DASHBOARD PAGE ========== -->
+        <section class="page-section active" id="page-dashboard">
+            <header class="header">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Willkommen zurück, Ömer. Hier ist dein Überblick.</p>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input type="text" placeholder="Suchen...">
                     </div>
-                    <p>Diese Cookies sind für den Betrieb der Anwendung unerlässlich und können nicht deaktiviert werden. Sie speichern Ihre Einstellungen und ermöglichen grundlegende Funktionen.</p>
-                    <div style="margin-top: var(--space-md);">
-                        <label class="toggle">
-                            <input type="checkbox" checked disabled>
-                            <span class="toggle-slider"></span>
-                        </label>
+                    <div class="header-icon">🔔</div>
+                    <div class="header-icon">🔒</div>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">💰</div>
+                        <span class="stat-badge up">↑ 23.5%</span>
+                    </div>
+                    <div class="stat-value">€847.5K</div>
+                    <div class="stat-label">Gesamtumsatz (YTD)</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">👥</div>
+                        <span class="stat-badge up">↑ 12</span>
+                    </div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Aktive Leads</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">📈</div>
+                        <span class="stat-badge up">↑ 2.1pp</span>
+                    </div>
+                    <div class="stat-value">23.4%</div>
+                    <div class="stat-label">Conversion Rate</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                        <span class="stat-badge up">↑ 5</span>
+                    </div>
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">DSGVO Compliance</div>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📊 Sales Pipeline</h3>
+                        <button class="btn btn-ghost">Alle anzeigen</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="pipeline-stages">
+                            <div class="pipeline-stage">
+                                <div class="pipeline-bar"></div>
+                                <div class="pipeline-label">Neu</div>
+                                <div class="pipeline-value">12</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="pipeline-bar"></div>
+                                <div class="pipeline-label">Qualifiziert</div>
+                                <div class="pipeline-value">23</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="pipeline-bar"></div>
+                                <div class="pipeline-label">Angebot</div>
+                                <div class="pipeline-value">8</div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <div class="pipeline-bar"></div>
+                                <div class="pipeline-label">Gewonnen</div>
+                                <div class="pipeline-value">4</div>
+                            </div>
+                        </div>
+                        
+                        <div class="lead-item">
+                            <div class="lead-avatar">MG</div>
+                            <div class="lead-info">
+                                <div class="lead-name">Müller GmbH</div>
+                                <div class="lead-company">Smart Home Integration</div>
+                            </div>
+                            <div class="lead-value">€45,000</div>
+                            <span class="lead-status qualified">Qualifiziert</span>
+                        </div>
+                        
+                        <div class="lead-item">
+                            <div class="lead-avatar">WB</div>
+                            <div class="lead-info">
+                                <div class="lead-name">Weber Bau</div>
+                                <div class="lead-company">Barrierefreies Bad</div>
+                            </div>
+                            <div class="lead-value">€28,000</div>
+                            <span class="lead-status new">Neu</span>
+                        </div>
+                        
+                        <div class="lead-item">
+                            <div class="lead-avatar">SH</div>
+                            <div class="lead-info">
+                                <div class="lead-name">Schmidt Haus</div>
+                                <div class="lead-company">LOXONE Installation</div>
+                            </div>
+                            <div class="lead-value">€62,000</div>
+                            <span class="lead-status won">Gewonnen</span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="consent-category">
-                    <div class="consent-header">
-                        <h4>📊 Analyse-Cookies</h4>
-                        <span>Optional</span>
-                    </div>
-                    <p>Diese Cookies helfen uns zu verstehen, wie Sie die Anwendung nutzen. Alle Daten werden anonymisiert und lokal verarbeitet – keine Weitergabe an Dritte.</p>
-                    <div style="margin-top: var(--space-md);">
-                        <label class="toggle">
-                            <input type="checkbox" id="analyticsCookies">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="consent-category">
-                    <div class="consent-header">
-                        <h4>⚙️ Funktionale Cookies</h4>
-                        <span>Optional</span>
-                    </div>
-                    <p>Ermöglichen erweiterte Funktionen wie gespeicherte Präferenzen, Dashboard-Layouts und personalisierte Einstellungen.</p>
-                    <div style="margin-top: var(--space-md);">
-                        <label class="toggle">
-                            <input type="checkbox" id="functionalCookies">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="consent-category">
-                    <div class="consent-header">
-                        <h4>💬 WhatsApp Business Consent</h4>
-                        <span>Optional</span>
-                    </div>
-                    <p>Erlauben Sie uns, Sie über WhatsApp Business zu kontaktieren? Ihre Zustimmung wird gemäß Art. 6 Abs. 1 lit. a DSGVO dokumentiert und kann jederzeit widerrufen werden.</p>
-                    <div style="margin-top: var(--space-md);">
-                        <label class="toggle">
-                            <input type="checkbox" id="whatsappConsent">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-ghost" onclick="closeCookieSettings()">Abbrechen</button>
-                <button class="btn btn-primary" onclick="saveConsentSettings()">Einstellungen speichern</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Privacy Policy Modal -->
-    <div class="modal-overlay" id="privacyModal">
-        <div class="modal" style="max-width: 800px;">
-            <div class="modal-header">
-                <h2>📜 Datenschutzerklärung</h2>
-                <button class="modal-close" onclick="closePrivacyPolicy()">×</button>
-            </div>
-            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">1. Verantwortlicher</h4>
-                <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
-                    Enterprise Universe<br>
-                    Ömer Hüseyin Coşkun<br>
-                    E-Mail: ö<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd90988fbd989389988f8d8f948e98d08893948b988f8e98d39998">[email&#160;protected]</a>
-                </p>
-
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">2. Erhobene Daten</h4>
-                <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
-                    Wir verarbeiten nur Daten, die für den Betrieb der Plattform erforderlich sind:
-                    Nutzungsdaten (anonymisiert), Kontaktdaten (bei Registrierung), Geschäftsdaten (im Rahmen der Hub-Nutzung).
-                    Alle Daten werden verschlüsselt gespeichert und nicht an Dritte weitergegeben.
-                </p>
-
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">3. Rechtsgrundlage</h4>
-                <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
-                    Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO (Einwilligung), 
-                    Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) und Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).
-                </p>
-
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">4. Ihre Rechte</h4>
-                <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
-                    Sie haben das Recht auf: Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16 DSGVO), 
-                    Löschung (Art. 17 DSGVO), Einschränkung (Art. 18 DSGVO), Datenübertragbarkeit (Art. 20 DSGVO), 
-                    Widerspruch (Art. 21 DSGVO) und Beschwerde bei einer Aufsichtsbehörde.
-                </p>
-
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">5. Speicherdauer</h4>
-                <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
-                    Daten werden nur so lange gespeichert, wie es für den jeweiligen Zweck erforderlich ist 
-                    oder gesetzliche Aufbewahrungsfristen dies verlangen.
-                </p>
-
-                <h4 style="color: var(--primary); margin-bottom: var(--space-md);">6. Datensicherheit</h4>
-                <p style="color: var(--text-secondary);">
-                    Wir setzen technische und organisatorische Maßnahmen ein: TLS 1.3 Verschlüsselung, 
-                    AES-256 für gespeicherte Daten, regelmäßige Sicherheitsaudits, Zugriffsprotokollierung.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closePrivacyPolicy()">Verstanden</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main App -->
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <div class="logo-icon">GTz</div>
-                <div class="logo-text">
-                    <h1>GTz ECOSYSTEM</h1>
-                    <span>WEST MONEY OS</span>
-                </div>
-            </div>
-
-            <nav>
-                <div class="nav-section">
-                    <div class="nav-title">Hauptmodule</div>
-                    <a class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
-                        <span class="icon">📊</span>
-                        <span class="label">Dashboard</span>
-                    </a>
-                    <a class="nav-item" data-page="gtzhub" onclick="showPage('gtzhub')">
-                        <span class="icon">💰</span>
-                        <span class="label">GTzHub Finance</span>
-                        <span class="badge">12</span>
-                    </a>
-                    <a class="nav-item" data-page="projects" onclick="showPage('projects')">
-                        <span class="icon">📁</span>
-                        <span class="label">ProjectHubZ</span>
-                    </a>
-                    <a class="nav-item" data-page="health" onclick="showPage('health')">
-                        <span class="icon">❤️</span>
-                        <span class="label">HealthSync</span>
-                    </a>
-                    <a class="nav-item" data-page="meta" onclick="showPage('meta')">
-                        <span class="icon">🌐</span>
-                        <span class="label">GTzMeta</span>
-                    </a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-title">Compliance</div>
-                    <a class="nav-item" data-page="compliance" onclick="showPage('compliance')">
-                        <span class="icon">🛡️</span>
-                        <span class="label">Compliance</span>
-                    </a>
-                    <a class="nav-item" data-page="consent" onclick="showPage('consent')">
-                        <span class="icon">✅</span>
-                        <span class="label">Consent Manager</span>
-                    </a>
-                    <a class="nav-item" data-page="audit" onclick="showPage('audit')">
-                        <span class="icon">📋</span>
-                        <span class="label">Audit Log</span>
-                    </a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-title">System</div>
-                    <a class="nav-item" onclick="showCookieSettings()">
-                        <span class="icon">🔒</span>
-                        <span class="label">Datenschutz</span>
-                    </a>
-                    <a class="nav-item">
-                        <span class="icon">⚙️</span>
-                        <span class="label">Einstellungen</span>
-                    </a>
-                </div>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="user-card">
-                    <div class="user-avatar">ÖC</div>
-                    <div class="user-info">
-                        <h4>Ömer Coşkun</h4>
-                        <span>Super Admin</span>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dashboard Page -->
-            <section class="page-section active" id="page-dashboard">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>Dashboard</h2>
-                        <p>Willkommen zurück, Ömer. Hier ist dein Überblick.</p>
-                    </div>
-                    <div class="header-right">
-                        <div class="search-box">
-                            <span>🔍</span>
-                            <input type="text" placeholder="Suchen...">
-                        </div>
-                        <button class="icon-btn">
-                            <span>🔔</span>
-                            <span class="notification-dot"></span>
-                        </button>
-                        <button class="icon-btn" onclick="showCookieSettings()">
-                            <span>🔒</span>
-                        </button>
-                    </div>
-                </header>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon blue">💰</div>
-                            <span class="stat-trend up">↑ 23.5%</span>
-                        </div>
-                        <div class="stat-value">€847.5K</div>
-                        <div class="stat-label">Gesamtumsatz (YTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon purple">👥</div>
-                            <span class="stat-trend up">↑ 12</span>
-                        </div>
-                        <div class="stat-value">47</div>
-                        <div class="stat-label">Aktive Leads</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon pink">📊</div>
-                            <span class="stat-trend up">↑ 2.1pp</span>
-                        </div>
-                        <div class="stat-value">23.4%</div>
-                        <div class="stat-label">Conversion Rate</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon green">✅</div>
-                            <span class="stat-trend up">↑ 5</span>
-                        </div>
-                        <div class="stat-value">98%</div>
-                        <div class="stat-label">DSGVO Compliance</div>
-                    </div>
-                </div>
-
-                <div class="content-grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>📈 Sales Pipeline</h3>
-                            <button class="btn btn-ghost">Alle anzeigen</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="pipeline">
-                                <div class="pipeline-stage">
-                                    <div class="pipeline-bar"><div class="pipeline-fill"></div></div>
-                                    <div class="pipeline-label">Neu</div>
-                                    <div class="pipeline-value">12</div>
-                                </div>
-                                <div class="pipeline-stage">
-                                    <div class="pipeline-bar"><div class="pipeline-fill"></div></div>
-                                    <div class="pipeline-label">Qualifiziert</div>
-                                    <div class="pipeline-value">23</div>
-                                </div>
-                                <div class="pipeline-stage">
-                                    <div class="pipeline-bar"><div class="pipeline-fill"></div></div>
-                                    <div class="pipeline-label">Angebot</div>
-                                    <div class="pipeline-value">8</div>
-                                </div>
-                                <div class="pipeline-stage">
-                                    <div class="pipeline-bar"><div class="pipeline-fill"></div></div>
-                                    <div class="pipeline-label">Gewonnen</div>
-                                    <div class="pipeline-value">4</div>
-                                </div>
-                            </div>
-
-                            <div class="lead-table">
-                                <div class="lead-row">
-                                    <div class="lead-avatar">MG</div>
-                                    <div class="lead-info">
-                                        <div class="lead-name">Müller GmbH</div>
-                                        <div class="lead-company">Smart Home Integration</div>
-                                    </div>
-                                    <div class="lead-value">€45,000</div>
-                                    <span class="lead-status qualified">Qualifiziert</span>
-                                    <div class="consent-indicator" title="WhatsApp Consent: Erteilt">
-                                        <span class="consent-dot granted"></span>
-                                        <span style="font-size: 0.75rem; color: var(--text-muted);">WA</span>
-                                    </div>
-                                </div>
-                                <div class="lead-row">
-                                    <div class="lead-avatar">TH</div>
-                                    <div class="lead-info">
-                                        <div class="lead-name">Tech House AG</div>
-                                        <div class="lead-company">LOXONE System</div>
-                                    </div>
-                                    <div class="lead-value">€78,500</div>
-                                    <span class="lead-status proposal">Angebot</span>
-                                    <div class="consent-indicator" title="WhatsApp Consent: Ausstehend">
-                                        <span class="consent-dot pending"></span>
-                                        <span style="font-size: 0.75rem; color: var(--text-muted);">WA</span>
-                                    </div>
-                                </div>
-                                <div class="lead-row">
-                                    <div class="lead-avatar">WB</div>
-                                    <div class="lead-info">
-                                        <div class="lead-name">Weber Bau KG</div>
-                                        <div class="lead-company">Barrierefreies Bauen</div>
-                                    </div>
-                                    <div class="lead-value">€125,000</div>
-                                    <span class="lead-status negotiation">Verhandlung</span>
-                                    <div class="consent-indicator" title="WhatsApp Consent: Erteilt">
-                                        <span class="consent-dot granted"></span>
-                                        <span style="font-size: 0.75rem; color: var(--text-muted);">WA</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>⚡ Aktivitäten</h3>
-                            <button class="btn btn-ghost">Alle</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity-item">
-                                <div class="activity-icon lead">👤</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Lead <strong>Müller GmbH</strong> qualifiziert</div>
-                                    <div class="activity-time">Vor 12 Minuten</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon consent">✅</div>
-                                <div class="activity-content">
-                                    <div class="activity-text"><strong>WhatsApp Consent</strong> von Weber Bau erhalten</div>
-                                    <div class="activity-time">Vor 34 Minuten</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon payment">💳</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Zahlung <strong>€23,500</strong> eingegangen</div>
-                                    <div class="activity-time">Vor 1 Stunde</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon document">📄</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Vertrag von <strong>Tech House</strong> hochgeladen</div>
-                                    <div class="activity-time">Vor 2 Stunden</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon consent">🔒</div>
-                                <div class="activity-content">
-                                    <div class="activity-text"><strong>DSGVO Audit</strong> abgeschlossen</div>
-                                    <div class="activity-time">Vor 3 Stunden</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- GTzHub Finance Page -->
-            <section class="page-section" id="page-gtzhub">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>💰 GTzHub – Finanz & Leads</h2>
-                        <p>Lead-Management, Finanzen und Dokumentenverwaltung</p>
-                    </div>
-                    <div class="header-right">
-                        <button class="btn btn-primary">+ Neuer Lead</button>
-                    </div>
-                </header>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon blue">📥</div>
-                        </div>
-                        <div class="stat-value">€124.5K</div>
-                        <div class="stat-label">Umsatz (MTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon purple">📤</div>
-                        </div>
-                        <div class="stat-value">€67.2K</div>
-                        <div class="stat-label">Ausgaben (MTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon green">📊</div>
-                        </div>
-                        <div class="stat-value">€57.3K</div>
-                        <div class="stat-label">Gewinn (MTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon pink">📑</div>
-                        </div>
-                        <div class="stat-value">23</div>
-                        <div class="stat-label">Offene Rechnungen</div>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-header">
-                        <h3>📋 Lead-Übersicht mit Consent-Status</h3>
-                        <div style="display: flex; gap: var(--space-md);">
-                            <button class="btn btn-ghost">Filter</button>
-                            <button class="btn btn-primary">Export</button>
-                        </div>
+                        <h3>⚡ Aktivitäten</h3>
+                        <button class="btn btn-ghost">Alle</button>
                     </div>
                     <div class="card-body">
-                        <div class="lead-table">
-                            <div class="lead-row" style="background: var(--bg-hover); font-weight: 600;">
-                                <div style="width: 36px; margin-right: var(--space-md);"></div>
-                                <div class="lead-info">Unternehmen</div>
-                                <div class="lead-value">Wert</div>
-                                <div style="width: 100px;">Status</div>
-                                <div style="width: 80px; text-align: center;">WA Consent</div>
-                                <div style="width: 80px; text-align: center;">DSGVO</div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">MG</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Müller GmbH</div>
-                                    <div class="lead-company">Smart Home Integration</div>
-                                </div>
-                                <div class="lead-value">€45,000</div>
-                                <span class="lead-status qualified">Qualifiziert</span>
-                                <div style="width: 80px; text-align: center;">
-                                    <span class="consent-dot granted" style="display: inline-block;"></span>
-                                </div>
-                                <div style="width: 80px; text-align: center;">✅</div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">TH</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Tech House AG</div>
-                                    <div class="lead-company">LOXONE System</div>
-                                </div>
-                                <div class="lead-value">€78,500</div>
-                                <span class="lead-status proposal">Angebot</span>
-                                <div style="width: 80px; text-align: center;">
-                                    <span class="consent-dot pending" style="display: inline-block;"></span>
-                                </div>
-                                <div style="width: 80px; text-align: center;">✅</div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">WB</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Weber Bau KG</div>
-                                    <div class="lead-company">Barrierefreies Bauen</div>
-                                </div>
-                                <div class="lead-value">€125,000</div>
-                                <span class="lead-status negotiation">Verhandlung</span>
-                                <div style="width: 80px; text-align: center;">
-                                    <span class="consent-dot granted" style="display: inline-block;"></span>
-                                </div>
-                                <div style="width: 80px; text-align: center;">✅</div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">SH</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Schmidt Haus</div>
-                                    <div class="lead-company">Komplettlösung</div>
-                                </div>
-                                <div class="lead-value">€89,000</div>
-                                <span class="lead-status qualified">Qualifiziert</span>
-                                <div style="width: 80px; text-align: center;">
-                                    <span class="consent-dot denied" style="display: inline-block;"></span>
-                                </div>
-                                <div style="width: 80px; text-align: center;">✅</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ProjectHubZ Page -->
-            <section class="page-section" id="page-projects">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>📁 ProjectHubZ</h2>
-                        <p>Projekt- & Innovationshub</p>
-                    </div>
-                    <div class="header-right">
-                        <button class="btn btn-primary">+ Neues Projekt</button>
-                    </div>
-                </header>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon blue">📂</div></div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Aktive Projekte</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon purple">✅</div></div>
-                        <div class="stat-value">47</div>
-                        <div class="stat-label">Abgeschlossen (YTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon pink">⏰</div></div>
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Diese Woche fällig</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon green">💡</div></div>
-                        <div class="stat-value">8</div>
-                        <div class="stat-label">Ideen in Pipeline</div>
-                    </div>
-                </div>
-
-                <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>🚀 Aktive Projekte</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="project-card">
-                                <div class="project-header">
-                                    <div>
-                                        <div class="project-title">West Money OS v2.0</div>
-                                        <div class="project-meta">Enterprise Universe • Deadline: 01.01.2026</div>
-                                    </div>
-                                    <span class="lead-status qualified">In Progress</span>
-                                </div>
-                                <div class="project-progress">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 68%;"></div>
-                                    </div>
-                                    <div class="progress-text">
-                                        <span>68% abgeschlossen</span>
-                                        <span>17/25 Tasks</span>
-                                    </div>
-                                </div>
-                                <div class="project-team">
-                                    <div class="team-avatar">ÖC</div>
-                                    <div class="team-avatar">MW</div>
-                                    <div class="team-avatar">TS</div>
-                                    <div class="team-avatar">+3</div>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-header">
-                                    <div>
-                                        <div class="project-title">DEDSEC World VR</div>
-                                        <div class="project-meta">Gaming Division • Deadline: 15.03.2026</div>
-                                    </div>
-                                    <span class="lead-status proposal">Planning</span>
-                                </div>
-                                <div class="project-progress">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 25%;"></div>
-                                    </div>
-                                    <div class="progress-text">
-                                        <span>25% abgeschlossen</span>
-                                        <span>5/20 Tasks</span>
-                                    </div>
-                                </div>
-                                <div class="project-team">
-                                    <div class="team-avatar">ÖC</div>
-                                    <div class="team-avatar">AK</div>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-header">
-                                    <div>
-                                        <div class="project-title">ComfortClick Integration</div>
-                                        <div class="project-meta">West Money Bau • Deadline: 28.02.2026</div>
-                                    </div>
-                                    <span class="lead-status negotiation">Review</span>
-                                </div>
-                                <div class="project-progress">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 85%;"></div>
-                                    </div>
-                                    <div class="progress-text">
-                                        <span>85% abgeschlossen</span>
-                                        <span>17/20 Tasks</span>
-                                    </div>
-                                </div>
-                                <div class="project-team">
-                                    <div class="team-avatar">MW</div>
-                                    <div class="team-avatar">TS</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>💡 Idea Zone</h3>
-                            <button class="btn btn-ghost">+ Neue Idee</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="project-card" style="border-left: 3px solid var(--primary);">
-                                <div class="project-title">CR7 VR Football Ultimate</div>
-                                <div class="project-meta" style="margin-bottom: var(--space-md);">Gaming • Votes: 12</div>
-                                <p style="font-size: 0.9rem; color: var(--text-secondary);">
-                                    VR-Fußballspiel mit Token-Economy (GOD, DedSec Tokens) und Meta Quest 3 Support.
-                                </p>
-                            </div>
-                            <div class="project-card" style="border-left: 3px solid var(--accent);">
-                                <div class="project-title">AI Meeting Assistant</div>
-                                <div class="project-meta" style="margin-bottom: var(--space-md);">Productivity • Votes: 8</div>
-                                <p style="font-size: 0.9rem; color: var(--text-secondary);">
-                                    Automatische Transkription und Action-Item-Extraktion für alle Meetings.
-                                </p>
-                            </div>
-                            <div class="project-card" style="border-left: 3px solid var(--secondary);">
-                                <div class="project-title">SecTower Dubai Expansion</div>
-                                <div class="project-meta" style="margin-bottom: var(--space-md);">International • Votes: 5</div>
-                                <p style="font-size: 0.9rem; color: var(--text-secondary);">
-                                    Erweiterung der Sicherheitslösungen auf den UAE-Markt mit Verisure.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- HealthSync Page -->
-            <section class="page-section" id="page-health">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>❤️ HealthSync</h2>
-                        <p>Gesundheits- & Produktivitäts-Monitoring</p>
-                    </div>
-                </header>
-
-                <div class="card" style="margin-bottom: var(--space-xl);">
-                    <div class="card-body">
-                        <div class="health-score">
-                            <div class="score-circle">
-                                <div class="score-inner">
-                                    <div class="score-value">87</div>
-                                    <div class="score-label">Wellness Score</div>
-                                </div>
-                            </div>
-                            <p style="color: var(--text-secondary);">↑ 5 Punkte seit gestern • 14 Tage Streak</p>
-                        </div>
-                        <div class="health-metrics">
-                            <div class="health-metric">
-                                <div class="icon">🏃</div>
-                                <div class="value" style="color: var(--primary);">8,432</div>
-                                <div class="label">Schritte</div>
-                            </div>
-                            <div class="health-metric">
-                                <div class="icon">😴</div>
-                                <div class="value" style="color: var(--accent);">7h 24m</div>
-                                <div class="label">Schlaf</div>
-                            </div>
-                            <div class="health-metric">
-                                <div class="icon">💼</div>
-                                <div class="value" style="color: var(--success);">4h 32m</div>
-                                <div class="label">Fokuszeit</div>
-                            </div>
-                            <div class="health-metric">
-                                <div class="icon">🧘</div>
-                                <div class="value" style="color: var(--secondary);">Low</div>
-                                <div class="label">Stress</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>🔒 Datenschutz-Hinweis</h3>
-                    </div>
-                    <div class="card-body">
-                        <p style="color: var(--text-secondary); margin-bottom: var(--space-md);">
-                            Alle Gesundheitsdaten werden <strong>lokal und verschlüsselt</strong> gespeichert. 
-                            Es erfolgt <strong>keine Weitergabe an Dritte</strong>. Du kontrollierst vollständig, 
-                            welche Daten erfasst und mit anderen Hubs geteilt werden.
-                        </p>
-                        <div style="display: flex; gap: var(--space-md);">
-                            <button class="btn btn-ghost" onclick="showCookieSettings()">Datenschutz-Einstellungen</button>
-                            <button class="btn btn-ghost">Daten exportieren</button>
-                            <button class="btn btn-ghost" style="color: var(--danger);">Alle Daten löschen</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- GTzMeta Page -->
-            <section class="page-section" id="page-meta">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>🌐 GTzMeta – Command Center</h2>
-                        <p>Unified Control über alle Hubs</p>
-                    </div>
-                    <div class="header-right">
-                        <span class="god-mode-badge">⚡ GOD MODE ACTIVE</span>
-                    </div>
-                </header>
-
-                <div class="meta-command">
-                    <h3>🎯 Unified Command Center</h3>
-                    <div class="command-input">
-                        <input type="text" placeholder="Natürlicher Sprachbefehl: z.B. 'Zeige mir alle überfälligen Tasks und offene Leads'">
-                        <button class="btn btn-primary">Ausführen</button>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card" style="border-left: 3px solid var(--primary);">
-                        <div class="stat-header"><div class="stat-icon blue">💰</div></div>
-                        <div class="stat-value">GTzHub</div>
-                        <div class="stat-label">€847.5K YTD • 47 Leads</div>
-                    </div>
-                    <div class="stat-card" style="border-left: 3px solid var(--accent);">
-                        <div class="stat-header"><div class="stat-icon purple">📁</div></div>
-                        <div class="stat-value">ProjectHubZ</div>
-                        <div class="stat-label">12 Aktiv • 3 diese Woche</div>
-                    </div>
-                    <div class="stat-card" style="border-left: 3px solid var(--secondary);">
-                        <div class="stat-header"><div class="stat-icon pink">❤️</div></div>
-                        <div class="stat-value">HealthSync</div>
-                        <div class="stat-label">Score: 87 • 14 Tage Streak</div>
-                    </div>
-                    <div class="stat-card" style="border-left: 3px solid var(--success);">
-                        <div class="stat-header"><div class="stat-icon green">🎮</div></div>
-                        <div class="stat-value">GamingHub</div>
-                        <div class="stat-label">Level 42 • 2,340 XP</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>🌍 World Map – Enterprise Universe</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="compliance-grid">
-                            <div class="entity-card">
-                                <h4>West Money Bau</h4>
-                                <div class="country">🇩🇪 Deutschland</div>
-                                <span class="entity-status compliant">✓ Aktiv</span>
-                            </div>
-                            <div class="entity-card">
-                                <h4>Enterprise Universe</h4>
-                                <div class="country">🇩🇪 Deutschland</div>
-                                <span class="entity-status compliant">✓ Aktiv</span>
-                            </div>
-                            <div class="entity-card">
-                                <h4>Opera Marketing</h4>
-                                <div class="country">🇩🇪 Deutschland</div>
-                                <span class="entity-status compliant">✓ Aktiv</span>
-                            </div>
-                            <div class="entity-card">
-                                <h4>SecTower Dubai</h4>
-                                <div class="country">🇦🇪 UAE</div>
-                                <span class="entity-status warning">⚠ Setup</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Compliance Page -->
-            <section class="page-section" id="page-compliance">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>🛡️ Global Compliance Layer</h2>
-                        <p>Übersicht über Compliance-Status aller Entitäten</p>
-                    </div>
-                </header>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon green">✅</div></div>
-                        <div class="stat-value">98%</div>
-                        <div class="stat-label">DSGVO Compliance</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon blue">🔐</div></div>
-                        <div class="stat-value">100%</div>
-                        <div class="stat-label">AML/KYC Status</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon purple">📋</div></div>
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Anstehende Fristen</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon pink">⚠️</div></div>
-                        <div class="stat-value">1</div>
-                        <div class="stat-label">Offene Aktionen</div>
-                    </div>
-                </div>
-
-                <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>📊 Compliance Checks</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">✓</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">AML Screening</div>
-                                    <div class="activity-time">Status: OK • Letzte Prüfung: Heute</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">✓</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">UBO Registry</div>
-                                    <div class="activity-time">Status: Aktuell • Nächste Prüfung: 01.03.2026</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">⚠</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Transfer Pricing Dokumentation</div>
-                                    <div class="activity-time">Status: Fällig • Deadline: 31.01.2026</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">✓</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">DSGVO Consent Management</div>
-                                    <div class="activity-time">Status: 98% compliant • 2 ausstehend</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>📅 Anstehende Fristen</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(239, 68, 68, 0.15); color: var(--danger);">📅</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">USt-VA Q4 2025</div>
-                                    <div class="activity-time">Fällig: 10.01.2026 • Deutschland</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warning);">📅</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">Annual Return UK</div>
-                                    <div class="activity-time">Fällig: 15.01.2026 • UK</div>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon" style="background: rgba(0, 240, 255, 0.15); color: var(--primary);">📅</div>
-                                <div class="activity-content">
-                                    <div class="activity-text">License Renewal UAE</div>
-                                    <div class="activity-time">Fällig: 01.02.2026 • SecTower Dubai</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Consent Manager Page -->
-            <section class="page-section" id="page-consent">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>✅ Consent Manager</h2>
-                        <p>DSGVO-konforme Einwilligungsverwaltung</p>
-                    </div>
-                    <div class="header-right">
-                        <button class="btn btn-primary">Bulk Update</button>
-                    </div>
-                </header>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon green">✅</div></div>
-                        <div class="stat-value">156</div>
-                        <div class="stat-label">WhatsApp Consent erteilt</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon pink">⏳</div></div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Ausstehend</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon blue">❌</div></div>
-                        <div class="stat-value">8</div>
-                        <div class="stat-label">Abgelehnt</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header"><div class="stat-icon purple">🔄</div></div>
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Widerrufen</div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>📋 WhatsApp Consent Status (HubSpot Sync)</h3>
-                        <div style="display: flex; gap: var(--space-md);">
-                            <button class="btn btn-ghost">🔄 Sync mit HubSpot</button>
-                            <button class="btn btn-ghost">Export</button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p style="color: var(--text-secondary); margin-bottom: var(--space-lg); padding: var(--space-md); background: var(--bg-elevated); border-radius: var(--radius-md);">
-                            ℹ️ Consent-Status wird automatisch mit HubSpot synchronisiert. Änderungen werden gemäß 
-                            <a href="https://knowledge.hubspot.com/de/inbox/edit-the-whatsapp-consent-status-of-your-contacts-in-bulk" target="_blank" style="color: var(--primary);">HubSpot WhatsApp Consent Management</a> 
-                            verarbeitet und protokolliert.
-                        </p>
-                        <div class="lead-table">
-                            <div class="lead-row" style="background: var(--bg-hover); font-weight: 600;">
-                                <div style="width: 36px; margin-right: var(--space-md);"></div>
-                                <div class="lead-info">Kontakt</div>
-                                <div style="width: 120px;">WhatsApp Status</div>
-                                <div style="width: 150px;">Datum</div>
-                                <div style="width: 120px;">Quelle</div>
-                                <div style="width: 100px;">Aktion</div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">MG</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Max Gruber</div>
-                                    <div class="lead-company">Müller GmbH</div>
-                                </div>
-                                <div style="width: 120px;">
-                                    <span style="display: flex; align-items: center; gap: 4px;">
-                                        <span class="consent-dot granted"></span>
-                                        Erteilt
-                                    </span>
-                                </div>
-                                <div style="width: 150px; font-size: 0.85rem; color: var(--text-muted);">12.12.2025 14:32</div>
-                                <div style="width: 120px; font-size: 0.85rem;">HubSpot Form</div>
-                                <div style="width: 100px;">
-                                    <button class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.75rem;">Details</button>
-                                </div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">TH</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Thomas Huber</div>
-                                    <div class="lead-company">Tech House AG</div>
-                                </div>
-                                <div style="width: 120px;">
-                                    <span style="display: flex; align-items: center; gap: 4px;">
-                                        <span class="consent-dot pending"></span>
-                                        Ausstehend
-                                    </span>
-                                </div>
-                                <div style="width: 150px; font-size: 0.85rem; color: var(--text-muted);">–</div>
-                                <div style="width: 120px; font-size: 0.85rem;">–</div>
-                                <div style="width: 100px;">
-                                    <button class="btn btn-primary" style="padding: 4px 8px; font-size: 0.75rem;">Anfragen</button>
-                                </div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">WB</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Werner Bauer</div>
-                                    <div class="lead-company">Weber Bau KG</div>
-                                </div>
-                                <div style="width: 120px;">
-                                    <span style="display: flex; align-items: center; gap: 4px;">
-                                        <span class="consent-dot granted"></span>
-                                        Erteilt
-                                    </span>
-                                </div>
-                                <div style="width: 150px; font-size: 0.85rem; color: var(--text-muted);">10.12.2025 09:15</div>
-                                <div style="width: 120px; font-size: 0.85rem;">WhatsApp Opt-in</div>
-                                <div style="width: 100px;">
-                                    <button class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.75rem;">Details</button>
-                                </div>
-                            </div>
-                            <div class="lead-row">
-                                <div class="lead-avatar">SH</div>
-                                <div class="lead-info">
-                                    <div class="lead-name">Stefan Horn</div>
-                                    <div class="lead-company">Schmidt Haus</div>
-                                </div>
-                                <div style="width: 120px;">
-                                    <span style="display: flex; align-items: center; gap: 4px;">
-                                        <span class="consent-dot denied"></span>
-                                        Abgelehnt
-                                    </span>
-                                </div>
-                                <div style="width: 150px; font-size: 0.85rem; color: var(--text-muted);">08.12.2025 16:45</div>
-                                <div style="width: 120px; font-size: 0.85rem;">E-Mail</div>
-                                <div style="width: 100px;">
-                                    <button class="btn btn-ghost" style="padding: 4px 8px; font-size: 0.75rem;">Details</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Audit Log Page -->
-            <section class="page-section" id="page-audit">
-                <header class="header">
-                    <div class="header-left">
-                        <h2>📋 Audit Log</h2>
-                        <p>DSGVO-konforme Protokollierung aller datenschutzrelevanten Aktionen</p>
-                    </div>
-                    <div class="header-right">
-                        <button class="btn btn-ghost">Filter</button>
-                        <button class="btn btn-primary">Export</button>
-                    </div>
-                </header>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h3>📜 Aktivitätsprotokoll</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="activity-item">
-                            <div class="activity-icon consent">🔐</div>
-                            <div class="activity-content">
-                                <div class="activity-text"><strong>CONSENT_GRANTED</strong> – WhatsApp Consent von Werner Bauer (Weber Bau KG)</div>
-                                <div class="activity-time">10.12.2025 09:15:32 • IP: 192.168.x.x • User Agent: Chrome/120</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon document">📄</div>
-                            <div class="activity-content">
-                                <div class="activity-text"><strong>DATA_ACCESS</strong> – Kundendaten abgerufen von Ömer Coşkun</div>
-                                <div class="activity-time">10.12.2025 08:45:12 • Betroffene Datensätze: 3</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon consent">❌</div>
-                            <div class="activity-content">
-                                <div class="activity-text"><strong>CONSENT_DENIED</strong> – WhatsApp Consent abgelehnt von Stefan Horn (Schmidt Haus)</div>
-                                <div class="activity-time">08.12.2025 16:45:22 • Via: E-Mail Response</div>
-                            </div>
-                        </div>
                         <div class="activity-item">
                             <div class="activity-icon lead">👤</div>
                             <div class="activity-content">
-                                <div class="activity-text"><strong>DATA_EXPORT</strong> – DSGVO Auskunft für Kunde #12847 generiert</div>
-                                <div class="activity-time">07.12.2025 14:22:10 • Format: PDF • Größe: 2.4MB</div>
+                                <div class="activity-text">Lead <strong>Müller GmbH</strong> qualifiziert</div>
+                                <div class="activity-time">Vor 12 Minuten</div>
                             </div>
                         </div>
-                        <div class="activity-item">
-                            <div class="activity-icon payment">🗑️</div>
-                            <div class="activity-content">
-                                <div class="activity-text"><strong>DATA_DELETION</strong> – Löschanfrage ausgeführt für Kontakt #8834</div>
-                                <div class="activity-time">05.12.2025 11:30:45 • Gelöschte Felder: 12 • Retention: Audit-Log behalten</div>
-                            </div>
-                        </div>
+                        
                         <div class="activity-item">
                             <div class="activity-icon consent">✅</div>
                             <div class="activity-content">
-                                <div class="activity-text"><strong>CONSENT_GRANTED</strong> – WhatsApp Consent von Max Gruber (Müller GmbH)</div>
-                                <div class="activity-time">12.12.2025 14:32:18 • Via: HubSpot Form</div>
+                                <div class="activity-text"><strong>WhatsApp Consent</strong> von Weber Bau erhalten</div>
+                                <div class="activity-time">Vor 34 Minuten</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon payment">💳</div>
+                            <div class="activity-content">
+                                <div class="activity-text">Zahlung <strong>€23,500</strong> eingegangen</div>
+                                <div class="activity-time">Vor 1 Stunde</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon lead">📧</div>
+                            <div class="activity-content">
+                                <div class="activity-text">E-Mail Kampagne an <strong>47 Leads</strong> versendet</div>
+                                <div class="activity-time">Vor 2 Stunden</div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== FINANCE PAGE ========== -->
+        <section class="page-section" id="page-finance">
+            <header class="header">
+                <div>
+                    <h1>💰 GTzHub Finance</h1>
+                    <p>Finanzen, Leads und Dokumentenverwaltung</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-ghost">Export</button>
+                    <button class="btn btn-primary">+ Neuer Lead</button>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">💵</div>
+                        <span class="stat-badge up">↑ 18%</span>
+                    </div>
+                    <div class="stat-value">€425K</div>
+                    <div class="stat-label">Pipeline Wert</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">📄</div>
+                        <span class="stat-badge up">↑ 5</span>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Offene Angebote</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-value">€78.5K</div>
+                    <div class="stat-label">Monatsumsatz</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">📊</div>
+                    </div>
+                    <div class="stat-value">34</div>
+                    <div class="stat-label">Aktive Kunden</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>📋 Alle Leads</h3>
+                </div>
+                <div class="card-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Kunde</th>
+                                <th>Projekt</th>
+                                <th>Wert</th>
+                                <th>Status</th>
+                                <th>Datum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Müller GmbH</strong></td>
+                                <td>Smart Home Integration</td>
+                                <td style="color: var(--primary);">€45,000</td>
+                                <td><span class="lead-status qualified">Qualifiziert</span></td>
+                                <td>12.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weber Bau KG</strong></td>
+                                <td>Barrierefreies Bad</td>
+                                <td style="color: var(--primary);">€28,000</td>
+                                <td><span class="lead-status new">Neu</span></td>
+                                <td>11.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Schmidt Haus</strong></td>
+                                <td>LOXONE Installation</td>
+                                <td style="color: var(--primary);">€62,000</td>
+                                <td><span class="lead-status won">Gewonnen</span></td>
+                                <td>10.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Becker Immobilien</strong></td>
+                                <td>Verisure Security</td>
+                                <td style="color: var(--primary);">€15,000</td>
+                                <td><span class="lead-status qualified">Qualifiziert</span></td>
+                                <td>09.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hoffmann AG</strong></td>
+                                <td>Smart Office</td>
+                                <td style="color: var(--primary);">€85,000</td>
+                                <td><span class="lead-status new">Neu</span></td>
+                                <td>08.12.2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== PROJECTS PAGE ========== -->
+        <section class="page-section" id="page-projects">
+            <header class="header">
+                <div>
+                    <h1>📁 ProjectHubZ</h1>
+                    <p>Projekt- & Innovationshub</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary">+ Neues Projekt</button>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">📁</div>
+                    </div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Aktive Projekte</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Abgeschlossen</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">⏳</div>
+                    </div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">In Planung</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">👥</div>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Teammitglieder</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>🚀 Aktuelle Projekte</h3>
+                </div>
+                <div class="card-body">
+                    <div class="lead-item">
+                        <div class="lead-avatar">WO</div>
+                        <div class="lead-info">
+                            <div class="lead-name">West Money OS</div>
+                            <div class="lead-company">SaaS Plattform Entwicklung</div>
+                        </div>
+                        <div class="lead-value">75%</div>
+                        <span class="lead-status qualified">In Progress</span>
+                    </div>
+                    
+                    <div class="lead-item">
+                        <div class="lead-avatar">FS</div>
+                        <div class="lead-info">
+                            <div class="lead-name">Flagship Store</div>
+                            <div class="lead-company">Ehrenstraße Köln</div>
+                        </div>
+                        <div class="lead-value">25%</div>
+                        <span class="lead-status new">Planung</span>
+                    </div>
+                    
+                    <div class="lead-item">
+                        <div class="lead-avatar">LX</div>
+                        <div class="lead-info">
+                            <div class="lead-name">LOXONE Showroom</div>
+                            <div class="lead-company">Demo Installation</div>
+                        </div>
+                        <div class="lead-value">90%</div>
+                        <span class="lead-status won">Fast fertig</span>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
+        
+        <!-- ========== HEALTH PAGE ========== -->
+        <section class="page-section" id="page-health">
+            <header class="header">
+                <div>
+                    <h1>❤️ HealthSync</h1>
+                    <p>Gesundheits- & Wellness-Tracking</p>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">🏃</div>
+                    </div>
+                    <div class="stat-value">8,432</div>
+                    <div class="stat-label">Schritte heute</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">💧</div>
+                    </div>
+                    <div class="stat-value">2.1L</div>
+                    <div class="stat-label">Wasser</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">😴</div>
+                    </div>
+                    <div class="stat-value">7.5h</div>
+                    <div class="stat-label">Schlaf</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">🔥</div>
+                    </div>
+                    <div class="stat-value">520</div>
+                    <div class="stat-label">Kalorien</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>📊 Wochenübersicht</h3>
+                </div>
+                <div class="card-body">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 40px;">
+                        🏗️ Health-Tracking Dashboard in Entwicklung...
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== META PAGE ========== -->
+        <section class="page-section" id="page-meta">
+            <header class="header">
+                <div>
+                    <h1>🌐 GTzMeta</h1>
+                    <p>Metaverse & Gaming Hub</p>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">🎮</div>
+                    </div>
+                    <div class="stat-value">GTz</div>
+                    <div class="stat-label">Meta Avatar</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">🏆</div>
+                    </div>
+                    <div class="stat-value">Level 42</div>
+                    <div class="stat-label">GOD MODE</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">💎</div>
+                    </div>
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">Ultra Instinct</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">🐉</div>
+                    </div>
+                    <div class="stat-value">神</div>
+                    <div class="stat-label">Dragon Ball GOD</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>🎮 HAIKU - Divine Warrior</h3>
+                </div>
+                <div class="card-body">
+                    <p style="color: var(--text-secondary);">
+                        Meta World Avatar: <strong style="color: var(--primary);">HAIKU (神 Dragon Ball GOD)</strong><br><br>
+                        Gaming Handles: <strong>GTzMeta</strong> | <strong>itzzkingz1</strong> (Twitch)
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== COMPLIANCE PAGE ========== -->
+        <section class="page-section" id="page-compliance">
+            <header class="header">
+                <div>
+                    <h1>🛡️ Compliance Center</h1>
+                    <p>DSGVO & Datenschutz Management</p>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">DSGVO Score</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">📋</div>
+                    </div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Aktive Consents</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">🔐</div>
+                    </div>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Offene Anfragen</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">📜</div>
+                    </div>
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Audit Logs</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== CONSENT PAGE ========== -->
+        <section class="page-section" id="page-consent">
+            <header class="header">
+                <div>
+                    <h1>✅ Consent Manager</h1>
+                    <p>WhatsApp & E-Mail Einwilligungen verwalten</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary">+ Consent anfragen</button>
+                </div>
+            </header>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>📋 Consent Übersicht</h3>
+                </div>
+                <div class="card-body">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Kontakt</th>
+                                <th>Typ</th>
+                                <th>Status</th>
+                                <th>Datum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Müller GmbH</strong></td>
+                                <td>WhatsApp</td>
+                                <td><span style="color: var(--success);">✅ Erteilt</span></td>
+                                <td>12.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Weber Bau</strong></td>
+                                <td>E-Mail + WhatsApp</td>
+                                <td><span style="color: var(--success);">✅ Erteilt</span></td>
+                                <td>11.12.2025</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Schmidt Haus</strong></td>
+                                <td>E-Mail</td>
+                                <td><span style="color: var(--warning);">⏳ Ausstehend</span></td>
+                                <td>10.12.2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== SETTINGS PAGE ========== -->
+        <section class="page-section" id="page-settings">
+            <header class="header">
+                <div>
+                    <h1>⚙️ Einstellungen</h1>
+                    <p>System- und Kontoeinstellungen</p>
+                </div>
+            </header>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>👤 Profil</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> Ömer Hüseyin Coşkun</p>
+                    <p><strong>Firma:</strong> West Money Bau GmbH</p>
+                    <p><strong>E-Mail:</strong> info@west-money-bau.de</p>
+                    <p><strong>Rolle:</strong> CEO & Founder</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ========== INTEGRATIONS PAGE ========== -->
+        <section class="page-section" id="page-integrations">
+            <header class="header">
+                <div>
+                    <h1>🔗 Integrationen</h1>
+                    <p>Verbundene Services & APIs</p>
+                </div>
+            </header>
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-header">
+                        <div class="stat-icon">🧡</div>
+                    </div>
+                    <div class="stat-value">✅</div>
+                    <div class="stat-label">HubSpot CRM</div>
+                </div>
+                
+                <div class="stat-card blue">
+                    <div class="stat-header">
+                        <div class="stat-icon">📱</div>
+                    </div>
+                    <div class="stat-value">✅</div>
+                    <div class="stat-label">WhatsApp</div>
+                </div>
+                
+                <div class="stat-card purple">
+                    <div class="stat-header">
+                        <div class="stat-icon">🏦</div>
+                    </div>
+                    <div class="stat-value">⏳</div>
+                    <div class="stat-label">Revolut</div>
+                </div>
+                
+                <div class="stat-card orange">
+                    <div class="stat-header">
+                        <div class="stat-icon">📞</div>
+                    </div>
+                    <div class="stat-value">✅</div>
+                    <div class="stat-label">Zadarma</div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+</div>
 
-        </main>
-    </div>
-
-    <!-- Navigation & Functionality Script -->
-    <script>
-        // ===== NAVIGATION =====
-        function showPage(pageId) {
-            // Hide all page sections
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Remove active class from all nav items
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Show the selected page
-            const targetPage = document.getElementById('page-' + pageId);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-            }
-            
-            // Add active class to clicked nav item
-            const activeNav = document.querySelector('.nav-item[data-page="' + pageId + '"]');
-            if (activeNav) {
-                activeNav.classList.add('active');
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide all pages except dashboard
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            // Show dashboard by default
-            const dashboard = document.getElementById('page-dashboard');
-            if (dashboard) {
-                dashboard.style.display = 'block';
-            }
-            
-            // Set dashboard nav as active
-            const dashboardNav = document.querySelector('.nav-item[data-page="dashboard"]');
-            if (dashboardNav) {
-                dashboardNav.classList.add('active');
-            }
-
-            // Check cookie consent
-            if (localStorage.getItem('cookieConsent')) {
-                const banner = document.getElementById('gdprBanner');
-                if (banner) banner.style.display = 'none';
-            }
+<!-- Navigation Script -->
+<script>
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page-section').forEach(section => {
+            section.classList.remove('active');
         });
-
-        // ===== COOKIE/GDPR FUNCTIONS =====
-        function acceptAllCookies() {
-            document.getElementById('gdprBanner').style.display = 'none';
-            localStorage.setItem('cookieConsent', 'all');
+        
+        // Remove active from all nav items
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Show selected page
+        const page = document.getElementById('page-' + pageId);
+        if (page) {
+            page.classList.add('active');
         }
-
-        function rejectOptionalCookies() {
-            document.getElementById('gdprBanner').style.display = 'none';
-            localStorage.setItem('cookieConsent', 'necessary');
+        
+        // Set nav item active
+        const navItem = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+        if (navItem) {
+            navItem.classList.add('active');
         }
-
-        function showCookieSettings() {
-            document.getElementById('cookieModal').classList.add('active');
-        }
-
-        function closeCookieSettings() {
-            document.getElementById('cookieModal').classList.remove('active');
-        }
-
-        function saveConsentSettings() {
-            closeCookieSettings();
-            document.getElementById('gdprBanner').style.display = 'none';
-            localStorage.setItem('cookieConsent', 'custom');
-        }
-
-        function showPrivacyPolicy() {
-            document.getElementById('privacyModal').classList.add('active');
-        }
-
-        function closePrivacyPolicy() {
-            document.getElementById('privacyModal').classList.remove('active');
-        }
-
-        // ===== UTILITY FUNCTIONS =====
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(amount);
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = 'notification ' + type;
-            notification.innerHTML = message;
-            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; padding: 15px 25px; background: ' + (type === 'success' ? '#10b981' : '#ef4444') + '; color: white; border-radius: 10px; z-index: 10000; animation: slideIn 0.3s ease;';
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-        }
-
-        console.log('🚀 GTz Ecosystem Dashboard loaded successfully!');
-        console.log('📊 West Money OS v1.0.0');
-    </script>
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+    }
+    
+    console.log('🚀 GTz Ecosystem loaded!');
+    console.log('📊 West Money OS v1.0.0');
+</script>
 
 </body>
 </html>
