@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashflow Tracker | West Money OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #00f0ff;
+            --accent: #8b5cf6;
+            --income: #10b981;
+            --expense: #ef4444;
+            --pending: #f59e0b;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-income {
+            background: linear-gradient(135deg, var(--income) 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-expense {
+            background: linear-gradient(135deg, var(--expense) 0%, #dc2626 100%);
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #1a1a2e 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .balance-item {
+            text-align: center;
+        }
+
+        .balance-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .balance-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .balance-value.positive {
+            color: var(--income);
+        }
+
+        .balance-value.negative {
+            color: var(--expense);
+        }
+
+        .balance-value.pending {
+            color: var(--pending);
+        }
+
+        .balance-change {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .balance-change.up {
+            color: var(--income);
+        }
+
+        .balance-change.down {
+            color: var(--expense);
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Transactions Table */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transactions-table th,
+        .transactions-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transactions-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .transactions-table tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        .transaction-type {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .type-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .type-icon.income {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .type-icon.expense {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .type-icon.pending {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .transaction-name {
+            font-weight: 600;
+        }
+
+        .transaction-category {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .amount {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+        }
+
+        .amount.income {
+            color: var(--income);
+        }
+
+        .amount.expense {
+            color: var(--expense);
+        }
+
+        .amount.pending {
+            color: var(--pending);
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--income);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--expense);
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--pending);
+        }
+
+        .badge-info {
+            background: rgba(0, 240, 255, 0.2);
+            color: var(--secondary);
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 10px;
+        }
+
+        .stat-item .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .stat-item .value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+        }
+
+        /* Invoice List */
+        .invoice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .invoice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            border-left: 3px solid var(--pending);
+        }
+
+        .invoice-item.overdue {
+            border-left-color: var(--expense);
+        }
+
+        .invoice-item.paid {
+            border-left-color: var(--income);
+        }
+
+        .invoice-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .invoice-client {
+            font-weight: 600;
+        }
+
+        .invoice-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .invoice-amount {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            color: var(--pending);
+        }
+
+        .invoice-item.overdue .invoice-amount {
+            color: var(--expense);
+        }
+
+        .invoice-item.paid .invoice-amount {
+            color: var(--income);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-dark);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.income {
+            background: linear-gradient(90deg, var(--income), #34d399);
+        }
+
+        .progress-fill.expense {
+            background: linear-gradient(90deg, var(--expense), #f87171);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .type-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .type-btn.active.income {
+            border-color: var(--income);
+            color: var(--income);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .type-btn.active.expense {
+            border-color: var(--expense);
+            color: var(--expense);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Charts Area */
+        .chart-container {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+            min-height: 10px;
+        }
+
+        .chart-bar.income {
+            background: linear-gradient(180deg, var(--income), rgba(16, 185, 129, 0.3));
+        }
+
+        .chart-bar.expense {
+            background: linear-gradient(180deg, var(--expense), rgba(239, 68, 68, 0.3));
+        }
+
+        .chart-bar::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.income {
+            background: var(--income);
+        }
+
+        .legend-dot.expense {
+            background: var(--expense);
+        }
+
+        /* Lexoffice Banner */
+        .integration-banner {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+
+        .integration-banner .info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .integration-banner .icon {
+            font-size: 2rem;
+        }
+
+        .integration-banner h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .integration-banner p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .integration-banner .btn {
+            background: white;
+            color: #2563eb;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+            margin-top: 0.75rem;
+        }
+
+        .toast.success {
+            border-left: 3px solid var(--income);
+        }
+
+        .toast.error {
+            border-left: 3px solid var(--expense);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .balance-card {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">💰</div>
+            <div class="logo-text">
+                <h1>Cashflow Tracker</h1>
+                <span>West Money OS • Enterprise Universe</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="exportData()">📥 Export</button>
+            <button class="btn btn-expense" onclick="openModal('expense')">➖ Ausgabe</button>
+            <button class="btn btn-income" onclick="openModal('income')">➕ Einnahme</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Balance Overview -->
+        <div class="balance-card">
+            <div class="balance-item">
+                <div class="balance-label">💳 Kontostand</div>
+                <div class="balance-value positive" id="totalBalance">€0,00</div>
+                <div class="balance-change up" id="balanceChange">+0% vs. Vormonat</div>
+            </div>
+            <div class="balance-item">
+                <div class="balance-label">📈 Einnahmen (Monat)</div>
+                <div class="balance-value positive" id="monthlyIncome">€0,00</div>
+                <div class="balance-change" id="incomeChange">diesen Monat</div>
+            </div>
+            <div class="balance-item">
+                <div class="balance-label">📉 Ausgaben (Monat)</div>
+                <div class="balance-value negative" id="monthlyExpenses">€0,00</div>
+                <div class="balance-change" id="expenseChange">diesen Monat</div>
+            </div>
+            <div class="balance-item">
+                <div class="balance-label">⏳ Offene Rechnungen</div>
+                <div class="balance-value pending" id="pendingInvoices">€0,00</div>
+                <div class="balance-change" id="pendingCount">0 ausstehend</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div>
+                <!-- Transactions -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <h3>📋 Transaktionen</h3>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="filterType" onchange="filterTransactions()" style="padding: 0.5rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 8px; color: var(--text);">
+                                <option value="all">Alle</option>
+                                <option value="income">Einnahmen</option>
+                                <option value="expense">Ausgaben</option>
+                                <option value="pending">Ausstehend</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Transaktion</th>
+                                <th>Datum</th>
+                                <th>Kategorie</th>
+                                <th>Status</th>
+                                <th>Betrag</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Monthly Chart -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📊 Monatsübersicht</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" id="monthlyChart"></div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot income"></div>
+                                <span>Einnahmen</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot expense"></div>
+                                <span>Ausgaben</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <!-- Quick Stats -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <h3>📈 Schnellübersicht</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <span class="label">Umsatz YTD</span>
+                                <span class="value" id="ytdRevenue" style="color: var(--income);">€0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="label">Ausgaben YTD</span>
+                                <span class="value" id="ytdExpenses" style="color: var(--expense);">€0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="label">Gewinn YTD</span>
+                                <span class="value" id="ytdProfit" style="color: var(--secondary);">€0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="label">Ø Monatlicher Cashflow</span>
+                                <span class="value" id="avgCashflow">€0</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Monatsziel: €75.000</span>
+                                <span id="goalPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill income" id="goalProgress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open Invoices -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <h3>📄 Offene Rechnungen</h3>
+                        <button class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="openInvoiceModal()">+ Neu</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="invoice-list" id="invoiceList">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>🏷️ Top Kategorien</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="quick-stats" id="categoryStats">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lexoffice Integration Banner -->
+                <div class="integration-banner">
+                    <div class="info">
+                        <div class="icon">📘</div>
+                        <div>
+                            <h4>Lexoffice Integration</h4>
+                            <p>Verbinde deine Buchhaltung</p>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="showLexofficeInfo()">Später verbinden</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal-overlay" id="transactionModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Neue Transaktion</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="type-selector">
+                <button class="type-btn income" id="typeIncome" onclick="setTransactionType('income')">
+                    📈 Einnahme
+                </button>
+                <button class="type-btn expense" id="typeExpense" onclick="setTransactionType('expense')">
+                    📉 Ausgabe
+                </button>
+            </div>
+
+            <form id="transactionForm" onsubmit="saveTransaction(event)">
+                <div class="form-group">
+                    <label>Bezeichnung *</label>
+                    <input type="text" id="txName" placeholder="z.B. Smart Home Projekt Müller" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Betrag (€) *</label>
+                        <input type="number" id="txAmount" placeholder="0,00" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Datum *</label>
+                        <input type="date" id="txDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Kategorie</label>
+                        <select id="txCategory">
+                            <option value="smart-home">🏠 Smart Home Projekt</option>
+                            <option value="loxone">💡 LOXONE Installation</option>
+                            <option value="consulting">💼 Beratung</option>
+                            <option value="service">🔧 Service & Wartung</option>
+                            <option value="material">📦 Material</option>
+                            <option value="personal">👥 Personal</option>
+                            <option value="miete">🏢 Miete & Nebenkosten</option>
+                            <option value="marketing">📣 Marketing</option>
+                            <option value="software">💻 Software & Tools</option>
+                            <option value="versicherung">🛡️ Versicherung</option>
+                            <option value="sonstiges">📋 Sonstiges</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="txStatus">
+                            <option value="completed">✅ Abgeschlossen</option>
+                            <option value="pending">⏳ Ausstehend</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kunde / Lieferant</label>
+                    <input type="text" id="txClient" placeholder="Name des Kunden oder Lieferanten">
+                </div>
+
+                <div class="form-group">
+                    <label>Notizen</label>
+                    <textarea id="txNotes" rows="2" placeholder="Optionale Notizen..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    💾 Speichern
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // WEST MONEY OS - CASHFLOW TRACKER
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        let transactions = [];
+        let invoices = [];
+        let currentType = 'income';
+        let currentBalance = 0;
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            document.getElementById('txDate').valueAsDate = new Date();
+        });
+
+        function loadData() {
+            // Load from localStorage
+            const savedTransactions = localStorage.getItem('wm_transactions');
+            const savedInvoices = localStorage.getItem('wm_invoices');
+            const savedBalance = localStorage.getItem('wm_balance');
+
+            if (savedTransactions) {
+                transactions = JSON.parse(savedTransactions);
+            } else {
+                // Demo data
+                transactions = [
+                    {
+                        id: 1,
+                        type: 'income',
+                        name: 'Smart Home Projekt Familie Weber',
+                        amount: 28500,
+                        date: '2025-12-10',
+                        category: 'smart-home',
+                        status: 'completed',
+                        client: 'Familie Weber, Düsseldorf'
+                    },
+                    {
+                        id: 2,
+                        type: 'income',
+                        name: 'LOXONE Installation Bürokomplex',
+                        amount: 45000,
+                        date: '2025-12-08',
+                        category: 'loxone',
+                        status: 'completed',
+                        client: 'TechPark GmbH'
+                    },
+                    {
+                        id: 3,
+                        type: 'expense',
+                        name: 'LOXONE Material Bestellung',
+                        amount: 12500,
+                        date: '2025-12-07',
+                        category: 'material',
+                        status: 'completed',
+                        client: 'LOXONE GmbH'
+                    },
+                    {
+                        id: 4,
+                        type: 'expense',
+                        name: 'Gehalt Dezember',
+                        amount: 4500,
+                        date: '2025-12-01',
+                        category: 'personal',
+                        status: 'completed',
+                        client: 'Mitarbeiter'
+                    },
+                    {
+                        id: 5,
+                        type: 'expense',
+                        name: 'Büromiete Dezember',
+                        amount: 2800,
+                        date: '2025-12-01',
+                        category: 'miete',
+                        status: 'completed',
+                        client: 'Vermieter'
+                    },
+                    {
+                        id: 6,
+                        type: 'income',
+                        name: 'Barrierefreier Umbau Seniorenwohnung',
+                        amount: 18500,
+                        date: '2025-12-05',
+                        category: 'smart-home',
+                        status: 'pending',
+                        client: 'Herr Schneider'
+                    },
+                    {
+                        id: 7,
+                        type: 'income',
+                        name: 'Wartungsvertrag Q4',
+                        amount: 3500,
+                        date: '2025-12-03',
+                        category: 'service',
+                        status: 'completed',
+                        client: 'Diverse Kunden'
+                    },
+                    {
+                        id: 8,
+                        type: 'expense',
+                        name: 'HubSpot Subscription',
+                        amount: 450,
+                        date: '2025-12-01',
+                        category: 'software',
+                        status: 'completed',
+                        client: 'HubSpot'
+                    },
+                    {
+                        id: 9,
+                        type: 'expense',
+                        name: 'Google Ads Dezember',
+                        amount: 800,
+                        date: '2025-12-01',
+                        category: 'marketing',
+                        status: 'completed',
+                        client: 'Google'
+                    }
+                ];
+            }
+
+            if (savedInvoices) {
+                invoices = JSON.parse(savedInvoices);
+            } else {
+                invoices = [
+                    { id: 1, client: 'Familie Müller', amount: 32000, dueDate: '2025-12-20', status: 'pending' },
+                    { id: 2, client: 'Praxis Dr. Schmidt', amount: 15500, dueDate: '2025-12-15', status: 'pending' },
+                    { id: 3, client: 'Hotel Rheinblick', amount: 48000, dueDate: '2025-12-28', status: 'pending' },
+                    { id: 4, client: 'Familie Weber', amount: 28500, dueDate: '2025-12-05', status: 'paid' }
+                ];
+            }
+
+            currentBalance = savedBalance ? parseFloat(savedBalance) : 47250;
+
+            updateUI();
+        }
+
+        function saveData() {
+            localStorage.setItem('wm_transactions', JSON.stringify(transactions));
+            localStorage.setItem('wm_invoices', JSON.stringify(invoices));
+            localStorage.setItem('wm_balance', currentBalance.toString());
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // UI UPDATES
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function updateUI() {
+            updateBalances();
+            renderTransactions();
+            renderInvoices();
+            renderChart();
+            renderCategoryStats();
+        }
+
+        function updateBalances() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            // Monthly calculations
+            const monthlyTx = transactions.filter(tx => {
+                const txDate = new Date(tx.date);
+                return txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear;
+            });
+
+            const monthlyIncome = monthlyTx
+                .filter(tx => tx.type === 'income' && tx.status === 'completed')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            const monthlyExpenses = monthlyTx
+                .filter(tx => tx.type === 'expense' && tx.status === 'completed')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            // YTD calculations
+            const ytdTx = transactions.filter(tx => {
+                const txDate = new Date(tx.date);
+                return txDate.getFullYear() === currentYear;
+            });
+
+            const ytdIncome = ytdTx
+                .filter(tx => tx.type === 'income' && tx.status === 'completed')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            const ytdExpenses = ytdTx
+                .filter(tx => tx.type === 'expense' && tx.status === 'completed')
+                .reduce((sum, tx) => sum + tx.amount, 0);
+
+            // Pending invoices
+            const pendingTotal = invoices
+                .filter(inv => inv.status === 'pending')
+                .reduce((sum, inv) => sum + inv.amount, 0);
+
+            const pendingCount = invoices.filter(inv => inv.status === 'pending').length;
+
+            // Update DOM
+            document.getElementById('totalBalance').textContent = formatCurrency(currentBalance);
+            document.getElementById('monthlyIncome').textContent = formatCurrency(monthlyIncome);
+            document.getElementById('monthlyExpenses').textContent = formatCurrency(monthlyExpenses);
+            document.getElementById('pendingInvoices').textContent = formatCurrency(pendingTotal);
+            document.getElementById('pendingCount').textContent = `${pendingCount} ausstehend`;
+
+            document.getElementById('ytdRevenue').textContent = formatCurrency(ytdIncome);
+            document.getElementById('ytdExpenses').textContent = formatCurrency(ytdExpenses);
+            document.getElementById('ytdProfit').textContent = formatCurrency(ytdIncome - ytdExpenses);
+
+            const avgCashflow = (ytdIncome - ytdExpenses) / (currentMonth + 1);
+            document.getElementById('avgCashflow').textContent = formatCurrency(avgCashflow);
+            document.getElementById('avgCashflow').style.color = avgCashflow >= 0 ? 'var(--income)' : 'var(--expense)';
+
+            // Goal progress
+            const goalAmount = 75000;
+            const goalPercent = Math.min(100, Math.round((monthlyIncome / goalAmount) * 100));
+            document.getElementById('goalPercent').textContent = `${goalPercent}%`;
+            document.getElementById('goalProgress').style.width = `${goalPercent}%`;
+        }
+
+        function renderTransactions() {
+            const tbody = document.getElementById('transactionsBody');
+            const filterType = document.getElementById('filterType').value;
+
+            let filtered = transactions;
+            if (filterType !== 'all') {
+                if (filterType === 'pending') {
+                    filtered = transactions.filter(tx => tx.status === 'pending');
+                } else {
+                    filtered = transactions.filter(tx => tx.type === filterType);
+                }
+            }
+
+            // Sort by date descending
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            tbody.innerHTML = filtered.slice(0, 15).map(tx => {
+                const categoryIcons = {
+                    'smart-home': '🏠',
+                    'loxone': '💡',
+                    'consulting': '💼',
+                    'service': '🔧',
+                    'material': '📦',
+                    'personal': '👥',
+                    'miete': '🏢',
+                    'marketing': '📣',
+                    'software': '💻',
+                    'versicherung': '🛡️',
+                    'sonstiges': '📋'
+                };
+
+                const icon = categoryIcons[tx.category] || '📋';
+                const typeClass = tx.status === 'pending' ? 'pending' : tx.type;
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="transaction-type">
+                                <div class="type-icon ${typeClass}">${tx.type === 'income' ? '📈' : '📉'}</div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name">${tx.name}</span>
+                                    <span class="transaction-category">${tx.client || '-'}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${formatDate(tx.date)}</td>
+                        <td>${icon} ${getCategoryName(tx.category)}</td>
+                        <td><span class="badge badge-${tx.status === 'completed' ? 'success' : 'warning'}">${tx.status === 'completed' ? 'Abgeschlossen' : 'Ausstehend'}</span></td>
+                        <td><span class="amount ${typeClass}">${tx.type === 'expense' ? '-' : '+'}${formatCurrency(tx.amount)}</span></td>
+                        <td>
+                            <button onclick="deleteTransaction(${tx.id})" style="background: none; border: none; color: var(--text-muted); cursor: pointer;">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderInvoices() {
+            const list = document.getElementById('invoiceList');
+            const pending = invoices.filter(inv => inv.status === 'pending');
+
+            if (pending.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Keine offenen Rechnungen 🎉</p>';
+                return;
+            }
+
+            const today = new Date();
+
+            list.innerHTML = pending.map(inv => {
+                const dueDate = new Date(inv.dueDate);
+                const isOverdue = dueDate < today;
+                const statusClass = isOverdue ? 'overdue' : '';
+
+                return `
+                    <div class="invoice-item ${statusClass}">
+                        <div class="invoice-info">
+                            <span class="invoice-client">${inv.client}</span>
+                            <span class="invoice-date">Fällig: ${formatDate(inv.dueDate)} ${isOverdue ? '⚠️ Überfällig!' : ''}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span class="invoice-amount">${formatCurrency(inv.amount)}</span>
+                            <button onclick="markInvoicePaid(${inv.id})" style="background: var(--income); border: none; color: white; padding: 0.25rem 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">✓</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderChart() {
+            const container = document.getElementById('monthlyChart');
+            const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+            const currentMonth = new Date().getMonth();
+
+            // Calculate monthly data
+            const monthlyData = [];
+            for (let i = 0; i <= currentMonth; i++) {
+                const monthTx = transactions.filter(tx => {
+                    const txDate = new Date(tx.date);
+                    return txDate.getMonth() === i && txDate.getFullYear() === 2025;
+                });
+
+                const income = monthTx.filter(tx => tx.type === 'income').reduce((sum, tx) => sum + tx.amount, 0);
+                const expense = monthTx.filter(tx => tx.type === 'expense').reduce((sum, tx) => sum + tx.amount, 0);
+
+                monthlyData.push({ month: months[i], income, expense });
+            }
+
+            const maxValue = Math.max(...monthlyData.flatMap(d => [d.income, d.expense]), 1);
+
+            container.innerHTML = monthlyData.slice(-6).map(d => {
+                const incomeHeight = (d.income / maxValue) * 150;
+                const expenseHeight = (d.expense / maxValue) * 150;
+
+                return `
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 0.25rem; align-items: center;">
+                        <div style="display: flex; gap: 2px; align-items: flex-end; height: 160px;">
+                            <div class="chart-bar income" style="height: ${incomeHeight}px; width: 20px;"></div>
+                            <div class="chart-bar expense" style="height: ${expenseHeight}px; width: 20px;"></div>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">${d.month}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCategoryStats() {
+            const container = document.getElementById('categoryStats');
+
+            // Calculate by category
+            const categoryTotals = {};
+            transactions.forEach(tx => {
+                if (tx.type === 'expense') {
+                    categoryTotals[tx.category] = (categoryTotals[tx.category] || 0) + tx.amount;
+                }
+            });
+
+            const sorted = Object.entries(categoryTotals)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            container.innerHTML = sorted.map(([category, amount]) => `
+                <div class="stat-item">
+                    <span class="label">${getCategoryName(category)}</span>
+                    <span class="value" style="color: var(--expense);">${formatCurrency(amount)}</span>
+                </div>
+            `).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // MODAL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function openModal(type = 'income') {
+            document.getElementById('transactionModal').classList.add('active');
+            setTransactionType(type);
+            document.getElementById('txDate').valueAsDate = new Date();
+        }
+
+        function closeModal() {
+            document.getElementById('transactionModal').classList.remove('active');
+            document.getElementById('transactionForm').reset();
+        }
+
+        function setTransactionType(type) {
+            currentType = type;
+            document.getElementById('typeIncome').classList.toggle('active', type === 'income');
+            document.getElementById('typeExpense').classList.toggle('active', type === 'expense');
+        }
+
+        function saveTransaction(e) {
+            e.preventDefault();
+
+            const tx = {
+                id: Date.now(),
+                type: currentType,
+                name: document.getElementById('txName').value,
+                amount: parseFloat(document.getElementById('txAmount').value),
+                date: document.getElementById('txDate').value,
+                category: document.getElementById('txCategory').value,
+                status: document.getElementById('txStatus').value,
+                client: document.getElementById('txClient').value,
+                notes: document.getElementById('txNotes').value
+            };
+
+            transactions.unshift(tx);
+
+            // Update balance
+            if (tx.status === 'completed') {
+                if (tx.type === 'income') {
+                    currentBalance += tx.amount;
+                } else {
+                    currentBalance -= tx.amount;
+                }
+            }
+
+            saveData();
+            updateUI();
+            closeModal();
+
+            showToast(`${tx.type === 'income' ? 'Einnahme' : 'Ausgabe'} gespeichert: ${formatCurrency(tx.amount)}`, 'success');
+        }
+
+        function deleteTransaction(id) {
+            if (!confirm('Transaktion wirklich löschen?')) return;
+
+            const tx = transactions.find(t => t.id === id);
+            if (tx && tx.status === 'completed') {
+                if (tx.type === 'income') {
+                    currentBalance -= tx.amount;
+                } else {
+                    currentBalance += tx.amount;
+                }
+            }
+
+            transactions = transactions.filter(t => t.id !== id);
+            saveData();
+            updateUI();
+            showToast('Transaktion gelöscht', 'success');
+        }
+
+        function markInvoicePaid(id) {
+            const invoice = invoices.find(inv => inv.id === id);
+            if (invoice) {
+                invoice.status = 'paid';
+
+                // Add as income transaction
+                transactions.unshift({
+                    id: Date.now(),
+                    type: 'income',
+                    name: `Rechnung bezahlt: ${invoice.client}`,
+                    amount: invoice.amount,
+                    date: new Date().toISOString().split('T')[0],
+                    category: 'smart-home',
+                    status: 'completed',
+                    client: invoice.client
+                });
+
+                currentBalance += invoice.amount;
+
+                saveData();
+                updateUI();
+                showToast(`Rechnung als bezahlt markiert: ${formatCurrency(invoice.amount)}`, 'success');
+            }
+        }
+
+        function filterTransactions() {
+            renderTransactions();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // HELPERS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            }).format(amount);
+        }
+
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'smart-home': 'Smart Home',
+                'loxone': 'LOXONE',
+                'consulting': 'Beratung',
+                'service': 'Service',
+                'material': 'Material',
+                'personal': 'Personal',
+                'miete': 'Miete',
+                'marketing': 'Marketing',
+                'software': 'Software',
+                'versicherung': 'Versicherung',
+                'sonstiges': 'Sonstiges'
+            };
+            return names[category] || category;
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function exportData() {
+            const data = {
+                balance: currentBalance,
+                transactions: transactions,
+                invoices: invoices,
+                exportDate: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cashflow-export-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showToast('Daten exportiert!', 'success');
+        }
+
+        function showLexofficeInfo() {
+            alert('Lexoffice Integration wird später hinzugefügt.\n\nBenötigt:\n- Lexoffice API Key\n- OAuth Verbindung\n\nKontaktiere mich, wenn du bereit bist!');
+        }
+
+        function openInvoiceModal() {
+            const client = prompt('Kundenname:');
+            if (!client) return;
+
+            const amount = parseFloat(prompt('Rechnungsbetrag (€):'));
+            if (!amount || isNaN(amount)) return;
+
+            const dueDate = prompt('Fälligkeitsdatum (YYYY-MM-DD):', new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+            if (!dueDate) return;
+
+            invoices.push({
+                id: Date.now(),
+                client,
+                amount,
+                dueDate,
+                status: 'pending'
+            });
+
+            saveData();
+            updateUI();
+            showToast('Rechnung hinzugefügt', 'success');
+        }
+    </script>
+</body>
+</html>

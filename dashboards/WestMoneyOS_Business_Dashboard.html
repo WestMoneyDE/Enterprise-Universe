@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Money OS - Business Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                        secondary: '#06b6d4',
+                        dark: '#0f0f1a',
+                        darker: '#080810',
+                        card: '#1a1a2e',
+                        success: '#10b981',
+                        warning: '#f59e0b',
+                        danger: '#ef4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: linear-gradient(135deg, #080810 0%, #0f0f1a 50%, #1a1a2e 100%); }
+        .glass { background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(139, 92, 246, 0.2); }
+        .glow { box-shadow: 0 0 30px rgba(139, 92, 246, 0.3); }
+        .glow-cyan { box-shadow: 0 0 30px rgba(6, 182, 212, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .status-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .sidebar-item:hover { background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), transparent); }
+        .sidebar-item.active { background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), transparent); border-left: 3px solid #8b5cf6; }
+        input, select, textarea { background: rgba(15, 15, 26, 0.8) !important; }
+        .modal { display: none; }
+        .modal.active { display: flex; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1a2e; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 3px; }
+    </style>
+</head>
+<body class="min-h-screen text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-primary/20">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center font-bold text-lg">W</div>
+                <div>
+                    <h1 class="text-xl font-bold gradient-text">West Money OS</h1>
+                    <p class="text-xs text-gray-400">Business Management System</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="status-dot w-2 h-2 rounded-full bg-success"></span>
+                    <span class="text-gray-400">Alle Systeme online</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm font-medium">Ömer Hüseyin Coşkun</p>
+                    <p class="text-xs text-gray-400">CEO & President</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center font-bold">ÖC</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-[73px] bottom-0 w-64 glass border-r border-primary/20 overflow-y-auto">
+        <nav class="py-4">
+            <div class="px-4 mb-4">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Dashboard</p>
+            </div>
+            <a href="#" class="sidebar-item active flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('overview')">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                Übersicht
+            </a>
+            
+            <div class="px-4 mt-6 mb-4">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Kundenmanagement</p>
+            </div>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('inquiries')">
+                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                Kundenanfragen
+                <span class="ml-auto bg-danger/20 text-danger text-xs px-2 py-0.5 rounded-full">12</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('customers')">
+                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                Kundenstamm
+            </a>
+
+            <div class="px-4 mt-6 mb-4">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Verträge</p>
+            </div>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('contracts')">
+                <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Vertragsübersicht
+                <span class="ml-auto bg-warning/20 text-warning text-xs px-2 py-0.5 rounded-full">5</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('signatures')">
+                <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                Signaturen
+            </a>
+
+            <div class="px-4 mt-6 mb-4">
+                <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Partnerschaften</p>
+            </div>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('partnerships')">
+                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                Partner
+                <span class="ml-auto bg-success/20 text-success text-xs px-2 py-0.5 rounded-full">8</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center gap-3 px-4 py-3 text-sm" onclick="showSection('integrations')">
+                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                Integrationen
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 pt-[73px] min-h-screen p-6">
+        
+        <!-- Overview Section -->
+        <section id="overview" class="tab-content active">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Business Dashboard</h2>
+                <p class="text-gray-400">Übersicht aller Geschäftsaktivitäten</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="glass rounded-2xl p-6 glow">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                        </div>
+                        <span class="text-success text-sm">+23%</span>
+                    </div>
+                    <p class="text-3xl font-bold mb-1">127</p>
+                    <p class="text-gray-400 text-sm">Kundenanfragen</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-warning/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <span class="text-warning text-sm">5 offen</span>
+                    </div>
+                    <p class="text-3xl font-bold mb-1">43</p>
+                    <p class="text-gray-400 text-sm">Aktive Verträge</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-success/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <span class="text-success text-sm">+2 neu</span>
+                    </div>
+                    <p class="text-3xl font-bold mb-1">8</p>
+                    <p class="text-gray-400 text-sm">Partner</p>
+                </div>
+
+                <div class="glass rounded-2xl p-6 glow-cyan">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <span class="text-secondary text-sm">+15.3%</span>
+                    </div>
+                    <p class="text-3xl font-bold mb-1">€847,523</p>
+                    <p class="text-gray-400 text-sm">Umsatz 2025</p>
+                </div>
+            </div>
+
+            <!-- Recent Activity & Pending Actions -->
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Pending Actions -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-danger animate-pulse"></span>
+                        Ausstehende Aktionen
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-dark/50 hover:bg-dark transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-danger/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-sm">Vertrag #2024-089 signieren</p>
+                                    <p class="text-xs text-gray-400">LOXONE Partnervertrag</p>
+                                </div>
+                            </div>
+                            <button onclick="openSignatureModal('2024-089')" class="px-3 py-1.5 bg-danger/20 hover:bg-danger text-danger hover:text-white text-xs rounded-lg transition">Signieren</button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-dark/50 hover:bg-dark transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-warning/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-sm">Kundenanfrage prüfen</p>
+                                    <p class="text-xs text-gray-400">Smart Home Projekt - Müller GmbH</p>
+                                </div>
+                            </div>
+                            <button onclick="showSection('inquiries')" class="px-3 py-1.5 bg-warning/20 hover:bg-warning text-warning hover:text-white text-xs rounded-lg transition">Prüfen</button>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-dark/50 hover:bg-dark transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-sm">Partnerschaft verifizieren</p>
+                                    <p class="text-xs text-gray-400">ComfortClick Integration</p>
+                                </div>
+                            </div>
+                            <button onclick="verifyPartnership('comfortclick')" class="px-3 py-1.5 bg-primary/20 hover:bg-primary text-primary hover:text-white text-xs rounded-lg transition">Verifizieren</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Letzte Aktivitäten</h3>
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm">Vertrag <span class="text-success font-medium">#2024-087</span> unterzeichnet</p>
+                                <p class="text-xs text-gray-400">Vor 2 Stunden</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm">Neue Kundenanfrage von <span class="text-primary font-medium">Schmidt Immobilien</span></p>
+                                <p class="text-xs text-gray-400">Vor 4 Stunden</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm">Partnerschaft mit <span class="text-secondary font-medium">Verisure</span> aktiviert</p>
+                                <p class="text-xs text-gray-400">Vor 1 Tag</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm">Vertrag <span class="text-warning font-medium">#2024-088</span> wartet auf Unterschrift</p>
+                                <p class="text-xs text-gray-400">Vor 2 Tagen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inquiries Section -->
+        <section id="inquiries" class="tab-content">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">Kundenanfragen</h2>
+                    <p class="text-gray-400">Alle eingehenden Anfragen verwalten</p>
+                </div>
+                <button onclick="openNewInquiryModal()" class="px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Neue Anfrage
+                </button>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex gap-2 mb-6">
+                <button class="px-4 py-2 bg-primary/20 text-primary rounded-xl text-sm font-medium">Alle (127)</button>
+                <button class="px-4 py-2 bg-dark/50 text-gray-400 hover:text-white rounded-xl text-sm">Neu (12)</button>
+                <button class="px-4 py-2 bg-dark/50 text-gray-400 hover:text-white rounded-xl text-sm">In Bearbeitung (45)</button>
+                <button class="px-4 py-2 bg-dark/50 text-gray-400 hover:text-white rounded-xl text-sm">Abgeschlossen (70)</button>
+            </div>
+
+            <!-- Inquiries Table -->
+            <div class="glass rounded-2xl overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-dark/50">
+                        <tr>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">ID</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Kunde</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Projekt</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Wert</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Status</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Datum</th>
+                            <th class="text-left px-6 py-4 text-sm font-medium text-gray-400">Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800" id="inquiriesTable">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Contracts Section -->
+        <section id="contracts" class="tab-content">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">Verträge</h2>
+                    <p class="text-gray-400">Alle Verträge kontrollieren und verwalten</p>
+                </div>
+                <button onclick="openNewContractModal()" class="px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Neuer Vertrag
+                </button>
+            </div>
+
+            <!-- Contract Stats -->
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="glass rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-success">38</p>
+                    <p class="text-sm text-gray-400">Signiert</p>
+                </div>
+                <div class="glass rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-warning">5</p>
+                    <p class="text-sm text-gray-400">Ausstehend</p>
+                </div>
+                <div class="glass rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-primary">3</p>
+                    <p class="text-sm text-gray-400">In Prüfung</p>
+                </div>
+                <div class="glass rounded-xl p-4 text-center">
+                    <p class="text-2xl font-bold text-secondary">€2.4M</p>
+                    <p class="text-sm text-gray-400">Gesamtwert</p>
+                </div>
+            </div>
+
+            <!-- Contracts Grid -->
+            <div class="grid grid-cols-2 gap-6" id="contractsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Signatures Section -->
+        <section id="signatures" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Digitale Signaturen</h2>
+                <p class="text-gray-400">Verträge digital unterzeichnen und verifizieren</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <!-- Pending Signatures -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-warning animate-pulse"></span>
+                        Ausstehende Signaturen
+                    </h3>
+                    <div class="space-y-3" id="pendingSignatures">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Signature History -->
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Signatur-Historie</h3>
+                    <div class="space-y-3" id="signatureHistory">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partnerships Section -->
+        <section id="partnerships" class="tab-content">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">Partnerschaften</h2>
+                    <p class="text-gray-400">Strategische Partner und Integrationen</p>
+                </div>
+                <button onclick="openNewPartnerModal()" class="px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium hover:opacity-90 transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    Neuer Partner
+                </button>
+            </div>
+
+            <!-- Partners Grid -->
+            <div class="grid grid-cols-3 gap-6" id="partnersGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Integrations Section -->
+        <section id="integrations" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">API Integrationen</h2>
+                <p class="text-gray-400">Status aller verbundenen Systeme</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6" id="integrationsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Kundenstamm</h2>
+                <p class="text-gray-400">Alle Kunden und Kontakte</p>
+            </div>
+            <div class="glass rounded-2xl p-6">
+                <p class="text-gray-400">Kundendaten werden aus HubSpot synchronisiert...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Signature Modal -->
+    <div id="signatureModal" class="modal fixed inset-0 z-50 items-center justify-center bg-black/80">
+        <div class="glass rounded-2xl p-8 w-full max-w-2xl mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold">Vertrag signieren</h3>
+                <button onclick="closeModal('signatureModal')" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-dark/50 rounded-xl p-4">
+                    <p class="text-sm text-gray-400 mb-1">Vertrag</p>
+                    <p class="font-semibold" id="modalContractTitle">LOXONE Partnervertrag #2024-089</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-dark/50 rounded-xl p-4">
+                        <p class="text-sm text-gray-400 mb-1">Partner</p>
+                        <p class="font-semibold">LOXONE Electronics GmbH</p>
+                    </div>
+                    <div class="bg-dark/50 rounded-xl p-4">
+                        <p class="text-sm text-gray-400 mb-1">Vertragswert</p>
+                        <p class="font-semibold text-success">€125,000</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2">Digitale Signatur</label>
+                    <div class="border-2 border-dashed border-primary/30 rounded-xl p-8 text-center">
+                        <canvas id="signatureCanvas" class="w-full h-32 bg-dark/50 rounded-lg cursor-crosshair"></canvas>
+                        <button onclick="clearSignature()" class="mt-2 text-sm text-gray-400 hover:text-white">Signatur löschen</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <input type="checkbox" id="agreeTerms" class="w-5 h-5 rounded bg-dark border-primary/30 text-primary focus:ring-primary">
+                    <label for="agreeTerms" class="text-sm text-gray-400">Ich bestätige die Vertragsbedingungen gelesen und akzeptiert zu haben</label>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="closeModal('signatureModal')" class="flex-1 px-4 py-3 bg-dark/50 hover:bg-dark rounded-xl font-medium transition">Abbrechen</button>
+                    <button onclick="submitSignature()" class="flex-1 px-4 py-3 bg-gradient-to-r from-success to-emerald-400 rounded-xl font-medium hover:opacity-90 transition flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        Signieren & Abschließen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-6 right-6 glass rounded-xl p-4 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <div class="w-10 h-10 rounded-lg bg-success/20 flex items-center justify-center">
+            <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <div>
+            <p class="font-medium" id="toastTitle">Erfolgreich!</p>
+            <p class="text-sm text-gray-400" id="toastMessage">Aktion wurde ausgeführt</p>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // DATA
+        // ═══════════════════════════════════════════════════════════════════
+
+        const inquiries = [
+            { id: 'INQ-2024-127', customer: 'Schmidt Immobilien GmbH', project: 'Smart Home Villa München', value: 85000, status: 'new', date: '2024-12-14' },
+            { id: 'INQ-2024-126', customer: 'Müller & Partner KG', project: 'Bürogebäude Automation', value: 125000, status: 'in_progress', date: '2024-12-13' },
+            { id: 'INQ-2024-125', customer: 'Weber Bauträger AG', project: 'Wohnanlage Düsseldorf', value: 340000, status: 'in_progress', date: '2024-12-12' },
+            { id: 'INQ-2024-124', customer: 'Hoffmann Architekten', project: 'Penthouse Frankfurt', value: 67000, status: 'new', date: '2024-12-11' },
+            { id: 'INQ-2024-123', customer: 'Bauer Projektentwicklung', project: 'Hotel Smart Rooms', value: 450000, status: 'completed', date: '2024-12-10' },
+            { id: 'INQ-2024-122', customer: 'Fischer Wohnbau GmbH', project: 'Mehrfamilienhaus Köln', value: 95000, status: 'completed', date: '2024-12-09' },
+        ];
+
+        const contracts = [
+            { id: '2024-089', title: 'LOXONE Partnervertrag', partner: 'LOXONE Electronics GmbH', value: 125000, status: 'pending', type: 'partnership' },
+            { id: '2024-088', title: 'Smart Home Projekt Schmidt', partner: 'Schmidt Immobilien GmbH', value: 85000, status: 'pending', type: 'project' },
+            { id: '2024-087', title: 'Verisure Integration', partner: 'Verisure Deutschland GmbH', value: 45000, status: 'signed', type: 'partnership' },
+            { id: '2024-086', title: 'HubSpot Enterprise', partner: 'HubSpot Inc.', value: 12000, status: 'signed', type: 'software' },
+            { id: '2024-085', title: 'Bürogebäude Automation', partner: 'Müller & Partner KG', value: 125000, status: 'review', type: 'project' },
+            { id: '2024-084', title: 'Zadarma VoIP Service', partner: 'Zadarma B.V.', value: 3600, status: 'signed', type: 'software' },
+        ];
+
+        const partners = [
+            { name: 'LOXONE', logo: '🏠', status: 'active', type: 'Smart Home', contract: '2024-089', since: '2024-01' },
+            { name: 'Verisure', logo: '🔒', status: 'active', type: 'Security', contract: '2024-087', since: '2024-06' },
+            { name: 'HubSpot', logo: '🔶', status: 'active', type: 'CRM', contract: '2024-086', since: '2023-09' },
+            { name: 'Zadarma', logo: '📞', status: 'active', type: 'VoIP', contract: '2024-084', since: '2024-03' },
+            { name: 'ComfortClick', logo: '🎛️', status: 'pending', type: 'Building Automation', contract: null, since: null },
+            { name: 'Slack', logo: '💬', status: 'active', type: 'Communication', contract: '2024-078', since: '2023-06' },
+            { name: 'Meta/WhatsApp', logo: '📱', status: 'active', type: 'Messaging', contract: '2024-065', since: '2023-11' },
+            { name: 'Zapier', logo: '⚡', status: 'active', type: 'Automation', contract: '2024-071', since: '2024-02' },
+        ];
+
+        const integrations = [
+            { name: 'HubSpot CRM', status: 'connected', lastSync: '2 Min', icon: '🔶' },
+            { name: 'WhatsApp Business', status: 'connected', lastSync: '1 Min', icon: '📱' },
+            { name: 'Zadarma VoIP', status: 'connected', lastSync: '5 Min', icon: '📞' },
+            { name: 'LOXONE Miniserver', status: 'connected', lastSync: 'Live', icon: '🏠' },
+            { name: 'Slack', status: 'connected', lastSync: '1 Min', icon: '💬' },
+            { name: 'Verisure Security', status: 'connected', lastSync: '3 Min', icon: '🔒' },
+            { name: 'Zapier', status: 'connected', lastSync: '10 Min', icon: '⚡' },
+            { name: 'ComfortClick', status: 'pending', lastSync: '-', icon: '🎛️' },
+        ];
+
+        // ═══════════════════════════════════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════════════════════════════════
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.closest('.sidebar-item')?.classList.add('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // RENDER FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════
+
+        function renderInquiries() {
+            const tbody = document.getElementById('inquiriesTable');
+            tbody.innerHTML = inquiries.map(inq => `
+                <tr class="hover:bg-dark/30 transition">
+                    <td class="px-6 py-4 text-sm font-mono text-primary">${inq.id}</td>
+                    <td class="px-6 py-4">
+                        <p class="font-medium">${inq.customer}</p>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-400">${inq.project}</td>
+                    <td class="px-6 py-4 text-sm font-semibold">€${inq.value.toLocaleString()}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-xs ${getStatusClass(inq.status)}">${getStatusText(inq.status)}</span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-400">${inq.date}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex gap-2">
+                            <button onclick="approveInquiry('${inq.id}')" class="p-2 hover:bg-success/20 rounded-lg transition" title="Genehmigen">
+                                <svg class="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </button>
+                            <button onclick="viewInquiry('${inq.id}')" class="p-2 hover:bg-primary/20 rounded-lg transition" title="Details">
+                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderContracts() {
+            const grid = document.getElementById('contractsGrid');
+            grid.innerHTML = contracts.map(contract => `
+                <div class="glass rounded-2xl p-6 hover:glow transition-all duration-300">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <p class="text-sm text-gray-400 font-mono">#${contract.id}</p>
+                            <h4 class="font-semibold mt-1">${contract.title}</h4>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs ${getContractStatusClass(contract.status)}">${getContractStatusText(contract.status)}</span>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Partner</span>
+                            <span>${contract.partner}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Wert</span>
+                            <span class="font-semibold text-success">€${contract.value.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-400">Typ</span>
+                            <span class="capitalize">${contract.type}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        ${contract.status === 'pending' ? `
+                            <button onclick="openSignatureModal('${contract.id}')" class="flex-1 px-3 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-sm font-medium hover:opacity-90 transition">Signieren</button>
+                        ` : contract.status === 'review' ? `
+                            <button onclick="verifyContract('${contract.id}')" class="flex-1 px-3 py-2 bg-warning/20 text-warning rounded-lg text-sm font-medium hover:bg-warning hover:text-white transition">Prüfen</button>
+                        ` : `
+                            <button onclick="viewContract('${contract.id}')" class="flex-1 px-3 py-2 bg-dark/50 rounded-lg text-sm font-medium hover:bg-dark transition">Ansehen</button>
+                        `}
+                        <button class="p-2 bg-dark/50 rounded-lg hover:bg-dark transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPartners() {
+            const grid = document.getElementById('partnersGrid');
+            grid.innerHTML = partners.map(partner => `
+                <div class="glass rounded-2xl p-6 hover:glow transition-all duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-dark/50 flex items-center justify-center text-3xl">${partner.logo}</div>
+                        <div>
+                            <h4 class="font-semibold">${partner.name}</h4>
+                            <p class="text-sm text-gray-400">${partner.type}</p>
+                        </div>
+                        <div class="ml-auto">
+                            <span class="px-2 py-1 rounded-full text-xs ${partner.status === 'active' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'}">${partner.status === 'active' ? 'Aktiv' : 'Ausstehend'}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        ${partner.contract ? `
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Vertrag</span>
+                                <span class="font-mono text-primary">#${partner.contract}</span>
+                            </div>
+                        ` : ''}
+                        ${partner.since ? `
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Partner seit</span>
+                                <span>${partner.since}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="mt-4 flex gap-2">
+                        ${partner.status === 'pending' ? `
+                            <button onclick="verifyPartnership('${partner.name.toLowerCase()}')" class="flex-1 px-3 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-sm font-medium hover:opacity-90 transition">Verifizieren</button>
+                        ` : `
+                            <button class="flex-1 px-3 py-2 bg-dark/50 rounded-lg text-sm font-medium hover:bg-dark transition">Details</button>
+                            <button class="p-2 bg-success/20 rounded-lg text-success">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </button>
+                        `}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderIntegrations() {
+            const grid = document.getElementById('integrationsGrid');
+            grid.innerHTML = integrations.map(int => `
+                <div class="glass rounded-2xl p-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-dark/50 flex items-center justify-center text-2xl">${int.icon}</div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold">${int.name}</h4>
+                            <p class="text-sm text-gray-400">Letzte Sync: ${int.lastSync}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="status-dot w-2 h-2 rounded-full ${int.status === 'connected' ? 'bg-success' : 'bg-warning'}"></span>
+                            <span class="text-sm ${int.status === 'connected' ? 'text-success' : 'text-warning'}">${int.status === 'connected' ? 'Verbunden' : 'Ausstehend'}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPendingSignatures() {
+            const container = document.getElementById('pendingSignatures');
+            const pending = contracts.filter(c => c.status === 'pending');
+            container.innerHTML = pending.map(contract => `
+                <div class="flex items-center justify-between p-3 rounded-xl bg-dark/50">
+                    <div>
+                        <p class="font-medium text-sm">#${contract.id}</p>
+                        <p class="text-xs text-gray-400">${contract.title}</p>
+                    </div>
+                    <button onclick="openSignatureModal('${contract.id}')" class="px-3 py-1.5 bg-primary/20 hover:bg-primary text-primary hover:text-white text-xs rounded-lg transition">Signieren</button>
+                </div>
+            `).join('');
+        }
+
+        function renderSignatureHistory() {
+            const container = document.getElementById('signatureHistory');
+            const signed = contracts.filter(c => c.status === 'signed');
+            container.innerHTML = signed.map(contract => `
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-dark/50">
+                    <div class="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium text-sm">#${contract.id} - ${contract.title}</p>
+                        <p class="text-xs text-gray-400">Signiert von Ömer Hüseyin Coşkun</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // HELPER FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════
+
+        function getStatusClass(status) {
+            const classes = {
+                'new': 'bg-primary/20 text-primary',
+                'in_progress': 'bg-warning/20 text-warning',
+                'completed': 'bg-success/20 text-success'
+            };
+            return classes[status] || 'bg-gray-500/20 text-gray-400';
+        }
+
+        function getStatusText(status) {
+            const texts = { 'new': 'Neu', 'in_progress': 'In Bearbeitung', 'completed': 'Abgeschlossen' };
+            return texts[status] || status;
+        }
+
+        function getContractStatusClass(status) {
+            const classes = {
+                'pending': 'bg-warning/20 text-warning',
+                'signed': 'bg-success/20 text-success',
+                'review': 'bg-primary/20 text-primary'
+            };
+            return classes[status] || 'bg-gray-500/20 text-gray-400';
+        }
+
+        function getContractStatusText(status) {
+            const texts = { 'pending': 'Ausstehend', 'signed': 'Signiert', 'review': 'In Prüfung' };
+            return texts[status] || status;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // ACTIONS
+        // ═══════════════════════════════════════════════════════════════════
+
+        function openSignatureModal(contractId) {
+            const contract = contracts.find(c => c.id === contractId);
+            if (contract) {
+                document.getElementById('modalContractTitle').textContent = `${contract.title} #${contract.id}`;
+            }
+            document.getElementById('signatureModal').classList.add('active');
+            initSignatureCanvas();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function submitSignature() {
+            showToast('Vertrag signiert!', 'Der Vertrag wurde erfolgreich unterzeichnet und abgeschlossen.');
+            closeModal('signatureModal');
+            setTimeout(() => location.reload(), 1500);
+        }
+
+        function approveInquiry(id) {
+            showToast('Anfrage genehmigt!', `Kundenanfrage ${id} wurde genehmigt und weitergeleitet.`);
+        }
+
+        function verifyPartnership(partner) {
+            showToast('Partnerschaft verifiziert!', `Die Partnerschaft mit ${partner} wurde erfolgreich verifiziert.`);
+        }
+
+        function verifyContract(id) {
+            showToast('Vertrag geprüft!', `Vertrag #${id} wurde erfolgreich geprüft und freigegeben.`);
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('successToast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // SIGNATURE CANVAS
+        // ═══════════════════════════════════════════════════════════════════
+
+        let signatureCanvas, signatureCtx, isDrawing = false;
+
+        function initSignatureCanvas() {
+            signatureCanvas = document.getElementById('signatureCanvas');
+            signatureCtx = signatureCanvas.getContext('2d');
+            signatureCanvas.width = signatureCanvas.offsetWidth;
+            signatureCanvas.height = 128;
+            
+            signatureCtx.strokeStyle = '#8b5cf6';
+            signatureCtx.lineWidth = 2;
+            signatureCtx.lineCap = 'round';
+
+            signatureCanvas.addEventListener('mousedown', startDrawing);
+            signatureCanvas.addEventListener('mousemove', draw);
+            signatureCanvas.addEventListener('mouseup', stopDrawing);
+            signatureCanvas.addEventListener('mouseout', stopDrawing);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            signatureCtx.beginPath();
+            signatureCtx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            signatureCtx.lineTo(e.offsetX, e.offsetY);
+            signatureCtx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearSignature() {
+            signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════
+        // INIT
+        // ═══════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderInquiries();
+            renderContracts();
+            renderPartners();
+            renderIntegrations();
+            renderPendingSignatures();
+            renderSignatureHistory();
+        });
+    </script>
+</body>
+</html>

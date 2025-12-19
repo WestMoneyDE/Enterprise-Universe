@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise-Universe Repo Setup - Komplettanleitung</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      color: #c9d1d9;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 950px; margin: 0 auto; }
+    
+    .header {
+      text-align: center;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, rgba(35, 134, 54, 0.15), rgba(88, 166, 255, 0.1));
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(35, 134, 54, 0.3);
+    }
+    .header h1 {
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .header .repo-url {
+      background: rgba(0,0,0,0.3);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: #3fb950;
+      margin: 15px 0;
+      display: inline-block;
+    }
+    .header p { color: #8b949e; }
+    
+    .phase {
+      background: rgba(22, 27, 34, 0.8);
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+    .phase-header {
+      padding: 20px 25px;
+      background: linear-gradient(135deg, rgba(35, 134, 54, 0.1), transparent);
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .phase-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #238636, #2ea043);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .phase-info h2 { font-size: 18px; color: #fff; }
+    .phase-info p { font-size: 12px; color: #8b949e; }
+    .phase-time {
+      margin-left: auto;
+      text-align: right;
+    }
+    .phase-time .duration { font-size: 18px; font-weight: bold; color: #3fb950; }
+    .phase-time .label { font-size: 10px; color: #8b949e; }
+    .phase-content { padding: 25px; }
+    
+    .step {
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+    }
+    .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .step h3 {
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .step p { font-size: 13px; color: #8b949e; margin-bottom: 15px; }
+    
+    .code-block {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #161b22;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    .code-header .label {
+      font-size: 11px;
+      color: #8b949e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .code-header .copy-btn {
+      background: rgba(35, 134, 54, 0.2);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      color: #3fb950;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .code-header .copy-btn:hover { background: rgba(35, 134, 54, 0.3); }
+    .code-body {
+      padding: 15px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.5;
+    }
+    .code-body .comment { color: #8b949e; }
+    .code-body .cmd { color: #ff7b72; }
+    .code-body .str { color: #a5d6ff; }
+    .code-body .flag { color: #d2a8ff; }
+    .code-body .var { color: #ffa657; }
+    
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #238636, #2ea043);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .download-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(35, 134, 54, 0.3); }
+    .download-btn.secondary {
+      background: #21262d;
+      border: 1px solid #30363d;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+    
+    .info-box {
+      background: rgba(56, 139, 253, 0.1);
+      border: 1px solid rgba(56, 139, 253, 0.3);
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .info-box .icon { font-size: 18px; flex-shrink: 0; }
+    .info-box .text { font-size: 13px; }
+    
+    .warning-box {
+      background: rgba(187, 128, 9, 0.1);
+      border: 1px solid rgba(187, 128, 9, 0.3);
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .warning-box .icon { font-size: 18px; flex-shrink: 0; }
+    .warning-box .text { font-size: 13px; color: #d29922; }
+    
+    .success-box {
+      background: rgba(35, 134, 54, 0.1);
+      border: 1px solid rgba(35, 134, 54, 0.3);
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .success-box .icon { font-size: 18px; flex-shrink: 0; }
+    .success-box .text { font-size: 13px; color: #3fb950; }
+    
+    .checklist { list-style: none; margin: 15px 0; }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checklist li:hover { background: rgba(0,0,0,0.3); }
+    .checklist .checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #30363d;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .checklist li.checked .checkbox {
+      background: #238636;
+      border-color: #238636;
+    }
+    .checklist li.checked .checkbox::after {
+      content: '✓';
+      color: white;
+      font-size: 14px;
+    }
+    .checklist li.checked .text {
+      text-decoration: line-through;
+      color: #8b949e;
+    }
+    .checklist .text { font-size: 14px; }
+    
+    .file-tree {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: monospace;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .file-tree .folder { color: #58a6ff; }
+    .file-tree .file { color: #c9d1d9; }
+    
+    .table-container { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    th {
+      text-align: left;
+      padding: 12px 15px;
+      background: rgba(0,0,0,0.3);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #8b949e;
+      border-bottom: 1px solid #30363d;
+    }
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #21262d;
+      font-size: 13px;
+    }
+    code {
+      background: rgba(110, 118, 129, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 10px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: #8b949e;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .tab.active {
+      color: #fff;
+      background: rgba(35, 134, 54, 0.2);
+      border-bottom: 2px solid #238636;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      margin: 10px 0;
+      transition: all 0.2s;
+    }
+    .quick-link:hover { border-color: #238636; transform: translateY(-2px); }
+    .quick-link .icon { font-size: 24px; }
+    .quick-link .content h4 { font-size: 14px; color: #fff; margin-bottom: 2px; }
+    .quick-link .content p { font-size: 12px; color: #8b949e; }
+    
+    .progress-tracker {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+    }
+    .progress-item {
+      text-align: center;
+      flex: 1;
+      position: relative;
+    }
+    .progress-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      right: -50%;
+      width: 100%;
+      height: 2px;
+      background: #30363d;
+    }
+    .progress-item.done:not(:last-child)::after { background: #238636; }
+    .progress-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #30363d;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .progress-item.done .progress-dot { background: #238636; }
+    .progress-item.current .progress-dot { background: #58a6ff; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(88, 166, 255, 0); }
+    }
+    .progress-label { font-size: 10px; color: #8b949e; }
+    
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #8b949e;
+      font-size: 12px;
+    }
+    
+    @media (max-width: 600px) {
+      .progress-tracker { display: none; }
+      .btn-group { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>🚀 Enterprise-Universe Repository</h1>
+  <div class="repo-url">github.com/WestMoneyDE/Enterprise-Universe</div>
+  <p>Komplette Setup-Anleitung | West Money OS</p>
+</div>
+
+<!-- Progress Tracker -->
+<div class="progress-tracker">
+  <div class="progress-item done">
+    <div class="progress-dot">✓</div>
+    <div class="progress-label">Account</div>
+  </div>
+  <div class="progress-item done">
+    <div class="progress-dot">✓</div>
+    <div class="progress-label">Repo erstellt</div>
+  </div>
+  <div class="progress-item current">
+    <div class="progress-dot">3</div>
+    <div class="progress-label">Git Setup</div>
+  </div>
+  <div class="progress-item">
+    <div class="progress-dot">4</div>
+    <div class="progress-label">Clone</div>
+  </div>
+  <div class="progress-item">
+    <div class="progress-dot">5</div>
+    <div class="progress-label">Code Push</div>
+  </div>
+  <div class="progress-item">
+    <div class="progress-dot">6</div>
+    <div class="progress-label">Fertig!</div>
+  </div>
+</div>
+
+<!-- PHASE 1: Downloads -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">1</div>
+    <div class="phase-info">
+      <h2>Programme installieren</h2>
+      <p>Git und GitHub Desktop herunterladen</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">10 min</div>
+      <div class="label">Dauer</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>💻 Wähle dein Betriebssystem:</h3>
+      
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('windows')">🪟 Windows</button>
+        <button class="tab" onclick="showTab('mac')">🍎 macOS</button>
+      </div>
+      
+      <div class="tab-content active" id="windows">
+        <div class="btn-group">
+          <a href="https://git-scm.com/download/win" target="_blank" class="download-btn">
+            ⬇️ Git für Windows herunterladen
+          </a>
+          <a href="https://desktop.github.com" target="_blank" class="download-btn secondary">
+            🖥️ GitHub Desktop (optional, einfacher)
+          </a>
+        </div>
+        
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div class="text">
+            <strong>Bei der Git-Installation:</strong> Alle Standard-Einstellungen beibehalten, einfach "Next" klicken bis fertig.
+          </div>
+        </div>
+        
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)">
+            <div class="checkbox"></div>
+            <span class="text">Git für Windows heruntergeladen</span>
+          </li>
+          <li onclick="toggleCheck(this)">
+            <div class="checkbox"></div>
+            <span class="text">Git installiert (alle Standard-Optionen)</span>
+          </li>
+          <li onclick="toggleCheck(this)">
+            <div class="checkbox"></div>
+            <span class="text">GitHub Desktop installiert (optional)</span>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="tab-content" id="mac">
+        <div class="btn-group">
+          <a href="https://git-scm.com/download/mac" target="_blank" class="download-btn">
+            ⬇️ Git für Mac herunterladen
+          </a>
+          <a href="https://desktop.github.com" target="_blank" class="download-btn secondary">
+            🖥️ GitHub Desktop (optional, einfacher)
+          </a>
+        </div>
+        
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div class="text">
+            <strong>Mac-Tipp:</strong> Git ist oft schon vorinstalliert. Öffne Terminal und tippe <code>git --version</code> um zu prüfen.
+          </div>
+        </div>
+        
+        <p style="margin-top: 15px;">Oder via Homebrew:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+          </div>
+          <div class="code-body"><span class="cmd">brew</span> install git</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 2: Git konfigurieren -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">2</div>
+    <div class="phase-info">
+      <h2>Git konfigurieren</h2>
+      <p>Name und E-Mail für Commits einstellen</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">2 min</div>
+      <div class="label">Dauer</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>⚙️ Git Bash öffnen (Windows) oder Terminal (Mac)</h3>
+      <p>Dann diese Befehle ausführen:</p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">📋 Kopieren & Einfügen</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># Dein Name (erscheint bei Commits)</span>
+<span class="cmd">git config</span> <span class="flag">--global</span> user.name <span class="str">"Ömer Hüseyin Coşkun"</span>
+
+<span class="comment"># Deine E-Mail (muss mit GitHub Account übereinstimmen!)</span>
+<span class="cmd">git config</span> <span class="flag">--global</span> user.email <span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6afa8a0a986b1a3b5b2ebaba9a8a3bfeba4a7b3e8a2a3">[email&#160;protected]</a>"</span>
+
+<span class="comment"># Prüfen ob es funktioniert hat</span>
+<span class="cmd">git config</span> <span class="flag">--list</span></div>
+      </div>
+      
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Git Bash / Terminal geöffnet</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Name konfiguriert</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">E-Mail konfiguriert</span>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 3: SSH Key -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">3</div>
+    <div class="phase-info">
+      <h2>SSH Key erstellen & hinzufügen</h2>
+      <p>Sichere Verbindung zu GitHub (kein Passwort nötig)</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">5 min</div>
+      <div class="label">Dauer</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>🔑 SSH Key generieren</h3>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">Git Bash / Terminal</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># SSH Key erstellen</span>
+<span class="cmd">ssh-keygen</span> <span class="flag">-t ed25519</span> <span class="flag">-C</span> <span class="str">"<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cea7a0a8a18eb9abbdbae3a3a1a0abb7e3acafbbe0aaab">[email&#160;protected]</a>"</span>
+
+<span class="comment"># Bei allen Fragen einfach ENTER drücken (Standard-Werte)</span></div>
+      </div>
+      
+      <div class="warning-box">
+        <div class="icon">⚠️</div>
+        <div class="text">
+          <strong>Wichtig:</strong> Bei "Enter passphrase" kannst du einfach Enter drücken (kein Passwort) oder ein Passwort setzen.
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <h3>📋 SSH Key kopieren</h3>
+      
+      <div class="tabs">
+        <button class="tab active" onclick="showTab2('win-copy')">🪟 Windows</button>
+        <button class="tab" onclick="showTab2('mac-copy')">🍎 macOS</button>
+      </div>
+      
+      <div class="tab-content active" id="win-copy">
+        <div class="code-block">
+          <div class="code-header">
+            <span class="label">Git Bash (Windows)</span>
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+          </div>
+          <div class="code-body"><span class="comment"># Key anzeigen und manuell kopieren</span>
+<span class="cmd">cat</span> ~/.ssh/id_ed25519.pub
+
+<span class="comment"># ODER direkt in Zwischenablage kopieren</span>
+<span class="cmd">clip</span> < ~/.ssh/id_ed25519.pub</div>
+        </div>
+      </div>
+      
+      <div class="tab-content" id="mac-copy">
+        <div class="code-block">
+          <div class="code-header">
+            <span class="label">Terminal (macOS)</span>
+            <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+          </div>
+          <div class="code-body"><span class="comment"># Key anzeigen und manuell kopieren</span>
+<span class="cmd">cat</span> ~/.ssh/id_ed25519.pub
+
+<span class="comment"># ODER direkt in Zwischenablage kopieren</span>
+<span class="cmd">pbcopy</span> < ~/.ssh/id_ed25519.pub</div>
+        </div>
+      </div>
+      
+      <div class="info-box">
+        <div class="icon">ℹ️</div>
+        <div class="text">Der Key beginnt mit <code>ssh-ed25519</code> und endet mit deiner E-Mail.</div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <h3>🔗 SSH Key zu GitHub hinzufügen</h3>
+      
+      <a href="https://github.com/settings/ssh/new" target="_blank" class="quick-link">
+        <div class="icon">🔑</div>
+        <div class="content">
+          <h4>GitHub SSH Settings öffnen</h4>
+          <p>github.com/settings/ssh/new</p>
+        </div>
+      </a>
+      
+      <table>
+        <tr>
+          <td><strong>Title</strong></td>
+          <td><code>West Money Laptop</code></td>
+        </tr>
+        <tr>
+          <td><strong>Key type</strong></td>
+          <td>Authentication Key</td>
+        </tr>
+        <tr>
+          <td><strong>Key</strong></td>
+          <td>Den kopierten SSH Key einfügen</td>
+        </tr>
+      </table>
+      
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">SSH Key generiert</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Public Key kopiert</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Key auf GitHub hinzugefügt</span>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="step">
+      <h3>✅ Verbindung testen</h3>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">Git Bash / Terminal</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="cmd">ssh</span> <span class="flag">-T</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8aede3fecaede3fee2ffe8a4e9e5e7">[email&#160;protected]</a></div>
+      </div>
+      
+      <div class="success-box">
+        <div class="icon">✅</div>
+        <div class="text">
+          <strong>Erwartete Antwort:</strong> "Hi WestMoneyDE! You've successfully authenticated..."
+        </div>
+      </div>
+      
+      <div class="info-box">
+        <div class="icon">💡</div>
+        <div class="text">Bei der Frage "Are you sure you want to continue connecting?" tippe <code>yes</code> und Enter.</div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 4: Repository klonen -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">4</div>
+    <div class="phase-info">
+      <h2>Repository auf Computer klonen</h2>
+      <p>Dein Repo herunterladen</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">2 min</div>
+      <div class="label">Dauer</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>📥 Repository klonen</h3>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">📋 Alle Befehle nacheinander</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># 1. In deinen Dokumente-Ordner wechseln</span>
+<span class="cmd">cd</span> ~/Documents
+
+<span class="comment"># 2. Repo klonen (dein Repository!)</span>
+<span class="cmd">git clone</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="21464855614648554954430f424e4c">[email&#160;protected]</a>:<span class="str">WestMoneyDE/Enterprise-Universe</span>.git
+
+<span class="comment"># 3. In den Repo-Ordner wechseln</span>
+<span class="cmd">cd</span> Enterprise-Universe
+
+<span class="comment"># 4. Prüfen ob es funktioniert hat</span>
+<span class="cmd">ls</span> <span class="flag">-la</span></div>
+      </div>
+      
+      <div class="success-box">
+        <div class="icon">📁</div>
+        <div class="text">
+          <strong>Dein Repo ist jetzt hier:</strong><br>
+          Windows: <code>C:\Users\[DeinName]\Documents\Enterprise-Universe</code><br>
+          Mac: <code>/Users/[DeinName]/Documents/Enterprise-Universe</code>
+        </div>
+      </div>
+      
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Repository geklont</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Im Ordner Enterprise-Universe</span>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 5: Dateien hochladen -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">5</div>
+    <div class="phase-info">
+      <h2>Code & Dateien hochladen</h2>
+      <p>Deine Projektdateien auf GitHub pushen</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">5 min</div>
+      <div class="label">Dauer</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>📁 Empfohlene Projektstruktur</h3>
+      <p>Kopiere deine Dateien in den Enterprise-Universe Ordner. So sollte die Struktur aussehen:</p>
+      
+      <div class="file-tree">
+<span class="folder">📁 Enterprise-Universe/</span>
+├── <span class="folder">📁 src/</span>
+│   ├── <span class="folder">📁 components/</span>
+│   ├── <span class="folder">📁 pages/</span>
+│   ├── <span class="folder">📁 services/</span>
+│   └── <span class="folder">📁 utils/</span>
+├── <span class="folder">📁 public/</span>
+│   ├── <span class="folder">📁 assets/</span>
+│   └── <span class="file">📄 index.html</span>
+├── <span class="folder">📁 dashboards/</span>
+│   ├── <span class="file">📄 MASTER_CONTROL_DASHBOARD.html</span>
+│   ├── <span class="file">📄 FINANCE_LEADS_CONTROL_HUB.html</span>
+│   ├── <span class="file">📄 REVOLUT_INTEGRATION_HUB.html</span>
+│   └── <span class="file">📄 ...</span>
+├── <span class="folder">📁 docs/</span>
+├── <span class="file">📄 .gitignore</span>
+├── <span class="file">📄 package.json</span>
+├── <span class="file">📄 README.md</span>
+└── <span class="file">📄 LICENSE</span>
+      </div>
+    </div>
+    
+    <div class="step">
+      <h3>🚀 Dateien hochladen (Push)</h3>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">📋 Alle Befehle nacheinander</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># 1. Stelle sicher, dass du im richtigen Ordner bist</span>
+<span class="cmd">cd</span> ~/Documents/Enterprise-Universe
+
+<span class="comment"># 2. Status prüfen (zeigt geänderte Dateien)</span>
+<span class="cmd">git status</span>
+
+<span class="comment"># 3. ALLE neuen/geänderten Dateien hinzufügen</span>
+<span class="cmd">git add</span> .
+
+<span class="comment"># 4. Commit erstellen mit Nachricht</span>
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"Initial commit: West Money OS v1.0 🚀"</span>
+
+<span class="comment"># 5. Auf GitHub hochladen</span>
+<span class="cmd">git push</span> origin main</div>
+      </div>
+      
+      <div class="success-box">
+        <div class="icon">🎉</div>
+        <div class="text">
+          <strong>Geschafft!</strong> Dein Code ist jetzt auf GitHub unter:<br>
+          <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" style="color: #3fb950;">github.com/WestMoneyDE/Enterprise-Universe</a>
+        </div>
+      </div>
+      
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text">Dateien in Ordner kopiert</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text"><code>git add .</code> ausgeführt</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text"><code>git commit</code> ausgeführt</span>
+        </li>
+        <li onclick="toggleCheck(this)">
+          <div class="checkbox"></div>
+          <span class="text"><code>git push</code> ausgeführt</span>
+        </li>
+      </ul>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 6: Täglicher Workflow -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">6</div>
+    <div class="phase-info">
+      <h2>Täglicher Workflow</h2>
+      <p>Regelmäßig Änderungen speichern</p>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <h3>🔄 Standard-Workflow (täglich)</h3>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">📋 Schnellbefehl zum Kopieren</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># Alle Änderungen committen und pushen (Einzeiler)</span>
+<span class="cmd">git add</span> . && <span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"Update"</span> && <span class="cmd">git push</span></div>
+      </div>
+      
+      <p style="margin-top: 20px;"><strong>Oder ausführlicher:</strong></p>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <span class="label">Täglicher Workflow</span>
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+        </div>
+        <div class="code-body"><span class="comment"># 1. Neueste Version holen (falls Team)</span>
+<span class="cmd">git pull</span>
+
+<span class="comment"># 2. Arbeiten... Dateien ändern...</span>
+
+<span class="comment"># 3. Was hat sich geändert?</span>
+<span class="cmd">git status</span>
+
+<span class="comment"># 4. Alles hinzufügen</span>
+<span class="cmd">git add</span> .
+
+<span class="comment"># 5. Commit mit aussagekräftiger Nachricht</span>
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="str">"Add Finance Dashboard"</span>
+
+<span class="comment"># 6. Auf GitHub hochladen</span>
+<span class="cmd">git push</span></div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <h3>📚 Wichtige Git-Befehle</h3>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Befehl</th>
+            <th>Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>git status</code></td>
+            <td>Zeigt geänderte Dateien</td>
+          </tr>
+          <tr>
+            <td><code>git log --oneline</code></td>
+            <td>Zeigt Commit-Historie</td>
+          </tr>
+          <tr>
+            <td><code>git diff</code></td>
+            <td>Zeigt Änderungen im Detail</td>
+          </tr>
+          <tr>
+            <td><code>git pull</code></td>
+            <td>Neueste Version von GitHub holen</td>
+          </tr>
+          <tr>
+            <td><code>git branch</code></td>
+            <td>Zeigt alle Branches</td>
+          </tr>
+          <tr>
+            <td><code>git checkout -b feature</code></td>
+            <td>Neuen Branch erstellen</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Quick Links -->
+<div class="phase" style="background: linear-gradient(135deg, rgba(35, 134, 54, 0.08), transparent);">
+  <div class="phase-header" style="background: transparent; border: none;">
+    <div class="phase-number">🔗</div>
+    <div class="phase-info">
+      <h2>Quick Links</h2>
+      <p>Wichtige Ressourcen</p>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="btn-group">
+      <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="download-btn">
+        🐙 Dein Repository öffnen
+      </a>
+      <a href="https://github.com/settings/ssh/new" target="_blank" class="download-btn secondary">
+        🔑 SSH Keys verwalten
+      </a>
+      <a href="https://desktop.github.com" target="_blank" class="download-btn secondary">
+        🖥️ GitHub Desktop
+      </a>
+    </div>
+    
+    <div class="info-box" style="margin-top: 20px;">
+      <div class="icon">💡</div>
+      <div class="text">
+        <strong>Pro-Tipp:</strong> Installiere <a href="https://code.visualstudio.com" target="_blank" style="color: #3fb950;">Visual Studio Code</a> als Code-Editor. Hat Git direkt integriert!
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">📊</div>
+    <div class="phase-info">
+      <h2>Zusammenfassung</h2>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <table>
+      <tr>
+        <td><strong>GitHub Username</strong></td>
+        <td><code>WestMoneyDE</code></td>
+      </tr>
+      <tr>
+        <td><strong>Repository</strong></td>
+        <td><code>Enterprise-Universe</code></td>
+      </tr>
+      <tr>
+        <td><strong>URL</strong></td>
+        <td><a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" style="color: #3fb950;">github.com/WestMoneyDE/Enterprise-Universe</a></td>
+      </tr>
+      <tr>
+        <td><strong>SSH Clone</strong></td>
+        <td><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="54333d2014333d203c21367a373b39">[email&#160;protected]</a>:WestMoneyDE/Enterprise-Universe.git</code></td>
+      </tr>
+      <tr>
+        <td><strong>Lokaler Ordner</strong></td>
+        <td><code>~/Documents/Enterprise-Universe</code></td>
+      </tr>
+      <tr>
+        <td><strong>Visibility</strong></td>
+        <td>🔒 Private</td>
+      </tr>
+      <tr>
+        <td><strong>License</strong></td>
+        <td>MIT</td>
+      </tr>
+    </table>
+    
+    <div class="success-box" style="margin-top: 20px;">
+      <div class="icon">🚀</div>
+      <div class="text">
+        <strong>Fertig!</strong> Dein Repository ist vollständig eingerichtet. Jetzt kannst du alle West Money OS Dateien hochladen!
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>West Money Bau GmbH</strong> | Enterprise Universe | GitHub Setup Guide v1.0</p>
+  <p>© 2024 WestMoneyDE</p>
+</div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function showTab2(tabId) {
+  const tabs = event.currentTarget.parentElement.parentElement;
+  tabs.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  tabs.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function toggleCheck(element) {
+  element.classList.toggle('checked');
+  saveProgress();
+}
+
+function copyCode(btn) {
+  const codeBlock = btn.closest('.code-block');
+  const code = codeBlock.querySelector('.code-body').textContent;
+  navigator.clipboard.writeText(code);
+  btn.textContent = '✅ Copied!';
+  setTimeout(() => { b

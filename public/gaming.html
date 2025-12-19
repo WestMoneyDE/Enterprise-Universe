@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Hub | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gold: #fbbf24;
+            --bg-deep: #0a0a0f;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+            animation: glowPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.1); }
+        }
+
+        .bg-glow-1 { width: 600px; height: 600px; top: -200px; right: -200px; background: var(--accent); }
+        .bg-glow-2 { width: 500px; height: 500px; bottom: -200px; left: -200px; background: var(--secondary); }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.75rem;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Player Card */
+        .player-card {
+            background: linear-gradient(135deg, var(--bg-surface), var(--bg-elevated));
+            border: 1px solid var(--border-bright);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary), var(--accent));
+            background-size: 200% 100%;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .player-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .avatar-inner {
+            width: 110px;
+            height: 110px;
+            border-radius: 16px;
+            background: var(--bg-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-kanji {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        .avatar-symbol {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .player-info { flex: 1; }
+
+        .player-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .player-title {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .player-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Token Balance */
+        .token-balance {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .token-item {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .token-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .token-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .token-name {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-card .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .game-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-banner {
+            height: 180px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .game-banner-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 30px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .game-content {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-platforms {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .platform-badge {
+            padding: 4px 10px;
+            background: var(--bg-elevated);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .game-progress {
+            margin-bottom: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-hover);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            border-radius: 4px;
+        }
+
+        .game-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .game-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.live { background: var(--success); animation: pulse 2s infinite; }
+        .status-dot.development { background: var(--warning); }
+        .status-dot.beta { background: var(--accent); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+
+        .card-body { padding: 1.5rem; }
+
+        /* Achievements */
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .achievement-item.locked {
+            opacity: 0.5;
+        }
+
+        .achievement-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--gold), #fcd34d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .achievement-item.locked .achievement-icon {
+            background: var(--bg-hover);
+        }
+
+        .achievement-info { flex: 1; }
+        .achievement-info h4 { font-weight: 600; margin-bottom: 4px; }
+        .achievement-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .achievement-xp {
+            font-family: 'Space Mono', monospace;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .leaderboard-item:nth-child(1) { background: linear-gradient(90deg, rgba(251, 191, 36, 0.15), transparent); }
+        .leaderboard-item:nth-child(2) { background: linear-gradient(90deg, rgba(192, 192, 192, 0.1), transparent); }
+        .leaderboard-item:nth-child(3) { background: linear-gradient(90deg, rgba(205, 127, 50, 0.1), transparent); }
+
+        .leaderboard-rank {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            width: 30px;
+        }
+
+        .leaderboard-rank:nth-child(1) { color: var(--gold); }
+
+        .leaderboard-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .leaderboard-name { flex: 1; font-weight: 500; }
+        .leaderboard-score {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary);
+        }
+
+        /* VR Badge */
+        .vr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .games-grid { grid-template-columns: 1fr; }
+            .content-grid { grid-template-columns: 1fr; }
+            .player-card { flex-direction: column; text-align: center; }
+            .player-stats { justify-content: center; }
+            .token-balance { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">🎮</div>
+                <div>
+                    <h1>🎮 <span>Gaming Hub</span></h1>
+                    <p class="subtitle">DEDSEC World | CR7 VR Football | Token Economy</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span class="vr-badge">🥽 VR Ready</span>
+                <a href="index.html" class="btn btn-ghost">← Dashboard</a>
+            </div>
+        </header>
+
+        <!-- Player Card -->
+        <div class="player-card">
+            <div class="player-avatar">
+                <div class="avatar-inner">
+                    <div class="avatar-kanji">神</div>
+                    <div class="avatar-symbol">∞</div>
+                </div>
+            </div>
+            <div class="player-info">
+                <div class="player-name">HAIKU</div>
+                <div class="player-title">Divine Warrior • Ultra Instinct • Dragon Ball GOD</div>
+                <div class="player-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--accent);">42</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--primary);">2,340</div>
+                        <div class="stat-label">Total XP</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--gold);">127</div>
+                        <div class="stat-label">Achievements</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" style="color: var(--secondary);">14</div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                </div>
+            </div>
+            <div class="token-balance">
+                <div class="token-item">
+                    <div class="token-icon">🌟</div>
+                    <div class="token-amount" style="color: var(--gold);">1,250</div>
+                    <div class="token-name">GOD Token</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-icon">💀</div>
+                    <div class="token-amount" style="color: var(--accent);">890</div>
+                    <div class="token-name">DedSec Token</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-icon">🏆</div>
+                    <div class="token-amount" style="color: var(--primary);">450</div>
+                    <div class="token-name">OG Token</div>
+                </div>
+                <div class="token-item">
+                    <div class="token-icon">🗼</div>
+                    <div class="token-amount" style="color: var(--secondary);">320</div>
+                    <div class="token-name">Tower Token</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" style="color: var(--success);">847</div>
+                <div class="stat-label">Missions Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚔️</div>
+                <div class="stat-value" style="color: var(--danger);">1,234</div>
+                <div class="stat-label">Battles Won</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏅</div>
+                <div class="stat-value" style="color: var(--gold);">#12</div>
+                <div class="stat-label">Global Rank</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-value" style="color: var(--accent);">156h</div>
+                <div class="stat-label">Playtime</div>
+            </div>
+        </div>
+
+        <!-- Games -->
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-banner" style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+                    <div class="game-banner-text">DEDSEC WORLD</div>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">DEDSEC World AI</div>
+                    <div class="game-description">
+                        AR/VR Cyber Security Simulation mit AI-gesteuerten Missionen. Hacke Systeme, verteidige Netzwerke, werde zum ultimativen Hacker.
+                    </div>
+                    <div class="game-platforms">
+                        <span class="platform-badge">🥽 Meta Quest 3</span>
+                        <span class="platform-badge">🍎 Apple Vision Pro</span>
+                        <span class="platform-badge">🌐 WebXR</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-label">
+                            <span>Story Progress</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-status">
+                            <span class="status-dot development"></span>
+                            <span style="color: var(--warning);">In Development</span>
+                        </div>
+                        <button class="btn btn-primary">🎮 Spielen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-banner" style="background: linear-gradient(135deg, #065f46, #047857);">
+                    <div class="game-banner-text">CR7 VR FOOTBALL</div>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">CR7zZzAutomations VR Football v3.0 ULTIMATE</div>
+                    <div class="game-description">
+                        Immersives VR-Fußballerlebnis mit Token-Economy. Trainiere wie Ronaldo, sammle GOD Tokens und dominiere die Rangliste.
+                    </div>
+                    <div class="game-platforms">
+                        <span class="platform-badge">🥽 Meta Quest 3</span>
+                        <span class="platform-badge">🎮 PC VR</span>
+                        <span class="platform-badge">📱 Mobile AR</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-label">
+                            <span>Season Progress</span>
+                            <span>78%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%;"></div>
+                        </div>
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-status">
+                            <span class="status-dot beta"></span>
+                            <span style="color: var(--accent);">Beta</span>
+                        </div>
+                        <button class="btn btn-primary">🎮 Spielen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-banner" style="background: linear-gradient(135deg, #7c2d12, #c2410c);">
+                    <div class="game-banner-text">SecTower DEFENSE</div>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">SecTower Dubai Defense</div>
+                    <div class="game-description">
+                        Tower Defense mit Verisure Security-Thema. Verteidige kritische Infrastruktur gegen Cyber-Angriffe.
+                    </div>
+                    <div class="game-platforms">
+                        <span class="platform-badge">🌐 Browser</span>
+                        <span class="platform-badge">📱 iOS/Android</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-label">
+                            <span>Towers Unlocked</span>
+                            <span>12/20</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-status">
+                            <span class="status-dot live"></span>
+                            <span style="color: var(--success);">Live</span>
+                        </div>
+                        <button class="btn btn-primary">🎮 Spielen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-banner" style="background: linear-gradient(135deg, #4c1d95, #7c3aed);">
+                    <div class="game-banner-text">SMART HOME TYCOON</div>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">Smart Home Tycoon</div>
+                    <div class="game-description">
+                        Baue und manage Smart-Home-Projekte mit LOXONE und ComfortClick Integration. Werde zum Smart-Building-Mogul.
+                    </div>
+                    <div class="game-platforms">
+                        <span class="platform-badge">🌐 Browser</span>
+                        <span class="platform-badge">💻 Desktop</span>
+                    </div>
+                    <div class="game-progress">
+                        <div class="progress-label">
+                            <span>Empire Value</span>
+                            <span>€2.4M</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%;"></div>
+                        </div>
+                    </div>
+                    <div class="game-footer">
+                        <div class="game-status">
+                            <span class="status-dot development"></span>
+                            <span style="color: var(--warning);">Coming Soon</span>
+                        </div>
+                        <button class="btn btn-ghost">🔔 Notify Me</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Achievements -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>🏆 Recent Achievements</h2>
+                </div>
+                <div class="card-body">
+                    <div class="achievement-item">
+                        <div class="achievement-icon">🔥</div>
+                        <div class="achievement-info">
+                            <h4>14-Day Streak</h4>
+                            <p>Logged in for 14 consecutive days</p>
+                        </div>
+                        <div class="achievement-xp">+100 XP</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-icon">⚔️</div>
+                        <div class="achievement-info">
+                            <h4>Cyber Warrior</h4>
+                            <p>Won 100 battles in DEDSEC World</p>
+                        </div>
+                        <div class="achievement-xp">+250 XP</div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-icon">⚽</div>
+                        <div class="achievement-info">
+                            <h4>Hat-Trick Hero</h4>
+                            <p>Scored 3 goals in one match</p>
+                        </div>
+                        <div class="achievement-xp">+150 XP</div>
+                    </div>
+                    <div class="achievement-item locked">
+                        <div class="achievement-icon">🔒</div>
+                        <div class="achievement-info">
+                            <h4>GOD Mode Activated</h4>
+                            <p>Reach Level 50</p>
+                        </div>
+                        <div class="achievement-xp">+500 XP</div>
+                    </div>
+                    <div class="achievement-item locked">
+                        <div class="achievement-icon">🔒</div>
+                        <div class="achievement-info">
+                            <h4>Ultra Instinct</h4>
+                            <p>Win 10 battles without taking damage</p>
+                        </div>
+                        <div class="achievement-xp">+1000 XP</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>🏅 Global Leaderboard</h2>
+                </div>
+                <div class="card-body">
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank" style="color: var(--gold);">1</div>
+                        <div class="leaderboard-avatar">XM</div>
+                        <div class="leaderboard-name">xXMasterXx</div>
+                        <div class="leaderboard-score">45,230</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank" style="color: #c0c0c0;">2</div>
+                        <div class="leaderboard-avatar">NK</div>
+                        <div class="leaderboard-name">NinjaKnight</div>
+                        <div class="leaderboard-score">42,150</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank" style="color: #cd7f32;">3</div>
+                        <div class="leaderboard-avatar">CP</div>
+                        <div class="leaderboard-name">CyberPunk2077</div>
+                        <div class="leaderboard-score">38,890</div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">...</div>
+                        <div></div>
+                        <div class="leaderboard-name"></div>
+                        <div></div>
+                    </div>
+                    <div class="leaderboard-item" style="background: rgba(0, 240, 255, 0.1);">
+                        <div class="leaderboard-rank" style="color: var(--primary);">12</div>
+                        <div class="leaderboard-avatar" style="background: linear-gradient(135deg, var(--primary), var(--accent));">神</div>
+                        <div class="leaderboard-name" style="color: var(--primary);">HAIKU (Du)</div>
+                        <div class="leaderboard-score">12,340</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

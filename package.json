@@ -1,0 +1,46 @@
+{
+  "name": "gtz-ecosystem-automation",
+  "version": "2.0.0",
+  "description": "GTz Ecosystem - Vollautomatisches Lead-zu-Vertrag System mit HubSpot, WhatsApp & AI",
+  "main": "automation/webhook-server.js",
+  "scripts": {
+    "start": "node automation/webhook-server.js",
+    "dev": "nodemon automation/webhook-server.js",
+    "test": "jest",
+    "lint": "eslint .",
+    "setup": "node scripts/setup.js"
+  },
+  "keywords": [
+    "hubspot",
+    "whatsapp",
+    "crm",
+    "automation",
+    "lead-generation",
+    "sales",
+    "ai",
+    "dsgvo",
+    "gdpr"
+  ],
+  "author": "Enterprise Universe <kontakt@enterprise-universe.de>",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^2.7.0",
+    "crypto": "^1.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "eslint": "^8.56.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enterprise-universe/gtz-ecosystem"
+  },
+  "homepage": "https://enterprise-universe.de"
+}

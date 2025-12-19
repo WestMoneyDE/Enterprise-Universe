@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Money Bau - Investoren Kampagnen</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: rgba(34, 197, 94, 0.1);
+      border-radius: 16px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .header h1 { color: #22c55e; font-size: 28px; margin-bottom: 10px; }
+    .header p { color: #888; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-number { font-size: 32px; font-weight: bold; color: #22c55e; }
+    .stat-label { color: #888; font-size: 12px; margin-top: 5px; }
+    
+    .pitch-box {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.1));
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+    .pitch-box h3 { color: #22c55e; margin-bottom: 20px; font-size: 16px; text-align: center; }
+    .pitch-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+    }
+    .pitch-stat { text-align: center; }
+    .pitch-stat .value { font-size: 24px; font-weight: bold; color: #22c55e; }
+    .pitch-stat .label { font-size: 11px; color: #888; margin-top: 5px; text-transform: uppercase; }
+    
+    .kategorie {
+      margin-bottom: 30px;
+    }
+    .kategorie-header {
+      font-size: 18px;
+      padding: 15px;
+      background: rgba(34, 197, 94, 0.2);
+      border-radius: 10px 10px 0 0;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .kategorie-header .send-all {
+      padding: 8px 16px;
+      background: rgba(34, 197, 94, 0.5);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .kategorie-header .send-all:hover { background: rgba(34, 197, 94, 0.8); }
+    .email-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 2px;
+      overflow: hidden;
+    }
+    .email-card:last-child { border-radius: 0 0 10px 10px; }
+    .email-header {
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .email-header:hover { background: rgba(255,255,255,0.05); }
+    .email-info h3 { font-size: 14px; margin-bottom: 5px; }
+    .email-info p { font-size: 12px; color: #888; }
+    .email-priority {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .priority-hoch { background: #ef4444; }
+    .priority-mittel { background: #f59e0b; }
+    .priority-niedrig { background: #22c55e; }
+    .email-body {
+      display: none;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .email-body.active { display: block; }
+    .email-field {
+      margin-bottom: 15px;
+    }
+    .email-field label {
+      display: block;
+      font-size: 11px;
+      color: #22c55e;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .email-field-value {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+    .email-text {
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #22c55e;
+      color: white;
+    }
+    .btn-primary:hover { background: #16a34a; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    .btn-gmail {
+      background: #ea4335;
+      color: white;
+    }
+    .btn-gmail:hover { background: #d33426; }
+    .btn-gmail.sent { background: #22c55e; }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #22c55e;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      display: none;
+      animation: slideIn 0.3s ease;
+      z-index: 1000;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .instructions {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .instructions h3 { color: #22c55e; margin-bottom: 10px; }
+    .instructions ol { margin-left: 20px; line-height: 1.8; }
+    .send-all-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: all 0.2s;
+    }
+    .send-all-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💰 West Money Bau - Investoren</h1>
+  <p>22 Investor E-Mails bereit zum Versand | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="51383f373e11263422257c3c3e3f34287c3330247f3534">[email&#160;protected]</a></p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-number">22</div>
+    <div class="stat-label">E-Mails Total</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">12</div>
+    <div class="stat-label">Hohe Priorität</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">7</div>
+    <div class="stat-label">Kategorien</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number" id="sentCount">0</div>
+    <div class="stat-label">Gesendet</div>
+  </div>
+</div>
+
+<div class="pitch-box">
+  <h3>📊 PITCH DATEN - WEST MONEY BAU</h3>
+  <div class="pitch-stats">
+    <div class="pitch-stat">
+      <div class="value">€847K</div>
+      <div class="label">Umsatz 2025</div>
+    </div>
+    <div class="pitch-stat">
+      <div class="value">+23.5%</div>
+      <div class="label">Wachstum YoY</div>
+    </div>
+    <div class="pitch-stat">
+      <div class="value">€500K</div>
+      <div class="label">Investment Ask</div>
+    </div>
+    <div class="pitch-stat">
+      <div class="value">15-20%</div>
+      <div class="label">Equity Offer</div>
+    </div>
+    <div class="pitch-stat">
+      <div class="value">€2.5-3.3M</div>
+      <div class="label">Bewertung</div>
+    </div>
+    <div class="pitch-stat">
+      <div class="value">Q1 2026</div>
+      <div class="label">West Money OS</div>
+    </div>
+  </div>
+</div>
+
+<button class="send-all-btn" onclick="sendAllEmails()">🚀 ALLE 22 INVESTOR E-MAILS SENDEN</button>
+
+<div class="instructions">
+  <h3>📧 So sendest du die E-Mails:</h3>
+  <ol>
+    <li><strong>Klicke auf eine E-Mail</strong> um sie zu öffnen</li>
+    <li><strong>"In Gmail öffnen"</strong> öffnet Gmail mit allen Daten vorausgefüllt</li>
+    <li><strong>Oder "Kopieren"</strong> um den Text manuell einzufügen</li>
+    <li><strong>In Gmail senden</strong> - fertig!</li>
+  </ol>
+</div>
+
+<div id="emailContainer"></div>
+
+<div class="toast" id="toast">✅ Kopiert!</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const SIGNATURE_DE = `Mit freundlichen Grüßen
+
+Ömer Hüseyin Coşkun
+Geschäftsführer / CEO
+
+WEST MONEY BAU
+Smart Home Systems | LOXONE Partner | Barrierefreies Bauen
+Ein Unternehmen der Enterprise Universe Gruppe
+
+📧 info@west-money-bau.de
+🌐 www.west-money-bau.de`;
+
+const SIGNATURE_EN = `Best regards,
+
+Ömer Hüseyin Coşkun
+CEO / Managing Director
+
+WEST MONEY BAU
+Smart Home Systems | LOXONE Partner | Barrier-Free Construction
+An Enterprise Universe Company
+
+📧 info@west-money-bau.de
+🌐 www.west-money-bau.de`;
+
+const EMAILS = {
+  "🏦 Venture Capital - PropTech": [
+    {
+      id: "proptech1",
+      name: "PropTech1 Ventures",
+      priority: "HOCH",
+      to: "pitch@proptech1.vc",
+      cc: "info@west-money-bau.de",
+      subject: "Investment Opportunity - West Money Bau | Smart Home PropTech | €500K Seed",
+      body: `Sehr geehrtes PropTech1 Team,
+
+die West Money Bau GmbH sucht €500.000 Seed-Finanzierung für unsere Smart Home PropTech Plattform.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXECUTIVE SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UNTERNEHMEN:
+• Firma: West Money Bau GmbH (Enterprise Universe Gruppe)
+• Sektor: PropTech / Smart Home / ConstructionTech
+• Standort: Köln, NRW, Deutschland
+• Gegründet: 2024
+• CEO: Ömer Hüseyin Coşkun
+
+FINANZEN:
+• Umsatz 2025: €847.523
+• Wachstum: +23,5% YoY
+• Projektumsatz: €650K
+• Break-Even: Q4 2026
+
+INVESTMENT:
+• Seed Round: €500.000
+• Equity Offer: 15-20%
+• Bewertung: €2,5 - €3,3 Mio (Pre-Money)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUKTE & ROADMAP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. WEST MONEY OS (Release: Q1 2026)
+   • Master Control System für Smart Home & Business
+   • Plattformen: iOS, Android, Web, VR/AR
+   • Tech: React Native, Node.js, PostgreSQL
+   • SaaS-Modell: €29/€79/€199 pro Monat
+
+2. VR SHOWROOM (Release: Q1 2026)
+   • Meta Quest 3 & Apple Vision Pro
+   • Interaktive Smart Home Demos
+   • Training Academy
+
+3. FLAGSHIP STORE KÖLN (Eröffnung: Q2 2026)
+   • Standort: Ehrenstraße, Köln (Premium)
+   • Fläche: 200 qm
+   • Investment: €485.000 - €650.000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERWENDUNG DER MITTEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• 40% - Produktentwicklung (West Money OS, VR)
+• 30% - Flagship Store Ausbau
+• 20% - Marketing & Vertrieb
+• 10% - Working Capital
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WETTBEWERBSVORTEILE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Einzigartiges Ökosystem: Hardware + Software + Retail
+• VR/AR Differenzierung im PropTech
+• Barrierefreies Bauen als Wachstumsmarkt
+• Lokaler Fokus DACH mit Skalierungspotenzial
+
+Wir würden uns über die Möglichkeit eines Pitch-Termins freuen.`
+    },
+    {
+      id: "bitstone",
+      name: "BitStone Capital (Köln)",
+      priority: "HOCH",
+      to: "invest@bitstone.capital",
+      cc: "info@west-money-bau.de",
+      subject: "PropTech Investment - West Money Bau | Smart Home + VR | Köln | €500K",
+      body: `Sehr geehrtes BitStone Capital Team,
+
+als PropTech-fokussierter VC mit Sitz in Köln möchten wir Ihnen die West Money Bau vorstellen - ebenfalls aus Köln.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT HIGHLIGHTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Sektor: PropTech / Smart Home / VR
+• Investment Ask: €500.000 Seed
+• Equity Offer: 15-20%
+• Bewertung: €2,5 - €3,3 Mio Pre-Money
+• Umsatz 2025: €847.523 (+23,5% YoY)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WARUM WEST MONEY BAU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Einzigartiges Ökosystem: Hardware + Software + Retail
+• VR/AR Differenzierung (Meta Quest 3, Apple Vision Pro)
+• Lokaler Fokus Köln/DACH mit Skalierungspotenzial
+• Barrierefreies Bauen als demografischer Wachstumsmarkt
+• Flagship Store in Köln-Ehrenstraße geplant (Q2 2026)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUKTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. West Money OS - Smart Home SaaS Plattform
+2. VR Showroom - Immersive Produktdemos
+3. Flagship Store - Retail Experience
+
+Als Kölner Unternehmen würden wir uns sehr über ein lokales Meeting freuen.`
+    },
+    {
+      id: "htgf",
+      name: "High-Tech Gründerfonds (HTGF)",
+      priority: "HOCH",
+      to: "businessplan@htgf.de",
+      cc: "info@west-money-bau.de",
+      subject: "Seed Investment Bewerbung - West Money Bau | PropTech | €500K",
+      body: `Sehr geehrtes HTGF Team,
+
+die West Money Bau GmbH bewirbt sich für eine HTGF Seed-Finanzierung.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+UNTERNEHMENSPROFIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Firma: West Money Bau GmbH
+• Holding: Enterprise Universe Gruppe
+• Gründung: 2024
+• Standort: Köln, NRW
+• Sektor: PropTech / Smart Home / SaaS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Seed Round: €500.000
+• Equity: 15-20%
+• Bewertung: €2,5 - €3,3 Mio Pre-Money
+• Runway: 18-24 Monate
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TECHNOLOGIE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• West Money OS: React Native, Node.js, PostgreSQL
+• VR/AR: Unity, Meta Quest 3, Apple Vision Pro
+• IoT: LOXONE, KNX Integration
+• AI: GPT-4 basierter Assistent
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FINANZEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Umsatz 2025: €847.523
+• Wachstum: +23,5% YoY
+• Geplanter ARR: €180K (2026)
+• Break-Even: Q4 2026
+
+Wir bitten um Prüfung und Einladung zum Pitch.`
+    },
+    {
+      id: "speedinvest",
+      name: "Speedinvest",
+      priority: "HOCH",
+      to: "proptech@speedinvest.com",
+      cc: "info@west-money-bau.de",
+      subject: "PropTech Seed Investment - West Money Bau Germany | €500K",
+      body: `Dear Speedinvest PropTech Team,
+
+West Money Bau is seeking €500,000 Seed funding for our Smart Home PropTech platform in Germany.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT OPPORTUNITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Sector: PropTech / Smart Home / VR
+• Stage: Seed
+• Ask: €500,000 for 15-20% equity
+• Valuation: €2.5 - €3.3M (Pre-Money)
+• Location: Cologne, Germany
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TRACTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Revenue 2025: €847,523
+• Growth: +23.5% YoY
+• Existing Partners: LOXONE, Verisure, HubSpot
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRODUCTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. West Money OS - Smart Home SaaS Platform (Q1 2026)
+2. VR Showroom - Meta Quest 3 Experience (Q1 2026)
+3. Flagship Store Cologne - Retail Expansion (Q2 2026)
+
+We would welcome the opportunity to pitch to your team.`
+    }
+  ],
+
+  "💼 Business Angels NRW": [
+    {
+      id: "band",
+      name: "BAND - Business Angels Deutschland",
+      priority: "HOCH",
+      to: "info@business-angels.de",
+      cc: "info@west-money-bau.de",
+      subject: "One-Pager Einreichung - West Money Bau | PropTech €500K",
+      body: `Sehr geehrtes BAND Team,
+
+die West Money Bau GmbH möchte einen One-Pager zur Investorensuche einreichen.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ONE-PAGER ZUSAMMENFASSUNG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UNTERNEHMEN:
+• Firma: West Money Bau GmbH (Enterprise Universe Gruppe)
+• Sektor: PropTech / Smart Home / VR
+• Standort: Köln, NRW
+• CEO: Ömer Hüseyin Coşkun
+
+INVESTMENT:
+• Investment Ask: €500.000 Seed
+• Equity Offer: 15-20%
+• Bewertung: €2,5 - €3,3 Mio Pre-Money
+
+FINANZEN:
+• Umsatz 2025: €847.523 (+23,5% YoY)
+• Projektumsatz: €650K
+• Break-Even: Q4 2026
+
+PRODUKTE:
+• West Money OS - Smart Home SaaS (Release Q1 2026)
+• VR Showroom - Meta Quest 3 (Release Q1 2026)
+• Flagship Store Köln (Eröffnung Q2 2026)
+
+VERWENDUNG:
+• 40% Produktentwicklung
+• 30% Flagship Store
+• 20% Marketing
+• 10% Working Capital
+
+Bitte teilen Sie uns das Prozedere für die One-Pager Einreichung mit.`
+    },
+    {
+      id: "baar",
+      name: "BAAR - Business Angels Ruhr",
+      priority: "HOCH",
+      to: "info@baar-nrw.de",
+      cc: "info@west-money-bau.de",
+      subject: "Pitch-Bewerbung - West Money Bau Köln | Smart Home PropTech",
+      body: `Sehr geehrte BAAR Mitglieder,
+
+die West Money Bau aus Köln bewirbt sich für ein Matching-Event bei Business Angels Ruhr.
+
+KURZPROFIL:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Branche: PropTech / Smart Home / SaaS
+• Standort: Köln (NRW-Fokus)
+• Investment: €500.000 für 15-20%
+• Umsatz 2025: €847K (+23,5%)
+
+HIGHLIGHTS:
+• LOXONE Partner für Smart Home
+• VR Experience für Meta Quest 3
+• Flagship Store Projekt Köln-Ehrenstraße
+• Barrierefreies Bauen als Wachstumsmarkt
+
+Als NRW-Unternehmen freuen wir uns besonders auf regionale Business Angels.`
+    },
+    {
+      id: "ba_frankfurt",
+      name: "BA Netzwerk FrankfurtRheinMain",
+      priority: "MITTEL",
+      to: "startups@ba-frankfurt.de",
+      cc: "info@west-money-bau.de",
+      subject: "Investment Opportunity - West Money Bau | PropTech DACH",
+      body: `Sehr geehrtes BA Netzwerk Frankfurt Team,
+
+die West Money Bau GmbH sucht Business Angels für €500K Seed-Finanzierung.
+
+INVESTMENT CASE:
+• Sektor: PropTech / Smart Home / VR
+• Investment: €500.000 für 15-20%
+• Umsatz 2025: €847.523
+• Standort: Köln, NRW
+
+PRODUKTE:
+• West Money OS - Smart Home SaaS
+• VR Showroom - Meta Quest 3
+• Flagship Store Köln
+
+Wir freuen uns auf Ihre Rückmeldung.`
+    },
+    {
+      id: "angel_engine",
+      name: "Angel Engine Düsseldorf",
+      priority: "MITTEL",
+      to: "deals@angel-engine.de",
+      cc: "info@west-money-bau.de",
+      subject: "Startup Pitch - West Money Bau | Smart Home Tech",
+      body: `Sehr geehrtes Angel Engine Team,
+
+West Money Bau aus Köln sucht Business Angel Investoren für unsere Seed-Runde.
+
+DEAL SUMMARY:
+• €500K Seed für 15-20% Equity
+• PropTech / Smart Home / SaaS
+• Revenue: €847K (2025)
+• Location: Köln, NRW
+
+Interesse an einem Pitch bei Ihrer nächsten Veranstaltung.`
+    }
+  ],
+
+  "🏛️ Öffentliche Förderung": [
+    {
+      id: "nrwbank",
+      name: "NRW.Bank",
+      priority: "HOCH",
+      to: "gruendung@nrwbank.de",
+      cc: "info@west-money-bau.de",
+      subject: "Fördermittel-Anfrage - West Money Bau | PropTech Startup Köln",
+      body: `Sehr geehrtes NRW.Bank Gründungsteam,
+
+die West Money Bau GmbH aus Köln interessiert sich für Fördermittel und Beteiligungsprogramme.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+UNTERNEHMENSPROFIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Firma: West Money Bau GmbH
+• Standort: Köln, NRW
+• Gründung: 2024
+• Branche: PropTech / Smart Home / Software
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INTERESSE AN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• NRW.SeedCap (Eigenkapitalbeteiligung)
+• NRW.Venture (Co-Investment mit Business Angels)
+• Gründungsdarlehen
+• Innovationskredit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FINANZIERUNGSBEDARF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Gesamt: €500.000
+• Verwendung: Produktentwicklung, Flagship Store, Marketing
+
+Bitte beraten Sie uns zu passenden Förderprogrammen.`
+    },
+    {
+      id: "kfw",
+      name: "KfW Bank",
+      priority: "HOCH",
+      to: "info@kfw.de",
+      cc: "info@west-money-bau.de",
+      subject: "ERP-Gründerkredit Anfrage - West Money Bau GmbH",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH interessiert sich für KfW-Förderkredite.
+
+UNTERNEHMEN:
+• West Money Bau GmbH, Köln
+• Gründung: 2024
+• Branche: PropTech / Smart Home / Software
+• Umsatz 2025: €847.523
+
+INTERESSE AN:
+• ERP-Gründerkredit - StartGeld
+• ERP-Digitalisierungs- und Innovationskredit
+• ERP-Kapital für Gründung
+
+FINANZIERUNGSBEDARF:
+• €200.000 - €500.000
+
+Bitte senden Sie uns Informationen zu den Anforderungen.`
+    },
+    {
+      id: "bafa",
+      name: "BAFA Förderprogramme",
+      priority: "MITTEL",
+      to: "foerderung@bafa.bund.de",
+      cc: "info@west-money-bau.de",
+      subject: "Förderprogramm-Anfrage - Digitalisierung Smart Home",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH interessiert sich für BAFA-Förderprogramme.
+
+UNTERNEHMEN:
+• West Money Bau GmbH, Köln
+• Branche: PropTech / Smart Home / Barrierefreies Bauen
+
+INTERESSE AN:
+• Förderung Digitalisierung
+• Energieeffizienz in Gebäuden
+• Barrierefreies Bauen
+
+Bitte informieren Sie uns über relevante Programme.`
+    }
+  ],
+
+  "🏢 Corporate Venture Capital": [
+    {
+      id: "telekom_vc",
+      name: "Deutsche Telekom Capital Partners",
+      priority: "HOCH",
+      to: "dtcp@telekom.de",
+      cc: "info@west-money-bau.de",
+      subject: "Investment Opportunity - Smart Home IoT Platform | €500K",
+      body: `Dear DTCP Team,
+
+West Money Bau is developing "West Money OS" - a Smart Home control platform with IoT integration - and sees strong strategic fit with Deutsche Telekom.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRATEGIC FIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Smart Home / IoT Platform
+• 5G/Connectivity integration potential
+• B2B and B2C market coverage
+• Synergy with Telekom Smart Home offerings
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Seed Round: €500,000
+• Equity: 15-20%
+• Revenue 2025: €847K
+
+We see strong synergies with Deutsche Telekom's Smart Home initiatives.`
+    },
+    {
+      id: "bosch_vc",
+      name: "Robert Bosch Venture Capital",
+      priority: "HOCH",
+      to: "venture@de.bosch.com",
+      cc: "info@west-money-bau.de",
+      subject: "Smart Home Startup - West Money Bau | Building Technology",
+      body: `Dear RBVC Team,
+
+West Money Bau is building a Smart Home ecosystem with strong relevance to building technology and connected devices.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRATEGIC FIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Smart Home / Building Automation
+• LOXONE, KNX Integration (Bosch compatible)
+• VR/AR for Building Visualization
+• Barrier-free Construction (aging society)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT ASK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• €500,000 Seed for 15-20%
+• Revenue 2025: €847K
+• Location: Cologne, Germany
+
+We believe there are strong synergies with Bosch Building Technologies.`
+    },
+    {
+      id: "siemens_vc",
+      name: "Siemens Next47",
+      priority: "MITTEL",
+      to: "next47@siemens.com",
+      cc: "info@west-money-bau.de",
+      subject: "PropTech Investment - Smart Building Platform",
+      body: `Dear Next47 Team,
+
+West Money Bau is developing a Smart Building platform with strong alignment to Siemens Smart Infrastructure.
+
+OPPORTUNITY:
+• Smart Home / Building Automation SaaS
+• Integration with LOXONE, KNX, building systems
+• VR Showroom Experience for buildings
+
+INVESTMENT:
+• €500K Seed for 15-20%
+• Revenue: €847K (2025)
+
+Interested in exploring synergies with Siemens Smart Infrastructure.`
+    }
+  ],
+
+  "👤 Private Equity & Family Office": [
+    {
+      id: "dbag",
+      name: "Deutsche Beteiligungs AG",
+      priority: "MITTEL",
+      to: "info@dbag.de",
+      cc: "info@west-money-bau.de",
+      subject: "Wachstumsfinanzierung - PropTech Startup West Money Bau",
+      body: `Sehr geehrte DBAG,
+
+die West Money Bau GmbH sucht Wachstumskapital für unsere Expansion.
+
+INVESTMENT CASE:
+• Sektor: PropTech / Smart Home / VR
+• Investment: €500.000 Seed
+• Umsatz 2025: €847.523
+• Wachstum: +23,5% YoY
+
+EXPANSION PLAN:
+• West Money OS SaaS Launch (Q1 2026)
+• Flagship Store Köln (Q2 2026)
+• DACH Expansion (2027)
+
+Wir freuen uns auf Ihre Rückmeldung.`
+    },
+    {
+      id: "haniel",
+      name: "Franz Haniel & Cie.",
+      priority: "MITTEL",
+      to: "beteiligungen@haniel.de",
+      cc: "info@west-money-bau.de",
+      subject: "Investment Opportunity - PropTech / Smart Home DACH",
+      body: `Sehr geehrtes Haniel Team,
+
+die West Money Bau GmbH aus Köln sucht einen strategischen Investor.
+
+PROFIL:
+• Branche: PropTech / Smart Home / Barrierefreies Bauen
+• Standort: Köln
+• Investment: €500.000 für 15-20%
+• Umsatz: €847K (2025)
+
+Als deutsches Familienunternehmen mit Fokus auf Mittelstand und nachhaltige Investments sehen wir starke Synergien.`
+    }
+  ],
+
+  "🌐 International VCs": [
+    {
+      id: "dn_capital",
+      name: "DN Capital",
+      priority: "MITTEL",
+      to: "deals@dncapital.com",
+      cc: "info@west-money-bau.de",
+      subject: "PropTech Seed Investment - West Money Bau Germany",
+      body: `Dear DN Capital Team,
+
+West Money Bau is seeking Seed investment for our Smart Home PropTech platform in Germany.
+
+OPPORTUNITY:
+• Sector: PropTech / Smart Home / SaaS
+• Stage: Seed
+• Ask: €500,000 for 15-20%
+• Revenue 2025: €847,523
+• Location: Cologne, Germany
+
+PRODUCTS:
+• West Money OS - Smart Home SaaS
+• VR Showroom (Meta Quest 3)
+• Flagship Store Cologne
+
+Looking forward to your response.`
+    },
+    {
+      id: "jll_spark",
+      name: "JLL Spark",
+      priority: "HOCH",
+      to: "spark@jll.com",
+      cc: "info@west-money-bau.de",
+      subject: "PropTech Investment - Smart Home Retail Experience Germany",
+      body: `Dear JLL Spark Team,
+
+West Money Bau is building a unique PropTech platform combining Smart Home technology, VR experiences, and Retail.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STRATEGIC FIT FOR JLL SPARK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Smart Home Showroom / Retail Experience
+• VR Property Visualization
+• Building Technology Integration
+• Real Estate Tech meets Consumer Experience
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• €500,000 Seed for 15-20%
+• Revenue: €847K (2025)
+• Flagship Store: Cologne Premium Location (Ehrenstraße)
+
+Strong alignment with JLL's retail and PropTech investment focus.`
+    }
+  ],
+
+  "💡 Crowdfunding Plattformen": [
+    {
+      id: "angel_network",
+      name: "Angel Investment Network DE",
+      priority: "MITTEL",
+      to: "info@angelinvestmentnetz.de",
+      cc: "info@west-money-bau.de",
+      subject: "Startup Listing - West Money Bau | €500K PropTech",
+      body: `Sehr geehrtes Team,
+
+die West Money Bau GmbH möchte sich auf Ihrer Plattform listen.
+
+INVESTMENT OPPORTUNITY:
+• Investment: €500.000 für 15-20%
+• Branche: PropTech / Smart Home / VR
+• Umsatz 2025: €847.523
+• Standort: Köln
+
+Bitte senden Sie uns Informationen zur Registrierung.`
+    },
+    {
+      id: "seedblink",
+      name: "SeedBlink",
+      priority: "MITTEL",
+      to: "hello@seedblink.com",
+      cc: "info@west-money-bau.de",
+      subject: "Equity Crowdfunding - West Money Bau PropTech",
+      body: `Dear SeedBlink Team,
+
+West Money Bau is interested in Equity Crowdfunding for our PropTech platform.
+
+CAMPAIGN DETAILS:
+• Target: €500,000
+• Sector: PropTech / Smart Home / VR
+• Revenue 2025: €847,523
+• Location: Cologne, Germany
+
+Please send us information about your platform.`
+    },
+    {
+      id: "companisto",
+      name: "Companisto",
+      priority: "MITTEL",
+      to: "startups@companisto.com",
+      cc: "info@west-money-bau.de",
+      subject: "Crowdinvesting Kampagne - West Money Bau PropTech",
+      body: `Sehr geehrtes Companisto Team,
+
+die West Money Bau interessiert sich für eine Crowdinvesting-Kampagne.
+
+KAMPAGNENDETAILS:
+• Ziel: €500.000
+• Branche: PropTech / Smart Home / VR
+• Produkte: West Money OS, VR Showroom, Flagship Store
+• Umsatz: €847K
+
+Bitte informieren Sie uns über das Bewerbungsverfahren.`
+    },
+    {
+      id: "seedrs",
+      name: "Seedrs",
+      priority: "NIEDRIG",
+      to: "raise@seedrs.com",
+      cc: "info@west-money-bau.de",
+      subject: "Equity Crowdfunding Campaign - West Money Bau",
+      body: `Dear Seedrs Team,
+
+West Money Bau is exploring Equity Crowdfunding for European expansion.
+
+CAMPAIGN:
+• Target: €500,000
+• Sector: PropTech / Smart Home
+• Traction: €847K Revenue
+
+Please send us information about running a campaign on Seedrs.`
+    }
+  ]
+};
+
+let sentCount = 0;
+let allEmails = [];
+
+function getSignature(body) {
+  return (body.includes('Dear') || body.includes('Best regards')) ? SIGNATURE_EN : SIGNATURE_DE;
+}
+
+function flattenEmails() {
+  allEmails = [];
+  for (const [kat, emails] of Object.entries(EMAILS)) {
+    for (const email of emails) {
+      allEmails.push({ ...email, kategorie: kat });
+    }
+  }
+}
+
+function sendAllEmails() {
+  flattenEmails();
+  sendSequentially(0);
+}
+
+function sendCategoryEmails(kategorie) {
+  const emails = EMAILS[kategorie] || [];
+  sendSequentiallyList(emails, 0);
+}
+
+function sendSequentially(index) {
+  if (index < allEmails.length) {
+    const email = allEmails[index];
+    openGmail(email);
+    setTimeout(() => sendSequentially(index + 1), 2000);
+  }
+}
+
+function sendSequentiallyList(list, index) {
+  if (index < list.length) {
+    openGmail(list[index]);
+    setTimeout(() => sendSequentiallyList(list, index + 1), 2000);
+  }
+}
+
+function openGmail(email) {
+  const fullBody = email.body + '\n\n' + getSignature(email.body);
+  const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email.to)}&cc=${encodeURIComponent(email.cc || '')}&su=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(fullBody)}`;
+  window.open(gmailLink, '_blank');
+  markSent(email.id);
+}
+
+function renderEmails() {
+  const container = document.getElementById('emailContainer');
+  
+  for (const [kategorie, emails] of Object.entries(EMAILS)) {
+    const katDiv = document.createElement('div');
+    katDiv.className = 'kategorie';
+    katDiv.innerHTML = `<div class="kategorie-header">${kategorie} (${emails.length}) <button class="send-all" onclick="sendCategoryEmails('${kategorie}')">🚀 Alle senden</button></div>`;
+    
+    for (const email of emails) {
+      const priorityClass = email.priority === 'HOCH' ? 'priority-hoch' : 
+                           email.priority === 'MITTEL' ? 'priority-mittel' : 'priority-niedrig';
+      
+      const fullBody = email.body + '\n\n' + getSignature(email.body);
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email.to)}&cc=${encodeURIComponent(email.cc || '')}&su=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(fullBody)}`;
+      
+      katDiv.innerHTML += `
+        <div class="email-card">
+          <div class="email-header" onclick="toggleEmail('${email.id}')">
+            <div class="email-info">
+              <h3>${email.name}</h3>
+              <p>An: ${email.to}</p>
+            </div>
+            <span class="email-priority ${priorityClass}">${email.priority}</span>
+          </div>
+          <div class="email-body" id="body-${email.id}">
+            <div class="email-field">
+              <label>An</label>
+              <div class="email-field-value">${email.to}</div>
+            </div>
+            <div class="email-field">
+              <label>CC</label>
+              <div class="email-field-value">${email.cc || '-'}</div>
+            </div>
+            <div class="email-field">
+              <label>Betreff</label>
+              <div class="email-field-value">${email.subject}</div>
+            </div>
+            <div class="email-field">
+              <label>Nachricht</label>
+              <div class="email-field-value email-text">${fullBody}</div>
+            </div>
+            <div class="btn-group">
+              <a href="${gmailLink}" target="_blank" class="btn btn-gmail" id="gmail-${email.id}" onclick="markSent('${email.id}')">📧 In Gmail öffnen</a>
+              <button class="btn btn-secondary" onclick="copyEmail('${email.id}')">📋 Text kopieren</button>
+              <button class="btn btn-primary" onclick="markSent('${email.id}')">✅ Als gesendet markieren</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    container.appendChild(katDiv);
+  }
+}
+
+function toggleEmail(id) {
+  const body = document.getElementById('body-' + id);
+  body.classList.toggle('active');
+}
+
+function copyEmail(id) {
+  const body = document.getElementById('body-' + id);
+  const text = body.querySelector('.email-text').textContent;
+  navigator.clipboard.writeText(text);
+  showToast('Text kopiert!');
+}
+
+function markSent(id) {
+  const btn = document.getElementById('gmail-' + id);
+  if (btn && !btn.classList.contains('sent')) {
+    btn.classList.add('sent');
+    btn.textContent = '✅ Geöffnet';
+    sentCount++;
+    document.getElementById('sentCount').textContent = sentCount;
+  }
+}
+
+function showToast(msg) {
+  const to

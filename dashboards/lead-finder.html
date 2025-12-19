@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Finder | West Money Bau</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #00f0ff;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --hot: #ef4444;
+            --warm: #f59e0b;
+            --cold: #3b82f6;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        .header {
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .stat-card .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        /* Lead Cards */
+        .leads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .lead-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .lead-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .lead-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .lead-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .lead-info .category {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .lead-score {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .score-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .score-hot {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--hot);
+        }
+
+        .score-warm {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warm);
+        }
+
+        .score-cold {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--cold);
+        }
+
+        .lead-body {
+            padding: 1.25rem;
+        }
+
+        .lead-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .detail-row .icon {
+            width: 24px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .detail-row a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .detail-row a:hover {
+            text-decoration: underline;
+        }
+
+        .lead-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .tag.highlight {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .lead-potential {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .potential-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .potential-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+        }
+
+        .lead-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .lead-actions .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .email-preview {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            white-space: pre-wrap;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { border-left: 3px solid var(--success); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .leads-grid { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🎯</div>
+            <div class="logo-text">
+                <h1>Lead Finder</h1>
+                <span>West Money Bau • Smart Home & LOXONE</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+            <button class="btn btn-success" onclick="exportLeads()">📥 Export CSV</button>
+            <button class="btn btn-primary" onclick="refreshLeads()">🔄 Aktualisieren</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="icon">🎯</div>
+                <div class="value" id="totalLeads">0</div>
+                <div class="label">Gesamt Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🔥</div>
+                <div class="value" id="hotLeads">0</div>
+                <div class="label">Hot Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🌡️</div>
+                <div class="value" id="warmLeads">0</div>
+                <div class="label">Warm Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">💰</div>
+                <div class="value" id="totalPotential">€0</div>
+                <div class="label">Pipeline Potenzial</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📧</div>
+                <div class="value" id="contactedLeads">0</div>
+                <div class="label">Kontaktiert</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Kategorie:</label>
+                <select id="filterCategory" onchange="filterLeads()">
+                    <option value="all">Alle</option>
+                    <option value="architekt">🏛️ Architekten</option>
+                    <option value="bautraeger">🏗️ Bauträger</option>
+                    <option value="seniorenheim">🏥 Seniorenheime</option>
+                    <option value="hotel">🏨 Hotels</option>
+                    <option value="praxis">⚕️ Praxen</option>
+                    <option value="privat">🏠 Privatkunden</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Score:</label>
+                <select id="filterScore" onchange="filterLeads()">
+                    <option value="all">Alle</option>
+                    <option value="hot">🔥 Hot</option>
+                    <option value="warm">🌡️ Warm</option>
+                    <option value="cold">❄️ Cold</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Region:</label>
+                <select id="filterRegion" onchange="filterLeads()">
+                    <option value="all">Alle</option>
+                    <option value="duesseldorf">Düsseldorf</option>
+                    <option value="koeln">Köln</option>
+                    <option value="nrw">NRW</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Suche:</label>
+                <input type="text" id="searchInput" placeholder="Name, Firma..." onkeyup="filterLeads()">
+            </div>
+        </div>
+
+        <!-- Leads Grid -->
+        <div class="leads-grid" id="leadsGrid"></div>
+    </main>
+
+    <!-- Email Modal -->
+    <div class="modal-overlay" id="emailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📧 E-Mail Vorlage</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="email-preview" id="emailPreview"></div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="flex:1" onclick="copyEmail()">📋 Kopieren</button>
+                <button class="btn btn-primary" style="flex:1" onclick="openMailClient()">📤 E-Mail öffnen</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // WEST MONEY BAU - LEAD FINDER
+        // Echte Leads aus Web-Recherche - Stand: Dezember 2025
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        const leads = [
+            // ARCHITEKTEN - HOT LEADS
+            {
+                id: 1,
+                name: "Schmale Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Markus Schmale",
+                email: "kontakt@schmale-architekten.com",
+                phone: "",
+                website: "https://www.schmale-architekten.com",
+                address: "Grevenbroich-Hemmerden",
+                tags: ["Neubau", "Wohnquartier", "Pflegezentrum", "Deutscher Bauherrenpreis"],
+                potential: 45000,
+                reason: "Aktuelles Projekt: Pflegezentrum St. Anna Düsseldorf (120 Plätze) - perfekt für LOXONE Smart Home Integration",
+                notes: "BDA Mitglied, realisiert große Wohnquartiere, Fokus auf nachhaltige Neubauten"
+            },
+            {
+                id: 2,
+                name: "EHRICH Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@ehricharchitekten.de",
+                phone: "",
+                website: "https://ehricharchitekten.de",
+                address: "Düsseldorf",
+                tags: ["Wohnquartier", "Nahversorgung", "Revitalisierung", "Kaiserswerth"],
+                potential: 65000,
+                reason: "Projekt 'Lebenswerth' in Düsseldorf-Kaiserswerth: 24 Wohneinheiten am Rhein - Smart Home ideal",
+                notes: "Fokus auf energetische Sanierung und Revitalisierung, perfekt für LOXONE Nachrüstung"
+            },
+            {
+                id: 3,
+                name: "Georg Döring Architekten GmbH",
+                category: "architekt",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "Georg Döring, Volker Brockmeier",
+                email: "info@doering-architekten.de",
+                phone: "",
+                website: "https://doering-architekten.de",
+                address: "Düsseldorf",
+                tags: ["Einfamilienhaus", "Luxus", "Real Estate Award 2025", "Generalübernehmer"],
+                potential: 35000,
+                reason: "Spezialisiert auf hochwertige Einfamilienhäuser - Smart Home ist Qualitätsmerkmal",
+                notes: "Gewinner Real Estate Award 2025, bietet jetzt auch schlüsselfertige Lösungen an"
+            },
+            {
+                id: 4,
+                name: "SOHOarchitekten",
+                category: "architekt",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "architekten@SOHOarchitekten.de",
+                phone: "+49 211 440 377 30",
+                website: "https://www.sohoarchitekten.de",
+                address: "Stockkampstraße 12, 40477 Düsseldorf",
+                tags: ["Arztpraxen", "Neubau", "Sanierung", "15+ Jahre"],
+                potential: 25000,
+                reason: "Spezialist für Arztpraxen - perfekte Zielgruppe für Smart Home in Praxen",
+                notes: "15+ Jahre Erfahrung, auch private Bauherren"
+            },
+            {
+                id: 5,
+                name: "Achim Sökefeld Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Achim Sökefeld",
+                email: "info@soekefeld.eu",
+                phone: "",
+                website: "https://soekefeld.eu",
+                address: "Düsseldorf",
+                tags: ["KNX-System", "Luxuswohnungen", "Denkmalschutz", "Neubau"],
+                potential: 55000,
+                reason: "Hat bereits KNX-Systeme in Projekten verbaut - kennt Smart Home!",
+                notes: "Realisiert luxuriöse Wohnungen hinter historischen Fassaden mit KNX"
+            },
+            {
+                id: 6,
+                name: "Eppinger und Kiiskinen Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "architekten@eppinger-kiiskinen.de",
+                phone: "+49 211 8800798",
+                website: "https://eppinger-kiiskinen.de",
+                address: "Leostraße 91, 40547 Düsseldorf",
+                tags: ["Barrierefreies Bauen", "Seniorengerecht", "Neubau", "Modernisierung"],
+                potential: 30000,
+                reason: "Fokus auf barrierefreies und seniorengerechtes Wohnen - perfekt für West Money Bau Expertise",
+                notes: "Seit 1999 aktiv, Schwerpunkt Lebensraum-Gestaltung"
+            },
+            // KÖLN ARCHITEKTEN
+            {
+                id: 7,
+                name: "STEIN Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "mail@stein-architekten.de",
+                phone: "+49 221 990 464 0",
+                website: "https://stein-architekten.de",
+                address: "Apostelnstraße 9, 50667 Köln",
+                tags: ["WDR Filmhaus", "Schulen", "Wohnbau", "70 Jahre"],
+                potential: 40000,
+                reason: "70 Jahre Erfahrung, große Projekte - Smart Building Integration möglich",
+                notes: "Bekannt für WDR Filmhaus, Max Planck Gymnasium Düsseldorf"
+            },
+            {
+                id: 8,
+                name: "Schilling Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "mail@schilling-architekten.de",
+                phone: "+49 221 91402 0",
+                website: "https://schilling-architekten.de",
+                address: "Gereonswall 75, 50670 Köln",
+                tags: ["TECE Campus", "Ausgezeichnet", "Minimalistisch", "Hochwertig"],
+                potential: 50000,
+                reason: "Vielfach ausgezeichnet, TECE Campus - Smart Building Integration",
+                notes: "Bekannt für ästhetische Projekte und innovative Bauweise"
+            },
+            // BAUTRÄGER / PROJEKTENTWICKLER
+            {
+                id: 9,
+                name: "Paul Schmalenbach Projektentwicklung",
+                category: "bautraeger",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "fleissinger@pspe.de",
+                phone: "+49 231 56349208",
+                website: "https://www.paul-schmalenbach.de",
+                address: "Burgunderstr. 47a, 40549 Düsseldorf",
+                tags: ["240 Wohnungen", "Barrierefrei", "KfW 40", "Mörsenbroich"],
+                potential: 120000,
+                reason: "Aktuell: 240 barrierefreie Wohnungen in Düsseldorf-Mörsenbroich - LOXONE ideal",
+                notes: "Alle Wohnungen barrierefrei nach neustem Energiestandard"
+            },
+            {
+                id: 10,
+                name: "DIE WOHNKOMPANIE NRW",
+                category: "bautraeger",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Niklas Swertz",
+                email: "nswertz@wohnkompanie.de",
+                phone: "",
+                website: "https://www.wohnkompanie.de",
+                address: "Willstätterstr. 12, 40549 Düsseldorf",
+                tags: ["Quartiersentwicklung", "Neubau", "Revitalisierung", "NRW-weit"],
+                potential: 150000,
+                reason: "Große Quartiersentwicklungen in NRW - Smart Home als Verkaufsargument",
+                notes: "Teil der Zech Group, stark in Düsseldorf, Köln, Essen"
+            },
+            {
+                id: 11,
+                name: "PAESCHKE GmbH",
+                category: "bautraeger",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "info@paeschke.de",
+                phone: "",
+                website: "https://www.paeschke.de",
+                address: "Elisabeth-Selbert-Straße 9, 40764 Langenfeld",
+                tags: ["10.000+ Wohnungen", "Seit 1952", "Schlüsselfertig", "Rheinland"],
+                potential: 80000,
+                reason: "10.000+ realisierte Wohnungen - große Menge für LOXONE Partnerschaften",
+                notes: "60+ Mitarbeiter, starke Marke im Rheinland"
+            },
+            {
+                id: 12,
+                name: "KÖLNreal Wohnbau GmbH",
+                category: "bautraeger",
+                score: "warm",
+                region: "koeln",
+                contact: "Martin Becker, Matthias Becker",
+                email: "info@koelnreal.de",
+                phone: "",
+                website: "https://koelnreal.de",
+                address: "Köln",
+                tags: ["Wohnimmobilien", "Familienunternehmen", "Hochwertig", "Rheinland"],
+                potential: 45000,
+                reason: "Familiengeführt, Fokus auf Qualität - Smart Home passt perfekt",
+                notes: "Gute Bewertungen, starker Fokus auf Wohnkomfort"
+            },
+            {
+                id: 13,
+                name: "WvM Immobilien + Projektentwicklung",
+                category: "bautraeger",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "info@wvm.de",
+                phone: "",
+                website: "https://wvm.de",
+                address: "Köln",
+                tags: ["Seit 1992", "Quartiere", "Berlin", "Düsseldorf"],
+                potential: 60000,
+                reason: "Erfahrener Entwickler in Köln, Düsseldorf und Berlin",
+                notes: "Mitglied Wohnungsbau Initiative Köln"
+            },
+            // SENIORENHEIME
+            {
+                id: 14,
+                name: "Caritasverband Düsseldorf e.V.",
+                category: "seniorenheim",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@caritas-duesseldorf.de",
+                phone: "",
+                website: "https://www.caritas-duesseldorf.de",
+                address: "Düsseldorf",
+                tags: ["St. Anna Neubau", "120 Plätze", "Pflegezentrum", "Mai 2025"],
+                potential: 85000,
+                reason: "Gerade neues Pflegezentrum St. Anna eröffnet (Mai 2025) - Smart Home nachrüsten!",
+                notes: "Moderner Neubau am Hilarius-Gilges-Platz, 120 Pflegeplätze"
+            },
+            {
+                id: 15,
+                name: "Haus Brina - Seniorenresidenzen",
+                category: "seniorenheim",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@brina.de",
+                phone: "",
+                website: "https://www.brina.de",
+                address: "Düsseldorf-Heerdt",
+                tags: ["Neue Generation Pflege", "Modern", "Apartments", "Expansion"],
+                potential: 95000,
+                reason: "Innovative Seniorenresidenz - 'Die neue Generation der Pflege' - expandiert nach Osnabrück",
+                notes: "Modernes Konzept, Hotelcharakter, perfekt für Smart Home"
+            },
+            {
+                id: 16,
+                name: "Alloheim Senioren-Residenz Neuss",
+                category: "seniorenheim",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "",
+                phone: "",
+                website: "https://www.alloheim.de",
+                address: "Neuss",
+                tags: ["Kette", "Modernisierung", "Digitalisierung"],
+                potential: 40000,
+                reason: "Große Kette mit Modernisierungsbedarf",
+                notes: "Teil der Alloheim Gruppe"
+            },
+            // HOTELS
+            {
+                id: 17,
+                name: "The Curve - Innenhafen Duisburg",
+                category: "hotel",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "info@developer.de",
+                phone: "",
+                website: "https://www.developer.de",
+                address: "Innenhafen Duisburg",
+                tags: ["Neubau", "Hotel", "Büro", "Gastronomie"],
+                potential: 75000,
+                reason: "Neubau-Projekt mit Hotel, Büro, Gastronomie - Smart Building ideal",
+                notes: "Projektentwickler: die developer GmbH aus Düsseldorf"
+            },
+            // PRIVATKUNDEN - Potenzielle Leads
+            {
+                id: 18,
+                name: "Neubaugebiet Dormagen-Horrem",
+                category: "privat",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "",
+                phone: "",
+                website: "",
+                address: "Dormagen-Horrem",
+                tags: ["Neubau", "Wohnquartier", "Baugenossenschaft"],
+                potential: 25000,
+                reason: "Neues Stadtquartier mit vielen Bauherren - Akquise-Potenzial",
+                notes: "Baugenossenschaft Dormagen eG, Spatenstich August 2025"
+            },
+            {
+                id: 19,
+                name: "BÖCKER-Wohnimmobilien",
+                category: "bautraeger",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@immobilien-boecker.de",
+                phone: "",
+                website: "https://www.immobilien-boecker.de",
+                address: "Düsseldorf",
+                tags: ["Neubauprojekte", "Düsseldorf", "Essen", "Duisburg"],
+                potential: 55000,
+                reason: "Mehrere aktuelle Neubauprojekte in Düsseldorf und Region",
+                notes: "Seit 1995, Fokus auf Rhein-Ruhr-Region"
+            },
+            {
+                id: 20,
+                name: "JSWD Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "info@jswd.de",
+                phone: "",
+                website: "https://jswd.de",
+                address: "Köln",
+                tags: ["Kö-Bogen", "Vodafone Campus", "Großprojekte", "NRW Landesregierung"],
+                potential: 100000,
+                reason: "Große Leuchtturmprojekte: Kö-Bogen, Vodafone Campus, NRW Verwaltungszentrum",
+                notes: "Einer der größten Architekten in NRW"
+            }
+        ];
+
+        let currentLead = null;
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLeads(leads);
+            updateStats();
+        });
+
+        function updateStats() {
+            document.getElementById('totalLeads').textContent = leads.length;
+            document.getElementById('hotLeads').textContent = leads.filter(l => l.score === 'hot').length;
+            document.getElementById('warmLeads').textContent = leads.filter(l => l.score === 'warm').length;
+            
+            const totalPotential = leads.reduce((sum, l) => sum + l.potential, 0);
+            document.getElementById('totalPotential').textContent = '€' + totalPotential.toLocaleString('de-DE');
+            
+            const contacted = JSON.parse(localStorage.getItem('contactedLeads') || '[]');
+            document.getElementById('contactedLeads').textContent = contacted.length;
+        }
+
+        function filterLeads() {
+            const category = document.getElementById('filterCategory').value;
+            const score = document.getElementById('filterScore').value;
+            const region = document.getElementById('filterRegion').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = leads.filter(lead => {
+                if (category !== 'all' && lead.category !== category) return false;
+                if (score !== 'all' && lead.score !== score) return false;
+                if (region !== 'all' && lead.region !== region) return false;
+                if (search && !lead.name.toLowerCase().includes(search) && !lead.tags.some(t => t.toLowerCase().includes(search))) return false;
+                return true;
+            });
+
+            renderLeads(filtered);
+        }
+
+        function renderLeads(leadsToRender) {
+            const grid = document.getElementById('leadsGrid');
+            const contacted = JSON.parse(localStorage.getItem('contactedLeads') || '[]');
+
+            const categoryIcons = {
+                'architekt': '🏛️',
+                'bautraeger': '🏗️',
+                'seniorenheim': '🏥',
+                'hotel': '🏨',
+                'praxis': '⚕️',
+                'privat': '🏠'
+            };
+
+            const categoryNames = {
+                'architekt': 'Architekturbüro',
+                'bautraeger': 'Bauträger / Projektentwickler',
+                'seniorenheim': 'Seniorenheim / Pflege',
+                'hotel': 'Hotel / Gastgewerbe',
+                'praxis': 'Arztpraxis',
+                'privat': 'Privatkunde'
+            };
+
+            grid.innerHTML = leadsToRender.map(lead => `
+                <div class="lead-card">
+                    <div class="lead-header">
+                        <div class="lead-info">
+                            <h3>${lead.name}</h3>
+                            <div class="category">${categoryIcons[lead.category]} ${categoryNames[lead.category]}</div>
+                        </div>
+                        <div class="lead-score">
+                            ${contacted.includes(lead.id) ? '<span style="color: var(--success);">✅</span>' : ''}
+                            <span class="score-badge score-${lead.score}">${lead.score === 'hot' ? '🔥 HOT' : lead.score === 'warm' ? '🌡️ WARM' : '❄️ COLD'}</span>
+                        </div>
+                    </div>
+                    <div class="lead-body">
+                        <div class="lead-details">
+                            ${lead.contact ? `<div class="detail-row"><span class="icon">👤</span> ${lead.contact}</div>` : ''}
+                            ${lead.email ? `<div class="detail-row"><span class="icon">📧</span> <a href="mailto:${lead.email}">${lead.email}</a></div>` : ''}
+                            ${lead.phone ? `<div class="detail-row"><span class="icon">📞</span> ${lead.phone}</div>` : ''}
+                            ${lead.website ? `<div class="detail-row"><span class="icon">🌐</span> <a href="${lead.website}" target="_blank">${lead.website.replace('https://', '')}</a></div>` : ''}
+                            <div class="detail-row"><span class="icon">📍</span> ${lead.address}</div>
+                        </div>
+                        <div class="lead-tags">
+                            ${lead.tags.map(tag => `<span class="tag ${lead.score === 'hot' ? 'highlight' : ''}">${tag}</span>`).join('')}
+                        </div>
+                        <div class="lead-potential">
+                            <div class="potential-label">Geschätztes Potenzial</div>
+                            <div class="potential-value">€${lead.potential.toLocaleString('de-DE')}</div>
+                        </div>
+                        <div style="background: var(--bg-dark); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; font-size: 0.9rem;">
+                            <strong>💡 Warum kontaktieren:</strong><br>
+                            ${lead.reason}
+                        </div>
+                        <div class="lead-actions">
+                            <button class="btn btn-outline" onclick="showDetails(${lead.id})">📋 Details</button>
+                            ${lead.email ? `<button class="btn btn-primary" onclick="generateEmail(${lead.id})">📧 E-Mail</button>` : `<button class="btn btn-outline" disabled>Keine E-Mail</button>`}
+                            <button class="btn btn-success" onclick="markContacted(${lead.id})">✅</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generateEmail(id) {
+            const lead = leads.find(l => l.id === id);
+            if (!lead) return;
+
+            currentLead = lead;
+
+            const emailText = `Betreff: Smart Home & LOXONE Integration für Ihre Projekte
+
+Sehr geehrte Damen und Herren,
+
+mein Name ist Ömer Hüseyin Coşkun, Geschäftsführer der West Money Bau.
+
+Wir sind spezialisiert auf:
+• LOXONE Smart Home Systeme (zertifizierter Partner)
+• Barrierefreies Bauen & Wohnraumanpassung
+• Gebäudeautomation für Wohn- und Gewerbeobjekte
+
+${lead.reason}
+
+Gerne würde ich Ihnen in einem kurzen Gespräch zeigen, wie wir Ihre Projekte mit intelligenter Gebäudetechnik aufwerten können.
+
+Darf ich Sie zu einem unverbindlichen Beratungsgespräch einladen?
+
+Mit freundlichen Grüßen
+
+Ömer Hüseyin Coşkun
+Geschäftsführer / CEO
+
+WEST MONEY BAU
+Smart Home Systems | LOXONE Partner | Barrierefreies Bauen
+E-Mail: info@west-money-bau.de`;
+
+            document.getElementById('emailPreview').textContent = emailText;
+            document.getElementById('emailModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('emailModal').classList.remove('active');
+        }
+
+        function copyEmail() {
+            const text = document.getElementById('emailPreview').textContent;
+            navigator.clipboard.writeText(text);
+            showToast('E-Mail in Zwischenablage kopiert!');
+        }
+
+        function openMailClient() {
+            if (!currentLead || !currentLead.email) return;
+            
+            const subject = encodeURIComponent('Smart Home & LOXONE Integration für Ihre Projekte');
+            const body = encodeURIComponent(document.getElementById('emailPreview').textContent);
+            window.open(`mailto:${currentLead.email}?subject=${subject}&body=${body}`);
+            
+            markContacted(currentLead.id);
+            closeModal();
+        }
+
+        function markContacted(id) {
+            let contacted = JSON.parse(localStorage.getItem('contactedLeads') || '[]');
+            if (!contacted.includes(id)) {
+                contacted.push(id);
+                localStorage.setItem('contactedLeads', JSON.stringify(contacted));
+                updateStats();
+                filterLeads();
+                showToast('Lead als kontaktiert markiert ✅');
+            }
+        }
+
+        function showDetails(id) {
+            const lead = leads.find(l => l.id === id);
+            if (!lead) return;
+            alert(`${lead.name}\n\n${lead.notes}\n\nPotenzial: €${lead.potential.toLocaleString('de-DE')}`);
+        }
+
+        function exportLeads() {
+            const headers = ['Name', 'Kategorie', 'Score', 'Region', 'Kontakt', 'E-Mail', 'Telefon', 'Website', 'Potenzial', 'Grund'];
+            const rows = leads.map(l => [
+                l.name, l.category, l.score, l.region, l.contact || '', l.email || '', l.phone || '', l.website || '', l.potential, l.reason
+            ]);
+
+            const csv = [headers, ...rows].map(r => r.join(';')).join('\n');
+            downloadFile(csv, 'leads-export.csv', 'text/csv');
+            showToast('Leads exportiert!');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function refreshLeads() {
+            showToast('Leads aktualisiert! 🔄');
+            filterLeads();
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast success';
+            toast.innerHTML = `<span>✅</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+    </script>
+</body>
+</html>

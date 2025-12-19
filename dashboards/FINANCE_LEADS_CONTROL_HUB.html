@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Money Bau - Finance & Leads Control Hub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+    
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: rgba(0,0,0,0.3);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 25px;
+    }
+    .logo-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #22c55e, #10b981);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .logo-text h3 { font-size: 14px; color: #fff; }
+    .logo-text p { font-size: 10px; color: #666; }
+    
+    .nav-section {
+      margin-bottom: 25px;
+    }
+    .nav-section-title {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #888;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .nav-item .icon { font-size: 18px; }
+    .nav-item .badge {
+      margin-left: auto;
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 25px;
+    }
+    
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 24px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header p { color: #666; font-size: 13px; margin-top: 5px; }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .header-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .header-btn.primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+    .header-btn.secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .header-btn:hover { transform: translateY(-2px); }
+    
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .stat-card.revenue::before { background: linear-gradient(90deg, #22c55e, #10b981); }
+    .stat-card.leads::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .stat-card.conversion::before { background: linear-gradient(90deg, #8b5cf6, #a855f7); }
+    .stat-card.pipeline::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    .stat-card.cashflow::before { background: linear-gradient(90deg, #ec4899, #f43f5e); }
+    .stat-card.customers::before { background: linear-gradient(90deg, #06b6d4, #0ea5e9); }
+    
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    .stat-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .stat-card.revenue .stat-icon { background: rgba(34, 197, 94, 0.2); }
+    .stat-card.leads .stat-icon { background: rgba(59, 130, 246, 0.2); }
+    .stat-card.conversion .stat-icon { background: rgba(139, 92, 246, 0.2); }
+    .stat-card.pipeline .stat-icon { background: rgba(245, 158, 11, 0.2); }
+    .stat-card.cashflow .stat-icon { background: rgba(236, 72, 153, 0.2); }
+    .stat-card.customers .stat-icon { background: rgba(6, 182, 212, 0.2); }
+    
+    .stat-change {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    .stat-change.positive { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .stat-change.negative { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .stat-card.revenue .stat-value { color: #22c55e; }
+    .stat-card.leads .stat-value { color: #3b82f6; }
+    .stat-card.conversion .stat-value { color: #8b5cf6; }
+    .stat-card.pipeline .stat-value { color: #f59e0b; }
+    .stat-card.cashflow .stat-value { color: #ec4899; }
+    .stat-card.customers .stat-value { color: #06b6d4; }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #888;
+    }
+    
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 1200px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* Cards */
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-header h3 {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-header .badge {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .card-body { padding: 20px; }
+    
+    /* Pipeline */
+    .pipeline-stages {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    .pipeline-stage {
+      min-width: 200px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      padding: 15px;
+    }
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .stage-name {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stage-count {
+      background: rgba(255,255,255,0.1);
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+    }
+    .stage-value {
+      font-size: 16px;
+      font-weight: bold;
+      color: #22c55e;
+      margin-bottom: 10px;
+    }
+    
+    .lead-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lead-card:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+    }
+    .lead-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .lead-company {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .lead-value {
+      font-size: 14px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+    .lead-tags {
+      display: flex;
+      gap: 5px;
+      margin-top: 8px;
+    }
+    .lead-tag {
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+    
+    /* Finance Table */
+    .finance-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .finance-table th {
+      text-align: left;
+      padding: 12px 15px;
+      background: rgba(0,0,0,0.2);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+    .finance-table td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .finance-table tr:hover { background: rgba(255,255,255,0.02); }
+    .finance-table .amount { font-family: 'SF Mono', Monaco, monospace; font-weight: 600; }
+    .finance-table .positive { color: #22c55e; }
+    .finance-table .negative { color: #ef4444; }
+    
+    /* Chart Placeholder */
+    .chart-container {
+      height: 200px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .chart-bar {
+      width: 30px;
+      background: linear-gradient(180deg, #22c55e, #16a34a);
+      border-radius: 5px 5px 0 0;
+      position: relative;
+    }
+    .chart-bar::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #888;
+    }
+    .chart-bar::before {
+      content: attr(data-value);
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #22c55e;
+      white-space: nowrap;
+    }
+    
+    /* Activity Feed */
+    .activity-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .activity-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .activity-icon.lead { background: rgba(59, 130, 246, 0.2); }
+    .activity-icon.deal { background: rgba(34, 197, 94, 0.2); }
+    .activity-icon.payment { background: rgba(139, 92, 246, 0.2); }
+    .activity-icon.meeting { background: rgba(245, 158, 11, 0.2); }
+    .activity-content h4 { font-size: 13px; margin-bottom: 3px; }
+    .activity-content p { font-size: 11px; color: #888; }
+    .activity-time {
+      margin-left: auto;
+      font-size: 11px;
+      color: #666;
+    }
+    
+    /* Quick Stats */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .quick-stat {
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
+    .quick-stat-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+    .quick-stat-label {
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    
+    /* Progress Bars */
+    .progress-item {
+      margin-bottom: 15px;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    .progress-fill.green { background: linear-gradient(90deg, #22c55e, #10b981); }
+    .progress-fill.blue { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .progress-fill.purple { background: linear-gradient(90deg, #8b5cf6, #a855f7); }
+    .progress-fill.orange { background: linear-gradient(90deg, #f59e0b, #f97316); }
+    
+    /* Lead Form Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #1a1a2e;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    .modal-header h3 { font-size: 18px; }
+    .modal-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: #22c55e;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    /* Integration Cards */
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .integration-card {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .integration-card:hover {
+      border-color: #22c55e;
+      transform: translateY(-3px);
+    }
+    .integration-card .icon { font-size: 28px; margin-bottom: 10px; }
+    .integration-card .name { font-size: 12px; font-weight: 600; }
+    .integration-card .status {
+      font-size: 10px;
+      margin-top: 5px;
+      color: #22c55e;
+    }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      display: none;
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">W</div>
+      <div class="logo-text">
+        <h3>West Money Bau</h3>
+        <p>Finance & Leads Hub</p>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">Overview</div>
+      <div class="nav-item active" onclick="showSection('dashboard')">
+        <span class="icon">📊</span>
+        Dashboard
+      </div>
+      <div class="nav-item" onclick="showSection('pipeline')">
+        <span class="icon">🎯</span>
+        Sales Pipeline
+        <span class="badge">12</span>
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">Finanzen</div>
+      <div class="nav-item" onclick="showSection('revenue')">
+        <span class="icon">💵</span>
+        Umsatz & Einnahmen
+      </div>
+      <div class="nav-item" onclick="showSection('expenses')">
+        <span class="icon">💸</span>
+        Ausgaben
+      </div>
+      <div class="nav-item" onclick="showSection('invoices')">
+        <span class="icon">📄</span>
+        Rechnungen
+        <span class="badge">3</span>
+      </div>
+      <div class="nav-item" onclick="showSection('cashflow')">
+        <span class="icon">📈</span>
+        Cashflow
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">Leads & CRM</div>
+      <div class="nav-item" onclick="showSection('leads')">
+        <span class="icon">👥</span>
+        Alle Leads
+        <span class="badge">47</span>
+      </div>
+      <div class="nav-item" onclick="showSection('customers')">
+        <span class="icon">⭐</span>
+        Kunden
+      </div>
+      <div class="nav-item" onclick="showSection('activities')">
+        <span class="icon">📅</span>
+        Aktivitäten
+      </div>
+    </div>
+    
+    <div class="nav-section">
+      <div class="nav-section-title">Integrationen</div>
+      <div class="nav-item" onclick="showSection('integrations')">
+        <span class="icon">🔗</span>
+        Verbindungen
+      </div>
+      <div class="nav-item" onclick="window.open('REVOLUT_INTEGRATION_HUB.html')">
+        <span class="icon">🏦</span>
+        Revolut
+      </div>
+      <div class="nav-item" onclick="window.open('https://app.hubspot.com')">
+        <span class="icon">🧡</span>
+        HubSpot CRM
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h1>💰 Finance & Leads Control</h1>
+        <p>West Money Bau GmbH | Stand: Dezember 2024</p>
+      </div>
+      <div class="header-actions">
+        <button class="header-btn secondary" onclick="exportData()">📥 Export</button>
+        <button class="header-btn secondary" onclick="syncAll()">🔄 Sync</button>
+        <button class="header-btn primary" onclick="openModal('lead')">➕ Neuer Lead</button>
+      </div>
+    </div>
+    
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card revenue">
+        <div class="stat-header">
+          <div class="stat-icon">💵</div>
+          <span class="stat-change positive">+23,5%</span>
+        </div>
+        <div class="stat-value">€847.523</div>
+        <div class="stat-label">Umsatz 2025</div>
+      </div>
+      
+      <div class="stat-card leads">
+        <div class="stat-header">
+          <div class="stat-icon">👥</div>
+          <span class="stat-change positive">+12</span>
+        </div>
+        <div class="stat-value">47</div>
+        <div class="stat-label">Aktive Leads</div>
+      </div>
+      
+      <div class="stat-card conversion">
+        <div class="stat-header">
+          <div class="stat-icon">🎯</div>
+          <span class="stat-change positive">+5%</span>
+        </div>
+        <div class="stat-value">32%</div>
+        <div class="stat-label">Conversion Rate</div>
+      </div>
+      
+      <div class="stat-card pipeline">
+        <div class="stat-header">
+          <div class="stat-icon">📊</div>
+          <span class="stat-change positive">+€85K</span>
+        </div>
+        <div class="stat-value">€425.000</div>
+        <div class="stat-label">Pipeline Value</div>
+      </div>
+      
+      <div class="stat-card cashflow">
+        <div class="stat-header">
+          <div class="stat-icon">💳</div>
+          <span class="stat-change positive">+€12K</span>
+        </div>
+        <div class="stat-value">€78.500</div>
+        <div class="stat-label">Cashflow (Monat)</div>
+      </div>
+      
+      <div class="stat-card customers">
+        <div class="stat-header">
+          <div class="stat-icon">⭐</div>
+          <span class="stat-change positive">+8</span>
+        </div>
+        <div class="stat-value">34</div>
+        <div class="stat-label">Aktive Kunden</div>
+      </div>
+    </div>
+    
+    <!-- Pipeline Section -->
+    <div class="card" style="margin-bottom: 25px;">
+      <div class="card-header">
+        <h3>🎯 Sales Pipeline</h3>
+        <span class="badge">12 Deals | €425K</span>
+      </div>
+      <div class="card-body">
+        <div class="pipeline-stages">
+          
+          <div class="pipeline-stage">
+            <div class="stage-header">
+              <span class="stage-name">🔵 Neu</span>
+              <span class="stage-count">4</span>
+            </div>
+            <div class="stage-value">€85.000</div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Familie Weber</div>
+              <div class="lead-company">Smart Home Neubau</div>
+              <div class="lead-value">€35.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">LOXONE</span>
+                <span class="lead-tag">Neubau</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Praxis Dr. Müller</div>
+              <div class="lead-company">Barrierefreier Umbau</div>
+              <div class="lead-value">€28.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Barrierefrei</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Residenz Am Park</div>
+              <div class="lead-company">Seniorenwohnanlage</div>
+              <div class="lead-value">€22.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Pflege</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pipeline-stage">
+            <div class="stage-header">
+              <span class="stage-name">🟡 Qualifiziert</span>
+              <span class="stage-count">3</span>
+            </div>
+            <div class="stage-value">€95.000</div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Villa Ehrenfeld</div>
+              <div class="lead-company">Komplett-Smart-Home</div>
+              <div class="lead-value">€48.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">LOXONE</span>
+                <span class="lead-tag">Premium</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Bürokomplex Deutz</div>
+              <div class="lead-company">Gebäudeautomation</div>
+              <div class="lead-value">€32.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">B2B</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Pension Altstadt</div>
+              <div class="lead-company">Sicherheitssystem</div>
+              <div class="lead-value">€15.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Verisure</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pipeline-stage">
+            <div class="stage-header">
+              <span class="stage-name">🟠 Angebot</span>
+              <span class="stage-count">3</span>
+            </div>
+            <div class="stage-value">€125.000</div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Architekturbüro Schmidt</div>
+              <div class="lead-company">Showroom Installation</div>
+              <div class="lead-value">€55.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">LOXONE</span>
+                <span class="lead-tag">Showroom</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Wohnpark Lindenthal</div>
+              <div class="lead-company">10 Einheiten Smart Home</div>
+              <div class="lead-value">€45.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Wohnanlage</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Hotel Köln-Süd</div>
+              <div class="lead-company">Zimmerkontrolle</div>
+              <div class="lead-value">€25.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Hospitality</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pipeline-stage">
+            <div class="stage-header">
+              <span class="stage-name">🟢 Verhandlung</span>
+              <span class="stage-count">2</span>
+            </div>
+            <div class="stage-value">€120.000</div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Luxusvilla Rodenkirchen</div>
+              <div class="lead-company">Full Smart Home</div>
+              <div class="lead-value">€85.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Premium</span>
+                <span class="lead-tag">VIP</span>
+              </div>
+            </div>
+            
+            <div class="lead-card">
+              <div class="lead-name">Zahnarztpraxis Zentrum</div>
+              <div class="lead-company">Barrierefrei + Security</div>
+              <div class="lead-value">€35.000</div>
+              <div class="lead-tags">
+                <span class="lead-tag">Barrierefrei</span>
+                <span class="lead-tag">Verisure</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content Grid -->
+    <div class="content-grid">
+      
+      <!-- Revenue Chart -->
+      <div class="card">
+        <div class="card-header">
+          <h3>📈 Umsatz nach Kategorie</h3>
+          <span class="badge">2025</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <div class="chart-bar" style="height: 160px;" data-label="Smart Home" data-value="€425K"></div>
+            <div class="chart-bar" style="height: 100px;" data-label="Barrierefrei" data-value="€185K"></div>
+            <div class="chart-bar" style="height: 75px;" data-label="Security" data-value="€125K"></div>
+            <div class="chart-bar" style="height: 45px;" data-label="Wartung" data-value="€73K"></div>
+            <div class="chart-bar" style="height: 25px; background: linear-gradient(180deg, #3b82f6, #2563eb);" data-label="SaaS" data-value="€40K"></div>
+          </div>
+          
+          <table class="finance-table">
+            <thead>
+              <tr>
+                <th>Kategorie</th>
+                <th>Umsatz</th>
+                <th>Anteil</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🏠 Smart Home Projekte</td>
+                <td class="amount positive">€425.000</td>
+                <td>50,1%</td>
+                <td class="positive">↑ +18%</td>
+              </tr>
+              <tr>
+                <td>♿ Barrierefreies Bauen</td>
+                <td class="amount positive">€185.000</td>
+                <td>21,8%</td>
+                <td class="positive">↑ +25%</td>
+              </tr>
+              <tr>
+                <td>🔐 Security (Verisure)</td>
+                <td class="amount positive">€125.000</td>
+                <td>14,7%</td>
+                <td class="positive">↑ +32%</td>
+              </tr>
+              <tr>
+                <td>🔧 Wartung & Service</td>
+                <td class="amount positive">€72.523</td>
+                <td>8,6%</td>
+                <td class="positive">↑ +15%</td>
+              </tr>
+              <tr>
+                <td>📱 West Money OS (SaaS)</td>
+                <td class="amount positive">€40.000</td>
+                <td>4,7%</td>
+                <td style="color: #3b82f6;">🆕 Neu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Activity Feed -->
+      <div class="card">
+        <div class="card-header">
+          <h3>⚡ Letzte Aktivitäten</h3>
+        </div>
+        <div class="card-body">
+          <div class="activity-list">
+            
+            <div class="activity-item">
+              <div class="activity-icon deal">💰</div>
+              <div class="activity-content">
+                <h4>Deal gewonnen: Villa Rodenkirchen</h4>
+                <p>€85.000 - Full Smart Home Installation</p>
+              </div>
+              <span class="activity-time">vor 2 Std</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon lead">👤</div>
+              <div class="activity-content">
+                <h4>Neuer Lead: Familie Weber</h4>
+                <p>Smart Home Neubau, Köln-Nippes</p>
+              </div>
+              <span class="activity-time">vor 4 Std</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon payment">💳</div>
+              <div class="activity-content">
+                <h4>Zahlung eingegangen</h4>
+                <p>€12.500 - Praxis Dr. Hoffmann</p>
+              </div>
+              <span class="activity-time">vor 5 Std</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon meeting">📅</div>
+              <div class="activity-content">
+                <h4>Meeting: Architekturbüro Schmidt</h4>
+                <p>Showroom Planung besprochen</p>
+              </div>
+              <span class="activity-time">Gestern</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon lead">👤</div>
+              <div class="activity-content">
+                <h4>Lead qualifiziert: Bürokomplex Deutz</h4>
+                <p>Budget €32.000 bestätigt</p>
+              </div>
+              <span class="activity-time">Gestern</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon deal">📄</div>
+              <div class="activity-content">
+                <h4>Angebot versendet: Wohnpark Lindenthal</h4>
+                <p>10 Einheiten, €45.000</p>
+              </div>
+              <span class="activity-time">vor 2 Tagen</span>
+            </div>
+            
+            <div class="activity-item">
+              <div class="activity-icon payment">💳</div>
+              <div class="activity-content">
+                <h4>Rechnung bezahlt: Hotel Köln-Mitte</h4>
+                <p>€8.750 - Anzahlung</p>
+              </div>
+              <span class="activity-time">vor 2 Tagen</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Bottom Grid -->
+    <div class="content-grid">
+      
+      <!-- Monthly Targets -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🎯 Monatsziele Dezember</h3>
+        </div>
+        <div class="card-body">
+          <div class="progress-item">
+            <div class="progress-header">
+              <span>Umsatz</span>
+              <span style="color: #22c55e;">€78.500 / €85.000</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill green" style="width: 92%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-header">
+              <span>Neue Leads</span>
+              <span style="color: #3b82f6;">12 / 15</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill blue" style="width: 80%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-header">
+              <span>Abgeschlossene Deals</span>
+              <span style="color: #8b5cf6;">4 / 5</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill purple" style="width: 80%;"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-header">
+              <span>Kundenmeetings</span>
+              <span style="color: #f59e0b;">8 / 10</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill orange" style="width: 80%;"></div>
+            </div>
+          </div>
+          
+          <div class="quick-stats" style="margin-top: 25px;">
+            <div class="quick-stat">
+              <div class="quick-stat-value">€70.833</div>
+              <div class="quick-stat-label">Ø Monatsumsatz</div>
+            </div>
+            <div class="quick-stat">
+              <div class="quick-stat-value">€21.250</div>
+              <div class="quick-stat-label">Ø Deal Size</div>
+            </div>
+            <div class="quick-stat">
+              <div class="quick-stat-value">18 Tage</div>
+              <div class="quick-stat-label">Ø Sales Cycle</div>
+            </div>
+            <div class="quick-stat">
+              <div class="quick-stat-value">4,8 ⭐</div>
+              <div class="quick-stat-label">Kundenbewertung</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Integrations -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🔗 Integrationen</h3>
+        </div>
+        <div class="card-body">
+          <div class="integration-grid">
+            <div class="integration-card" onclick="window.open('REVOLUT_INTEGRATION_HUB.html')">
+              <div class="icon">🏦</div>
+              <div class="name">Revolut</div>
+              <div class="status">⏳ Setup</div>
+            </div>
+            <div class="integration-card" onclick="window.open('https://app.hubspot.com')">
+              <div class="icon">🧡</div>
+              <div class="name">HubSpot</div>
+              <div class="status">✅ Verbunden</div>
+            </div>
+            <div class="integration-card">
+              <div class="icon">📱</div>
+              <div class="name">WhatsApp</div>
+              <div class="status">✅ Verbunden</div>
+            </div>
+            <div class="integration-card">
+              <div class="icon">📞</div>
+              <div class="name">Zadarma</div>
+              <div class="status">✅ Verbunden</div>
+            </div>
+            <div class="integration-card">
+              <div class="icon">📧</div>
+              <div class="name">Gmail</div>
+              <div class="status">✅ Verbunden</div>
+            </div>
+            <div class="integration-card">
+              <div class="icon">📊</div>
+              <div class="name">Slack</div>
+              <div class="status">✅ Verbunden</div>
+            </div>
+          </div>
+          
+          <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <h4 style="font-size: 12px; color: #888; margin-bottom: 15px;">BANKVERBINDUNG</h4>
+            <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px;">
+              <p style="font-size: 11px; color: #888;">IBAN</p>
+              <p style="font-size: 14px; font-family: monospace; color: #22c55e;">DE42 1001 0178 9758 7887 93</p>
+              <p style="font-size: 11px; color: #888; margin-top: 10px;">Kontoinhaber</p>
+              <p style="font-size: 13px;">Ömer Hüseyin Coşkun</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</div>
+
+<!-- Lead Modal -->
+<div class="modal" id="leadModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>➕ Neuer Lead</h3>
+      <button class="modal-close" onclick="closeModal('lead')">&times;</button>
+    </div>
+    
+    <div class="form-group">
+      <label>Name / Firma</label>
+      <input type="text" placeholder="z.B. Familie Müller oder Firma XYZ GmbH">
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Kontaktperson</label>
+        <input type="text" placeholder="Ansprechpartner">
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" placeholder="+49...">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>E-Mail</label>
+      <input type="email" placeholder="email@example.de">
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Kategorie</label>
+        <select>
+          <option>🏠 Smart Home</option>
+          <option>♿ Barrierefreies Bauen</option>
+          <option>🔐 Security / Verisure</option>
+          <option>🔧 Wartung</option>
+          <option>📱 West Money OS</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Geschätzter Wert</label>
+        <input type="text" placeholder="€">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label>Pipeline Stage</label>
+      <select>
+        <option>🔵 Neu</option>
+        <option>🟡 Qualifiziert</option>
+        <option>🟠 Angebot</option>
+        <option>🟢 Verhandlung</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>Notizen</label>
+      <textarea rows="3" placeholder="Projektbeschreibung, Anforderungen..."></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>Quelle</label>
+      <select>
+        <option>🌐 Website</option>
+        <option>📞 Telefonanruf</option>
+        <option>📧 E-Mail</option>
+        <option>🤝 Empfehlung</option>
+        <option>📱 WhatsApp</option>
+        <option>🏠 LOXONE Partner</option>
+        <option>🔐 Verisure</option>
+      </select>
+    </div>
+    
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="saveLead()">💾 Lead speichern</button>
+      <button class="btn btn-secondary" onclick="closeModal('lead')">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Erfolgreich!</div>
+
+<script>
+// Sample data
+const leads = [
+  { id: 1, name: 'Familie Weber', company: 'Smart Home Neubau', value: 35000, stage: 'new', category: 'smart-home' },
+  { id: 2, name: 'Praxis Dr. Müller', company: 'Barrierefreier Umbau', value: 28000, stage: 'new', category: 'barrier-free' },
+  { id: 3, name: 'Villa Ehrenfeld', company: 'Komplett-Smart-Home', value: 48000, stage: 'qualified', category: 'smart-home' },
+];
+
+function showSection(section) {
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  
+  showToast('Section: ' + section);
+}
+
+function openModal(type) {
+  document.getElementById('leadModal').classList.add('active');
+}
+
+function closeModal(type) {
+  document.getElementById('leadModal').classList.remove('active');
+}
+
+function saveLead() {
+  showToast('Lead gespeichert!');
+  closeModal('lead');
+}
+
+function exportData() {
+  showToast('Export gestartet...');
+}
+
+function syncAll() {
+  showToast('Synchronisierung läuft...');
+  setTimeout(() => {
+    showToast('✅ Alle Daten synchronisiert!');
+  }, 2000);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 2500);
+}
+
+// Close modal on outside click
+document.getElementById('leadModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal('lead');
+});
+</script>
+
+</body>
+</html>

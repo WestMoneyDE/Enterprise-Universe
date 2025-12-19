@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dateien für Repository - Kopieranleitung</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+      color: #c9d1d9;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: rgba(35, 134, 54, 0.1);
+      border: 1px solid rgba(35, 134, 54, 0.3);
+      border-radius: 16px;
+      margin-bottom: 30px;
+    }
+    .header h1 { font-size: 24px; color: #fff; margin-bottom: 10px; }
+    .header p { color: #8b949e; }
+    
+    .section {
+      background: rgba(22, 27, 34, 0.8);
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .section-header {
+      padding: 15px 20px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header .icon { font-size: 20px; }
+    .section-header h2 { font-size: 16px; color: #fff; }
+    .section-header .count {
+      margin-left: auto;
+      background: rgba(35, 134, 54, 0.2);
+      color: #3fb950;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+    .section-content { padding: 15px 20px; }
+    
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    .file-item .icon { font-size: 16px; }
+    .file-item .name { color: #58a6ff; flex: 1; }
+    .file-item .size { color: #8b949e; font-size: 11px; }
+    .file-item .arrow { color: #3fb950; }
+    .file-item .dest { color: #3fb950; }
+    
+    .folder-dest {
+      background: rgba(35, 134, 54, 0.1);
+      border: 1px dashed rgba(35, 134, 54, 0.3);
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #3fb950;
+    }
+    
+    .instructions {
+      background: rgba(56, 139, 253, 0.1);
+      border: 1px solid rgba(56, 139, 253, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .instructions h3 { color: #58a6ff; margin-bottom: 15px; font-size: 14px; }
+    .instructions ol { margin-left: 20px; }
+    .instructions li { margin-bottom: 10px; font-size: 13px; }
+    .instructions code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    
+    .download-all {
+      display: block;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #238636, #2ea043);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 20px 0;
+      transition: all 0.2s;
+    }
+    .download-all:hover { transform: translateY(-2px); }
+    
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .summary-item {
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .summary-item .value { font-size: 28px; font-weight: bold; color: #3fb950; }
+    .summary-item .label { font-size: 11px; color: #8b949e; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+  <h1>📁 Dateien für Enterprise-Universe Repository</h1>
+  <p>Alle Dateien die du in den Ordner kopieren sollst</p>
+</div>
+
+<div class="summary">
+  <div class="summary-item">
+    <div class="value">45+</div>
+    <div class="label">Dateien</div>
+  </div>
+  <div class="summary-item">
+    <div class="value">6</div>
+    <div class="label">Dashboards</div>
+  </div>
+  <div class="summary-item">
+    <div class="value">5</div>
+    <div class="label">APIs</div>
+  </div>
+  <div class="summary-item">
+    <div class="value">2</div>
+    <div class="label">Pitch Decks</div>
+  </div>
+</div>
+
+<div class="instructions">
+  <h3>📋 Anleitung: So kopierst du die Dateien</h3>
+  <ol>
+    <li>Öffne den Ordner <code>Enterprise-Universe</code> auf deinem Computer</li>
+    <li>Erstelle die Unterordner: <code>dashboards</code>, <code>integrations</code>, <code>api</code>, <code>automation</code>, <code>docs</code>, <code>pitch</code>, <code>public</code></li>
+    <li>Kopiere die Dateien wie unten angegeben in die entsprechenden Ordner</li>
+    <li>Ersetze die <code>README.md</code> mit der neuen Version</li>
+    <li>Führe <code>git add . && git commit -m "Add all files" && git push</code> aus</li>
+  </ol>
+</div>
+
+<!-- DASHBOARDS -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🎛️</span>
+    <h2>dashboards/</h2>
+    <span class="count">6 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/dashboards/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">MASTER_CONTROL_DASHBOARD.html</span>
+      <span class="size">26 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">FINANCE_LEADS_CONTROL_HUB.html</span>
+      <span class="size">40 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">MEGA_EMAIL_HUB.html</span>
+      <span class="size">61 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">INVESTOREN_DASHBOARD.html</span>
+      <span class="size">40 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">TECH_PARTNER_DASHBOARD.html</span>
+      <span class="size">32 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">FINANCES_FUNDS_HUB.html</span>
+      <span class="size">37 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATIONS -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔗</span>
+    <h2>integrations/</h2>
+    <span class="count">4 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/integrations/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">REVOLUT_INTEGRATION_HUB.html</span>
+      <span class="size">27 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">hubspot-sync.html</span>
+      <span class="size">43 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">consent-manager.html</span>
+      <span class="size">31 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">live-dashboard.html</span>
+      <span class="size">36 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- API -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">⚙️</span>
+    <h2>api/</h2>
+    <span class="count">5 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/api/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">hubspot-consent.js</span>
+      <span class="size">20 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">hubspot-integration.js</span>
+      <span class="size">22 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">email-sender.js</span>
+      <span class="size">13 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">email-automation.ts</span>
+      <span class="size">28 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">app.js</span>
+      <span class="size">21 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- AUTOMATION -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🤖</span>
+    <h2>automation/</h2>
+    <span class="count">4 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/automation/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">sales-automation-engine.js</span>
+      <span class="size">46 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">webhook-server.js</span>
+      <span class="size">20 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">kampagnen-launcher.js</span>
+      <span class="size">22 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">send-emails.js</span>
+      <span class="size">16 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- DOCS -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📚</span>
+    <h2>docs/</h2>
+    <span class="count">7 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/docs/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">REVOLUT_SETUP_ANLEITUNG.html</span>
+      <span class="size">40 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">GITHUB_SETUP_ANLEITUNG.html</span>
+      <span class="size">36 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">STEUERNUMMER_KOELNBUSINESS.html</span>
+      <span class="size">33 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">API_SETUP_CHECKLIST.md</span>
+      <span class="size">13 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">GOOGLE_CLOUD_SETUP_ANLEITUNG.md</span>
+      <span class="size">10 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">GMAIL_API_SETUP_OHNE_BILLING.md</span>
+      <span class="size">11 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">ENTERPRISE_UNIVERSE_REPO_SETUP.html</span>
+      <span class="size">35 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- PITCH -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">💼</span>
+    <h2>pitch/</h2>
+    <span class="count">2 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/pitch/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">WestMoneyOS_Investor_Pitch_2025.pptx</span>
+      <span class="size">86 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">WestMoneyOS_Pitch_Deck_2025.pptx</span>
+      <span class="size">1.5 MB</span>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLIC -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🌐</span>
+    <h2>public/</h2>
+    <span class="count">5 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/public/</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">index.html</span>
+      <span class="size">97 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">login.html</span>
+      <span class="size">24 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">impressum.html</span>
+      <span class="size">11 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">datenschutz.html</span>
+      <span class="size">21 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">settings.html</span>
+      <span class="size">33 KB</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROOT FILES -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📁</span>
+    <h2>Root-Verzeichnis (Hauptordner)</h2>
+    <span class="count">4 Dateien</span>
+  </div>
+  <div class="section-content">
+    <div class="folder-dest">📁 Zielordner: Enterprise-Universe/ (direkt im Hauptordner)</div>
+    
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">REPO_README.md</span>
+      <span class="arrow">→</span>
+      <span class="dest">Als README.md speichern!</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">package.json</span>
+      <span class="size">1.5 KB</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">WestMoneyOS_env_template.txt</span>
+      <span class="arrow">→</span>
+      <span class="dest">Als .env.example speichern!</span>
+    </div>
+    <div class="file-item">
+      <span class="icon">📄</span>
+      <span class="name">zapier-config.json</span>
+      <span class="size">6.5 KB</span>
+    </div>
+  </div>
+</div>
+
+<div class="instructions" style="background: rgba(35, 134, 54, 0.1); border-color: rgba(35, 134, 54, 0.3);">
+  <h3 style="color: #3fb950;">🚀 Schnellstart: Git Befehle nach dem Kopieren</h3>
+  <ol>
+    <li>Terminal öffnen und in den Ordner wechseln: <code>cd ~/Documents/Enterprise-Universe</code></li>
+    <li>Alle Dateien hinzufügen: <code>git add .</code></li>
+    <li>Commit erstellen: <code>git commit -m "Add all West Money OS files"</code></li>
+    <li>Auf GitHub pushen: <code>git push origin main</code></li>
+    <li><strong>Fertig! 🎉</strong></li>
+  </ol>
+</div>
+
+</div>
+
+</body>
+</html>

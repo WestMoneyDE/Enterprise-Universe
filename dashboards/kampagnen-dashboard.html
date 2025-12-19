@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Money Bau - Kampagnen Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 16px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .header h1 { color: #8b5cf6; font-size: 28px; margin-bottom: 10px; }
+    .header p { color: #888; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-number { font-size: 32px; font-weight: bold; color: #8b5cf6; }
+    .stat-label { color: #888; font-size: 12px; margin-top: 5px; }
+    .kategorie {
+      margin-bottom: 30px;
+    }
+    .kategorie-header {
+      font-size: 18px;
+      padding: 15px;
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 10px 10px 0 0;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-bottom: none;
+    }
+    .email-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0 0 10px 10px;
+      margin-bottom: 2px;
+      overflow: hidden;
+    }
+    .email-card:last-child { border-radius: 0 0 10px 10px; }
+    .email-header {
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .email-header:hover { background: rgba(255,255,255,0.05); }
+    .email-info h3 { font-size: 14px; margin-bottom: 5px; }
+    .email-info p { font-size: 12px; color: #888; }
+    .email-priority {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .priority-hoch { background: #ef4444; }
+    .priority-mittel { background: #f59e0b; }
+    .priority-niedrig { background: #22c55e; }
+    .email-body {
+      display: none;
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .email-body.active { display: block; }
+    .email-field {
+      margin-bottom: 15px;
+    }
+    .email-field label {
+      display: block;
+      font-size: 11px;
+      color: #8b5cf6;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .email-field-value {
+      background: rgba(255,255,255,0.05);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 13px;
+      word-break: break-all;
+    }
+    .email-text {
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #8b5cf6;
+      color: white;
+    }
+    .btn-primary:hover { background: #7c3aed; }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    .btn-gmail {
+      background: #ea4335;
+      color: white;
+    }
+    .btn-gmail:hover { background: #d33426; }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #22c55e;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .instructions {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+    .instructions h3 { color: #22c55e; margin-bottom: 10px; }
+    .instructions ol { margin-left: 20px; line-height: 1.8; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🚀 West Money Bau - Kampagnen</h1>
+  <p>Alle offenen E-Mails bereit zum Versand | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9d0d7dfd6f9cedccacd94d4d6d7dcc094dbd8cc97dddc">[email&#160;protected]</a></p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-number">11</div>
+    <div class="stat-label">E-Mails Total</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">4</div>
+    <div class="stat-label">Hohe Priorität</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">5</div>
+    <div class="stat-label">Kategorien</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number" id="sentCount">0</div>
+    <div class="stat-label">Gesendet</div>
+  </div>
+</div>
+
+<div class="instructions">
+  <h3>📧 So sendest du die E-Mails:</h3>
+  <ol>
+    <li><strong>Klicke auf eine E-Mail</strong> um sie zu öffnen</li>
+    <li><strong>"In Gmail öffnen"</strong> öffnet Gmail mit allen Daten vorausgefüllt</li>
+    <li><strong>Oder "Kopieren"</strong> um den Text manuell einzufügen</li>
+    <li><strong>In Gmail senden</strong> - fertig!</li>
+  </ol>
+</div>
+
+<div id="emailContainer"></div>
+
+<div class="toast" id="toast">✅ Kopiert!</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const SIGNATURE = `Mit freundlichen Grüßen
+
+Ömer Hüseyin Coşkun
+Geschäftsführer / CEO
+
+WEST MONEY BAU
+Smart Home Systems | LOXONE Partner | Barrierefreies Bauen
+Ein Unternehmen der Enterprise Universe Gruppe
+
+📧 info@west-money-bau.de
+🌐 www.west-money-bau.de`;
+
+const EMAILS = {
+  "🤝 Partner Akquise": [
+    {
+      id: "comfortclick",
+      name: "ComfortClick Partner-Anfrage",
+      priority: "HOCH",
+      to: "partners@comfortclick.com",
+      cc: "info@west-money-bau.de",
+      subject: "Partnerantrag - West Money Bau GmbH, Deutschland",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH aus Köln möchte offizieller ComfortClick Partner für die DACH-Region werden.
+
+UNSER PROFIL:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Spezialisierung: Smart Home Installation, LOXONE, Barrierefreies Bauen
+• Bestehende Partner: LOXONE, Verisure, HubSpot
+• Standort: Köln / NRW / Deutschland
+• Geplant: Flagship Store in Köln mit Building Automation Showroom
+• Ziel: Integration ComfortClick Jigsaw in unser Portfolio
+
+INTERESSE AN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Jigsaw Server & Jigsaw Pro
+• Bobcat Panels
+• Lizenzmodelle für Integratoren
+• Schulungen & Zertifizierung
+
+Wir bitten um Zusendung der Partnerschaftsunterlagen und Konditionen für Deutschland.`
+    },
+    {
+      id: "knx",
+      name: "KNX Partnerschaft",
+      priority: "MITTEL",
+      to: "info@knx.org",
+      cc: "info@west-money-bau.de",
+      subject: "KNX Partnerschaft - West Money Bau GmbH",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH interessiert sich für eine KNX Partnerschaft und Zertifizierung.
+
+UNTERNEHMENSPROFIL:
+• Spezialisierung: Smart Home, Gebäudeautomation, Barrierefreies Bauen
+• Standort: Köln / NRW
+• Bestehende Systeme: LOXONE, ComfortClick (in Planung)
+
+INTERESSE AN:
+• KNX Partner-Programm
+• Zertifizierungsmöglichkeiten
+• Schulungen
+
+Bitte senden Sie uns Informationen zu den Partnerschaftsmöglichkeiten.`
+    }
+  ],
+  "🏠 LOXONE Projekt": [
+    {
+      id: "loxone_koeln",
+      name: "LOXONE Köln - Angebotsanfrage",
+      priority: "HOCH",
+      to: "info@smarthome-koeln.de",
+      cc: "info@west-money-bau.de",
+      subject: "Angebotsanfrage - LOXONE Flagship Store Köln €35-42k",
+      body: `Sehr geehrtes Smart Home Köln Team,
+
+wir planen einen Flagship Store in der Kölner Ehrenstraße mit vollständiger LOXONE Integration.
+
+PROJEKTECKDATEN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Standort:       Ehrenstraße, 50672 Köln (Belgisches Viertel)
+Fläche:         ca. 200 qm
+Konzept:        Experience Store mit VR/AR, Smart Home Demo
+Eröffnung:      Q2 2026
+Budget:         €35.000 - €42.000
+
+SYSTEMUMFANG:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• 1x Miniserver Gen. 2 + Extensions
+• 60x LED Spots RGBW + 40m LED Strips
+• 15x Touch Pure Schalter
+• 12x Präsenzmelder Air
+• 1x Audioserver + 12x Speaker
+• 2x Intercom + 6x Rauchmelder
+
+Bitte senden Sie uns ein detailliertes Angebot.`
+    },
+    {
+      id: "loxone_direkt",
+      name: "LOXONE Direkt - Referenzprojekt",
+      priority: "MITTEL",
+      to: "info@loxone.com",
+      cc: "info@west-money-bau.de",
+      subject: "Showroom-Projekt Köln - LOXONE Referenzprojekt",
+      body: `Sehr geehrtes LOXONE Team,
+
+die West Money Bau plant einen Flagship Store in Köln als LOXONE Referenzprojekt.
+
+PROJEKTDETAILS:
+• Standort: Ehrenstraße, Köln (Premium-Lage)
+• Fläche: 200 qm
+• Investition: €485.000 - €650.000 (Gesamtausbau)
+• LOXONE Budget: €35.000 - €42.000
+• Eröffnung: Q2 2026
+
+MEHRWERT FÜR LOXONE:
+• Showroom in Premium-Lage Köln
+• Live-Demos für Endkunden
+• VR/AR Integration
+• Regelmäßige Events & Workshops
+
+Haben Sie Interesse an einer Kooperation als Referenzprojekt?`
+    }
+  ],
+  "🏢 Flagship Store Immobilien": [
+    {
+      id: "engelvoelkers",
+      name: "Engel & Völkers",
+      priority: "HOCH",
+      to: "koeln@engelvoelkers.com",
+      cc: "info@west-money-bau.de",
+      subject: "Mietgesuch Gewerbefläche - Ehrenstraße Köln - €11.000/Monat",
+      body: `Sehr geehrte Damen und Herren,
+
+wir suchen eine Gewerbefläche für unseren Tech & Smart Home Flagship Store.
+
+SUCHKRITERIEN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Lage:           Ehrenstraße / Belgisches Viertel, Köln
+Fläche:         180-250 qm (EG, ggf. mit UG)
+Schaufenster:   Mindestens 4m Frontbreite
+Deckenhöhe:     Mindestens 3,00m
+Budget:         bis EUR 11.000/Monat Kaltmiete
+Mietdauer:      5-10 Jahre
+Bezug:          ab Q1 2026
+
+MIETER:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+West Money Bau / Enterprise Universe
+Tech & Smart Home Flagship mit VR/AR, LOXONE Showroom, Gaming Lounge
+
+INVESTITION AUSBAU: €485.000 - €650.000
+
+Bitte kontaktieren Sie uns bei passenden Objekten.`
+    },
+    {
+      id: "comfort",
+      name: "Comfort Immobilien",
+      priority: "MITTEL",
+      to: "koeln@comfort.de",
+      cc: "info@west-money-bau.de",
+      subject: "Gewerbefläche gesucht - Ehrenstraße/Friesenplatz Köln",
+      body: `Sehr geehrte Damen und Herren,
+
+wir suchen eine repräsentative Gewerbefläche in Köln für einen Tech Flagship Store.
+
+ANFORDERUNGEN:
+• Lage: Ehrenstraße, Friesenplatz, Belgisches Viertel
+• Größe: 180-250 qm
+• Schaufensterfront: min. 4m
+• Budget: bis €11.000/Monat
+• Bezug: Q1 2026
+
+UNTERNEHMEN:
+West Money Bau GmbH - Smart Home & Gebäudeautomation
+Investition Innenausbau: €485.000 - €650.000
+
+Haben Sie passende Objekte im Portfolio?`
+    },
+    {
+      id: "jll",
+      name: "JLL Retail",
+      priority: "HOCH",
+      to: "retail.koeln@eu.jll.com",
+      cc: "info@west-money-bau.de",
+      subject: "Retail-Fläche gesucht - Tech Flagship Store Köln",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau sucht eine Retail-Fläche für einen Tech Flagship Store in Köln.
+
+SUCHPROFIL:
+• Zielgebiet: Ehrenstraße, Friesenplatz, Belgisches Viertel
+• Fläche: 180-250 qm EG
+• Schaufenster: min. 4m
+• Budget: bis €11.000/Monat netto
+• Mietdauer: 5-10 Jahre
+
+KONZEPT:
+Tech & Smart Home Experience Store mit LOXONE Showroom, VR/AR Zone
+
+Investitionsvolumen Ausbau: €485.000 - €650.000
+
+Bitte nehmen Sie uns in Ihre Suchdatenbank auf.`
+    }
+  ],
+  "🔐 Bestehende Partner": [
+    {
+      id: "verisure",
+      name: "Verisure Erweiterung",
+      priority: "MITTEL",
+      to: "partner@verisure.de",
+      cc: "info@west-money-bau.de",
+      subject: "Partnerschaft erweitern - Flagship Store Köln",
+      body: `Sehr geehrtes Verisure Partner-Team,
+
+als bestehender Verisure Partner möchten wir unsere Zusammenarbeit erweitern.
+
+AKTUELLER STATUS:
+• Aktiver Verisure Partner seit 2024
+• Integration in West Money OS
+• API-Verbindung aktiv
+
+FLAGSHIP STORE PROJEKT:
+• Standort: Ehrenstraße, 50672 Köln
+• Fläche: ca. 200 qm
+• Eröffnung: Q2 2026
+
+ANFRAGE:
+• Verisure Demo-Installation im Showroom
+• Co-Branding Möglichkeiten
+• Gemeinsame Marketing-Aktivitäten
+
+Können wir einen Termin vereinbaren?`
+    }
+  ],
+  "💻 IT Partner": [
+    {
+      id: "knguru",
+      name: "KNGURU IT",
+      priority: "MITTEL",
+      to: "info@knguru.de",
+      cc: "info@west-money-bau.de",
+      subject: "IT-Partnerschaft - West Money OS Entwicklung",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau sucht einen IT-Partner für die Weiterentwicklung unserer Plattform "West Money OS".
+
+PROJEKTUMFANG:
+• Plattform: West Money OS (Master Control System)
+• Module: WhatsApp Plugin, CRM Integration, VoIP, Smart Home
+• Tech-Stack: React, Node.js, TypeScript, PostgreSQL
+• Release: 01.01.2026
+
+ANFORDERUNGEN:
+• API-Entwicklung & Integration
+• Mobile App Development
+• DevOps & Cloud Infrastructure
+• Langfristige Partnerschaft
+
+Haben Sie Kapazitäten und Interesse?`
+    }
+  ]
+};
+
+let sentCount = 0;
+
+function renderEmails() {
+  const container = document.getElementById('emailContainer');
+  
+  for (const [kategorie, emails] of Object.entries(EMAILS)) {
+    const katDiv = document.createElement('div');
+    katDiv.className = 'kategorie';
+    katDiv.innerHTML = `<div class="kategorie-header">${kategorie} (${emails.length})</div>`;
+    
+    for (const email of emails) {
+      const priorityClass = email.priority === 'HOCH' ? 'priority-hoch' : 
+                           email.priority === 'MITTEL' ? 'priority-mittel' : 'priority-niedrig';
+      
+      const fullBody = email.body + '\n\n' + SIGNATURE;
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email.to)}&cc=${encodeURIComponent(email.cc || '')}&su=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(fullBody)}`;
+      
+      katDiv.innerHTML += `
+        <div class="email-card">
+          <div class="email-header" onclick="toggleEmail('${email.id}')">
+            <div class="email-info">
+              <h3>${email.name}</h3>
+              <p>An: ${email.to}</p>
+            </div>
+            <span class="email-priority ${priorityClass}">${email.priority}</span>
+          </div>
+          <div class="email-body" id="body-${email.id}">
+            <div class="email-field">
+              <label>An</label>
+              <div class="email-field-value">${email.to}</div>
+            </div>
+            <div class="email-field">
+              <label>CC</label>
+              <div class="email-field-value">${email.cc || '-'}</div>
+            </div>
+            <div class="email-field">
+              <label>Betreff</label>
+              <div class="email-field-value">${email.subject}</div>
+            </div>
+            <div class="email-field">
+              <label>Nachricht</label>
+              <div class="email-field-value email-text">${fullBody}</div>
+            </div>
+            <div class="btn-group">
+              <a href="${gmailLink}" target="_blank" class="btn btn-gmail">📧 In Gmail öffnen</a>
+              <button class="btn btn-secondary" onclick="copyEmail('${email.id}', \`${fullBody.replace(/`/g, '\\`')}\`)">📋 Text kopieren</button>
+              <button class="btn btn-primary" onclick="markSent('${email.id}')">✅ Als gesendet markieren</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    container.appendChild(katDiv);
+  }
+}
+
+function toggleEmail(id) {
+  const body = document.getElementById('body-' + id);
+  body.classList.toggle('active');
+}
+
+function copyEmail(id, text) {
+  navigator.clipboard.writeText(text);
+  showToast('Text kopiert!');
+}
+
+function markSent(id) {
+  sentCount++;
+  document.getElementById('sentCount').textContent = sentCount;
+  showToast('Als gesendet markiert!');
+}
+
+function showT

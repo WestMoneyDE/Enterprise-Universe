@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>West Money Bau - INVESTOR KAMPAGNE 2025</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding: 40px;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+    .header h1 { 
+      font-size: 36px; 
+      background: linear-gradient(90deg, #22c55e, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .header .subtitle { color: #888; font-size: 18px; }
+    
+    .pitch-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .pitch-card {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.05));
+      padding: 25px;
+      border-radius: 15px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      text-align: center;
+    }
+    .pitch-card .value {
+      font-size: 32px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #22c55e, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pitch-card .label { color: #888; font-size: 12px; margin-top: 5px; }
+    
+    .development-status {
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .development-status h2 {
+      color: #22c55e;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 10px;
+    }
+    .status-icon { font-size: 24px; }
+    .status-text h4 { font-size: 14px; margin-bottom: 3px; }
+    .status-text p { font-size: 12px; color: #888; }
+    .status-badge {
+      margin-left: auto;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .badge-done { background: #22c55e; }
+    .badge-progress { background: #f59e0b; }
+    .badge-planned { background: #3b82f6; }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat-number { 
+      font-size: 28px; 
+      font-weight: bold; 
+      color: #22c55e;
+    }
+    .stat-label { color: #888; font-size: 11px; margin-top: 5px; }
+    
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .btn-mega {
+      padding: 20px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-mega:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .btn-all {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+    .btn-vc {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+    }
+    .btn-angels {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+    }
+    .btn-pe {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      color: white;
+    }
+    .btn-public {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+    }
+    
+    .category {
+      margin-bottom: 25px;
+    }
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background: rgba(34, 197, 94, 0.15);
+      border-radius: 12px 12px 0 0;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .category-header h3 { font-size: 16px; }
+    .category-header .count {
+      background: rgba(34, 197, 94, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .email-list {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+    }
+    .email-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+    .email-item:hover { background: rgba(255,255,255,0.03); }
+    .email-item:last-child { border-bottom: none; }
+    .email-info { flex: 1; }
+    .email-info h4 { font-size: 14px; margin-bottom: 3px; }
+    .email-info p { font-size: 12px; color: #888; }
+    .email-info .focus { font-size: 11px; color: #22c55e; margin-top: 2px; }
+    .email-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ticket {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+    .btn-send {
+      padding: 8px 16px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .btn-send:hover { background: #16a34a; }
+    .btn-send.sent {
+      background: #3b82f6;
+      pointer-events: none;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #10b981);
+      border-radius: 10px;
+      transition: width 0.5s;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    .pitch-deck-box {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+    .pitch-deck-box h3 { color: #8b5cf6; margin-bottom: 15px; }
+    .pitch-deck-box pre {
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 11px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>💰 INVESTOR KAMPAGNE 2025</h1>
+  <div class="subtitle">West Money Bau GmbH | Enterprise Universe | Series Seed</div>
+</div>
+
+<!-- PITCH SUMMARY -->
+<div class="pitch-summary">
+  <div class="pitch-card">
+    <div class="value">€500K</div>
+    <div class="label">FUNDING ZIEL</div>
+  </div>
+  <div class="pitch-card">
+    <div class="value">€847K</div>
+    <div class="label">UMSATZ 2024</div>
+  </div>
+  <div class="pitch-card">
+    <div class="value">23.5%</div>
+    <div class="label">WACHSTUM YoY</div>
+  </div>
+  <div class="pitch-card">
+    <div class="value">€4M</div>
+    <div class="label">BEWERTUNG (Pre)</div>
+  </div>
+  <div class="pitch-card">
+    <div class="value">12.5%</div>
+    <div class="label">EQUITY ANGEBOT</div>
+  </div>
+  <div class="pitch-card">
+    <div class="value">Q1/26</div>
+    <div class="label">LAUNCH DATE</div>
+  </div>
+</div>
+
+<!-- DEVELOPMENT STATUS -->
+<div class="development-status">
+  <h2>📊 ENTWICKLUNGSSTAND WEST MONEY OS</h2>
+  <div class="status-grid">
+    <div class="status-item">
+      <span class="status-icon">✅</span>
+      <div class="status-text">
+        <h4>West Money OS Core</h4>
+        <p>Backend API, Database, Auth System</p>
+      </div>
+      <span class="status-badge badge-done">100%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">✅</span>
+      <div class="status-text">
+        <h4>WhatsApp Business Plugin</h4>
+        <p>API Integration, Consent Management</p>
+      </div>
+      <span class="status-badge badge-done">100%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">✅</span>
+      <div class="status-text">
+        <h4>HubSpot CRM Integration</h4>
+        <p>Contacts, Deals, Pipeline Sync</p>
+      </div>
+      <span class="status-badge badge-done">100%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">✅</span>
+      <div class="status-text">
+        <h4>Zadarma VoIP Integration</h4>
+        <p>Click-to-Call, Call Logging</p>
+      </div>
+      <span class="status-badge badge-done">100%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">🔄</span>
+      <div class="status-text">
+        <h4>Mobile Apps iOS/Android</h4>
+        <p>React Native Development</p>
+      </div>
+      <span class="status-badge badge-progress">65%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">🔄</span>
+      <div class="status-text">
+        <h4>LOXONE Smart Home Module</h4>
+        <p>Miniserver API, Device Control</p>
+      </div>
+      <span class="status-badge badge-progress">75%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">🔄</span>
+      <div class="status-text">
+        <h4>GOD BOT AI Assistant</h4>
+        <p>GPT-4 Integration, Voice Commands</p>
+      </div>
+      <span class="status-badge badge-progress">50%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">📋</span>
+      <div class="status-text">
+        <h4>VR Showroom (Meta Quest)</h4>
+        <p>Unity Development, 3D Assets</p>
+      </div>
+      <span class="status-badge badge-planned">25%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">📋</span>
+      <div class="status-text">
+        <h4>Flagship Store Köln</h4>
+        <p>Location Search, Buildout Planning</p>
+      </div>
+      <span class="status-badge badge-planned">20%</span>
+    </div>
+    <div class="status-item">
+      <span class="status-icon">✅</span>
+      <div class="status-text">
+        <h4>IP Portfolio</h4>
+        <p>47 Trademarks, 12 Patents Filed</p>
+      </div>
+      <span class="status-badge badge-done">100%</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-number" id="totalCount">45</div>
+    <div class="stat-label">INVESTOREN</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">15</div>
+    <div class="stat-label">VENTURE CAPITAL</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">18</div>
+    <div class="stat-label">BUSINESS ANGELS</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">7</div>
+    <div class="stat-label">PRIVATE EQUITY</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number">5</div>
+    <div class="stat-label">ÖFFENTLICH</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="sentCount">0</div>
+    <div class="stat-label">GESENDET</div>
+  </div>
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="action-buttons">
+  <button class="btn-mega btn-all" onclick="sendAll()">
+    🚀 ALLE 45 INVESTOREN ANSCHREIBEN
+  </button>
+  <button class="btn-mega btn-vc" onclick="sendCategory('vc')">
+    🏦 Venture Capital (15)
+  </button>
+  <button class="btn-mega btn-angels" onclick="sendCategory('angels')">
+    👼 Business Angels (18)
+  </button>
+  <button class="btn-mega btn-pe" onclick="sendCategory('pe')">
+    💼 Private Equity (7)
+  </button>
+  <button class="btn-mega btn-public" onclick="sendCategory('public')">
+    🏛️ Öffentliche Förderung (5)
+  </button>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+</div>
+
+<!-- PITCH DECK BOX -->
+<div class="pitch-deck-box">
+  <h3>📑 PITCH DECK EXECUTIVE SUMMARY</h3>
+  <pre>
+═══════════════════════════════════════════════════════════════════════════════
+                    WEST MONEY BAU GmbH - INVESTMENT PITCH
+                         Series Seed | Q4 2024 / Q1 2025
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 PROBLEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Smart Home Markt fragmentiert: 100+ Apps für verschiedene Systeme
+• Keine einheitliche Plattform für Gebäudeautomation + Business Management
+• Barrierefreies Bauen unterdigitalisiert
+• Handwerker & Installateure ohne moderne Tools
+
+💡 LÖSUNG: WEST MONEY OS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Eine Plattform für:
+✓ Smart Home Steuerung (LOXONE, KNX, ComfortClick)
+✓ Business Management (CRM, VoIP, WhatsApp Business)
+✓ KI-Assistant (GOD BOT) für Sprach- & Textsteuerung
+✓ VR/AR Showroom für immersive Produktpräsentation
+✓ Barrierefreie Bedienung nach WCAG 2.1
+
+📊 MARKT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Smart Home Markt Deutschland: €12 Mrd. (2025)
+• PropTech Investment Deutschland: €8.1 Mrd. (2024)
+• Barrierefreies Bauen: €4.2 Mrd. Fördervolumen/Jahr
+• CAGR Smart Home: 18.5% (2024-2030)
+
+💰 GESCHÄFTSMODELL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+B2B SaaS + B2C Subscriptions:
+• West Money OS Basic:      €29/Monat    (Privatnutzer)
+• West Money OS Pro:        €79/Monat    (Installateure)
+• West Money OS Enterprise: €199/Monat   (Unternehmen)
+• Hardware Margin:          15-25%       (LOXONE, Verisure)
+• Installation Services:    €80-150/Std
+
+📈 TRACTION & FINANZEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Umsatz 2024:           €847.523
+• Wachstum YoY:          23.5%
+• Projekte abgeschlossen: 45+
+• Partner:               LOXONE, Verisure, HubSpot
+• IP Portfolio:          47 Trademarks, 12 Patents
+
+🎯 USE OF FUNDS (€500K)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Product Development:    €200.000 (40%)
+• Flagship Store Köln:    €150.000 (30%)
+• Marketing & Sales:      €100.000 (20%)
+• Operations & Legal:     €50.000  (10%)
+
+📅 MILESTONES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Q1 2025: Seed Funding Close
+Q2 2025: West Money OS Beta Launch
+Q3 2025: Mobile Apps iOS/Android
+Q4 2025: VR Showroom Release
+Q1 2026: Flagship Store Köln Eröffnung
+Q2 2026: 1.000 zahlende Kunden
+Q4 2026: Break-Even
+
+👥 TEAM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Ömer Hüseyin Coşkun - CEO & Founder
+  Serial Entrepreneur, 10+ Jahre Bau & Tech
+• Enterprise Universe Gruppe
+• Partnernetzwerk: LOXONE, Verisure, ComfortClick
+
+💎 INVESTMENT TERMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Funding Ziel:      €500.000
+• Pre-Money:         €4.000.000
+• Equity Angebot:    12.5%
+• Instrument:        SAFE / Convertible Note
+• Min. Ticket:       €25.000
+• Lead Investor:     Gesucht
+
+═══════════════════════════════════════════════════════════════════════════════
+  </pre>
+</div>
+
+<div id="emailContainer"></div>
+
+<div class="toast" id="toast">✅ E-Mail geöffnet!</div>
+
+<script>
+const SIGNATURE = `Mit freundlichen Grüßen
+
+Ömer Hüseyin Coşkun
+Geschäftsführer / CEO
+
+WEST MONEY BAU GmbH
+Smart Home Systems | LOXONE Partner | Barrierefreies Bauen
+Ein Unternehmen der Enterprise Universe Gruppe
+
+📧 info@west-money-bau.de
+🌐 www.west-money-bau.de
+📍 Köln, Deutschland`;
+
+const SIGNATURE_EN = `Best regards,
+
+Ömer Hüseyin Coşkun
+CEO & Founder
+
+WEST MONEY BAU GmbH
+Smart Home Systems | LOXONE Partner | Barrier-Free Construction
+An Enterprise Universe Company
+
+📧 info@west-money-bau.de
+🌐 www.west-money-bau.de
+📍 Cologne, Germany`;
+
+// PITCH TEMPLATE DEUTSCH
+const PITCH_DE = `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH sucht im Rahmen einer Seed-Finanzierungsrunde Investoren für unser Produkt "West Money OS" - eine umfassende Smart Home & Business Management Plattform.
+
+═══════════════════════════════════════════════════════════════
+INVESTMENT HIGHLIGHTS
+═══════════════════════════════════════════════════════════════
+
+🎯 PRODUKT: West Money OS
+• All-in-One Plattform für Smart Home + Business Management
+• Integriert: LOXONE, KNX, CRM, VoIP, WhatsApp Business
+• KI-Assistant "GOD BOT" für Sprach- & Textsteuerung
+• VR/AR Showroom für immersive Produktpräsentation
+• Barrierefreie Bedienung nach WCAG 2.1
+
+📊 TRACTION & KENNZAHLEN
+• Umsatz 2024: €847.523 (+23.5% YoY)
+• 45+ abgeschlossene Projekte
+• Partner: LOXONE, Verisure, HubSpot
+• IP Portfolio: 47 Marken, 12 Patente angemeldet
+
+💰 INVESTMENT
+• Funding Ziel: €500.000
+• Pre-Money Bewertung: €4.000.000
+• Equity Angebot: 12.5%
+• Instrument: SAFE / Convertible Note
+• Min. Ticket: €25.000
+
+📅 MEILENSTEINE
+• Q1 2025: Funding Close
+• Q2 2025: West Money OS Beta
+• Q1 2026: Flagship Store Köln Eröffnung
+• Q4 2026: Break-Even
+
+🎯 USE OF FUNDS
+• 40% Product Development (€200K)
+• 30% Flagship Store Köln (€150K)
+• 20% Marketing & Sales (€100K)
+• 10% Operations & Legal (€50K)
+
+═══════════════════════════════════════════════════════════════
+
+Wir würden uns freuen, Ihnen unser Pitch Deck und Businessplan in einem persönlichen Gespräch vorzustellen.
+
+Haben Sie Interesse an einem 30-minütigen Call?`;
+
+// PITCH TEMPLATE ENGLISH
+const PITCH_EN = `Dear Sir or Madam,
+
+West Money Bau GmbH is seeking investors for our Seed funding round for "West Money OS" - a comprehensive Smart Home & Business Management Platform.
+
+═══════════════════════════════════════════════════════════════
+INVESTMENT HIGHLIGHTS
+═══════════════════════════════════════════════════════════════
+
+🎯 PRODUCT: West Money OS
+• All-in-One Platform for Smart Home + Business Management
+• Integrates: LOXONE, KNX, CRM, VoIP, WhatsApp Business
+• AI Assistant "GOD BOT" for Voice & Text Control
+• VR/AR Showroom for Immersive Product Presentation
+• Accessibility compliant (WCAG 2.1)
+
+📊 TRACTION & METRICS
+• Revenue 2024: €847,523 (+23.5% YoY)
+• 45+ completed projects
+• Partners: LOXONE, Verisure, HubSpot
+• IP Portfolio: 47 Trademarks, 12 Patents Filed
+
+💰 INVESTMENT
+• Funding Target: €500,000
+• Pre-Money Valuation: €4,000,000
+• Equity Offered: 12.5%
+• Instrument: SAFE / Convertible Note
+• Min. Ticket: €25,000
+
+📅 MILESTONES
+• Q1 2025: Funding Close
+• Q2 2025: West Money OS Beta Launch
+• Q1 2026: Flagship Store Cologne Opening
+• Q4 2026: Break-Even
+
+🎯 USE OF FUNDS
+• 40% Product Development (€200K)
+• 30% Flagship Store Cologne (€150K)
+• 20% Marketing & Sales (€100K)
+• 10% Operations & Legal (€50K)
+
+═══════════════════════════════════════════════════════════════
+
+We would be delighted to present our Pitch Deck and Business Plan in a personal meeting.
+
+Would you be interested in a 30-minute call?`;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ALLE INVESTOREN
+// ═══════════════════════════════════════════════════════════════════════════
+
+const ALL_INVESTORS = {
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // VENTURE CAPITAL - PROPTECH & CONSTRUCTION TECH
+  // ═══════════════════════════════════════════════════════════════════════
+  
+  "🏦 Venture Capital - PropTech": [
+    {
+      id: "bitstone",
+      type: "vc",
+      name: "BitStone Capital",
+      to: "info@bitstone.capital",
+      focus: "PropTech, ConstructionTech, Real Estate",
+      ticket: "€100K - €2M",
+      location: "Köln",
+      subject: "Investment Anfrage - West Money OS | PropTech Seed Round",
+      body: PITCH_DE + `\n\nAls PropTech-Investor mit Sitz in Köln sind Sie ein idealer Partner für uns. West Money OS verbindet Smart Home mit Business Management - genau im Bereich digitale Immobilienwirtschaft.`
+    },
+    {
+      id: "proptech1",
+      type: "vc",
+      name: "PropTech1 Ventures",
+      to: "info@proptech1.ventures",
+      focus: "PropTech, ConstructionTech Europe",
+      ticket: "€500K - €3M",
+      location: "Berlin",
+      subject: "Investment Opportunity - West Money OS | Smart Home SaaS",
+      body: PITCH_EN + `\n\nAs Europe's leading PropTech VC, PropTech1 is the ideal partner for West Money OS - bridging Smart Home technology with Construction and Real Estate.`
+    },
+    {
+      id: "htgf",
+      type: "vc",
+      name: "High-Tech Gründerfonds (HTGF)",
+      to: "businessplan@htgf.de",
+      focus: "Tech Startups, Deep Tech, SaaS",
+      ticket: "€500K - €3M",
+      location: "Bonn (NRW)",
+      subject: "Businessplan West Money Bau - Smart Home SaaS Seed",
+      body: PITCH_DE + `\n\nAls größter Seed-Investor Deutschlands mit Sitz in NRW wäre HTGF ein strategischer Partner für unsere Technologie-Plattform.`
+    },
+    {
+      id: "speedinvest",
+      type: "vc",
+      name: "Speedinvest",
+      to: "pitch@speedinvest.com",
+      focus: "SaaS, Deep Tech, Climate Tech",
+      ticket: "€500K - €2M",
+      location: "Wien/Berlin",
+      subject: "Pitch: West Money OS - PropTech/Smart Home Seed",
+      body: PITCH_EN + `\n\nSpeedinvest's focus on SaaS and Climate Tech aligns perfectly with West Money OS - our platform drives energy efficiency in Smart Homes.`
+    },
+    {
+      id: "dn_capital",
+      type: "vc",
+      name: "DN Capital",
+      to: "info@dncapital.com",
+      focus: "Enterprise Software, SaaS",
+      ticket: "€1M - €10M",
+      location: "Berlin/London",
+      subject: "Investment Opportunity - West Money OS Platform",
+      body: PITCH_EN + `\n\nDN Capital's expertise in Enterprise Software makes you an ideal partner for our B2B SaaS Smart Home platform.`
+    },
+    {
+      id: "apic",
+      type: "vc",
+      name: "Apic Investments",
+      to: "info@apic-investments.com",
+      focus: "PropTech, RetailTech",
+      ticket: "€100K - €500K",
+      location: "Berlin",
+      subject: "Seed Investment - West Money OS PropTech",
+      body: PITCH_DE + `\n\nIhr Fokus auf PropTech und RetailTech passt perfekt zu unserem Flagship Store Konzept mit integrierter Smart Home Technologie.`
+    },
+    {
+      id: "brandenburg",
+      type: "vc",
+      name: "Brandenburg Kapital",
+      to: "info@brandenburg-kapital.de",
+      focus: "ICT, PropTech, MedTech",
+      ticket: "€500K - €2M",
+      location: "Potsdam",
+      subject: "Investment Anfrage - West Money OS Smart Home",
+      body: PITCH_DE + `\n\nAls regionaler Investor mit PropTech-Fokus könnten Sie von unserem Expansionsplan in Ostdeutschland profitieren.`
+    }
+  ],
+
+  "🏦 Venture Capital - Tech & SaaS": [
+    {
+      id: "project_a",
+      type: "vc",
+      name: "Project A Ventures",
+      to: "pitch@project-a.com",
+      focus: "Digital Companies, SaaS, Marketplaces",
+      ticket: "€500K - €10M",
+      location: "Berlin",
+      subject: "Pitch: West Money OS - Smart Home SaaS Platform",
+      body: PITCH_EN + `\n\nProject A's operational approach and expertise in scaling digital companies would be invaluable for West Money OS.`
+    },
+    {
+      id: "cherry",
+      type: "vc",
+      name: "Cherry Ventures",
+      to: "pitch@cherry.vc",
+      focus: "Consumer Tech, Enterprise, Climate",
+      ticket: "€500K - €5M",
+      location: "Berlin",
+      subject: "Investment: West Money OS - Smart Home Platform",
+      body: PITCH_EN + `\n\nCherry's portfolio in Consumer Tech and Enterprise aligns with our B2B2C Smart Home platform approach.`
+    },
+    {
+      id: "hv_capital",
+      type: "vc",
+      name: "HV Capital",
+      to: "team@hvcapital.com",
+      focus: "Tech Companies, SaaS, Fintech",
+      ticket: "€1M - €20M",
+      location: "München",
+      subject: "Series Seed - West Money OS Platform",
+      body: PITCH_EN + `\n\nHV Capital's track record with successful German tech companies makes you an ideal partner for our growth journey.`
+    },
+    {
+      id: "earlybird",
+      type: "vc",
+      name: "Earlybird Venture Capital",
+      to: "info@earlybird.com",
+      focus: "Tech, Digital Health, SaaS",
+      ticket: "€500K - €15M",
+      location: "Berlin/München",
+      subject: "Investment Opportunity - West Money OS",
+      body: PITCH_EN + `\n\nEarlybird's focus on technology innovation aligns with our AI-powered Smart Home platform West Money OS.`
+    },
+    {
+      id: "capnamic",
+      type: "vc",
+      name: "Capnamic Ventures",
+      to: "pitch@capnamic.com",
+      focus: "B2B SaaS, Enterprise Tech",
+      ticket: "€500K - €5M",
+      location: "Köln",
+      subject: "Seed Investment - West Money OS | B2B SaaS",
+      body: PITCH_DE + `\n\nAls Kölner VC mit B2B SaaS Fokus sind Sie ein idealer lokaler Partner für West Money OS.`
+    },
+    {
+      id: "cavalry",
+      type: "vc",
+      name: "Cavalry Ventures",
+      to: "pitch@cavalry.vc",
+      focus: "Pre-Seed/Seed, Tech, SaaS",
+      ticket: "€200K - €1M",
+      location: "Berlin",
+      subject: "Seed Pitch - West Money OS Smart Home",
+      body: PITCH_DE + `\n\nCavalry's Pre-Seed/Seed Fokus passt perfekt zu unserer aktuellen Finanzierungsrunde.`
+    },
+    {
+      id: "fly_ventures",
+      type: "vc",
+      name: "Fly Ventures",
+      to: "hello@fly.vc",
+      focus: "Deep Tech, AI, Enterprise",
+      ticket: "€500K - €3M",
+      location: "Berlin",
+      subject: "AI-Powered Smart Home - West Money OS Pitch",
+      body: PITCH_EN + `\n\nFly Ventures' Deep Tech and AI focus aligns with our GOD BOT AI assistant and smart automation technology.`
+    },
+    {
+      id: "signals",
+      type: "vc",
+      name: "Signals Venture Capital",
+      to: "pitch@signals.vc",
+      focus: "B2B Software, Deep Tech",
+      ticket: "€300K - €2M",
+      location: "Berlin",
+      subject: "B2B Smart Home Platform - Seed Investment",
+      body: PITCH_EN + `\n\nSignals' B2B software expertise would help us scale West Money OS in the enterprise market.`
+    }
+  ],
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // BUSINESS ANGELS - NETZWERKE
+  // ═══════════════════════════════════════════════════════════════════════
+
+  "👼 Business Angels - Netzwerke NRW": [
+    {
+      id: "band",
+      type: "angels",
+      name: "BAND - Business Angels Deutschland",
+      to: "info@business-angels.de",
+      focus: "Alle Branchen, bundesweit",
+      ticket: "€25K - €500K",
+      location: "Essen (NRW)",
+      subject: "One-Pager Einreichung - West Money Bau GmbH",
+      body: `Sehr geehrtes BAND-Team,
+
+hiermit reiche ich den One-Pager für West Money Bau GmbH ein und bitte um Aufnahme in Ihr Netzwerk für die Investorensuche.
+
+` + PITCH_DE
+    },
+    {
+      id: "baar",
+      type: "angels",
+      name: "BAAR - Business Angels Agentur Ruhr",
+      to: "info@baar.de",
+      focus: "Ruhrgebiet, alle Branchen",
+      ticket: "€25K - €250K",
+      location: "Essen",
+      subject: "Pitch Bewerbung - West Money Bau GmbH | Smart Home",
+      body: `Sehr geehrtes BAAR-Team,
+
+als Unternehmen aus der Region NRW bewerben wir uns für ein Matching mit Ihren Business Angels.
+
+` + PITCH_DE + `\n\nUnser Flagship Store in Köln stärkt die Region.`
+    },
+    {
+      id: "angel_engine",
+      type: "angels",
+      name: "Angel Engine Düsseldorf",
+      to: "info@angel-engine.de",
+      focus: "NRW, Tech & Digital",
+      ticket: "€25K - €200K",
+      location: "Düsseldorf",
+      subject: "Startup Pitch - West Money OS | PropTech",
+      body: `Sehr geehrtes Angel Engine Team,
+
+wir suchen Business Angels aus NRW für unsere Seed-Runde.
+
+` + PITCH_DE
+    },
+    {
+      id: "ban_frm",
+      type: "angels",
+      name: "Business Angels FrankfurtRheinMain",
+      to: "info@ba-frm.de",
+      focus: "Rhein-Main, alle Branchen",
+      ticket: "€50K - €500K",
+      location: "Frankfurt",
+      subject: "Investment Anfrage - West Money OS Plattform",
+      body: PITCH_DE + `\n\nAls eines der größten Angel-Netzwerke Deutschlands wäre eine Partnerschaft für uns ideal.`
+    },
+    {
+      id: "nrw_bank_seed",
+      type: "angels",
+      name: "NRW.BANK Seed Fonds",
+      to: "seedfonds@nrwbank.de",
+      focus: "NRW Startups, Tech",
+      ticket: "€50K - €200K",
+      location: "Düsseldorf",
+      subject: "Seed Fonds Bewerbung - West Money Bau GmbH",
+      body: `Sehr geehrtes NRW.BANK Seed Fonds Team,
+
+als NRW-Unternehmen mit Sitz in Köln bewerben wir uns um eine Beteiligung aus dem Seed Fonds.
+
+` + PITCH_DE
+    }
+  ],
+
+  "👼 Business Angels - Überregional": [
+    {
+      id: "angel_invest",
+      type: "angels",
+      name: "AngelInvest Ventures",
+      to: "info@angelinvest.ventures",
+      focus: "European Tech Startups",
+      ticket: "€125K",
+      location: "Berlin",
+      subject: "Pre-Seed/Seed Investment - West Money OS",
+      body: PITCH_EN + `\n\nAngelInvest's European focus and €125K standard ticket size fits our syndicate strategy.`
+    },
+    {
+      id: "auxxo",
+      type: "angels",
+      name: "Auxxo Female Catalyst Fund",
+      to: "hello@auxxo.com",
+      focus: "Female-Founded, Tech",
+      ticket: "€50K - €500K",
+      location: "Berlin",
+      subject: "Investment Inquiry - West Money OS PropTech",
+      body: PITCH_EN + `\n\nWhile West Money Bau is male-founded, we prioritize diversity in our team expansion and would value Auxxo's strategic input.`
+    },
+    {
+      id: "vfn",
+      type: "angels",
+      name: "VFN Heilbronn-Franken",
+      to: "info@venture-forum-neckar.de",
+      focus: "Tech, B2B, Mittelstand",
+      ticket: "€100K - €1M",
+      location: "Heilbronn",
+      subject: "Investmentforum Bewerbung - West Money OS",
+      body: PITCH_DE + `\n\nIhre Nähe zum Mittelstand und Tech-Fokus macht VFN zum idealen Partner für unsere B2B Smart Home Plattform.`
+    },
+    {
+      id: "cyberforum",
+      type: "angels",
+      name: "CyberForum Karlsruhe",
+      to: "investment@cyberforum.de",
+      focus: "IT, Software, Web",
+      ticket: "€25K - €500K",
+      location: "Karlsruhe",
+      subject: "Business Angel Matching - West Money OS Software",
+      body: PITCH_DE + `\n\nCyberForum's IT und Software Fokus passt perfekt zu unserer SaaS-Plattform.`
+    },
+    {
+      id: "angelbw",
+      type: "angels",
+      name: "AngelBW Baden-Württemberg",
+      to: "info@angelbw.de",
+      focus: "Tech, Innovation BW",
+      ticket: "€25K - €300K",
+      location: "Stuttgart",
+      subject: "Angel Investment - West Money OS",
+      body: PITCH_DE + `\n\nAngelBW's bundesweites Netzwerk ist ideal für unsere Expansion.`
+    },
+    {
+      id: "banson",
+      type: "angels",
+      name: "BANSON Braunschweig",
+      to: "info@banson.net",
+      focus: "Tech, Innovation",
+      ticket: "€25K - €200K",
+      location: "Braunschweig",
+      subject: "Startup Pitch - West Money OS",
+      body: PITCH_DE
+    },
+    {
+      id: "angel_network",
+      type: "angels",
+      name: "Angel Investment Network DE",
+      to: "germany@angelinvestmentnetwork.de",
+      focus: "Alle Branchen",
+      ticket: "€25K - €1M",
+      location: "Online",
+      subject: "Funding Request - West Money OS Platform",
+      body: PITCH_EN + `\n\nWe're seeking angel investors through your network for our Seed round.`
+    },
+    {
+      id: "investforum",
+      type: "angels",
+      name: "Investforum Sachsen-Anhalt",
+      to: "info@investforum.de",
+      focus: "Tech, Innovation Ost",
+      ticket: "€50K - €500K",
+      location: "Magdeburg",
+      subject: "Pitch-Day Bewerbung - West Money Bau",
+      body: PITCH_DE
+    },
+    {
+      id: "bans_saar",
+      type: "angels",
+      name: "BANS Saarland",
+      to: "bans@saarland.ihk.de",
+      focus: "Saarland Region",
+      ticket: "€25K - €200K",
+      location: "Saarbrücken",
+      subject: "Business Angel Anfrage - West Money OS",
+      body: PITCH_DE
+    },
+    {
+      id: "banew",
+      type: "angels",
+      name: "BANEW Elbe-Weser",
+      to: "info@banew.de",
+      focus: "Norddeutschland",
+      ticket: "€25K - €200K",
+      location: "Hamburg Region",
+      subject: "Investment Anfrage - West Money OS",
+      body: PITCH_DE
+    },
+    {
+      id: "cornexion",
+      type: "angels",
+      name: "CORNEXION Mittelstand",
+      to: "info@cornexion.de",
+      focus: "B2B, Mittelstand",
+      ticket: "€50K - €500K",
+      location: "Frankfurt",
+      subject: "Mittelstand Investment - West Money OS B2B",
+      body: PITCH_DE + `\n\nUnser B2B Fokus auf Handwerker und Installateure passt perfekt zu Ihrem Mittelstand-Netzwerk.`
+    },
+    {
+      id: "greenventure",
+      type: "angels",
+      name: "GreenVenture Forum (BAND)",
+      to: "greenventure@business-angels.de",
+      focus: "Klima, Energie, Nachhaltigkeit",
+      ticket: "€50K - €300K",
+      location: "NRW",
+      subject: "GreenVenture Pitch - West Money OS Energieeffizienz",
+      body: PITCH_DE + `\n\nWest Money OS optimiert den Energieverbrauch in Smart Homes und trägt zur Dekarbonisierung im Gebäudesektor bei.`
+    },
+    {
+      id: "angels4health",
+      type: "angels",
+      name: "Angels4Health",
+      to: "info@angels4health.de",
+      focus: "Healthcare, MedTech, Accessibility",
+      ticket: "€50K - €300K",
+      location: "Berlin",
+      subject: "Investment Anfrage - Barrierefreies Smart Home",
+      body: PITCH_DE + `\n\nUnser Fokus auf barrierefreies Bauen und WCAG 2.1 konforme Bedienung macht uns relevant für den Healthcare-Bereich.`
+    }
+  ],
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // PRIVATE EQUITY & FAMILY OFFICES
+  // ═══════════════════════════════════════════════════════════════════════
+
+  "💼 Private Equity & Family Offices": [
+    {
+      id: "dbag",
+      type: "pe",
+      name: "Deutsche Beteiligungs AG (DBAG)",
+      to: "info@dbag.de",
+      focus: "Mittelstand, Tech",
+      ticket: "€5M - €50M",
+      location: "Frankfurt",
+      subject: "Beteiligungsanfrage - West Money Bau GmbH",
+      body: PITCH_DE + `\n\nAls etablierter Mittelstandsinvestor mit Tech-Fokus wäre DBAG ein strategischer Partner für unsere Wachstumsphase.`
+    },
+    {
+      id: "gimv",
+      type: "pe",
+      name: "Gimv Germany",
+      to: "info.de@gimv.com",
+      focus: "Consumer, Healthcare, Tech",
+      ticket: "€5M - €30M",
+      location: "München",
+      subject: "Investment Opportunity - West Money OS Platform",
+      body: PITCH_EN + `\n\nGimv's smart industries focus aligns with our Smart Home and Building Automation platform.`
+    },
+    {
+      id: "equistone",
+      type: "pe",
+      name: "Equistone Partners",
+      to: "germany@equistonepe.com",
+      focus: "Mid-Market, Tech",
+      ticket: "€10M - €100M",
+      location: "München",
+      subject: "Growth Investment - West Money Bau GmbH",
+      body: PITCH_EN + `\n\nWhile we're currently at Seed stage, we're building towards a Series A that could fit Equistone's profile.`
+    },
+    {
+      id: "paragon",
+      type: "pe",
+      name: "Paragon Partners",
+      to: "info@paragon.de",
+      focus: "Tech-enabled Services",
+      ticket: "€5M - €50M",
+      location: "München",
+      subject: "Investment Inquiry - Smart Home Platform",
+      body: PITCH_DE + `\n\nParagons Fokus auf tech-enabled Services passt zu unserem Smart Home Installation + SaaS Modell.`
+    },
+    {
+      id: "hannover_finanz",
+      type: "pe",
+      name: "Hannover Finanz",
+      to: "info@hannoverfinanz.de",
+      focus: "Mittelstand, Nachfolge",
+      ticket: "€5M - €30M",
+      location: "Hannover",
+      subject: "Wachstumsfinanzierung - West Money Bau",
+      body: PITCH_DE + `\n\nAls Mittelstandsinvestor könnten Sie unsere Expansion in neue Regionen unterstützen.`
+    },
+    {
+      id: "auctus",
+      type: "pe",
+      name: "Auctus Capital Partners",
+      to: "info@auctuscapital.de",
+      focus: "Mittelstand, Growth",
+      ticket: "€3M - €20M",
+      location: "München",
+      subject: "Growth Capital - West Money OS",
+      body: PITCH_DE
+    },
+    {
+      id: "armira",
+      type: "pe",
+      name: "ARMIRA",
+      to: "info@armira.de",
+      focus: "Mittelstand, B2B Services",
+      ticket: "€10M - €50M",
+      location: "München",
+      subject: "Investment Anfrage - B2B Smart Home",
+      body: PITCH_DE + `\n\nARMIRAs B2B Services Fokus passt zu unserem Installateur- und Handwerker-Netzwerk.`
+    }
+  ],
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // ÖFFENTLICHE FÖRDERUNG
+  // ═══════════════════════════════════════════════════════════════════════
+
+  "🏛️ Öffentliche Förderung & Zuschüsse": [
+    {
+      id: "kfw",
+      type: "public",
+      name: "KfW Bankengruppe",
+      to: "infocenter@kfw.de",
+      focus: "Gründung, Innovation, Klimaschutz",
+      ticket: "€50K - €25M",
+      location: "Frankfurt",
+      subject: "Beratung Förderprogramme - West Money Bau GmbH",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH entwickelt "West Money OS" - eine Smart Home Plattform mit Fokus auf Energieeffizienz und Barrierefreiheit.
+
+Wir bitten um Beratung zu passenden KfW-Förderprogrammen:
+
+UNTERNEHMENSPROFIL:
+• Branche: PropTech / Smart Home / Barrierefreies Bauen
+• Umsatz 2024: €847.523
+• Mitarbeiter: 5
+• Standort: Köln, NRW
+
+RELEVANTE PROGRAMME:
+• ERP-Gründerkredit - StartGeld
+• ERP-Digitalisierungs- und Innovationskredit
+• Klimaschutzoffensive für den Mittelstand
+
+PROJEKT:
+• West Money OS Plattform-Entwicklung
+• Flagship Store Köln (energieeffizient)
+• Investitionsbedarf: €500.000
+
+Bitte kontaktieren Sie uns für ein Beratungsgespräch.
+
+` + SIGNATURE
+    },
+    {
+      id: "nrwbank",
+      type: "public",
+      name: "NRW.BANK",
+      to: "info@nrwbank.de",
+      focus: "NRW Unternehmen",
+      ticket: "€25K - €10M",
+      location: "Düsseldorf",
+      subject: "Förderantrag - West Money Bau GmbH Köln",
+      body: `Sehr geehrte Damen und Herren,
+
+als NRW-Unternehmen mit Sitz in Köln interessieren wir uns für Förderprogramme der NRW.BANK.
+
+` + PITCH_DE + `\n\nBitte informieren Sie uns über passende Programme (Seed Fonds, Innovationskredit, etc.).`
+    },
+    {
+      id: "bafa",
+      type: "public",
+      name: "BAFA - Bundesamt für Wirtschaft",
+      to: "foerderung@bafa.bund.de",
+      focus: "Energie, Digitalisierung",
+      ticket: "Zuschüsse bis €50K",
+      location: "Eschborn",
+      subject: "Förderprogramm Anfrage - Smart Home Energieeffizienz",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH entwickelt Smart Home Lösungen für energieeffiziente Gebäude.
+
+Wir interessieren uns für BAFA-Förderprogramme im Bereich:
+• Energieeffizienz in Gebäuden
+• Digitalisierung
+• go-digital
+
+Bitte senden Sie uns Informationen zu passenden Programmen.
+
+` + SIGNATURE
+    },
+    {
+      id: "zim",
+      type: "public",
+      name: "ZIM - Zentrales Innovationsprogramm",
+      to: "zim@vdivde-it.de",
+      focus: "Innovation, F&E",
+      ticket: "Zuschüsse bis €380K",
+      location: "Berlin",
+      subject: "ZIM Projektskizze - West Money OS KI-Entwicklung",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH plant ein Innovationsprojekt für die KI-gestützte Smart Home Steuerung.
+
+PROJEKTSKIZZE:
+• Titel: GOD BOT - KI-Assistant für Smart Home Steuerung
+• Projekttyp: Einzelprojekt
+• Laufzeit: 24 Monate
+• Geschätzte Kosten: €400.000
+• Beantragte Förderung: €200.000 (50%)
+
+INNOVATION:
+• Sprachgesteuerte Smart Home Automation
+• Machine Learning für Energieoptimierung
+• Barrierefreie Bedienung (Accessibility)
+
+Bitte senden Sie uns Informationen zum Antragsverfahren.
+
+` + SIGNATURE
+    },
+    {
+      id: "invest_bw",
+      type: "public",
+      name: "Invest NRW",
+      to: "info@invest-in-nrw.de",
+      focus: "NRW Wirtschaftsförderung",
+      ticket: "Beratung + Zuschüsse",
+      location: "Düsseldorf",
+      subject: "Ansiedlung & Förderung - West Money Bau Flagship Store",
+      body: `Sehr geehrte Damen und Herren,
+
+die West Money Bau GmbH plant einen Smart Home Flagship Store in Köln (Ehrenstraße).
+
+PROJEKT:
+• Investition: €485.000 - €650.000
+• Arbeitsplätze: 10-15 neue Stellen
+• Eröffnung: Q1-Q2 2026
+
+Wir interessieren uns für:
+• Investitionsförderung NRW
+• Arbeitsplatzförderung
+• Beratung Standortwahl
+
+Bitte kontaktieren Sie uns für ein Gespräch.
+
+` + SIGNATURE
+    }
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FUNKTIONEN
+// ═══════════════════════════════════════════════════════════════════════════
+
+let sentEmails = [];
+let currentIndex = 0;
+let emailQueue = [];
+
+function getGmailLink(email) {
+  const isEnglish = email.body.includes('Dear') || email.body.includes('Best regards');
+  const sig = isEnglish ? SIGNATURE_EN : SIGNATURE;
+  const fullBody = email.body + '\n\n' + sig;
+  
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email.to)}&su=${encodeURIComponent(email.subject)}&body=${encodeURIComponent(fullBody)}`;
+}
+
+function getAllEmails() {
+  const emails = [];
+  for (const [category, items] of Object.entries(ALL_INVESTORS)) {
+    for (const email of items) {
+      emails.push({ ...email, category });
+    }
+  }
+  return emails;
+}
+
+function sendEmail(email) {
+  const link = getGmailLink(email);
+  window.open(link, '_blank');
+  
+  if (!sentEmails.includes(email.id)) {
+    sentEmails.push(email.id);
+    document.getElementById('sentCount').textContent = sentEmails.length;
+    updateProgress();
+    
+    const btn = document.getElementById('btn-' + email.id);
+    if (btn) {
+      btn.textContent = '✅ Geöffnet';
+      btn.classList.add('sent');
+    }
+  }
+  
+  showToast('E-Mail geöffnet: ' + email.name);
+}
+
+function sendAll() {
+  emailQueue = getAllEmails();
+  currentIndex = 0;
+  alert(`🚀 ${emailQueue.length} E-Mails werden geöffnet!\n\nBitte Pop-ups erlauben und in jedem Tab auf "Senden" klicken.`);
+  sendNext();
+}
+
+function sendCategory(type) {
+  emailQueue = getAllEmails().filter(e => e.type === type);
+  currentIndex = 0;
+  alert(`📧 ${emailQueue.length} E-Mails werden geöffnet!`);
+  sendNext();
+}
+
+function sendNext() {
+  if (currentIndex < emailQueue.length) {
+    const email = emailQueue[currentIndex];
+    sendEmail(email);
+    currentIndex++;
+    
+    if (currentIndex < emailQueue.length) {
+      setTimeout(sendNext, 1500);
+    }
+  }
+}
+
+function updateProgress() {
+  const total = getAllEmails().length;
+  const percent = (sentEmails.length / total) * 100;
+  document.getElementById('progressFill').style.width = percent + '%';
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = '✅ ' + msg;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 2000);
+}
+
+function renderEmails() {
+  const container = document.getElementById('emailContainer');
+  
+  for (const [category, emails] of Object.entries(ALL_INVESTORS)) {
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'category';
+    
+    categoryDiv.innerHTML = `
+      <div class="category-header">
+        <h3>${category}</h3>
+        <span class="count">${emails.length} Investoren</span>
+      </div>
+      <div class="email-list"></div>
+    `;
+    
+    container.appendChild(categoryDiv);
+    
+    const list = categoryDiv.querySelector('.email-list');
+    
+    for (const email of emails) {
+      const item = document.createElement('div');
+      item.className = 'email-item';
+      item.innerHTML = `
+        <div class="email-info">
+          <h4>${email.name}</h4>
+          <p>${email.to}</p>
+          <div class="focus">${email.focus}</div>
+        </div>
+        <div class="email-status">
+          <span class="ticket">${email.ticket}</span>
+          <button class="btn-send" id="btn-${email.id}" onclick='sendEmail(${JSON.stringify(email).replace(/'/g, "&#39;")})'>
+            📧 Pitch senden
+          </button>
+        </div>
+      `;
+      
+      list.appendChild(item);
+    }
+  }
+}
+
+// Init
+renderEmails();
+</script>
+
+</body>
+</html>

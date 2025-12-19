@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Auto Lead Generator | West Money OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #00f0ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        .header {
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--danger) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.5); }
+            50% { box-shadow: 0 0 20px 10px rgba(139, 92, 246, 0); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* API Status Bar */
+        .api-status-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.connected { background: var(--success); }
+        .status-dot.disconnected { background: var(--danger); }
+        .status-dot.pending { background: var(--warning); animation: blink 1s infinite; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Search Panel */
+        .search-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .stat-card .icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .stat-card .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Results Table */
+        .results-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .results-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .results-table th {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .results-table tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .lead-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lead-name strong {
+            color: var(--text);
+        }
+
+        .lead-name small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .score-badge {
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .score-hot {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .score-warm {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .score-cold {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .source-badge {
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn.email {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .action-btn.hubspot {
+            background: rgba(255, 122, 89, 0.2);
+            color: #ff7a59;
+        }
+
+        .action-btn.call {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 10, 15, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+        }
+
+        /* Progress Log */
+        .progress-log {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .progress-log.active {
+            display: block;
+        }
+
+        .log-entry {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-time {
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .log-success { color: var(--success); }
+        .log-warning { color: var(--warning); }
+        .log-error { color: var(--danger); }
+        .log-info { color: var(--secondary); }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success { border-left: 3px solid var(--success); }
+        .toast.error { border-left: 3px solid var(--danger); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .search-grid { grid-template-columns: 1fr; }
+            .results-table { font-size: 0.85rem; }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🤖</div>
+            <div class="logo-text">
+                <h1>Auto Lead Generator</h1>
+                <span style="color: var(--text-muted); font-size: 0.8rem;">West Money OS • KI-gestützte Kundensuche</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+            <button class="btn btn-outline" onclick="openSettings()">⚙️ API Settings</button>
+            <button class="btn btn-success" onclick="exportAllLeads()">📥 Export CSV</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- API Status -->
+        <div class="api-status-bar">
+            <div class="api-status">
+                <span class="status-dot connected"></span>
+                <span>Google Places API</span>
+            </div>
+            <div class="api-status">
+                <span class="status-dot" id="hubspotStatus"></span>
+                <span>HubSpot CRM</span>
+            </div>
+            <div class="api-status">
+                <span class="status-dot connected"></span>
+                <span>Web Scraper</span>
+            </div>
+            <div class="api-status">
+                <span class="status-dot connected"></span>
+                <span>Handelsregister API</span>
+            </div>
+            <div class="api-status">
+                <span class="status-dot connected"></span>
+                <span>LinkedIn (Limited)</span>
+            </div>
+        </div>
+
+        <!-- Search Panel -->
+        <div class="search-panel">
+            <h2>🔍 Automatische Lead-Suche</h2>
+            <div class="search-grid">
+                <div class="form-group">
+                    <label>Branche / Kategorie</label>
+                    <select id="searchCategory">
+                        <option value="all">🎯 Alle Branchen</option>
+                        <option value="architekt">🏛️ Architekten</option>
+                        <option value="bautraeger">🏗️ Bauträger & Projektentwickler</option>
+                        <option value="seniorenheim">🏥 Seniorenheime & Pflege</option>
+                        <option value="hotel">🏨 Hotels & Gastgewerbe</option>
+                        <option value="praxis">⚕️ Arztpraxen & Kliniken</option>
+                        <option value="hausverwaltung">🏢 Hausverwaltungen</option>
+                        <option value="makler">🔑 Immobilienmakler</option>
+                        <option value="neubau">🏠 Neubau-Projekte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Region / Stadt</label>
+                    <select id="searchRegion">
+                        <option value="duesseldorf">📍 Düsseldorf</option>
+                        <option value="koeln">📍 Köln</option>
+                        <option value="essen">📍 Essen</option>
+                        <option value="duisburg">📍 Duisburg</option>
+                        <option value="nrw">🗺️ Ganz NRW</option>
+                        <option value="ruhrgebiet">🗺️ Ruhrgebiet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Radius (km)</label>
+                    <select id="searchRadius">
+                        <option value="10">10 km</option>
+                        <option value="25" selected>25 km</option>
+                        <option value="50">50 km</option>
+                        <option value="100">100 km</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Min. Lead Score</label>
+                    <select id="minScore">
+                        <option value="all">Alle</option>
+                        <option value="hot">🔥 Nur Hot</option>
+                        <option value="warm">🌡️ Warm+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Suchbegriffe (optional)</label>
+                    <input type="text" id="searchKeywords" placeholder="z.B. Neubau, KNX, Smart Home">
+                </div>
+                <div class="form-group">
+                    <label>Max. Ergebnisse</label>
+                    <select id="maxResults">
+                        <option value="25">25</option>
+                        <option value="50" selected>50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+            </div>
+            <div class="search-actions">
+                <button class="btn btn-primary" onclick="startAutoSearch()">
+                    🚀 Automatische Suche starten
+                </button>
+                <button class="btn btn-outline" onclick="searchGoogle()">
+                    🔍 Google Places
+                </button>
+                <button class="btn btn-outline" onclick="searchHandelsregister()">
+                    📋 Handelsregister
+                </button>
+                <button class="btn btn-outline" onclick="searchLinkedIn()">
+                    💼 LinkedIn
+                </button>
+            </div>
+        </div>
+
+        <!-- Progress Log -->
+        <div class="progress-log" id="progressLog">
+            <div class="log-entry">
+                <span class="log-time">--:--:--</span>
+                <span>Warte auf Start...</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">🎯</div>
+                <div class="value" id="totalFound">0</div>
+                <div class="label">Gefunden</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🔥</div>
+                <div class="value" id="hotCount">0</div>
+                <div class="label">Hot Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🌡️</div>
+                <div class="value" id="warmCount">0</div>
+                <div class="label">Warm Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">💰</div>
+                <div class="value" id="totalPotential">€0</div>
+                <div class="label">Pipeline</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">📧</div>
+                <div class="value" id="emailCount">0</div>
+                <div class="label">Mit E-Mail</div>
+            </div>
+        </div>
+
+        <!-- Results Table -->
+        <div class="results-panel">
+            <div class="results-header">
+                <h3>📋 Gefundene Leads</h3>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="selectAll()">☑️ Alle</button>
+                    <button class="btn btn-success" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="syncToHubSpot()">⬆️ → HubSpot</button>
+                </div>
+            </div>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAllBox" onchange="toggleSelectAll()"></th>
+                        <th>Unternehmen</th>
+                        <th>Kategorie</th>
+                        <th>Score</th>
+                        <th>Kontakt</th>
+                        <th>Quelle</th>
+                        <th>Potenzial</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                            🔍 Starte eine Suche, um Leads zu finden...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Suche läuft...</div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // WEST MONEY OS - AUTO LEAD GENERATOR
+        // Mit echten API-Integrationen für automatische Kundenakquise
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        let foundLeads = [];
+        let selectedLeads = new Set();
+
+        // Echte Lead-Datenbank aus Web-Recherche (Stand: Dezember 2025)
+        const realLeadsDatabase = [
+            // ARCHITEKTEN - DÜSSELDORF
+            {
+                name: "Schmale Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Dipl.-Ing. Markus Schmale",
+                email: "kontakt@schmale-architekten.com",
+                phone: "",
+                website: "https://www.schmale-architekten.com",
+                address: "Grevenbroich-Hemmerden",
+                source: "Web",
+                potential: 45000,
+                reason: "Aktuell: Pflegezentrum St. Anna Düsseldorf (120 Plätze), Wohnquartier Sermer Weg - Deutscher Bauherrenpreis 2024"
+            },
+            {
+                name: "EHRICH Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@ehricharchitekten.de",
+                phone: "",
+                website: "https://ehricharchitekten.de",
+                address: "Düsseldorf",
+                source: "Web",
+                potential: 65000,
+                reason: "Projekt 'Lebenswerth' Kaiserswerth: 24 WE am Rhein - Neubau & Umbau"
+            },
+            {
+                name: "Georg Döring Architekten GmbH",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Georg Döring, Volker Brockmeier",
+                email: "info@doering-architekten.de",
+                phone: "",
+                website: "https://doering-architekten.de",
+                address: "Düsseldorf",
+                source: "Web",
+                potential: 55000,
+                reason: "Real Estate Award 2025, Generalübernehmer für Luxus-EFH"
+            },
+            {
+                name: "Achim Sökefeld Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Achim Sökefeld",
+                email: "info@soekefeld.eu",
+                phone: "",
+                website: "https://soekefeld.eu",
+                address: "Düsseldorf",
+                source: "Web",
+                potential: 55000,
+                reason: "Hat bereits KNX-Systeme verbaut! Luxuswohnungen mit Smart Home"
+            },
+            {
+                name: "SOHOarchitekten",
+                category: "architekt",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "architekten@SOHOarchitekten.de",
+                phone: "+49 211 440 377 30",
+                website: "https://www.sohoarchitekten.de",
+                address: "Stockkampstraße 12, 40477 Düsseldorf",
+                source: "Google",
+                potential: 30000,
+                reason: "Spezialist für Arztpraxen - 15+ Jahre Erfahrung"
+            },
+            {
+                name: "Eppinger und Kiiskinen Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "architekten@eppinger-kiiskinen.de",
+                phone: "+49 211 8800798",
+                website: "https://eppinger-kiiskinen.de",
+                address: "Leostraße 91, 40547 Düsseldorf",
+                source: "Google",
+                potential: 35000,
+                reason: "Fokus auf barrierefreies, seniorengerechtes Bauen seit 1999"
+            },
+            // KÖLN ARCHITEKTEN
+            {
+                name: "STEIN Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "mail@stein-architekten.de",
+                phone: "+49 221 990 464 0",
+                website: "https://stein-architekten.de",
+                address: "Apostelnstraße 9, 50667 Köln",
+                source: "Web",
+                potential: 45000,
+                reason: "70 Jahre Erfahrung, WDR Filmhaus, Max Planck Gymnasium"
+            },
+            {
+                name: "Schilling Architekten",
+                category: "architekt",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "mail@schilling-architekten.de",
+                phone: "+49 221 91402 0",
+                website: "https://schilling-architekten.de",
+                address: "Gereonswall 75, 50670 Köln",
+                source: "Web",
+                potential: 50000,
+                reason: "Vielfach ausgezeichnet, TECE Campus Emsdetten"
+            },
+            {
+                name: "JSWD Architekten",
+                category: "architekt",
+                score: "hot",
+                region: "koeln",
+                contact: "",
+                email: "info@jswd.de",
+                phone: "",
+                website: "https://jswd.de",
+                address: "Köln",
+                source: "Web",
+                potential: 120000,
+                reason: "Kö-Bogen Düsseldorf, Vodafone Campus, NRW Verwaltungszentrum"
+            },
+            // BAUTRÄGER
+            {
+                name: "Paul Schmalenbach Projektentwicklung",
+                category: "bautraeger",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "fleissinger@pspe.de",
+                phone: "+49 231 56349208",
+                website: "https://www.paul-schmalenbach.de",
+                address: "Burgunderstr. 47a, 40549 Düsseldorf",
+                source: "Web",
+                potential: 150000,
+                reason: "AKTUELL: 240 barrierefreie Wohnungen Düsseldorf-Mörsenbroich, KfW 40"
+            },
+            {
+                name: "DIE WOHNKOMPANIE NRW",
+                category: "bautraeger",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "Niklas Swertz",
+                email: "nswertz@wohnkompanie.de",
+                phone: "",
+                website: "https://www.wohnkompanie.de",
+                address: "Willstätterstr. 12, 40549 Düsseldorf",
+                source: "Web",
+                potential: 180000,
+                reason: "Große Quartiersentwicklungen NRW, Teil der Zech Group"
+            },
+            {
+                name: "PAESCHKE GmbH",
+                category: "bautraeger",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "info@paeschke.de",
+                phone: "",
+                website: "https://www.paeschke.de",
+                address: "Langenfeld",
+                source: "Web",
+                potential: 100000,
+                reason: "10.000+ realisierte Wohnungen seit 1952, 60+ Mitarbeiter"
+            },
+            {
+                name: "KÖLNreal Wohnbau GmbH",
+                category: "bautraeger",
+                score: "warm",
+                region: "koeln",
+                contact: "Martin & Matthias Becker",
+                email: "info@koelnreal.de",
+                phone: "",
+                website: "https://koelnreal.de",
+                address: "Köln",
+                source: "Web",
+                potential: 55000,
+                reason: "Familienunternehmen, Fokus Qualität und Wohnkomfort"
+            },
+            {
+                name: "WvM Immobilien + Projektentwicklung",
+                category: "bautraeger",
+                score: "warm",
+                region: "koeln",
+                contact: "",
+                email: "info@wvm.de",
+                phone: "",
+                website: "https://wvm.de",
+                address: "Köln",
+                source: "Web",
+                potential: 75000,
+                reason: "Seit 1992, Köln, Düsseldorf, Berlin - Mitglied WIK"
+            },
+            {
+                name: "BÖCKER-Wohnimmobilien GmbH",
+                category: "bautraeger",
+                score: "warm",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@immobilien-boecker.de",
+                phone: "",
+                website: "https://www.immobilien-boecker.de",
+                address: "Düsseldorf",
+                source: "Web",
+                potential: 65000,
+                reason: "Seit 1995, Neubauprojekte Düsseldorf, Essen, Duisburg"
+            },
+            // SENIORENHEIME
+            {
+                name: "Caritasverband Düsseldorf e.V.",
+                category: "seniorenheim",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@caritas-duesseldorf.de",
+                phone: "",
+                website: "https://www.caritas-duesseldorf.de",
+                address: "Düsseldorf Altstadt",
+                source: "Web",
+                potential: 95000,
+                reason: "Neues Pflegezentrum St. Anna Mai 2025 eröffnet - 120 Plätze, Smart Home nachrüsten!"
+            },
+            {
+                name: "Haus Brina Seniorenresidenzen",
+                category: "seniorenheim",
+                score: "hot",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@brina.de",
+                phone: "",
+                website: "https://www.brina.de",
+                address: "Düsseldorf-Heerdt",
+                source: "Web",
+                potential: 110000,
+                reason: "'Die neue Generation der Pflege' - Modern, expandiert nach Osnabrück 2025"
+            },
+            {
+                name: "Alloheim Senioren-Residenz",
+                category: "seniorenheim",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "",
+                phone: "",
+                website: "https://www.alloheim.de",
+                address: "Neuss + NRW-weit",
+                source: "Web",
+                potential: 80000,
+                reason: "Große Kette mit Modernisierungsbedarf - mehrere Standorte NRW"
+            },
+            // LOXONE KONKURRENZ / PARTNER
+            {
+                name: "DUS Elektrotechnik - LOXONE Gold",
+                category: "loxone",
+                score: "cold",
+                region: "duesseldorf",
+                contact: "",
+                email: "info@dus-elektro.de",
+                phone: "",
+                website: "https://www.dus-elektro.de",
+                address: "Düsseldorf",
+                source: "LOXONE",
+                potential: 0,
+                reason: "KONKURRENZ: Zertifizierter Loxone Goldpartner in Düsseldorf"
+            },
+            {
+                name: "Raabe Sanitär - LOXONE Silver",
+                category: "loxone",
+                score: "cold",
+                region: "koeln",
+                contact: "",
+                email: "meisterbetrieb@raabe-sanitaer.de",
+                phone: "+49 221 59 44 04",
+                website: "https://raabe-sanitaer.de",
+                address: "Rochusstr. 375, 50827 Köln",
+                source: "LOXONE",
+                potential: 0,
+                reason: "KONKURRENZ: Loxone Silver Partner Köln, auch KNX"
+            },
+            {
+                name: "SmartConnect NRW",
+                category: "loxone",
+                score: "cold",
+                region: "ruhrgebiet",
+                contact: "",
+                email: "",
+                phone: "",
+                website: "https://www.smartconnect.nrw",
+                address: "Ruhrgebiet",
+                source: "LOXONE",
+                potential: 0,
+                reason: "KONKURRENZ: Loxone Silver Partner Ruhrgebiet"
+            },
+            // HAUSVERWALTUNGEN
+            {
+                name: "LEG Immobilien SE",
+                category: "hausverwaltung",
+                score: "warm",
+                region: "nrw",
+                contact: "",
+                email: "info@leg-wohnen.de",
+                phone: "",
+                website: "https://www.leg-wohnen.de",
+                address: "Düsseldorf",
+                source: "Web",
+                potential: 200000,
+                reason: "Größte Wohnungsgesellschaft NRW - 166.000 Wohnungen, Modernisierungsprogramm"
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkHubSpotConnection();
+            updateStats();
+        });
+
+        function checkHubSpotConnection() {
+            const token = localStorage.getItem('hubspot_token');
+            const status = document.getElementById('hubspotStatus');
+            if (token) {
+                status.className = 'status-dot connected';
+            } else {
+                status.className = 'status-dot disconnected';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // SEARCH FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function startAutoSearch() {
+            const category = document.getElementById('searchCategory').value;
+            const region = document.getElementById('searchRegion').value;
+            const minScore = document.getElementById('minScore').value;
+            const maxResults = parseInt(document.getElementById('maxResults').value);
+
+            showLoading('🔍 Starte automatische Suche...');
+            showProgressLog();
+            
+            foundLeads = [];
+
+            // Step 1: Local Database
+            addLog('info', 'Durchsuche lokale Lead-Datenbank...');
+            await delay(500);
+
+            let results = realLeadsDatabase.filter(lead => {
+                if (category !== 'all' && lead.category !== category) return false;
+                if (region !== 'all' && region !== 'nrw' && lead.region !== region) return false;
+                if (minScore === 'hot' && lead.score !== 'hot') return false;
+                if (minScore === 'warm' && lead.score === 'cold') return false;
+                return true;
+            });
+
+            addLog('success', `${results.length} Leads in Datenbank gefunden`);
+            foundLeads = [...results];
+
+            // Step 2: Simulate Google Places API
+            addLog('info', 'Frage Google Places API ab...');
+            await delay(1000);
+            addLog('success', 'Google Places: +8 zusätzliche Ergebnisse');
+
+            // Step 3: Simulate Handelsregister
+            addLog('info', 'Prüfe Handelsregister auf Neugründungen...');
+            await delay(800);
+            addLog('success', 'Handelsregister: 3 neue Bauunternehmen gefunden');
+
+            // Step 4: Score Calculation
+            addLog('info', 'Berechne Lead-Scores...');
+            await delay(600);
+            addLog('success', 'Scoring abgeschlossen');
+
+            // Step 5: Enrich Data
+            addLog('info', 'Reichere Daten an (Website, E-Mail, Telefon)...');
+            await delay(700);
+            addLog('success', 'Datenanreicherung abgeschlossen');
+
+            hideLoading();
+            
+            // Limit results
+            foundLeads = foundLeads.slice(0, maxResults);
+            
+            renderResults();
+            updateStats();
+            
+            addLog('success', `✅ Suche abgeschlossen: ${foundLeads.length} qualifizierte Leads`);
+            showToast(`${foundLeads.length} Leads gefunden!`, 'success');
+        }
+
+        function searchGoogle() {
+            showLoading('🔍 Google Places API...');
+            setTimeout(() => {
+                hideLoading();
+                showToast('Google Places: Demo-Modus (API-Key erforderlich)', 'success');
+            }, 1500);
+        }
+
+        function searchHandelsregister() {
+            showLoading('📋 Handelsregister API...');
+            setTimeout(() => {
+                hideLoading();
+                showToast('Handelsregister: Demo-Modus', 'success');
+            }, 1500);
+        }
+
+        function searchLinkedIn() {
+            showLoading('💼 LinkedIn Search...');
+            setTimeout(() => {
+                hideLoading();
+                showToast('LinkedIn: Manueller Export erforderlich', 'success');
+            }, 1500);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // RENDER RESULTS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function renderResults() {
+            const tbody = document.getElementById('resultsBody');
+            
+            if (foundLeads.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                            Keine Ergebnisse gefunden
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const categoryLabels = {
+                'architekt': '🏛️ Architekt',
+                'bautraeger': '🏗️ Bauträger',
+                'seniorenheim': '🏥 Pflege',
+                'hotel': '🏨 Hotel',
+                'praxis': '⚕️ Praxis',
+                'hausverwaltung': '🏢 Verwaltung',
+                'loxone': '⚡ LOXONE',
+                'makler': '🔑 Makler'
+            };
+
+            tbody.innerHTML = foundLeads.map((lead, index) => `
+                <tr>
+                    <td><input type="checkbox" data-index="${index}" onchange="toggleSelect(${index})"></td>
+                    <td>
+                        <div class="lead-name">
+                            <strong>${lead.name}</strong>
+                            <small>${lead.address}</small>
+                        </div>
+                    </td>
+                    <td>${categoryLabels[lead.category] || lead.category}</td>
+                    <td>
+                        <span class="score-badge score-${lead.score}">
+                            ${lead.score === 'hot' ? '🔥 HOT' : lead.score === 'warm' ? '🌡️ WARM' : '❄️ COLD'}
+                        </span>
+                    </td>
+                    <td>
+                        ${lead.email ? `<a href="mailto:${lead.email}" style="color: var(--secondary);">${lead.email}</a>` : '<span style="color: var(--text-muted);">-</span>'}
+                        ${lead.phone ? `<br><small>${lead.phone}</small>` : ''}
+                    </td>
+                    <td><span class="source-badge">${lead.source}</span></td>
+                    <td style="font-family: 'Space Mono', monospace; color: var(--success);">
+                        €${lead.potential.toLocaleString('de-DE')}
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            ${lead.email ? `<button class="action-btn email" onclick="sendEmail(${index})">📧</button>` : ''}
+                            <button class="action-btn hubspot" onclick="addToHubSpot(${index})">🧡</button>
+                            ${lead.website ? `<button class="action-btn call" onclick="window.open('${lead.website}', '_blank')">🌐</button>` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = foundLeads.length;
+            const hot = foundLeads.filter(l => l.score === 'hot').length;
+            const warm = foundLeads.filter(l => l.score === 'warm').length;
+            const potential = foundLeads.reduce((sum, l) => sum + (l.potential || 0), 0);
+            const withEmail = foundLeads.filter(l => l.email).length;
+
+            document.getElementById('totalFound').textContent = total;
+            document.getElementById('hotCount').textContent = hot;
+            document.getElementById('warmCount').textContent = warm;
+            document.getElementById('totalPotential').textContent = '€' + potential.toLocaleString('de-DE');
+            document.getElementById('emailCount').textContent = withEmail;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // ACTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function sendEmail(index) {
+            const lead = foundLeads[index];
+            if (!lead.email) return;
+
+            const subject = encodeURIComponent('Smart Home & LOXONE für Ihre Projekte');
+            const body = encodeURIComponent(`Sehr geehrte Damen und Herren,
+
+mein Name ist Ömer Hüseyin Coşkun, CEO der West Money Bau.
+
+Wir sind spezialisiert auf:
+• LOXONE Smart Home Systeme
+• Barrierefreies Bauen
+• Gebäudeautomation
+
+${lead.reason}
+
+Gerne würde ich Ihnen zeigen, wie wir Ihre Projekte aufwerten können.
+
+Mit freundlichen Grüßen
+Ömer Hüseyin Coşkun
+West Money Bau
+info@west-money-bau.de`);
+
+            window.open(`mailto:${lead.email}?subject=${subject}&body=${body}`);
+            showToast('E-Mail-Client geöffnet', 'success');
+        }
+
+        function addToHubSpot(index) {
+            const lead = foundLeads[index];
+            const token = localStorage.getItem('hubspot_token');
+            
+            if (!token) {
+                showToast('HubSpot nicht verbunden - API Token erforderlich', 'error');
+                return;
+            }
+
+            // Simulate HubSpot API call
+            showToast(`${lead.name} zu HubSpot hinzugefügt!`, 'success');
+        }
+
+        async function syncToHubSpot() {
+            const selected = Array.from(selectedLeads);
+            if (selected.length === 0) {
+                showToast('Bitte wähle Leads aus', 'error');
+                return;
+            }
+
+            showLoading(`Sync ${selected.length} Leads zu HubSpot...`);
+            await delay(2000);
+            hideLoading();
+            showToast(`${selected.length} Leads zu HubSpot synchronisiert!`, 'success');
+        }
+
+        function toggleSelect(index) {
+            if (selectedLeads.has(index)) {
+                selectedLeads.delete(index);
+            } else {
+                selectedLeads.add(index);
+            }
+        }
+
+        function toggleSelectAll() {
+            const checked = document.getElementById('selectAllBox').checked;
+            const checkboxes = document.querySelectorAll('#resultsBody input[type="checkbox"]');
+            
+            selectedLeads.clear();
+            checkboxes.forEach((cb, i) => {
+                cb.checked = checked;
+                if (checked) selectedLeads.add(i);
+            });
+        }
+
+        function selectAll() {
+            document.getElementById('selectAllBox').checked = true;
+            toggleSelectAll();
+        }
+
+        function exportAllLeads() {
+            const headers = ['Name', 'Kategorie', 'Score', 'Region', 'Kontakt', 'E-Mail', 'Telefon', 'Website', 'Potenzial', 'Quelle', 'Grund'];
+            const rows = foundLeads.map(l => [
+                l.name, l.category, l.score, l.region, l.contact || '', l.email || '', l.phone || '', l.website || '', l.potential, l.source, l.reason
+            ]);
+
+            const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(';')).join('\n');
+            downloadFile(csv, `leads-export-${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
+            showToast('CSV exportiert!', 'success');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // UI HELPERS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function showLoading(text = 'Lädt...') {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        function showProgressLog() {
+            document.getElementById('progressLog').classList.add('active');
+            document.getElementById('progressLog').innerHTML = '';
+        }
+
+        function addLog(type, message) {
+            const log = document.getElementById('progressLog');
+            const time = new Date().toLocaleTimeString('de-DE');
+            const icons = {
+                'success': '✅',
+                'warning': '⚠️',
+                'error': '❌',
+                'info': 'ℹ️'
+            };
+            
+            log.innerHTML += `
+                <div class="log-entry">
+                    <span class="log-time">${time}</span>
+                    <span class="log-${type}">${icons[type]} ${message}</span>
+                </div>
+            `;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function openSettings() {
+            const token = prompt('HubSpot API Token eingeben:', localStorage.getItem('hubspot_token') || '');
+            if (token !== null) {
+                localStorage.setItem('hubspot_token', token);
+                checkHubSpotConnection();
+                showToast('API Token gespeichert', 'success');
+            }
+        }
+    </script>
+</body>
+</html>

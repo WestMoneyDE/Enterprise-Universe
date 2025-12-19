@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTz Ecosystem - Live Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-deep: #0a0a0f;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area { display: flex; align-items: center; gap: 1rem; }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.5); }
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
+        h1 span { color: var(--primary); }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: var(--bg-deep); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+
+        /* API Status Bar */
+        .api-status-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .api-status .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .api-status.connected .status-dot { background: var(--success); }
+        .api-status.disconnected .status-dot { background: var(--danger); }
+        .api-status.loading .status-dot { background: var(--warning); animation: blink 0.5s infinite; }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.75rem; font-weight: 700; }
+        .stat-label { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.25rem; }
+        .stat-trend { font-size: 0.75rem; margin-top: 0.25rem; }
+        .stat-trend.up { color: var(--success); }
+        .stat-trend.down { color: var(--danger); }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 400px;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; }
+        .card-body { padding: 1rem 1.25rem; max-height: 400px; overflow-y: auto; }
+
+        /* Lead Row */
+        .lead-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .lead-row:hover {
+            background: var(--bg-hover);
+            transform: translateX(4px);
+        }
+
+        .lead-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .lead-info { flex: 1; }
+        .lead-name { font-weight: 600; font-size: 0.9rem; }
+        .lead-company { font-size: 0.8rem; color: var(--text-muted); }
+
+        .lead-score {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .lead-score.hot { color: var(--success); }
+        .lead-score.warm { color: var(--warning); }
+        .lead-score.cold { color: var(--text-muted); }
+
+        .consent-badge {
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .consent-badge.granted { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .consent-badge.pending { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .consent-badge.denied { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        /* Deal Row */
+        .deal-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .deal-stage {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .stage-new { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .stage-qualified { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
+        .stage-proposal { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .stage-negotiation { background: rgba(255, 0, 110, 0.15); color: var(--secondary); }
+        .stage-won { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+
+        .deal-value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child { border-bottom: none; }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.lead { background: rgba(0, 240, 255, 0.15); }
+        .activity-icon.consent { background: rgba(16, 185, 129, 0.15); }
+        .activity-icon.deal { background: rgba(139, 92, 246, 0.15); }
+        .activity-icon.message { background: rgba(255, 0, 110, 0.15); }
+
+        .activity-content { flex: 1; }
+        .activity-text { font-size: 0.85rem; }
+        .activity-text strong { color: var(--primary); }
+        .activity-time { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Config Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 { font-family: 'Orbitron', sans-serif; color: var(--primary); }
+        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer { padding: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 1rem; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--danger);
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.visible { display: block; }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1400px) {
+            .main-grid { grid-template-columns: 1fr 1fr; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">GTz</div>
+                <div>
+                    <h1>🚀 <span>Live Dashboard</span></h1>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Echtzeit-Daten aus HubSpot, WhatsApp & Zadarma</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    <span>LIVE</span>
+                </div>
+                <button class="btn btn-ghost" onclick="refreshAll()">🔄 Aktualisieren</button>
+                <button class="btn btn-primary" onclick="showConfigModal()">⚙️ API Config</button>
+            </div>
+        </header>
+
+        <!-- API Status Bar -->
+        <div class="api-status-bar">
+            <div class="api-status loading" id="hubspotStatus">
+                <span class="status-dot"></span>
+                <span>HubSpot</span>
+            </div>
+            <div class="api-status loading" id="whatsappStatus">
+                <span class="status-dot"></span>
+                <span>WhatsApp</span>
+            </div>
+            <div class="api-status loading" id="zadarmaStatus">
+                <span class="status-dot"></span>
+                <span>Zadarma</span>
+            </div>
+            <div style="flex: 1;"></div>
+            <span style="color: var(--text-muted); font-size: 0.8rem;">
+                Letzte Aktualisierung: <span id="lastUpdate">-</span>
+            </span>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="totalRevenue">-</div>
+                <div class="stat-label">Umsatz (YTD)</div>
+                <div class="stat-trend up" id="revenueTrend"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="pipelineValue">-</div>
+                <div class="stat-label">Pipeline-Wert</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="totalLeads">-</div>
+                <div class="stat-label">Aktive Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" id="consentGranted" style="color: var(--success);">-</div>
+                <div class="stat-label">WA Consent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" id="conversionRate">-</div>
+                <div class="stat-label">Conversion Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🤖</div>
+                <div class="stat-value" id="automatedActions" style="color: var(--accent);">-</div>
+                <div class="stat-label">Auto-Aktionen</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Leads -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>👥 Leads (Live aus HubSpot)</h2>
+                    <button class="btn btn-ghost" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;" onclick="loadLeads()">
+                        🔄
+                    </button>
+                </div>
+                <div class="card-body" id="leadsContainer">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top: 1rem;">Lade Leads...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deals -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>💼 Deals (Live aus HubSpot)</h2>
+                    <button class="btn btn-ghost" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;" onclick="loadDeals()">
+                        🔄
+                    </button>
+                </div>
+                <div class="card-body" id="dealsContainer">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top: 1rem;">Lade Deals...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>⚡ Live-Aktivitäten</h2>
+                </div>
+                <div class="card-body" id="activityContainer">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        Warte auf Aktivitäten...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Modal -->
+    <div class="modal-overlay" id="configModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>⚙️ API Konfiguration</h3>
+                <button class="modal-close" onclick="closeConfigModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="error-message" id="configError"></div>
+                
+                <div class="form-group">
+                    <label>HubSpot API Key</label>
+                    <input type="password" class="form-control" id="hubspotKey" 
+                           placeholder="pat-eu1-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+                </div>
+                
+                <div class="form-group">
+                    <label>WhatsApp API Token</label>
+                    <input type="password" class="form-control" id="whatsappKey" 
+                           placeholder="EAAxxxxxxxx...">
+                </div>
+                
+                <div class="form-group">
+                    <label>WhatsApp Phone Number ID</label>
+                    <input type="text" class="form-control" id="whatsappPhoneId" 
+                           placeholder="123456789012345">
+                </div>
+                
+                <div class="form-group">
+                    <label>Zadarma API Key</label>
+                    <input type="password" class="form-control" id="zadarmaKey" 
+                           placeholder="xxxxxxxxxxxxxxxxxxxxxx">
+                </div>
+
+                <div class="form-group">
+                    <label>OpenAI API Key (für AI-Funktionen)</label>
+                    <input type="password" class="form-control" id="openaiKey" 
+                           placeholder="sk-xxxxxxxx...">
+                </div>
+
+                <p style="font-size: 0.8rem; color: var(--text-muted);">
+                    🔒 Die Keys werden nur lokal im Browser gespeichert (localStorage) und nicht an Server übertragen.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeConfigModal()">Abbrechen</button>
+                <button class="btn btn-primary" onclick="saveConfig()">💾 Speichern & Verbinden</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====================================================================
+        // KONFIGURATION
+        // ====================================================================
+        
+        let CONFIG = {
+            hubspot: {
+                apiKey: localStorage.getItem('gtz_hubspot_key') || '',
+                baseUrl: 'https://api.hubapi.com'
+            },
+            whatsapp: {
+                apiKey: localStorage.getItem('gtz_whatsapp_key') || '',
+                phoneId: localStorage.getItem('gtz_whatsapp_phone') || '',
+                baseUrl: 'https://graph.facebook.com/v18.0'
+            },
+            zadarma: {
+                apiKey: localStorage.getItem('gtz_zadarma_key') || ''
+            },
+            openai: {
+                apiKey: localStorage.getItem('gtz_openai_key') || ''
+            }
+        };
+
+        // ====================================================================
+        // API CALLS
+        // ====================================================================
+
+        async function hubspotRequest(endpoint) {
+            if (!CONFIG.hubspot.apiKey) {
+                throw new Error('HubSpot API Key nicht konfiguriert');
+            }
+
+            const response = await fetch(`${CONFIG.hubspot.baseUrl}${endpoint}`, {
+                headers: {
+                    'Authorization': `Bearer ${CONFIG.hubspot.apiKey}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`HubSpot API Error: ${response.status}`);
+            }
+
+            return response.json();
+        }
+
+        // ====================================================================
+        // DATEN LADEN
+        // ====================================================================
+
+        async function loadLeads() {
+            const container = document.getElementById('leadsContainer');
+            
+            try {
+                const data = await hubspotRequest('/crm/v3/objects/contacts?limit=20&properties=email,firstname,lastname,phone,company,hs_lead_status,hs_whatsapp_consent');
+                
+                if (data.results.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Keine Leads gefunden</p>';
+                    return;
+                }
+
+                container.innerHTML = data.results.map(contact => {
+                    const props = contact.properties;
+                    const initials = `${(props.firstname || 'N')[0]}${(props.lastname || 'N')[0]}`.toUpperCase();
+                    const consent = props.hs_whatsapp_consent || 'not_opted';
+                    const consentClass = consent === 'opt_in' ? 'granted' : consent === 'opt_out' ? 'denied' : 'pending';
+                    const consentText = consent === 'opt_in' ? '✓ WA' : consent === 'opt_out' ? '✗ WA' : '? WA';
+                    
+                    // Einfacher Score basierend auf vorhandenen Daten
+                    let score = 30;
+                    if (props.email) score += 20;
+                    if (props.phone) score += 20;
+                    if (props.company) score += 15;
+                    if (consent === 'opt_in') score += 15;
+                    
+                    const scoreClass = score >= 70 ? 'hot' : score >= 50 ? 'warm' : 'cold';
+
+                    return `
+                        <div class="lead-row">
+                            <div class="lead-avatar">${initials}</div>
+                            <div class="lead-info">
+                                <div class="lead-name">${props.firstname || ''} ${props.lastname || ''}</div>
+                                <div class="lead-company">${props.company || props.email || 'N/A'}</div>
+                            </div>
+                            <span class="consent-badge ${consentClass}">${consentText}</span>
+                            <span class="lead-score ${scoreClass}">${score}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('totalLeads').textContent = data.total || data.results.length;
+                updateStatus('hubspotStatus', 'connected');
+
+            } catch (error) {
+                console.error('Load Leads Error:', error);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 1rem; color: var(--danger);">
+                        ❌ ${error.message}<br>
+                        <button class="btn btn-ghost" style="margin-top: 1rem;" onclick="showConfigModal()">
+                            API konfigurieren
+                        </button>
+                    </div>
+                `;
+                updateStatus('hubspotStatus', 'disconnected');
+            }
+        }
+
+        async function loadDeals() {
+            const container = document.getElementById('dealsContainer');
+            
+            try {
+                const data = await hubspotRequest('/crm/v3/objects/deals?limit=20&properties=dealname,amount,dealstage,closedate');
+                
+                if (data.results.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Keine Deals gefunden</p>';
+                    return;
+                }
+
+                let totalPipeline = 0;
+                let wonValue = 0;
+
+                const stageMap = {
+                    'appointmentscheduled': { label: 'Neu', class: 'stage-new' },
+                    'qualifiedtobuy': { label: 'Qualifiziert', class: 'stage-qualified' },
+                    'presentationscheduled': { label: 'Angebot', class: 'stage-proposal' },
+                    'decisionmakerboughtin': { label: 'Verhandlung', class: 'stage-negotiation' },
+                    'closedwon': { label: 'Gewonnen', class: 'stage-won' },
+                    'closedlost': { label: 'Verloren', class: 'stage-lost' }
+                };
+
+                container.innerHTML = data.results.map(deal => {
+                    const props = deal.properties;
+                    const amount = parseFloat(props.amount) || 0;
+                    const stage = stageMap[props.dealstage] || { label: props.dealstage, class: '' };
+                    
+                    if (props.dealstage !== 'closedwon' && props.dealstage !== 'closedlost') {
+                        totalPipeline += amount;
+                    }
+                    if (props.dealstage === 'closedwon') {
+                        wonValue += amount;
+                    }
+
+                    return `
+                        <div class="deal-row">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 0.9rem;">${props.dealname || 'Unbenannt'}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">
+                                    ${props.closedate ? 'Abschluss: ' + new Date(props.closedate).toLocaleDateString('de-DE') : ''}
+                                </div>
+                            </div>
+                            <span class="deal-stage ${stage.class}">${stage.label}</span>
+                            <span class="deal-value">€${amount.toLocaleString('de-DE')}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('pipelineValue').textContent = '€' + totalPipeline.toLocaleString('de-DE');
+                document.getElementById('totalRevenue').textContent = '€' + wonValue.toLocaleString('de-DE');
+
+                // Conversion Rate berechnen
+                const totalDeals = data.results.length;
+                const wonDeals = data.results.filter(d => d.properties.dealstage === 'closedwon').length;
+                const convRate = totalDeals > 0 ? ((wonDeals / totalDeals) * 100).toFixed(1) : 0;
+                document.getElementById('conversionRate').textContent = convRate + '%';
+
+            } catch (error) {
+                console.error('Load Deals Error:', error);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 1rem; color: var(--danger);">
+                        ❌ ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function loadConsentStats() {
+            try {
+                const data = await hubspotRequest('/crm/v3/objects/contacts?limit=500&properties=hs_whatsapp_consent');
+                
+                let granted = 0;
+                data.results.forEach(c => {
+                    if (c.properties.hs_whatsapp_consent === 'opt_in') granted++;
+                });
+
+                document.getElementById('consentGranted').textContent = granted;
+            } catch (error) {
+                console.error('Load Consent Error:', error);
+            }
+        }
+
+        // ====================================================================
+        // ACTIVITY FEED (Simulated für Demo)
+        // ====================================================================
+
+        const activities = [];
+
+        function addActivity(type, text) {
+            activities.unshift({
+                type,
+                text,
+                time: new Date()
+            });
+
+            if (activities.length > 20) activities.pop();
+            renderActivities();
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('activityContainer');
+            
+            if (activities.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">Warte auf Aktivitäten...</div>';
+                return;
+            }
+
+            container.innerHTML = activities.map(a => {
+                const iconClass = a.type === 'lead' ? 'lead' : a.type === 'consent' ? 'consent' : a.type === 'deal' ? 'deal' : 'message';
+                const icon = a.type === 'lead' ? '👤' : a.type === 'consent' ? '✅' : a.type === 'deal' ? '💼' : '💬';
+                const timeAgo = getTimeAgo(a.time);
+
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon ${iconClass}">${icon}</div>
+                        <div class="activity-content">
+                            <div class="activity-text">${a.text}</div>
+                            <div class="activity-time">${timeAgo}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            if (seconds < 60) return 'Gerade eben';
+            if (seconds < 3600) return `Vor ${Math.floor(seconds / 60)} Min.`;
+            if (seconds < 86400) return `Vor ${Math.floor(seconds / 3600)} Std.`;
+            return date.toLocaleDateString('de-DE');
+        }
+
+        // ====================================================================
+        // STATUS UPDATES
+        // ====================================================================
+
+        function updateStatus(elementId, status) {
+            const el = document.getElementById(elementId);
+            el.className = `api-status ${status}`;
+        }
+
+        function updateLastRefresh() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('de-DE');
+        }
+
+        // ====================================================================
+        // CONFIG MODAL
+        // ====================================================================
+
+        function showConfigModal() {
+            document.getElementById('hubspotKey').value = CONFIG.hubspot.apiKey;
+            document.getElementById('whatsappKey').value = CONFIG.whatsapp.apiKey;
+            document.getElementById('whatsappPhoneId').value = CONFIG.whatsapp.phoneId;
+            document.getElementById('zadarmaKey').value = CONFIG.zadarma.apiKey;
+            document.getElementById('openaiKey').value = CONFIG.openai.apiKey;
+            document.getElementById('configModal').classList.add('visible');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').classList.remove('visible');
+        }
+
+        function saveConfig() {
+            CONFIG.hubspot.apiKey = document.getElementById('hubspotKey').value;
+            CONFIG.whatsapp.apiKey = document.getElementById('whatsappKey').value;
+            CONFIG.whatsapp.phoneId = document.getElementById('whatsappPhoneId').value;
+            CONFIG.zadarma.apiKey = document.getElementById('zadarmaKey').value;
+            CONFIG.openai.apiKey = document.getElementById('openaiKey').value;
+
+            // In localStorage speichern
+            localStorage.setItem('gtz_hubspot_key', CONFIG.hubspot.apiKey);
+            localStorage.setItem('gtz_whatsapp_key', CONFIG.whatsapp.apiKey);
+            localStorage.setItem('gtz_whatsapp_phone', CONFIG.whatsapp.phoneId);
+            localStorage.setItem('gtz_zadarma_key', CONFIG.zadarma.apiKey);
+            localStorage.setItem('gtz_openai_key', CONFIG.openai.apiKey);
+
+            closeConfigModal();
+            refreshAll();
+
+            addActivity('system', '⚙️ API-Konfiguration aktualisiert');
+        }
+
+        // ====================================================================
+        // MAIN
+        // ====================================================================
+
+        async function refreshAll() {
+            updateLastRefresh();
+            
+            // Status auf Loading setzen
+            updateStatus('hubspotStatus', 'loading');
+            updateStatus('whatsappStatus', 'loading');
+            updateStatus('zadarmaStatus', 'loading');
+
+            await Promise.all([
+                loadLeads(),
+                loadDeals(),
+                loadConsentStats()
+            ]);
+
+            // WhatsApp und Zadarma Status (vereinfacht)
+            if (CONFIG.whatsapp.apiKey) {
+                updateStatus('whatsappStatus', 'connected');
+            } else {
+                updateStatus('whatsappStatus', 'disconnected');
+            }
+
+            if (CONFIG.zadarma.apiKey) {
+                updateStatus('zadarmaStatus', 'connected');
+            } else {
+                updateStatus('zadarmaStatus', 'disconnected');
+            }
+
+            // Demo-Automation-Counter
+            document.getElementById('automatedActions').textContent = Math.floor(Math.random() * 50) + 100;
+        }
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Prüfen ob API Keys konfiguriert sind
+            if (!CONFIG.hubspot.apiKey) {
+                showConfigModal();
+            } else {
+                refreshAll();
+            }
+
+            // Auto-Refresh alle 30 Sekunden
+            setInterval(refreshAll, 30000);
+        });
+    </script>
+</body>
+</html>

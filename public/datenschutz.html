@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --bg-deep: #0a0a0f;
+            --bg-surface: #1a1a28;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            color: var(--text-secondary);
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box {
+            background: var(--bg-surface);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box.warning {
+            border-left-color: var(--secondary);
+        }
+
+        .highlight-box h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+
+        .highlight-box.warning h4 {
+            color: var(--secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-surface);
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .contact-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: var(--bg-deep);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Anwendung</a>
+        
+        <header>
+            <div class="logo">GTz ECOSYSTEM</div>
+            <h1>Datenschutzerklärung</h1>
+            <p class="last-updated">Stand: 13. Dezember 2025 | Version 1.0</p>
+        </header>
+
+        <main>
+            <!-- 1. Verantwortlicher -->
+            <section>
+                <h2>📋 1. Verantwortlicher</h2>
+                
+                <div class="contact-card">
+                    <h4>Verantwortlicher gemäß Art. 4 Abs. 7 DSGVO</h4>
+                    <p>
+                        <strong>Enterprise Universe</strong><br>
+                        Ömer Hüseyin Coşkun<br>
+                        Geschäftsführer & CEO West Money Bau<br><br>
+                        E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f99d988d9c978a9a918c8d83b99c978d9c8b898b908a9cd48c97908f9c8b8a9cd79d9c">[email&#160;protected]</a><br>
+                        Telefon: [Telefonnummer einfügen]
+                    </p>
+                </div>
+
+                <p>
+                    Der Verantwortliche entscheidet allein oder gemeinsam mit anderen über die Zwecke und 
+                    Mittel der Verarbeitung von personenbezogenen Daten (z.B. Namen, E-Mail-Adressen etc.).
+                </p>
+            </section>
+
+            <!-- 2. Erhobene Daten -->
+            <section>
+                <h2>📊 2. Erhobene Daten</h2>
+                
+                <h3>2.1 Automatisch erhobene Daten</h3>
+                <p>Bei der Nutzung unserer Plattform werden folgende Daten automatisch erhoben:</p>
+                <ul>
+                    <li>IP-Adresse (anonymisiert)</li>
+                    <li>Browsertyp und -version (gekürzt)</li>
+                    <li>Datum und Uhrzeit des Zugriffs</li>
+                    <li>Genutzte Funktionen (wenn Analytics-Consent erteilt)</li>
+                </ul>
+
+                <h3>2.2 Von Ihnen bereitgestellte Daten</h3>
+                <ul>
+                    <li>Kontaktdaten (Name, E-Mail, Telefon)</li>
+                    <li>Unternehmensdaten (Firma, Position)</li>
+                    <li>Kommunikationspräferenzen</li>
+                    <li>WhatsApp-Einwilligung (wenn erteilt)</li>
+                </ul>
+
+                <h3>2.3 Daten aus integrierten Diensten</h3>
+                <table>
+                    <tr>
+                        <th>Dienst</th>
+                        <th>Zweck</th>
+                        <th>Datenarten</th>
+                    </tr>
+                    <tr>
+                        <td>HubSpot CRM</td>
+                        <td>Kundenmanagement</td>
+                        <td>Kontakt- und Interaktionsdaten</td>
+                    </tr>
+                    <tr>
+                        <td>WhatsApp Business</td>
+                        <td>Kundenkommunikation</td>
+                        <td>Telefonnummer, Nachrichteninhalt</td>
+                    </tr>
+                    <tr>
+                        <td>Zadarma VoIP</td>
+                        <td>Telefonie</td>
+                        <td>Anrufdaten (bei Nutzung)</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 3. Rechtsgrundlagen -->
+            <section>
+                <h2>⚖️ 3. Rechtsgrundlagen</h2>
+                
+                <p>Die Verarbeitung Ihrer personenbezogenen Daten erfolgt auf Basis folgender Rechtsgrundlagen:</p>
+
+                <div class="highlight-box">
+                    <h4>Art. 6 Abs. 1 lit. a DSGVO – Einwilligung</h4>
+                    <p>
+                        Für die WhatsApp-Kommunikation, optionale Analytics und Marketing-Zwecke. 
+                        Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.
+                    </p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Art. 6 Abs. 1 lit. b DSGVO – Vertragserfüllung</h4>
+                    <p>
+                        Für die Erbringung unserer Dienstleistungen, Projektmanagement und 
+                        die Durchführung vorvertraglicher Maßnahmen.
+                    </p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Art. 6 Abs. 1 lit. f DSGVO – Berechtigtes Interesse</h4>
+                    <p>
+                        Für die Sicherheit unserer Systeme, Betrugsprävention und 
+                        die Verbesserung unserer Dienste.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 4. WhatsApp Business Einwilligung -->
+            <section>
+                <h2>💬 4. WhatsApp Business Kommunikation</h2>
+                
+                <div class="highlight-box warning">
+                    <h4>⚠️ Wichtiger Hinweis zur WhatsApp-Einwilligung</h4>
+                    <p>
+                        Die Kommunikation über WhatsApp Business erfolgt ausschließlich mit Ihrer 
+                        ausdrücklichen Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO.
+                    </p>
+                </div>
+
+                <h3>4.1 Zweck der WhatsApp-Kommunikation</h3>
+                <ul>
+                    <li>Schnelle Beantwortung von Kundenanfragen</li>
+                    <li>Projektstatusbenachrichtigungen</li>
+                    <li>Terminbestätigungen und -erinnerungen</li>
+                    <li>Wichtige Servicemitteilungen</li>
+                </ul>
+
+                <h3>4.2 Ihre Kontrollmöglichkeiten</h3>
+                <p>Sie können Ihre WhatsApp-Einwilligung jederzeit:</p>
+                <ul>
+                    <li>In den Datenschutz-Einstellungen der App ändern</li>
+                    <li>Per E-Mail an <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86e2e7f2e3e8f5e5eef3f2fcc6e3e8f2e3f4f6f4eff5e3abf3e8eff0e3f4f5e3a8e2e3">[email&#160;protected]</a> widerrufen</li>
+                    <li>Direkt über das HubSpot Consent Management anpassen</li>
+                </ul>
+
+                <h3>4.3 HubSpot Consent Sync</h3>
+                <p>
+                    Ihr WhatsApp Consent-Status wird mit unserem HubSpot CRM synchronisiert. 
+                    Details zur Verwaltung finden Sie unter: 
+                    <a href="https://knowledge.hubspot.com/de/inbox/edit-the-whatsapp-consent-status-of-your-contacts-in-bulk" 
+                       target="_blank" rel="noopener">
+                        HubSpot WhatsApp Consent Management
+                    </a>
+                </p>
+            </section>
+
+            <!-- 5. Cookies & lokale Speicherung -->
+            <section>
+                <h2>🍪 5. Cookies & Lokale Speicherung</h2>
+                
+                <h3>5.1 Kategorien</h3>
+                <table>
+                    <tr>
+                        <th>Kategorie</th>
+                        <th>Zweck</th>
+                        <th>Speicherdauer</th>
+                        <th>Opt-In erforderlich</th>
+                    </tr>
+                    <tr>
+                        <td>Notwendig</td>
+                        <td>Grundfunktionen, Session</td>
+                        <td>Session / 1 Jahr</td>
+                        <td>Nein</td>
+                    </tr>
+                    <tr>
+                        <td>Funktional</td>
+                        <td>Präferenzen, Layout</td>
+                        <td>1 Jahr</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Analyse</td>
+                        <td>Anonyme Nutzungsstatistik</td>
+                        <td>1 Jahr</td>
+                        <td>Ja</td>
+                    </tr>
+                </table>
+
+                <h3>5.2 Keine Drittanbieter-Tracker</h3>
+                <p>
+                    Wir verwenden <strong>keine</strong> externen Tracking-Dienste wie Google Analytics, 
+                    Facebook Pixel oder ähnliche. Alle Analytics-Daten werden lokal auf Ihrem Gerät 
+                    gespeichert und niemals an Dritte übermittelt.
+                </p>
+            </section>
+
+            <!-- 6. Ihre Rechte -->
+            <section>
+                <h2>🛡️ 6. Ihre Rechte</h2>
+                
+                <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
+
+                <table>
+                    <tr>
+                        <th>Recht</th>
+                        <th>Artikel</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Auskunft</strong></td>
+                        <td>Art. 15 DSGVO</td>
+                        <td>Erfahren Sie, welche Daten wir über Sie speichern</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Berichtigung</strong></td>
+                        <td>Art. 16 DSGVO</td>
+                        <td>Lassen Sie fehlerhafte Daten korrigieren</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Löschung</strong></td>
+                        <td>Art. 17 DSGVO</td>
+                        <td>Verlangen Sie die Löschung Ihrer Daten</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Einschränkung</strong></td>
+                        <td>Art. 18 DSGVO</td>
+                        <td>Beschränken Sie die Verarbeitung</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Datenübertragbarkeit</strong></td>
+                        <td>Art. 20 DSGVO</td>
+                        <td>Erhalten Sie Ihre Daten in maschinenlesbarem Format</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Widerspruch</strong></td>
+                        <td>Art. 21 DSGVO</td>
+                        <td>Widersprechen Sie der Verarbeitung</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Widerruf</strong></td>
+                        <td>Art. 7 Abs. 3 DSGVO</td>
+                        <td>Widerrufen Sie erteilte Einwilligungen</td>
+                    </tr>
+                </table>
+
+                <div class="contact-card">
+                    <h4>So können Sie Ihre Rechte ausüben</h4>
+                    <p>
+                        Senden Sie uns eine E-Mail an <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6a2a7b2a3a8b5a5aeb3b2bc86a3a8b2a3b4b6b4afb5a3ebb3a8afb0a3b4b5a3e8a2a3">[email&#160;protected]</a></strong> 
+                        oder nutzen Sie die Export- und Löschfunktionen direkt in der Anwendung.
+                    </p>
+                    <a href="index.html" class="btn">🔒 Zu den Datenschutz-Einstellungen</a>
+                </div>
+            </section>
+
+            <!-- 7. Datensicherheit -->
+            <section>
+                <h2>🔐 7. Datensicherheit</h2>
+                
+                <p>Wir setzen umfangreiche technische und organisatorische Maßnahmen ein:</p>
+
+                <ul>
+                    <li><strong>TLS 1.3 Verschlüsselung</strong> für alle Datenübertragungen</li>
+                    <li><strong>AES-256-GCM</strong> für gespeicherte Daten</li>
+                    <li><strong>Zwei-Faktor-Authentifizierung</strong> für Administratoren</li>
+                    <li><strong>Regelmäßige Sicherheitsaudits</strong> und Penetrationstests</li>
+                    <li><strong>Zugriffsprotokollierung</strong> aller datenschutzrelevanten Aktionen</li>
+                    <li><strong>Datensparsamkeit</strong> – wir erheben nur notwendige Daten</li>
+                </ul>
+            </section>
+
+            <!-- 8. Speicherdauer -->
+            <section>
+                <h2>⏱️ 8. Speicherdauer</h2>
+                
+                <p>
+                    Personenbezogene Daten werden nur so lange gespeichert, wie es für den jeweiligen 
+                    Zweck erforderlich ist oder gesetzliche Aufbewahrungsfristen dies verlangen:
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Datenart</th>
+                        <th>Speicherdauer</th>
+                        <th>Grund</th>
+                    </tr>
+                    <tr>
+                        <td>Kontaktdaten</td>
+                        <td>3 Jahre nach letzter Interaktion</td>
+                        <td>Berechtigtes Interesse</td>
+                    </tr>
+                    <tr>
+                        <td>Vertragsdaten</td>
+                        <td>10 Jahre</td>
+                        <td>HGB §257, AO §147</td>
+                    </tr>
+                    <tr>
+                        <td>Consent-Protokolle</td>
+                        <td>3 Jahre</td>
+                        <td>DSGVO Nachweis</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics (lokal)</td>
+                        <td>1 Jahr</td>
+                        <td>Nutzungsverbesserung</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- 9. Beschwerderecht -->
+            <section>
+                <h2>📞 9. Beschwerderecht</h2>
+                
+                <p>
+                    Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren, 
+                    wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen die DSGVO verstößt.
+                </p>
+
+                <div class="contact-card">
+                    <h4>Zuständige Aufsichtsbehörde</h4>
+                    <p>
+                        Landesbeauftragte für Datenschutz und Informationsfreiheit<br>
+                        Nordrhein-Westfalen<br>
+                        Kavalleriestraße 2-4<br>
+                        40213 Düsseldorf<br><br>
+                        Website: <a href="https://www.ldi.nrw.de" target="_blank">www.ldi.nrw.de</a>
+                    </p>
+                </div>
+            </section>
+
+            <!-- 10. Änderungen -->
+            <section>
+                <h2>🔄 10. Änderungen dieser Datenschutzerklärung</h2>
+                
+                <p>
+                    Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte 
+                    Rechtslagen oder Änderungen unserer Dienste anzupassen. Die aktuelle Version 
+                    finden Sie stets auf dieser Seite.
+                </p>
+
+                <p>
+                    <strong>Letzte Aktualisierung:</strong> 13. Dezember 2025
+                </p>
+          

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Log | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-deep: #0a0a0f;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h1 span { color: var(--primary); }
+
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: var(--bg-deep); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.85rem; }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.75rem; font-weight: 700; }
+        .stat-label { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Filters */
+        .filters {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group { flex: 1; min-width: 150px; }
+        .filter-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary); font-size: 0.85rem; }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Log Table */
+        .log-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .log-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .log-table th,
+        .log-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .log-table th {
+            background: var(--bg-elevated);
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .log-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        /* Action Badges */
+        .action-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .action-consent-granted { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .action-consent-revoked { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .action-consent-requested { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .action-data-export { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .action-data-delete { background: rgba(255, 0, 110, 0.15); color: var(--secondary); }
+        .action-login { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
+        .action-update { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+
+        /* User Info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .user-name { font-weight: 500; }
+        .user-email { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* Timestamp */
+        .timestamp {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* IP Display */
+        .ip-display {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Details */
+        .details-cell {
+            max-width: 300px;
+        }
+
+        .details-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .legal-basis {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg-elevated);
+        }
+
+        .pagination-info {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--bg-deep);
+        }
+
+        /* GDPR Notice */
+        .gdpr-notice {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-bright);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gdpr-notice h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gdpr-notice p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .gdpr-notice ul {
+            margin: 0.75rem 0 0 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .filters { flex-direction: column; }
+            .filter-group { width: 100%; }
+            .log-table { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <div>
+                <h1>📜 <span>Audit Log</span></h1>
+                <p class="subtitle">DSGVO-konforme Protokollierung aller datenschutzrelevanten Aktionen</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-ghost" onclick="exportAuditLog()">📥 Export CSV</button>
+                <button class="btn btn-primary">🔄 Aktualisieren</button>
+                <a href="index.html" class="btn btn-ghost">← Dashboard</a>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-value" style="color: var(--primary);">2,847</div>
+                <div class="stat-label">Einträge (30 Tage)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" style="color: var(--success);">156</div>
+                <div class="stat-label">Consent erteilt</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value" style="color: var(--danger);">8</div>
+                <div class="stat-label">Consent widerrufen</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📥</div>
+                <div class="stat-value" style="color: var(--accent);">23</div>
+                <div class="stat-label">Daten-Exports</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🗑️</div>
+                <div class="stat-value" style="color: var(--secondary);">3</div>
+                <div class="stat-label">Lösch-Anfragen</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label>Zeitraum</label>
+                <select class="form-control">
+                    <option>Letzte 7 Tage</option>
+                    <option selected>Letzte 30 Tage</option>
+                    <option>Letzte 90 Tage</option>
+                    <option>Letztes Jahr</option>
+                    <option>Benutzerdefiniert</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Aktion</label>
+                <select class="form-control">
+                    <option value="">Alle Aktionen</option>
+                    <option value="consent_granted">Consent erteilt</option>
+                    <option value="consent_revoked">Consent widerrufen</option>
+                    <option value="data_export">Daten-Export</option>
+                    <option value="data_delete">Daten-Löschung</option>
+                    <option value="login">Login</option>
+                    <option value="update">Profil-Update</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Benutzer</label>
+                <input type="text" class="form-control" placeholder="E-Mail oder Name">
+            </div>
+            <div class="filter-group">
+                <label>Rechtsgrundlage</label>
+                <select class="form-control">
+                    <option value="">Alle</option>
+                    <option value="art6a">Art. 6 Abs. 1 lit. a (Einwilligung)</option>
+                    <option value="art6b">Art. 6 Abs. 1 lit. b (Vertrag)</option>
+                    <option value="art6f">Art. 6 Abs. 1 lit. f (Berechtigtes Interesse)</option>
+                    <option value="art7">Art. 7 Abs. 3 (Widerruf)</option>
+                    <option value="art17">Art. 17 (Löschung)</option>
+                    <option value="art20">Art. 20 (Datenportabilität)</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">🔍 Filtern</button>
+        </div>
+
+        <!-- Log Table -->
+        <div class="log-card">
+            <div class="log-header">
+                <h2>📋 Audit-Protokoll</h2>
+                <span style="color: var(--text-muted); font-size: 0.85rem;">Zeige 1-20 von 2,847 Einträgen</span>
+            </div>
+            
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>Zeitstempel</th>
+                        <th>Benutzer</th>
+                        <th>Aktion</th>
+                        <th>Details</th>
+                        <th>IP (anonymisiert)</th>
+                        <th>Rechtsgrundlage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="timestamp">13.12.2025<br>14:32:18</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">MG</div>
+                                <div>
+                                    <div class="user-name">Max Gruber</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6d1c4c3d4d3c4f6dbc3d3dadad3c49bd1dbd4de98d2d3">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-consent-granted">✅ Consent erteilt</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">WhatsApp Business Kommunikation aktiviert</div>
+                            <div class="legal-basis">HubSpot Sync: OK</div>
+                        </td>
+                        <td class="ip-display">192.168.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 6 Abs. 1 lit. a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">13.12.2025<br>12:15:42</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">TH</div>
+                                <div>
+                                    <div class="user-name">Thomas Huber</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48c91868196a49081878c8c8b919781ca8081">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-consent-requested">⏳ Consent angefragt</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">WhatsApp Consent-Anfrage gesendet</div>
+                            <div class="legal-basis">Quelle: Lead Form</div>
+                        </td>
+                        <td class="ip-display">10.0.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 6 Abs. 1 lit. a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">13.12.2025<br>10:45:33</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">LM</div>
+                                <div>
+                                    <div class="user-name">Lisa Meyer</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b060e120e192b0f0e18020c05450f0e">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-data-export">📥 Daten-Export</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">Vollständiger Datenexport angefordert</div>
+                            <div class="legal-basis">Format: JSON, 245 KB</div>
+                        </td>
+                        <td class="ip-display">172.16.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 20 DSGVO</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">12.12.2025<br>16:22:11</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">WB</div>
+                                <div>
+                                    <div class="user-name">Werner Bauer</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6b090a1e0e192b1c0e090e19090a1e450f0e">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-consent-granted">✅ Consent erteilt</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">Marketing & Newsletter aktiviert</div>
+                            <div class="legal-basis">Double Opt-In bestätigt</div>
+                        </td>
+                        <td class="ip-display">192.168.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 6 Abs. 1 lit. a</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">12.12.2025<br>14:08:55</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">SH</div>
+                                <div>
+                                    <div class="user-name">Stefan Horn</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="335b5c415d7340505b5e5a57471d5756">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-consent-revoked">❌ Consent widerrufen</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">WhatsApp Kommunikation deaktiviert</div>
+                            <div class="legal-basis">Grund: Benutzeranfrage</div>
+                        </td>
+                        <td class="ip-display">10.0.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 7 Abs. 3</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">11.12.2025<br>09:30:22</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">KF</div>
+                                <div>
+                                    <div class="user-name">Klaus Fischer</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88eee1fbebe0edfac8eee1fbebe0edfaa6eced">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-login">🔐 Login</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">Erfolgreiche Anmeldung (2FA)</div>
+                            <div class="legal-basis">Browser: Chrome 120</div>
+                        </td>
+                        <td class="ip-display">172.16.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 6 Abs. 1 lit. b</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">10.12.2025<br>17:45:10</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">AM</div>
+                                <div>
+                                    <div class="user-name">Anna Müller</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462b33232a2a23340627282827682223">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-data-delete">🗑️ Daten gelöscht</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">Konto und alle Daten gelöscht</div>
+                            <div class="legal-basis">Anfrage vom 08.12.2025</div>
+                        </td>
+                        <td class="ip-display">–</td>
+                        <td><span style="font-size: 0.8rem;">Art. 17 DSGVO</span></td>
+                    </tr>
+                    <tr>
+                        <td class="timestamp">10.12.2025<br>11:20:33</td>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">MG</div>
+                                <div>
+                                    <div class="user-name">Max Gruber</div>
+                                    <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88effafdeaedfac8e5fdede4e4edfaa5efe5eae0a6eced">[email&#160;protected]</a></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="action-badge action-update">✏️ Profil aktualisiert</span></td>
+                        <td class="details-cell">
+                            <div class="details-text">Telefonnummer geändert</div>
+                            <div class="legal-basis">Felder: phone</div>
+                        </td>
+                        <td class="ip-display">192.168.xxx.xxx</td>
+                        <td><span style="font-size: 0.8rem;">Art. 6 Abs. 1 lit. b</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <div class="pagination-info">Zeige 1-20 von 2,847 Einträgen</div>
+                <div class="pagination-controls">
+                    <button class="page-btn">←</button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">...</button>
+                    <button class="page-btn">143</button>
+                    <button class="page-btn">→</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GDPR Notice -->
+        <div class="gdpr-notice

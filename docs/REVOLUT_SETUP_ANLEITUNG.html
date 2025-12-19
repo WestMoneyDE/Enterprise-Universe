@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revolut Setup Anleitung - West Money Bau</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 40px 30px;
+      background: linear-gradient(135deg, rgba(0, 117, 235, 0.15), rgba(0, 212, 170, 0.1));
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(0, 117, 235, 0.3);
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .logo-box {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #0075EB, #00D4AA);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .header h1 {
+      font-size: 32px;
+      background: linear-gradient(90deg, #0075EB, #00D4AA);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .header p { color: #888; }
+    .header .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0075EB, #00D4AA);
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 12px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    
+    /* Progress Bar */
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+      padding: 0 20px;
+    }
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50px;
+      right: 50px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+    }
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .progress-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .progress-step.active .progress-number {
+      background: linear-gradient(135deg, #0075EB, #00D4AA);
+      border-color: #00D4AA;
+    }
+    .progress-step.done .progress-number {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+    .progress-label {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+    }
+    .progress-step.active .progress-label { color: #0075EB; }
+    .progress-step.done .progress-label { color: #22c55e; }
+    
+    /* Phase Sections */
+    .phase {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    .phase-header {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, rgba(0, 117, 235, 0.1), rgba(0, 212, 170, 0.05));
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .phase-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #0075EB, #00D4AA);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .phase-info h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    .phase-info p {
+      font-size: 13px;
+      color: #888;
+    }
+    .phase-time {
+      margin-left: auto;
+      text-align: right;
+    }
+    .phase-time .duration {
+      font-size: 18px;
+      font-weight: bold;
+      color: #00D4AA;
+    }
+    .phase-time .label {
+      font-size: 11px;
+      color: #666;
+    }
+    .phase-content {
+      padding: 30px;
+    }
+    
+    /* Steps */
+    .step {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .step:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .step-number {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      background: rgba(0, 117, 235, 0.2);
+      color: #0075EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-content h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .step-content p {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 15px;
+    }
+    
+    /* Action Box */
+    .action-box {
+      background: rgba(0, 117, 235, 0.1);
+      border: 1px solid rgba(0, 117, 235, 0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 15px 0;
+    }
+    .action-box .label {
+      font-size: 10px;
+      color: #0075EB;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .action-box a {
+      color: #00D4AA;
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .action-box a:hover { text-decoration: underline; }
+    
+    /* Info Box */
+    .info-box {
+      background: rgba(0, 212, 170, 0.1);
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .info-box .icon { font-size: 18px; }
+    .info-box .text { font-size: 13px; color: #aaa; }
+    
+    /* Warning Box */
+    .warning-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      display: flex;
+      gap: 12px;
+    }
+    .warning-box .icon { font-size: 18px; }
+    .warning-box .text { font-size: 13px; color: #aaa; }
+    
+    /* Code Block */
+    .code-block {
+      background: #0d0d15;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin: 15px 0;
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 117, 235, 0.3);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #0075EB;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .code-block code {
+      color: #00D4AA;
+    }
+    
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      margin: 15px 0;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checklist .checkbox.checked {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+    .checklist .checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 12px;
+    }
+    .checklist .text {
+      font-size: 14px;
+      color: #ccc;
+    }
+    .checklist .text.checked {
+      text-decoration: line-through;
+      color: #666;
+    }
+    
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 12px 15px;
+      background: rgba(0, 117, 235, 0.1);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+    .data-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+    .data-table code {
+      background: rgba(0, 117, 235, 0.15);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #0075EB;
+    }
+    
+    /* Screenshot Placeholder */
+    .screenshot {
+      background: rgba(0,0,0,0.3);
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin: 15px 0;
+    }
+    .screenshot .icon { font-size: 40px; margin-bottom: 10px; }
+    .screenshot .text { font-size: 12px; color: #666; }
+    
+    /* Button */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0075EB, #00D4AA);
+      color: white;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    /* Summary Card */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(0, 117, 235, 0.15), rgba(0, 212, 170, 0.1));
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+    .summary-card h4 {
+      font-size: 14px;
+      color: #00D4AA;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .summary-item .value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .summary-item .label {
+      font-size: 11px;
+      color: #888;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+      font-size: 12px;
+    }
+    
+    /* Print Styles */
+    @media print {
+      body { background: white; color: black; }
+      .phase { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-box">R</div>
+  </div>
+  <h1>REVOLUT SETUP ANLEITUNG</h1>
+  <p>Schritt-für-Schritt Integration für West Money OS</p>
+  <div class="badge">📋 Komplette Einrichtung in 5 Phasen</div>
+</div>
+
+<!-- Progress Bar -->
+<div class="progress-bar">
+  <div class="progress-step active">
+    <div class="progress-number">1</div>
+    <div class="progress-label">Account</div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-number">2</div>
+    <div class="progress-label">Verifizierung</div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-number">3</div>
+    <div class="progress-label">API Setup</div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-number">4</div>
+    <div class="progress-label">OAuth</div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-number">5</div>
+    <div class="progress-label">Integration</div>
+  </div>
+</div>
+
+<!-- PHASE 1: Account erstellen -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">1</div>
+    <div class="phase-info">
+      <h2>Revolut Business Account erstellen</h2>
+      <p>Registrierung und Unternehmenskonto anlegen</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">15 min</div>
+      <div class="label">Geschätzte Zeit</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <div class="step-number">1.1</div>
+      <div class="step-content">
+        <h3>📱 Revolut Business Website öffnen</h3>
+        <p>Gehe zur offiziellen Revolut Business Registrierungsseite.</p>
+        
+        <div class="action-box">
+          <div class="label">🔗 Link öffnen</div>
+          <a href="https://business.revolut.com/signup" target="_blank">
+            https://business.revolut.com/signup →
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">1.2</div>
+      <div class="step-content">
+        <h3>📝 Registrierung starten</h3>
+        <p>Wähle "Unternehmen registrieren" und gib deine E-Mail-Adresse ein.</p>
+        
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div class="text">Verwende <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cca5a2aaa38cbba9bfb8e1a1a3a2a9b5e1aeadb9e2a8a9">[email&#160;protected]</a></strong> als primäre Geschäfts-E-Mail für den Account.</div>
+        </div>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">E-Mail-Adresse eingeben</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Land auswählen: Deutschland</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Unternehmensform: GmbH</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Bestätigungs-E-Mail erhalten</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">1.3</div>
+      <div class="step-content">
+        <h3>🏢 Unternehmensdaten eingeben</h3>
+        <p>Gib die vollständigen Unternehmensdaten für West Money Bau GmbH ein.</p>
+        
+        <table class="data-table">
+          <tr>
+            <td><strong>Firmenname</strong></td>
+            <td>West Money Bau GmbH</td>
+          </tr>
+          <tr>
+            <td><strong>Rechtsform</strong></td>
+            <td>GmbH (Gesellschaft mit beschränkter Haftung)</td>
+          </tr>
+          <tr>
+            <td><strong>Handelsregister</strong></td>
+            <td>HRB [Nummer eintragen]</td>
+          </tr>
+          <tr>
+            <td><strong>USt-IdNr.</strong></td>
+            <td>DE [Nummer eintragen]</td>
+          </tr>
+          <tr>
+            <td><strong>Geschäftsadresse</strong></td>
+            <td>Köln, Deutschland</td>
+          </tr>
+          <tr>
+            <td><strong>Branche</strong></td>
+            <td>Construction / Technology Services</td>
+          </tr>
+          <tr>
+            <td><strong>Geschäftsführer</strong></td>
+            <td>Ömer Hüseyin Coşkun</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">1.4</div>
+      <div class="step-content">
+        <h3>👤 Persönliche Daten des Geschäftsführers</h3>
+        <p>Als Geschäftsführer musst du dich persönlich verifizieren.</p>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Vollständiger Name: Ömer Hüseyin Coşkun</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Geburtsdatum eingeben</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Wohnadresse eingeben</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Staatsangehörigkeit angeben</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 2: Verifizierung -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">2</div>
+    <div class="phase-info">
+      <h2>Unternehmens-Verifizierung</h2>
+      <p>KYC (Know Your Customer) Dokumentenprüfung</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">1-3 Tage</div>
+      <div class="label">Bearbeitungszeit</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <div class="step-number">2.1</div>
+      <div class="step-content">
+        <h3>📄 Benötigte Dokumente vorbereiten</h3>
+        <p>Folgende Dokumente müssen hochgeladen werden:</p>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text"><strong>Handelsregisterauszug</strong> (nicht älter als 3 Monate)</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text"><strong>Gesellschaftsvertrag</strong> (GmbH Satzung)</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text"><strong>Personalausweis oder Reisepass</strong> des Geschäftsführers</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text"><strong>Adressnachweis</strong> (Stromrechnung, Kontoauszug - max. 3 Monate alt)</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text"><strong>UBO-Erklärung</strong> (Ultimate Beneficial Owner / wirtschaftlich Berechtigte)</span>
+          </li>
+        </ul>
+        
+        <div class="warning-box">
+          <div class="icon">⚠️</div>
+          <div class="text">Alle Dokumente müssen gut lesbar sein. Fotos müssen alle vier Ecken des Dokuments zeigen.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">2.2</div>
+      <div class="step-content">
+        <h3>🤳 Video-Identifikation</h3>
+        <p>Revolut nutzt Video-KYC zur Identitätsprüfung des Geschäftsführers.</p>
+        
+        <div class="info-box">
+          <div class="icon">📱</div>
+          <div class="text">Halte deinen Ausweis bereit und sorge für gute Beleuchtung. Der Prozess dauert ca. 5 Minuten.</div>
+        </div>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Selfie mit Ausweis aufnehmen</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Ausweis Vorder- und Rückseite fotografieren</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Kurzes Video zur Lebenderkennung</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">2.3</div>
+      <div class="step-content">
+        <h3>⏳ Auf Freischaltung warten</h3>
+        <p>Revolut prüft deine Dokumente. Du erhältst eine E-Mail bei Freischaltung.</p>
+        
+        <table class="data-table">
+          <tr>
+            <td><strong>Standard-Prüfung</strong></td>
+            <td>1-3 Werktage</td>
+          </tr>
+          <tr>
+            <td><strong>Bei Rückfragen</strong></td>
+            <td>bis zu 7 Werktage</td>
+          </tr>
+          <tr>
+            <td><strong>Status prüfen</strong></td>
+            <td>In der Revolut App unter "Verifizierung"</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 3: API Setup -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">3</div>
+    <div class="phase-info">
+      <h2>API Zugang einrichten</h2>
+      <p>Developer Portal und API Credentials</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">30 min</div>
+      <div class="label">Geschätzte Zeit</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <div class="step-number">3.1</div>
+      <div class="step-content">
+        <h3>🔧 API-Zugang aktivieren</h3>
+        <p>Im Revolut Business Dashboard den API-Zugang freischalten.</p>
+        
+        <div class="action-box">
+          <div class="label">🔗 Navigation</div>
+          <a href="https://business.revolut.com/settings/api" target="_blank">
+            Business Portal → Settings → API →
+          </a>
+        </div>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Im Business Portal einloggen</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Settings → API aufrufen</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">"Enable API access" klicken</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">API Nutzungsbedingungen akzeptieren</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">3.2</div>
+      <div class="step-content">
+        <h3>🔑 API Client erstellen</h3>
+        <p>Erstelle einen neuen API Client für West Money OS.</p>
+        
+        <table class="data-table">
+          <tr>
+            <td><strong>Client Name</strong></td>
+            <td><code>West Money OS Production</code></td>
+          </tr>
+          <tr>
+            <td><strong>OAuth Redirect URIs</strong></td>
+            <td><code>https://westmoney.app/auth/revolut/callback</code></td>
+          </tr>
+          <tr>
+            <td><strong>Scopes</strong></td>
+            <td><code>READ</code>, <code>WRITE</code>, <code>PAY</code></td>
+          </tr>
+        </table>
+        
+        <div class="info-box">
+          <div class="icon">💡</div>
+          <div class="text">Erstelle auch einen separaten Client für Sandbox-Testing: <code>West Money OS Sandbox</code></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">3.3</div>
+      <div class="step-content">
+        <h3>📋 Credentials sicher speichern</h3>
+        <p>Speichere die generierten Credentials sicher ab.</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre># .env Datei (NIEMALS in Git committen!)
+
+# Revolut Production
+REVOLUT_CLIENT_ID=<code>dein-client-id-hier</code>
+REVOLUT_CLIENT_SECRET=<code>dein-client-secret-hier</code>
+REVOLUT_REDIRECT_URI=https://westmoney.app/auth/revolut/callback
+
+# Revolut Sandbox
+REVOLUT_SANDBOX_CLIENT_ID=<code>sandbox-client-id</code>
+REVOLUT_SANDBOX_CLIENT_SECRET=<code>sandbox-secret</code>
+REVOLUT_SANDBOX_REDIRECT_URI=https://localhost:3000/auth/revolut/callback</pre>
+        </div>
+        
+        <div class="warning-box">
+          <div class="icon">🔐</div>
+          <div class="text"><strong>WICHTIG:</strong> Client Secret niemals im Frontend oder in öffentlichen Repositories speichern! Nur im Backend verwenden.</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">3.4</div>
+      <div class="step-content">
+        <h3>🧪 Sandbox-Umgebung testen</h3>
+        <p>Teste die API zuerst in der Sandbox-Umgebung.</p>
+        
+        <div class="action-box">
+          <div class="label">🔗 Sandbox Portal</div>
+          <a href="https://sandbox-business.revolut.com" target="_blank">
+            https://sandbox-business.revolut.com →
+          </a>
+        </div>
+        
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Umgebung</th>
+              <th>Base URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🧪 Sandbox</td>
+              <td><code>https://sandbox-b2b.revolut.com/api/1.0</code></td>
+            </tr>
+            <tr>
+              <td>🚀 Production</td>
+              <td><code>https://b2b.revolut.com/api/1.0</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 4: OAuth Implementation -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">4</div>
+    <div class="phase-info">
+      <h2>OAuth 2.0 implementieren</h2>
+      <p>Authentifizierung und Token-Management</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">2-4 Std</div>
+      <div class="label">Development</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <div class="step-number">4.1</div>
+      <div class="step-content">
+        <h3>🔗 Authorization URL generieren</h3>
+        <p>Erstelle die URL für den OAuth-Flow.</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre>// Authorization URL für Revolut OAuth
+const REVOLUT_AUTH_URL = 'https://business.revolut.com/app-confirm';
+
+function getAuthorizationUrl() {
+  const params = new URLSearchParams({
+    client_id: process.env.REVOLUT_CLIENT_ID,
+    response_type: 'code',
+    redirect_uri: process.env.REVOLUT_REDIRECT_URI,
+    scope: 'READ WRITE PAY',
+    state: generateSecureRandomString() // CSRF Protection
+  });
+  
+  return `${REVOLUT_AUTH_URL}?${params.toString()}`;
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">4.2</div>
+      <div class="step-content">
+        <h3>🔄 Token Exchange implementieren</h3>
+        <p>Tausche den Authorization Code gegen Access Token.</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre>// routes/auth/revolut/callback.ts
+import axios from 'axios';
+
+export async function handleCallback(req, res) {
+  const { code, state } = req.query;
+  
+  // Verify state to prevent CSRF
+  if (!verifyState(state)) {
+    return res.status(400).json({ error: 'Invalid state' });
+  }
+  
+  try {
+    const response = await axios.post(
+      'https://b2b.revolut.com/api/1.0/auth/token',
+      new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        client_id: process.env.REVOLUT_CLIENT_ID,
+        client_secret: process.env.REVOLUT_CLIENT_SECRET,
+        redirect_uri: process.env.REVOLUT_REDIRECT_URI
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+    
+    const { access_token, refresh_token, expires_in } = response.data;
+    
+    // Store tokens securely (encrypted in database)
+    await storeTokens(access_token, refresh_token, expires_in);
+    
+    res.redirect('/dashboard?connected=revolut');
+    
+  } catch (error) {
+    console.error('Revolut OAuth Error:', error);
+    res.redirect('/settings?error=revolut_auth_failed');
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">4.3</div>
+      <div class="step-content">
+        <h3>♻️ Token Refresh einrichten</h3>
+        <p>Automatische Token-Erneuerung vor Ablauf.</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre>// services/revolut-token.service.ts
+
+class RevolutTokenService {
+  private tokenExpiry: Date;
+  
+  async getValidAccessToken(): Promise&lt;string&gt; {
+    // Check if token expires soon (within 5 minutes)
+    if (this.isTokenExpiringSoon()) {
+      await this.refreshToken();
+    }
+    return this.accessToken;
+  }
+  
+  private isTokenExpiringSoon(): boolean {
+    const fiveMinutes = 5 * 60 * 1000;
+    return Date.now() > this.tokenExpiry.getTime() - fiveMinutes;
+  }
+  
+  async refreshToken(): Promise&lt;void&gt; {
+    const response = await axios.post(
+      'https://b2b.revolut.com/api/1.0/auth/token',
+      new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: this.refreshToken,
+        client_id: process.env.REVOLUT_CLIENT_ID,
+        client_secret: process.env.REVOLUT_CLIENT_SECRET
+      })
+    );
+    
+    this.accessToken = response.data.access_token;
+    this.refreshToken = response.data.refresh_token;
+    this.tokenExpiry = new Date(Date.now() + response.data.expires_in * 1000);
+    
+    await this.persistTokens();
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- PHASE 5: Integration -->
+<div class="phase">
+  <div class="phase-header">
+    <div class="phase-number">5</div>
+    <div class="phase-info">
+      <h2>West Money OS Integration</h2>
+      <p>API-Calls und Webhooks implementieren</p>
+    </div>
+    <div class="phase-time">
+      <div class="duration">1-2 Tage</div>
+      <div class="label">Development</div>
+    </div>
+  </div>
+  <div class="phase-content">
+    
+    <div class="step">
+      <div class="step-number">5.1</div>
+      <div class="step-content">
+        <h3>📦 Revolut Service erstellen</h3>
+        <p>Zentraler Service für alle Revolut API-Aufrufe.</p>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre>// services/revolut.service.ts
+import axios, { AxiosInstance } from 'axios';
+
+class RevolutService {
+  private client: AxiosInstance;
+  private tokenService: RevolutTokenService;
+  
+  constructor() {
+    this.client = axios.create({
+      baseURL: process.env.NODE_ENV === 'production'
+        ? 'https://b2b.revolut.com/api/1.0'
+        : 'https://sandbox-b2b.revolut.com/api/1.0'
+    });
+    
+    // Add auth interceptor
+    this.client.interceptors.request.use(async (config) => {
+      const token = await this.tokenService.getValidAccessToken();
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
+    });
+  }
+  
+  // Get all accounts
+  async getAccounts() {
+    const { data } = await this.client.get('/accounts');
+    return data;
+  }
+  
+  // Get account balance
+  async getBalance(accountId: string) {
+    const { data } = await this.client.get(`/accounts/${accountId}`);
+    return data.balance;
+  }
+  
+  // Create payment
+  async createPayment(payment: PaymentRequest) {
+    const { data } = await this.client.post('/pay', {
+      request_id: payment.idempotencyKey,
+      account_id: payment.accountId,
+      receiver: { counterparty_id: payment.counterpartyId },
+      amount: payment.amount,
+      currency: payment.currency,
+      reference: payment.reference
+    });
+    return data;
+  }
+  
+  // Get transactions
+  async getTransactions(from?: Date, to?: Date) {
+    const params: any = {};
+    if (from) params.from = from.toISOString();
+    if (to) params.to = to.toISOString();
+    
+    const { data } = await this.client.get('/transactions', { params });
+    return data;
+  }
+}
+
+export default new RevolutService();</pre>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">5.2</div>
+      <div class="step-content">
+        <h3>🔔 Webhooks einrichten</h3>
+        <p>Echtzeit-Benachrichtigungen für Transaktionen.</p>
+        
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Einstellung</th>
+              <th>Wert</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Webhook URL</strong></td>
+              <td><code>https://api.westmoney.app/webhooks/revolut</code></td>
+            </tr>
+            <tr>
+              <td><strong>Events</strong></td>
+              <td>TransactionCreated, TransactionStateChanged</td>
+            </tr>
+            <tr>
+              <td><strong>Secret</strong></td>
+              <td>Im Revolut Portal generieren und in .env speichern</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
+<pre>// routes/webhooks/revolut.ts
+import crypto from 'crypto';
+
+export async function handleRevolutWebhook(req, res) {
+  // Verify signature
+  const signature = req.headers['revolut-signature'];
+  const payload = JSON.stringify(req.body);
+  
+  const expectedSig = crypto
+    .createHmac('sha256', process.env.REVOLUT_WEBHOOK_SECRET)
+    .update(payload)
+    .digest('hex');
+    
+  if (signature !== expectedSig) {
+    return res.status(401).json({ error: 'Invalid signature' });
+  }
+  
+  const { event, data } = req.body;
+  
+  switch (event) {
+    case 'TransactionCreated':
+      await handleNewTransaction(data);
+      break;
+    case 'TransactionStateChanged':
+      await handleTransactionUpdate(data);
+      break;
+  }
+  
+  res.status(200).json({ received: true });
+}</pre>
+        </div>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">5.3</div>
+      <div class="step-content">
+        <h3>✅ Integration testen</h3>
+        <p>Teste alle Funktionen in der Sandbox-Umgebung.</p>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">OAuth Flow funktioniert (Login → Callback → Token)</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Konten abrufen funktioniert</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Kontostände werden angezeigt</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Test-Zahlung in Sandbox erfolgreich</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Webhooks werden empfangen</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Token Refresh funktioniert automatisch</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Fehlerbehandlung implementiert</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-number">5.4</div>
+      <div class="step-content">
+        <h3>🚀 Go Live!</h3>
+        <p>Wechsel zur Production-Umgebung.</p>
+        
+        <ul class="checklist">
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Production Credentials in .env eingetragen</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Environment auf "production" gesetzt</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Webhook URL in Revolut aktualisiert</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Erste echte Zahlung erfolgreich</span>
+          </li>
+          <li>
+            <div class="checkbox" onclick="toggleCheck(this)"></div>
+            <span class="text">Monitoring & Logging aktiv</span>
+          </li>
+        </ul>
+        
+        <div class="info-box">
+          <div class="icon">🎉</div>
+          <div class="text"><strong>Fertig!</strong> Revolut ist jetzt vollständig in West Money OS integriert.</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-card">
+  <h4>📊 Setup Zusammenfassung</h4>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <div class="value">5</div>
+      <div class="label">Phasen</div>
+    </div>
+    <div class="summary-item">
+      <div class="value">~4-5 Tage</div>
+      <div class="label">Gesamt-Dauer</div>
+    </div>
+    <div class="summary-item">
+      <div class="value">OAuth 2.0</div>
+      <div class="label">Auth-Methode</div>
+    </div>
+    <div class="summary-item">
+      <div class="value">REST API</div>
+      <div class="label">API-Typ</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Links -->
+<div class="phase" style="background: linear-gradient(135deg, rgba(0, 117, 235, 0.1), rgba(0, 212, 170, 0.05));">
+  <div class="phase-header" style="background: transparent; border: none;">
+    <div class="phase-number">🔗</div>
+    <div class="phase-info">
+      <h2>Quick Links</h2>
+      <p>Wichtige Ressourcen für die Integration</p>
+    </div>
+  </div>
+  <div class="phase-content">
+    <table class="data-table">
+      <tbody>
+        <tr>
+          <td>📄 API Dokumentation</td>
+          <td><a href="https://developer.revolut.com/docs/business" target="_blank" style="color: #00D4AA;">developer.revolut.com/docs/business</a></td>
+        </tr>
+        <tr>
+          <td>🧪 Sandbox Portal</td>
+          <td><a href="https://sandbox-business.revolut.com" target="_blank" style="color: #00D4AA;">sandbox-business.revolut.com</a></td>
+        </tr>
+        <tr>
+          <td>🏢 Business Portal</td>
+          <td><a href="https://business.revolut.com" target="_blank" style="color: #00D4AA;">business.revolut.com</a></td>
+        </tr>
+        <tr>
+          <td>📧 API Support</td>
+          <td><a href="/cdn-cgi/l/email-protection#ee8c9b9d87808b9d9dae9c8b9881829b9ac08d8183" style="color: #00D4AA;"><span class="__cf_email__" data-cfemail="ceacbbbda7a0abbdbd8ebcabb8a1a2bbbae0ada1a3">[email&#160;protected]</span></a></td>
+        </tr>
+        <tr>
+          <td>📱 Revolut App</td>
+          <td><a href="https://apps.apple.com/app/revolut-business" target="_blank" style="color: #00D4AA;">iOS App Store</a> | <a href="https://play.google.com/store/apps/details?id=com.revolut.business" target="_blank" style="color: #00D4AA;">Google Play</a></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="btn-group">
+      <a href="https://business.revolut.com/signup" target="_blank" class="btn btn-primary">🚀 Jetzt Account erstellen</a>
+      <a href="REVOLUT_INTEGRATION_HUB.html" class="btn btn-secondary">🔧 Integration Hub öffnen</a>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>West Money Bau GmbH</strong> | Revolut Integration Setup Guide v1.0</p>
+  <p>© 2024 Enterprise Universe Group</p>
+</div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function toggleCheck(element) {
+  element.classList.toggle('checked');
+  const textEl = element.nextElementSibling;
+  textEl.classList.toggle('checked');
+  
+  // Save progress to localStorage
+  saveProgress();
+}
+
+function copyCode(btn) {
+  const codeBlock = btn.parentElement;
+  const code = codeBlock.querySelector('pre').textContent;
+  navigator.clipboard.writeText(code);
+  btn.textContent = '✅ Copied!';
+  setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+}
+
+function saveProgress() {
+  const checkboxes = document.querySelectorAll('.checkbox');
+  const progress = Array.from(checkboxes).map(cb => cb.classList.contains('checked'));
+  localStorage.setItem('revolut_setup_progress', JSON.stringify(progress));
+}
+
+function loadProgress() {
+  const saved = localStorage.getItem('revolut_setup_progress');
+  if (saved) {
+    const progress = JSON.parse(sa

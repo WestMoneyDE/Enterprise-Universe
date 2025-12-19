@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Manager | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --primary-dark: #00a8b3;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-deep: #0a0a0f;
+            --bg-base: #0d0d14;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            color: var(--bg-deep);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg-deep);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--bg-elevated);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-box a {
+            color: var(--primary);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* Consent Table */
+        .consent-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .consent-table th,
+        .consent-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .consent-table th {
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .consent-table tr:hover td {
+            background: var(--bg-elevated);
+        }
+
+        .contact-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-hover);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .contact-name {
+            font-weight: 600;
+        }
+
+        .contact-company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-granted {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        .status-granted .status-dot { background: var(--success); }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        .status-pending .status-dot { background: var(--warning); }
+
+        .status-denied {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+        .status-denied .status-dot { background: var(--danger); }
+
+        .status-revoked {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent);
+        }
+        .status-revoked .status-dot { background: var(--accent); }
+
+        /* Actions */
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            max-width: 600px;
+            width: 100%;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Consent Timeline */
+        .consent-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .consent-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg-surface);
+        }
+
+        .timeline-item.revoked::before { background: var(--danger); }
+        .timeline-item.pending::before { background: var(--warning); }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-action {
+            font-weight: 600;
+        }
+
+        .timeline-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .bulk-actions .selected-count {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Checkbox */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">GTz</div>
+                <div>
+                    <h1>✅ <span>Consent Manager</span></h1>
+                    <p class="subtitle">DSGVO-konforme Einwilligungsverwaltung mit HubSpot Sync</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-ghost" onclick="syncHubSpot()">🔄 Sync mit HubSpot</button>
+                <button class="btn btn-primary" onclick="showBulkUpdateModal()">📤 Bulk Update</button>
+                <a href="index.html" class="btn btn-ghost">← Zurück</a>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value" style="color: var(--success);">156</div>
+                <div class="stat-label">WhatsApp Consent erteilt</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-value" style="color: var(--warning);">12</div>
+                <div class="stat-label">Ausstehend</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value" style="color: var(--danger);">8</div>
+                <div class="stat-label">Abgelehnt</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-value" style="color: var(--accent);">3</div>
+                <div class="stat-label">Widerrufen</div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <strong>ℹ️ HubSpot WhatsApp Consent Integration</strong><br>
+            Der Consent-Status wird automatisch mit HubSpot synchronisiert. Änderungen werden gemäß 
+            <a href="https://knowledge.hubspot.com/de/inbox/edit-the-whatsapp-consent-status-of-your-contacts-in-bulk" target="_blank">
+                HubSpot WhatsApp Consent Management
+            </a> verarbeitet und protokolliert. Alle Änderungen werden gemäß Art. 6 Abs. 1 lit. a DSGVO dokumentiert.
+        </div>
+
+        <!-- Filters -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🔍 Filter</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Consent Status</label>
+                        <select class="form-control" id="filterStatus">
+                            <option value="">Alle Status</option>
+                            <option value="granted">✅ Erteilt</option>
+                            <option value="pending">⏳ Ausstehend</option>
+                            <option value="denied">❌ Abgelehnt</option>
+                            <option value="revoked">🔄 Widerrufen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Consent Quelle</label>
+                        <select class="form-control" id="filterSource">
+                            <option value="">Alle Quellen</option>
+                            <option value="hubspot">HubSpot Form</option>
+                            <option value="whatsapp">WhatsApp Opt-in</option>
+                            <option value="email">E-Mail Response</option>
+                            <option value="manual">Manuell</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulkActions" style="display: none;">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+            </div>
+            <span class="selected-count"><span id="selectedCount">0</span> ausgewählt</span>
+            <button class="btn btn-ghost btn-sm" onclick="bulkGrant()">✅ Consent erteilen</button>
+            <button class="btn btn-ghost btn-sm" onclick="bulkRequest()">📧 Consent anfragen</button>
+            <button class="btn btn-danger btn-sm" onclick="bulkRevoke()">❌ Consent widerrufen</button>
+        </div>
+
+        <!-- Consent Table -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📋 WhatsApp Consent Status</h2>
+                <button class="btn btn-ghost btn-sm" onclick="exportData()">📥 Export CSV</button>
+            </div>
+            <div class="card-body" style="padding: 0;">
+                <table class="consent-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+                                <input type="checkbox" id="selectAllHeader" onchange="toggleSelectAll()">
+                            </th>
+                            <th>Kontakt</th>
+                            <th>WhatsApp Status</th>
+                            <th>Datum</th>
+                            <th>Quelle</th>
+                            <th>Rechtsgrundlage</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consentTableBody">
+                        <!-- Dynamisch gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Audit Log -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📜 Audit Log</h2>
+                <span style="color: var(--text-muted); font-size: 0.85rem;">Letzte 10 Einträge</span>
+            </div>
+            <div class="card-body">
+                <div class="consent-timeline" id="auditTimeline">
+                    <!-- Dynamisch gefüllt -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📋 Consent Details</h3>
+                <button class="modal-close" onclick="closeModal('detailModal')">×</button>
+            </div>
+            <div class="modal-body" id="detailModalBody">
+                <!-- Dynamisch gefüllt -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('detailModal')">Schließen</button>
+                <button class="btn btn-danger" onclick="revokeConsent()">Consent widerrufen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Update Modal -->
+    <div class="modal-overlay" id="bulkModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📤 Bulk Consent Update</h3>
+                <button class="modal-close" onclick="closeModal('bulkModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Neuer Status</label>
+                    <select class="form-control" id="bulkStatus">
+                        <option value="granted">✅ Consent erteilt</option>
+                        <option value="denied">❌ Consent abgelehnt</option>
+                        <option value="revoked">🔄 Consent widerrufen</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quelle</label>
+                    <select class="form-control" id="bulkSource">
+                        <option value="manual">Manuelles Update</option>
+                        <option value="bulk_import">Bulk Import</option>
+                    </select>
+                </div>
+                <div class="info-box">
+                    <strong>⚠️ DSGVO Hinweis</strong><br>
+                    Stellen Sie sicher, dass die Einwilligung nachweislich und freiwillig erfolgt ist 
+                    (Art. 7 DSGVO). Alle Änderungen werden protokolliert.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('bulkModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="executeBulkUpdate()">Update ausführen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const contacts = [
+            { id: 1, name: 'Max Gruber', company: 'Müller GmbH', status: 'granted', date: '12.12.2025 14:32', source: 'HubSpot Form', legalBasis: 'Art. 6 Abs. 1 lit. a' },
+            { id: 2, name: 'Thomas Huber', company: 'Tech House AG', status: 'pending', date: '–', source: '–', legalBasis: '–' },
+            { id: 3, name: 'Werner Bauer', company: 'Weber Bau KG', status: 'granted', date: '10.12.2025 09:15', source: 'WhatsApp Opt-in', legalBasis: 'Art. 6 Abs. 1 lit. a' },
+            { id: 4, name: 'Stefan Horn', company: 'Schmidt Haus', status: 'denied', date: '08.12.2025 16:45', source: 'E-Mail', legalBasis: '–' },
+            { id: 5, name: 'Lisa Meyer', company: 'Design Studio', status: 'revoked', date: '05.12.2025 11:20', source: 'Manual', legalBasis: 'Art. 7 Abs. 3 (Widerruf)' },
+            { id: 6, name: 'Klaus Fischer', company: 'Fischer & Co', status: 'granted', date: '03.12.2025 08:45', source: 'HubSpot Form', legalBasis: 'Art. 6 Abs. 1 lit. a' },
+        ];
+
+        const auditLog = [
+            { action: 'CONSENT_GRANTED', contact: 'Max Gruber', date: '12.12.2025 14:32', source: 'HubSpot Form' },
+            { action: 'CONSENT_GRANTED', contact: 'Werner Bauer', date: '10.12.2025 09:15', source: 'WhatsApp Opt-in' },
+            { action: 'CONSENT_DENIED', contact: 'Stefan Horn', date: '08.12.2025 16:45', source: 'E-Mail Response' },
+            { action: 'CONSENT_REVOKED', contact: 'Lisa Meyer', date: '05.12.2025 11:20', source: 'User Request' },
+            { action: 'CONSENT_GRANTED', contact: 'Klaus Fischer', date: '03.12.2025 08:45', source: 'HubSpot Form' },
+        ];
+
+        let selectedContacts = new Set();
+
+        // Render Table
+        function renderTable() {
+            const tbody = document.getElementById('consentTableBody');
+            tbody.innerHTML = contacts.map(c => `
+                <tr>
+                    <td>
+                        <input type="checkbox" class="contact-checkbox" value="${c.id}" onchange="updateSelection()">
+                    </td>
+                    <td>
+                        <div class="contact-info">
+                            <div class="contact-avatar">${c.name.split(' ').map(n => n[0]).join('')}</div>
+                            <div>
+                                <div class="contact-name">${c.name}</div>
+                                <div class="contact-company">${c.company}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge status-${c.status}">
+                            <span class="status-dot"></span>
+                            ${getStatusLabel(c.status)}
+                        </span>
+                    </td>
+                    <td style="color: var(--text-muted);">${c.date}</td>
+                    <td style="color: var(--text-muted);">${c.source}</td>
+                    <td style="font-size: 0.85rem; color: var(--text-muted);">${c.legalBasis}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-ghost btn-sm" onclick="showDetails(${c.id})">Details</button>
+                            ${c.status === 'pending' ? `<button class="btn btn-primary btn-sm" onclick="requestConsent(${c.id})">Anfragen</button>` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Audit Log
+        function renderAuditLog() {
+            const timeline = document.getElementById('auditTimeline');
+            timeline.innerHTML = auditLog.map(entry => `
+                <div class="timeline-item ${entry.action.includes('REVOKED') ? 'revoked' : entry.action.includes('PENDING') ? 'pending' : ''}">
+                    <div class="timeline-date">${entry.date}</div>
+                    <div class="timeline-action">${getActionLabel(entry.action)}</div>
+                    <div class="timeline-meta">${entry.contact} • Quelle: ${entry.source}</div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                granted: 'Erteilt',
+                pending: 'Ausstehend',
+                denied: 'Abgelehnt',
+                revoked: 'Widerrufen'
+            };
+            return labels[status] || status;
+        }
+
+        function getActionLabel(action) {
+            const labels = {
+                CONSENT_GRANTED: '✅ Consent erteilt',
+                CONSENT_DENIED: '❌ Consent abgelehnt',
+                CONSENT_REVOKED: '🔄 Consent widerrufen',
+                CONSENT_REQUESTED: '📧 Consent angefragt'
+            };
+            return labels[action] || action;
+        }
+
+        function updateSelection() {
+            const checkboxes = document.querySelectorAll('.contact-checkbox:checked');
+            selectedContacts = new Set([...checkboxes].map(cb => parseInt(cb.value)));
+            
+            document.getElementById('selectedCount').textContent = selectedContacts.size;
+            document.getElementById('bulkActions').style.display = selectedContacts.size > 0 ? 'flex' : 'none';
+        }
+
+        function toggleSelectAll() {
+            const allCheckboxes = document.querySelectorAll('.contact-checkbox');
+            const selectAll = document.getElementById('selectAllHeader').checked;
+            
+            allCheckboxes.forEach(cb => cb.checked = selectAll);
+            updateSelection();
+        }
+
+        function showDetails(id) {
+            const contact = contacts.find(c => c.id === id);
+            const modal = document.getElementById('detailModal');
+            const body = document.getElementById('detailModalBody');
+            
+            body.innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Kontakt</h4>
+                    <p><strong>${contact.name}</strong> – ${contact.company}</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Consent Status</h4>
+                    <span class="status-badge status-${contact.status}">
+                        <span class="status-dot"></span>
+                        ${getStatusLabel(contact.status)}
+                    </span>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Consent Datum</h4>
+                    <p>${contact.date}</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Quelle</h4>
+                    <p>${contact.source}</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">Rechtsgrundlage</h4>
+                    <p>${contact.legalBasis}</p>
+                </div>
+                <div class="info-box">
+                    <strong>🔒 DSGVO Dokumentation</strong><br>
+                    Diese Einwilligung wurde dokumentiert und kann jederzeit widerrufen werden (Art. 7 Abs. 3 DSGVO).
+                </div>
+            `;
+            
+            modal.classList.add('visible');
+        }
+
+        function showBulkUpdateModal() {
+            document.getElementById('bulkModal').classList.add('visible');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('visible');
+        }
+
+        function syncHubSpot() {
+            alert('🔄 Synchronisierung mit HubSpot gestartet...\n\nIn Produktion: API-Call zu HubSpot für Consent-Sync.');
+        }
+
+        function exportData() {
+            alert('📥 Export wird vorbereitet...\n\nCSV mit allen Consent-Daten wird generiert.');
+        }
+
+        function requestConsent(id) {
+            alert(`📧 Consent-Anfrage wird an Kontakt #${id} gesendet...\n\nIn Produktion: WhatsApp oder E-Mail Nachricht.`);
+        }
+
+        function revokeConsent() {
+            alert('❌ Consent wird widerrufen...\n\nAlle WhatsApp-Kommunikation wird gestoppt (Art. 7 Abs. 3 DSGVO).');
+            closeModal('detailModal');
+        }
+
+        function executeBulkUpdate() {
+            const status = document.getElementById('bulkStatus').value;
+            const source = document.getElementById('bulkSource').value;
+            
+            alert(`📤 Bulk Update wird ausgeführt...\n\nNeuer Status: ${status}\nQuelle: ${source}\nBetroffene Kontakte: ${selectedContacts.size}`);
+            closeModal('bulkModal');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+            renderAuditLog();
+        });
+    </script>
+</body>
+</html>

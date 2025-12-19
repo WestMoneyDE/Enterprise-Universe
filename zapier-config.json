@@ -1,0 +1,212 @@
+{
+  "name": "West Money Bau - Email Automations",
+  "version": "1.0.0",
+  "description": "Zapier Webhook Konfigurationen für automatischen E-Mail-Versand",
+  "sender": {
+    "email": "info@west-money-bau.de",
+    "name": "West Money Bau",
+    "company": "West Money Bau GmbH",
+    "signature": {
+      "name": "Ömer Hüseyin Coşkun",
+      "title": "Geschäftsführer / CEO",
+      "company": "WEST MONEY BAU",
+      "tagline": "Smart Home Systems | LOXONE Partner | Barrierefreies Bauen",
+      "group": "Ein Unternehmen der Enterprise Universe Gruppe",
+      "email": "info@west-money-bau.de",
+      "web": "www.west-money-bau.de"
+    }
+  },
+  "webhooks": {
+    "base_url": "https://hooks.zapier.com/hooks/catch/YOUR_ACCOUNT_ID",
+    "endpoints": {
+      "send_partner_email": "/partner_email",
+      "send_customer_confirmation": "/customer_confirm",
+      "send_follow_up": "/follow_up",
+      "send_loxone_request": "/loxone",
+      "send_immobilien_request": "/immobilien",
+      "send_custom_email": "/custom"
+    }
+  },
+  "automations": [
+    {
+      "id": "auto_001",
+      "name": "Partner Anfrage - ComfortClick",
+      "trigger": "manual_or_scheduled",
+      "webhook_endpoint": "/partner_email",
+      "payload": {
+        "action": "send_partner_email",
+        "template": "partner_anfrage",
+        "to": "partners@comfortclick.com",
+        "cc": "info@west-money-bau.de",
+        "variables": {
+          "partner_name": "ComfortClick"
+        },
+        "priority": "high",
+        "track_opens": true,
+        "track_clicks": true
+      },
+      "status": "ready"
+    },
+    {
+      "id": "auto_002",
+      "name": "LOXONE Angebotsanfrage",
+      "trigger": "manual",
+      "webhook_endpoint": "/loxone",
+      "payload": {
+        "action": "send_loxone_request",
+        "template": "loxone_angebot",
+        "recipients": [
+          {
+            "email": "info@smarthome-koeln.de",
+            "name": "SmartHome Köln"
+          },
+          {
+            "email": "info@loxone.com",
+            "name": "LOXONE Support"
+          },
+          {
+            "email": "info@ihaus.de",
+            "name": "iHaus Smart Home"
+          }
+        ],
+        "cc": "info@west-money-bau.de",
+        "priority": "high"
+      },
+      "status": "ready"
+    },
+    {
+      "id": "auto_003",
+      "name": "Immobilienmakler Kontakt",
+      "trigger": "manual",
+      "webhook_endpoint": "/immobilien",
+      "payload": {
+        "action": "send_immobilien_request",
+        "template": "immobilien_anfrage",
+        "recipients": [
+          {
+            "email": "info@engel-voelkers.com",
+            "name": "Engel & Völkers Köln"
+          },
+          {
+            "email": "koeln@sothebysrealty.de",
+            "name": "Sotheby's Köln"
+          },
+          {
+            "email": "gewerbe@immonet.de",
+            "name": "Immonet Gewerbe"
+          }
+        ],
+        "cc": "info@west-money-bau.de",
+        "subject_suffix": " - West Money Bau Tech Flagship",
+        "priority": "high"
+      },
+      "status": "ready"
+    },
+    {
+      "id": "auto_004",
+      "name": "Kundenanfrage Auto-Reply",
+      "trigger": "webhook_incoming",
+      "webhook_endpoint": "/customer_confirm",
+      "trigger_conditions": {
+        "source": ["website_form", "hubspot", "whatsapp"],
+        "type": "new_inquiry"
+      },
+      "payload": {
+        "action": "send_confirmation",
+        "template": "anfrage_bestaetigung",
+        "variables_from_trigger": ["kunde_name", "kunde_email", "anfrage_details"],
+        "delay_seconds": 0,
+        "follow_up": {
+          "enabled": true,
+          "delay_days": 3,
+          "template": "follow_up"
+        }
+      },
+      "status": "ready"
+    },
+    {
+      "id": "auto_005",
+      "name": "Follow-Up nach 3 Tagen",
+      "trigger": "scheduled",
+      "schedule": {
+        "type": "daily",
+        "time": "09:00",
+        "timezone": "Europe/Berlin"
+      },
+      "webhook_endpoint": "/follow_up",
+      "conditions": {
+        "inquiry_age_days": { "min": 3, "max": 7 },
+        "follow_up_sent": false,
+        "status": "pending"
+      },
+      "payload": {
+        "action": "send_follow_up",
+        "template": "follow_up",
+        "variables": {
+          "thema": "Ihre Anfrage",
+          "nachricht": "Ich wollte mich erkundigen, ob Sie weitere Informationen zu unseren Smart Home Lösungen benötigen oder ob wir einen Beratungstermin vereinbaren können."
+        }
+      },
+      "status": "ready"
+    },
+    {
+      "id": "auto_006",
+      "name": "Weekly Partner Reminder",
+      "trigger": "scheduled",
+      "schedule": {
+        "type": "weekly",
+        "day": "monday",
+        "time": "10:00",
+        "timezone": "Europe/Berlin"
+      },
+      "webhook_endpoint": "/follow_up",
+      "conditions": {
+        "partner_status": "pending",
+        "last_contact_days": { "min": 7 }
+      },
+      "payload": {
+        "action": "send_partner_follow_up",
+        "template": "follow_up",
+        "variables": {
+          "thema": "Partnerschaft West Money Bau",
+          "nachricht": "Ich möchte mich bezüglich unserer Partnerschaftsanfrage erkundigen. Haben Sie Gelegenheit gehabt, unsere Unterlagen zu prüfen?"
+        }
+      },
+      "status": "ready"
+    }
+  ],
+  "email_lists": {
+    "loxone_partners": [
+      { "email": "info@smarthome-koeln.de", "name": "SmartHome Köln", "type": "installer" },
+      { "email": "info@loxone.com", "name": "LOXONE Direct", "type": "manufacturer" },
+      { "email": "info@ihaus.de", "name": "iHaus", "type": "installer" }
+    ],
+    "immobilien_koeln": [
+      { "email": "info@engel-voelkers.com", "name": "Engel & Völkers", "type": "makler" },
+      { "email": "koeln@sothebysrealty.de", "name": "Sotheby's", "type": "makler" },
+      { "email": "gewerbe@immonet.de", "name": "Immonet", "type": "portal" }
+    ],
+    "building_automation": [
+      { "email": "partners@comfortclick.com", "name": "ComfortClick", "type": "partner" },
+      { "email": "info@knx.org", "name": "KNX Association", "type": "association" }
+    ],
+    "security_partners": [
+      { "email": "partner@verisure.de", "name": "Verisure", "type": "partner" }
+    ]
+  },
+  "tracking": {
+    "enabled": true,
+    "events": ["sent", "delivered", "opened", "clicked", "bounced", "unsubscribed"],
+    "webhook_url": "https://api.west-money-bau.de/webhooks/email-tracking",
+    "store_in_hubspot": true
+  },
+  "rate_limits": {
+    "per_minute": 10,
+    "per_hour": 100,
+    "per_day": 500
+  },
+  "retry_policy": {
+    "max_retries": 3,
+    "delay_seconds": [60, 300, 900]
+  }
+}

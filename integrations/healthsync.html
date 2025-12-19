@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthSync | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --health: #ec4899;
+            --bg-deep: #0a0a0f;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(236, 72, 153, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(236, 72, 153, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(236, 72, 153, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--health), var(--danger));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        h1 span { color: var(--health); }
+
+        .subtitle { color: var(--text-muted); font-size: 0.9rem; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--health);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--health);
+            color: var(--health);
+        }
+
+        /* Score Circle */
+        .score-section {
+            text-align: center;
+            padding: 3rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--health) 0deg 310deg,
+                var(--bg-hover) 310deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(236, 72, 153, 0.5); }
+        }
+
+        .score-inner {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--health);
+        }
+
+        .score-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .score-trend {
+            color: var(--success);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .score-streak {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-elevated);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            border-color: var(--health);
+            transform: translateY(-4px);
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .metric-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .metric-trend {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .metric-trend.up { color: var(--success); }
+        .metric-trend.down { color: var(--danger); }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+
+        .card-body { padding: 1.5rem; }
+
+        /* Chart Placeholder */
+        .chart-container {
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--health), var(--accent));
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+        }
+
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 1rem 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Activity Ring */
+        .activity-rings {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .ring-item {
+            text-align: center;
+        }
+
+        .ring {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .ring::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+        }
+
+        .ring-value {
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .ring-move { background: conic-gradient(var(--danger) 0deg 288deg, var(--bg-hover) 288deg); }
+        .ring-exercise { background: conic-gradient(var(--success) 0deg 252deg, var(--bg-hover) 252deg); }
+        .ring-stand { background: conic-gradient(var(--primary) 0deg 324deg, var(--bg-hover) 324deg); }
+
+        .ring-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Privacy Section */
+        .privacy-section {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-bright);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .privacy-section h3 {
+            color: var(--health);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .privacy-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        /* Insights */
+        .insight-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-icon {
+            font-size: 1.5rem;
+        }
+
+        .insight-content h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .insight-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Goals */
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .goal-icon { font-size: 1.25rem; }
+
+        .goal-info { flex: 1; }
+
+        .goal-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .goal-progress {
+            height: 6px;
+            background: var(--bg-hover);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .goal-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .goal-fill.green { background: var(--success); }
+        .goal-fill.pink { background: var(--health); }
+        .goal-fill.blue { background: var(--primary); }
+
+        .goal-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+            .activity-rings { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">❤️</div>
+                <div>
+                    <h1>❤️ <span>HealthSync</span></h1>
+                    <p class="subtitle">Gesundheits- & Produktivitäts-Monitoring | Privacy-First</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-ghost">📊 History</button>
+                <button class="btn btn-primary">⚙️ Einstellungen</button>
+                <a href="index.html" class="btn btn-ghost">← Dashboard</a>
+            </div>
+        </header>
+
+        <!-- Wellness Score -->
+        <div class="score-section">
+            <div class="score-circle">
+                <div class="score-inner">
+                    <div class="score-value">87</div>
+                    <div class="score-label">Wellness Score</div>
+                </div>
+            </div>
+            <div class="score-trend">↑ 5 Punkte seit gestern</div>
+            <div class="score-streak">🔥 14 Tage Streak</div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">🏃</div>
+                <div class="metric-value" style="color: var(--danger);">8,432</div>
+                <div class="metric-label">Schritte</div>
+                <div class="metric-trend up">↑ 12% vs. gestern</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">😴</div>
+                <div class="metric-value" style="color: var(--accent);">7h 24m</div>
+                <div class="metric-label">Schlaf</div>
+                <div class="metric-trend up">↑ Gute Qualität</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">💼</div>
+                <div class="metric-value" style="color: var(--success);">4h 32m</div>
+                <div class="metric-label">Fokuszeit</div>
+                <div class="metric-trend up">↑ 23% vs. Ø</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🧘</div>
+                <div class="metric-value" style="color: var(--health);">Low</div>
+                <div class="metric-label">Stress-Level</div>
+                <div class="metric-trend">● Optimal</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <!-- Weekly Chart -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>📊 Wellness Trend (7 Tage)</h2>
+                        <select style="background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-primary); padding: 0.5rem; border-radius: 6px;">
+                            <option>Wellness Score</option>
+                            <option>Schritte</option>
+                            <option>Schlaf</option>
+                            <option>Fokuszeit</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <div class="chart-bar" style="height: 70%;" data-value="78"></div>
+                            <div class="chart-bar" style="height: 75%;" data-value="82"></div>
+                            <div class="chart-bar" style="height: 68%;" data-value="75"></div>
+                            <div class="chart-bar" style="height: 82%;" data-value="85"></div>
+                            <div class="chart-bar" style="height: 78%;" data-value="80"></div>
+                            <div class="chart-bar" style="height: 75%;" data-value="82"></div>
+                            <div class="chart-bar" style="height: 87%;" data-value="87"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Mo</span>
+                            <span>Di</span>
+                            <span>Mi</span>
+                            <span>Do</span>
+                            <span>Fr</span>
+                            <span>Sa</span>
+                            <span>Heute</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Rings -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>🎯 Aktivitätsringe</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-rings">
+                            <div class="ring-item">
+                                <div class="ring ring-move">
+                                    <span class="ring-value" style="color: var(--danger);">80%</span>
+                                </div>
+                                <div class="ring-label">Bewegung</div>
+                            </div>
+                            <div class="ring-item">
+                                <div class="ring ring-exercise">
+                                    <span class="ring-value" style="color: var(--success);">70%</span>
+                                </div>
+                                <div class="ring-label">Training</div>
+                            </div>
+                            <div class="ring-item">
+                                <div class="ring ring-stand">
+                                    <span class="ring-value" style="color: var(--primary);">90%</span>
+                                </div>
+                                <div class="ring-label">Stehen</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <!-- AI Insights -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>💡 Insights</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="insight-item">
+                            <div class="insight-icon">🌟</div>
+                            <div class="insight-content">
+                                <h4>Toller Schlaf!</h4>
+                                <p>Deine Schlafqualität war diese Woche 15% besser als letzte Woche.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">⏰</div>
+                            <div class="insight-content">
+                                <h4>Fokus-Zeit Peak</h4>
+                                <p>Du bist am produktivsten zwischen 9-11 Uhr. Nutze diese Zeit für wichtige Tasks.</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🚶</div>
+                            <div class="insight-content">
+                                <h4>Fast am Ziel</h4>
+                                <p>Noch 1,568 Schritte bis zu deinem Tagesziel!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goals -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>🎯 Tagesziele</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="goal-item">
+                            <div class="goal-icon">🏃</div>
+                            <div class="goal-info">
+                                <div class="goal-title">10.000 Schritte</div>
+                                <div class="goal-progress">
+                                    <div class="goal-fill green" style="width: 84%;"></div>
+                                </div>
+                            </div>
+                            <div class="goal-value">84%</div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-icon">💧</div>
+                            <div class="goal-info">
+                                <div class="goal-title">2L Wasser</div>
+                                <div class="goal-progress">
+                                    <div class="goal-fill blue" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div class="goal-value">60%</div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-icon">🧘</div>
+                            <div class="goal-info">
+                                <div class="goal-title">10 Min Meditation</div>
+                                <div class="goal-progress">
+                                    <div class="goal-fill pink" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div class="goal-value">✓</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Notice -->
+                <div class="privacy-section">
+                    <h3>🔒 Datenschutz-Hinweis</h3>
+                    <p>
+                        Alle Gesundheitsdaten werden <strong>lokal und verschlüsselt</strong> auf deinem Gerät gespeichert. 
+                        Es erfolgt <strong>keine Weitergabe an Dritte</strong>. Du kontrollierst vollständig, welche Daten 
+                        erfasst und mit anderen Hubs geteilt werden.
+                    </p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                        ⚠️ HealthSync bietet keine medizinische Beratung. Bei gesundheitlichen Fragen wende dich an einen Arzt.
+                    </p>
+                    <div class="privacy-actions">
+                        <button class="btn btn-ghost" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            ⚙️ Datenschutz-Einstellungen
+                        </button>
+                        <button class="btn btn-ghost" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+                            📥 Daten exportieren
+                        </button>
+                        <button class="btn btn-ghost" style="font-size: 0.85rem; padding: 0.5rem 1rem; color: var(--danger); border-color: rgba(239, 68, 68, 0.3);">
+                            🗑️ Alle Daten löschen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

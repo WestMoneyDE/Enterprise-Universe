@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einstellungen | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-deep: #0a0a0f;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h1 span { color: var(--primary); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary { background: var(--primary); color: var(--bg-deep); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.85rem; }
+
+        /* Layout */
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .settings-nav {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-item-icon { font-size: 1.25rem; }
+
+        /* Content */
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .settings-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .section-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .section-body {
+            padding: 1.5rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Toggle Switch */
+        .toggle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .toggle-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .toggle-info h4 {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .toggle-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--bg-hover);
+            border-radius: 26px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(24px);
+        }
+
+        /* API Key Display */
+        .api-key-display {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .api-key-value {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Connected Apps */
+        .connected-app {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .app-icon.hubspot { background: rgba(255, 122, 89, 0.15); }
+        .app-icon.whatsapp { background: rgba(37, 211, 102, 0.15); }
+        .app-icon.zadarma { background: rgba(0, 136, 204, 0.15); }
+        .app-icon.slack { background: rgba(74, 21, 75, 0.15); }
+
+        .app-info { flex: 1; }
+        .app-info h4 { font-weight: 600; margin-bottom: 4px; }
+        .app-info p { font-size: 0.85rem; color: var(--text-muted); }
+
+        .app-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.connected { background: var(--success); }
+        .status-dot.pending { background: var(--warning); }
+        .status-dot.error { background: var(--danger); }
+
+        /* Danger Zone */
+        .danger-zone {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-zone .section-header {
+            border-bottom-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-zone .section-header h2 {
+            color: var(--danger);
+        }
+
+        .danger-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .danger-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* GDPR Section */
+        .gdpr-section {
+            border-color: var(--border-bright);
+        }
+
+        .gdpr-section .section-header {
+            border-bottom-color: var(--border-bright);
+        }
+
+        .gdpr-section .section-header h2 {
+            color: var(--primary);
+        }
+
+        .gdpr-rights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .gdpr-right {
+            padding: 1.25rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .gdpr-right h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gdpr-right p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .settings-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-nav {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .gdpr-rights {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <h1>⚙️ <span>Einstellungen</span></h1>
+            <a href="index.html" class="btn btn-ghost">← Zurück zum Dashboard</a>
+        </header>
+
+        <div class="settings-layout">
+            <!-- Sidebar Navigation -->
+            <nav class="settings-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Konto</div>
+                    <div class="nav-item active" onclick="scrollToSection('profile')">
+                        <span class="nav-item-icon">👤</span>
+                        <span>Profil</span>
+                    </div>
+                    <div class="nav-item" onclick="scrollToSection('security')">
+                        <span class="nav-item-icon">🔐</span>
+                        <span>Sicherheit</span>
+                    </div>
+                    <div class="nav-item" onclick="scrollToSection('notifications')">
+                        <span class="nav-item-icon">🔔</span>
+                        <span>Benachrichtigungen</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Integrationen</div>
+                    <div class="nav-item" onclick="scrollToSection('integrations')">
+                        <span class="nav-item-icon">🔗</span>
+                        <span>Verbundene Apps</span>
+                    </div>
+                    <div class="nav-item" onclick="scrollToSection('api')">
+                        <span class="nav-item-icon">🔑</span>
+                        <span>API-Schlüssel</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Datenschutz</div>
+                    <div class="nav-item" onclick="scrollToSection('privacy')">
+                        <span class="nav-item-icon">🛡️</span>
+                        <span>Datenschutz & DSGVO</span>
+                    </div>
+                    <div class="nav-item" onclick="scrollToSection('consent')">
+                        <span class="nav-item-icon">✅</span>
+                        <span>Einwilligungen</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Gefahrenzone</div>
+                    <div class="nav-item" onclick="scrollToSection('danger')" style="color: var(--danger);">
+                        <span class="nav-item-icon">⚠️</span>
+                        <span>Konto löschen</span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <div class="settings-content">
+                <!-- Profile -->
+                <section class="settings-section" id="profile">
+                    <div class="section-header">
+                        <h2>👤 Profil</h2>
+                        <p>Verwalten Sie Ihre persönlichen Informationen</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Vorname</label>
+                                <input type="text" class="form-control" value="Ömer">
+                            </div>
+                            <div class="form-group">
+                                <label>Nachname</label>
+                                <input type="text" class="form-control" value="Coşkun">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>E-Mail</label>
+                            <input type="email" class="form-control" value="omer@enterprise-universe.de">
+                        </div>
+                        <div class="form-group">
+                            <label>Unternehmen</label>
+                            <input type="text" class="form-control" value="Enterprise Universe">
+                        </div>
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" class="form-control" value="President & CEO">
+                        </div>
+                        <button class="btn btn-primary">💾 Speichern</button>
+                    </div>
+                </section>
+
+                <!-- Security -->
+                <section class="settings-section" id="security">
+                    <div class="section-header">
+                        <h2>🔐 Sicherheit</h2>
+                        <p>Passwort und Zwei-Faktor-Authentifizierung</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label>Aktuelles Passwort</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Neues Passwort</label>
+                                <input type="password" class="form-control" placeholder="Min. 8 Zeichen">
+                            </div>
+                            <div class="form-group">
+                                <label>Passwort bestätigen</label>
+                                <input type="password" class="form-control" placeholder="Wiederholen">
+                            </div>
+                        </div>
+                        <button class="btn btn-ghost" style="margin-bottom: 1.5rem;">Passwort ändern</button>
+
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Zwei-Faktor-Authentifizierung</h4>
+                                <p>Zusätzliche Sicherheit durch Authenticator-App</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications -->
+                <section class="settings-section" id="notifications">
+                    <div class="section-header">
+                        <h2>🔔 Benachrichtigungen</h2>
+                        <p>Steuern Sie, wie und wann Sie informiert werden</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>E-Mail Benachrichtigungen</h4>
+                                <p>Wichtige Updates per E-Mail erhalten</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>WhatsApp Benachrichtigungen</h4>
+                                <p>Schnelle Updates über WhatsApp Business</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Push-Benachrichtigungen</h4>
+                                <p>Browser-Benachrichtigungen aktivieren</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Wöchentlicher Report</h4>
+                                <p>Zusammenfassung aller Aktivitäten per E-Mail</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Integrations -->
+                <section class="settings-section" id="integrations">
+                    <div class="section-header">
+                        <h2>🔗 Verbundene Apps</h2>
+                        <p>Verwalten Sie Ihre Integrationen</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="connected-app">
+                            <div class="app-icon hubspot">🟠</div>
+                            <div class="app-info">
+                                <h4>HubSpot CRM</h4>
+                                <p>Leads, Contacts & Consent Management</p>
+                            </div>
+                            <div class="app-status">
+                                <span class="status-dot connected"></span>
+                                <span style="color: var(--success);">Verbunden</span>
+                            </div>
+                            <button class="btn btn-ghost btn-sm">Verwalten</button>
+                        </div>
+                        <div class="connected-app">
+                            <div class="app-icon whatsapp">💬</div>
+                            <div class="app-info">
+                                <h4>WhatsApp Business</h4>
+                                <p>Kundenkommunikation & Consent Sync</p>
+                            </div>
+                            <div class="app-status">
+                                <span class="status-dot connected"></span>
+                                <span style="color: var(--success);">Verbunden</span>
+                            </div>
+                            <button class="btn btn-ghost btn-sm">Verwalten</button>
+                        </div>
+                        <div class="connected-app">
+                            <div class="app-icon zadarma">📞</div>
+                            <div class="app-info">
+                                <h4>Zadarma VoIP</h4>
+                                <p>Telefonie & Anrufprotokollierung</p>
+                            </div>
+                            <div class="app-status">
+                                <span class="status-dot connected"></span>
+                                <span style="color: var(--success);">Verbunden</span>
+                            </div>
+                            <button class="btn btn-ghost btn-sm">Verwalten</button>
+                        </div>
+                        <div class="connected-app">
+                            <div class="app-icon slack">💜</div>
+                            <div class="app-info">
+                                <h4>Slack</h4>
+                                <p>Team-Kommunikation</p>
+                            </div>
+                            <div class="app-status">
+                                <span class="status-dot pending"></span>
+                                <span style="color: var(--warning);">Setup ausstehend</span>
+                            </div>
+                            <button class="btn btn-primary btn-sm">Verbinden</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- API Keys -->
+                <section class="settings-section" id="api">
+                    <div class="section-header">
+                        <h2>🔑 API-Schlüssel</h2>
+                        <p>Zugriffsschlüssel für die GTz Ecosystem API</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label>API-Schlüssel</label>
+                            <div class="api-key-display">
+                                <div class="api-key-value">gtz_live_••••••••••••••••••••••••</div>
+                                <button class="btn btn-ghost btn-sm">👁️ Anzeigen</button>
+                                <button class="btn btn-ghost btn-sm">📋 Kopieren</button>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button class="btn btn-ghost">🔄 Neu generieren</button>
+                            <button class="btn btn-ghost">📄 API-Dokumentation</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy & GDPR -->
+                <section class="settings-section gdpr-section" id="privacy">
+                    <div class="section-header">
+                        <h2>🛡️ Datenschutz & DSGVO</h2>
+                        <p>Ihre Datenschutzrechte gemäß DSGVO</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="gdpr-rights">
+                            <div class="gdpr-right">
+                                <h4>📋 Auskunftsrecht (Art. 15)</h4>
+                                <p>Erhalten Sie eine Übersicht aller gespeicherten Daten</p>
+                                <button class="btn btn-ghost btn-sm">Daten anfordern</button>
+                            </div>
+                            <div class="gdpr-right">
+                                <h4>📥 Datenportabilität (Art. 20)</h4>
+                                <p>Exportieren Sie Ihre Daten im JSON-Format</p>
+                                <button class="btn btn-ghost btn-sm" onclick="exportData()">Daten exportieren</button>
+                            </div>
+                            <div class="gdpr-right">
+                                <h4>✏️ Berichtigung (Art. 16)</h4>
+                                <p>Korrigieren Sie fehlerhafte Daten</p>
+                                <button class="btn btn-ghost btn-sm">Profil bearbeiten</button>
+                            </div>
+                            <div class="gdpr-right">
+                                <h4>🚫 Einschränkung (Art. 18)</h4>
+                                <p>Beschränken Sie die Datenverarbeitung</p>
+                                <button class="btn btn-ghost btn-sm">Verarbeitung einschränken</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Consent Management -->
+                <section class="settings-section" id="consent">
+                    <div class="section-header">
+                        <h2>✅ Einwilligungen</h2>
+                        <p>Verwalten Sie Ihre erteilten Einwilligungen</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>WhatsApp Business Kommunikation</h4>
+                                <p>Erhalte Nachrichten über WhatsApp (Art. 6 Abs. 1 lit. a DSGVO)</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="updateConsent('whatsapp', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Marketing & Newsletter</h4>
+                                <p>Erhalte Informationen über Neuigkeiten und Angebote</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="updateConsent('marketing', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-item">
+                            <div class="toggle-info">
+                                <h4>Analyse-Cookies</h4>
+                                <p>Anonymisierte Nutzungsstatistiken zur Verbesserung</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="updateConsent('analytics', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <a href="consent-manager.html" class="btn btn-ghost" style="margin-top: 1rem;">
+                            Zur Consent-Verwaltung →
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Danger Zone -->
+                <section class="settings-section danger-zone" id="danger">
+                    <div class="section-header">
+                        <h2>⚠️ Gefahrenzone</h2>
+                        <p>Diese Aktionen sind irreversibel</p>
+                    </div>
+                    <div class="section-body">
+                        <div class="danger-item">
+                            <div>
+                                <h4 style="color: var(--danger); font-weight: 600;">Alle Daten löschen</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                                    Löscht alle Ihre Daten gemäß Art. 17 DSGVO (Recht auf Löschung)
+                                </p>
+                            </div>
+                            <button class="btn btn-danger" onclick="deleteAllData()">🗑️ Daten löschen</button>
+                        </div>
+                        <div class="danger-item">
+                            <div>
+                                <h4 style="color: var(--danger); font-weight: 600;">Konto löschen</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                                    Löscht Ihr Konto und alle zugehörigen Daten unwiderruflich
+                                </p>
+                            </div>
+                            <button class="btn btn-danger" onclick="deleteAccount()">🗑️ Konto löschen</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+        }
+
+        function updateConsent(type, granted) {
+            console.log('📋 Consent Update:', {
+                type: type,
+                granted: granted,
+                timestamp: new Date().toISOString(),
+                legalBasis: granted ? 'Art. 6 Abs. 1 lit. a DSGVO' : 'Art. 7 Abs. 3 DSGVO (Widerruf)'
+            });
+
+            // In production: Sync mit HubSpot
+            alert(`${granted ? '✅' : '❌'} ${type.charAt(0).toUpperCase() + type.slice(1)} Consent ${granted ? 'erteilt' : 'widerrufen'}`);
+        }
+
+        function exportData() {
+            const data = {
+                exportDate: new Date().toISOString(),
+                legalBasis: 'Art. 20 DSGVO - Datenportabilität',
+                profile: {
+                    name: 'Ömer Coşkun',
+                    email: 'omer@enterprise-universe.de',
+                    company: 'Enterprise Universe'
+                },
+                consents: {
+                    whatsapp: true,
+                    marketing: false,
+                    analytics: true
+                }
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gtz-ecosystem-daten-export.json';
+            a.click();
+        }
+
+        function deleteAllData() {
+            if (confirm('⚠️ Sind Sie sicher, dass Sie alle Ihre Daten löschen möchten?\n\nDiese Aktion kann nicht rückgängig gemacht werden.')) {
+                alert('🗑️ Daten werden gelöscht...\n\nSie erhalten eine Bestätigung per E-Mail.');
+            }
+        }
+
+        function deleteAccount() {
+            if (confirm('⚠️ WARNUNG: Dies löscht Ihr Konto und alle Daten unwiderruflich!\n\nMöchten Sie fortfahren?')) {
+                if (confirm('Dies ist Ihre letzte Chance. Sind Sie absolut sicher?')) {
+                    alert('🗑️ Konto wird gelöscht...\n\nAuf Wiedersehen und danke für die Nutzung von GTz Ecosystem.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

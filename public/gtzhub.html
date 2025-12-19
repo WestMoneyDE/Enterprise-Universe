@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTzHub Finance | GTz Ecosystem</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff006e;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-deep: #0a0a0f;
+            --bg-base: #0d0d14;
+            --bg-elevated: #13131d;
+            --bg-surface: #1a1a28;
+            --bg-hover: #222233;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(0, 240, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            color: var(--bg-deep);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        h1 span { color: var(--primary); }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg-deep);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover::before { opacity: 1; }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            font-size: 1.75rem;
+        }
+
+        .stat-trend {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .stat-trend.up {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .stat-trend.down {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            background: var(--bg-surface);
+            border-bottom: 2px solid var(--primary);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Lead Table */
+        .lead-table {
+            width: 100%;
+        }
+
+        .lead-row {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 120px 100px 100px 80px 120px;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            gap: 1rem;
+            transition: background 0.2s;
+        }
+
+        .lead-row:hover {
+            background: var(--bg-hover);
+        }
+
+        .lead-row.header {
+            background: var(--bg-elevated);
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lead-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .lead-info .name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .lead-info .company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .lead-value {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-new { background: rgba(0, 240, 255, 0.15); color: var(--primary); }
+        .status-qualified { background: rgba(139, 92, 246, 0.15); color: var(--accent); }
+        .status-proposal { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .status-negotiation { background: rgba(255, 0, 110, 0.15); color: var(--secondary); }
+        .status-won { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-lost { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        /* Consent Indicator */
+        .consent-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .consent-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .consent-dot.granted { background: var(--success); }
+        .consent-dot.pending { background: var(--warning); }
+        .consent-dot.denied { background: var(--danger); }
+
+        .consent-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* GDPR Badge */
+        .gdpr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--success);
+        }
+
+        .gdpr-badge.warning { color: var(--warning); }
+        .gdpr-badge.error { color: var(--danger); }
+
+        /* Pipeline */
+        .pipeline-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pipeline-stage {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .pipeline-stage::after {
+            content: '→';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+
+        .pipeline-stage:last-child::after { display: none; }
+
+        .pipeline-count {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .pipeline-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--success);
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child { border-bottom: none; }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.lead { background: rgba(0, 240, 255, 0.15); }
+        .activity-icon.consent { background: rgba(16, 185, 129, 0.15); }
+        .activity-icon.payment { background: rgba(139, 92, 246, 0.15); }
+        .activity-icon.document { background: rgba(245, 158, 11, 0.15); }
+
+        .activity-content { flex: 1; }
+
+        .activity-text {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .activity-text strong { color: var(--primary); }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-overlay.visible { display: flex; }
+
+        .modal {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body { padding: 1.5rem; }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Consent Section in Form */
+        .consent-section {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-bright);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .consent-section h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .consent-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .consent-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            margin-top: 2px;
+        }
+
+        .consent-option label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .consent-option label strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Charts Placeholder */
+        .chart-container {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+            .content-grid { grid-template-columns: 1fr; }
+            .lead-row { grid-template-columns: 40px 1.5fr 1fr 100px 80px 80px 60px 100px; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pipeline-container { flex-direction: column; }
+            .pipeline-stage::after { display: none; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <div class="logo-icon">GTz</div>
+                <div>
+                    <h1>💰 <span>GTzHub</span> – Finanz & Leads</h1>
+                    <p class="subtitle">Lead-Management, CRM und Finanzen mit DSGVO-konformer WhatsApp Integration</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-ghost" onclick="exportLeads()">📥 Export</button>
+                <button class="btn btn-primary" onclick="showNewLeadModal()">+ Neuer Lead</button>
+                <a href="index.html" class="btn btn-ghost">← Dashboard</a>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">💰</span>
+                    <span class="stat-trend up">↑ 23.5%</span>
+                </div>
+                <div class="stat-value">€847.5K</div>
+                <div class="stat-label">Gesamtumsatz (YTD)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">📈</span>
+                    <span class="stat-trend up">↑ 12.3%</span>
+                </div>
+                <div class="stat-value">€124.5K</div>
+                <div class="stat-label">Umsatz (MTD)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">👥</span>
+                    <span class="stat-trend up">↑ 8</span>
+                </div>
+                <div class="stat-value">47</div>
+                <div class="stat-label">Aktive Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">📊</span>
+                    <span class="stat-trend up">↑ 2.1%</span>
+                </div>
+                <div class="stat-value">23.4%</div>
+                <div class="stat-label">Conversion Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-icon">✅</span>
+                </div>
+                <div class="stat-value" style="color: var(--success);">98%</div>
+                <div class="stat-label">DSGVO Compliance</div>
+            </div>
+        </div>
+
+        <!-- Pipeline -->
+        <div class="pipeline-container">
+            <div class="pipeline-stage">
+                <div class="pipeline-count" style="color: var(--primary);">12</div>
+                <div class="pipeline-label">Neu</div>
+                <div class="pipeline-value">€156,000</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count" style="color: var(--accent);">23</div>
+                <div class="pipeline-label">Qualifiziert</div>
+                <div class="pipeline-value">€412,500</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count" style="color: var(--warning);">8</div>
+                <div class="pipeline-label">Angebot</div>
+                <div class="pipeline-value">€234,000</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count" style="color: var(--secondary);">4</div>
+                <div class="pipeline-label">Verhandlung</div>
+                <div class="pipeline-value">€178,500</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count" style="color: var(--success);">31</div>
+                <div class="pipeline-label">Gewonnen (YTD)</div>
+                <div class="pipeline-value">€847,523</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('leads')">👥 Leads</button>
+            <button class="tab" onclick="showTab('invoices')">📑 Rechnungen</button>
+            <button class="tab" onclick="showTab('documents')">📄 Dokumente</button>
+            <button class="tab" onclick="showTab('analytics')">📊 Analytics</button>
+        </div>
+
+        <!-- Content -->
+        <div class="content-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📋 Lead-Übersicht mit Consent-Status</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-ghost btn-sm">Filter</button>
+                        <a href="consent-manager.html" class="btn btn-ghost btn-sm">Consent Manager</a>
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <div class="lead-table">
+                        <div class="lead-row header">
+                            <div></div>
+                            <div>Kontakt</div>
+                            <div>Projekt</div>
+                            <div>Wert</div>
+                            <div>Status</div>
+                            <div>WA Consent</div>
+                            <div>DSGVO</div>
+                            <div>Aktion</div>
+                        </div>
+                        
+                        <div class="lead-row">
+                            <div class="lead-avatar">MG</div>
+                            <div class="lead-info">
+                                <div class="name">Müller GmbH</div>
+                                <div class="company">Max Gruber • Geschäftsführer</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">Smart Home</div>
+                            <div class="lead-value">€45,000</div>
+                            <span class="status-badge status-qualified">Qualifiziert</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot granted"></span>
+                                <span class="consent-label">Erteilt</span>
+                            </div>
+                            <span class="gdpr-badge">✓ OK</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(1)">Details</button>
+                        </div>
+
+                        <div class="lead-row">
+                            <div class="lead-avatar">TH</div>
+                            <div class="lead-info">
+                                <div class="name">Tech House AG</div>
+                                <div class="company">Thomas Huber • CTO</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">LOXONE System</div>
+                            <div class="lead-value">€78,500</div>
+                            <span class="status-badge status-proposal">Angebot</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot pending"></span>
+                                <span class="consent-label">Ausstehend</span>
+                            </div>
+                            <span class="gdpr-badge warning">⚠ Pending</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(2)">Details</button>
+                        </div>
+
+                        <div class="lead-row">
+                            <div class="lead-avatar">WB</div>
+                            <div class="lead-info">
+                                <div class="name">Weber Bau KG</div>
+                                <div class="company">Werner Bauer • Inhaber</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">Barrierefreies Bauen</div>
+                            <div class="lead-value">€125,000</div>
+                            <span class="status-badge status-negotiation">Verhandlung</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot granted"></span>
+                                <span class="consent-label">Erteilt</span>
+                            </div>
+                            <span class="gdpr-badge">✓ OK</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(3)">Details</button>
+                        </div>
+
+                        <div class="lead-row">
+                            <div class="lead-avatar">SH</div>
+                            <div class="lead-info">
+                                <div class="name">Schmidt Haus</div>
+                                <div class="company">Stefan Horn • Projektleiter</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">Komplettlösung</div>
+                            <div class="lead-value">€89,000</div>
+                            <span class="status-badge status-qualified">Qualifiziert</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot denied"></span>
+                                <span class="consent-label">Abgelehnt</span>
+                            </div>
+                            <span class="gdpr-badge">✓ OK</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(4)">Details</button>
+                        </div>
+
+                        <div class="lead-row">
+                            <div class="lead-avatar">KF</div>
+                            <div class="lead-info">
+                                <div class="name">Fischer & Co</div>
+                                <div class="company">Klaus Fischer • CEO</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">Verisure Integration</div>
+                            <div class="lead-value">€156,000</div>
+                            <span class="status-badge status-new">Neu</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot pending"></span>
+                                <span class="consent-label">Ausstehend</span>
+                            </div>
+                            <span class="gdpr-badge warning">⚠ Pending</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(5)">Details</button>
+                        </div>
+
+                        <div class="lead-row">
+                            <div class="lead-avatar">LM</div>
+                            <div class="lead-info">
+                                <div class="name">Design Studio</div>
+                                <div class="company">Lisa Meyer • Creative Director</div>
+                            </div>
+                            <div style="color: var(--text-secondary);">ComfortClick</div>
+                            <div class="lead-value">€67,000</div>
+                            <span class="status-badge status-won">Gewonnen</span>
+                            <div class="consent-indicator">
+                                <span class="consent-dot granted"></span>
+                                <span class="consent-label">Erteilt</span>
+                            </div>
+                            <span class="gdpr-badge">✓ OK</span>
+                            <button class="btn btn-ghost btn-sm" onclick="showLeadDetails(6)">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <!-- Activity -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>⚡ Letzte Aktivitäten</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-icon lead">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-text">Lead <strong>Fischer & Co</strong> erstellt</div>
+                                <div class="activity-time">Vor 15 Minuten</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon consent">✅</div>
+                            <div class="activity-content">
+                                <div class="activity-text"><strong>WhatsApp Consent</strong> von Müller GmbH</div>
+                                <div class="activity-time">Vor 1 Stunde</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">💳</div>
+                            <div class="activity-content">
+                                <div class="activity-text">Zahlung <strong>€23,500</strong> eingegangen</div>
+                                <div class="activity-time">Vor 2 Stunden</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon document">📄</div>
+                            <div class="activity-content">
+                                <div class="activity-text">Angebot an <strong>Tech House</strong> gesendet</div>
+                                <div class="activity-time">Vor 3 Stunden</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>📊 Consent Übersicht</h2>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-elevated); border-radius: 8px;">
+                            <span>✅ Consent erteilt</span>
+                            <strong style="color: var(--success);">156</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-elevated); border-radius: 8px;">
+                            <span>⏳ Ausstehend</span>
+                            <strong style="color: var(--warning);">12</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-elevated); border-radius: 8px;">
+                            <span>❌ Abgelehnt</span>
+                            <strong style="color: var(--danger);">8</strong>
+                        </div>
+                        <a href="consent-manager.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            Consent Manager öffnen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Lead Modal -->
+    <div class="modal-overlay" id="newLeadModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>+ Neuen Lead erstellen</h3>
+                <button class="modal-close" onclick="closeModal('newLeadModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Firma *</label>
+                        <input type="text" class="form-control" placeholder="Firmenname">
+                    </div>
+                    <div class="form-group">
+                        <label>Ansprechpartner *</label>
+                        <input type="text" class="form-control" placeholder="Vor- und Nachname">
+                    </div>
+                    <div class="form-group">
+                        <label>E-Mail *</label>
+                        <input type="email" class="form-control" placeholder="email@firma.de">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" class="form-control" placeholder="+49 ...">
+                    </div>
+                    <div class="form-group">
+                        <label>Projektkategorie</label>
+                        <select class="form-control">
+                            <option>Smart Home Integration</option>
+                            <option>LOXONE System</option>
+                            <option>Barrierefreies Bauen</option>
+                            <option>ComfortClick</option>
+                            <option>Verisure Security</option>
+                            <option>Sonstiges</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Geschätzter Wert (€)</label>
+                        <input type="number" class="form-control" placeholder="50000">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Notizen</label>
+                        <textarea class="form-control" placeholder="Projektdetails, Anforderungen..."></textarea>
+                    </div>
+                </div>
+
+                <!-- DSGVO Consent Section -->
+                <div class="consent-section">
+                    <h4>🔒 DSGVO Einwilligungen</h4>
+                    
+                    <div class="consent-option">
+                        <input type="checkbox" id="consentData" required>
+                        <label for="consentData">
+                            <strong>Datenverarbeitung (erforderlich)</strong>
+                            Ich willige ein, dass meine Daten zur Bearbeitung meiner Anfrage verarbeitet werden.
+                        </label>
+                    </div>
+
+                    <div class="consent-option">
+                        <input type="checkbox" id="consentWhatsApp">
+                        <label for="consentWhatsApp">
+                            <strong>WhatsApp Business Kommunikation (optional)</strong>
+                            Ich möchte über WhatsApp kontaktiert werden. Diese Einwilligung kann jederzeit widerrufen werden.
+                        </label>
+                    </div>
+
+                    <div class="consent-option">
+                        <input type="checkbox" id="consentMarketing">
+                        <label for="consentMarketing">
+                            <strong>Marketing & Newsletter (optional)</strong>
+                            Ich möchte über Neuigkeiten und Angebote informiert werden.
+                        </label>
+                    </div>
+
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+                        Weitere Informationen finden Sie in unserer 
+                        <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a>.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('newLeadModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="createLead()">Lead erstellen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead Details Modal -->
+    <div class="modal-overlay" id="leadDetailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>📋 Lead Details</h3>
+                <button class="modal-close" onclick="closeModal('leadDetailModal')">×</button>
+            </div>
+            <div class="modal-body" id="leadDetailBody">
+                <!-- Dynamisch gefüllt -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal('leadDetailModal')">Schließen</button>
+                <button class="btn btn-primary">Bearbeiten</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lead Data
+        const leads = [
+            { id: 1, company: 'Müller GmbH', contact: 'Max Gruber', role: 'Geschäftsführer', email: 'gruber@mueller-gmbh.de', phone: '+49 123 456789', project: 'Smart Home Integration', value: 45000, status: 'qualified', consent: 'granted', consentDate: '12.12.2025' },
+            { id: 2, company: 'Tech House AG', contact: 'Thomas Huber', role: 'CTO', email: 'huber@techhouse.de', phone: '+49 234 567890', project: 'LOXONE System', value: 78500, status: 'proposal', consent: 'pending', consentDate: null },
+            { id: 3, company: 'Weber Bau KG', contact: 'Werner Bauer', role: 'Inhaber', email: 'bauer@weberbau.de', phone: '+49 345 678901', project: 'Barrierefreies Bauen', value: 125000, status: 'negotiation', consent: 'granted', consentDate: '10.12.2025' },
+            { id: 4, company: 'Schmidt Haus', contact: 'Stefan Horn', role: 'Projektleiter', email: 'horn@schmidt-haus.de', phone: '+49 456 789012', project: 'Komplettlösung', value: 89000, status: 'qualified', consent: 'denied', consentDate: '08.12.2025' },
+            { id: 5, company: 'Fischer & Co', contact: 'Klaus Fischer', role: 'CEO', email: 'fischer@fischer-co.de', phone: '+49 567 890123', project: 'Verisure Integration', value: 156000, status: 'new', consent: 'pending', consentDate: null },
+            { id: 6, company: 'Design Studio', contact: 'Lisa Meyer', role: 'Creative Director', email: 'meyer@designstudio.de', phone: '+49 678 901234', project: 'ComfortClick', value: 67000, status: 'won', consent: 'granted', consentDate: '03.12.2025' },
+        ];
+
+        function showNewLeadModal() {
+            document.getElementById('newLeadModal').classList.add('visible');
+        }
+
+        function showLeadDetails(id) {
+            const lead = leads.find(l => l.id === id);
+            const body = document.getElementById('leadDetailBody');
+            
+            const consentBadge = lead.consent === 'granted' 
+                ? '<span class="status-badge status-won">✅ Erteilt</span>'
+                : lead.consent === 'pending' 
+                    ? '<span class="status-badge status-proposal">⏳ Ausstehend</span>'
+                    : '<span class="status-badge status-lost">❌ Abgelehnt</span>';
+
+            body.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">UNTERNEHMEN</h4>
+                        <p style="font-size: 1.1rem; font-weight: 600;">${lead.company}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">PROJEKTWERT</h4>
+                        <p style="font-size: 1.1rem; font-weight: 600; color: var(--success);">€${lead.value.toLocaleString()}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">ANSPRECHPARTNER</h4>
+                        <p>${lead.contact}</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">${lead.role}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">PROJEKT</h4>
+                        <p>${lead.project}</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">E-MAIL</h4>
+                        <p><a href="mailto:${lead.email}" style="color: var(--primary);">${lead.email}</a></p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">TELEFON</h4>
+                        <p>${lead.phone}</p>
+                    </div>
+                </div>
+                
+                <div class="consent-section" style="margin-top: 1.5rem;">
+                    <h4>🔒 DSGVO & WhatsApp Consent</h4>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span>WhatsApp Business Consent</span>
+                        ${consentBadge}
+                    </div>
+                    ${lead.consentDate ? `<p style="font-size: 0.85rem; color: var(--text-muted);">Datum: ${lead.consentDate}</p>` : ''}
+                    ${lead.consent === 'pending' ? `
+                        <button class="btn btn-primary btn-sm" style="margin-top: 1rem;" onclick="requestConsent(${lead.id})">
+                            📧 WhatsApp Consent anfragen
+                        </button>
+                    ` : ''}
+                    ${lead.consent === 'granted' ? `
+                        <button class="btn btn-ghost btn-sm" style="margin-top: 1rem;">
+                            💬 WhatsApp Nachricht senden
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.getElementById('leadDetailModal').classList.add('visible');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('visible');
+        }
+
+        function createLead() {
+            const dataConsent = document.getElementById('consentData').checked;
+            
+            if (!dataConsent) {
+                alert('⚠️ Die Einwilligung zur Datenverarbeitung ist erforderlich.');
+                return;
+            }
+            
+            const whatsappConsent = document.getElementById('consentWhatsApp').checked;
+            const marketingConsent = document.getElementById('consentMarketing').checked;
+            
+            // Log consent
+            console.log('📋 DSGVO Consent dokumentiert:', {
+                dataProcessing: dataConsent,
+                whatsapp: whatsappConsent,
+                marketing: marketingConsent,
+                timestamp: new Date().toISOString(),
+                legalBasis: 'Art. 6 Abs. 1 lit. a DSGVO'
+            });
+            
+            alert('✅ Lead erfolgreich erstellt!\n\nDSGVO-Consent wurde dokumentiert.');
+            closeModal('newLeadModal');
+        }
+
+        function requestConsent(id) {
+            alert(`📧 WhatsApp Consent-Anfrage wird an Lead #${id} gesendet...\n\nGemäß Art. 6 Abs. 1 lit. a DSGVO`);
+        }
+
+        function exportLeads() {
+            alert('📥 Lead-Export wird vorbereitet...\n\nDSGVO-konforme CSV-Datei wird generiert.');
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            // Tab content switch logic would go here
+        }
+    </script>
+</body>
+</html>
