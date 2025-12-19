@@ -1349,7 +1349,7 @@
                 <p style="margin-bottom: var(--space-lg); color: var(--text-secondary);">
                     Enterprise Universe<br>
                     Ömer Hüseyin Coşkun<br>
-                    E-Mail: ö<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e4898196a4818a90819694968d9781c9918a8d9281969781ca8081">[email&#160;protected]</a>
+                    E-Mail: ö<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd90988fbd989389988f8d8f948e98d08893948b988f8e98d39998">[email&#160;protected]</a>
                 </p>
 
                 <h4 style="color: var(--primary); margin-bottom: var(--space-md);">2. Erhobene Daten</h4>
@@ -2344,4 +2344,120 @@
                                 <div class="activity-time">12.12.2025 14:32:18 • Via: HubSpot Form</div>
                             </div>
                         </div>
-                    </d
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Navigation & Functionality Script -->
+    <script>
+        // ===== NAVIGATION =====
+        function showPage(pageId) {
+            // Hide all page sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show the selected page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            }
+            
+            // Add active class to clicked nav item
+            const activeNav = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide all pages except dashboard
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show dashboard by default
+            const dashboard = document.getElementById('page-dashboard');
+            if (dashboard) {
+                dashboard.style.display = 'block';
+            }
+            
+            // Set dashboard nav as active
+            const dashboardNav = document.querySelector('.nav-item[data-page="dashboard"]');
+            if (dashboardNav) {
+                dashboardNav.classList.add('active');
+            }
+
+            // Check cookie consent
+            if (localStorage.getItem('cookieConsent')) {
+                const banner = document.getElementById('gdprBanner');
+                if (banner) banner.style.display = 'none';
+            }
+        });
+
+        // ===== COOKIE/GDPR FUNCTIONS =====
+        function acceptAllCookies() {
+            document.getElementById('gdprBanner').style.display = 'none';
+            localStorage.setItem('cookieConsent', 'all');
+        }
+
+        function rejectOptionalCookies() {
+            document.getElementById('gdprBanner').style.display = 'none';
+            localStorage.setItem('cookieConsent', 'necessary');
+        }
+
+        function showCookieSettings() {
+            document.getElementById('cookieModal').classList.add('active');
+        }
+
+        function closeCookieSettings() {
+            document.getElementById('cookieModal').classList.remove('active');
+        }
+
+        function saveConsentSettings() {
+            closeCookieSettings();
+            document.getElementById('gdprBanner').style.display = 'none';
+            localStorage.setItem('cookieConsent', 'custom');
+        }
+
+        function showPrivacyPolicy() {
+            document.getElementById('privacyModal').classList.add('active');
+        }
+
+        function closePrivacyPolicy() {
+            document.getElementById('privacyModal').classList.remove('active');
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(amount);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+            notification.innerHTML = message;
+            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; padding: 15px 25px; background: ' + (type === 'success' ? '#10b981' : '#ef4444') + '; color: white; border-radius: 10px; z-index: 10000; animation: slideIn 0.3s ease;';
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        console.log('🚀 GTz Ecosystem Dashboard loaded successfully!');
+        console.log('📊 West Money OS v1.0.0');
+    </script>
+
+</body>
+</html>
