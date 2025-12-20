@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>West Money OS | Enterprise SaaS Platform</title>
-    <meta name="description" content="West Money OS - Die All-in-One Business Plattform für Smart Home & Barrierefreies Bauen">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +23,6 @@
             --accent-purple: #a855f7;
             --accent-pink: #ec4899;
             --accent-orange: #f97316;
-            --accent-yellow: #eab308;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -58,30 +56,28 @@
             position: sticky;
             top: 0;
             background: var(--bg-secondary);
-            z-index: 10;
         }
         
         .logo { display: flex; align-items: center; gap: 12px; }
         
         .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, var(--primary), var(--accent-blue));
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--bg-primary);
         }
         
         .logo-text h1 {
-            font-size: 18px;
+            font-size: 16px;
             background: linear-gradient(135deg, var(--primary), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .logo-text span { font-size: 11px; color: var(--text-muted); }
@@ -110,7 +106,6 @@
             transition: all 0.2s;
             margin-bottom: 4px;
             color: var(--text-secondary);
-            text-decoration: none;
             position: relative;
         }
         
@@ -146,7 +141,6 @@
         }
         
         .nav-item .badge.warning { background: var(--warning); }
-        .nav-item .badge.new { background: var(--accent-purple); }
         
         .nav-item .status-dot {
             width: 8px;
@@ -156,7 +150,6 @@
         }
         
         .nav-item .status-dot.pending { background: var(--warning); }
-        .nav-item .status-dot.offline { background: var(--danger); }
         
         .sidebar-footer {
             padding: 15px;
@@ -217,7 +210,7 @@
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 10px 15px;
-            width: 300px;
+            width: 280px;
         }
         
         .search-box:focus-within { border-color: var(--primary); }
@@ -228,7 +221,6 @@
             outline: none;
             color: var(--text-primary);
             width: 100%;
-            font-size: 13px;
         }
         
         .header-btn {
@@ -242,7 +234,6 @@
             justify-content: center;
             cursor: pointer;
             position: relative;
-            transition: all 0.2s;
         }
         
         .header-btn:hover { border-color: var(--primary); }
@@ -275,7 +266,7 @@
         }
         
         .section-header h2 { font-size: 24px; }
-        .section-header p { color: var(--text-secondary); margin-top: 5px; font-size: 14px; }
+        .section-header p { color: var(--text-secondary); margin-top: 5px; }
         
         /* Stats */
         .stats-grid {
@@ -377,8 +368,6 @@
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
-            text-decoration: none;
-            color: inherit;
         }
         
         .module-card:hover {
@@ -418,7 +407,6 @@
         
         .status-indicator.active { background: rgba(16, 185, 129, 0.15); color: var(--success); }
         .status-indicator.setup { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-        .status-indicator.new { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
         
         /* Quick Actions */
         .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
@@ -433,8 +421,6 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
-            text-decoration: none;
-            color: inherit;
         }
         
         .quick-action:hover { border-color: var(--primary); transform: translateX(5px); }
@@ -497,7 +483,6 @@
         .lead-status { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
         .lead-status.new { background: rgba(74, 158, 255, 0.15); color: var(--accent-blue); }
         .lead-status.qualified { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
-        .lead-status.proposal { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); }
         .lead-status.won { background: rgba(16, 185, 129, 0.15); color: var(--success); }
         
         /* Activity */
@@ -558,8 +543,6 @@
         .int-icon.revolut { background: #0075eb; }
         .int-icon.google { background: #4285f4; }
         .int-icon.zadarma { background: #00b8d4; }
-        .int-icon.loxone { background: #83b81a; }
-        .int-icon.verisure { background: #003366; }
         
         .integration-card h4 { font-size: 14px; margin-bottom: 5px; }
         .int-status { font-size: 12px; color: var(--success); }
@@ -577,7 +560,6 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            text-decoration: none;
         }
         
         .btn-primary {
@@ -604,37 +586,10 @@
         .data-table td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 13px; }
         .data-table tr:hover { background: rgba(255,255,255,0.02); }
         
-        /* Repo Browser */
-        .repo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        
-        .repo-folder {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .repo-folder:hover { border-color: var(--primary); transform: translateY(-3px); }
-        
-        .repo-folder .folder-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        .repo-folder h4 { font-size: 16px; margin-bottom: 5px; }
-        .repo-folder p { font-size: 12px; color: var(--text-muted); }
-        .repo-folder .file-count { font-size: 11px; color: var(--primary); margin-top: 10px; }
-        
-        /* External Links */
-        .external-link { text-decoration: none; color: inherit; }
-        .external-link:hover { color: var(--primary); }
-        
         /* Responsive */
         @media (max-width: 1400px) {
             .stats-grid, .integrations-grid { grid-template-columns: repeat(2, 1fr); }
-            .modules-grid, .repo-grid { grid-template-columns: repeat(2, 1fr); }
+            .modules-grid { grid-template-columns: repeat(2, 1fr); }
         }
         
         @media (max-width: 1024px) {
@@ -645,7 +600,7 @@
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .main { margin-left: 0; }
-            .stats-grid, .modules-grid, .integrations-grid, .repo-grid { grid-template-columns: 1fr; }
+            .stats-grid, .modules-grid, .integrations-grid { grid-template-columns: 1fr; }
             .quick-actions { grid-template-columns: 1fr; }
             .pipeline-container { flex-direction: column; }
         }
@@ -668,8 +623,6 @@
         </div>
         
         <nav class="sidebar-content">
-            
-            <!-- Main -->
             <div class="nav-section">
                 <div class="nav-section-title">Hauptmodule</div>
                 <a class="nav-item active" data-page="overview" onclick="showPage('overview')">
@@ -695,7 +648,6 @@
                 </a>
             </div>
             
-            <!-- CRM -->
             <div class="nav-section">
                 <div class="nav-section-title">CRM & Sales</div>
                 <a class="nav-item" data-page="pipeline" onclick="showPage('pipeline')">
@@ -710,22 +662,6 @@
                 </a>
             </div>
             
-            <!-- Repository -->
-            <div class="nav-section">
-                <div class="nav-section-title">Repository</div>
-                <a class="nav-item" data-page="repository" onclick="showPage('repository')">
-                    <span class="icon">📂</span><span class="label">Alle Dateien</span>
-                    <span class="badge new">71+</span>
-                </a>
-                <a class="nav-item" data-page="dashboards" onclick="showPage('dashboards')">
-                    <span class="icon">🖥️</span><span class="label">Dashboards</span>
-                </a>
-                <a class="nav-item" data-page="docs" onclick="showPage('docs')">
-                    <span class="icon">📄</span><span class="label">Dokumentation</span>
-                </a>
-            </div>
-            
-            <!-- Integrations -->
             <div class="nav-section">
                 <div class="nav-section-title">Integrationen</div>
                 <a class="nav-item" data-page="integrations" onclick="showPage('integrations')">
@@ -743,9 +679,12 @@
                     <span class="icon">⚡</span><span class="label">Zapier</span>
                     <span class="status-dot"></span>
                 </a>
+                <a class="nav-item" data-page="revolut" onclick="showPage('revolut')">
+                    <span class="icon">🏦</span><span class="label">Revolut</span>
+                    <span class="status-dot pending"></span>
+                </a>
             </div>
             
-            <!-- Compliance -->
             <div class="nav-section">
                 <div class="nav-section-title">Compliance</div>
                 <a class="nav-item" data-page="compliance" onclick="showPage('compliance')">
@@ -756,28 +695,12 @@
                 </a>
             </div>
             
-            <!-- Meta -->
-            <div class="nav-section">
-                <div class="nav-section-title">Meta World</div>
-                <a class="nav-item" data-page="meta" onclick="showPage('meta')">
-                    <span class="icon">🎮</span><span class="label">GTzMeta</span>
-                </a>
-                <a class="nav-item" data-page="health" onclick="showPage('health')">
-                    <span class="icon">❤️</span><span class="label">HealthSync</span>
-                </a>
-            </div>
-            
-            <!-- System -->
             <div class="nav-section">
                 <div class="nav-section-title">System</div>
                 <a class="nav-item" data-page="settings" onclick="showPage('settings')">
                     <span class="icon">⚙️</span><span class="label">Einstellungen</span>
                 </a>
-                <a class="nav-item" href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="external-link">
-                    <span class="icon">🔗</span><span class="label">GitHub Repo</span>
-                </a>
             </div>
-            
         </nav>
         
         <div class="sidebar-footer">
@@ -798,49 +721,44 @@
             <div class="header-right">
                 <div class="search-box">
                     <span>🔍</span>
-                    <input type="text" placeholder="Suchen... (Cmd+K)" id="searchInput">
+                    <input type="text" placeholder="Suchen... (Cmd+K)">
                 </div>
                 <div class="header-btn">
                     <span>🔔</span>
                     <div class="notification-dot"></div>
                 </div>
-                <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="header-btn">
-                    <span>📂</span>
-                </a>
             </div>
         </header>
         
         <div class="content">
             
-            <!-- ==================== OVERVIEW ==================== -->
+            <!-- OVERVIEW -->
             <section class="page-section active" id="page-overview">
                 <div class="section-header">
                     <div>
                         <h2>Willkommen zurück, Ömer! 👋</h2>
-                        <p>West Money OS - Dein Enterprise Control Center</p>
+                        <p>Hier ist dein Business-Überblick für heute.</p>
                     </div>
-                    <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="btn btn-secondary">
-                        📂 GitHub Repository
-                    </a>
+                    <button class="btn btn-primary">+ Neuer Lead</button>
                 </div>
                 
                 <div class="quick-actions">
-                    <a class="quick-action" onclick="showPage('leads')">
+                    <div class="quick-action" onclick="showPage('leads')">
                         <div class="qa-icon">🎯</div>
                         <div class="qa-text">Lead erfassen</div>
-                    </a>
-                    <a class="quick-action" onclick="showPage('repository')">
-                        <div class="qa-icon">📂</div>
-                        <div class="qa-text">Repository öffnen</div>
-                    </a>
-                    <a class="quick-action" onclick="showPage('finance')">
+                    </div>
+                    <div class="quick-action" onclick="showPage('campaigns')">
+                        <div class="qa-icon">📧</div>
+                        <div class="qa-text">Kampagne starten</div>
+                    </div>
+                    <div class="quick-action" onclick="showPage('finance')">
                         <div class="qa-icon">💰</div>
                         <div class="qa-text">Finanzen prüfen</div>
-                    </a>
-                    <a class="quick-action" onclick="showPage('automation')">
+                    </div>
+                    <div class="quick-action" onclick="showPage('automation')">
                         <div class="qa-icon">🤖</div>
                         <div class="qa-text">Automationen</div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="stats-grid">
@@ -862,11 +780,11 @@
                     </div>
                     <div class="stat-card purple">
                         <div class="stat-header">
-                            <div class="stat-icon">📂</div>
-                            <span class="stat-badge up">71+</span>
+                            <div class="stat-icon">📈</div>
+                            <span class="stat-badge up">↑ 2.1pp</span>
                         </div>
-                        <div class="stat-value">9</div>
-                        <div class="stat-label">Repository Ordner</div>
+                        <div class="stat-value">29.4%</div>
+                        <div class="stat-label">Conversion Rate</div>
                     </div>
                     <div class="stat-card orange">
                         <div class="stat-header">
@@ -880,17 +798,17 @@
                 
                 <h3 style="margin-bottom: 20px;">📦 Module & Features</h3>
                 <div class="modules-grid">
-                    <a class="module-card" onclick="showPage('dashboard')">
+                    <div class="module-card" onclick="showPage('dashboard')">
                         <div class="status-indicator active">● Aktiv</div>
                         <div class="module-icon" style="background: rgba(0,212,170,0.2);">📊</div>
                         <h3>Dashboard</h3>
-                        <p>Zentrale Übersicht aller KPIs und Metriken</p>
+                        <p>Zentrale Übersicht aller KPIs</p>
                         <div class="module-stats">
                             <div class="module-stat"><div class="module-stat-value">15</div><div class="module-stat-label">Widgets</div></div>
                             <div class="module-stat"><div class="module-stat-value">Live</div><div class="module-stat-label">Updates</div></div>
                         </div>
-                    </a>
-                    <a class="module-card" onclick="showPage('finance')">
+                    </div>
+                    <div class="module-card" onclick="showPage('finance')">
                         <div class="status-indicator active">● Aktiv</div>
                         <div class="module-icon" style="background: rgba(74,158,255,0.2);">💰</div>
                         <h3>Finance Hub</h3>
@@ -899,8 +817,8 @@
                             <div class="module-stat"><div class="module-stat-value">€847K</div><div class="module-stat-label">Umsatz</div></div>
                             <div class="module-stat"><div class="module-stat-value">€425K</div><div class="module-stat-label">Pipeline</div></div>
                         </div>
-                    </a>
-                    <a class="module-card" onclick="showPage('leads')">
+                    </div>
+                    <div class="module-card" onclick="showPage('leads')">
                         <div class="status-indicator active">● Aktiv</div>
                         <div class="module-icon" style="background: rgba(168,85,247,0.2);">🎯</div>
                         <h3>Lead Center</h3>
@@ -909,8 +827,8 @@
                             <div class="module-stat"><div class="module-stat-value">47</div><div class="module-stat-label">Leads</div></div>
                             <div class="module-stat"><div class="module-stat-value">29%</div><div class="module-stat-label">Conv.</div></div>
                         </div>
-                    </a>
-                    <a class="module-card" onclick="showPage('automation')">
+                    </div>
+                    <div class="module-card" onclick="showPage('automation')">
                         <div class="status-indicator active">● Aktiv</div>
                         <div class="module-icon" style="background: rgba(249,115,22,0.2);">🤖</div>
                         <h3>Automation Hub</h3>
@@ -919,27 +837,27 @@
                             <div class="module-stat"><div class="module-stat-value">8</div><div class="module-stat-label">Zaps</div></div>
                             <div class="module-stat"><div class="module-stat-value">669</div><div class="module-stat-label">Runs</div></div>
                         </div>
-                    </a>
-                    <a class="module-card" onclick="showPage('repository')">
-                        <div class="status-indicator new">● Neu</div>
-                        <div class="module-icon" style="background: rgba(234,179,8,0.2);">📂</div>
-                        <h3>Repository</h3>
-                        <p>Alle Dateien & Dashboards</p>
-                        <div class="module-stats">
-                            <div class="module-stat"><div class="module-stat-value">71+</div><div class="module-stat-label">Dateien</div></div>
-                            <div class="module-stat"><div class="module-stat-value">9</div><div class="module-stat-label">Ordner</div></div>
-                        </div>
-                    </a>
-                    <a class="module-card" onclick="showPage('integrations')">
+                    </div>
+                    <div class="module-card" onclick="showPage('compliance')">
                         <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(236,72,153,0.2);">🔗</div>
+                        <div class="module-icon" style="background: rgba(236,72,153,0.2);">🛡️</div>
+                        <h3>Compliance</h3>
+                        <p>DSGVO & Datenschutz</p>
+                        <div class="module-stats">
+                            <div class="module-stat"><div class="module-stat-value">98%</div><div class="module-stat-label">Score</div></div>
+                            <div class="module-stat"><div class="module-stat-value">89</div><div class="module-stat-label">Consents</div></div>
+                        </div>
+                    </div>
+                    <div class="module-card" onclick="showPage('integrations')">
+                        <div class="status-indicator active">● Aktiv</div>
+                        <div class="module-icon" style="background: rgba(234,179,8,0.2);">🔗</div>
                         <h3>Integrationen</h3>
                         <p>HubSpot, WhatsApp, Zapier</p>
                         <div class="module-stats">
                             <div class="module-stat"><div class="module-stat-value">6</div><div class="module-stat-label">Aktiv</div></div>
                             <div class="module-stat"><div class="module-stat-value">2</div><div class="module-stat-label">Pending</div></div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 
                 <div class="content-grid">
@@ -1003,161 +921,17 @@
                 </div>
             </section>
             
-            <!-- ==================== REPOSITORY ==================== -->
-            <section class="page-section" id="page-repository">
-                <div class="section-header">
-                    <div>
-                        <h2>📂 Enterprise-Universe Repository</h2>
-                        <p>Alle Dateien und Dashboards verwalten • 71+ Dateien in 9 Ordnern</p>
-                    </div>
-                    <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="btn btn-primary">
-                        🔗 Auf GitHub öffnen
-                    </a>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card green">
-                        <div class="stat-header"><div class="stat-icon">📁</div></div>
-                        <div class="stat-value">9</div>
-                        <div class="stat-label">Ordner</div>
-                    </div>
-                    <div class="stat-card blue">
-                        <div class="stat-header"><div class="stat-icon">📄</div></div>
-                        <div class="stat-value">71+</div>
-                        <div class="stat-label">Dateien</div>
-                    </div>
-                    <div class="stat-card purple">
-                        <div class="stat-header"><div class="stat-icon">🖥️</div></div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Dashboards</div>
-                    </div>
-                    <div class="stat-card orange">
-                        <div class="stat-header"><div class="stat-icon">📊</div></div>
-                        <div class="stat-value">1.2MB</div>
-                        <div class="stat-label">Repository Größe</div>
-                    </div>
-                </div>
-                
-                <h3 style="margin-bottom: 20px;">📁 Repository Ordner</h3>
-                <div class="repo-grid">
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/docs', '_blank')">
-                        <div class="folder-icon">📄</div>
-                        <h4>docs/</h4>
-                        <p>Hauptdokumentation & Index</p>
-                        <div class="file-count">4 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/dashboards', '_blank')">
-                        <div class="folder-icon">🖥️</div>
-                        <h4>dashboards/</h4>
-                        <p>Alle Dashboard HTML-Dateien</p>
-                        <div class="file-count">12 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/api', '_blank')">
-                        <div class="folder-icon">🔧</div>
-                        <h4>api/</h4>
-                        <p>API Konfigurationen & Endpoints</p>
-                        <div class="file-count">8 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/config', '_blank')">
-                        <div class="folder-icon">⚙️</div>
-                        <h4>config/</h4>
-                        <p>System-Konfigurationen</p>
-                        <div class="file-count">6 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/integrations', '_blank')">
-                        <div class="folder-icon">🔗</div>
-                        <h4>integrations/</h4>
-                        <p>HubSpot, WhatsApp, Zapier</p>
-                        <div class="file-count">10 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/campaigns', '_blank')">
-                        <div class="folder-icon">📧</div>
-                        <h4>campaigns/</h4>
-                        <p>E-Mail Kampagnen & Templates</p>
-                        <div class="file-count">15 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/compliance', '_blank')">
-                        <div class="folder-icon">🛡️</div>
-                        <h4>compliance/</h4>
-                        <p>DSGVO & Datenschutz</p>
-                        <div class="file-count">5 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/assets', '_blank')">
-                        <div class="folder-icon">🎨</div>
-                        <h4>assets/</h4>
-                        <p>Bilder, Icons & Styles</p>
-                        <div class="file-count">8 Dateien</div>
-                    </div>
-                    <div class="repo-folder" onclick="window.open('https://github.com/WestMoneyDE/Enterprise-Universe/tree/main/scripts', '_blank')">
-                        <div class="folder-icon">📜</div>
-                        <h4>scripts/</h4>
-                        <p>JavaScript & Automation</p>
-                        <div class="file-count">3 Dateien</div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== DASHBOARDS ==================== -->
-            <section class="page-section" id="page-dashboards">
-                <div class="section-header">
-                    <div>
-                        <h2>🖥️ Dashboards</h2>
-                        <p>Alle verfügbaren Dashboard-Module</p>
-                    </div>
-                </div>
-                
-                <div class="modules-grid">
-                    <a class="module-card" onclick="showPage('dashboard')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(0,212,170,0.2);">📊</div>
-                        <h3>Master Dashboard</h3>
-                        <p>Zentrale KPI-Übersicht</p>
-                    </a>
-                    <a class="module-card" onclick="showPage('finance')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(74,158,255,0.2);">💰</div>
-                        <h3>Finance Dashboard</h3>
-                        <p>Finanzen & Umsatz</p>
-                    </a>
-                    <a class="module-card" onclick="showPage('leads')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(168,85,247,0.2);">🎯</div>
-                        <h3>Lead Dashboard</h3>
-                        <p>Lead Management</p>
-                    </a>
-                    <a class="module-card" onclick="showPage('automation')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(249,115,22,0.2);">🤖</div>
-                        <h3>Automation Dashboard</h3>
-                        <p>Zapier & Workflows</p>
-                    </a>
-                    <a class="module-card" onclick="showPage('compliance')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(236,72,153,0.2);">🛡️</div>
-                        <h3>Compliance Dashboard</h3>
-                        <p>DSGVO & Consent</p>
-                    </a>
-                    <a class="module-card" onclick="showPage('integrations')">
-                        <div class="status-indicator active">● Aktiv</div>
-                        <div class="module-icon" style="background: rgba(234,179,8,0.2);">🔗</div>
-                        <h3>Integrations Dashboard</h3>
-                        <p>API-Verbindungen</p>
-                    </a>
-                </div>
-            </section>
-            
-            <!-- ==================== DASHBOARD ==================== -->
+            <!-- Other pages with placeholder content -->
             <section class="page-section" id="page-dashboard">
                 <div class="section-header"><div><h2>📊 Dashboard</h2><p>Alle wichtigen KPIs</p></div></div>
                 <div class="stats-grid">
-                    <div class="stat-card green"><div class="stat-header"><div class="stat-icon">💰</div><span class="stat-badge up">↑ 23.5%</span></div><div class="stat-value">€847.5K</div><div class="stat-label">Umsatz 2025</div></div>
+                    <div class="stat-card green"><div class="stat-header"><div class="stat-icon">💰</div></div><div class="stat-value">€847.5K</div><div class="stat-label">Umsatz 2025</div></div>
                     <div class="stat-card blue"><div class="stat-header"><div class="stat-icon">👥</div></div><div class="stat-value">34</div><div class="stat-label">Kunden</div></div>
                     <div class="stat-card purple"><div class="stat-header"><div class="stat-icon">📈</div></div><div class="stat-value">€78.5K</div><div class="stat-label">Monatsumsatz</div></div>
                     <div class="stat-card orange"><div class="stat-header"><div class="stat-icon">📊</div></div><div class="stat-value">€425K</div><div class="stat-label">Pipeline</div></div>
                 </div>
             </section>
             
-            <!-- ==================== FINANCE ==================== -->
             <section class="page-section" id="page-finance">
                 <div class="section-header"><div><h2>💰 Finance Hub</h2><p>Finanzen & Rechnungen</p></div><button class="btn btn-primary">+ Rechnung</button></div>
                 <div class="stats-grid">
@@ -1168,7 +942,6 @@
                 </div>
             </section>
             
-            <!-- ==================== LEADS ==================== -->
             <section class="page-section" id="page-leads">
                 <div class="section-header"><div><h2>🎯 Lead Center</h2><p>Alle Leads verwalten</p></div><button class="btn btn-primary">+ Neuer Lead</button></div>
                 <div class="stats-grid">
@@ -1179,7 +952,6 @@
                 </div>
             </section>
             
-            <!-- ==================== AUTOMATION ==================== -->
             <section class="page-section" id="page-automation">
                 <div class="section-header"><div><h2>🤖 Automation Hub</h2><p>Automatische Lead-Generierung</p></div><button class="btn btn-primary">+ Neue Automation</button></div>
                 <div class="stats-grid">
@@ -1190,22 +962,20 @@
                 </div>
             </section>
             
-            <!-- ==================== INTEGRATIONS ==================== -->
             <section class="page-section" id="page-integrations">
                 <div class="section-header"><div><h2>🔗 Integrationen</h2><p>Verbundene Services</p></div></div>
                 <div class="integrations-grid">
-                    <div class="integration-card"><div class="int-icon hubspot">🧡</div><h4>HubSpot CRM</h4><div class="int-status">✓ Verbunden</div></div>
-                    <div class="integration-card"><div class="int-icon whatsapp">📱</div><h4>WhatsApp Business</h4><div class="int-status">✓ Verbunden</div></div>
+                    <div class="integration-card"><div class="int-icon hubspot">🧡</div><h4>HubSpot</h4><div class="int-status">✓ Verbunden</div></div>
+                    <div class="integration-card"><div class="int-icon whatsapp">📱</div><h4>WhatsApp</h4><div class="int-status">✓ Verbunden</div></div>
                     <div class="integration-card"><div class="int-icon zapier">⚡</div><h4>Zapier</h4><div class="int-status">✓ Verbunden</div></div>
                     <div class="integration-card"><div class="int-icon gmail">📧</div><h4>Gmail</h4><div class="int-status">✓ Verbunden</div></div>
                     <div class="integration-card"><div class="int-icon slack">💬</div><h4>Slack</h4><div class="int-status">✓ Verbunden</div></div>
-                    <div class="integration-card"><div class="int-icon zadarma">📞</div><h4>Zadarma VoIP</h4><div class="int-status">✓ Verbunden</div></div>
-                    <div class="integration-card"><div class="int-icon loxone">🏠</div><h4>LOXONE</h4><div class="int-status">✓ Gold Partner</div></div>
-                    <div class="integration-card"><div class="int-icon revolut">🏦</div><h4>Revolut Business</h4><div class="int-status pending">⏳ Setup</div></div>
+                    <div class="integration-card"><div class="int-icon zadarma">📞</div><h4>Zadarma</h4><div class="int-status">✓ Verbunden</div></div>
+                    <div class="integration-card"><div class="int-icon revolut">🏦</div><h4>Revolut</h4><div class="int-status pending">⏳ Setup</div></div>
+                    <div class="integration-card"><div class="int-icon google">🔍</div><h4>Google Ads</h4><div class="int-status pending">⏳ Setup</div></div>
                 </div>
             </section>
             
-            <!-- ==================== COMPLIANCE ==================== -->
             <section class="page-section" id="page-compliance">
                 <div class="section-header"><div><h2>🛡️ Compliance Center</h2><p>DSGVO & Datenschutz</p></div></div>
                 <div class="stats-grid">
@@ -1216,47 +986,29 @@
                 </div>
             </section>
             
-            <!-- ==================== META ==================== -->
-            <section class="page-section" id="page-meta">
-                <div class="section-header"><div><h2>🎮 GTzMeta</h2><p>Metaverse & Gaming Hub</p></div></div>
-                <div class="stats-grid">
-                    <div class="stat-card green"><div class="stat-header"><div class="stat-icon">🎮</div></div><div class="stat-value">GTz</div><div class="stat-label">Meta Avatar</div></div>
-                    <div class="stat-card blue"><div class="stat-header"><div class="stat-icon">🏆</div></div><div class="stat-value">Level 42</div><div class="stat-label">GOD MODE</div></div>
-                    <div class="stat-card purple"><div class="stat-header"><div class="stat-icon">💎</div></div><div class="stat-value">∞</div><div class="stat-label">Ultra Instinct</div></div>
-                    <div class="stat-card orange"><div class="stat-header"><div class="stat-icon">🐉</div></div><div class="stat-value">神</div><div class="stat-label">Dragon Ball GOD</div></div>
-                </div>
-                <div class="card"><div class="card-header"><h3>🎮 HAIKU - Divine Warrior</h3></div><div class="card-body"><p>Meta World Avatar: <strong style="color: var(--primary);">HAIKU (神 Dragon Ball GOD)</strong><br><br>Gaming Handles: <strong>GTzMeta</strong> | <strong>itzzkingz1</strong> (Twitch)</p></div></div>
+            <section class="page-section" id="page-consent">
+                <div class="section-header"><div><h2>✅ Consent Manager</h2><p>Einwilligungen verwalten</p></div><button class="btn btn-primary">+ Consent anfragen</button></div>
+                <div class="card"><div class="card-body"><p style="color: var(--text-muted); text-align: center; padding: 40px;">89 aktive Consents</p></div></div>
             </section>
             
-            <!-- ==================== SETTINGS ==================== -->
             <section class="page-section" id="page-settings">
                 <div class="section-header"><div><h2>⚙️ Einstellungen</h2><p>System- und Kontoeinstellungen</p></div></div>
                 <div class="card"><div class="card-header"><h3>👤 Profil</h3></div><div class="card-body">
                     <p style="margin-bottom: 10px;"><strong>Name:</strong> Ömer Hüseyin Coşkun</p>
                     <p style="margin-bottom: 10px;"><strong>Firma:</strong> West Money Bau GmbH</p>
                     <p style="margin-bottom: 10px;"><strong>E-Mail:</strong> info@west-money-bau.de</p>
-                    <p style="margin-bottom: 10px;"><strong>Rolle:</strong> CEO & Founder</p>
                     <p><strong>IBAN:</strong> DE42 1001 0178 9758 7887 93</p>
-                </div></div>
-                <div class="card"><div class="card-header"><h3>🏢 Unternehmen</h3></div><div class="card-body">
-                    <p style="margin-bottom: 10px;"><strong>Firma:</strong> West Money Bau GmbH</p>
-                    <p style="margin-bottom: 10px;"><strong>Standort:</strong> Köln, Deutschland</p>
-                    <p style="margin-bottom: 10px;"><strong>Branche:</strong> Smart Home & Barrierefreies Bauen</p>
-                    <p><strong>Partner:</strong> LOXONE Gold Partner, Verisure, ComfortClick</p>
                 </div></div>
             </section>
             
-            <!-- Other pages -->
-            <section class="page-section" id="page-projects"><div class="section-header"><div><h2>📁 Projekte</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">8 aktive Projekte • West Money OS 75% • Flagship Store 25%</p></div></div></section>
-            <section class="page-section" id="page-pipeline"><div class="section-header"><div><h2>📈 Sales Pipeline</h2></div></div><div class="stats-grid"><div class="stat-card green"><div class="stat-value">12</div><div class="stat-label">Neu</div></div><div class="stat-card blue"><div class="stat-value">23</div><div class="stat-label">Qualifiziert</div></div><div class="stat-card purple"><div class="stat-value">8</div><div class="stat-label">Angebot</div></div><div class="stat-card orange"><div class="stat-value">4</div><div class="stat-label">Gewonnen</div></div></div></section>
-            <section class="page-section" id="page-contacts"><div class="section-header"><div><h2>👥 Kontakte</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">247 Kontakte in HubSpot CRM</p></div></div></section>
-            <section class="page-section" id="page-campaigns"><div class="section-header"><div><h2>📧 Kampagnen</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">3 aktive Kampagnen • 547 E-Mails • 42.3% Öffnungsrate</p></div></div></section>
-            <section class="page-section" id="page-consent"><div class="section-header"><div><h2>✅ Consent Manager</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">89 aktive Consents • 98% DSGVO Score</p></div></div></section>
-            <section class="page-section" id="page-health"><div class="section-header"><div><h2>❤️ HealthSync</h2></div></div><div class="stats-grid"><div class="stat-card green"><div class="stat-value">8,432</div><div class="stat-label">Schritte</div></div><div class="stat-card blue"><div class="stat-value">2.1L</div><div class="stat-label">Wasser</div></div><div class="stat-card purple"><div class="stat-value">7.5h</div><div class="stat-label">Schlaf</div></div><div class="stat-card orange"><div class="stat-value">520</div><div class="stat-label">Kalorien</div></div></div></section>
-            <section class="page-section" id="page-hubspot"><div class="section-header"><div><h2>🧡 HubSpot</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--success);">✓ Verbunden</span> • 247 Kontakte • 47 Deals</p></div></div></section>
-            <section class="page-section" id="page-whatsapp"><div class="section-header"><div><h2>📱 WhatsApp</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--success);">✓ Verbunden</span> • 89 Consents • 3 Templates</p></div></div></section>
-            <section class="page-section" id="page-zapier"><div class="section-header"><div><h2>⚡ Zapier</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--success);">✓ Verbunden</span> • 8 aktive Zaps • 669 Runs</p></div></div></section>
-            <section class="page-section" id="page-docs"><div class="section-header"><div><h2>📄 Dokumentation</h2></div></div><div class="card"><div class="card-body"><p>README.md • Setup Guide • API Dokumentation</p><a href="https://github.com/WestMoneyDE/Enterprise-Universe/blob/main/README.md" target="_blank" class="btn btn-primary" style="margin-top: 15px;">📖 README öffnen</a></div></div></section>
+            <section class="page-section" id="page-projects"><div class="section-header"><div><h2>📁 Projekte</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">Projekte werden geladen...</p></div></div></section>
+            <section class="page-section" id="page-pipeline"><div class="section-header"><div><h2>📈 Sales Pipeline</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">Pipeline wird geladen...</p></div></div></section>
+            <section class="page-section" id="page-contacts"><div class="section-header"><div><h2>👥 Kontakte</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">Kontakte werden geladen...</p></div></div></section>
+            <section class="page-section" id="page-campaigns"><div class="section-header"><div><h2>📧 Kampagnen</h2></div></div><div class="card"><div class="card-body" style="text-align: center; padding: 60px;"><p style="color: var(--text-muted);">3 aktive Kampagnen</p></div></div></section>
+            <section class="page-section" id="page-hubspot"><div class="section-header"><div><h2>🧡 HubSpot</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--success);">✓ Verbunden</span></p></div></div></section>
+            <section class="page-section" id="page-whatsapp"><div class="section-header"><div><h2>📱 WhatsApp</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--success);">✓ Verbunden</span></p></div></div></section>
+            <section class="page-section" id="page-zapier"><div class="section-header"><div><h2>⚡ Zapier</h2></div></div><div class="card"><div class="card-body"><p>8 aktive Zaps • 669 Runs</p></div></div></section>
+            <section class="page-section" id="page-revolut"><div class="section-header"><div><h2>🏦 Revolut</h2></div></div><div class="card"><div class="card-body"><p>Status: <span style="color: var(--warning);">⏳ Setup erforderlich</span></p></div></div></section>
             
         </div>
     </main>
@@ -1268,9 +1020,8 @@
         'leads': '🎯 Lead Center', 'automation': '🤖 Automation Hub', 'projects': '📁 Projekte',
         'pipeline': '📈 Sales Pipeline', 'contacts': '👥 Kontakte', 'campaigns': '📧 Kampagnen',
         'integrations': '🔗 Integrationen', 'hubspot': '🧡 HubSpot', 'whatsapp': '📱 WhatsApp',
-        'zapier': '⚡ Zapier', 'compliance': '🛡️ Compliance', 'consent': '✅ Consent Manager',
-        'settings': '⚙️ Einstellungen', 'repository': '📂 Repository', 'dashboards': '🖥️ Dashboards',
-        'docs': '📄 Dokumentation', 'meta': '🎮 GTzMeta', 'health': '❤️ HealthSync'
+        'zapier': '⚡ Zapier', 'revolut': '🏦 Revolut', 'compliance': '🛡️ Compliance',
+        'consent': '✅ Consent Manager', 'settings': '⚙️ Einstellungen'
     };
     
     function showPage(pageId) {
@@ -1285,26 +1036,22 @@
         
         document.getElementById('pageTitle').textContent = pageTitles[pageId] || pageId;
         window.scrollTo(0, 0);
-        localStorage.setItem('westMoneyOS_currentPage', pageId);
+        localStorage.setItem('currentPage', pageId);
     }
     
-    // Keyboard shortcuts
     document.addEventListener('keydown', e => {
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
             e.preventDefault();
-            document.getElementById('searchInput').focus();
+            document.querySelector('.search-box input').focus();
         }
     });
     
-    // Load saved page
     document.addEventListener('DOMContentLoaded', () => {
-        const saved = localStorage.getItem('westMoneyOS_currentPage');
+        const saved = localStorage.getItem('currentPage');
         if (saved) showPage(saved);
     });
     
     console.log('🚀 West Money OS v2.0');
-    console.log('📂 Enterprise-Universe Repository');
-    console.log('🌐 https://westmoneyde.github.io/Enterprise-Universe/');
 </script>
 
 </body>
