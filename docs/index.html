@@ -516,6 +516,163 @@
             <button class="btn btn-primary" onclick="sendNewMessage()">📤 Senden</button>
         </div>
     </div>
+    
+    <!-- Campaign Modal -->
+    <div class="modal" id="modalCampaign" style="max-width:600px">
+        <div class="modal-header"><h2>📧 Neue Kampagne erstellen</h2><button class="modal-close" onclick="closeModal()">×</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Kampagnen-Name *</label><input type="text" class="form-control" id="campName" placeholder="z.B. Q1 2026 Outreach"></div>
+            <div class="form-row">
+                <div class="form-group"><label>Kampagnen-Typ</label>
+                    <select class="form-control" id="campType">
+                        <option value="email">📧 E-Mail Kampagne</option>
+                        <option value="whatsapp">💬 WhatsApp Kampagne</option>
+                        <option value="multi">🔄 Multi-Channel</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Zielgruppe</label>
+                    <select class="form-control" id="campTarget">
+                        <option value="all">Alle Leads</option>
+                        <option value="new">Nur neue Leads</option>
+                        <option value="qualified">Qualifizierte Leads</option>
+                        <option value="cold">Kalte Leads reaktivieren</option>
+                        <option value="b2b">B2B Datenbank</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label>Betreff (E-Mail)</label><input type="text" class="form-control" id="campSubject" placeholder="Betreffzeile für E-Mails"></div>
+            <div class="form-group"><label>Nachricht *</label><textarea class="form-control" id="campMessage" rows="5" placeholder="Hallo {name},
+
+wir von West Money Bau möchten Ihnen unsere Smart Home Lösungen vorstellen...
+
+Mit freundlichen Grüßen
+Ömer Coşkun"></textarea></div>
+            <div style="background:var(--bg-3);border-radius:8px;padding:12px;margin-top:12px">
+                <div style="font-size:12px;font-weight:600;margin-bottom:8px">📊 Variablen verfügbar:</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <code style="background:var(--bg-4);padding:2px 8px;border-radius:4px;font-size:11px">{name}</code>
+                    <code style="background:var(--bg-4);padding:2px 8px;border-radius:4px;font-size:11px">{company}</code>
+                    <code style="background:var(--bg-4);padding:2px 8px;border-radius:4px;font-size:11px">{industry}</code>
+                    <code style="background:var(--bg-4);padding:2px 8px;border-radius:4px;font-size:11px">{city}</code>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
+            <button class="btn btn-secondary" onclick="saveCampaignDraft()">💾 Als Entwurf</button>
+            <button class="btn btn-gradient" onclick="startCampaign()">🚀 Kampagne starten</button>
+        </div>
+    </div>
+    
+    <!-- Outreach Modal -->
+    <div class="modal" id="modalOutreach" style="max-width:550px">
+        <div class="modal-header"><h2>📞 Anfrage starten</h2><button class="modal-close" onclick="closeModal()">×</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Lead auswählen *</label>
+                <select class="form-control" id="outreachLead">
+                    <option value="">-- Lead auswählen --</option>
+                    ${data.leads.map(l => `<option value="${l.id}">${l.company} - ${l.name}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>Kontakt-Art</label>
+                    <select class="form-control" id="outreachType">
+                        <option value="call">📞 Telefonanruf</option>
+                        <option value="email">📧 E-Mail</option>
+                        <option value="whatsapp">💬 WhatsApp</option>
+                        <option value="meeting">📅 Meeting</option>
+                        <option value="linkedin">💼 LinkedIn</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Priorität</label>
+                    <select class="form-control" id="outreachPriority">
+                        <option value="high">🔴 Hoch</option>
+                        <option value="medium">🟡 Mittel</option>
+                        <option value="low">🟢 Niedrig</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group"><label>Notizen</label><textarea class="form-control" id="outreachNotes" rows="3" placeholder="Gesprächsnotizen, Ziele, etc."></textarea></div>
+            <div class="form-group"><label>Follow-up Datum</label><input type="datetime-local" class="form-control" id="outreachFollowup"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
+            <button class="btn btn-primary" onclick="saveOutreach()">📞 Anfrage speichern</button>
+        </div>
+    </div>
+    
+    <!-- Sequence Modal -->
+    <div class="modal" id="modalSequence" style="max-width:650px">
+        <div class="modal-header"><h2>⚡ Automatisierte Sequenz erstellen</h2><button class="modal-close" onclick="closeModal()">×</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>Sequenz-Name *</label><input type="text" class="form-control" id="seqName" placeholder="z.B. Neue Lead Nurturing"></div>
+            <div class="form-group"><label>Trigger</label>
+                <select class="form-control" id="seqTrigger">
+                    <option value="new_lead">🆕 Neuer Lead erstellt</option>
+                    <option value="status_change">📊 Status-Änderung</option>
+                    <option value="no_response">⏰ Keine Antwort nach X Tagen</option>
+                    <option value="manual">👆 Manuell einschreiben</option>
+                </select>
+            </div>
+            
+            <div style="margin:20px 0">
+                <div style="font-size:13px;font-weight:600;margin-bottom:12px">📋 Sequenz-Schritte</div>
+                <div id="sequenceSteps">
+                    <div class="sequence-step" style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <span style="background:var(--primary);color:white;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">1</span>
+                            <select class="form-control" style="width:auto">
+                                <option value="email">📧 E-Mail senden</option>
+                                <option value="whatsapp">💬 WhatsApp senden</option>
+                                <option value="task">📋 Aufgabe erstellen</option>
+                                <option value="wait">⏰ Warten</option>
+                            </select>
+                            <span style="color:var(--text-3)">nach</span>
+                            <input type="number" class="form-control" style="width:60px" value="0">
+                            <select class="form-control" style="width:auto">
+                                <option value="minutes">Minuten</option>
+                                <option value="hours">Stunden</option>
+                                <option value="days" selected>Tagen</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sequence-step" style="background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <span style="background:var(--primary);color:white;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">2</span>
+                            <select class="form-control" style="width:auto">
+                                <option value="email">📧 E-Mail senden</option>
+                                <option value="whatsapp">💬 WhatsApp senden</option>
+                                <option value="task" selected>📋 Aufgabe erstellen</option>
+                                <option value="wait">⏰ Warten</option>
+                            </select>
+                            <span style="color:var(--text-3)">nach</span>
+                            <input type="number" class="form-control" style="width:60px" value="3">
+                            <select class="form-control" style="width:auto">
+                                <option value="days" selected>Tagen</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="addSequenceStep()" style="width:100%;margin-top:8px">+ Schritt hinzufügen</button>
+            </div>
+            
+            <div class="form-group">
+                <label><input type="checkbox" id="seqAutoEnroll" checked> Leads automatisch einschreiben</label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
+            <button class="btn btn-gradient" onclick="saveSequence()">⚡ Sequenz erstellen</button>
+        </div>
+    </div>
+    
+    <!-- Lead Status Modal -->
+    <div class="modal" id="modalLeadStatus" style="max-width:400px">
+        <div class="modal-header"><h2>📊 Lead Status ändern</h2><button class="modal-close" onclick="closeModal()">×</button></div>
+        <div class="modal-body">
+            <div id="leadStatusContent"></div>
+        </div>
+    </div>
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
@@ -581,6 +738,23 @@ const defaultData = {
         { name: 'Bundesanzeiger', type: 'Datenbank', logo: 'database', status: 'connected' },
         { name: 'LinkedIn', type: 'Social', logo: 'linkedin', status: 'pending' },
         { name: 'XING', type: 'Social', logo: 'xing', status: 'pending' }
+    ],
+    campaigns: [
+        { id: 1, name: 'Smart Home Q1 2026', type: 'email', sent: 45, total: 120, openRate: 42, status: 'active' },
+        { id: 2, name: 'B2B Baugewerbe NRW', type: 'email', sent: 89, total: 89, openRate: 38, status: 'completed' },
+        { id: 3, name: 'WhatsApp Follow-up', type: 'whatsapp', sent: 23, total: 50, openRate: 67, status: 'active' }
+    ],
+    outreach: [
+        { id: 1, lead: 'Müller GmbH', type: 'call', date: '23.12.2025', result: 'positive', notes: 'Interesse an Smart Home' },
+        { id: 2, lead: 'Weber Bau', type: 'email', date: '22.12.2025', result: 'callback', notes: 'Rückruf am Montag' },
+        { id: 3, lead: 'Schmidt Haus', type: 'whatsapp', date: '22.12.2025', result: 'positive', notes: 'Termin vereinbart' },
+        { id: 4, lead: 'Fischer Immo', type: 'call', date: '21.12.2025', result: 'noAnswer', notes: '' },
+        { id: 5, lead: 'Bauer Gruppe', type: 'email', date: '21.12.2025', result: 'pending', notes: 'Angebot gesendet' }
+    ],
+    sequences: [
+        { id: 1, name: 'Neuer Lead Welcome', steps: 4, enrolled: 12, progress: 75, active: true },
+        { id: 2, name: 'Cold Lead Reaktivierung', steps: 6, enrolled: 34, progress: 45, active: true },
+        { id: 3, name: 'Post-Meeting Follow-up', steps: 3, enrolled: 8, progress: 90, active: false }
     ]
 };
 
@@ -986,24 +1160,173 @@ function renderContacts() {
 function renderLeads() {
     const stats = { new: 0, qualified: 0, proposal: 0, won: 0 };
     data.leads.forEach(l => stats[l.status]++);
+    const totalValue = data.leads.reduce((s, l) => s + l.value, 0);
     return `<div class="page active">
-        <div class="page-header"><div><h1>Leads</h1><p>${data.leads.length} Leads</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button></div></div>
+        <div class="page-header"><div><h1>Leads</h1><p>${data.leads.length} Leads · €${totalValue.toLocaleString()} Pipeline-Wert</p></div>
+        <div class="page-actions">
+            <button class="btn btn-secondary" onclick="openModal('campaign')">📧 Kampagne starten</button>
+            <button class="btn btn-secondary" onclick="openModal('outreach')">📞 Anfrage starten</button>
+            <button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button>
+        </div></div>
         <div class="stats-grid">
-            <div class="stat-card"><div class="stat-value">${stats.new}</div><div class="stat-label">Neu</div></div>
-            <div class="stat-card"><div class="stat-value">${stats.qualified}</div><div class="stat-label">Qualifiziert</div></div>
-            <div class="stat-card"><div class="stat-value">${stats.proposal}</div><div class="stat-label">Angebot</div></div>
-            <div class="stat-card"><div class="stat-value">${stats.won}</div><div class="stat-label">Gewonnen</div></div>
+            <div class="stat-card"><div class="stat-top"><div class="stat-icon amber">🆕</div></div><div class="stat-value">${stats.new}</div><div class="stat-label">Neu</div></div>
+            <div class="stat-card"><div class="stat-top"><div class="stat-icon cyan">✓</div></div><div class="stat-value">${stats.qualified}</div><div class="stat-label">Qualifiziert</div></div>
+            <div class="stat-card"><div class="stat-top"><div class="stat-icon violet">📋</div></div><div class="stat-value">${stats.proposal}</div><div class="stat-label">Angebot</div></div>
+            <div class="stat-card highlight"><div class="stat-top"><div class="stat-icon emerald">🎉</div></div><div class="stat-value">${stats.won}</div><div class="stat-label">Gewonnen</div></div>
         </div>
-        <div class="card"><div class="card-body" style="padding:0"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Lead</th><th>Firma</th><th>Wert</th><th>Status</th><th>Quelle</th><th>Aktionen</th></tr></thead><tbody>${data.leads.map(l => `<tr><td><strong>${l.name}</strong></td><td>${l.company}</td><td>€${l.value.toLocaleString()}</td><td><span class="status ${l.status}">${statusLabel(l.status)}</span></td><td>${l.source}</td><td><button class="btn btn-sm btn-danger" onclick="deleteLead(${l.id})">🗑️</button></td></tr>`).join('')}</tbody></table></div></div></div>
+        
+        <div class="grid-2" style="margin-bottom:20px">
+            <div class="card">
+                <div class="card-header"><h3>📧 Aktive Kampagnen</h3><button class="btn btn-sm btn-primary" onclick="openModal('campaign')">+ Neu</button></div>
+                <div class="card-body" style="padding:0">
+                    <table class="data-table">
+                        <thead><tr><th>Kampagne</th><th>Typ</th><th>Gesendet</th><th>Öffnungsrate</th><th>Status</th></tr></thead>
+                        <tbody>
+                            ${(data.campaigns || []).map(c => `<tr>
+                                <td><strong>${c.name}</strong></td>
+                                <td>${c.type === 'email' ? '📧 E-Mail' : '💬 WhatsApp'}</td>
+                                <td>${c.sent}/${c.total}</td>
+                                <td><div class="progress-bar" style="width:80px"><div class="progress-bar-fill ${c.openRate > 40 ? 'high' : c.openRate > 20 ? 'medium' : 'low'}" style="width:${c.openRate}%"></div></div> ${c.openRate}%</td>
+                                <td><span class="status ${c.status}">${c.status === 'active' ? '🟢 Aktiv' : c.status === 'paused' ? '⏸️ Pausiert' : '✅ Fertig'}</span></td>
+                            </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text-3)">Keine aktiven Kampagnen</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h3>📞 Outreach Aktivitäten</h3><button class="btn btn-sm btn-primary" onclick="openModal('outreach')">+ Neu</button></div>
+                <div class="card-body" style="padding:0">
+                    <table class="data-table">
+                        <thead><tr><th>Lead</th><th>Typ</th><th>Datum</th><th>Ergebnis</th></tr></thead>
+                        <tbody>
+                            ${(data.outreach || []).slice(0, 5).map(o => `<tr>
+                                <td><strong>${o.lead}</strong></td>
+                                <td>${o.type === 'call' ? '📞 Anruf' : o.type === 'email' ? '📧 E-Mail' : '💬 WhatsApp'}</td>
+                                <td>${o.date}</td>
+                                <td><span class="status ${o.result}">${o.result === 'positive' ? '✅ Positiv' : o.result === 'callback' ? '📅 Rückruf' : o.result === 'noAnswer' ? '❌ K.A.' : '⏳ Offen'}</span></td>
+                            </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text-3)">Keine Aktivitäten</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>📋 Alle Leads</h3>
+                <div style="display:flex;gap:8px">
+                    <button class="btn btn-sm btn-secondary" onclick="bulkAction('email')">📧 Alle kontaktieren</button>
+                    <button class="btn btn-sm btn-secondary" onclick="bulkAction('export')">📥 Exportieren</button>
+                </div>
+            </div>
+            <div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th><input type="checkbox" onclick="toggleAllLeads(this)"></th><th>Lead</th><th>Firma</th><th>Wert</th><th>Status</th><th>Quelle</th><th>Letzter Kontakt</th><th>Aktionen</th></tr></thead>
+                        <tbody>${data.leads.map(l => `<tr>
+                            <td><input type="checkbox" class="lead-checkbox" data-id="${l.id}"></td>
+                            <td><strong>${l.name}</strong></td>
+                            <td>${l.company}</td>
+                            <td>€${l.value.toLocaleString()}</td>
+                            <td><span class="status ${l.status}">${statusLabel(l.status)}</span></td>
+                            <td>${l.source}</td>
+                            <td>${l.lastContact || 'Nie'}</td>
+                            <td>
+                                <button class="btn btn-sm btn-secondary" onclick="quickOutreach(${l.id}, 'email')" title="E-Mail">📧</button>
+                                <button class="btn btn-sm btn-secondary" onclick="quickOutreach(${l.id}, 'call')" title="Anrufen">📞</button>
+                                <button class="btn btn-sm btn-secondary" onclick="quickOutreach(${l.id}, 'whatsapp')" title="WhatsApp">💬</button>
+                                <button class="btn btn-sm btn-secondary" onclick="changeLeadStatus(${l.id})" title="Status">📊</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteLead(${l.id})" title="Löschen">🗑️</button>
+                            </td>
+                        </tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>`;
 }
 
 function renderPipeline() {
-    const stages = [{ id: 'new', name: 'Neu', items: [] }, { id: 'qualified', name: 'Qualifiziert', items: [] }, { id: 'proposal', name: 'Angebot', items: [] }, { id: 'won', name: 'Gewonnen', items: [] }];
+    const stages = [
+        { id: 'new', name: '🆕 Neu', color: 'amber', items: [] }, 
+        { id: 'qualified', name: '✓ Qualifiziert', color: 'cyan', items: [] }, 
+        { id: 'proposal', name: '📋 Angebot', color: 'violet', items: [] }, 
+        { id: 'won', name: '🎉 Gewonnen', color: 'emerald', items: [] }
+    ];
     data.leads.forEach(l => { const s = stages.find(x => x.id === l.status); if (s) s.items.push(l); });
+    const totalValue = data.leads.reduce((s, l) => s + l.value, 0);
+    const wonValue = stages.find(s => s.id === 'won').items.reduce((s, l) => s + l.value, 0);
+    
     return `<div class="page active">
-        <div class="page-header"><div><h1>Pipeline</h1><p>€${data.leads.reduce((s, l) => s + l.value, 0).toLocaleString()} Gesamtwert</p></div></div>
-        <div class="pipeline">${stages.map(s => `<div class="pipeline-stage"><div class="pipeline-header"><h4>${s.name}</h4><span>€${s.items.reduce((a, l) => a + l.value, 0).toLocaleString()}</span></div><div class="pipeline-body">${s.items.map(l => `<div class="pipeline-card"><h5>${l.company}</h5><p>${l.name}</p><div class="value">€${l.value.toLocaleString()}</div></div>`).join('')}</div></div>`).join('')}</div>
+        <div class="page-header">
+            <div><h1>Sales Pipeline</h1><p>€${totalValue.toLocaleString()} Gesamtwert · €${wonValue.toLocaleString()} gewonnen</p></div>
+            <div class="page-actions">
+                <button class="btn btn-secondary" onclick="openModal('sequence')">⚡ Sequenz erstellen</button>
+                <button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value">€${totalValue.toLocaleString()}</div><div class="stat-label">Pipeline-Wert</div></div>
+            <div class="stat-card highlight"><div class="stat-value">€${wonValue.toLocaleString()}</div><div class="stat-label">Gewonnen</div></div>
+            <div class="stat-card"><div class="stat-value">${data.leads.length > 0 ? Math.round((stages.find(s => s.id === 'won').items.length / data.leads.length) * 100) : 0}%</div><div class="stat-label">Win-Rate</div></div>
+            <div class="stat-card"><div class="stat-value">${Math.round(totalValue / Math.max(data.leads.length, 1)).toLocaleString()}</div><div class="stat-label">Ø Deal-Größe</div></div>
+        </div>
+        
+        <div class="card" style="margin-bottom:20px">
+            <div class="card-header"><h3>⚡ Automatisierte Sequenzen</h3><button class="btn btn-sm btn-primary" onclick="openModal('sequence')">+ Neue Sequenz</button></div>
+            <div class="card-body">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                    ${(data.sequences || []).map(s => `
+                        <div style="background:var(--bg-3);border:1px solid var(--border);border-radius:10px;padding:16px">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                                <strong>${s.name}</strong>
+                                <span class="status ${s.active ? 'active' : 'inactive'}">${s.active ? '🟢 Aktiv' : '⏸️ Pausiert'}</span>
+                            </div>
+                            <div style="font-size:12px;color:var(--text-2);margin-bottom:8px">${s.steps} Schritte · ${s.enrolled} Leads eingeschrieben</div>
+                            <div class="progress-bar"><div class="progress-bar-fill high" style="width:${s.progress}%"></div></div>
+                            <div style="display:flex;gap:8px;margin-top:12px">
+                                <button class="btn btn-sm btn-secondary" style="flex:1" onclick="toggleSequence(${s.id})">${s.active ? '⏸️ Pause' : '▶️ Start'}</button>
+                                <button class="btn btn-sm btn-secondary" onclick="editSequence(${s.id})">✏️</button>
+                            </div>
+                        </div>
+                    `).join('') || '<div style="grid-column:1/-1;text-align:center;color:var(--text-3);padding:20px">Keine Sequenzen erstellt. <a href="#" onclick="openModal(\'sequence\')" style="color:var(--primary)">Erste Sequenz erstellen</a></div>'}
+                </div>
+            </div>
+        </div>
+        
+        <div class="pipeline">${stages.map(s => {
+            const stageValue = s.items.reduce((a, l) => a + l.value, 0);
+            return `
+            <div class="pipeline-stage" style="border-top:3px solid var(--${s.color})">
+                <div class="pipeline-header">
+                    <h4>${s.name} <span style="background:var(--bg-4);padding:2px 8px;border-radius:10px;font-size:11px">${s.items.length}</span></h4>
+                    <span>€${stageValue.toLocaleString()}</span>
+                </div>
+                <div class="pipeline-body" style="min-height:300px">
+                    ${s.items.map(l => `
+                        <div class="pipeline-card" onclick="openLeadDetail(${l.id})">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+                                <h5>${l.company}</h5>
+                                <div style="display:flex;gap:4px">
+                                    <button class="btn btn-sm btn-icon" style="width:24px;height:24px;font-size:10px" onclick="event.stopPropagation();quickOutreach(${l.id},'email')">📧</button>
+                                    <button class="btn btn-sm btn-icon" style="width:24px;height:24px;font-size:10px" onclick="event.stopPropagation();quickOutreach(${l.id},'call')">📞</button>
+                                </div>
+                            </div>
+                            <p>${l.name}</p>
+                            <div class="value">€${l.value.toLocaleString()}</div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+                                <span style="font-size:10px;color:var(--text-3)">${l.source}</span>
+                                ${s.id !== 'won' ? `<select style="font-size:10px;padding:2px 4px;background:var(--bg-4);border:1px solid var(--border);border-radius:4px;color:var(--text-0)" onchange="event.stopPropagation();moveLeadToStage(${l.id}, this.value)">
+                                    <option value="">Verschieben →</option>
+                                    ${stages.filter(st => st.id !== s.id).map(st => `<option value="${st.id}">${st.name}</option>`).join('')}
+                                </select>` : '<span style="font-size:10px;color:var(--emerald)">✓ Abgeschlossen</span>'}
+                            </div>
+                        </div>
+                    `).join('') || '<div style="text-align:center;color:var(--text-3);padding:40px 20px;font-size:12px">Keine Leads</div>'}
+                </div>
+            </div>`;
+        }).join('')}</div>
     </div>`;
 }
 
@@ -1094,8 +1417,14 @@ function renderSettings() {
 function openModal(type) {
     document.getElementById('modalOverlay').classList.add('active');
     document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-    const map = { contact: 'modalContact', lead: 'modalLead', invoice: 'modalInvoice', message: 'modalMessage' };
+    const map = { contact: 'modalContact', lead: 'modalLead', invoice: 'modalInvoice', message: 'modalMessage', campaign: 'modalCampaign', outreach: 'modalOutreach', sequence: 'modalSequence', leadStatus: 'modalLeadStatus' };
     if (map[type]) document.getElementById(map[type]).classList.add('active');
+    
+    // Update outreach lead dropdown
+    if (type === 'outreach') {
+        const select = document.getElementById('outreachLead');
+        select.innerHTML = '<option value="">-- Lead auswählen --</option>' + data.leads.map(l => `<option value="${l.id}">${l.company} - ${l.name}</option>`).join('');
+    }
 }
 
 function closeModal() {
@@ -1133,6 +1462,259 @@ function sendNewMessage() {
 
 function deleteContact(id) { if (confirm('Löschen?')) { data.contacts = data.contacts.filter(c => c.id !== id); saveData(); showPage(currentPage); } }
 function deleteLead(id) { if (confirm('Löschen?')) { data.leads = data.leads.filter(l => l.id !== id); saveData(); showPage(currentPage); } }
+
+// ==================== CAMPAIGN FUNCTIONS ====================
+function startCampaign() {
+    const name = document.getElementById('campName').value.trim();
+    const type = document.getElementById('campType').value;
+    const target = document.getElementById('campTarget').value;
+    const message = document.getElementById('campMessage').value.trim();
+    
+    if (!name || !message) return showToast('error', 'Fehler', 'Name und Nachricht erforderlich');
+    
+    let targetCount = data.leads.length;
+    if (target === 'new') targetCount = data.leads.filter(l => l.status === 'new').length;
+    if (target === 'qualified') targetCount = data.leads.filter(l => l.status === 'qualified').length;
+    if (target === 'b2b') targetCount = data.b2bDatabase.length;
+    
+    if (!data.campaigns) data.campaigns = [];
+    data.campaigns.unshift({
+        id: Date.now(),
+        name: name,
+        type: type,
+        sent: 0,
+        total: targetCount,
+        openRate: 0,
+        status: 'active',
+        message: message,
+        target: target,
+        createdAt: new Date().toISOString()
+    });
+    
+    data.activities.unshift({ icon: '📧', text: `Kampagne gestartet: ${name}`, time: 'Gerade' });
+    saveData();
+    closeModal();
+    showToast('success', 'Kampagne gestartet', `"${name}" wird an ${targetCount} Empfänger gesendet`);
+    
+    // Simulate sending
+    simulateCampaignSending(data.campaigns[0].id);
+    showPage(currentPage);
+}
+
+function simulateCampaignSending(campId) {
+    const interval = setInterval(() => {
+        const camp = data.campaigns.find(c => c.id === campId);
+        if (!camp || camp.sent >= camp.total) {
+            clearInterval(interval);
+            if (camp) {
+                camp.status = 'completed';
+                camp.openRate = Math.floor(Math.random() * 30) + 25;
+                saveData();
+            }
+            return;
+        }
+        camp.sent += Math.min(5, camp.total - camp.sent);
+        camp.openRate = Math.floor(Math.random() * 20) + 30;
+        saveData();
+    }, 2000);
+}
+
+function saveCampaignDraft() {
+    showToast('success', 'Entwurf gespeichert', 'Kampagne als Entwurf gespeichert');
+    closeModal();
+}
+
+// ==================== OUTREACH FUNCTIONS ====================
+function saveOutreach() {
+    const leadId = document.getElementById('outreachLead').value;
+    const type = document.getElementById('outreachType').value;
+    const priority = document.getElementById('outreachPriority').value;
+    const notes = document.getElementById('outreachNotes').value;
+    const followup = document.getElementById('outreachFollowup').value;
+    
+    if (!leadId) return showToast('error', 'Fehler', 'Bitte Lead auswählen');
+    
+    const lead = data.leads.find(l => l.id == leadId);
+    if (!lead) return;
+    
+    if (!data.outreach) data.outreach = [];
+    data.outreach.unshift({
+        id: Date.now(),
+        leadId: leadId,
+        lead: lead.company,
+        type: type,
+        priority: priority,
+        date: new Date().toLocaleDateString('de-DE'),
+        result: 'pending',
+        notes: notes,
+        followup: followup
+    });
+    
+    lead.lastContact = new Date().toLocaleDateString('de-DE');
+    data.activities.unshift({ icon: type === 'call' ? '📞' : type === 'email' ? '📧' : '💬', text: `Outreach: ${lead.company}`, time: 'Gerade' });
+    
+    saveData();
+    closeModal();
+    showToast('success', 'Anfrage gespeichert', `${type === 'call' ? 'Anruf' : type === 'email' ? 'E-Mail' : 'Nachricht'} für ${lead.company} geplant`);
+    showPage(currentPage);
+}
+
+function quickOutreach(leadId, type) {
+    const lead = data.leads.find(l => l.id === leadId);
+    if (!lead) return;
+    
+    if (!data.outreach) data.outreach = [];
+    data.outreach.unshift({
+        id: Date.now(),
+        leadId: leadId,
+        lead: lead.company,
+        type: type,
+        date: new Date().toLocaleDateString('de-DE'),
+        result: 'pending',
+        notes: ''
+    });
+    
+    lead.lastContact = new Date().toLocaleDateString('de-DE');
+    saveData();
+    
+    const typeLabel = type === 'call' ? 'Anruf' : type === 'email' ? 'E-Mail' : 'WhatsApp';
+    showToast('success', `${typeLabel} gestartet`, `Kontaktiert: ${lead.company}`);
+    
+    if (type === 'email' || type === 'whatsapp') {
+        openModal('message');
+        document.getElementById('msgTo').value = lead.company;
+        document.getElementById('msgChannel').value = type === 'whatsapp' ? 'whatsapp' : 'email';
+    }
+}
+
+// ==================== SEQUENCE FUNCTIONS ====================
+function saveSequence() {
+    const name = document.getElementById('seqName').value.trim();
+    const trigger = document.getElementById('seqTrigger').value;
+    
+    if (!name) return showToast('error', 'Fehler', 'Name erforderlich');
+    
+    const steps = document.querySelectorAll('.sequence-step').length;
+    
+    if (!data.sequences) data.sequences = [];
+    data.sequences.unshift({
+        id: Date.now(),
+        name: name,
+        trigger: trigger,
+        steps: steps,
+        enrolled: 0,
+        progress: 0,
+        active: true
+    });
+    
+    data.activities.unshift({ icon: '⚡', text: `Sequenz erstellt: ${name}`, time: 'Gerade' });
+    saveData();
+    closeModal();
+    showToast('success', 'Sequenz erstellt', `"${name}" mit ${steps} Schritten aktiviert`);
+    showPage(currentPage);
+}
+
+function addSequenceStep() {
+    const container = document.getElementById('sequenceSteps');
+    const stepNum = container.children.length + 1;
+    const step = document.createElement('div');
+    step.className = 'sequence-step';
+    step.style.cssText = 'background:var(--bg-3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px';
+    step.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px">
+            <span style="background:var(--primary);color:white;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">${stepNum}</span>
+            <select class="form-control" style="width:auto">
+                <option value="email">📧 E-Mail senden</option>
+                <option value="whatsapp">💬 WhatsApp senden</option>
+                <option value="task">📋 Aufgabe erstellen</option>
+                <option value="wait">⏰ Warten</option>
+            </select>
+            <span style="color:var(--text-3)">nach</span>
+            <input type="number" class="form-control" style="width:60px" value="${stepNum}">
+            <select class="form-control" style="width:auto">
+                <option value="days" selected>Tagen</option>
+            </select>
+            <button class="btn btn-sm btn-danger" onclick="this.parentElement.parentElement.remove()">🗑️</button>
+        </div>
+    `;
+    container.appendChild(step);
+}
+
+function toggleSequence(id) {
+    const seq = data.sequences.find(s => s.id === id);
+    if (seq) {
+        seq.active = !seq.active;
+        saveData();
+        showToast('info', seq.active ? 'Sequenz aktiviert' : 'Sequenz pausiert', seq.name);
+        showPage(currentPage);
+    }
+}
+
+function editSequence(id) {
+    showToast('info', 'Bearbeiten', 'Sequenz-Editor wird geladen...');
+}
+
+// ==================== LEAD PIPELINE FUNCTIONS ====================
+function moveLeadToStage(leadId, newStatus) {
+    if (!newStatus) return;
+    const lead = data.leads.find(l => l.id === leadId);
+    if (lead) {
+        const oldStatus = lead.status;
+        lead.status = newStatus;
+        data.activities.unshift({ icon: '📊', text: `${lead.company}: ${statusLabel(oldStatus)} → ${statusLabel(newStatus)}`, time: 'Gerade' });
+        saveData();
+        showToast('success', 'Status geändert', `${lead.company} → ${statusLabel(newStatus)}`);
+        showPage(currentPage);
+    }
+}
+
+function changeLeadStatus(leadId) {
+    const lead = data.leads.find(l => l.id === leadId);
+    if (!lead) return;
+    
+    document.getElementById('leadStatusContent').innerHTML = `
+        <div style="text-align:center;margin-bottom:20px">
+            <strong>${lead.company}</strong><br>
+            <span style="color:var(--text-3)">${lead.name}</span>
+        </div>
+        <div style="display:grid;gap:10px">
+            <button class="btn ${lead.status === 'new' ? 'btn-primary' : 'btn-secondary'}" style="justify-content:flex-start" onclick="updateLeadStatus(${leadId}, 'new')">🆕 Neu</button>
+            <button class="btn ${lead.status === 'qualified' ? 'btn-primary' : 'btn-secondary'}" style="justify-content:flex-start" onclick="updateLeadStatus(${leadId}, 'qualified')">✓ Qualifiziert</button>
+            <button class="btn ${lead.status === 'proposal' ? 'btn-primary' : 'btn-secondary'}" style="justify-content:flex-start" onclick="updateLeadStatus(${leadId}, 'proposal')">📋 Angebot</button>
+            <button class="btn ${lead.status === 'won' ? 'btn-primary' : 'btn-secondary'}" style="justify-content:flex-start" onclick="updateLeadStatus(${leadId}, 'won')">🎉 Gewonnen</button>
+        </div>
+    `;
+    openModal('leadStatus');
+}
+
+function updateLeadStatus(leadId, newStatus) {
+    moveLeadToStage(leadId, newStatus);
+    closeModal();
+}
+
+function openLeadDetail(leadId) {
+    const lead = data.leads.find(l => l.id === leadId);
+    if (!lead) return;
+    changeLeadStatus(leadId);
+}
+
+function toggleAllLeads(checkbox) {
+    document.querySelectorAll('.lead-checkbox').forEach(cb => cb.checked = checkbox.checked);
+}
+
+function bulkAction(action) {
+    const selected = Array.from(document.querySelectorAll('.lead-checkbox:checked')).map(cb => cb.dataset.id);
+    if (selected.length === 0) {
+        return showToast('info', 'Keine Auswahl', 'Bitte Leads auswählen');
+    }
+    
+    if (action === 'email') {
+        showToast('success', 'Kampagne', `E-Mail an ${selected.length} Leads wird vorbereitet...`);
+        openModal('campaign');
+    } else if (action === 'export') {
+        showToast('success', 'Export', `${selected.length} Leads werden exportiert...`);
+    }
+}
 
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded', function() {
