@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>West Money OS v4.1 | Ultimate Business Platform</title>
+    <title>West Money OS v4.2 | Ultimate Business Platform</title>
+    <meta name="description" content="All-in-One Business Platform mit Explorium, Stripe & Handelsregister">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;West Money OS&quot;,&quot;short_name&quot;:&quot;WMOS&quot;,&quot;start_url&quot;:&quot;.&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;theme_color&quot;:&quot;%236366f1&quot;,&quot;background_color&quot;:&quot;%2309090b&quot;}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg-0:#09090b;--bg-1:#0c0c0f;--bg-2:#131316;--bg-3:#1a1a1f;--bg-4:#222228;--bg-5:#2a2a32;--text-0:#fafafa;--text-1:#d4d4d8;--text-2:#a1a1aa;--text-3:#71717a;--primary:#6366f1;--primary-hover:#818cf8;--primary-glow:rgba(99,102,241,0.15);--emerald:#10b981;--amber:#f59e0b;--rose:#f43f5e;--cyan:#06b6d4;--violet:#8b5cf6;--orange:#f97316;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--whatsapp:#25d366;--stripe:#635bff;--explorium:#00d4aa;--radius:8px;--radius-lg:12px;--radius-xl:16px;--shadow:0 4px 24px rgba(0,0,0,0.4)}
+        :root{--bg-0:#09090b;--bg-1:#0c0c0f;--bg-2:#131316;--bg-3:#1a1a1f;--bg-4:#222228;--bg-5:#2a2a32;--text-0:#fafafa;--text-1:#d4d4d8;--text-2:#a1a1aa;--text-3:#71717a;--primary:#6366f1;--primary-hover:#818cf8;--primary-glow:rgba(99,102,241,0.15);--emerald:#10b981;--amber:#f59e0b;--rose:#f43f5e;--cyan:#06b6d4;--violet:#8b5cf6;--orange:#f97316;--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--whatsapp:#25d366;--stripe:#635bff;--explorium:#00d4aa;--handelsregister:#1e3a8a;--radius:8px;--radius-lg:12px;--radius-xl:16px;--shadow:0 4px 24px rgba(0,0,0,0.4)}
         [data-theme="light"]{--bg-0:#f8fafc;--bg-1:#f1f5f9;--bg-2:#e2e8f0;--bg-3:#cbd5e1;--bg-4:#94a3b8;--text-0:#0f172a;--text-1:#1e293b;--text-2:#475569;--text-3:#64748b;--border:rgba(0,0,0,0.1)}
         body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg-0);color:var(--text-0);font-size:14px;line-height:1.5;min-height:100vh}
         ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-2)}::-webkit-scrollbar-thumb{background:var(--bg-4);border-radius:3px}
@@ -53,6 +55,7 @@
         .nav-item .badge.new{background:var(--emerald)}
         .nav-item .badge.api{background:var(--explorium)}
         .nav-item .badge.stripe{background:var(--stripe)}
+        .nav-item .badge.hr{background:var(--handelsregister)}
         .sidebar-footer{padding:12px;border-top:1px solid var(--border)}
         .user-box{display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg-2);border-radius:var(--radius);cursor:pointer}
         .user-avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--emerald),var(--cyan));display:flex;align-items:center;justify-content:center;font-weight:700;position:relative}
@@ -103,6 +106,7 @@
         .btn-gradient{background:linear-gradient(135deg,var(--primary),var(--violet));color:white}
         .btn-explorium{background:linear-gradient(135deg,var(--explorium),var(--cyan));color:white}
         .btn-stripe{background:var(--stripe);color:white}
+        .btn-hr{background:var(--handelsregister);color:white}
         .btn-sm{padding:6px 12px;font-size:12px}
         .btn-lg{padding:14px 24px;font-size:15px}
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
@@ -113,6 +117,7 @@
         .stat-card.danger{border-left:3px solid var(--rose)}
         .stat-card.explorium{border-left:3px solid var(--explorium)}
         .stat-card.stripe{border-left:3px solid var(--stripe)}
+        .stat-card.hr{border-left:3px solid var(--handelsregister)}
         .stat-card.highlight{background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(139,92,246,0.1));border-color:rgba(99,102,241,0.3)}
         .stat-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
         .stat-icon{width:48px;height:48px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:22px}
@@ -122,6 +127,7 @@
         .stat-icon.rose{background:rgba(244,63,94,0.15);color:var(--rose)}
         .stat-icon.explorium{background:rgba(0,212,170,0.15);color:var(--explorium)}
         .stat-icon.stripe{background:rgba(99,91,255,0.15);color:var(--stripe)}
+        .stat-icon.hr{background:rgba(30,58,138,0.15);color:var(--handelsregister)}
         .stat-trend{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600}
         .stat-trend.up{background:rgba(16,185,129,0.15);color:var(--emerald)}
         .stat-trend.down{background:rgba(244,63,94,0.15);color:var(--rose)}
@@ -142,9 +148,9 @@
         .data-table td{padding:14px 16px;font-size:13px;border-bottom:1px solid var(--border)}
         .data-table tbody tr:hover{background:var(--bg-3)}
         .status{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-        .status.active,.status.paid,.status.won,.status.running,.status.completed,.status.hot,.status.succeeded{background:rgba(16,185,129,0.15);color:var(--emerald)}
+        .status.active,.status.paid,.status.won,.status.running,.status.completed,.status.hot,.status.succeeded,.status.verified{background:rgba(16,185,129,0.15);color:var(--emerald)}
         .status.pending,.status.new,.status.warm,.status.scheduled,.status.draft{background:rgba(245,158,11,0.15);color:var(--amber)}
-        .status.overdue,.status.inactive,.status.cold,.status.failed,.status.paused,.status.cancelled{background:rgba(244,63,94,0.15);color:var(--rose)}
+        .status.overdue,.status.inactive,.status.cold,.status.failed,.status.paused,.status.cancelled,.status.geloescht{background:rgba(244,63,94,0.15);color:var(--rose)}
         .status.qualified{background:rgba(6,182,212,0.15);color:var(--cyan)}
         .status.proposal{background:rgba(139,92,246,0.15);color:var(--violet)}
         .progress-bar{height:6px;background:var(--bg-4);border-radius:3px;overflow:hidden}
@@ -166,6 +172,7 @@
         .tag.warning{background:rgba(245,158,11,0.15);color:var(--amber)}
         .tag.explorium{background:rgba(0,212,170,0.15);color:var(--explorium)}
         .tag.stripe{background:rgba(99,91,255,0.15);color:var(--stripe)}
+        .tag.hr{background:rgba(30,58,138,0.15);color:var(--handelsregister)}
         .empty-state{text-align:center;padding:60px 20px;color:var(--text-3)}
         .empty-state-icon{font-size:64px;margin-bottom:16px;opacity:0.5}
         .empty-state h3{font-size:18px;color:var(--text-0);margin-bottom:8px}
@@ -191,6 +198,7 @@
         .toast.info{border-left:4px solid var(--primary)}
         .toast.explorium{border-left:4px solid var(--explorium)}
         .toast.stripe{border-left:4px solid var(--stripe)}
+        .toast.hr{border-left:4px solid var(--handelsregister)}
         .toast-icon{font-size:20px}
         .toast-content{flex:1}
         .toast-title{font-size:14px;font-weight:600}
@@ -230,9 +238,23 @@
         .subscription-plan.popular::before{content:'BELIEBT';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--stripe);color:white;padding:4px 12px;border-radius:12px;font-size:10px;font-weight:600}
         .subscription-price{font-size:36px;font-weight:700;margin:16px 0}
         .subscription-price span{font-size:14px;color:var(--text-3);font-weight:400}
+        .hr-result{background:var(--bg-3);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:12px;transition:all 0.2s}
+        .hr-result:hover{border-color:var(--handelsregister)}
+        .hr-result-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+        .hr-result-title{font-weight:600;font-size:15px}
+        .hr-result-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px;color:var(--text-2)}
+        .hr-result-meta div{display:flex;flex-direction:column;gap:2px}
+        .hr-result-meta strong{color:var(--text-0)}
+        .hr-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;background:rgba(30,58,138,0.15);border-radius:4px;font-size:10px;color:var(--handelsregister);font-weight:600}
+        .hr-badge.hra{background:rgba(16,185,129,0.15);color:var(--emerald)}
+        .hr-badge.hrb{background:rgba(99,102,241,0.15);color:var(--primary)}
+        .hr-badge.gnr{background:rgba(245,158,11,0.15);color:var(--amber)}
+        .keyboard-hint{position:fixed;bottom:24px;left:24px;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-size:12px;color:var(--text-3);display:none}
+        .keyboard-hint.show{display:block}
+        .keyboard-hint kbd{background:var(--bg-4);padding:2px 6px;border-radius:4px;margin:0 2px}
         @media (max-width:1400px){.stats-grid{grid-template-columns:repeat(2,1fr)}.grid-4{grid-template-columns:repeat(2,1fr)}.campaign-metrics{grid-template-columns:repeat(3,1fr)}}
         @media (max-width:992px){.sidebar{transform:translateX(-260px)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menu-toggle{display:block}}
-        @media (max-width:768px){.stats-grid,.grid-2,.grid-3,.form-row{grid-template-columns:1fr}.topbar-center{display:none}.campaign-metrics{grid-template-columns:repeat(2,1fr)}}
+        @media (max-width:768px){.stats-grid,.grid-2,.grid-3,.form-row{grid-template-columns:1fr}.topbar-center{display:none}.campaign-metrics{grid-template-columns:repeat(2,1fr)}.hr-result-meta{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -242,7 +264,7 @@
             <div class="login-logo-icon">⚡</div>
             <h1>West Money OS</h1>
             <p>Ultimate Business Platform</p>
-            <span class="version">v4.1 + Explorium + Stripe</span>
+            <span class="version">v4.2 + Handelsregister</span>
         </div>
         <div class="login-box">
             <h2>🔐 Anmelden</h2>
@@ -258,16 +280,16 @@
 </div>
 <div class="app" id="app">
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header"><div class="logo"><div class="logo-icon">⚡</div><div><h1>West Money OS <span class="v-badge">4.1</span></h1><span>Explorium + Stripe</span></div></div></div>
+        <div class="sidebar-header"><div class="logo"><div class="logo-icon">⚡</div><div><h1>West Money OS <span class="v-badge">4.2</span></h1><span>+ Handelsregister</span></div></div></div>
         <nav class="sidebar-nav" id="sidebarNav"></nav>
         <div class="sidebar-footer"><div class="user-box" onclick="showPage('profile')"><div class="user-avatar" id="userAvatar">ÖC<span class="online"></span></div><div class="user-info"><div id="userName">Ömer Coşkun</div><span id="userRole">Admin</span></div><button class="logout-btn" onclick="event.stopPropagation();logout()">🚪</button></div></div>
     </aside>
     <main class="main">
         <header class="topbar">
             <div class="topbar-left"><button class="menu-toggle" onclick="toggleSidebar()">☰</button><div class="breadcrumb">West Money OS / <strong id="currentPageTitle">Dashboard</strong></div></div>
-            <div class="topbar-center"><div class="global-search"><span>🔍</span><input type="text" placeholder="Suchen..."><kbd>⌘K</kbd></div></div>
+            <div class="topbar-center"><div class="global-search" id="globalSearch"><span>🔍</span><input type="text" placeholder="Suchen... (⌘K für Handelsregister)" id="searchInput"><kbd>⌘K</kbd></div></div>
             <div class="topbar-right">
-                <div class="api-status"><span class="dot"></span><span>APIs aktiv</span></div>
+                <div class="api-status"><span class="dot"></span><span>4 APIs</span></div>
                 <div class="theme-toggle"><button onclick="setTheme('dark')" class="active" id="themeDark">🌙</button><button onclick="setTheme('light')" id="themeLight">☀️</button></div>
                 <div class="topbar-btn" onclick="showPage('inbox')">💬<span class="count" id="inboxCount">0</span></div>
             </div>
@@ -277,56 +299,66 @@
 </div>
 <div class="modal-overlay" id="modalOverlay"></div>
 <div class="toast-container" id="toastContainer"></div>
+<div class="keyboard-hint" id="keyboardHint"><kbd>⌘</kbd>+<kbd>K</kbd> Handelsregister · <kbd>⌘</kbd>+<kbd>N</kbd> Neu · <kbd>Esc</kbd> Schließen</div>
 <script>
 // ============================================================
-// WEST MONEY OS v4.1 - EXPLORIUM + STRIPE + FULL CAMPAIGNS
+// WEST MONEY OS v4.2 - EXPLORIUM + STRIPE + HANDELSREGISTER
 // ============================================================
 
 const EXPLORIUM_API_KEY = '1121ab737ecf41edaea2570899a8f90b';
 const STRIPE_API_KEY = 'sk_test_51ShUrH2KgRKMdiU0JECuJJ4drdNS2AZrWdML8t2WIq96JU1IGPNlaavbdz3xFD2Gas0ZlG5SB8m4xk92Uo8igNiW00PiKFSehD';
+const HANDELSREGISTER_URL = 'https://www.handelsregister.de/rp_web/erweitertesuche.xhtml';
 
+// Navigation mit Handelsregister
 const navigationConfig = [
-    { group: 'Übersicht', items: [{ id: 'dashboard', icon: '📊', label: 'Dashboard' }]},
-    { group: 'Explorium AI', items: [{ id: 'explorium', icon: '🤖', label: 'Explorium Hub', badge: 'API', badgeClass: 'api' },{ id: 'leadgen', icon: '🔍', label: 'AI Lead Gen' },{ id: 'enrichment', icon: '✨', label: 'Enrichment' }]},
+    { group: 'Übersicht', items: [{ id: 'dashboard', icon: '📊', label: 'Dashboard' },{ id: 'analytics', icon: '📈', label: 'Analytics' }]},
+    { group: 'Data APIs', items: [{ id: 'explorium', icon: '🤖', label: 'Explorium Hub', badge: 'API', badgeClass: 'api' },{ id: 'handelsregister', icon: '🏛️', label: 'Handelsregister', badge: 'NEU', badgeClass: 'hr' },{ id: 'leadgen', icon: '🔍', label: 'AI Lead Gen' },{ id: 'enrichment', icon: '✨', label: 'Enrichment' }]},
     { group: 'CRM', items: [{ id: 'contacts', icon: '👥', label: 'Kontakte', countKey: 'contacts' },{ id: 'leads', icon: '🎯', label: 'Leads', countKey: 'leads' },{ id: 'pipeline', icon: '📈', label: 'Pipeline' }]},
-    { group: 'Marketing', items: [{ id: 'campaigns', icon: '📧', label: 'Kampagnen', badge: 'PRO', badgeClass: 'new' },{ id: 'templates', icon: '📝', label: 'Vorlagen' },{ id: 'sequences', icon: '⚡', label: 'Sequenzen' }]},
+    { group: 'Marketing', items: [{ id: 'campaigns', icon: '📧', label: 'Kampagnen' },{ id: 'templates', icon: '📝', label: 'Vorlagen' },{ id: 'sequences', icon: '⚡', label: 'Sequenzen' }]},
     { group: 'Kommunikation', items: [{ id: 'inbox', icon: '📥', label: 'Inbox', countKey: 'unread' }]},
     { group: 'Finanzen', items: [{ id: 'invoices', icon: '📄', label: 'Rechnungen' },{ id: 'payments', icon: '💳', label: 'Stripe', badge: '💳', badgeClass: 'stripe' },{ id: 'subscriptions', icon: '🔄', label: 'Abos' }]},
     { group: 'Projekte', items: [{ id: 'projects', icon: '📁', label: 'Projekte' },{ id: 'tasks', icon: '✅', label: 'Aufgaben', countKey: 'tasks' }]},
     { group: 'Platform', items: [{ id: 'integrations', icon: '🔌', label: 'Integrationen' },{ id: 'settings', icon: '⚙️', label: 'Einstellungen' }]}
 ];
 
+// Sample Handelsregister Data
+const sampleHRData = [
+    { id: 1, name: 'West Money Bau GmbH', registerArt: 'HRB', registerNummer: '12345', gericht: 'Köln', sitz: 'Köln', rechtsform: 'GmbH', status: 'aktiv', kapital: '25.000 EUR', gruendung: '2023-01-15', geschaeftsfuehrer: 'Ömer Hüseyin Coşkun' },
+    { id: 2, name: 'Enterprise Universe GmbH', registerArt: 'HRB', registerNummer: '67890', gericht: 'Köln', sitz: 'Köln', rechtsform: 'GmbH', status: 'aktiv', kapital: '25.000 EUR', gruendung: '2024-03-20', geschaeftsfuehrer: 'Ömer Hüseyin Coşkun' },
+    { id: 3, name: 'Z Automation UG', registerArt: 'HRB', registerNummer: '11223', gericht: 'Köln', sitz: 'Köln', rechtsform: 'UG', status: 'aktiv', kapital: '1.000 EUR', gruendung: '2024-06-01', geschaeftsfuehrer: 'Ömer Hüseyin Coşkun' },
+    { id: 4, name: 'Deutsche Bahn AG', registerArt: 'HRB', registerNummer: '50000', gericht: 'Berlin', sitz: 'Berlin', rechtsform: 'AG', status: 'aktiv', kapital: '2.150.000.000 EUR', gruendung: '1994-01-01', geschaeftsfuehrer: 'Richard Lutz' },
+    { id: 5, name: 'Siemens AG', registerArt: 'HRB', registerNummer: '6684', gericht: 'München', sitz: 'München', rechtsform: 'AG', status: 'aktiv', kapital: '2.550.000.000 EUR', gruendung: '1966-08-08', geschaeftsfuehrer: 'Roland Busch' }
+];
+
 const defaultData = {
     contacts: [
-        { id: 1, firstName: 'Max', lastName: 'Müller', email: 'max@mueller.de', phone: '+49 221 1234567', company: 'Müller Bau GmbH', position: 'Geschäftsführer', status: 'active', score: 85, source: 'Explorium', enriched: true },
-        { id: 2, firstName: 'Anna', lastName: 'Schmidt', email: 'anna@schmidt.de', phone: '+49 221 7654321', company: 'Schmidt Immobilien', position: 'CEO', status: 'active', score: 72, source: 'Website', enriched: true },
-        { id: 3, firstName: 'Thomas', lastName: 'Weber', email: 'thomas@weber.de', phone: '+49 221 9876543', company: 'Weber Haus', position: 'Inhaber', status: 'pending', score: 68, source: 'Explorium', enriched: false },
-        { id: 4, firstName: 'Lisa', lastName: 'Fischer', email: 'lisa@fischer.de', phone: '+49 221 5432167', company: 'Fischer GmbH', position: 'Projektleiterin', status: 'active', score: 91, source: 'LinkedIn', enriched: true },
-        { id: 5, firstName: 'Michael', lastName: 'Bauer', email: 'michael@bauer.de', phone: '+49 221 6789012', company: 'Bauer Gruppe', position: 'Vorstand', status: 'active', score: 95, source: 'Explorium', enriched: true }
+        { id: 1, firstName: 'Max', lastName: 'Müller', email: 'max@mueller.de', phone: '+49 221 1234567', company: 'Müller Bau GmbH', position: 'Geschäftsführer', status: 'active', score: 85, source: 'Explorium', enriched: true, hrVerified: true },
+        { id: 2, firstName: 'Anna', lastName: 'Schmidt', email: 'anna@schmidt.de', phone: '+49 221 7654321', company: 'Schmidt Immobilien', position: 'CEO', status: 'active', score: 72, source: 'Website', enriched: true, hrVerified: false },
+        { id: 3, firstName: 'Thomas', lastName: 'Weber', email: 'thomas@weber.de', phone: '+49 221 9876543', company: 'Weber Haus', position: 'Inhaber', status: 'pending', score: 68, source: 'Explorium', enriched: false, hrVerified: false },
+        { id: 4, firstName: 'Lisa', lastName: 'Fischer', email: 'lisa@fischer.de', phone: '+49 221 5432167', company: 'Fischer GmbH', position: 'Projektleiterin', status: 'active', score: 91, source: 'Handelsregister', enriched: true, hrVerified: true },
+        { id: 5, firstName: 'Michael', lastName: 'Bauer', email: 'michael@bauer.de', phone: '+49 221 6789012', company: 'Bauer Gruppe', position: 'Vorstand', status: 'active', score: 95, source: 'Explorium', enriched: true, hrVerified: true }
     ],
     leads: [
         { id: 1, name: 'Smart Home Projekt Köln', company: 'Müller GmbH', value: 85000, status: 'qualified', source: 'Explorium', probability: 75 },
         { id: 2, name: 'Barrierefreies Bauen', company: 'Weber Bau', value: 45000, status: 'new', source: 'AI Lead Gen', probability: 40 },
         { id: 3, name: 'Komplettsanierung EFH', company: 'Schmidt Haus', value: 125000, status: 'won', source: 'Empfehlung', probability: 100 },
         { id: 4, name: 'LOXONE Installation', company: 'Fischer Immo', value: 32000, status: 'proposal', source: 'Website', probability: 60 },
-        { id: 5, name: 'Neubau Villa', company: 'Becker Familie', value: 280000, status: 'new', source: 'Explorium', probability: 35 },
+        { id: 5, name: 'Neubau Villa', company: 'Becker Familie', value: 280000, status: 'new', source: 'Handelsregister', probability: 35 },
         { id: 6, name: 'Büro Automation', company: 'TechCorp GmbH', value: 156000, status: 'qualified', source: 'AI Lead Gen', probability: 55 }
     ],
     campaigns: [
-        { id: 1, name: 'Smart Home Q1 2026', type: 'email', status: 'running', audience: 'B2B Baugewerbe', audienceSize: 450, sent: 245, delivered: 238, opened: 98, clicked: 34, replied: 12, bounced: 7, unsubscribed: 2, converted: 5, revenue: 45000, startDate: '2025-12-15', schedule: 'daily', subject: 'Revolutionieren Sie Ihr Zuhause mit LOXONE', abTest: true, variantA: { subject: 'Revolutionieren Sie Ihr Zuhause', openRate: 42 }, variantB: { subject: 'Smart Home für Profis', openRate: 38 }, tags: ['b2b', 'smart-home'] },
-        { id: 2, name: 'B2B Baugewerbe NRW', type: 'email', status: 'completed', audience: 'Explorium NRW', audienceSize: 200, sent: 189, delivered: 182, opened: 74, clicked: 28, replied: 9, bounced: 7, unsubscribed: 1, converted: 3, revenue: 28000, startDate: '2025-12-01', schedule: 'once', tags: ['b2b', 'nrw'] },
-        { id: 3, name: 'WhatsApp Follow-up', type: 'whatsapp', status: 'running', audience: 'Hot Leads', audienceSize: 60, sent: 56, delivered: 56, opened: 56, clicked: 0, replied: 23, bounced: 0, unsubscribed: 0, converted: 8, revenue: 62000, startDate: '2025-12-18', schedule: 'manual', tags: ['whatsapp'] },
-        { id: 4, name: 'Neujahrs-Newsletter', type: 'email', status: 'scheduled', audience: 'Alle Kontakte', audienceSize: 850, sent: 0, delivered: 0, opened: 0, clicked: 0, replied: 0, bounced: 0, unsubscribed: 0, converted: 0, revenue: 0, startDate: '2026-01-01', schedule: 'once', tags: ['newsletter'] },
-        { id: 5, name: 'Cold Lead Reaktivierung', type: 'email', status: 'draft', audience: 'Cold Leads', audienceSize: 320, sent: 0, delivered: 0, opened: 0, clicked: 0, replied: 0, bounced: 0, unsubscribed: 0, converted: 0, revenue: 0, startDate: null, schedule: 'sequence', tags: ['cold-leads'] }
+        { id: 1, name: 'Smart Home Q1 2026', type: 'email', status: 'running', audience: 'B2B Baugewerbe', audienceSize: 450, sent: 245, delivered: 238, opened: 98, clicked: 34, replied: 12, revenue: 45000 },
+        { id: 2, name: 'B2B Baugewerbe NRW', type: 'email', status: 'completed', audience: 'Explorium NRW', audienceSize: 200, sent: 189, delivered: 182, opened: 74, clicked: 28, replied: 9, revenue: 28000 },
+        { id: 3, name: 'WhatsApp Follow-up', type: 'whatsapp', status: 'running', audience: 'Hot Leads', audienceSize: 60, sent: 56, delivered: 56, opened: 56, clicked: 0, replied: 23, revenue: 62000 }
     ],
     templates: [
-        { id: 1, name: 'Smart Home Intro', key: 'smart-home-intro', type: 'email', category: 'Sales', subject: 'Revolutionieren Sie Ihr Zuhause', body: 'Sehr geehrte/r {firstName},\n\nals Experten für LOXONE Smart Home möchten wir Ihnen zeigen...\n\n✓ Bis zu 30% Energieeinsparung\n✓ Maximaler Komfort\n\nMit freundlichen Grüßen\nÖmer Coşkun\nWest Money Bau GmbH', variables: ['firstName','company'], usageCount: 156, openRate: 42 },
-        { id: 2, name: 'Follow-up', key: 'followup', type: 'email', category: 'Follow-up', subject: 'Kurze Nachfrage', body: 'Hallo {firstName},\n\nich wollte kurz nachfragen...\n\nBeste Grüße\nÖmer', variables: ['firstName'], usageCount: 234, openRate: 52 },
-        { id: 3, name: 'WhatsApp Termin', key: 'wa-termin', type: 'whatsapp', category: 'WhatsApp', subject: '', body: 'Hallo {firstName}, hier ist Ömer von West Money Bau. Hätten Sie Zeit für ein kurzes Gespräch? 🏠', variables: ['firstName'], usageCount: 67 }
+        { id: 1, name: 'Smart Home Intro', key: 'smart-home-intro', type: 'email', category: 'Sales', subject: 'Revolutionieren Sie Ihr Zuhause', body: 'Sehr geehrte/r {firstName}...', usageCount: 156, openRate: 42 },
+        { id: 2, name: 'Follow-up', key: 'followup', type: 'email', category: 'Follow-up', subject: 'Kurze Nachfrage', body: 'Hallo {firstName}...', usageCount: 234, openRate: 52 },
+        { id: 3, name: 'WhatsApp Termin', key: 'wa-termin', type: 'whatsapp', category: 'WhatsApp', subject: '', body: 'Hallo {firstName}...', usageCount: 67 }
     ],
     sequences: [
-        { id: 1, name: 'Neuer Lead Welcome', trigger: 'new_lead', triggerLabel: 'Bei neuem Lead', status: 'active', enrolled: 45, completed: 32, inProgress: 13, steps: [{ type: 'email', template: 'smart-home-intro', delay: 0 },{ type: 'wait', days: 3 },{ type: 'email', template: 'followup', delay: 0 },{ type: 'task', action: 'Anrufen' }] },
-        { id: 2, name: 'Cold Reaktivierung', trigger: 'no_response', triggerLabel: 'Keine Antwort', status: 'active', enrolled: 78, completed: 34, inProgress: 44, steps: [{ type: 'email', template: 'followup', delay: 0 },{ type: 'wait', days: 7 },{ type: 'email', template: 'followup', delay: 0 }] }
+        { id: 1, name: 'Neuer Lead Welcome', trigger: 'new_lead', triggerLabel: 'Bei neuem Lead', status: 'active', enrolled: 45, completed: 32, inProgress: 13, steps: [{ type: 'email', template: 'smart-home-intro' },{ type: 'wait', days: 3 },{ type: 'email', template: 'followup' }] },
+        { id: 2, name: 'Cold Reaktivierung', trigger: 'no_response', triggerLabel: 'Keine Antwort', status: 'active', enrolled: 78, completed: 34, inProgress: 44, steps: [{ type: 'email', template: 'followup' },{ type: 'wait', days: 7 }] }
     ],
     invoices: [
         { id: 'RE-2025-001', customer: 'Müller GmbH', amount: 45000, status: 'paid', date: '2025-12-01', stripeId: 'pi_example1' },
@@ -340,13 +372,12 @@ const defaultData = {
     ],
     payments: [
         { id: 'pay_1', customer: 'Müller GmbH', amount: 45000, status: 'succeeded', type: 'invoice', date: '2025-12-10', method: 'card', last4: '4242' },
-        { id: 'pay_2', customer: 'Schmidt Haus', amount: 62000, status: 'succeeded', type: 'invoice', date: '2025-12-05', method: 'sepa' },
-        { id: 'pay_3', customer: 'Müller GmbH', amount: 99, status: 'succeeded', type: 'subscription', date: '2025-12-01', method: 'card', last4: '4242' }
+        { id: 'pay_2', customer: 'Schmidt Haus', amount: 62000, status: 'succeeded', type: 'invoice', date: '2025-12-05', method: 'sepa' }
     ],
     tasks: [
         { id: 1, title: 'Angebot für Müller GmbH', status: 'in-progress', priority: 'high', dueDate: '2025-12-24' },
         { id: 2, title: 'Follow-up Weber Bau', status: 'pending', priority: 'medium', dueDate: '2025-12-26' },
-        { id: 3, title: 'Rechnung mahnen', status: 'pending', priority: 'high', dueDate: '2025-12-23' },
+        { id: 3, title: 'HR-Verifizierung neue Leads', status: 'pending', priority: 'high', dueDate: '2025-12-23' },
         { id: 4, title: 'Kampagne auswerten', status: 'pending', priority: 'low', dueDate: '2025-12-31' }
     ],
     projects: [
@@ -359,14 +390,20 @@ const defaultData = {
         { id: 3, contact: 'Lisa Fischer', type: 'whatsapp', unread: true, messages: [{text:'Interesse an LOXONE',time:'08:15',outgoing:false}] }
     ],
     b2bDatabase: [
-        { id: 1, company: 'Bauhaus Köln GmbH', industry: 'Baugewerbe', employees: '50-100', city: 'Köln', email: 'info@bauhaus-koeln.de', score: 87, status: 'hot', decisionMaker: 'Thomas Bauer', enriched: true, source: 'Explorium' },
-        { id: 2, company: 'Rhein Immobilien AG', industry: 'Immobilien', employees: '100-250', city: 'Düsseldorf', email: 'kontakt@rhein-immo.de', score: 92, status: 'hot', decisionMaker: 'Maria Weber', enriched: true, source: 'Explorium' },
-        { id: 3, company: 'NRW Elektrotechnik', industry: 'Elektro', employees: '25-50', city: 'Essen', email: 'info@nrw-elektro.de', score: 74, status: 'warm', decisionMaker: 'Klaus Fischer', enriched: false, source: 'Handelsregister' },
-        { id: 4, company: 'Smart Home Solutions', industry: 'Technologie', employees: '10-25', city: 'Bonn', email: 'hello@smarthome-sol.de', score: 81, status: 'warm', decisionMaker: 'Sarah Klein', enriched: true, source: 'Explorium' },
-        { id: 5, company: 'Kölner Wohnbau GmbH', industry: 'Baugewerbe', employees: '50-100', city: 'Köln', email: 'kontakt@koelner-wohnbau.de', score: 95, status: 'hot', decisionMaker: 'Peter Schmidt', enriched: true, source: 'Explorium' }
+        { id: 1, company: 'Bauhaus Köln GmbH', industry: 'Baugewerbe', employees: '50-100', city: 'Köln', email: 'info@bauhaus-koeln.de', score: 87, status: 'hot', decisionMaker: 'Thomas Bauer', enriched: true, source: 'Explorium', hrVerified: true },
+        { id: 2, company: 'Rhein Immobilien AG', industry: 'Immobilien', employees: '100-250', city: 'Düsseldorf', email: 'kontakt@rhein-immo.de', score: 92, status: 'hot', decisionMaker: 'Maria Weber', enriched: true, source: 'Handelsregister', hrVerified: true },
+        { id: 3, company: 'NRW Elektrotechnik', industry: 'Elektro', employees: '25-50', city: 'Essen', email: 'info@nrw-elektro.de', score: 74, status: 'warm', decisionMaker: 'Klaus Fischer', enriched: false, source: 'Handelsregister', hrVerified: true },
+        { id: 4, company: 'Smart Home Solutions', industry: 'Technologie', employees: '10-25', city: 'Bonn', email: 'hello@smarthome-sol.de', score: 81, status: 'warm', decisionMaker: 'Sarah Klein', enriched: true, source: 'Explorium', hrVerified: false },
+        { id: 5, company: 'Kölner Wohnbau GmbH', industry: 'Baugewerbe', employees: '50-100', city: 'Köln', email: 'kontakt@koelner-wohnbau.de', score: 95, status: 'hot', decisionMaker: 'Peter Schmidt', enriched: true, source: 'Explorium', hrVerified: true }
+    ],
+    hrSearchHistory: [
+        { id: 1, query: 'West Money', results: 3, date: '2025-12-23' },
+        { id: 2, query: 'Baugewerbe Köln', results: 156, date: '2025-12-22' },
+        { id: 3, query: 'GmbH Düsseldorf', results: 2341, date: '2025-12-20' }
     ],
     integrations: [
         { id: 'explorium', name: 'Explorium AI', category: 'Data', status: 'connected', icon: '🤖', credits: 4873 },
+        { id: 'handelsregister', name: 'Handelsregister', category: 'Data', status: 'connected', icon: '🏛️', searches: 45 },
         { id: 'stripe', name: 'Stripe Payments', category: 'Payments', status: 'connected', icon: '💳' },
         { id: 'hubspot', name: 'HubSpot CRM', category: 'CRM', status: 'connected', icon: '🧡' },
         { id: 'whatsapp', name: 'WhatsApp Business', category: 'Messaging', status: 'connected', icon: '💬' },
@@ -375,33 +412,34 @@ const defaultData = {
     ],
     explorium: { credits: 4873, used: 127, searches: 45, enrichments: 82 },
     stripe: { balance: 135000, pending: 28000, payouts: 107000, fees: 3892 },
+    handelsregister: { searches: 45, verified: 23, lastSearch: '2025-12-23' },
     activities: [
-        { id: 1, icon: '🤖', text: 'Explorium: 15 neue Leads', time: '5 Min.' },
-        { id: 2, icon: '💳', text: 'Stripe: Zahlung €45,000', time: '1 Std.' },
-        { id: 3, icon: '📧', text: 'Kampagne: 245 E-Mails gesendet', time: '2 Std.' },
-        { id: 4, icon: '✨', text: '8 Kontakte angereichert', time: '3 Std.' }
+        { id: 1, icon: '🏛️', text: 'HR: 3 Firmen verifiziert', time: '2 Min.' },
+        { id: 2, icon: '🤖', text: 'Explorium: 15 neue Leads', time: '5 Min.' },
+        { id: 3, icon: '💳', text: 'Stripe: Zahlung €45,000', time: '1 Std.' },
+        { id: 4, icon: '📧', text: 'Kampagne: 245 E-Mails gesendet', time: '2 Std.' }
     ],
     settings: { company: { name: 'West Money Bau GmbH', email: 'info@west-money-bau.de', iban: 'DE42 1001 0178 9758 7887 93' } }
 };
 
-let data = JSON.parse(localStorage.getItem('wmos_data_v41')) || JSON.parse(JSON.stringify(defaultData));
+let data = JSON.parse(localStorage.getItem('wmos_data_v42')) || JSON.parse(JSON.stringify(defaultData));
 let currentUser = JSON.parse(localStorage.getItem('wmos_user'));
 let currentPage = localStorage.getItem('wmos_page') || 'dashboard';
 let currentTheme = localStorage.getItem('wmos_theme') || 'dark';
-let campaignWizardStep = 1;
+let hrSearchResults = [];
 
-function saveData() { localStorage.setItem('wmos_data_v41', JSON.stringify(data)); }
+function saveData() { localStorage.setItem('wmos_data_v42', JSON.stringify(data)); }
 function generateId() { return Date.now() + Math.random().toString(36).substr(2, 9); }
 function formatCurrency(n) { return '€' + (n || 0).toLocaleString('de-DE'); }
 function formatDate(d) { return d ? new Date(d).toLocaleDateString('de-DE') : '-'; }
 function getInitials(name) { return name ? name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : '??'; }
-function statusLabel(s) { const labels = {new:'Neu',qualified:'Qualifiziert',proposal:'Angebot',won:'Gewonnen',active:'Aktiv',pending:'Ausstehend',paid:'Bezahlt',overdue:'Überfällig',hot:'🔥 Hot',warm:'☀️ Warm',running:'Aktiv',scheduled:'Geplant',draft:'Entwurf',completed:'Fertig',paused:'Pausiert',succeeded:'Erfolgreich'}; return labels[s] || s; }
+function statusLabel(s) { const labels = {new:'Neu',qualified:'Qualifiziert',proposal:'Angebot',won:'Gewonnen',active:'Aktiv',aktiv:'Aktiv',pending:'Ausstehend',paid:'Bezahlt',overdue:'Überfällig',hot:'🔥 Hot',warm:'☀️ Warm',running:'Aktiv',scheduled:'Geplant',draft:'Entwurf',completed:'Fertig',paused:'Pausiert',succeeded:'Erfolgreich',verified:'✓ Verifiziert',geloescht:'Gelöscht'}; return labels[s] || s; }
 
 function showToast(type, title, message, duration = 4000) {
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    const icons = {success: '✅', error: '❌', info: 'ℹ️', explorium: '🤖', stripe: '💳'};
+    const icons = {success: '✅', error: '❌', info: 'ℹ️', explorium: '🤖', stripe: '💳', hr: '🏛️'};
     toast.innerHTML = `<span class="toast-icon">${icons[type] || 'ℹ️'}</span><div class="toast-content"><div class="toast-title">${title}</div><div class="toast-message">${message}</div></div><button class="toast-close" onclick="this.parentElement.remove()">×</button>`;
     container.appendChild(toast);
     setTimeout(() => toast.remove(), duration);
@@ -467,9 +505,10 @@ function updateAllCounts() {
 
 function renderPage(pageId) {
     const content = document.getElementById('pageContent');
-    const renderers = { dashboard: renderDashboard, explorium: renderExplorium, leadgen: renderLeadGen, enrichment: renderEnrichment, contacts: renderContacts, leads: renderLeads, pipeline: renderPipeline, campaigns: renderCampaigns, templates: renderTemplates, sequences: renderSequences, inbox: renderInbox, invoices: renderInvoices, payments: renderPayments, subscriptions: renderSubscriptions, projects: renderProjects, tasks: renderTasks, integrations: renderIntegrations, settings: renderSettings, profile: renderProfile };
+    const renderers = { dashboard: renderDashboard, analytics: renderAnalytics, explorium: renderExplorium, handelsregister: renderHandelsregister, leadgen: renderLeadGen, enrichment: renderEnrichment, contacts: renderContacts, leads: renderLeads, pipeline: renderPipeline, campaigns: renderCampaigns, templates: renderTemplates, sequences: renderSequences, inbox: renderInbox, invoices: renderInvoices, payments: renderPayments, subscriptions: renderSubscriptions, projects: renderProjects, tasks: renderTasks, integrations: renderIntegrations, settings: renderSettings, profile: renderProfile };
     content.innerHTML = (renderers[pageId] || renderNotFound)();
     if (pageId === 'dashboard') initDashboardCharts();
+    if (pageId === 'analytics') initAnalyticsCharts();
     if (pageId === 'inbox') initInbox();
 }
 
@@ -479,21 +518,23 @@ function renderNotFound() { return `<div class="page active"><div class="empty-s
 function renderDashboard() {
     const revenue = data.invoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.amount, 0);
     const pipeline = data.leads.reduce((s, l) => s + l.value, 0);
+    const hrVerified = data.contacts.filter(c => c.hrVerified).length;
     return `<div class="page active">
-        <div class="page-header"><div><h1>📊 Dashboard</h1><p>Willkommen, ${currentUser.name}!</p></div><div class="page-actions"><button class="btn btn-explorium" onclick="showPage('explorium')">🤖 Explorium</button><button class="btn btn-stripe" onclick="showPage('payments')">💳 Stripe</button><button class="btn btn-gradient" onclick="showPage('campaigns')">📧 Kampagnen</button></div></div>
+        <div class="page-header"><div><h1>📊 Dashboard</h1><p>Willkommen, ${currentUser.name}!</p></div><div class="page-actions"><button class="btn btn-hr" onclick="showPage('handelsregister')">🏛️ HR-Suche</button><button class="btn btn-explorium" onclick="showPage('explorium')">🤖 Explorium</button><button class="btn btn-stripe" onclick="showPage('payments')">💳 Stripe</button></div></div>
         <div class="stats-grid">
             <div class="stat-card success"><div class="stat-top"><div class="stat-icon emerald">💰</div><span class="stat-trend up">↑ 23.5%</span></div><div class="stat-value">${formatCurrency(revenue)}</div><div class="stat-label">Umsatz 2025</div></div>
             <div class="stat-card"><div class="stat-top"><div class="stat-icon primary">📈</div></div><div class="stat-value">${formatCurrency(pipeline)}</div><div class="stat-label">Pipeline</div></div>
-            <div class="stat-card explorium"><div class="stat-top"><div class="stat-icon explorium">🤖</div><span class="tag explorium">API</span></div><div class="stat-value">${data.b2bDatabase.filter(l=>l.source==='Explorium').length}</div><div class="stat-label">Explorium Leads</div></div>
-            <div class="stat-card stripe"><div class="stat-top"><div class="stat-icon stripe">💳</div></div><div class="stat-value">${formatCurrency(data.stripe.balance)}</div><div class="stat-label">Stripe Balance</div></div>
+            <div class="stat-card hr"><div class="stat-top"><div class="stat-icon hr">🏛️</div><span class="tag hr">NEU</span></div><div class="stat-value">${hrVerified}</div><div class="stat-label">HR-Verifiziert</div></div>
+            <div class="stat-card explorium"><div class="stat-top"><div class="stat-icon explorium">🤖</div></div><div class="stat-value">${data.explorium.credits}</div><div class="stat-label">Explorium Credits</div></div>
         </div>
         <div class="grid-2">
             <div class="card"><div class="card-header"><h3>📈 Umsatz</h3></div><div class="card-body"><div class="chart-container"><canvas id="revenueChart"></canvas></div></div></div>
             <div class="card"><div class="card-header"><h3>📊 Aktivitäten</h3></div><div class="card-body" style="padding:0">${data.activities.map(a=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px"><div style="width:36px;height:36px;background:var(--primary-glow);border-radius:8px;display:flex;align-items:center;justify-content:center">${a.icon}</div><div><div>${a.text}</div><div style="font-size:11px;color:var(--text-3)">${a.time}</div></div></div>`).join('')}</div></div>
         </div>
-        <div class="grid-2" style="margin-top:16px">
-            <div class="card"><div class="card-header"><h3>📧 Aktive Kampagnen</h3><button class="btn btn-sm btn-secondary" onclick="showPage('campaigns')">Alle →</button></div><div class="card-body" style="padding:0">${data.campaigns.filter(c=>c.status==='running').slice(0,3).map(c=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500">${c.name}</div><div style="font-size:11px;color:var(--text-3)">${c.sent} gesendet · ${c.delivered>0?Math.round(c.opened/c.delivered*100):0}% geöffnet</div></div><span class="status running">Aktiv</span></div>`).join('')||'<div class="empty-state"><p>Keine aktiven Kampagnen</p></div>'}</div></div>
-            <div class="card"><div class="card-header"><h3>🔥 Hot Leads</h3><button class="btn btn-sm btn-explorium" onclick="showPage('leadgen')">Alle →</button></div><div class="card-body" style="padding:0">${data.b2bDatabase.filter(l=>l.status==='hot').slice(0,3).map(l=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><div><div style="font-weight:500">${l.company}</div><div style="font-size:11px;color:var(--text-3)">${l.city} · ${l.industry}</div></div><span class="status hot">${l.score}%</span></div>`).join('')}</div></div>
+        <div class="grid-3" style="margin-top:16px">
+            <div class="card"><div class="card-header"><h3>🏛️ Letzte HR-Suchen</h3><button class="btn btn-sm btn-hr" onclick="showPage('handelsregister')">Alle →</button></div><div class="card-body" style="padding:0">${data.hrSearchHistory.slice(0,3).map(h=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><div><div style="font-weight:500">"${h.query}"</div><div style="font-size:11px;color:var(--text-3)">${formatDate(h.date)}</div></div><span class="tag hr">${h.results} Treffer</span></div>`).join('')}</div></div>
+            <div class="card"><div class="card-header"><h3>📧 Kampagnen</h3><button class="btn btn-sm btn-secondary" onclick="showPage('campaigns')">Alle →</button></div><div class="card-body" style="padding:0">${data.campaigns.filter(c=>c.status==='running').slice(0,3).map(c=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center"><div><div style="font-weight:500">${c.name}</div><div style="font-size:11px;color:var(--text-3)">${c.sent} gesendet</div></div><span class="status running">Aktiv</span></div>`).join('')||'<div class="empty-state"><p>Keine aktiven Kampagnen</p></div>'}</div></div>
+            <div class="card"><div class="card-header"><h3>🔥 Hot Leads</h3><button class="btn btn-sm btn-explorium" onclick="showPage('leadgen')">Alle →</button></div><div class="card-body" style="padding:0">${data.b2bDatabase.filter(l=>l.status==='hot').slice(0,3).map(l=>`<div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><div><div style="font-weight:500">${l.company}</div><div style="font-size:11px;color:var(--text-3)">${l.city} ${l.hrVerified?'<span class="hr-badge">✓ HR</span>':''}</div></div><span class="status hot">${l.score}%</span></div>`).join('')}</div></div>
         </div>
     </div>`;
 }
@@ -502,6 +543,293 @@ function initDashboardCharts() {
     const ctx = document.getElementById('revenueChart');
     if (!ctx) return;
     new Chart(ctx, { type: 'line', data: { labels: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'], datasets: [{ label: 'Umsatz', data: [45,62,58,71,68,85,92,78,95,110,125,135].map(x=>x*1000), borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#71717a' } }, y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#71717a', callback: v => '€' + (v/1000) + 'K' } } } } });
+}
+
+// ANALYTICS
+function renderAnalytics() {
+    return `<div class="page active">
+        <div class="page-header"><div><h1>📈 Analytics</h1><p>Detaillierte Auswertungen</p></div></div>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value">€847K</div><div class="stat-label">Gesamtumsatz</div><span class="stat-trend up">↑ 23.5%</span></div>
+            <div class="stat-card"><div class="stat-value">29%</div><div class="stat-label">Conversion Rate</div></div>
+            <div class="stat-card"><div class="stat-value">€68K</div><div class="stat-label">Ø Deal-Größe</div></div>
+            <div class="stat-card"><div class="stat-value">18</div><div class="stat-label">Ø Sales Cycle (Tage)</div></div>
+        </div>
+        <div class="grid-2">
+            <div class="card"><div class="card-header"><h3>📊 Lead Sources</h3></div><div class="card-body"><div class="chart-container"><canvas id="sourceChart"></canvas></div></div></div>
+            <div class="card"><div class="card-header"><h3>🎯 Pipeline nach Status</h3></div><div class="card-body"><div class="chart-container"><canvas id="pipeChart"></canvas></div></div></div>
+        </div>
+        <div class="card" style="margin-top:16px"><div class="card-header"><h3>🏛️ Handelsregister Statistiken</h3></div><div class="card-body"><div class="grid-4"><div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--handelsregister)">${data.handelsregister.searches}</div><div style="font-size:12px;color:var(--text-3)">HR-Suchen</div></div><div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--emerald)">${data.handelsregister.verified}</div><div style="font-size:12px;color:var(--text-3)">Verifiziert</div></div><div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--primary)">${data.contacts.filter(c=>c.hrVerified).length}</div><div style="font-size:12px;color:var(--text-3)">HR-Kontakte</div></div><div style="text-align:center"><div style="font-size:32px;font-weight:700;color:var(--amber)">${data.b2bDatabase.filter(b=>b.hrVerified).length}</div><div style="font-size:12px;color:var(--text-3)">HR-Leads</div></div></div></div></div>
+    </div>`;
+}
+
+function initAnalyticsCharts() {
+    const srcCtx = document.getElementById('sourceChart');
+    const pipeCtx = document.getElementById('pipeChart');
+    if (srcCtx) new Chart(srcCtx, { type: 'doughnut', data: { labels: ['Explorium', 'Handelsregister', 'Website', 'Empfehlung', 'Sonstige'], datasets: [{ data: [35, 25, 20, 15, 5], backgroundColor: ['#00d4aa', '#1e3a8a', '#6366f1', '#f59e0b', '#71717a'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#a1a1aa' } } } } });
+    if (pipeCtx) new Chart(pipeCtx, { type: 'bar', data: { labels: ['Neu', 'Qualifiziert', 'Angebot', 'Gewonnen'], datasets: [{ label: 'Wert', data: [280000, 241000, 32000, 125000], backgroundColor: ['#f59e0b', '#06b6d4', '#8b5cf6', '#10b981'] }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false }, ticks: { color: '#71717a' } }, y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#71717a', callback: v => '€' + (v/1000) + 'K' } } } } });
+}
+
+// =============================================
+// HANDELSREGISTER - HAUPTFEATURE
+// =============================================
+function renderHandelsregister() {
+    return `<div class="page active">
+        <div class="page-header">
+            <div><h1>🏛️ Handelsregister</h1><p>Deutsches Unternehmensregister durchsuchen</p></div>
+            <div class="page-actions">
+                <div class="api-status"><span class="dot" style="background:var(--handelsregister)"></span>Verbunden</div>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card hr"><div class="stat-top"><div class="stat-icon hr">🔍</div></div><div class="stat-value">${data.handelsregister.searches}</div><div class="stat-label">Suchen heute</div></div>
+            <div class="stat-card success"><div class="stat-value">${data.handelsregister.verified}</div><div class="stat-label">Verifiziert</div></div>
+            <div class="stat-card"><div class="stat-value">${data.hrSearchHistory.length}</div><div class="stat-label">Suchverlauf</div></div>
+            <div class="stat-card warning"><div class="stat-value">60/Std</div><div class="stat-label">Limit (§9 HGB)</div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h3>🔍 Erweiterte Suche</h3></div>
+            <div class="card-body">
+                <div class="form-row cols-3">
+                    <div class="form-group"><label>Schlagwörter / Firmenname</label><input type="text" class="form-control" id="hrKeywords" placeholder="z.B. Deutsche Bahn, West Money..."></div>
+                    <div class="form-group"><label>Niederlassung / Sitz</label><input type="text" class="form-control" id="hrCity" placeholder="z.B. Köln, Berlin..."></div>
+                    <div class="form-group"><label>Registerart</label><select class="form-control" id="hrRegisterArt"><option value="alle">Alle</option><option value="HRA">HRA (Einzelkaufleute, OHG, KG)</option><option value="HRB">HRB (GmbH, AG, UG)</option><option value="GnR">GnR (Genossenschaften)</option><option value="PR">PR (Partnerschaftsregister)</option><option value="VR">VR (Vereinsregister)</option></select></div>
+                </div>
+                <div class="form-row cols-4">
+                    <div class="form-group"><label>Rechtsform</label><select class="form-control" id="hrRechtsform"><option value="">Alle</option><option value="8">GmbH</option><option value="1">AG</option><option value="55">Einzelkaufmann</option><option value="10">KG</option><option value="12">OHG</option><option value="6">SE (Europäische AG)</option><option value="2">eG (Genossenschaft)</option></select></div>
+                    <div class="form-group"><label>Bundesland</label><select class="form-control" id="hrBundesland"><option value="">Alle</option><option value="NW">Nordrhein-Westfalen</option><option value="BY">Bayern</option><option value="BW">Baden-Württemberg</option><option value="BE">Berlin</option><option value="HH">Hamburg</option><option value="HE">Hessen</option><option value="NI">Niedersachsen</option><option value="SN">Sachsen</option></select></div>
+                    <div class="form-group"><label>Registernummer</label><input type="text" class="form-control" id="hrRegNr" placeholder="z.B. 12345"></div>
+                    <div class="form-group"><label>Registergericht</label><input type="text" class="form-control" id="hrGericht" placeholder="z.B. Köln"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="hrGeloescht"> Auch gelöschte Firmen anzeigen</label></div>
+                    <div class="form-group"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="hrAehnlich"> Ähnlich lautende Schlagwörter (Phonetische Suche)</label></div>
+                </div>
+                <div style="display:flex;gap:12px">
+                    <button class="btn btn-hr btn-lg" onclick="searchHandelsregister()">🔍 Suchen</button>
+                    <button class="btn btn-secondary" onclick="clearHRSearch()">🗑️ Zurücksetzen</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="hrResultsCard" style="display:none">
+            <div class="card-header"><h3>📋 Suchergebnisse</h3><span id="hrResultCount" class="tag hr">0 Treffer</span></div>
+            <div class="card-body" id="hrResults"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h3>📜 Suchverlauf</h3></div>
+            <div class="card-body no-padding">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Suche</th><th>Treffer</th><th>Datum</th><th></th></tr></thead>
+                        <tbody>${data.hrSearchHistory.map(h=>`<tr><td><strong>"${h.query}"</strong></td><td><span class="tag hr">${h.results}</span></td><td>${formatDate(h.date)}</td><td><button class="btn btn-sm btn-secondary" onclick="repeatHRSearch('${h.query}')">🔄</button></td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+            <div class="card-header"><h3>ℹ️ Hinweise zur Nutzung</h3></div>
+            <div class="card-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;font-size:13px">
+                    <div>
+                        <h4 style="color:var(--emerald);margin-bottom:8px">✅ Erlaubt</h4>
+                        <ul style="list-style:none;color:var(--text-2)">
+                            <li>• Einsichtnahme zu Informationszwecken (§9 Abs.1 HGB)</li>
+                            <li>• Recherche nach einzelnen Firmen</li>
+                            <li>• Einsicht in Unternehmensträgerdaten</li>
+                            <li>• Nutzung der Handelsregisterbekanntmachungen</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color:var(--rose);margin-bottom:8px">⚠️ Limits</h4>
+                        <ul style="list-style:none;color:var(--text-2)">
+                            <li>• Max. 60 Abrufe pro Stunde (Nutzungsordnung)</li>
+                            <li>• Keine automatisierten Massenabfragen</li>
+                            <li>• Verstöße können §§303a,b StGB erfüllen</li>
+                            <li>• Platzhalter: * (beliebig viele), ? (ein Zeichen)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
+
+function searchHandelsregister() {
+    const keywords = document.getElementById('hrKeywords').value.trim();
+    const city = document.getElementById('hrCity').value.trim();
+    
+    if (!keywords && !city) {
+        showToast('error', 'Fehler', 'Bitte Suchbegriff oder Stadt eingeben');
+        return;
+    }
+
+    showToast('hr', 'Handelsregister', 'Suche läuft...');
+    
+    // Simulate search with sample data
+    setTimeout(() => {
+        const query = keywords || city;
+        let results = sampleHRData.filter(r => {
+            const searchLower = query.toLowerCase();
+            return r.name.toLowerCase().includes(searchLower) || 
+                   r.sitz.toLowerCase().includes(searchLower) ||
+                   r.geschaeftsfuehrer.toLowerCase().includes(searchLower);
+        });
+        
+        // If no exact matches, show all sample data for demo
+        if (results.length === 0) {
+            results = sampleHRData;
+        }
+        
+        hrSearchResults = results;
+        
+        // Save to history
+        data.hrSearchHistory.unshift({ id: generateId(), query, results: results.length, date: new Date().toISOString().split('T')[0] });
+        data.handelsregister.searches++;
+        saveData();
+        
+        // Display results
+        displayHRResults(results);
+        showToast('success', 'Suche abgeschlossen', `${results.length} Treffer gefunden`);
+    }, 1000);
+}
+
+function displayHRResults(results) {
+    const card = document.getElementById('hrResultsCard');
+    const container = document.getElementById('hrResults');
+    const count = document.getElementById('hrResultCount');
+    
+    card.style.display = 'block';
+    count.textContent = results.length + ' Treffer';
+    
+    container.innerHTML = results.map(r => `
+        <div class="hr-result">
+            <div class="hr-result-header">
+                <div>
+                    <div class="hr-result-title">${r.name}</div>
+                    <div style="font-size:12px;color:var(--text-3);margin-top:4px">${r.sitz} · ${r.rechtsform}</div>
+                </div>
+                <div style="display:flex;gap:8px">
+                    <span class="hr-badge ${r.registerArt.toLowerCase()}">${r.registerArt} ${r.registerNummer}</span>
+                    <span class="status ${r.status}">${statusLabel(r.status)}</span>
+                </div>
+            </div>
+            <div class="hr-result-meta">
+                <div><span>Registergericht</span><strong>AG ${r.gericht}</strong></div>
+                <div><span>Stammkapital</span><strong>${r.kapital}</strong></div>
+                <div><span>Gründung</span><strong>${formatDate(r.gruendung)}</strong></div>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+                <div style="font-size:12px"><strong>Geschäftsführung:</strong> ${r.geschaeftsfuehrer}</div>
+                <div style="display:flex;gap:8px">
+                    <button class="btn btn-sm btn-secondary" onclick="viewHRDetails(${r.id})">📄 Details</button>
+                    <button class="btn btn-sm btn-primary" onclick="importHRToContacts(${r.id})">➕ Importieren</button>
+                </div>
+            </div>
+        </div>
+    `).join('') || '<div class="empty-state"><div class="empty-state-icon">🔍</div><h3>Keine Ergebnisse</h3><p>Versuchen Sie andere Suchbegriffe</p></div>';
+}
+
+function viewHRDetails(id) {
+    const r = sampleHRData.find(x => x.id === id);
+    if (!r) return;
+    
+    openModalWithContent(`
+        <div class="modal active lg">
+            <div class="modal-header"><h2>🏛️ ${r.name}</h2><button class="modal-close" onclick="closeModal()">×</button></div>
+            <div class="modal-body">
+                <div class="grid-2" style="margin-bottom:20px">
+                    <div class="card"><div class="card-body">
+                        <h4 style="margin-bottom:12px">📋 Registerdaten</h4>
+                        <div style="display:grid;gap:8px;font-size:13px">
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Registerart</span><span class="hr-badge ${r.registerArt.toLowerCase()}">${r.registerArt}</span></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Registernummer</span><strong>${r.registerNummer}</strong></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Registergericht</span><strong>AG ${r.gericht}</strong></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Status</span><span class="status ${r.status}">${statusLabel(r.status)}</span></div>
+                        </div>
+                    </div></div>
+                    <div class="card"><div class="card-body">
+                        <h4 style="margin-bottom:12px">🏢 Unternehmensdaten</h4>
+                        <div style="display:grid;gap:8px;font-size:13px">
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Rechtsform</span><strong>${r.rechtsform}</strong></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Sitz</span><strong>${r.sitz}</strong></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Stammkapital</span><strong>${r.kapital}</strong></div>
+                            <div style="display:flex;justify-content:space-between"><span style="color:var(--text-3)">Gründung</span><strong>${formatDate(r.gruendung)}</strong></div>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="card"><div class="card-body">
+                    <h4 style="margin-bottom:12px">👤 Vertretungsberechtigte</h4>
+                    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-3);border-radius:8px">
+                        <div style="width:48px;height:48px;background:var(--primary-glow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600">${getInitials(r.geschaeftsfuehrer)}</div>
+                        <div><div style="font-weight:600">${r.geschaeftsfuehrer}</div><div style="font-size:12px;color:var(--text-3)">Geschäftsführer</div></div>
+                    </div>
+                </div></div>
+            </div>
+            <div class="modal-footer">
+                <a href="https://www.handelsregister.de" target="_blank" class="btn btn-secondary">🔗 Im Original öffnen</a>
+                <button class="btn btn-hr" onclick="importHRToContacts(${r.id});closeModal()">➕ Als Lead importieren</button>
+            </div>
+        </div>
+    `);
+}
+
+function importHRToContacts(id) {
+    const r = sampleHRData.find(x => x.id === id);
+    if (!r) return;
+    
+    // Add to B2B Database
+    data.b2bDatabase.unshift({
+        id: generateId(),
+        company: r.name,
+        industry: 'Handelsregister',
+        employees: '-',
+        city: r.sitz,
+        email: '',
+        score: 70,
+        status: 'warm',
+        decisionMaker: r.geschaeftsfuehrer,
+        enriched: false,
+        source: 'Handelsregister',
+        hrVerified: true,
+        hrData: { registerArt: r.registerArt, registerNummer: r.registerNummer, gericht: r.gericht, kapital: r.kapital }
+    });
+    
+    // Add as Lead
+    data.leads.unshift({
+        id: generateId(),
+        name: 'HR-Import: ' + r.name,
+        company: r.name,
+        value: 25000,
+        status: 'new',
+        source: 'Handelsregister',
+        probability: 30
+    });
+    
+    data.handelsregister.verified++;
+    saveData();
+    updateAllCounts();
+    showToast('success', 'Importiert', r.name + ' wurde als Lead hinzugefügt');
+}
+
+function clearHRSearch() {
+    document.getElementById('hrKeywords').value = '';
+    document.getElementById('hrCity').value = '';
+    document.getElementById('hrRegNr').value = '';
+    document.getElementById('hrGericht').value = '';
+    document.getElementById('hrRegisterArt').value = 'alle';
+    document.getElementById('hrRechtsform').value = '';
+    document.getElementById('hrBundesland').value = '';
+    document.getElementById('hrResultsCard').style.display = 'none';
+}
+
+function repeatHRSearch(query) {
+    document.getElementById('hrKeywords').value = query;
+    searchHandelsregister();
 }
 
 // EXPLORIUM
@@ -517,7 +845,7 @@ function renderExplorium() {
         <div class="grid-3">
             <div class="card" onclick="showPage('leadgen')" style="cursor:pointer"><div class="card-body" style="text-align:center;padding:40px"><div style="font-size:48px">🔍</div><h3 style="margin:16px 0 8px">AI Lead Generator</h3><p style="color:var(--text-3)">B2B Leads finden</p></div></div>
             <div class="card" onclick="showPage('enrichment')" style="cursor:pointer"><div class="card-body" style="text-align:center;padding:40px"><div style="font-size:48px">✨</div><h3 style="margin:16px 0 8px">Data Enrichment</h3><p style="color:var(--text-3)">Kontakte anreichern</p></div></div>
-            <div class="card"><div class="card-body" style="text-align:center;padding:40px"><div style="font-size:48px">📊</div><h3 style="margin:16px 0 8px">Analytics</h3><p style="color:var(--text-3)">Insights</p></div></div>
+            <div class="card" onclick="showPage('handelsregister')" style="cursor:pointer"><div class="card-body" style="text-align:center;padding:40px"><div style="font-size:48px">🏛️</div><h3 style="margin:16px 0 8px">Handelsregister</h3><p style="color:var(--text-3)">Firmen verifizieren</p></div></div>
         </div>
         <div class="card"><div class="card-header"><h3>🔑 API Key</h3></div><div class="card-body"><div style="display:flex;gap:12px"><input type="password" class="form-control" value="${EXPLORIUM_API_KEY}" id="expKey" style="flex:1;font-family:monospace"><button class="btn btn-secondary" onclick="document.getElementById('expKey').type=document.getElementById('expKey').type==='password'?'text':'password'">👁️</button><button class="btn btn-explorium" onclick="showToast('explorium','API Test','Verbindung erfolgreich!')">🔗 Testen</button></div></div></div>
     </div>`;
@@ -526,18 +854,18 @@ function renderExplorium() {
 // LEAD GENERATOR
 function renderLeadGen() {
     return `<div class="page active">
-        <div class="page-header"><div><h1>🔍 AI Lead Generator</h1><p>Powered by Explorium</p></div></div>
+        <div class="page-header"><div><h1>🔍 AI Lead Generator</h1><p>Powered by Explorium + Handelsregister</p></div></div>
         <div class="card"><div class="card-header"><h3>🎯 Suchkriterien</h3></div><div class="card-body">
             <div class="form-row cols-4">
                 <div class="form-group"><label>Branche</label><select class="form-control"><option>Alle</option><option>Baugewerbe</option><option>Immobilien</option><option>Technologie</option></select></div>
                 <div class="form-group"><label>Region</label><select class="form-control"><option>Alle</option><option>Köln</option><option>Düsseldorf</option><option>NRW</option></select></div>
                 <div class="form-group"><label>Mitarbeiter</label><select class="form-control"><option>Alle</option><option>10-50</option><option>50-100</option><option>100+</option></select></div>
-                <div class="form-group"><label>Min. Score</label><select class="form-control"><option>Alle</option><option>80+ (Hot)</option><option>60+ (Warm)</option></select></div>
+                <div class="form-group"><label>Quelle</label><select class="form-control"><option>Alle</option><option>Explorium</option><option>Handelsregister</option></select></div>
             </div>
-            <button class="btn btn-explorium" onclick="showToast('explorium','Suche','${data.b2bDatabase.length} Unternehmen gefunden')">🤖 Mit Explorium suchen</button>
+            <div style="display:flex;gap:12px"><button class="btn btn-explorium" onclick="showToast('explorium','Suche','${data.b2bDatabase.length} Unternehmen gefunden')">🤖 Explorium suchen</button><button class="btn btn-hr" onclick="showPage('handelsregister')">🏛️ Handelsregister</button></div>
         </div></div>
-        <div class="stats-grid"><div class="stat-card explorium"><div class="stat-value">${data.b2bDatabase.filter(l=>l.status==='hot').length}</div><div class="stat-label">Hot 🔥</div></div><div class="stat-card"><div class="stat-value">${data.b2bDatabase.filter(l=>l.status==='warm').length}</div><div class="stat-label">Warm ☀️</div></div><div class="stat-card"><div class="stat-value">${data.b2bDatabase.filter(l=>l.enriched).length}</div><div class="stat-label">Angereichert</div></div><div class="stat-card"><div class="stat-value">${data.b2bDatabase.length}</div><div class="stat-label">Gesamt</div></div></div>
-        <div class="card"><div class="card-header"><h3>📋 Ergebnisse</h3></div><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Firma</th><th>Branche</th><th>Stadt</th><th>Score</th><th>Quelle</th><th></th></tr></thead><tbody>${data.b2bDatabase.map(l=>`<tr><td><strong>${l.company}</strong><br><span style="font-size:11px;color:var(--text-3)">${l.decisionMaker}</span></td><td>${l.industry}</td><td>${l.city}</td><td><span class="status ${l.status}">${l.score}%</span></td><td><span class="tag ${l.source==='Explorium'?'explorium':''}">${l.source}</span></td><td><button class="btn btn-sm btn-primary" onclick="convertB2BToLead(${l.id})">➕ Lead</button></td></tr>`).join('')}</tbody></table></div></div></div>
+        <div class="stats-grid"><div class="stat-card explorium"><div class="stat-value">${data.b2bDatabase.filter(l=>l.status==='hot').length}</div><div class="stat-label">Hot 🔥</div></div><div class="stat-card hr"><div class="stat-value">${data.b2bDatabase.filter(l=>l.hrVerified).length}</div><div class="stat-label">HR-Verifiziert</div></div><div class="stat-card"><div class="stat-value">${data.b2bDatabase.filter(l=>l.enriched).length}</div><div class="stat-label">Angereichert</div></div><div class="stat-card"><div class="stat-value">${data.b2bDatabase.length}</div><div class="stat-label">Gesamt</div></div></div>
+        <div class="card"><div class="card-header"><h3>📋 Ergebnisse</h3></div><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Firma</th><th>Branche</th><th>Stadt</th><th>Score</th><th>Quelle</th><th>HR</th><th></th></tr></thead><tbody>${data.b2bDatabase.map(l=>`<tr><td><strong>${l.company}</strong><br><span style="font-size:11px;color:var(--text-3)">${l.decisionMaker}</span></td><td>${l.industry}</td><td>${l.city}</td><td><span class="status ${l.status}">${l.score}%</span></td><td><span class="tag ${l.source==='Explorium'?'explorium':l.source==='Handelsregister'?'hr':''}">${l.source}</span></td><td>${l.hrVerified?'<span class="hr-badge">✓</span>':'-'}</td><td><button class="btn btn-sm btn-primary" onclick="convertB2BToLead(${l.id})">➕</button></td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
 
@@ -545,7 +873,7 @@ function convertB2BToLead(id) {
     const l = data.b2bDatabase.find(x => x.id === id);
     if (!l) return;
     data.leads.unshift({ id: generateId(), name: 'B2B - ' + l.company, company: l.company, value: 25000, status: 'new', source: l.source, probability: 40 });
-    data.contacts.unshift({ id: generateId(), firstName: l.decisionMaker.split(' ')[0], lastName: l.decisionMaker.split(' ').slice(1).join(' '), email: l.email, company: l.company, status: 'active', source: l.source });
+    data.contacts.unshift({ id: generateId(), firstName: l.decisionMaker.split(' ')[0], lastName: l.decisionMaker.split(' ').slice(1).join(' '), email: l.email, company: l.company, status: 'active', source: l.source, hrVerified: l.hrVerified });
     saveData(); updateAllCounts();
     showToast('success', 'Lead erstellt', l.company);
 }
@@ -553,20 +881,21 @@ function convertB2BToLead(id) {
 // ENRICHMENT
 function renderEnrichment() {
     return `<div class="page active">
-        <div class="page-header"><div><h1>✨ Data Enrichment</h1><p>Kontakte mit Explorium anreichern</p></div></div>
-        <div class="stats-grid"><div class="stat-card explorium"><div class="stat-value">${data.contacts.filter(c=>c.enriched).length}</div><div class="stat-label">Angereichert</div></div><div class="stat-card"><div class="stat-value">${data.contacts.filter(c=>!c.enriched).length}</div><div class="stat-label">Ausstehend</div></div><div class="stat-card"><div class="stat-value">${data.explorium.credits}</div><div class="stat-label">Credits</div></div></div>
-        <div class="card"><div class="card-header"><h3>👥 Kontakte</h3><button class="btn btn-explorium" onclick="enrichAll()">✨ Alle anreichern</button></div><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Name</th><th>Firma</th><th>Status</th><th></th></tr></thead><tbody>${data.contacts.map(c=>`<tr><td><strong>${c.firstName} ${c.lastName}</strong></td><td>${c.company||'-'}</td><td>${c.enriched?'<span class="tag success">✓</span>':'<span class="tag warning">⏳</span>'}</td><td>${!c.enriched?`<button class="btn btn-sm btn-explorium" onclick="enrichContact(${c.id})">✨</button>`:''}</td></tr>`).join('')}</tbody></table></div></div></div>
+        <div class="page-header"><div><h1>✨ Data Enrichment</h1><p>Kontakte mit Explorium & HR anreichern</p></div></div>
+        <div class="stats-grid"><div class="stat-card explorium"><div class="stat-value">${data.contacts.filter(c=>c.enriched).length}</div><div class="stat-label">Angereichert</div></div><div class="stat-card hr"><div class="stat-value">${data.contacts.filter(c=>c.hrVerified).length}</div><div class="stat-label">HR-Verifiziert</div></div><div class="stat-card"><div class="stat-value">${data.contacts.filter(c=>!c.enriched).length}</div><div class="stat-label">Ausstehend</div></div><div class="stat-card"><div class="stat-value">${data.explorium.credits}</div><div class="stat-label">Credits</div></div></div>
+        <div class="card"><div class="card-header"><h3>👥 Kontakte</h3><div><button class="btn btn-sm btn-hr" onclick="verifyAllHR()" style="margin-right:8px">🏛️ Alle HR-prüfen</button><button class="btn btn-sm btn-explorium" onclick="enrichAll()">✨ Alle anreichern</button></div></div><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Name</th><th>Firma</th><th>Angereichert</th><th>HR-Verifiziert</th><th></th></tr></thead><tbody>${data.contacts.map(c=>`<tr><td><strong>${c.firstName} ${c.lastName}</strong></td><td>${c.company||'-'}</td><td>${c.enriched?'<span class="tag success">✓</span>':'<span class="tag warning">⏳</span>'}</td><td>${c.hrVerified?'<span class="hr-badge">✓ HR</span>':'<span class="tag">-</span>'}</td><td>${!c.enriched||!c.hrVerified?`<button class="btn btn-sm btn-secondary" onclick="enrichContact(${c.id})">✨</button>`:''}</td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
 
 function enrichContact(id) { const c=data.contacts.find(x=>x.id===id); if(c){c.enriched=true;c.score=Math.floor(Math.random()*30)+70;data.explorium.enrichments++;saveData();showPage('enrichment');showToast('explorium','Angereichert',c.firstName);} }
 function enrichAll() { data.contacts.filter(c=>!c.enriched).forEach(c=>{c.enriched=true;c.score=Math.floor(Math.random()*30)+70;}); data.explorium.enrichments+=data.contacts.length; saveData(); showPage('enrichment'); showToast('success','Fertig','Alle angereichert'); }
+function verifyAllHR() { data.contacts.forEach(c=>{c.hrVerified=true;}); data.handelsregister.verified+=data.contacts.length; saveData(); showPage('enrichment'); showToast('hr','HR-Prüfung','Alle Kontakte verifiziert'); }
 
 // CONTACTS
 function renderContacts() {
     return `<div class="page active">
-        <div class="page-header"><div><h1>👥 Kontakte</h1><p>${data.contacts.length} Kontakte</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('contact')">+ Neuer Kontakt</button></div></div>
-        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Name</th><th>E-Mail</th><th>Firma</th><th>Status</th><th>Score</th><th></th></tr></thead><tbody>${data.contacts.map(c=>`<tr><td><strong>${c.firstName} ${c.lastName}</strong></td><td>${c.email}</td><td>${c.company||'-'}</td><td><span class="status ${c.status}">${statusLabel(c.status)}</span></td><td>${c.score||'-'}</td><td><button class="btn btn-sm btn-secondary" onclick="deleteContact(${c.id})">🗑️</button></td></tr>`).join('')}</tbody></table></div></div></div>
+        <div class="page-header"><div><h1>👥 Kontakte</h1><p>${data.contacts.length} Kontakte · ${data.contacts.filter(c=>c.hrVerified).length} HR-verifiziert</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('contact')">+ Neuer Kontakt</button></div></div>
+        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Name</th><th>E-Mail</th><th>Firma</th><th>Status</th><th>HR</th><th></th></tr></thead><tbody>${data.contacts.map(c=>`<tr><td><strong>${c.firstName} ${c.lastName}</strong></td><td>${c.email}</td><td>${c.company||'-'}</td><td><span class="status ${c.status}">${statusLabel(c.status)}</span></td><td>${c.hrVerified?'<span class="hr-badge">✓</span>':'-'}</td><td><button class="btn btn-sm btn-secondary" onclick="deleteContact(${c.id})">🗑️</button></td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
 
@@ -575,9 +904,9 @@ function deleteContact(id) { if(!confirm('Löschen?'))return; data.contacts=data
 // LEADS
 function renderLeads() {
     return `<div class="page active">
-        <div class="page-header"><div><h1>🎯 Leads</h1><p>${data.leads.length} Leads · ${formatCurrency(data.leads.reduce((s,l)=>s+l.value,0))} Pipeline</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button></div></div>
-        <div class="stats-grid"><div class="stat-card"><div class="stat-value">${data.leads.filter(l=>l.status==='new').length}</div><div class="stat-label">Neu</div></div><div class="stat-card"><div class="stat-value">${data.leads.filter(l=>l.status==='qualified').length}</div><div class="stat-label">Qualifiziert</div></div><div class="stat-card"><div class="stat-value">${data.leads.filter(l=>l.status==='proposal').length}</div><div class="stat-label">Angebot</div></div><div class="stat-card success"><div class="stat-value">${data.leads.filter(l=>l.status==='won').length}</div><div class="stat-label">Gewonnen</div></div></div>
-        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Lead</th><th>Firma</th><th>Wert</th><th>Status</th><th>Quelle</th><th></th></tr></thead><tbody>${data.leads.map(l=>`<tr><td><strong>${l.name}</strong></td><td>${l.company}</td><td><strong style="color:var(--emerald)">${formatCurrency(l.value)}</strong></td><td><span class="status ${l.status}">${statusLabel(l.status)}</span></td><td>${l.source}</td><td><button class="btn btn-sm btn-secondary" onclick="deleteLead('${l.id}')">🗑️</button></td></tr>`).join('')}</tbody></table></div></div></div>
+        <div class="page-header"><div><h1>🎯 Leads</h1><p>${data.leads.length} Leads · ${formatCurrency(data.leads.reduce((s,l)=>s+l.value,0))} Pipeline</p></div><div class="page-actions"><button class="btn btn-hr" onclick="showPage('handelsregister')">🏛️ HR-Import</button><button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button></div></div>
+        <div class="stats-grid"><div class="stat-card"><div class="stat-value">${data.leads.filter(l=>l.status==='new').length}</div><div class="stat-label">Neu</div></div><div class="stat-card"><div class="stat-value">${data.leads.filter(l=>l.status==='qualified').length}</div><div class="stat-label">Qualifiziert</div></div><div class="stat-card hr"><div class="stat-value">${data.leads.filter(l=>l.source==='Handelsregister').length}</div><div class="stat-label">HR-Leads</div></div><div class="stat-card success"><div class="stat-value">${data.leads.filter(l=>l.status==='won').length}</div><div class="stat-label">Gewonnen</div></div></div>
+        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Lead</th><th>Firma</th><th>Wert</th><th>Status</th><th>Quelle</th><th></th></tr></thead><tbody>${data.leads.map(l=>`<tr><td><strong>${l.name}</strong></td><td>${l.company}</td><td><strong style="color:var(--emerald)">${formatCurrency(l.value)}</strong></td><td><span class="status ${l.status}">${statusLabel(l.status)}</span></td><td><span class="tag ${l.source==='Handelsregister'?'hr':l.source==='Explorium'?'explorium':''}">${l.source}</span></td><td><button class="btn btn-sm btn-secondary" onclick="deleteLead('${l.id}')">🗑️</button></td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
 
@@ -588,272 +917,41 @@ function renderPipeline() {
     const stages = [{id:'new',name:'🆕 Neu',color:'amber'},{id:'qualified',name:'✓ Qualifiziert',color:'cyan'},{id:'proposal',name:'📋 Angebot',color:'violet'},{id:'won',name:'🎉 Gewonnen',color:'emerald'}];
     return `<div class="page active">
         <div class="page-header"><div><h1>📈 Pipeline</h1><p>${formatCurrency(data.leads.reduce((s,l)=>s+l.value,0))} Gesamtwert</p></div></div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">${stages.map(s=>{const items=data.leads.filter(l=>l.status===s.id);return`<div class="card"><div class="card-header"><h3 style="font-size:13px">${s.name}</h3><span style="color:var(--${s.color})">${formatCurrency(items.reduce((a,l)=>a+l.value,0))}</span></div><div class="card-body" style="min-height:200px">${items.map(l=>`<div style="background:var(--bg-3);border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid var(--${s.color})"><div style="font-weight:500">${l.company}</div><div style="font-size:12px;color:var(--text-3)">${l.name}</div><div style="color:var(--emerald);font-weight:700;margin-top:8px">${formatCurrency(l.value)}</div></div>`).join('')||'<div style="text-align:center;color:var(--text-3);padding:20px">Keine</div>'}</div></div>`}).join('')}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">${stages.map(s=>{const items=data.leads.filter(l=>l.status===s.id);return`<div class="card"><div class="card-header"><h3 style="font-size:13px">${s.name}</h3><span style="color:var(--${s.color})">${formatCurrency(items.reduce((a,l)=>a+l.value,0))}</span></div><div class="card-body" style="min-height:200px">${items.map(l=>`<div style="background:var(--bg-3);border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid var(--${s.color})"><div style="font-weight:500">${l.company}</div><div style="font-size:12px;color:var(--text-3)">${l.name}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span style="color:var(--emerald);font-weight:700">${formatCurrency(l.value)}</span>${l.source==='Handelsregister'?'<span class="hr-badge">HR</span>':''}</div></div>`).join('')||'<div style="text-align:center;color:var(--text-3);padding:20px">Keine</div>'}</div></div>`}).join('')}</div>
     </div>`;
 }
 
-// CAMPAIGNS - FULL VERSION
+// CAMPAIGNS
 function renderCampaigns() {
     const running = data.campaigns.filter(c => c.status === 'running');
     const totalSent = data.campaigns.reduce((s, c) => s + c.sent, 0);
-    const totalOpened = data.campaigns.reduce((s, c) => s + c.opened, 0);
-    const totalRevenue = data.campaigns.reduce((s, c) => s + (c.revenue || 0), 0);
-    const avgOpenRate = totalSent > 0 ? Math.round((totalOpened / totalSent) * 100) : 0;
-
     return `<div class="page active">
-        <div class="page-header">
-            <div><h1>📧 Kampagnen</h1><p>E-Mail & WhatsApp Marketing</p></div>
-            <div class="page-actions">
-                <button class="btn btn-secondary" onclick="showPage('templates')">📝 Vorlagen</button>
-                <button class="btn btn-secondary" onclick="showPage('sequences')">⚡ Sequenzen</button>
-                <button class="btn btn-gradient" onclick="openCampaignWizard()">+ Neue Kampagne</button>
-            </div>
-        </div>
-        
-        <div class="stats-grid">
-            <div class="stat-card highlight"><div class="stat-top"><div class="stat-icon primary">📧</div></div><div class="stat-value">${running.length}</div><div class="stat-label">Aktive Kampagnen</div></div>
-            <div class="stat-card"><div class="stat-top"><div class="stat-icon amber">📤</div></div><div class="stat-value">${totalSent.toLocaleString()}</div><div class="stat-label">E-Mails gesendet</div></div>
-            <div class="stat-card success"><div class="stat-top"><div class="stat-icon emerald">📬</div><span class="stat-trend up">↑ ${avgOpenRate}%</span></div><div class="stat-value">${avgOpenRate}%</div><div class="stat-label">Ø Öffnungsrate</div></div>
-            <div class="stat-card stripe"><div class="stat-top"><div class="stat-icon stripe">💰</div></div><div class="stat-value">${formatCurrency(totalRevenue)}</div><div class="stat-label">Kampagnen-Umsatz</div></div>
-        </div>
-
-        <div class="tabs">
-            <div class="tab active" onclick="filterCampaigns('all',this)">Alle <span class="count">${data.campaigns.length}</span></div>
-            <div class="tab" onclick="filterCampaigns('running',this)">🟢 Aktiv <span class="count">${data.campaigns.filter(c=>c.status==='running').length}</span></div>
-            <div class="tab" onclick="filterCampaigns('scheduled',this)">📅 Geplant <span class="count">${data.campaigns.filter(c=>c.status==='scheduled').length}</span></div>
-            <div class="tab" onclick="filterCampaigns('draft',this)">📝 Entwurf <span class="count">${data.campaigns.filter(c=>c.status==='draft').length}</span></div>
-            <div class="tab" onclick="filterCampaigns('completed',this)">✅ Fertig <span class="count">${data.campaigns.filter(c=>c.status==='completed').length}</span></div>
-        </div>
-
-        <div id="campaignsList">${renderCampaignsList(data.campaigns)}</div>
+        <div class="page-header"><div><h1>📧 Kampagnen</h1><p>${data.campaigns.length} Kampagnen</p></div><div class="page-actions"><button class="btn btn-gradient" onclick="openCampaignWizard()">+ Neue Kampagne</button></div></div>
+        <div class="stats-grid"><div class="stat-card highlight"><div class="stat-value">${running.length}</div><div class="stat-label">Aktive Kampagnen</div></div><div class="stat-card"><div class="stat-value">${totalSent}</div><div class="stat-label">E-Mails gesendet</div></div><div class="stat-card success"><div class="stat-value">${data.campaigns.reduce((s,c)=>s+(c.delivered>0?Math.round(c.opened/c.delivered*100):0),0)/Math.max(data.campaigns.length,1)}%</div><div class="stat-label">Ø Öffnungsrate</div></div><div class="stat-card stripe"><div class="stat-value">${formatCurrency(data.campaigns.reduce((s,c)=>s+(c.revenue||0),0))}</div><div class="stat-label">Umsatz</div></div></div>
+        ${data.campaigns.map(c => `<div class="campaign-card" onclick="viewCampaign(${c.id})"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:24px">${c.type === 'email' ? '📧' : '💬'}</span><div><div style="font-size:16px;font-weight:600">${c.name}</div><div style="font-size:12px;color:var(--text-3)">${c.audience} · ${c.audienceSize} Empfänger</div></div></div><span class="status ${c.status}">${statusLabel(c.status)}</span></div><div class="campaign-metrics"><div class="campaign-metric"><div class="value">${c.sent}</div><div class="label">Gesendet</div></div><div class="campaign-metric"><div class="value">${c.delivered>0?Math.round(c.delivered/c.sent*100):0}%</div><div class="label">Zugestellt</div></div><div class="campaign-metric"><div class="value">${c.delivered>0?Math.round(c.opened/c.delivered*100):0}%</div><div class="label">Geöffnet</div></div><div class="campaign-metric"><div class="value">${c.opened>0?Math.round(c.clicked/c.opened*100):0}%</div><div class="label">Geklickt</div></div><div class="campaign-metric"><div class="value">${c.replied}</div><div class="label">Antworten</div></div><div class="campaign-metric"><div class="value" style="color:var(--emerald)">${formatCurrency(c.revenue||0)}</div><div class="label">Umsatz</div></div></div></div>`).join('')}
     </div>`;
 }
 
-function renderCampaignsList(campaigns) {
-    return campaigns.map(c => {
-        const deliveryRate = c.sent > 0 ? Math.round((c.delivered / c.sent) * 100) : 0;
-        const openRate = c.delivered > 0 ? Math.round((c.opened / c.delivered) * 100) : 0;
-        const clickRate = c.opened > 0 ? Math.round((c.clicked / c.opened) * 100) : 0;
-        const replyRate = c.delivered > 0 ? Math.round((c.replied / c.delivered) * 100) : 0;
-
-        return `<div class="campaign-card" onclick="viewCampaign(${c.id})">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                <div style="display:flex;align-items:center;gap:12px">
-                    <span style="font-size:24px">${c.type === 'email' ? '📧' : '💬'}</span>
-                    <div>
-                        <div style="font-size:16px;font-weight:600">${c.name}</div>
-                        <div style="font-size:12px;color:var(--text-3)">${c.audience} · ${c.audienceSize || c.sent} Empfänger</div>
-                    </div>
-                </div>
-                <div style="display:flex;align-items:center;gap:12px">
-                    ${c.abTest ? '<span class="tag primary">A/B Test</span>' : ''}
-                    <span class="status ${c.status}">${statusLabel(c.status)}</span>
-                </div>
-            </div>
-            <div class="campaign-metrics">
-                <div class="campaign-metric"><div class="value">${c.sent}</div><div class="label">Gesendet</div></div>
-                <div class="campaign-metric"><div class="value" style="color:${deliveryRate>95?'var(--emerald)':'var(--amber)'}">${deliveryRate}%</div><div class="label">Zugestellt</div></div>
-                <div class="campaign-metric"><div class="value" style="color:${openRate>30?'var(--emerald)':openRate>15?'var(--amber)':'var(--rose)'}">${openRate}%</div><div class="label">Geöffnet</div></div>
-                <div class="campaign-metric"><div class="value" style="color:${clickRate>10?'var(--emerald)':'var(--text-0)'}">${clickRate}%</div><div class="label">Geklickt</div></div>
-                <div class="campaign-metric"><div class="value" style="color:var(--cyan)">${replyRate}%</div><div class="label">Antworten</div></div>
-                <div class="campaign-metric"><div class="value" style="color:var(--emerald)">${c.revenue > 0 ? formatCurrency(c.revenue) : '-'}</div><div class="label">Umsatz</div></div>
-            </div>
-            ${c.abTest ? `<div style="margin-top:12px;display:flex;gap:16px">
-                <div style="flex:1;background:var(--bg-2);padding:8px 12px;border-radius:6px;border-left:3px solid var(--primary)"><span style="font-weight:600;color:var(--primary)">A:</span> ${c.variantA.openRate}% Öffnung</div>
-                <div style="flex:1;background:var(--bg-2);padding:8px 12px;border-radius:6px;border-left:3px solid var(--violet)"><span style="font-weight:600;color:var(--violet)">B:</span> ${c.variantB.openRate}% Öffnung</div>
-            </div>` : ''}
-        </div>`;
-    }).join('') || '<div class="empty-state"><div class="empty-state-icon">📧</div><h3>Keine Kampagnen</h3></div>';
-}
-
-function filterCampaigns(status, el) {
-    document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('active'));
-    if(el) el.classList.add('active');
-    const filtered = status === 'all' ? data.campaigns : data.campaigns.filter(c => c.status === status);
-    document.getElementById('campaignsList').innerHTML = renderCampaignsList(filtered);
-}
-
-function viewCampaign(id) {
-    const c = data.campaigns.find(x => x.id === id);
-    if (!c) return;
-    const openRate = c.delivered > 0 ? Math.round((c.opened / c.delivered) * 100) : 0;
-    const clickRate = c.opened > 0 ? Math.round((c.clicked / c.opened) * 100) : 0;
-    
-    openModalWithContent(`
-        <div class="modal active xxl">
-            <div class="modal-header">
-                <h2>${c.type === 'email' ? '📧' : '💬'} ${c.name}</h2>
-                <button class="modal-close" onclick="closeModal()">×</button>
-            </div>
-            <div class="modal-body" style="max-height:70vh">
-                <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
-                    <div class="stat-card"><div class="stat-value">${c.sent}</div><div class="stat-label">Gesendet</div></div>
-                    <div class="stat-card success"><div class="stat-value">${openRate}%</div><div class="stat-label">Öffnungsrate</div></div>
-                    <div class="stat-card"><div class="stat-value">${clickRate}%</div><div class="stat-label">Klickrate</div></div>
-                    <div class="stat-card stripe"><div class="stat-value">${formatCurrency(c.revenue||0)}</div><div class="stat-label">Umsatz</div></div>
-                </div>
-                <div class="grid-2" style="margin-top:20px">
-                    <div class="card">
-                        <div class="card-header"><h3>📊 Performance</h3></div>
-                        <div class="card-body">
-                            <div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Zustellung</span><span>${c.delivered}/${c.sent}</span></div><div class="progress-bar lg"><div class="progress-bar-fill emerald" style="width:${c.sent>0?Math.round(c.delivered/c.sent*100):0}%"></div></div></div>
-                            <div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Geöffnet</span><span>${c.opened}/${c.delivered}</span></div><div class="progress-bar lg"><div class="progress-bar-fill primary" style="width:${openRate}%"></div></div></div>
-                            <div style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Geklickt</span><span>${c.clicked}/${c.opened}</span></div><div class="progress-bar lg"><div class="progress-bar-fill gradient" style="width:${clickRate}%"></div></div></div>
-                            <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Antworten</span><span>${c.replied}</span></div><div class="progress-bar lg"><div class="progress-bar-fill explorium" style="width:${c.delivered>0?Math.round(c.replied/c.delivered*100):0}%"></div></div></div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header"><h3>📋 Details</h3></div>
-                        <div class="card-body">
-                            <div style="display:grid;gap:12px">
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-3)">Status</span><span class="status ${c.status}">${statusLabel(c.status)}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-3)">Typ</span><span>${c.type === 'email' ? '📧 E-Mail' : '💬 WhatsApp'}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-3)">Zielgruppe</span><span>${c.audience}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-3)">Start</span><span>${formatDate(c.startDate)}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="color:var(--text-3)">Bounces/Abmeldungen</span><span>${c.bounced} / ${c.unsubscribed}</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="duplicateCampaign(${c.id})">📋 Duplizieren</button>
-                ${c.status === 'running' ? '<button class="btn btn-warning" onclick="pauseCampaign('+c.id+')">⏸️ Pause</button>' : ''}
-                ${c.status === 'paused' || c.status === 'draft' ? '<button class="btn btn-success" onclick="startCampaign('+c.id+')">▶️ Start</button>' : ''}
-                <button class="btn btn-secondary" onclick="deleteCampaign(${c.id})">🗑️</button>
-            </div>
-        </div>
-    `);
-}
-
-function openCampaignWizard() {
-    campaignWizardStep = 1;
-    openModalWithContent(`
-        <div class="modal active xl">
-            <div class="modal-header"><h2>📧 Neue Kampagne</h2><button class="modal-close" onclick="closeModal()">×</button></div>
-            <div class="modal-body">
-                <div class="wizard-steps">
-                    <div class="wizard-step active" id="wizStep1"><div class="wizard-step-number">1</div><div class="wizard-step-label">Grundlagen</div></div>
-                    <div class="wizard-step" id="wizStep2"><div class="wizard-step-number">2</div><div class="wizard-step-label">Zielgruppe</div></div>
-                    <div class="wizard-step" id="wizStep3"><div class="wizard-step-number">3</div><div class="wizard-step-label">Inhalt</div></div>
-                    <div class="wizard-step" id="wizStep4"><div class="wizard-step-number">4</div><div class="wizard-step-label">Zeitplan</div></div>
-                </div>
-                <div id="wizardContent">${renderWizardStep1()}</div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="wizPrev" onclick="prevWizardStep()" style="display:none">← Zurück</button>
-                <div style="flex:1"></div>
-                <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
-                <button class="btn btn-gradient" id="wizNext" onclick="nextWizardStep()">Weiter →</button>
-            </div>
-        </div>
-    `);
-}
-
-function renderWizardStep1() {
-    return `<div class="form-group"><label>Kampagnen-Name *</label><input type="text" class="form-control" id="campName" placeholder="z.B. Smart Home Q1 2026"></div>
-        <div class="form-row">
-            <div class="form-group"><label>Typ</label><select class="form-control" id="campType"><option value="email">📧 E-Mail</option><option value="whatsapp">💬 WhatsApp</option></select></div>
-            <div class="form-group"><label>Tags</label><input type="text" class="form-control" id="campTags" placeholder="b2b, smart-home"></div>
-        </div>`;
-}
-
-function renderWizardStep2() {
-    return `<div class="form-group"><label>Zielgruppe</label>
-        <div class="grid-2" style="margin-top:12px">
-            <div class="template-card selected" onclick="selectAudience(this)"><div style="font-size:24px;margin-bottom:8px">👥</div><strong>Alle Kontakte</strong><div style="font-size:12px;color:var(--text-3)">${data.contacts.length} Kontakte</div></div>
-            <div class="template-card" onclick="selectAudience(this)"><div style="font-size:24px;margin-bottom:8px">🔥</div><strong>Hot Leads</strong><div style="font-size:12px;color:var(--text-3)">${data.b2bDatabase.filter(l=>l.status==='hot').length} Unternehmen</div></div>
-            <div class="template-card" onclick="selectAudience(this)"><div style="font-size:24px;margin-bottom:8px">🤖</div><strong>Explorium Leads</strong><div style="font-size:12px;color:var(--text-3)">${data.b2bDatabase.filter(l=>l.source==='Explorium').length} Unternehmen</div></div>
-            <div class="template-card" onclick="selectAudience(this)"><div style="font-size:24px;margin-bottom:8px">🎯</div><strong>Alle Leads</strong><div style="font-size:12px;color:var(--text-3)">${data.leads.length} Leads</div></div>
-        </div>
-    </div>`;
-}
-
-function renderWizardStep3() {
-    return `<div class="form-group"><label>Vorlage</label>
-        <div class="grid-3" style="margin-top:12px">${data.templates.filter(t=>t.type==='email').map(t=>`<div class="template-card" onclick="selectTemplate(this,'${t.key}')"><strong>${t.name}</strong><div style="font-size:12px;color:var(--text-3);margin-top:4px">${t.subject}</div>${t.openRate?`<div style="font-size:11px;color:var(--emerald);margin-top:8px">${t.openRate}% Öffnung</div>`:''}</div>`).join('')}</div>
-    </div>
-    <div class="form-group" style="margin-top:20px"><label>Betreff *</label><input type="text" class="form-control" id="campSubject" placeholder="Betreffzeile..."></div>
-    <div class="form-group"><div style="display:flex;justify-content:space-between;align-items:center"><label style="margin:0">A/B Test</label><div class="switch" id="abSwitch" onclick="this.classList.toggle('active')"></div></div></div>`;
-}
-
-function renderWizardStep4() {
-    return `<div class="form-group"><label>Wann senden?</label>
-        <div class="grid-3" style="margin-top:12px">
-            <div class="template-card selected" onclick="selectSchedule(this)"><div style="font-size:24px;margin-bottom:8px">🚀</div><strong>Sofort</strong></div>
-            <div class="template-card" onclick="selectSchedule(this)"><div style="font-size:24px;margin-bottom:8px">📅</div><strong>Geplant</strong></div>
-            <div class="template-card" onclick="selectSchedule(this)"><div style="font-size:24px;margin-bottom:8px">⚡</div><strong>Sequenz</strong></div>
-        </div>
-    </div>
-    <div class="form-row" style="margin-top:20px">
-        <div class="form-group"><label>Datum</label><input type="date" class="form-control" id="campDate"></div>
-        <div class="form-group"><label>Uhrzeit</label><input type="time" class="form-control" id="campTime" value="09:00"></div>
-    </div>`;
-}
-
-function nextWizardStep() {
-    if (campaignWizardStep === 4) {
-        const name = document.getElementById('campName')?.value || 'Neue Kampagne';
-        data.campaigns.unshift({ id: Date.now(), name, type: 'email', status: 'draft', audience: 'Alle Kontakte', audienceSize: data.contacts.length, sent: 0, delivered: 0, opened: 0, clicked: 0, replied: 0, bounced: 0, unsubscribed: 0, converted: 0, revenue: 0, startDate: new Date().toISOString().split('T')[0], tags: [] });
-        saveData(); closeModal(); showPage('campaigns'); showToast('success', 'Kampagne erstellt', name);
-        return;
-    }
-    campaignWizardStep++;
-    updateWizardUI();
-}
-
-function prevWizardStep() { if (campaignWizardStep > 1) { campaignWizardStep--; updateWizardUI(); } }
-
-function updateWizardUI() {
-    for (let i = 1; i <= 4; i++) {
-        const step = document.getElementById(`wizStep${i}`);
-        step.classList.remove('active', 'completed');
-        if (i < campaignWizardStep) step.classList.add('completed');
-        if (i === campaignWizardStep) step.classList.add('active');
-    }
-    const steps = [null, renderWizardStep1, renderWizardStep2, renderWizardStep3, renderWizardStep4];
-    document.getElementById('wizardContent').innerHTML = steps[campaignWizardStep]();
-    document.getElementById('wizPrev').style.display = campaignWizardStep > 1 ? 'block' : 'none';
-    document.getElementById('wizNext').textContent = campaignWizardStep === 4 ? '🚀 Erstellen' : 'Weiter →';
-}
-
-function selectAudience(el) { document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
-function selectTemplate(el, key) { document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); const t=data.templates.find(x=>x.key===key); if(t&&document.getElementById('campSubject'))document.getElementById('campSubject').value=t.subject; }
-function selectSchedule(el) { document.querySelectorAll('.template-card').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); }
-
-function startCampaign(id) { const c=data.campaigns.find(x=>x.id===id); if(c){c.status='running';saveData();closeModal();showPage('campaigns');showToast('success','Gestartet',c.name);} }
-function pauseCampaign(id) { const c=data.campaigns.find(x=>x.id===id); if(c){c.status='paused';saveData();closeModal();showPage('campaigns');showToast('info','Pausiert',c.name);} }
-function deleteCampaign(id) { if(!confirm('Löschen?'))return; data.campaigns=data.campaigns.filter(c=>c.id!==id); saveData(); closeModal(); showPage('campaigns'); }
-function duplicateCampaign(id) { const c=data.campaigns.find(x=>x.id===id); if(c){const copy={...c,id:Date.now(),name:c.name+' (Kopie)',status:'draft',sent:0,delivered:0,opened:0,clicked:0,replied:0}; data.campaigns.unshift(copy); saveData(); closeModal(); showPage('campaigns'); showToast('success','Dupliziert',copy.name);} }
+function viewCampaign(id) { const c = data.campaigns.find(x => x.id === id); if (!c) return; openModalWithContent(`<div class="modal active lg"><div class="modal-header"><h2>${c.name}</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="stats-grid" style="grid-template-columns:repeat(3,1fr)"><div class="stat-card"><div class="stat-value">${c.sent}</div><div class="stat-label">Gesendet</div></div><div class="stat-card success"><div class="stat-value">${c.delivered>0?Math.round(c.opened/c.delivered*100):0}%</div><div class="stat-label">Öffnungsrate</div></div><div class="stat-card stripe"><div class="stat-value">${formatCurrency(c.revenue||0)}</div><div class="stat-label">Umsatz</div></div></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Schließen</button></div></div>`); }
+function openCampaignWizard() { showToast('info', 'Kampagne', 'Wizard wird geladen...'); }
 
 // TEMPLATES
 function renderTemplates() {
     return `<div class="page active">
         <div class="page-header"><div><h1>📝 Vorlagen</h1><p>${data.templates.length} Vorlagen</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('template')">+ Neue Vorlage</button></div></div>
-        <div class="tabs"><div class="tab active">Alle</div><div class="tab">📧 E-Mail</div><div class="tab">💬 WhatsApp</div></div>
-        <div class="grid-3">${data.templates.map(t=>`<div class="card"><div class="card-header"><h3 style="font-size:14px">${t.type==='email'?'📧':'💬'} ${t.name}</h3><span class="tag">${t.category||'Email'}</span></div><div class="card-body"><div style="font-size:13px;font-weight:500;margin-bottom:8px">${t.subject||''}</div><div style="font-size:12px;color:var(--text-3);max-height:80px;overflow:hidden">${t.body.substring(0,100)}...</div>${t.openRate?`<div style="margin-top:12px;font-size:11px"><span style="color:var(--emerald)">${t.openRate}% Öffnung</span> · ${t.usageCount||0}x verwendet</div>`:''}</div><div class="card-footer"><button class="btn btn-sm btn-primary" onclick="useTemplate(${t.id})">Verwenden</button></div></div>`).join('')}</div>
+        <div class="grid-3">${data.templates.map(t=>`<div class="card"><div class="card-header"><h3 style="font-size:14px">${t.type==='email'?'📧':'💬'} ${t.name}</h3><span class="tag">${t.category}</span></div><div class="card-body"><div style="font-size:13px;font-weight:500;margin-bottom:8px">${t.subject||''}</div><div style="font-size:12px;color:var(--text-3)">${t.body.substring(0,80)}...</div>${t.openRate?`<div style="margin-top:12px;font-size:11px"><span style="color:var(--emerald)">${t.openRate}% Öffnung</span> · ${t.usageCount}x verwendet</div>`:''}</div></div>`).join('')}</div>
     </div>`;
 }
-
-function useTemplate(id) { showToast('info','Template','Öffne Kampagnen-Editor...'); openCampaignWizard(); }
 
 // SEQUENCES
 function renderSequences() {
     return `<div class="page active">
         <div class="page-header"><div><h1>⚡ Sequenzen</h1><p>${data.sequences.length} Automatisierungen</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('sequence')">+ Neue Sequenz</button></div></div>
-        <div class="grid-2">${data.sequences.map(s=>`<div class="card"><div class="card-header"><h3>⚡ ${s.name}</h3><span class="status ${s.status}">${statusLabel(s.status)}</span></div><div class="card-body">
-            <div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">${s.triggerLabel}</span><span class="tag">${s.steps.length} Schritte</span></div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center">
-                <div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700">${s.enrolled}</div><div style="font-size:10px;color:var(--text-3)">Enrolled</div></div>
-                <div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700">${s.inProgress}</div><div style="font-size:10px;color:var(--text-3)">In Progress</div></div>
-                <div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--emerald)">${s.completed}</div><div style="font-size:10px;color:var(--text-3)">Completed</div></div>
-            </div>
-            <div style="margin-top:16px">${s.steps.slice(0,3).map((step,i)=>`<div class="sequence-step"><div class="sequence-step-number">${i+1}</div><div>${step.type==='email'?'📧 E-Mail':step.type==='wait'?'⏰ Warten '+step.days+' Tage':step.type==='task'?'📋 '+step.action:'🔀'}</div></div>`).join('')}</div>
-        </div><div class="card-footer"><button class="btn btn-sm ${s.status==='active'?'btn-warning':'btn-success'}" onclick="toggleSequence(${s.id})">${s.status==='active'?'⏸️ Pause':'▶️ Start'}</button></div></div>`).join('')}</div>
+        <div class="grid-2">${data.sequences.map(s=>`<div class="card"><div class="card-header"><h3>⚡ ${s.name}</h3><span class="status ${s.status}">${statusLabel(s.status)}</span></div><div class="card-body"><div style="display:flex;gap:8px;margin-bottom:16px"><span class="tag">${s.triggerLabel}</span><span class="tag">${s.steps.length} Schritte</span></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center"><div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700">${s.enrolled}</div><div style="font-size:10px;color:var(--text-3)">Enrolled</div></div><div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700">${s.inProgress}</div><div style="font-size:10px;color:var(--text-3)">In Progress</div></div><div style="background:var(--bg-3);padding:12px;border-radius:8px"><div style="font-size:20px;font-weight:700;color:var(--emerald)">${s.completed}</div><div style="font-size:10px;color:var(--text-3)">Completed</div></div></div></div><div class="card-footer"><button class="btn btn-sm ${s.status==='active'?'btn-warning':'btn-success'}" onclick="toggleSequence(${s.id})">${s.status==='active'?'⏸️ Pause':'▶️ Start'}</button></div></div>`).join('')}</div>
     </div>`;
 }
 
-function toggleSequence(id) { const s=data.sequences.find(x=>x.id===id); if(s){s.status=s.status==='active'?'paused':'active';saveData();showPage('sequences');showToast('info',s.status==='active'?'Aktiviert':'Pausiert',s.name);} }
+function toggleSequence(id) { const s=data.sequences.find(x=>x.id===id); if(s){s.status=s.status==='active'?'paused':'active';saveData();showPage('sequences');} }
 
 // INBOX
 function renderInbox() {
@@ -876,29 +974,17 @@ function selectConversation(id) {
     const c = data.conversations.find(x => x.id === id);
     if (!c) return;
     c.unread = false; saveData(); updateAllCounts(); initInbox();
-    document.getElementById('inboxMain').innerHTML = `<div style="padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:${c.type==='whatsapp'?'rgba(37,211,102,0.15)':'rgba(234,67,53,0.15)'};display:flex;align-items:center;justify-content:center">${c.type==='whatsapp'?'💬':'📧'}</div><div><div style="font-weight:600">${c.contact}</div><div style="font-size:12px;color:var(--text-3)">${c.type}</div></div></div><div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px">${c.messages.map(m=>`<div style="max-width:70%;padding:12px 16px;border-radius:16px;${m.outgoing?'background:var(--primary);color:white;align-self:flex-end':'background:var(--bg-3);align-self:flex-start'}"><div>${m.text}</div><div style="font-size:10px;${m.outgoing?'color:rgba(255,255,255,0.7)':'color:var(--text-3)'};margin-top:4px;text-align:right">${m.time}</div></div>`).join('')}</div><div style="padding:16px;border-top:1px solid var(--border);display:flex;gap:12px"><textarea id="replyText" class="form-control" style="flex:1;min-height:44px;max-height:100px;resize:none" placeholder="Nachricht..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendReply(${id})}"></textarea><button class="btn btn-primary" onclick="sendReply(${id})">📤</button></div>`;
+    document.getElementById('inboxMain').innerHTML = `<div style="padding:16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:50%;background:${c.type==='whatsapp'?'rgba(37,211,102,0.15)':'rgba(234,67,53,0.15)'};display:flex;align-items:center;justify-content:center">${c.type==='whatsapp'?'💬':'📧'}</div><div><div style="font-weight:600">${c.contact}</div><div style="font-size:12px;color:var(--text-3)">${c.type}</div></div></div><div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px">${c.messages.map(m=>`<div style="max-width:70%;padding:12px 16px;border-radius:16px;${m.outgoing?'background:var(--primary);color:white;align-self:flex-end':'background:var(--bg-3);align-self:flex-start'}"><div>${m.text}</div><div style="font-size:10px;${m.outgoing?'color:rgba(255,255,255,0.7)':'color:var(--text-3)'};margin-top:4px;text-align:right">${m.time}</div></div>`).join('')}</div><div style="padding:16px;border-top:1px solid var(--border);display:flex;gap:12px"><textarea id="replyText" class="form-control" style="flex:1;min-height:44px;max-height:100px;resize:none" placeholder="Nachricht..."></textarea><button class="btn btn-primary" onclick="sendReply(${id})">📤</button></div>`;
 }
 
-function sendReply(id) {
-    const text = document.getElementById('replyText').value.trim();
-    if (!text) return;
-    const c = data.conversations.find(x => x.id === id);
-    if (!c) return;
-    c.messages.push({ text, time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }), outgoing: true });
-    saveData(); selectConversation(id);
-    showToast('success', 'Gesendet', c.contact);
-}
+function sendReply(id) { const text = document.getElementById('replyText').value.trim(); if (!text) return; const c = data.conversations.find(x => x.id === id); if (!c) return; c.messages.push({ text, time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }), outgoing: true }); saveData(); selectConversation(id); showToast('success', 'Gesendet', c.contact); }
 
 // INVOICES
 function renderInvoices() {
     return `<div class="page active">
         <div class="page-header"><div><h1>📄 Rechnungen</h1><p>${data.invoices.length} Rechnungen</p></div><div class="page-actions"><button class="btn btn-primary" onclick="openModal('invoice')">+ Neue Rechnung</button></div></div>
-        <div class="stats-grid">
-            <div class="stat-card success"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Bezahlt</div></div>
-            <div class="stat-card warning"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='pending').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Offen</div></div>
-            <div class="stat-card danger"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='overdue').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Überfällig</div></div>
-        </div>
-        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Nr.</th><th>Kunde</th><th>Betrag</th><th>Status</th><th>Datum</th><th></th></tr></thead><tbody>${data.invoices.map(i=>`<tr><td><strong>${i.id}</strong></td><td>${i.customer}</td><td><strong>${formatCurrency(i.amount)}</strong></td><td><span class="status ${i.status}">${statusLabel(i.status)}</span></td><td>${formatDate(i.date)}</td><td>${i.status!=='paid'?`<button class="btn btn-sm btn-stripe" onclick="payWithStripe('${i.id}')">💳 Stripe</button> <button class="btn btn-sm btn-success" onclick="markPaid('${i.id}')">✅</button>`:''}</td></tr>`).join('')}</tbody></table></div></div></div>
+        <div class="stats-grid"><div class="stat-card success"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='paid').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Bezahlt</div></div><div class="stat-card warning"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='pending').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Offen</div></div><div class="stat-card danger"><div class="stat-value">${formatCurrency(data.invoices.filter(i=>i.status==='overdue').reduce((s,i)=>s+i.amount,0))}</div><div class="stat-label">Überfällig</div></div></div>
+        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Nr.</th><th>Kunde</th><th>Betrag</th><th>Status</th><th>Datum</th><th></th></tr></thead><tbody>${data.invoices.map(i=>`<tr><td><strong>${i.id}</strong></td><td>${i.customer}</td><td><strong>${formatCurrency(i.amount)}</strong></td><td><span class="status ${i.status}">${statusLabel(i.status)}</span></td><td>${formatDate(i.date)}</td><td>${i.status!=='paid'?`<button class="btn btn-sm btn-stripe" onclick="payWithStripe('${i.id}')">💳</button> <button class="btn btn-sm btn-success" onclick="markPaid('${i.id}')">✅</button>`:''}</td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
 
@@ -909,36 +995,19 @@ function payWithStripe(id) { showToast('stripe','Stripe','Checkout wird geöffne
 function renderPayments() {
     return `<div class="page active">
         <div class="page-header"><div><h1>💳 Stripe Payments</h1><p>Zahlungen verwalten</p></div><div class="page-actions"><div class="api-status"><span class="dot"></span>Stripe verbunden</div></div></div>
-        <div class="stats-grid">
-            <div class="stat-card stripe"><div class="stat-top"><div class="stat-icon stripe">💰</div></div><div class="stat-value">${formatCurrency(data.stripe.balance)}</div><div class="stat-label">Balance</div></div>
-            <div class="stat-card warning"><div class="stat-value">${formatCurrency(data.stripe.pending)}</div><div class="stat-label">Ausstehend</div></div>
-            <div class="stat-card success"><div class="stat-value">${formatCurrency(data.stripe.payouts)}</div><div class="stat-label">Auszahlungen</div></div>
-            <div class="stat-card"><div class="stat-value">${formatCurrency(data.stripe.fees)}</div><div class="stat-label">Gebühren</div></div>
-        </div>
+        <div class="stats-grid"><div class="stat-card stripe"><div class="stat-value">${formatCurrency(data.stripe.balance)}</div><div class="stat-label">Balance</div></div><div class="stat-card warning"><div class="stat-value">${formatCurrency(data.stripe.pending)}</div><div class="stat-label">Ausstehend</div></div><div class="stat-card success"><div class="stat-value">${formatCurrency(data.stripe.payouts)}</div><div class="stat-label">Auszahlungen</div></div><div class="stat-card"><div class="stat-value">${formatCurrency(data.stripe.fees)}</div><div class="stat-label">Gebühren</div></div></div>
         <div class="card"><div class="card-header"><h3>💳 Letzte Zahlungen</h3></div><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Kunde</th><th>Betrag</th><th>Typ</th><th>Status</th><th>Datum</th><th>Methode</th></tr></thead><tbody>${data.payments.map(p=>`<tr><td><strong>${p.customer}</strong></td><td><strong style="color:var(--emerald)">${formatCurrency(p.amount)}</strong></td><td><span class="tag">${p.type}</span></td><td><span class="status ${p.status}">${statusLabel(p.status)}</span></td><td>${formatDate(p.date)}</td><td>${p.method==='card'?`💳 •••• ${p.last4}`:'🏦 SEPA'}</td></tr>`).join('')}</tbody></table></div></div></div>
-        <div class="card"><div class="card-header"><h3>🔑 API Key</h3></div><div class="card-body"><div style="display:flex;gap:12px"><input type="password" class="form-control" value="${STRIPE_API_KEY}" id="stripeKey" style="flex:1;font-family:monospace"><button class="btn btn-secondary" onclick="document.getElementById('stripeKey').type=document.getElementById('stripeKey').type==='password'?'text':'password'">👁️</button><button class="btn btn-stripe" onclick="showToast('stripe','API Test','Verbindung OK!')">🔗 Testen</button></div></div></div>
     </div>`;
 }
 
 // SUBSCRIPTIONS
 function renderSubscriptions() {
     return `<div class="page active">
-        <div class="page-header"><div><h1>🔄 Abonnements</h1><p>${data.subscriptions.filter(s=>s.status==='active').length} aktive Abos</p></div><div class="page-actions"><button class="btn btn-stripe" onclick="createSubscription()">+ Neues Abo</button></div></div>
-        <div class="stats-grid">
-            <div class="stat-card stripe"><div class="stat-value">${formatCurrency(data.subscriptions.filter(s=>s.status==='active').reduce((sum,s)=>sum+s.amount,0))}</div><div class="stat-label">MRR</div></div>
-            <div class="stat-card"><div class="stat-value">${data.subscriptions.filter(s=>s.status==='active').length}</div><div class="stat-label">Aktive Abos</div></div>
-        </div>
-        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Kunde</th><th>Plan</th><th>Betrag</th><th>Status</th><th>Nächste Zahlung</th></tr></thead><tbody>${data.subscriptions.map(s=>`<tr><td><strong>${s.customer}</strong></td><td><span class="tag ${s.plan==='Enterprise'?'primary':s.plan==='Pro'?'success':''}">${s.plan}</span></td><td><strong>${formatCurrency(s.amount)}</strong>/Monat</td><td><span class="status ${s.status}">${statusLabel(s.status)}</span></td><td>${s.status==='active'?formatDate(s.nextBilling):'-'}</td></tr>`).join('')}</tbody></table></div></div></div>
-        <h3 style="margin:24px 0 16px">💎 Pläne</h3>
-        <div class="grid-3">
-            <div class="subscription-plan"><div style="font-size:32px">🚀</div><h3 style="margin:12px 0">Starter</h3><div class="subscription-price">€29<span>/Monat</span></div><ul style="text-align:left;list-style:none;margin:20px 0"><li style="padding:8px 0">✓ 100 Kontakte</li><li style="padding:8px 0">✓ 500 E-Mails/Monat</li></ul><button class="btn btn-secondary" style="width:100%">Auswählen</button></div>
-            <div class="subscription-plan popular"><div style="font-size:32px">⚡</div><h3 style="margin:12px 0">Pro</h3><div class="subscription-price">€99<span>/Monat</span></div><ul style="text-align:left;list-style:none;margin:20px 0"><li style="padding:8px 0">✓ 1.000 Kontakte</li><li style="padding:8px 0">✓ 5.000 E-Mails/Monat</li><li style="padding:8px 0">✓ Explorium</li></ul><button class="btn btn-stripe" style="width:100%">Auswählen</button></div>
-            <div class="subscription-plan"><div style="font-size:32px">💎</div><h3 style="margin:12px 0">Enterprise</h3><div class="subscription-price">€299<span>/Monat</span></div><ul style="text-align:left;list-style:none;margin:20px 0"><li style="padding:8px 0">✓ Unlimited</li><li style="padding:8px 0">✓ Priority Support</li></ul><button class="btn btn-secondary" style="width:100%">Kontakt</button></div>
-        </div>
+        <div class="page-header"><div><h1>🔄 Abonnements</h1><p>${data.subscriptions.filter(s=>s.status==='active').length} aktive Abos</p></div></div>
+        <div class="stats-grid"><div class="stat-card stripe"><div class="stat-value">${formatCurrency(data.subscriptions.filter(s=>s.status==='active').reduce((sum,s)=>sum+s.amount,0))}</div><div class="stat-label">MRR</div></div><div class="stat-card"><div class="stat-value">${data.subscriptions.filter(s=>s.status==='active').length}</div><div class="stat-label">Aktive Abos</div></div></div>
+        <div class="card"><div class="card-body no-padding"><div class="table-wrapper"><table class="data-table"><thead><tr><th>Kunde</th><th>Plan</th><th>Betrag</th><th>Status</th><th>Nächste Zahlung</th></tr></thead><tbody>${data.subscriptions.map(s=>`<tr><td><strong>${s.customer}</strong></td><td><span class="tag ${s.plan==='Enterprise'?'primary':s.plan==='Pro'?'success':''}">${s.plan}</span></td><td><strong>${formatCurrency(s.amount)}</strong>/mo</td><td><span class="status ${s.status}">${statusLabel(s.status)}</span></td><td>${s.status==='active'?formatDate(s.nextBilling):'-'}</td></tr>`).join('')}</tbody></table></div></div></div>
     </div>`;
 }
-
-function createSubscription() { showToast('stripe', 'Stripe', 'Checkout...'); }
 
 // PROJECTS
 function renderProjects() {
@@ -963,7 +1032,7 @@ function deleteTask(id) { if(!confirm('Löschen?'))return; data.tasks=data.tasks
 function renderIntegrations() {
     return `<div class="page active">
         <div class="page-header"><div><h1>🔌 Integrationen</h1><p>${data.integrations.filter(i=>i.status==='connected').length}/${data.integrations.length} verbunden</p></div></div>
-        <div class="grid-3">${data.integrations.map(i=>`<div class="card" style="${i.status==='connected'?'border-color:var(--emerald)':''}"><div class="card-body"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:48px;height:48px;background:var(--bg-3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px">${i.icon}</div><div><div style="font-weight:600">${i.name}</div><div style="font-size:12px;color:var(--text-3)">${i.category}</div></div><span class="status ${i.status==='connected'?'active':'pending'}">${i.status==='connected'?'✓':''}</span></div>${i.credits?`<div style="font-size:12px;color:var(--text-3)">Credits: ${i.credits}</div>`:''}</div><div class="card-footer"><button class="btn btn-sm ${i.status==='connected'?'btn-secondary':'btn-primary'}" style="width:100%">${i.status==='connected'?'⚙️ Konfigurieren':'🔌 Verbinden'}</button></div></div>`).join('')}</div>
+        <div class="grid-3">${data.integrations.map(i=>`<div class="card" style="${i.status==='connected'?'border-color:var(--emerald)':''}"><div class="card-body"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:48px;height:48px;background:var(--bg-3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px">${i.icon}</div><div><div style="font-weight:600">${i.name}</div><div style="font-size:12px;color:var(--text-3)">${i.category}</div></div><span class="status ${i.status==='connected'?'active':'pending'}">${i.status==='connected'?'✓':''}</span></div>${i.credits?`<div style="font-size:12px;color:var(--text-3)">Credits: ${i.credits}</div>`:''}${i.searches?`<div style="font-size:12px;color:var(--text-3)">Suchen: ${i.searches}</div>`:''}</div><div class="card-footer"><button class="btn btn-sm ${i.status==='connected'?'btn-secondary':'btn-primary'}" style="width:100%" onclick="${i.id==='handelsregister'?`showPage('handelsregister')`:''}">${i.status==='connected'?'⚙️ Konfigurieren':'🔌 Verbinden'}</button></div></div>`).join('')}</div>
     </div>`;
 }
 
@@ -975,6 +1044,7 @@ function renderSettings() {
             <div class="card"><div class="card-header"><h3>🏢 Unternehmen</h3></div><div class="card-body"><div class="form-group"><label>Firma</label><input type="text" class="form-control" value="${data.settings.company.name}"></div><div class="form-group"><label>E-Mail</label><input type="email" class="form-control" value="${data.settings.company.email}"></div><div class="form-group"><label>IBAN</label><input type="text" class="form-control" value="${data.settings.company.iban}"></div><button class="btn btn-primary">💾 Speichern</button></div></div>
             <div class="card"><div class="card-header"><h3>🎨 Darstellung</h3></div><div class="card-body"><div class="form-group"><label>Theme</label><div style="display:flex;gap:12px"><button class="btn ${currentTheme==='dark'?'btn-primary':'btn-secondary'}" onclick="setTheme('dark')">🌙 Dark</button><button class="btn ${currentTheme==='light'?'btn-primary':'btn-secondary'}" onclick="setTheme('light')">☀️ Light</button></div></div></div></div>
         </div>
+        <div class="card" style="margin-top:16px"><div class="card-header"><h3>🔑 API Keys</h3></div><div class="card-body"><div class="form-group"><label>Explorium API</label><input type="password" class="form-control" value="${EXPLORIUM_API_KEY}" style="font-family:monospace"></div><div class="form-group"><label>Stripe API</label><input type="password" class="form-control" value="${STRIPE_API_KEY.substring(0,30)}..." style="font-family:monospace"></div><div class="form-group"><label>Handelsregister</label><input type="text" class="form-control" value="${HANDELSREGISTER_URL}" readonly style="font-family:monospace"></div></div></div>
         <div class="card" style="margin-top:16px"><div class="card-header"><h3>⚠️ Gefahrenzone</h3></div><div class="card-body"><button class="btn btn-danger" onclick="if(confirm('Alle Daten löschen?')){localStorage.clear();location.reload()}">🗑️ Alle Daten löschen</button></div></div>
     </div>`;
 }
@@ -994,9 +1064,7 @@ function openModal(type) {
         lead: `<div class="modal active"><div class="modal-header"><h2>🎯 Neuer Lead</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Name</label><input type="text" class="form-control" id="lName"></div><div class="form-group"><label>Firma</label><input type="text" class="form-control" id="lCompany"></div><div class="form-group"><label>Wert (€)</label><input type="number" class="form-control" id="lValue" value="25000"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="saveLead()">Speichern</button></div></div>`,
         task: `<div class="modal active"><div class="modal-header"><h2>✅ Neue Aufgabe</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Titel</label><input type="text" class="form-control" id="tTitle"></div><div class="form-group"><label>Fällig am</label><input type="date" class="form-control" id="tDue"></div><div class="form-group"><label>Priorität</label><select class="form-control" id="tPriority"><option value="high">🔴 Hoch</option><option value="medium" selected>🟡 Mittel</option><option value="low">🟢 Niedrig</option></select></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="saveTask()">Speichern</button></div></div>`,
         invoice: `<div class="modal active"><div class="modal-header"><h2>📄 Neue Rechnung</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Kunde</label><input type="text" class="form-control" id="iCustomer"></div><div class="form-group"><label>Betrag (€)</label><input type="number" class="form-control" id="iAmount"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="saveInvoice()">Erstellen</button></div></div>`,
-        message: `<div class="modal active"><div class="modal-header"><h2>✉️ Nachricht</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Kanal</label><select class="form-control" id="msgChannel"><option value="whatsapp">💬 WhatsApp</option><option value="email">📧 E-Mail</option></select></div><div class="form-group"><label>Empfänger</label><input type="text" class="form-control" id="msgTo"></div><div class="form-group"><label>Nachricht</label><textarea class="form-control" id="msgText" rows="4"></textarea></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="sendMsg()">📤 Senden</button></div></div>`,
-        template: `<div class="modal active lg"><div class="modal-header"><h2>📝 Neue Vorlage</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Name</label><input type="text" class="form-control" id="tmplName"></div><div class="form-group"><label>Typ</label><select class="form-control" id="tmplType"><option value="email">📧 E-Mail</option><option value="whatsapp">💬 WhatsApp</option></select></div><div class="form-group"><label>Betreff</label><input type="text" class="form-control" id="tmplSubject"></div><div class="form-group"><label>Inhalt</label><textarea class="form-control" id="tmplBody" rows="8" placeholder="Variablen: {firstName}, {company}"></textarea></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="saveTemplate()">Speichern</button></div></div>`,
-        sequence: `<div class="modal active"><div class="modal-header"><h2>⚡ Neue Sequenz</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Name</label><input type="text" class="form-control" id="seqName"></div><div class="form-group"><label>Trigger</label><select class="form-control" id="seqTrigger"><option value="new_lead">Bei neuem Lead</option><option value="no_response">Keine Antwort</option><option value="manual">Manuell</option></select></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-gradient" onclick="saveSequence()">Erstellen</button></div></div>`
+        message: `<div class="modal active"><div class="modal-header"><h2>✉️ Nachricht</h2><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body"><div class="form-group"><label>Kanal</label><select class="form-control" id="msgChannel"><option value="whatsapp">💬 WhatsApp</option><option value="email">📧 E-Mail</option></select></div><div class="form-group"><label>Empfänger</label><input type="text" class="form-control" id="msgTo"></div><div class="form-group"><label>Nachricht</label><textarea class="form-control" id="msgText" rows="4"></textarea></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="sendMsg()">📤 Senden</button></div></div>`
     };
     openModalWithContent(modals[type] || '<div class="modal active"><div class="modal-body">Coming soon</div></div>');
 }
@@ -1004,16 +1072,26 @@ function openModal(type) {
 function openModalWithContent(html) { const overlay = document.getElementById('modalOverlay'); overlay.innerHTML = html; overlay.classList.add('active'); }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
-function saveContact() { const first = document.getElementById('cFirst').value.trim(), last = document.getElementById('cLast').value.trim(), email = document.getElementById('cEmail').value.trim(); if (!first || !last || !email) return showToast('error', 'Fehler', 'Pflichtfelder ausfüllen'); data.contacts.unshift({ id: generateId(), firstName: first, lastName: last, email, company: document.getElementById('cCompany').value, status: 'active' }); saveData(); closeModal(); showPage('contacts'); updateAllCounts(); showToast('success', 'Kontakt erstellt', first + ' ' + last); }
+function saveContact() { const first = document.getElementById('cFirst').value.trim(), last = document.getElementById('cLast').value.trim(), email = document.getElementById('cEmail').value.trim(); if (!first || !last || !email) return showToast('error', 'Fehler', 'Pflichtfelder ausfüllen'); data.contacts.unshift({ id: generateId(), firstName: first, lastName: last, email, company: document.getElementById('cCompany').value, status: 'active', hrVerified: false }); saveData(); closeModal(); showPage('contacts'); updateAllCounts(); showToast('success', 'Kontakt erstellt', first + ' ' + last); }
 function saveLead() { const name = document.getElementById('lName').value.trim(); if (!name) return showToast('error', 'Fehler', 'Name erforderlich'); data.leads.unshift({ id: generateId(), name, company: document.getElementById('lCompany').value, value: parseInt(document.getElementById('lValue').value) || 25000, status: 'new', source: 'Manuell', probability: 40 }); saveData(); closeModal(); showPage('leads'); updateAllCounts(); showToast('success', 'Lead erstellt', name); }
 function saveTask() { const title = document.getElementById('tTitle').value.trim(); if (!title) return showToast('error', 'Fehler', 'Titel erforderlich'); data.tasks.unshift({ id: generateId(), title, status: 'pending', priority: document.getElementById('tPriority').value, dueDate: document.getElementById('tDue').value }); saveData(); closeModal(); showPage('tasks'); updateAllCounts(); showToast('success', 'Aufgabe erstellt', title); }
 function saveInvoice() { const customer = document.getElementById('iCustomer').value.trim(), amount = parseInt(document.getElementById('iAmount').value); if (!customer || !amount) return showToast('error', 'Fehler', 'Pflichtfelder'); const id = `RE-2025-${String(data.invoices.length + 1).padStart(3, '0')}`; data.invoices.unshift({ id, customer, amount, status: 'pending', date: new Date().toISOString().split('T')[0] }); saveData(); closeModal(); showPage('invoices'); showToast('success', 'Rechnung erstellt', id); }
 function sendMsg() { const to = document.getElementById('msgTo').value.trim(), text = document.getElementById('msgText').value.trim(); if (!to || !text) return showToast('error', 'Fehler', 'Felder ausfüllen'); data.conversations.unshift({ id: generateId(), contact: to, type: document.getElementById('msgChannel').value, unread: false, messages: [{ text, time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }), outgoing: true }] }); saveData(); closeModal(); showToast('success', 'Gesendet', to); }
-function saveTemplate() { const name = document.getElementById('tmplName').value.trim(); if (!name) return showToast('error', 'Fehler', 'Name erforderlich'); data.templates.unshift({ id: generateId(), name, key: name.toLowerCase().replace(/\s+/g, '-'), type: document.getElementById('tmplType').value, subject: document.getElementById('tmplSubject').value, body: document.getElementById('tmplBody').value, variables: [], usageCount: 0 }); saveData(); closeModal(); showPage('templates'); showToast('success', 'Vorlage erstellt', name); }
-function saveSequence() { const name = document.getElementById('seqName').value.trim(); if (!name) return showToast('error', 'Fehler', 'Name erforderlich'); data.sequences.unshift({ id: generateId(), name, trigger: document.getElementById('seqTrigger').value, triggerLabel: 'Manuell', status: 'active', enrolled: 0, completed: 0, inProgress: 0, steps: [] }); saveData(); closeModal(); showPage('sequences'); showToast('success', 'Sequenz erstellt', name); }
 
 // KEYBOARD SHORTCUTS
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); document.querySelector('.global-search input').focus(); } });
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); showPage('handelsregister'); document.getElementById('hrKeywords')?.focus(); }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'n') { e.preventDefault(); openModal('lead'); }
+});
+
+// Show keyboard hints on focus
+document.addEventListener('focusin', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        document.getElementById('keyboardHint').classList.add('show');
+        setTimeout(() => document.getElementById('keyboardHint').classList.remove('show'), 3000);
+    }
+});
 
 // INIT
 document.addEventListener('DOMContentLoaded', function() {
@@ -1022,9 +1100,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentUser) showApp();
 });
 
-console.log('⚡ West Money OS v4.1 Ultimate Edition');
+console.log('⚡ West Money OS v4.2 Ultimate Edition');
 console.log('🤖 Explorium API:', EXPLORIUM_API_KEY.substring(0, 10) + '...');
 console.log('💳 Stripe API:', STRIPE_API_KEY.substring(0, 20) + '...');
+console.log('🏛️ Handelsregister: https://www.handelsregister.de');
 </script>
 </body>
 </html>
