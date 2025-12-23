@@ -4,755 +4,178 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>West Money OS | Business Operating System</title>
-    <meta name="description" content="West Money OS - All-in-One Business Operating System">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
-            --bg-0: #09090b;
-            --bg-1: #0c0c0f;
-            --bg-2: #131316;
-            --bg-3: #1a1a1f;
-            --bg-4: #222228;
-            --text-0: #fafafa;
-            --text-1: #d4d4d8;
-            --text-2: #a1a1aa;
-            --text-3: #71717a;
-            --primary: #6366f1;
-            --primary-hover: #818cf8;
-            --primary-glow: rgba(99, 102, 241, 0.15);
-            --cyan: #06b6d4;
-            --emerald: #10b981;
-            --amber: #f59e0b;
-            --rose: #f43f5e;
-            --violet: #8b5cf6;
-            --border: rgba(255,255,255,0.06);
-            --border-hover: rgba(255,255,255,0.12);
+            --bg-0: #09090b; --bg-1: #0c0c0f; --bg-2: #131316; --bg-3: #1a1a1f; --bg-4: #222228;
+            --text-0: #fafafa; --text-1: #d4d4d8; --text-2: #a1a1aa; --text-3: #71717a;
+            --primary: #6366f1; --primary-hover: #818cf8; --primary-glow: rgba(99,102,241,0.15);
+            --emerald: #10b981; --amber: #f59e0b; --rose: #f43f5e; --cyan: #06b6d4; --violet: #8b5cf6;
+            --border: rgba(255,255,255,0.06); --border-hover: rgba(255,255,255,0.12);
         }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg-0); color: var(--text-0); font-size: 14px; line-height: 1.5; min-height: 100vh; }
         
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg-0);
-            color: var(--text-0);
-            font-size: 14px;
-            line-height: 1.5;
-            min-height: 100vh;
-        }
+        /* LOGIN */
+        .login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--bg-0) 0%, #0f0f1a 100%); }
+        .login-container { width: 100%; max-width: 400px; padding: 20px; }
+        .login-logo { text-align: center; margin-bottom: 32px; }
+        .login-logo-icon { width: 64px; height: 64px; background: linear-gradient(135deg, var(--primary), var(--violet)); border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; }
+        .login-logo h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+        .login-logo p { color: var(--text-3); font-size: 14px; }
+        .login-box { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+        .login-box h2 { font-size: 18px; margin-bottom: 24px; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-1); }
+        .form-input, .form-control { width: 100%; padding: 12px 14px; background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; color: var(--text-0); font-size: 14px; transition: all 0.2s; }
+        .form-input:focus, .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .form-input::placeholder, .form-control::placeholder { color: var(--text-3); }
+        .login-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .login-btn:hover { background: var(--primary-hover); }
+        .login-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; text-align: center; display: none; }
+        .login-error.show { display: block; }
+        .login-footer { text-align: center; margin-top: 20px; color: var(--text-3); font-size: 12px; }
+        .demo-hint { background: var(--bg-3); border-radius: 8px; padding: 12px; margin-top: 20px; font-size: 12px; color: var(--text-2); }
+        .demo-hint strong { color: var(--primary); }
         
-        /* ==================== LOGIN ==================== */
-        .login-screen {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--bg-0) 0%, #0f0f1a 100%);
-        }
+        /* APP */
+        .app { display: none; min-height: 100vh; }
+        .app.active { display: flex; }
         
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-        }
-        
-        .login-logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        
-        .login-logo-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--primary), var(--violet));
-            border-radius: 16px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 16px;
-        }
-        
-        .login-logo h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .login-logo p {
-            color: var(--text-3);
-            font-size: 14px;
-        }
-        
-        .login-box {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-        }
-        
-        .login-box h2 {
-            font-size: 18px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-1);
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px 14px;
-            background: var(--bg-3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-0);
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-glow);
-        }
-        
-        .form-input::placeholder {
-            color: var(--text-3);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .login-btn:hover {
-            background: var(--primary-hover);
-        }
-        
-        .login-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .login-error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            text-align: center;
-            display: none;
-        }
-        
-        .login-error.show {
-            display: block;
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-3);
-            font-size: 12px;
-        }
-        
-        .login-footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .demo-hint {
-            background: var(--bg-3);
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 20px;
-            font-size: 12px;
-            color: var(--text-2);
-        }
-        
-        .demo-hint strong {
-            color: var(--primary);
-        }
-        
-        /* ==================== APP LAYOUT ==================== */
-        .app {
-            display: none;
-            min-height: 100vh;
-        }
-        
-        .app.active {
-            display: flex;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 240px;
-            background: var(--bg-1);
-            border-right: 1px solid var(--border);
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
-        
-        .sidebar-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--primary), var(--violet));
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-        
+        /* SIDEBAR */
+        .sidebar { width: 240px; background: var(--bg-1); border-right: 1px solid var(--border); position: fixed; height: 100vh; display: flex; flex-direction: column; z-index: 100; }
+        .sidebar-header { padding: 16px; border-bottom: 1px solid var(--border); }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--violet)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
         .logo h1 { font-size: 15px; font-weight: 600; }
         .logo span { font-size: 10px; color: var(--text-3); display: block; }
-        
-        .sidebar-nav {
-            flex: 1;
-            padding: 8px;
-            overflow-y: auto;
-        }
-        
+        .sidebar-nav { flex: 1; padding: 8px; overflow-y: auto; }
         .nav-group { margin-bottom: 16px; }
-        
-        .nav-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 8px 12px 6px;
-        }
-        
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: var(--text-2);
-            font-size: 13px;
-            transition: all 0.15s;
-            margin-bottom: 2px;
-        }
-        
+        .nav-label { font-size: 10px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px 6px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; cursor: pointer; color: var(--text-2); font-size: 13px; transition: all 0.15s; margin-bottom: 2px; }
         .nav-item:hover { background: var(--bg-3); color: var(--text-0); }
         .nav-item.active { background: var(--primary-glow); color: var(--primary-hover); }
-        
         .nav-item .icon { width: 18px; text-align: center; font-size: 14px; }
         .nav-item .label { flex: 1; }
-        
-        .nav-item .badge {
-            background: var(--primary);
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        
-        .nav-item .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--emerald);
-        }
-        
-        .sidebar-footer {
-            padding: 12px;
-            border-top: 1px solid var(--border);
-        }
-        
-        .user-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px;
-            background: var(--bg-2);
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        
-        .user-box:hover {
-            background: var(--bg-3);
-        }
-        
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            background: linear-gradient(135deg, var(--emerald), var(--cyan));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        
+        .nav-item .badge { background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+        .nav-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); }
+        .sidebar-footer { padding: 12px; border-top: 1px solid var(--border); }
+        .user-box { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-2); border-radius: 8px; cursor: pointer; }
+        .user-box:hover { background: var(--bg-3); }
+        .user-avatar { width: 32px; height: 32px; border-radius: 6px; background: linear-gradient(135deg, var(--emerald), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
         .user-info { flex: 1; }
         .user-info div { font-size: 12px; font-weight: 500; }
         .user-info span { color: var(--text-3); font-size: 11px; }
+        .logout-btn { background: none; border: none; color: var(--text-3); cursor: pointer; padding: 4px; font-size: 14px; }
+        .logout-btn:hover { color: var(--rose); }
         
-        .logout-btn {
-            background: none;
-            border: none;
-            color: var(--text-3);
-            cursor: pointer;
-            padding: 4px;
-            font-size: 14px;
-        }
-        
-        .logout-btn:hover {
-            color: var(--rose);
-        }
-        
-        /* Main */
-        .main {
-            flex: 1;
-            margin-left: 240px;
-        }
-        
-        .topbar {
-            height: 52px;
-            background: var(--bg-1);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .breadcrumb {
-            font-size: 13px;
-            color: var(--text-2);
-        }
-        
+        /* MAIN */
+        .main { flex: 1; margin-left: 240px; }
+        .topbar { height: 52px; background: var(--bg-1); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; position: sticky; top: 0; z-index: 50; }
+        .topbar-left { display: flex; align-items: center; gap: 16px; }
+        .breadcrumb { font-size: 13px; color: var(--text-2); }
         .breadcrumb strong { color: var(--text-0); }
-        
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--emerald);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        .status-badge .pulse {
-            width: 6px;
-            height: 6px;
-            background: var(--emerald);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 6px 12px;
-            width: 200px;
-        }
-        
-        .search-box input {
-            background: none;
-            border: none;
-            outline: none;
-            color: var(--text-0);
-            font-size: 12px;
-            width: 100%;
-        }
-        
-        .topbar-btn {
-            width: 32px;
-            height: 32px;
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 14px;
-            position: relative;
-        }
-        
+        .status-badge { display: flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.1); color: var(--emerald); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .status-badge .pulse { width: 6px; height: 6px; background: var(--emerald); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .topbar-right { display: flex; align-items: center; gap: 8px; }
+        .search-box { display: flex; align-items: center; gap: 8px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; width: 200px; }
+        .search-box input { background: none; border: none; outline: none; color: var(--text-0); font-size: 12px; width: 100%; }
+        .topbar-btn { width: 32px; height: 32px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; position: relative; }
         .topbar-btn:hover { border-color: var(--border-hover); }
+        .topbar-btn .notif-dot { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--rose); border-radius: 50%; border: 2px solid var(--bg-1); }
         
-        .topbar-btn .notif-dot {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 8px;
-            height: 8px;
-            background: var(--rose);
-            border-radius: 50%;
-            border: 2px solid var(--bg-1);
-        }
-        
-        /* Content */
+        /* CONTENT */
         .content { padding: 20px; }
-        
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.2s; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
-        }
-        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
         .page-header h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
         .page-header p { color: var(--text-2); font-size: 13px; }
+        .page-actions { display: flex; gap: 8px; }
         
-        .page-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.15s;
-        }
-        
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: var(--primary-hover); }
         .btn-secondary { background: var(--bg-3); color: var(--text-0); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--bg-4); }
-        .btn-success { background: var(--emerald); color: white; }
         .btn-danger { background: var(--rose); color: white; }
-        
+        .btn-danger:hover { background: #e11d48; }
         .btn-sm { padding: 6px 10px; font-size: 12px; }
         
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        
-        .stat-card {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            transition: all 0.2s;
-        }
-        
-        .stat-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-        
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        
+        /* STATS */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: all 0.2s; }
+        .stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+        .stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
         .stat-icon.primary { background: var(--primary-glow); }
-        .stat-icon.cyan { background: rgba(6, 182, 212, 0.15); }
-        .stat-icon.emerald { background: rgba(16, 185, 129, 0.15); }
-        .stat-icon.amber { background: rgba(245, 158, 11, 0.15); }
-        .stat-icon.rose { background: rgba(244, 63, 94, 0.15); }
-        .stat-icon.violet { background: rgba(139, 92, 246, 0.15); }
-        
-        .stat-trend {
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        
-        .stat-trend.up { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
-        .stat-trend.down { background: rgba(244, 63, 94, 0.15); color: var(--rose); }
-        
+        .stat-icon.cyan { background: rgba(6,182,212,0.15); }
+        .stat-icon.emerald { background: rgba(16,185,129,0.15); }
+        .stat-icon.amber { background: rgba(245,158,11,0.15); }
+        .stat-trend { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+        .stat-trend.up { background: rgba(16,185,129,0.15); color: var(--emerald); }
         .stat-value { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
         .stat-label { font-size: 13px; color: var(--text-2); }
         
-        /* Cards */
-        .card {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-        
-        .card-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+        /* CARDS */
+        .card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+        .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .card-header h3 { font-size: 14px; font-weight: 600; }
         .card-body { padding: 20px; }
-        .card-footer { padding: 12px 20px; border-top: 1px solid var(--border); background: var(--bg-3); }
-        
-        /* Grid */
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         
-        /* Table */
-        .data-table { width: 100%; border-collapse: collapse; }
+        /* TABLE */
+        .table-wrapper { overflow-x: auto; }
+        .data-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        .data-table th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; background: var(--bg-3); border-bottom: 1px solid var(--border); }
+        .data-table td { padding: 14px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .data-table tbody tr:hover { background: var(--bg-3); }
         
-        .data-table th {
-            text-align: left;
-            padding: 12px 16px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-3);
-            text-transform: uppercase;
-            background: var(--bg-3);
-            border-bottom: 1px solid var(--border);
-        }
+        /* STATUS */
+        .status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .status.active, .status.paid, .status.won { background: rgba(16,185,129,0.15); color: var(--emerald); }
+        .status.pending, .status.new { background: rgba(245,158,11,0.15); color: var(--amber); }
+        .status.overdue, .status.inactive { background: rgba(244,63,94,0.15); color: var(--rose); }
+        .status.qualified { background: rgba(6,182,212,0.15); color: var(--cyan); }
+        .status.proposal { background: rgba(139,92,246,0.15); color: var(--violet); }
         
-        .data-table td {
-            padding: 14px 16px;
-            font-size: 13px;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .data-table tr:hover { background: var(--bg-3); }
-        
-        .data-table .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        .status.active { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
-        .status.pending { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
-        .status.inactive { background: rgba(113, 113, 122, 0.15); color: var(--text-3); }
-        
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        
-        .quick-action {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        
-        .quick-action:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .quick-action-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-glow);
-            font-size: 16px;
-        }
-        
+        /* QUICK ACTIONS */
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+        .quick-action { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; }
+        .quick-action:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .quick-action-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--primary-glow); font-size: 16px; }
         .quick-action-text { font-size: 13px; font-weight: 500; }
         
-        /* Module Cards */
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
+        /* ACTIVITY */
+        .activity-item { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+        .activity-content { flex: 1; }
+        .activity-text { font-size: 13px; margin-bottom: 2px; }
+        .activity-time { font-size: 11px; color: var(--text-3); }
         
-        .module-card {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
+        /* PIPELINE */
+        .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .pipeline-stage { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+        .pipeline-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .pipeline-header h4 { font-size: 13px; font-weight: 600; }
+        .pipeline-header span { font-size: 12px; color: var(--text-3); }
+        .pipeline-body { padding: 12px; min-height: 200px; }
+        .pipeline-card { background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+        .pipeline-card:hover { border-color: var(--primary); }
+        .pipeline-card h5 { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+        .pipeline-card p { font-size: 11px; color: var(--text-3); }
+        .pipeline-card .value { font-size: 14px; font-weight: 700; color: var(--emerald); margin-top: 8px; }
         
-        .module-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-        }
-        
-        .module-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 16px;
-        }
-        
-        .module-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-        .module-card p { font-size: 12px; color: var(--text-2); margin-bottom: 16px; }
-        
-        .module-meta {
-            display: flex;
-            gap: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-        
-        .module-meta-value { font-size: 18px; font-weight: 700; color: var(--primary-hover); }
-        .module-meta-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; }
-        
-        .module-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .module-badge.active { background: rgba(16, 185, 129, 0.15); color: var(--emerald); }
-        .module-badge.beta { background: rgba(139, 92, 246, 0.15); color: var(--violet); }
-        
-        /* API Cards */
-        .api-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        
-        .api-card {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .api-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .api-top {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        
-        .api-logo {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-        
+        /* API CARDS */
+        .api-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .api-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s; }
+        .api-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .api-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .api-logo { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
         .api-logo.hubspot { background: linear-gradient(135deg, #ff7a59, #ff5c35); }
         .api-logo.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); }
         .api-logo.zapier { background: linear-gradient(135deg, #ff4a00, #ff6d00); }
@@ -765,280 +188,51 @@
         .api-logo.drive { background: linear-gradient(135deg, #0f9d58, #4285f4); }
         .api-logo.notion { background: var(--bg-0); border: 1px solid var(--border); }
         .api-logo.make { background: linear-gradient(135deg, #6d4aff, #9d4edd); }
-        .api-logo.claude { background: linear-gradient(135deg, #d4a574, #cc785c); }
-        
         .api-info h4 { font-size: 14px; font-weight: 600; }
         .api-info span { font-size: 11px; color: var(--text-3); }
-        
-        .api-status {
-            margin-left: auto;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
+        .api-status { margin-left: auto; font-size: 11px; }
         .api-status.connected { color: var(--emerald); }
         .api-status.pending { color: var(--amber); }
         
-        .api-desc {
-            font-size: 12px;
-            color: var(--text-2);
-            margin-bottom: 14px;
-        }
+        /* FORM */
+        .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
+        select.form-control { cursor: pointer; }
+        textarea.form-control { resize: vertical; min-height: 80px; }
         
-        .api-stats {
-            display: flex;
-            gap: 16px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
-        }
-        
-        .api-stat-value { font-size: 15px; font-weight: 700; }
-        .api-stat-label { font-size: 10px; color: var(--text-3); }
-        
-        /* Forms */
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        
-        .form-group {
-            margin-bottom: 16px;
-        }
-        
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-1);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 10px 12px;
-            background: var(--bg-3);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-0);
-            font-size: 13px;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        /* Activity */
-        .activity-list { }
-        
-        .activity-item {
-            display: flex;
-            gap: 12px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .activity-item:last-child { border-bottom: none; }
-        
-        .activity-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        
-        .activity-content { flex: 1; }
-        .activity-text { font-size: 13px; margin-bottom: 2px; }
-        .activity-time { font-size: 11px; color: var(--text-3); }
-        
-        /* Pipeline */
-        .pipeline {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-        
-        .pipeline-stage {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .pipeline-header {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .pipeline-header h4 { font-size: 13px; font-weight: 600; }
-        .pipeline-header span { font-size: 12px; color: var(--text-3); }
-        
-        .pipeline-body {
-            padding: 12px;
-            min-height: 200px;
-        }
-        
-        .pipeline-card {
-            background: var(--bg-3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        
-        .pipeline-card:hover {
-            border-color: var(--primary);
-        }
-        
-        .pipeline-card h5 { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-        .pipeline-card p { font-size: 11px; color: var(--text-3); }
-        .pipeline-card .value { font-size: 14px; font-weight: 700; color: var(--emerald); margin-top: 8px; }
-        
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--text-2);
-        }
-        
-        .empty-state-icon { font-size: 48px; margin-bottom: 16px; }
-        .empty-state h3 { font-size: 16px; color: var(--text-0); margin-bottom: 8px; }
-        .empty-state p { font-size: 13px; margin-bottom: 20px; }
-        
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        
-        .modal {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow: hidden;
-        }
-        
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+        .modal { background: var(--bg-2); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow: hidden; display: none; }
+        .modal.active { display: block; }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .modal-header h2 { font-size: 16px; font-weight: 600; }
+        .modal-close { background: none; border: none; color: var(--text-3); cursor: pointer; font-size: 24px; line-height: 1; }
+        .modal-close:hover { color: var(--text-0); }
+        .modal-body { padding: 24px; overflow-y: auto; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
         
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-3);
-            cursor: pointer;
-            font-size: 20px;
-        }
-        
-        .modal-body { padding: 24px; }
-        
-        .modal-footer {
-            padding: 16px 24px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-        }
-        
-        /* Toast */
-        .toast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 2000;
-        }
-        
-        .toast {
-            background: var(--bg-2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 300px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(100%); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
+        /* TOAST */
+        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
+        .toast { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; margin-top: 10px; display: flex; align-items: center; gap: 12px; min-width: 300px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
         .toast.success { border-left: 3px solid var(--emerald); }
         .toast.error { border-left: 3px solid var(--rose); }
         .toast.info { border-left: 3px solid var(--primary); }
-        
         .toast-icon { font-size: 18px; }
         .toast-content { flex: 1; }
         .toast-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
         .toast-message { font-size: 12px; color: var(--text-2); }
         
-        /* Charts Placeholder */
-        .chart-placeholder {
-            height: 200px;
-            background: var(--bg-3);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-3);
-        }
+        .chart-placeholder { height: 200px; background: var(--bg-3); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 14px; }
         
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .api-grid, .module-grid { grid-template-columns: repeat(2, 1fr); }
-            .pipeline { grid-template-columns: repeat(2, 1fr); }
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main { margin-left: 0; }
-            .stats-grid, .api-grid, .module-grid, .quick-actions { grid-template-columns: 1fr; }
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .pipeline { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-        }
+        /* RESPONSIVE */
+        @media (max-width: 1200px) { .stats-grid, .api-grid { grid-template-columns: repeat(2, 1fr); } .pipeline { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; } .stats-grid, .api-grid, .quick-actions { grid-template-columns: 1fr; } .grid-2, .pipeline, .form-row { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<!-- ==================== LOGIN SCREEN ==================== -->
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-container">
         <div class="login-logo">
@@ -1046,900 +240,268 @@
             <h1>West Money OS</h1>
             <p>Business Operating System</p>
         </div>
-        
         <div class="login-box">
             <h2>Anmelden</h2>
-            
-            <div class="login-error" id="loginError">
-                Ungültige Anmeldedaten. Bitte versuche es erneut.
-            </div>
-            
-            <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="login-error" id="loginError">Ungültige Anmeldedaten.</div>
+            <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">Benutzername</label>
-                    <input type="text" id="username" class="form-input" placeholder="Benutzername eingeben" required>
+                    <label>Benutzername</label>
+                    <input type="text" id="username" class="form-input" placeholder="Benutzername" required>
                 </div>
-                
                 <div class="form-group">
-                    <label for="password">Passwort</label>
-                    <input type="password" id="password" class="form-input" placeholder="Passwort eingeben" required>
+                    <label>Passwort</label>
+                    <input type="password" id="password" class="form-input" placeholder="Passwort" required>
                 </div>
-                
-                <button type="submit" class="login-btn" id="loginBtn">
-                    Anmelden
-                </button>
+                <button type="submit" class="login-btn">Anmelden</button>
             </form>
-            
-            <div class="demo-hint">
-                <strong>Demo-Zugang:</strong> admin / admin
-            </div>
+            <div class="demo-hint"><strong>Demo-Zugang:</strong> admin / admin</div>
         </div>
-        
-        <div class="login-footer">
-            © 2025 West Money OS · <a href="#">Datenschutz</a> · <a href="#">Impressum</a>
-        </div>
+        <div class="login-footer">© 2025 West Money OS</div>
     </div>
 </div>
 
-<!-- ==================== APP ==================== -->
+<!-- APP -->
 <div class="app" id="app">
-    
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="logo">
                 <div class="logo-icon">⚡</div>
-                <div>
-                    <h1>West Money OS</h1>
-                    <span>Business Operating System</span>
-                </div>
+                <div><h1>West Money OS</h1><span>Business Operating System</span></div>
             </div>
         </div>
-        
         <nav class="sidebar-nav">
-            
             <div class="nav-group">
                 <div class="nav-label">Übersicht</div>
-                <div class="nav-item active" data-page="home" onclick="showPage('home')">
-                    <span class="icon">🏠</span><span class="label">Home</span>
-                </div>
-                <div class="nav-item" data-page="dashboard" onclick="showPage('dashboard')">
-                    <span class="icon">📊</span><span class="label">Dashboard</span>
-                </div>
+                <div class="nav-item active" data-page="home"><span class="icon">🏠</span><span class="label">Home</span></div>
+                <div class="nav-item" data-page="dashboard"><span class="icon">📊</span><span class="label">Dashboard</span></div>
             </div>
-            
             <div class="nav-group">
                 <div class="nav-label">CRM & Sales</div>
-                <div class="nav-item" data-page="contacts" onclick="showPage('contacts')">
-                    <span class="icon">👥</span><span class="label">Kontakte</span><span class="badge" id="contactCount">247</span>
-                </div>
-                <div class="nav-item" data-page="leads" onclick="showPage('leads')">
-                    <span class="icon">🎯</span><span class="label">Leads</span><span class="badge" id="leadCount">47</span>
-                </div>
-                <div class="nav-item" data-page="deals" onclick="showPage('deals')">
-                    <span class="icon">💼</span><span class="label">Deals</span>
-                </div>
-                <div class="nav-item" data-page="pipeline" onclick="showPage('pipeline')">
-                    <span class="icon">📈</span><span class="label">Pipeline</span>
-                </div>
+                <div class="nav-item" data-page="contacts"><span class="icon">👥</span><span class="label">Kontakte</span><span class="badge" id="navContacts">0</span></div>
+                <div class="nav-item" data-page="leads"><span class="icon">🎯</span><span class="label">Leads</span><span class="badge" id="navLeads">0</span></div>
+                <div class="nav-item" data-page="pipeline"><span class="icon">📈</span><span class="label">Pipeline</span></div>
             </div>
-            
             <div class="nav-group">
                 <div class="nav-label">Finance</div>
-                <div class="nav-item" data-page="invoices" onclick="showPage('invoices')">
-                    <span class="icon">📄</span><span class="label">Rechnungen</span>
-                </div>
-                <div class="nav-item" data-page="payments" onclick="showPage('payments')">
-                    <span class="icon">💳</span><span class="label">Zahlungen</span>
-                </div>
-                <div class="nav-item" data-page="banking" onclick="showPage('banking')">
-                    <span class="icon">🏦</span><span class="label">Banking</span><span class="dot"></span>
-                </div>
+                <div class="nav-item" data-page="invoices"><span class="icon">📄</span><span class="label">Rechnungen</span></div>
+                <div class="nav-item" data-page="payments"><span class="icon">💳</span><span class="label">Zahlungen</span></div>
             </div>
-            
             <div class="nav-group">
                 <div class="nav-label">Communication</div>
-                <div class="nav-item" data-page="inbox" onclick="showPage('inbox')">
-                    <span class="icon">📥</span><span class="label">Inbox</span><span class="badge">12</span>
-                </div>
-                <div class="nav-item" data-page="whatsapp" onclick="showPage('whatsapp')">
-                    <span class="icon">💬</span><span class="label">WhatsApp</span><span class="dot"></span>
-                </div>
-                <div class="nav-item" data-page="email" onclick="showPage('email')">
-                    <span class="icon">📧</span><span class="label">E-Mail</span><span class="dot"></span>
-                </div>
+                <div class="nav-item" data-page="inbox"><span class="icon">📥</span><span class="label">Inbox</span><span class="badge">12</span></div>
+                <div class="nav-item" data-page="whatsapp"><span class="icon">💬</span><span class="label">WhatsApp</span><span class="dot"></span></div>
             </div>
-            
             <div class="nav-group">
                 <div class="nav-label">Platform</div>
-                <div class="nav-item" data-page="integrations" onclick="showPage('integrations')">
-                    <span class="icon">🔌</span><span class="label">Integrationen</span>
-                </div>
-                <div class="nav-item" data-page="workflows" onclick="showPage('workflows')">
-                    <span class="icon">⚡</span><span class="label">Workflows</span>
-                </div>
-                <div class="nav-item" data-page="api" onclick="showPage('api')">
-                    <span class="icon">🔧</span><span class="label">API Hub</span>
-                </div>
+                <div class="nav-item" data-page="integrations"><span class="icon">🔌</span><span class="label">Integrationen</span></div>
+                <div class="nav-item" data-page="workflows"><span class="icon">⚡</span><span class="label">Workflows</span></div>
+                <div class="nav-item" data-page="api"><span class="icon">🔧</span><span class="label">API Hub</span></div>
             </div>
-            
             <div class="nav-group">
                 <div class="nav-label">System</div>
-                <div class="nav-item" data-page="settings" onclick="showPage('settings')">
-                    <span class="icon">⚙️</span><span class="label">Einstellungen</span>
-                </div>
+                <div class="nav-item" data-page="settings"><span class="icon">⚙️</span><span class="label">Einstellungen</span></div>
             </div>
-            
         </nav>
-        
         <div class="sidebar-footer">
-            <div class="user-box" onclick="showPage('settings')">
+            <div class="user-box">
                 <div class="user-avatar" id="userAvatar">WM</div>
-                <div class="user-info">
-                    <div id="userName">West Money Bau</div>
-                    <span id="userRole">Enterprise</span>
-                </div>
-                <button class="logout-btn" onclick="event.stopPropagation(); logout();" title="Abmelden">🚪</button>
+                <div class="user-info"><div id="userName">User</div><span id="userRole">Role</span></div>
+                <button class="logout-btn" id="logoutBtn">🚪</button>
             </div>
         </div>
     </aside>
     
     <!-- MAIN -->
     <main class="main">
-        
         <header class="topbar">
             <div class="topbar-left">
-                <div class="breadcrumb">
-                    West Money OS / <strong id="currentPage">Home</strong>
-                </div>
-                <div class="status-badge">
-                    <span class="pulse"></span>
-                    System Online
-                </div>
+                <div class="breadcrumb">West Money OS / <strong id="currentPage">Home</strong></div>
+                <div class="status-badge"><span class="pulse"></span>System Online</div>
             </div>
             <div class="topbar-right">
-                <div class="search-box">
-                    <span>🔍</span>
-                    <input type="text" placeholder="Suchen... (⌘K)" id="globalSearch">
-                </div>
-                <div class="topbar-btn" onclick="showToast('info', 'Benachrichtigungen', '3 neue Benachrichtigungen')">
-                    <span>🔔</span>
-                    <span class="notif-dot"></span>
-                </div>
-                <div class="topbar-btn" onclick="showPage('settings')">
-                    <span>⚙️</span>
-                </div>
+                <div class="search-box"><span>🔍</span><input type="text" placeholder="Suchen..."></div>
+                <div class="topbar-btn"><span>🔔</span><span class="notif-dot"></span></div>
             </div>
         </header>
         
-        <div class="content">
-            
-            <!-- ==================== HOME ==================== -->
-            <section class="page active" id="page-home">
-                <div class="page-header">
-                    <div>
-                        <h1>Willkommen zurück! 👋</h1>
-                        <p>Hier ist dein Business-Überblick für heute</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-secondary" onclick="showPage('api')">📖 API Docs</button>
-                        <button class="btn btn-primary" onclick="openModal('newContact')">+ Neuer Kontakt</button>
-                    </div>
-                </div>
-                
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="openModal('newContact')">
-                        <div class="quick-action-icon">👤</div>
-                        <div class="quick-action-text">Kontakt anlegen</div>
-                    </div>
-                    <div class="quick-action" onclick="openModal('newLead')">
-                        <div class="quick-action-icon">🎯</div>
-                        <div class="quick-action-text">Lead erfassen</div>
-                    </div>
-                    <div class="quick-action" onclick="openModal('newInvoice')">
-                        <div class="quick-action-icon">📄</div>
-                        <div class="quick-action-text">Rechnung erstellen</div>
-                    </div>
-                    <div class="quick-action" onclick="showPage('inbox')">
-                        <div class="quick-action-icon">📥</div>
-                        <div class="quick-action-text">Inbox öffnen</div>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon primary">💰</div>
-                            <div class="stat-trend up">↑ 23.5%</div>
-                        </div>
-                        <div class="stat-value" id="statRevenue">€847.5K</div>
-                        <div class="stat-label">Umsatz (YTD)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon cyan">👥</div>
-                            <div class="stat-trend up">↑ 12</div>
-                        </div>
-                        <div class="stat-value" id="statContacts">247</div>
-                        <div class="stat-label">Kontakte</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon emerald">🔌</div>
-                        </div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Aktive APIs</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon amber">⚡</div>
-                        </div>
-                        <div class="stat-value">8</div>
-                        <div class="stat-label">Workflows</div>
-                    </div>
-                </div>
-                
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>📊 Letzte Aktivitäten</h3>
-                            <button class="btn btn-sm btn-secondary">Alle anzeigen</button>
-                        </div>
-                        <div class="card-body">
-                            <div class="activity-list" id="activityList">
-                                <!-- Filled by JS -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>🎯 Top Leads</h3>
-                            <button class="btn btn-sm btn-secondary" onclick="showPage('leads')">Alle Leads</button>
-                        </div>
-                        <div class="card-body">
-                            <div id="topLeads">
-                                <!-- Filled by JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== DASHBOARD ==================== -->
-            <section class="page" id="page-dashboard">
-                <div class="page-header">
-                    <div>
-                        <h1>Dashboard</h1>
-                        <p>Business KPIs und Metriken</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-secondary">📥 Export</button>
-                        <button class="btn btn-primary">🔄 Aktualisieren</button>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-top"><div class="stat-icon primary">💰</div><div class="stat-trend up">↑ 23.5%</div></div>
-                        <div class="stat-value">€847.5K</div>
-                        <div class="stat-label">Umsatz</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top"><div class="stat-icon cyan">👥</div></div>
-                        <div class="stat-value">247</div>
-                        <div class="stat-label">Kontakte</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top"><div class="stat-icon emerald">🎯</div></div>
-                        <div class="stat-value">47</div>
-                        <div class="stat-label">Leads</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-top"><div class="stat-icon amber">📈</div></div>
-                        <div class="stat-value">29%</div>
-                        <div class="stat-label">Conversion</div>
-                    </div>
-                </div>
-                
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3>📈 Umsatzentwicklung</h3></div>
-                        <div class="card-body">
-                            <div class="chart-placeholder">
-                                📊 Chart: Umsatz nach Monat (€78.5K/Monat Ø)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header"><h3>🎯 Lead-Quellen</h3></div>
-                        <div class="card-body">
-                            <div class="chart-placeholder">
-                                🥧 Chart: Website 45%, Referral 30%, Ads 25%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== CONTACTS ==================== -->
-            <section class="page" id="page-contacts">
-                <div class="page-header">
-                    <div>
-                        <h1>Kontakte</h1>
-                        <p id="contactsSubtitle">247 Kontakte in der Datenbank</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-secondary">📥 Importieren</button>
-                        <button class="btn btn-primary" onclick="openModal('newContact')">+ Neuer Kontakt</button>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>E-Mail</th>
-                                    <th>Telefon</th>
-                                    <th>Unternehmen</th>
-                                    <th>Status</th>
-                                    <th>Aktionen</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contactsTable">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== LEADS ==================== -->
-            <section class="page" id="page-leads">
-                <div class="page-header">
-                    <div>
-                        <h1>Leads</h1>
-                        <p id="leadsSubtitle">47 aktive Leads</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-primary" onclick="openModal('newLead')">+ Neuer Lead</button>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value" id="leadsNew">12</div><div class="stat-label">Neu</div></div>
-                    <div class="stat-card"><div class="stat-value" id="leadsQualified">23</div><div class="stat-label">Qualifiziert</div></div>
-                    <div class="stat-card"><div class="stat-value" id="leadsProposal">8</div><div class="stat-label">Angebot</div></div>
-                    <div class="stat-card"><div class="stat-value" id="leadsWon">4</div><div class="stat-label">Gewonnen</div></div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Lead</th>
-                                    <th>Unternehmen</th>
-                                    <th>Wert</th>
-                                    <th>Status</th>
-                                    <th>Quelle</th>
-                                    <th>Aktionen</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leadsTable">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== DEALS ==================== -->
-            <section class="page" id="page-deals">
-                <div class="page-header">
-                    <div>
-                        <h1>Deals</h1>
-                        <p>Aktive Geschäftsabschlüsse</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-primary" onclick="openModal('newDeal')">+ Neuer Deal</button>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">€425K</div><div class="stat-label">Pipeline</div></div>
-                    <div class="stat-card"><div class="stat-value">47</div><div class="stat-label">Deals</div></div>
-                    <div class="stat-card"><div class="stat-value">€35K</div><div class="stat-label">Ø Deal</div></div>
-                    <div class="stat-card"><div class="stat-value">29%</div><div class="stat-label">Win Rate</div></div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        <table class="data-table">
-                            <thead>
-                                <tr><th>Deal</th><th>Kunde</th><th>Wert</th><th>Phase</th><th>Erstellt</th></tr>
-                            </thead>
-                            <tbody id="dealsTable">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== PIPELINE ==================== -->
-            <section class="page" id="page-pipeline">
-                <div class="page-header">
-                    <div>
-                        <h1>Sales Pipeline</h1>
-                        <p>€425K Gesamtwert in der Pipeline</p>
-                    </div>
-                </div>
-                
-                <div class="pipeline" id="pipelineBoard">
-                    <!-- Filled by JS -->
-                </div>
-            </section>
-            
-            <!-- ==================== INVOICES ==================== -->
-            <section class="page" id="page-invoices">
-                <div class="page-header">
-                    <div>
-                        <h1>Rechnungen</h1>
-                        <p>Rechnungen erstellen und verwalten</p>
-                    </div>
-                    <div class="page-actions">
-                        <button class="btn btn-primary" onclick="openModal('newInvoice')">+ Neue Rechnung</button>
-                    </div>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">€847K</div><div class="stat-label">Umsatz</div></div>
-                    <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Rechnungen</div></div>
-                    <div class="stat-card"><div class="stat-value">€156K</div><div class="stat-label">Offen</div></div>
-                    <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Überfällig</div></div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        <table class="data-table">
-                            <thead>
-                                <tr><th>Nr.</th><th>Kunde</th><th>Betrag</th><th>Status</th><th>Datum</th><th>Aktionen</th></tr>
-                            </thead>
-                            <tbody id="invoicesTable">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== PAYMENTS ==================== -->
-            <section class="page" id="page-payments">
-                <div class="page-header">
-                    <div><h1>Zahlungen</h1><p>Zahlungseingänge verfolgen</p></div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">€691K</div><div class="stat-label">Bezahlt</div></div>
-                    <div class="stat-card"><div class="stat-value">€156K</div><div class="stat-label">Ausstehend</div></div>
-                    <div class="stat-card"><div class="stat-value">34</div><div class="stat-label">Transaktionen</div></div>
-                    <div class="stat-card"><div class="stat-value">12 Tage</div><div class="stat-label">Ø Zahlung</div></div>
-                </div>
-            </section>
-            
-            <!-- ==================== BANKING ==================== -->
-            <section class="page" id="page-banking">
-                <div class="page-header">
-                    <div><h1>Banking</h1><p>Bankverbindungen verwalten</p></div>
-                    <button class="btn btn-primary">🏦 Konto verbinden</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">🏦</div>
-                            <h3>Revolut Business verbinden</h3>
-                            <p>Verbinde dein Bankkonto für automatische Transaktions-Synchronisation</p>
-                            <button class="btn btn-primary">Jetzt verbinden</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== INBOX ==================== -->
-            <section class="page" id="page-inbox">
-                <div class="page-header">
-                    <div><h1>Unified Inbox</h1><p>Alle Nachrichten an einem Ort</p></div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Ungelesen</div></div>
-                    <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Kanäle</div></div>
-                    <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Heute</div></div>
-                    <div class="stat-card"><div class="stat-value">2m</div><div class="stat-label">Ø Antwort</div></div>
-                </div>
-                <div class="card">
-                    <div class="card-body" id="inboxMessages">
-                        <!-- Filled by JS -->
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== WHATSAPP ==================== -->
-            <section class="page" id="page-whatsapp">
-                <div class="page-header">
-                    <div><h1>WhatsApp Business</h1><p>89 Consents aktiv</p></div>
-                    <button class="btn btn-primary">📱 Nachricht senden</button>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">89</div><div class="stat-label">Consents</div></div>
-                    <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Templates</div></div>
-                    <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Nachrichten</div></div>
-                    <div class="stat-card"><div class="stat-value">98%</div><div class="stat-label">Zustellrate</div></div>
-                </div>
-            </section>
-            
-            <!-- ==================== EMAIL ==================== -->
-            <section class="page" id="page-email">
-                <div class="page-header">
-                    <div><h1>E-Mail</h1><p>Gmail SMTP verbunden</p></div>
-                    <button class="btn btn-primary">📧 E-Mail senden</button>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">547</div><div class="stat-label">Gesendet</div></div>
-                    <div class="stat-card"><div class="stat-value">42%</div><div class="stat-label">Öffnungsrate</div></div>
-                    <div class="stat-card"><div class="stat-value">8.7%</div><div class="stat-label">Klickrate</div></div>
-                    <div class="stat-card"><div class="stat-value">0.2%</div><div class="stat-label">Bounce</div></div>
-                </div>
-            </section>
-            
-            <!-- ==================== INTEGRATIONS ==================== -->
-            <section class="page" id="page-integrations">
-                <div class="page-header">
-                    <div>
-                        <h1>Integrationen</h1>
-                        <p>Verbinde deine Business-Tools</p>
-                    </div>
-                    <button class="btn btn-primary">+ Neue Integration</button>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-icon emerald">✅</div><div class="stat-value">12</div><div class="stat-label">Verbunden</div></div>
-                    <div class="stat-card"><div class="stat-icon amber">⏳</div><div class="stat-value">2</div><div class="stat-label">Setup</div></div>
-                    <div class="stat-card"><div class="stat-icon cyan">🔄</div><div class="stat-value">1.2M</div><div class="stat-label">API Calls</div></div>
-                    <div class="stat-card"><div class="stat-icon primary">📦</div><div class="stat-value">50+</div><div class="stat-label">Verfügbar</div></div>
-                </div>
-                
-                <h3 style="font-size: 14px; margin: 24px 0 14px;">🟢 Aktive Integrationen</h3>
-                <div class="api-grid" id="integrationsGrid">
-                    <!-- Filled by JS -->
-                </div>
-            </section>
-            
-            <!-- ==================== WORKFLOWS ==================== -->
-            <section class="page" id="page-workflows">
-                <div class="page-header">
-                    <div><h1>Workflows</h1><p>8 aktive Automationen</p></div>
-                    <button class="btn btn-primary">+ Neuer Workflow</button>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-value">8</div><div class="stat-label">Aktiv</div></div>
-                    <div class="stat-card"><div class="stat-value">669</div><div class="stat-label">Runs</div></div>
-                    <div class="stat-card"><div class="stat-value">99.9%</div><div class="stat-label">Erfolg</div></div>
-                    <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Auto-Leads</div></div>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        <table class="data-table">
-                            <thead><tr><th>Workflow</th><th>Trigger</th><th>Runs</th><th>Status</th></tr></thead>
-                            <tbody id="workflowsTable">
-                                <!-- Filled by JS -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== API HUB ==================== -->
-            <section class="page" id="page-api">
-                <div class="page-header">
-                    <div><h1>API Hub</h1><p>API Keys und Dokumentation</p></div>
-                    <button class="btn btn-primary">+ Neuer API Key</button>
-                </div>
-                
-                <div class="grid-2" style="margin-bottom: 20px;">
-                    <div class="card">
-                        <div class="card-header"><h3>🔑 API Keys</h3></div>
-                        <div class="card-body">
-                            <table class="data-table">
-                                <thead><tr><th>Name</th><th>Key</th><th>Status</th></tr></thead>
-                                <tbody>
-                                    <tr><td><strong>Production</strong></td><td><code style="background: var(--bg-3); padding: 2px 6px; border-radius: 4px;">wm_live_***7f8a</code></td><td><span class="status active">Aktiv</span></td></tr>
-                                    <tr><td><strong>Development</strong></td><td><code style="background: var(--bg-3); padding: 2px 6px; border-radius: 4px;">wm_test_***2d4e</code></td><td><span class="status active">Aktiv</span></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header"><h3>📊 API Usage</h3></div>
-                        <div class="card-body">
-                            <div class="chart-placeholder">1.2M API Calls / Monat</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header"><h3>📖 API Endpoints</h3></div>
-                    <div class="card-body">
-                        <table class="data-table">
-                            <thead><tr><th>Method</th><th>Endpoint</th><th>Beschreibung</th></tr></thead>
-                            <tbody>
-                                <tr><td><span style="background: var(--emerald); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px;">GET</span></td><td><code>/api/v1/contacts</code></td><td>Alle Kontakte</td></tr>
-                                <tr><td><span style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px;">POST</span></td><td><code>/api/v1/contacts</code></td><td>Kontakt erstellen</td></tr>
-                                <tr><td><span style="background: var(--emerald); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px;">GET</span></td><td><code>/api/v1/leads</code></td><td>Alle Leads</td></tr>
-                                <tr><td><span style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px;">POST</span></td><td><code>/api/v1/messages/whatsapp</code></td><td>WhatsApp senden</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- ==================== SETTINGS ==================== -->
-            <section class="page" id="page-settings">
-                <div class="page-header">
-                    <div><h1>Einstellungen</h1><p>System- und Kontoeinstellungen</p></div>
-                    <button class="btn btn-primary" onclick="saveSettings()">💾 Speichern</button>
-                </div>
-                
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-header"><h3>👤 Profil</h3></div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" id="settingsName" value="Ömer Hüseyin Coşkun">
-                            </div>
-                            <div class="form-group">
-                                <label>E-Mail</label>
-                                <input type="email" class="form-control" id="settingsEmail" value="info@west-money-bau.de">
-                            </div>
-                            <div class="form-group">
-                                <label>Telefon</label>
-                                <input type="tel" class="form-control" id="settingsPhone" value="+49 221 12345678">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header"><h3>🏢 Unternehmen</h3></div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Firma</label>
-                                <input type="text" class="form-control" value="West Money Bau GmbH">
-                            </div>
-                            <div class="form-group">
-                                <label>IBAN</label>
-                                <input type="text" class="form-control" value="DE42 1001 0178 9758 7887 93">
-                            </div>
-                            <div class="form-group">
-                                <label>USt-IdNr.</label>
-                                <input type="text" class="form-control" value="DE123456789">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
+        <div class="content" id="pageContent">
+            <!-- Pages werden hier dynamisch geladen -->
         </div>
     </main>
 </div>
 
-<!-- ==================== MODALS ==================== -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
-    
-    <!-- New Contact Modal -->
-    <div class="modal" id="modalNewContact" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <h2>Neuer Kontakt</h2>
-            <button class="modal-close" onclick="closeModal()">×</button>
-        </div>
+<!-- MODALS -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalContact">
+        <div class="modal-header"><h2>Neuer Kontakt</h2><button class="modal-close" id="closeContactModal">×</button></div>
         <div class="modal-body">
             <div class="form-row">
-                <div class="form-group">
-                    <label>Vorname *</label>
-                    <input type="text" class="form-control" id="contactFirstName" placeholder="Max">
-                </div>
-                <div class="form-group">
-                    <label>Nachname *</label>
-                    <input type="text" class="form-control" id="contactLastName" placeholder="Mustermann">
-                </div>
+                <div class="form-group"><label>Vorname *</label><input type="text" class="form-control" id="cFirst" placeholder="Max"></div>
+                <div class="form-group"><label>Nachname *</label><input type="text" class="form-control" id="cLast" placeholder="Mustermann"></div>
             </div>
-            <div class="form-group">
-                <label>E-Mail *</label>
-                <input type="email" class="form-control" id="contactEmail" placeholder="max@beispiel.de">
-            </div>
-            <div class="form-group">
-                <label>Telefon</label>
-                <input type="tel" class="form-control" id="contactPhone" placeholder="+49 123 456789">
-            </div>
-            <div class="form-group">
-                <label>Unternehmen</label>
-                <input type="text" class="form-control" id="contactCompany" placeholder="Firma GmbH">
-            </div>
+            <div class="form-group"><label>E-Mail *</label><input type="email" class="form-control" id="cEmail" placeholder="max@beispiel.de"></div>
+            <div class="form-group"><label>Telefon</label><input type="tel" class="form-control" id="cPhone" placeholder="+49 123 456789"></div>
+            <div class="form-group"><label>Firma</label><input type="text" class="form-control" id="cCompany" placeholder="Firma GmbH"></div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
-            <button class="btn btn-primary" onclick="saveContact()">Kontakt speichern</button>
+            <button class="btn btn-secondary" id="cancelContactBtn">Abbrechen</button>
+            <button class="btn btn-primary" id="saveContactBtn">Speichern</button>
         </div>
     </div>
     
-    <!-- New Lead Modal -->
-    <div class="modal" id="modalNewLead" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <h2>Neuer Lead</h2>
-            <button class="modal-close" onclick="closeModal()">×</button>
-        </div>
+    <div class="modal" id="modalLead">
+        <div class="modal-header"><h2>Neuer Lead</h2><button class="modal-close" id="closeLeadModal">×</button></div>
         <div class="modal-body">
-            <div class="form-group">
-                <label>Name *</label>
-                <input type="text" class="form-control" id="leadName" placeholder="Lead Name">
-            </div>
-            <div class="form-group">
-                <label>Unternehmen</label>
-                <input type="text" class="form-control" id="leadCompany" placeholder="Firma GmbH">
-            </div>
-            <div class="form-group">
-                <label>Geschätzter Wert (€)</label>
-                <input type="number" class="form-control" id="leadValue" placeholder="25000">
-            </div>
-            <div class="form-group">
-                <label>Quelle</label>
-                <select class="form-control" id="leadSource">
+            <div class="form-group"><label>Name *</label><input type="text" class="form-control" id="lName" placeholder="Lead Name"></div>
+            <div class="form-group"><label>Firma</label><input type="text" class="form-control" id="lCompany" placeholder="Firma GmbH"></div>
+            <div class="form-group"><label>Wert (€)</label><input type="number" class="form-control" id="lValue" placeholder="25000"></div>
+            <div class="form-group"><label>Quelle</label>
+                <select class="form-control" id="lSource">
                     <option value="Website">Website</option>
                     <option value="Referral">Empfehlung</option>
                     <option value="Ads">Werbung</option>
-                    <option value="Other">Sonstiges</option>
                 </select>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
-            <button class="btn btn-primary" onclick="saveLead()">Lead speichern</button>
+            <button class="btn btn-secondary" id="cancelLeadBtn">Abbrechen</button>
+            <button class="btn btn-primary" id="saveLeadBtn">Speichern</button>
         </div>
     </div>
     
-    <!-- New Invoice Modal -->
-    <div class="modal" id="modalNewInvoice" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <h2>Neue Rechnung</h2>
-            <button class="modal-close" onclick="closeModal()">×</button>
-        </div>
+    <div class="modal" id="modalInvoice">
+        <div class="modal-header"><h2>Neue Rechnung</h2><button class="modal-close" id="closeInvoiceModal">×</button></div>
         <div class="modal-body">
-            <div class="form-group">
-                <label>Kunde *</label>
-                <input type="text" class="form-control" id="invoiceCustomer" placeholder="Kundenname">
-            </div>
-            <div class="form-group">
-                <label>Betrag (€) *</label>
-                <input type="number" class="form-control" id="invoiceAmount" placeholder="1000">
-            </div>
-            <div class="form-group">
-                <label>Beschreibung</label>
-                <textarea class="form-control" id="invoiceDescription" rows="3" placeholder="Leistungsbeschreibung"></textarea>
-            </div>
+            <div class="form-group"><label>Kunde *</label><input type="text" class="form-control" id="iCustomer" placeholder="Kundenname"></div>
+            <div class="form-group"><label>Betrag (€) *</label><input type="number" class="form-control" id="iAmount" placeholder="1000"></div>
+            <div class="form-group"><label>Beschreibung</label><textarea class="form-control" id="iDesc" placeholder="Leistungsbeschreibung"></textarea></div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
-            <button class="btn btn-primary" onclick="saveInvoice()">Rechnung erstellen</button>
+            <button class="btn btn-secondary" id="cancelInvoiceBtn">Abbrechen</button>
+            <button class="btn btn-primary" id="saveInvoiceBtn">Erstellen</button>
         </div>
     </div>
-    
 </div>
 
-<!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// ==================== DATA STORE ====================
+// ==================== DATA ====================
 const defaultData = {
     contacts: [
-        { id: 1, firstName: 'Max', lastName: 'Müller', email: 'max@mueller-bau.de', phone: '+49 221 1234567', company: 'Müller Bau GmbH', status: 'active' },
+        { id: 1, firstName: 'Max', lastName: 'Müller', email: 'max@mueller.de', phone: '+49 221 1234567', company: 'Müller Bau GmbH', status: 'active' },
         { id: 2, firstName: 'Anna', lastName: 'Schmidt', email: 'anna@schmidt.de', phone: '+49 221 7654321', company: 'Schmidt Immobilien', status: 'active' },
-        { id: 3, firstName: 'Thomas', lastName: 'Weber', email: 'thomas@weber-haus.de', phone: '+49 221 9876543', company: 'Weber Haus', status: 'active' },
-        { id: 4, firstName: 'Lisa', lastName: 'Fischer', email: 'lisa@fischer-gmbh.de', phone: '+49 221 5432167', company: 'Fischer GmbH', status: 'pending' },
-        { id: 5, firstName: 'Michael', lastName: 'Bauer', email: 'michael@bauer-gruppe.de', phone: '+49 221 6789012', company: 'Bauer Gruppe', status: 'active' }
+        { id: 3, firstName: 'Thomas', lastName: 'Weber', email: 'thomas@weber.de', phone: '+49 221 9876543', company: 'Weber Haus', status: 'pending' },
+        { id: 4, firstName: 'Lisa', lastName: 'Fischer', email: 'lisa@fischer.de', phone: '+49 221 5432167', company: 'Fischer GmbH', status: 'active' },
+        { id: 5, firstName: 'Michael', lastName: 'Bauer', email: 'michael@bauer.de', phone: '+49 221 6789012', company: 'Bauer Gruppe', status: 'active' }
     ],
     leads: [
         { id: 1, name: 'Smart Home Projekt', company: 'Müller GmbH', value: 45000, status: 'qualified', source: 'Website' },
         { id: 2, name: 'Barrierefreies Bauen', company: 'Weber Bau', value: 28000, status: 'new', source: 'Referral' },
         { id: 3, name: 'Komplettsanierung', company: 'Schmidt Haus', value: 62000, status: 'won', source: 'Ads' },
-        { id: 4, name: 'LOXONE Installation', company: 'Fischer Immobilien', value: 18000, status: 'proposal', source: 'Website' },
-        { id: 5, name: 'Neubau Einfamilienhaus', company: 'Becker Familie', value: 85000, status: 'new', source: 'Website' }
-    ],
-    deals: [
-        { id: 1, name: 'Smart Home Projekt Müller', customer: 'Müller GmbH', value: 45000, stage: 'qualified', date: '2025-12-01' },
-        { id: 2, name: 'Renovierung Weber', customer: 'Weber Bau', value: 28000, stage: 'new', date: '2025-12-15' },
-        { id: 3, name: 'Sanierung Schmidt', customer: 'Schmidt Haus', value: 62000, stage: 'won', date: '2025-11-20' }
+        { id: 4, name: 'LOXONE Installation', company: 'Fischer Immo', value: 18000, status: 'proposal', source: 'Website' },
+        { id: 5, name: 'Neubau EFH', company: 'Becker Familie', value: 85000, status: 'new', source: 'Website' }
     ],
     invoices: [
         { id: 'RE-2025-001', customer: 'Müller GmbH', amount: 45000, status: 'paid', date: '2025-12-01' },
         { id: 'RE-2025-002', customer: 'Weber Bau', amount: 28000, status: 'pending', date: '2025-12-10' },
         { id: 'RE-2025-003', customer: 'Schmidt Haus', amount: 62000, status: 'paid', date: '2025-11-25' },
-        { id: 'RE-2025-004', customer: 'Fischer GmbH', amount: 18000, status: 'overdue', date: '2025-11-01' }
+        { id: 'RE-2025-004', customer: 'Fischer GmbH', amount: 18000, status: 'overdue', date: '2025-11-01' },
+        { id: 'RE-2025-005', customer: 'Bauer Gruppe', amount: 35000, status: 'pending', date: '2025-12-18' }
+    ],
+    payments: [
+        { id: 1, date: '2025-12-20', customer: 'Müller GmbH', invoice: 'RE-2025-001', amount: 45000, method: 'Überweisung' },
+        { id: 2, date: '2025-12-15', customer: 'Schmidt Haus', invoice: 'RE-2025-003', amount: 62000, method: 'Überweisung' }
     ],
     activities: [
-        { type: 'lead', icon: '🎯', text: 'Neuer Lead: Smart Home Anfrage', time: '12 Min.' },
-        { type: 'whatsapp', icon: '💬', text: 'WhatsApp Consent erhalten', time: '34 Min.' },
-        { type: 'payment', icon: '💰', text: 'Zahlung eingegangen: €23,500', time: '1 Std.' },
-        { type: 'email', icon: '📧', text: 'E-Mail Kampagne gesendet', time: '2 Std.' },
-        { type: 'deal', icon: '🎉', text: 'Deal gewonnen: €62,000', time: '3 Std.' }
+        { icon: '🎯', text: 'Neuer Lead: Smart Home Anfrage', time: '12 Min.' },
+        { icon: '💬', text: 'WhatsApp Consent erhalten', time: '34 Min.' },
+        { icon: '💰', text: 'Zahlung eingegangen: €45,000', time: '1 Std.' },
+        { icon: '📧', text: 'E-Mail Kampagne gesendet', time: '2 Std.' },
+        { icon: '🎉', text: 'Deal gewonnen: €62,000', time: '3 Std.' }
+    ],
+    messages: [
+        { from: 'Max Müller', text: 'Vielen Dank für das Angebot!', time: '5 Min.', type: 'whatsapp' },
+        { from: 'Anna Schmidt', text: 'Können wir den Termin verschieben?', time: '23 Min.', type: 'whatsapp' },
+        { from: 'Lisa Fischer', subject: 'Anfrage Kostenvoranschlag', time: '15 Min.', type: 'email' }
     ],
     workflows: [
-        { id: 1, name: 'Website Lead → HubSpot', trigger: 'Form Submit', runs: 156, status: 'active' },
-        { id: 2, name: 'WhatsApp Consent Request', trigger: 'New Contact', runs: 89, status: 'active' },
-        { id: 3, name: 'Deal Won → Slack', trigger: 'Deal Status', runs: 47, status: 'active' },
-        { id: 4, name: 'Follow-up Reminder', trigger: 'Time-based', runs: 234, status: 'active' }
+        { name: 'Website Lead → HubSpot', trigger: 'Form Submit', runs: 156, status: 'active' },
+        { name: 'WhatsApp Consent Request', trigger: 'New Contact', runs: 89, status: 'active' },
+        { name: 'Deal Won → Slack', trigger: 'Deal Status', runs: 47, status: 'active' },
+        { name: 'Follow-up Reminder', trigger: 'Time-based', runs: 234, status: 'active' }
     ],
     integrations: [
-        { name: 'HubSpot', type: 'CRM', logo: 'hubspot', status: 'connected', stats: { contacts: 247, deals: 47 } },
-        { name: 'WhatsApp Business', type: 'Messaging', logo: 'whatsapp', status: 'connected', stats: { consents: 89, messages: 156 } },
-        { name: 'Zapier', type: 'Automation', logo: 'zapier', status: 'connected', stats: { zaps: 8, runs: 669 } },
-        { name: 'Gmail', type: 'E-Mail', logo: 'gmail', status: 'connected', stats: { sent: 547, rate: '42%' } },
-        { name: 'Zadarma', type: 'VoIP', logo: 'zadarma', status: 'connected', stats: { calls: 234, time: '12h' } },
-        { name: 'Slack', type: 'Team Chat', logo: 'slack', status: 'connected', stats: { channels: 4, alerts: 156 } },
-        { name: 'Google Calendar', type: 'Kalender', logo: 'calendar', status: 'connected', stats: { events: 23 } },
-        { name: 'Google Drive', type: 'Storage', logo: 'drive', status: 'connected', stats: { files: 156 } },
-        { name: 'Notion', type: 'Docs', logo: 'notion', status: 'connected', stats: { pages: 34 } },
-        { name: 'Make', type: 'Automation', logo: 'make', status: 'connected', stats: { scenarios: 5 } },
-        { name: 'Revolut', type: 'Banking', logo: 'revolut', status: 'pending', stats: {} },
-        { name: 'Stripe', type: 'Payments', logo: 'stripe', status: 'pending', stats: {} }
+        { name: 'HubSpot', type: 'CRM', logo: 'hubspot', status: 'connected' },
+        { name: 'WhatsApp', type: 'Messaging', logo: 'whatsapp', status: 'connected' },
+        { name: 'Zapier', type: 'Automation', logo: 'zapier', status: 'connected' },
+        { name: 'Gmail', type: 'E-Mail', logo: 'gmail', status: 'connected' },
+        { name: 'Slack', type: 'Chat', logo: 'slack', status: 'connected' },
+        { name: 'Zadarma', type: 'VoIP', logo: 'zadarma', status: 'connected' },
+        { name: 'Calendar', type: 'Kalender', logo: 'calendar', status: 'connected' },
+        { name: 'Drive', type: 'Storage', logo: 'drive', status: 'connected' },
+        { name: 'Notion', type: 'Docs', logo: 'notion', status: 'connected' },
+        { name: 'Make', type: 'Automation', logo: 'make', status: 'connected' },
+        { name: 'Revolut', type: 'Banking', logo: 'revolut', status: 'pending' },
+        { name: 'Stripe', type: 'Payments', logo: 'stripe', status: 'pending' }
     ]
 };
 
-// Load data from localStorage or use defaults
-let appData = JSON.parse(localStorage.getItem('westMoneyOS_data')) || defaultData;
+let data = JSON.parse(localStorage.getItem('wmos_data')) || JSON.parse(JSON.stringify(defaultData));
+let currentUser = JSON.parse(localStorage.getItem('wmos_user'));
+let currentPage = localStorage.getItem('wmos_page') || 'home';
 
-// Save data
 function saveData() {
-    localStorage.setItem('westMoneyOS_data', JSON.stringify(appData));
+    localStorage.setItem('wmos_data', JSON.stringify(data));
+}
+
+function statusLabel(s) {
+    const labels = { new: 'Neu', qualified: 'Qualifiziert', proposal: 'Angebot', won: 'Gewonnen', active: 'Aktiv', pending: 'Ausstehend', paid: 'Bezahlt', overdue: 'Überfällig' };
+    return labels[s] || s;
+}
+
+// ==================== TOAST ====================
+function showToast(type, title, message) {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.innerHTML = `
+        <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+        <div class="toast-content">
+            <div class="toast-title">${title}</div>
+            <div class="toast-message">${message}</div>
+        </div>
+    `;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
 // ==================== AUTH ====================
-const users = {
-    'admin': { password: '663724', role: 'Admin', name: 'Administrator' },
-    'demo': { password: 'admin', role: 'Demo', name: 'Demo User' }
-};
-
-// Also allow admin/admin for demo
-users['admin_demo'] = { password: 'admin', role: 'Demo', name: 'Demo User' };
-
-let currentUser = JSON.parse(localStorage.getItem('westMoneyOS_user'));
-
 function handleLogin(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const errorEl = document.getElementById('loginError');
     
-    // Check credentials
-    if (users[username] && users[username].password === password) {
-        currentUser = { username, ...users[username] };
-        localStorage.setItem('westMoneyOS_user', JSON.stringify(currentUser));
+    if ((username === 'admin' && password === '663724') || (username === 'admin' && password === 'admin')) {
+        currentUser = {
+            name: password === '663724' ? 'Administrator' : 'Demo User',
+            role: password === '663724' ? 'Admin' : 'Demo'
+        };
+        localStorage.setItem('wmos_user', JSON.stringify(currentUser));
         showApp();
-        errorEl.classList.remove('show');
-    } else if (username === 'admin' && password === 'admin') {
-        // Demo access
-        currentUser = { username: 'demo', role: 'Demo', name: 'Demo User' };
-        localStorage.setItem('westMoneyOS_user', JSON.stringify(currentUser));
-        showApp();
-        errorEl.classList.remove('show');
+        document.getElementById('loginError').classList.remove('show');
     } else {
-        errorEl.classList.add('show');
+        document.getElementById('loginError').classList.add('show');
     }
 }
 
 function logout() {
-    localStorage.removeItem('westMoneyOS_user');
+    localStorage.removeItem('wmos_user');
     currentUser = null;
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('app').classList.remove('active');
@@ -1950,446 +512,666 @@ function logout() {
 function showApp() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').classList.add('active');
-    
-    // Update user info
-    if (currentUser) {
-        document.getElementById('userName').textContent = currentUser.name;
-        document.getElementById('userRole').textContent = currentUser.role;
-        document.getElementById('userAvatar').textContent = currentUser.name.substring(0, 2).toUpperCase();
-    }
-    
-    // Initialize data
-    renderAll();
-    showToast('success', 'Willkommen!', 'Du bist jetzt angemeldet.');
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('userRole').textContent = currentUser.role;
+    document.getElementById('userAvatar').textContent = currentUser.name.substring(0, 2).toUpperCase();
+    showPage(currentPage);
+    showToast('success', 'Willkommen!', 'Erfolgreich angemeldet.');
 }
 
-// ==================== NAVIGATION ====================
+// ==================== PAGES ====================
 const pageNames = {
     home: 'Home', dashboard: 'Dashboard', contacts: 'Kontakte', leads: 'Leads',
-    deals: 'Deals', pipeline: 'Pipeline', invoices: 'Rechnungen', payments: 'Zahlungen',
-    banking: 'Banking', inbox: 'Inbox', whatsapp: 'WhatsApp', email: 'E-Mail',
-    integrations: 'Integrationen', workflows: 'Workflows', api: 'API Hub', settings: 'Einstellungen'
+    pipeline: 'Pipeline', invoices: 'Rechnungen', payments: 'Zahlungen',
+    inbox: 'Inbox', whatsapp: 'WhatsApp', integrations: 'Integrationen',
+    workflows: 'Workflows', api: 'API Hub', settings: 'Einstellungen'
 };
 
 function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    currentPage = pageId;
+    localStorage.setItem('wmos_page', pageId);
+    document.getElementById('currentPage').textContent = pageNames[pageId] || pageId;
+    
+    // Update nav
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    
-    const page = document.getElementById('page-' + pageId);
-    if (page) page.classList.add('active');
-    
     const nav = document.querySelector(`.nav-item[data-page="${pageId}"]`);
     if (nav) nav.classList.add('active');
     
-    document.getElementById('currentPage').textContent = pageNames[pageId] || pageId;
-    window.scrollTo(0, 0);
-    localStorage.setItem('westMoneyOS_page', pageId);
-}
-
-// ==================== RENDER FUNCTIONS ====================
-function renderAll() {
-    renderActivities();
-    renderTopLeads();
-    renderContacts();
-    renderLeads();
-    renderDeals();
-    renderPipeline();
-    renderInvoices();
-    renderInbox();
-    renderWorkflows();
-    renderIntegrations();
+    // Render page
+    renderPage(pageId);
     updateStats();
 }
 
 function updateStats() {
-    document.getElementById('statContacts').textContent = appData.contacts.length;
-    document.getElementById('contactCount').textContent = appData.contacts.length;
-    document.getElementById('leadCount').textContent = appData.leads.length;
-    document.getElementById('contactsSubtitle').textContent = `${appData.contacts.length} Kontakte in der Datenbank`;
-    document.getElementById('leadsSubtitle').textContent = `${appData.leads.length} aktive Leads`;
-    
-    // Lead stats
-    const newLeads = appData.leads.filter(l => l.status === 'new').length;
-    const qualLeads = appData.leads.filter(l => l.status === 'qualified').length;
-    const propLeads = appData.leads.filter(l => l.status === 'proposal').length;
-    const wonLeads = appData.leads.filter(l => l.status === 'won').length;
-    
-    document.getElementById('leadsNew').textContent = newLeads;
-    document.getElementById('leadsQualified').textContent = qualLeads;
-    document.getElementById('leadsProposal').textContent = propLeads;
-    document.getElementById('leadsWon').textContent = wonLeads;
+    document.getElementById('navContacts').textContent = data.contacts.length;
+    document.getElementById('navLeads').textContent = data.leads.length;
 }
 
-function renderActivities() {
-    const container = document.getElementById('activityList');
-    container.innerHTML = appData.activities.map(a => `
-        <div class="activity-item">
-            <div class="activity-icon" style="background: var(--primary-glow);">${a.icon}</div>
-            <div class="activity-content">
-                <div class="activity-text">${a.text}</div>
-                <div class="activity-time">${a.time}</div>
-            </div>
-        </div>
-    `).join('');
+function renderPage(pageId) {
+    const content = document.getElementById('pageContent');
+    
+    switch(pageId) {
+        case 'home':
+            content.innerHTML = renderHome();
+            break;
+        case 'dashboard':
+            content.innerHTML = renderDashboard();
+            break;
+        case 'contacts':
+            content.innerHTML = renderContacts();
+            break;
+        case 'leads':
+            content.innerHTML = renderLeads();
+            break;
+        case 'pipeline':
+            content.innerHTML = renderPipeline();
+            break;
+        case 'invoices':
+            content.innerHTML = renderInvoices();
+            break;
+        case 'payments':
+            content.innerHTML = renderPayments();
+            break;
+        case 'inbox':
+            content.innerHTML = renderInbox();
+            break;
+        case 'whatsapp':
+            content.innerHTML = renderWhatsApp();
+            break;
+        case 'integrations':
+            content.innerHTML = renderIntegrations();
+            break;
+        case 'workflows':
+            content.innerHTML = renderWorkflows();
+            break;
+        case 'api':
+            content.innerHTML = renderAPI();
+            break;
+        case 'settings':
+            content.innerHTML = renderSettings();
+            break;
+        default:
+            content.innerHTML = '<p>Seite nicht gefunden</p>';
+    }
+    
+    // Attach event listeners after render
+    attachPageListeners(pageId);
 }
 
-function renderTopLeads() {
-    const container = document.getElementById('topLeads');
-    container.innerHTML = appData.leads.slice(0, 5).map(l => `
-        <div class="activity-item">
-            <div class="activity-icon" style="background: rgba(16, 185, 129, 0.15);">🎯</div>
-            <div class="activity-content">
-                <div class="activity-text"><strong>${l.company}</strong></div>
-                <div class="activity-time">${l.name} · €${l.value.toLocaleString()}</div>
+function renderHome() {
+    return `
+        <div class="page active">
+            <div class="page-header">
+                <div><h1>Willkommen zurück! 👋</h1><p>Hier ist dein Business-Überblick</p></div>
+                <div class="page-actions"><button class="btn btn-primary" onclick="openModal('contact')">+ Neuer Kontakt</button></div>
             </div>
-            <span class="status ${l.status}">${l.status === 'new' ? 'Neu' : l.status === 'qualified' ? 'Qualifiziert' : l.status === 'proposal' ? 'Angebot' : 'Gewonnen'}</span>
+            <div class="quick-actions">
+                <div class="quick-action" onclick="openModal('contact')"><div class="quick-action-icon">👤</div><div class="quick-action-text">Kontakt anlegen</div></div>
+                <div class="quick-action" onclick="openModal('lead')"><div class="quick-action-icon">🎯</div><div class="quick-action-text">Lead erfassen</div></div>
+                <div class="quick-action" onclick="openModal('invoice')"><div class="quick-action-icon">📄</div><div class="quick-action-text">Rechnung erstellen</div></div>
+                <div class="quick-action" onclick="showPage('inbox')"><div class="quick-action-icon">📥</div><div class="quick-action-text">Inbox öffnen</div></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-top"><div class="stat-icon primary">💰</div><div class="stat-trend up">↑ 23.5%</div></div><div class="stat-value">€847.5K</div><div class="stat-label">Umsatz (YTD)</div></div>
+                <div class="stat-card"><div class="stat-top"><div class="stat-icon cyan">👥</div></div><div class="stat-value">${data.contacts.length}</div><div class="stat-label">Kontakte</div></div>
+                <div class="stat-card"><div class="stat-top"><div class="stat-icon emerald">🔌</div></div><div class="stat-value">12</div><div class="stat-label">Aktive APIs</div></div>
+                <div class="stat-card"><div class="stat-top"><div class="stat-icon amber">⚡</div></div><div class="stat-value">8</div><div class="stat-label">Workflows</div></div>
+            </div>
+            <div class="grid-2">
+                <div class="card"><div class="card-header"><h3>📊 Letzte Aktivitäten</h3></div><div class="card-body">
+                    ${data.activities.map(a => `<div class="activity-item"><div class="activity-icon" style="background:var(--primary-glow)">${a.icon}</div><div class="activity-content"><div class="activity-text">${a.text}</div><div class="activity-time">${a.time}</div></div></div>`).join('')}
+                </div></div>
+                <div class="card"><div class="card-header"><h3>🎯 Top Leads</h3></div><div class="card-body">
+                    ${data.leads.slice(0, 5).map(l => `<div class="activity-item"><div class="activity-icon" style="background:rgba(16,185,129,0.15)">🎯</div><div class="activity-content"><div class="activity-text"><strong>${l.company}</strong></div><div class="activity-time">${l.name} · €${l.value.toLocaleString()}</div></div><span class="status ${l.status}">${statusLabel(l.status)}</span></div>`).join('')}
+                </div></div>
+            </div>
         </div>
-    `).join('');
+    `;
+}
+
+function renderDashboard() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Dashboard</h1><p>Business KPIs</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">€847.5K</div><div class="stat-label">Umsatz</div></div>
+                <div class="stat-card"><div class="stat-value">${data.contacts.length}</div><div class="stat-label">Kontakte</div></div>
+                <div class="stat-card"><div class="stat-value">${data.leads.length}</div><div class="stat-label">Leads</div></div>
+                <div class="stat-card"><div class="stat-value">29%</div><div class="stat-label">Conversion</div></div>
+            </div>
+            <div class="grid-2">
+                <div class="card"><div class="card-header"><h3>📈 Umsatzentwicklung</h3></div><div class="card-body"><div class="chart-placeholder">€78.5K/Monat Ø</div></div></div>
+                <div class="card"><div class="card-header"><h3>🎯 Lead-Quellen</h3></div><div class="card-body"><div class="chart-placeholder">Website 45%, Referral 30%, Ads 25%</div></div></div>
+            </div>
+        </div>
+    `;
 }
 
 function renderContacts() {
-    const container = document.getElementById('contactsTable');
-    container.innerHTML = appData.contacts.map(c => `
-        <tr>
-            <td><strong>${c.firstName} ${c.lastName}</strong></td>
-            <td>${c.email}</td>
-            <td>${c.phone}</td>
-            <td>${c.company}</td>
-            <td><span class="status ${c.status}">${c.status === 'active' ? 'Aktiv' : 'Ausstehend'}</span></td>
-            <td>
-                <button class="btn btn-sm btn-secondary" onclick="editContact(${c.id})">✏️</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteContact(${c.id})">🗑️</button>
-            </td>
-        </tr>
-    `).join('');
+    return `
+        <div class="page active">
+            <div class="page-header">
+                <div><h1>Kontakte</h1><p>${data.contacts.length} Kontakte in der Datenbank</p></div>
+                <div class="page-actions"><button class="btn btn-primary" onclick="openModal('contact')">+ Neuer Kontakt</button></div>
+            </div>
+            <div class="card"><div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Name</th><th>E-Mail</th><th>Telefon</th><th>Firma</th><th>Status</th><th>Aktionen</th></tr></thead>
+                        <tbody>
+                            ${data.contacts.map(c => `
+                                <tr>
+                                    <td><strong>${c.firstName} ${c.lastName}</strong></td>
+                                    <td>${c.email}</td>
+                                    <td>${c.phone}</td>
+                                    <td>${c.company}</td>
+                                    <td><span class="status ${c.status}">${statusLabel(c.status)}</span></td>
+                                    <td><button class="btn btn-sm btn-danger" onclick="deleteContact(${c.id})">🗑️</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div></div>
+        </div>
+    `;
 }
 
 function renderLeads() {
-    const container = document.getElementById('leadsTable');
-    container.innerHTML = appData.leads.map(l => `
-        <tr>
-            <td><strong>${l.name}</strong></td>
-            <td>${l.company}</td>
-            <td>€${l.value.toLocaleString()}</td>
-            <td><span class="status ${l.status}">${l.status === 'new' ? 'Neu' : l.status === 'qualified' ? 'Qualifiziert' : l.status === 'proposal' ? 'Angebot' : 'Gewonnen'}</span></td>
-            <td>${l.source}</td>
-            <td>
-                <button class="btn btn-sm btn-secondary" onclick="editLead(${l.id})">✏️</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteLead(${l.id})">🗑️</button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function renderDeals() {
-    const container = document.getElementById('dealsTable');
-    container.innerHTML = appData.deals.map(d => `
-        <tr>
-            <td><strong>${d.name}</strong></td>
-            <td>${d.customer}</td>
-            <td>€${d.value.toLocaleString()}</td>
-            <td><span class="status ${d.stage}">${d.stage === 'new' ? 'Neu' : d.stage === 'qualified' ? 'Qualifiziert' : d.stage === 'won' ? 'Gewonnen' : d.stage}</span></td>
-            <td>${d.date}</td>
-        </tr>
-    `).join('');
+    const newCount = data.leads.filter(l => l.status === 'new').length;
+    const qualCount = data.leads.filter(l => l.status === 'qualified').length;
+    const propCount = data.leads.filter(l => l.status === 'proposal').length;
+    const wonCount = data.leads.filter(l => l.status === 'won').length;
+    
+    return `
+        <div class="page active">
+            <div class="page-header">
+                <div><h1>Leads</h1><p>${data.leads.length} aktive Leads</p></div>
+                <div class="page-actions"><button class="btn btn-primary" onclick="openModal('lead')">+ Neuer Lead</button></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">${newCount}</div><div class="stat-label">Neu</div></div>
+                <div class="stat-card"><div class="stat-value">${qualCount}</div><div class="stat-label">Qualifiziert</div></div>
+                <div class="stat-card"><div class="stat-value">${propCount}</div><div class="stat-label">Angebot</div></div>
+                <div class="stat-card"><div class="stat-value">${wonCount}</div><div class="stat-label">Gewonnen</div></div>
+            </div>
+            <div class="card"><div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Lead</th><th>Firma</th><th>Wert</th><th>Status</th><th>Quelle</th><th>Aktionen</th></tr></thead>
+                        <tbody>
+                            ${data.leads.map(l => `
+                                <tr>
+                                    <td><strong>${l.name}</strong></td>
+                                    <td>${l.company}</td>
+                                    <td>€${l.value.toLocaleString()}</td>
+                                    <td><span class="status ${l.status}">${statusLabel(l.status)}</span></td>
+                                    <td>${l.source}</td>
+                                    <td><button class="btn btn-sm btn-danger" onclick="deleteLead(${l.id})">🗑️</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div></div>
+        </div>
+    `;
 }
 
 function renderPipeline() {
     const stages = [
-        { id: 'new', name: 'Neu', value: 0 },
-        { id: 'qualified', name: 'Qualifiziert', value: 0 },
-        { id: 'proposal', name: 'Angebot', value: 0 },
-        { id: 'won', name: 'Gewonnen', value: 0 }
+        { id: 'new', name: 'Neu', items: [] },
+        { id: 'qualified', name: 'Qualifiziert', items: [] },
+        { id: 'proposal', name: 'Angebot', items: [] },
+        { id: 'won', name: 'Gewonnen', items: [] }
     ];
     
-    // Calculate values
-    appData.leads.forEach(l => {
+    data.leads.forEach(l => {
         const stage = stages.find(s => s.id === l.status);
-        if (stage) stage.value += l.value;
+        if (stage) stage.items.push(l);
     });
     
-    const container = document.getElementById('pipelineBoard');
-    container.innerHTML = stages.map(s => `
-        <div class="pipeline-stage">
-            <div class="pipeline-header">
-                <h4>${s.name}</h4>
-                <span>€${s.value.toLocaleString()}</span>
+    const total = data.leads.reduce((sum, l) => sum + l.value, 0);
+    
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Sales Pipeline</h1><p>€${total.toLocaleString()} Gesamtwert</p></div></div>
+            <div class="pipeline">
+                ${stages.map(s => {
+                    const stageTotal = s.items.reduce((sum, l) => sum + l.value, 0);
+                    return `
+                        <div class="pipeline-stage">
+                            <div class="pipeline-header"><h4>${s.name}</h4><span>€${stageTotal.toLocaleString()}</span></div>
+                            <div class="pipeline-body">
+                                ${s.items.map(l => `
+                                    <div class="pipeline-card">
+                                        <h5>${l.company}</h5>
+                                        <p>${l.name}</p>
+                                        <div class="value">€${l.value.toLocaleString()}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
             </div>
-            <div class="pipeline-body">
-                ${appData.leads.filter(l => l.status === s.id).map(l => `
-                    <div class="pipeline-card">
-                        <h5>${l.company}</h5>
-                        <p>${l.name}</p>
-                        <div class="value">€${l.value.toLocaleString()}</div>
+        </div>
+    `;
+}
+
+function renderInvoices() {
+    const openAmount = data.invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0);
+    const overdueCount = data.invoices.filter(i => i.status === 'overdue').length;
+    
+    return `
+        <div class="page active">
+            <div class="page-header">
+                <div><h1>Rechnungen</h1><p>Rechnungen erstellen und verwalten</p></div>
+                <div class="page-actions"><button class="btn btn-primary" onclick="openModal('invoice')">+ Neue Rechnung</button></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">€847K</div><div class="stat-label">Umsatz</div></div>
+                <div class="stat-card"><div class="stat-value">${data.invoices.length}</div><div class="stat-label">Rechnungen</div></div>
+                <div class="stat-card"><div class="stat-value">€${Math.round(openAmount/1000)}K</div><div class="stat-label">Offen</div></div>
+                <div class="stat-card"><div class="stat-value">${overdueCount}</div><div class="stat-label">Überfällig</div></div>
+            </div>
+            <div class="card"><div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Nr.</th><th>Kunde</th><th>Betrag</th><th>Status</th><th>Datum</th><th>Aktionen</th></tr></thead>
+                        <tbody>
+                            ${data.invoices.map(i => `
+                                <tr>
+                                    <td><strong>${i.id}</strong></td>
+                                    <td>${i.customer}</td>
+                                    <td>€${i.amount.toLocaleString()}</td>
+                                    <td><span class="status ${i.status}">${statusLabel(i.status)}</span></td>
+                                    <td>${i.date}</td>
+                                    <td><button class="btn btn-sm btn-secondary" onclick="showToast('info', 'PDF', 'Download gestartet...')">📥 PDF</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div></div>
+        </div>
+    `;
+}
+
+function renderPayments() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Zahlungen</h1><p>Zahlungseingänge verfolgen</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">€691K</div><div class="stat-label">Bezahlt</div></div>
+                <div class="stat-card"><div class="stat-value">€156K</div><div class="stat-label">Ausstehend</div></div>
+                <div class="stat-card"><div class="stat-value">34</div><div class="stat-label">Transaktionen</div></div>
+                <div class="stat-card"><div class="stat-value">12 Tage</div><div class="stat-label">Ø Zahlung</div></div>
+            </div>
+            <div class="card"><div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Datum</th><th>Kunde</th><th>Rechnung</th><th>Betrag</th><th>Methode</th></tr></thead>
+                        <tbody>
+                            ${data.payments.map(p => `
+                                <tr>
+                                    <td>${p.date}</td>
+                                    <td><strong>${p.customer}</strong></td>
+                                    <td>${p.invoice}</td>
+                                    <td>€${p.amount.toLocaleString()}</td>
+                                    <td>${p.method}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div></div>
+        </div>
+    `;
+}
+
+function renderInbox() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Unified Inbox</h1><p>Alle Nachrichten an einem Ort</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Ungelesen</div></div>
+                <div class="stat-card"><div class="stat-value">4</div><div class="stat-label">Kanäle</div></div>
+                <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Heute</div></div>
+                <div class="stat-card"><div class="stat-value">2m</div><div class="stat-label">Ø Antwort</div></div>
+            </div>
+            <div class="card"><div class="card-body">
+                ${data.messages.map(m => `
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background:${m.type === 'whatsapp' ? 'rgba(37,211,102,0.15)' : 'rgba(234,67,53,0.15)'}">${m.type === 'whatsapp' ? '💬' : '📧'}</div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>${m.from}</strong>: ${m.text || m.subject}</div>
+                            <div class="activity-time">${m.type === 'whatsapp' ? 'WhatsApp' : 'E-Mail'} · ${m.time}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div></div>
+        </div>
+    `;
+}
+
+function renderWhatsApp() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>WhatsApp Business</h1><p>89 Consents aktiv</p></div><button class="btn btn-primary">📱 Nachricht senden</button></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">89</div><div class="stat-label">Consents</div></div>
+                <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Templates</div></div>
+                <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Nachrichten</div></div>
+                <div class="stat-card"><div class="stat-value">98%</div><div class="stat-label">Zustellrate</div></div>
+            </div>
+            <div class="card"><div class="card-header"><h3>💬 Letzte Nachrichten</h3></div><div class="card-body">
+                ${data.messages.filter(m => m.type === 'whatsapp').map(m => `
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background:rgba(37,211,102,0.15)">💬</div>
+                        <div class="activity-content">
+                            <div class="activity-text"><strong>${m.from}</strong>: ${m.text}</div>
+                            <div class="activity-time">${m.time}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div></div>
+        </div>
+    `;
+}
+
+function renderIntegrations() {
+    const logos = { hubspot: '🧡', whatsapp: '💬', zapier: '⚡', gmail: '📧', slack: '💬', zadarma: '📞', calendar: '📅', drive: '📁', notion: '📝', make: '🔮', revolut: '🏦', stripe: '💳' };
+    
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Integrationen</h1><p>Verbinde deine Business-Tools</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">12</div><div class="stat-label">Verbunden</div></div>
+                <div class="stat-card"><div class="stat-value">2</div><div class="stat-label">Setup</div></div>
+                <div class="stat-card"><div class="stat-value">1.2M</div><div class="stat-label">API Calls</div></div>
+                <div class="stat-card"><div class="stat-value">50+</div><div class="stat-label">Verfügbar</div></div>
+            </div>
+            <h3 style="font-size:14px;margin:24px 0 14px">🟢 Aktive Integrationen</h3>
+            <div class="api-grid">
+                ${data.integrations.map(i => `
+                    <div class="api-card">
+                        <div class="api-top">
+                            <div class="api-logo ${i.logo}">${logos[i.logo] || '🔌'}</div>
+                            <div class="api-info"><h4>${i.name}</h4><span>${i.type}</span></div>
+                            <div class="api-status ${i.status}">● ${i.status === 'connected' ? 'Verbunden' : 'Setup'}</div>
+                        </div>
                     </div>
                 `).join('')}
             </div>
         </div>
-    `).join('');
-}
-
-function renderInvoices() {
-    const container = document.getElementById('invoicesTable');
-    container.innerHTML = appData.invoices.map(i => `
-        <tr>
-            <td><strong>${i.id}</strong></td>
-            <td>${i.customer}</td>
-            <td>€${i.amount.toLocaleString()}</td>
-            <td><span class="status ${i.status === 'paid' ? 'active' : i.status === 'pending' ? 'pending' : 'inactive'}">${i.status === 'paid' ? 'Bezahlt' : i.status === 'pending' ? 'Offen' : 'Überfällig'}</span></td>
-            <td>${i.date}</td>
-            <td><button class="btn btn-sm btn-secondary">📥 PDF</button></td>
-        </tr>
-    `).join('');
-}
-
-function renderInbox() {
-    const container = document.getElementById('inboxMessages');
-    container.innerHTML = `
-        <div class="activity-item"><div class="activity-icon" style="background: rgba(37, 211, 102, 0.15);">💬</div><div class="activity-content"><div class="activity-text"><strong>Max Müller</strong>: Vielen Dank für das Angebot!</div><div class="activity-time">WhatsApp · 5 Min.</div></div></div>
-        <div class="activity-item"><div class="activity-icon" style="background: rgba(234, 67, 53, 0.15);">📧</div><div class="activity-content"><div class="activity-text"><strong>Anna Schmidt</strong>: Terminanfrage für nächste Woche</div><div class="activity-time">E-Mail · 23 Min.</div></div></div>
-        <div class="activity-item"><div class="activity-icon" style="background: rgba(37, 211, 102, 0.15);">💬</div><div class="activity-content"><div class="activity-text"><strong>Thomas Weber</strong>: Können wir morgen telefonieren?</div><div class="activity-time">WhatsApp · 1 Std.</div></div></div>
     `;
 }
 
 function renderWorkflows() {
-    const container = document.getElementById('workflowsTable');
-    container.innerHTML = appData.workflows.map(w => `
-        <tr>
-            <td><strong>${w.name}</strong></td>
-            <td>${w.trigger}</td>
-            <td>${w.runs}</td>
-            <td><span class="status active">Aktiv</span></td>
-        </tr>
-    `).join('');
-}
-
-function renderIntegrations() {
-    const container = document.getElementById('integrationsGrid');
-    container.innerHTML = appData.integrations.map(i => `
-        <div class="api-card">
-            <div class="api-top">
-                <div class="api-logo ${i.logo}">
-                    ${i.logo === 'hubspot' ? '🧡' : i.logo === 'whatsapp' ? '💬' : i.logo === 'zapier' ? '⚡' : i.logo === 'gmail' ? '📧' : i.logo === 'slack' ? '💬' : i.logo === 'zadarma' ? '📞' : i.logo === 'calendar' ? '📅' : i.logo === 'drive' ? '📁' : i.logo === 'notion' ? '📝' : i.logo === 'make' ? '🔮' : i.logo === 'revolut' ? '🏦' : '💳'}
-                </div>
-                <div class="api-info">
-                    <h4>${i.name}</h4>
-                    <span>${i.type}</span>
-                </div>
-                <div class="api-status ${i.status}">● ${i.status === 'connected' ? 'Verbunden' : 'Setup'}</div>
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Workflows</h1><p>8 aktive Automationen</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">8</div><div class="stat-label">Aktiv</div></div>
+                <div class="stat-card"><div class="stat-value">669</div><div class="stat-label">Runs</div></div>
+                <div class="stat-card"><div class="stat-value">99.9%</div><div class="stat-label">Erfolg</div></div>
+                <div class="stat-card"><div class="stat-value">156</div><div class="stat-label">Auto-Leads</div></div>
             </div>
-            ${Object.keys(i.stats).length ? `
-                <div class="api-stats">
-                    ${Object.entries(i.stats).map(([k, v]) => `<div><div class="api-stat-value">${v}</div><div class="api-stat-label">${k}</div></div>`).join('')}
+            <div class="card"><div class="card-body" style="padding:0">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Workflow</th><th>Trigger</th><th>Runs</th><th>Status</th></tr></thead>
+                        <tbody>
+                            ${data.workflows.map(w => `
+                                <tr>
+                                    <td><strong>${w.name}</strong></td>
+                                    <td>${w.trigger}</td>
+                                    <td>${w.runs}</td>
+                                    <td><span class="status active">Aktiv</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
-            ` : ''}
+            </div></div>
         </div>
-    `).join('');
+    `;
 }
 
-// ==================== MODAL FUNCTIONS ====================
+function renderAPI() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>API Hub</h1><p>API Keys und Dokumentation</p></div></div>
+            <div class="grid-2" style="margin-bottom:20px">
+                <div class="card"><div class="card-header"><h3>🔑 API Keys</h3></div><div class="card-body" style="padding:0">
+                    <table class="data-table">
+                        <thead><tr><th>Name</th><th>Key</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>Production</strong></td><td><code style="background:var(--bg-3);padding:2px 6px;border-radius:4px">wm_live_***7f8a</code></td><td><span class="status active">Aktiv</span></td></tr>
+                            <tr><td><strong>Development</strong></td><td><code style="background:var(--bg-3);padding:2px 6px;border-radius:4px">wm_test_***2d4e</code></td><td><span class="status active">Aktiv</span></td></tr>
+                        </tbody>
+                    </table>
+                </div></div>
+                <div class="card"><div class="card-header"><h3>📊 API Usage</h3></div><div class="card-body"><div class="chart-placeholder">1.2M Calls/Monat</div></div></div>
+            </div>
+            <div class="card"><div class="card-header"><h3>📖 API Endpoints</h3></div><div class="card-body" style="padding:0">
+                <table class="data-table">
+                    <thead><tr><th>Method</th><th>Endpoint</th><th>Beschreibung</th></tr></thead>
+                    <tbody>
+                        <tr><td><span style="background:var(--emerald);color:white;padding:2px 8px;border-radius:4px;font-size:10px">GET</span></td><td><code>/api/v1/contacts</code></td><td>Alle Kontakte</td></tr>
+                        <tr><td><span style="background:var(--primary);color:white;padding:2px 8px;border-radius:4px;font-size:10px">POST</span></td><td><code>/api/v1/contacts</code></td><td>Kontakt erstellen</td></tr>
+                        <tr><td><span style="background:var(--emerald);color:white;padding:2px 8px;border-radius:4px;font-size:10px">GET</span></td><td><code>/api/v1/leads</code></td><td>Alle Leads</td></tr>
+                        <tr><td><span style="background:var(--primary);color:white;padding:2px 8px;border-radius:4px;font-size:10px">POST</span></td><td><code>/api/v1/invoices</code></td><td>Rechnung erstellen</td></tr>
+                    </tbody>
+                </table>
+            </div></div>
+        </div>
+    `;
+}
+
+function renderSettings() {
+    return `
+        <div class="page active">
+            <div class="page-header"><div><h1>Einstellungen</h1><p>System-Einstellungen</p></div><button class="btn btn-primary" onclick="showToast('success', 'Gespeichert', 'Einstellungen aktualisiert')">💾 Speichern</button></div>
+            <div class="grid-2">
+                <div class="card"><div class="card-header"><h3>👤 Profil</h3></div><div class="card-body">
+                    <div class="form-group"><label>Name</label><input type="text" class="form-control" value="Ömer Hüseyin Coşkun"></div>
+                    <div class="form-group"><label>E-Mail</label><input type="email" class="form-control" value="info@west-money-bau.de"></div>
+                </div></div>
+                <div class="card"><div class="card-header"><h3>🏢 Unternehmen</h3></div><div class="card-body">
+                    <div class="form-group"><label>Firma</label><input type="text" class="form-control" value="West Money Bau GmbH"></div>
+                    <div class="form-group"><label>IBAN</label><input type="text" class="form-control" value="DE42 1001 0178 9758 7887 93"></div>
+                </div></div>
+            </div>
+        </div>
+    `;
+}
+
+function attachPageListeners(pageId) {
+    // Page-specific listeners can be added here if needed
+}
+
+// ==================== MODALS ====================
 function openModal(type) {
     document.getElementById('modalOverlay').classList.add('active');
-    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
     
-    if (type === 'newContact') {
-        document.getElementById('modalNewContact').style.display = 'block';
-    } else if (type === 'newLead') {
-        document.getElementById('modalNewLead').style.display = 'block';
-    } else if (type === 'newInvoice') {
-        document.getElementById('modalNewInvoice').style.display = 'block';
+    const modalMap = {
+        'contact': 'modalContact',
+        'lead': 'modalLead',
+        'invoice': 'modalInvoice'
+    };
+    
+    const modalId = modalMap[type];
+    if (modalId) {
+        document.getElementById(modalId).classList.add('active');
     }
 }
 
 function closeModal() {
     document.getElementById('modalOverlay').classList.remove('active');
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
 }
 
+// ==================== SAVE FUNCTIONS ====================
 function saveContact() {
-    const firstName = document.getElementById('contactFirstName').value;
-    const lastName = document.getElementById('contactLastName').value;
-    const email = document.getElementById('contactEmail').value;
-    const phone = document.getElementById('contactPhone').value;
-    const company = document.getElementById('contactCompany').value;
+    const firstName = document.getElementById('cFirst').value.trim();
+    const lastName = document.getElementById('cLast').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const phone = document.getElementById('cPhone').value.trim();
+    const company = document.getElementById('cCompany').value.trim();
     
     if (!firstName || !lastName || !email) {
         showToast('error', 'Fehler', 'Bitte fülle alle Pflichtfelder aus.');
         return;
     }
     
-    const newContact = {
+    data.contacts.unshift({
         id: Date.now(),
         firstName, lastName, email, phone, company,
         status: 'active'
-    };
-    
-    appData.contacts.unshift(newContact);
-    appData.activities.unshift({
-        type: 'contact',
-        icon: '👤',
-        text: `Neuer Kontakt: ${firstName} ${lastName}`,
-        time: 'Gerade eben'
     });
     
+    data.activities.unshift({ icon: '👤', text: `Neuer Kontakt: ${firstName} ${lastName}`, time: 'Gerade eben' });
+    
     saveData();
-    renderAll();
     closeModal();
+    showPage(currentPage);
     showToast('success', 'Kontakt erstellt', `${firstName} ${lastName} wurde hinzugefügt.`);
     
     // Clear form
-    document.getElementById('contactFirstName').value = '';
-    document.getElementById('contactLastName').value = '';
-    document.getElementById('contactEmail').value = '';
-    document.getElementById('contactPhone').value = '';
-    document.getElementById('contactCompany').value = '';
+    document.getElementById('cFirst').value = '';
+    document.getElementById('cLast').value = '';
+    document.getElementById('cEmail').value = '';
+    document.getElementById('cPhone').value = '';
+    document.getElementById('cCompany').value = '';
 }
 
 function saveLead() {
-    const name = document.getElementById('leadName').value;
-    const company = document.getElementById('leadCompany').value;
-    const value = parseInt(document.getElementById('leadValue').value) || 0;
-    const source = document.getElementById('leadSource').value;
+    const name = document.getElementById('lName').value.trim();
+    const company = document.getElementById('lCompany').value.trim();
+    const value = parseInt(document.getElementById('lValue').value) || 0;
+    const source = document.getElementById('lSource').value;
     
     if (!name) {
         showToast('error', 'Fehler', 'Bitte gib einen Lead-Namen ein.');
         return;
     }
     
-    const newLead = {
+    data.leads.unshift({
         id: Date.now(),
         name, company, value, source,
         status: 'new'
-    };
-    
-    appData.leads.unshift(newLead);
-    appData.activities.unshift({
-        type: 'lead',
-        icon: '🎯',
-        text: `Neuer Lead: ${name}`,
-        time: 'Gerade eben'
     });
     
+    data.activities.unshift({ icon: '🎯', text: `Neuer Lead: ${name}`, time: 'Gerade eben' });
+    
     saveData();
-    renderAll();
     closeModal();
+    showPage(currentPage);
     showToast('success', 'Lead erstellt', `${name} wurde hinzugefügt.`);
     
-    // Clear form
-    document.getElementById('leadName').value = '';
-    document.getElementById('leadCompany').value = '';
-    document.getElementById('leadValue').value = '';
+    document.getElementById('lName').value = '';
+    document.getElementById('lCompany').value = '';
+    document.getElementById('lValue').value = '';
 }
 
 function saveInvoice() {
-    const customer = document.getElementById('invoiceCustomer').value;
-    const amount = parseInt(document.getElementById('invoiceAmount').value) || 0;
+    const customer = document.getElementById('iCustomer').value.trim();
+    const amount = parseInt(document.getElementById('iAmount').value) || 0;
     
     if (!customer || !amount) {
         showToast('error', 'Fehler', 'Bitte fülle alle Pflichtfelder aus.');
         return;
     }
     
-    const invoiceId = `RE-2025-${String(appData.invoices.length + 1).padStart(3, '0')}`;
+    const invoiceId = `RE-2025-${String(data.invoices.length + 1).padStart(3, '0')}`;
     
-    const newInvoice = {
+    data.invoices.unshift({
         id: invoiceId,
         customer, amount,
         status: 'pending',
         date: new Date().toISOString().split('T')[0]
-    };
-    
-    appData.invoices.unshift(newInvoice);
-    appData.activities.unshift({
-        type: 'invoice',
-        icon: '📄',
-        text: `Rechnung erstellt: ${invoiceId}`,
-        time: 'Gerade eben'
     });
     
+    data.activities.unshift({ icon: '📄', text: `Rechnung erstellt: ${invoiceId}`, time: 'Gerade eben' });
+    
     saveData();
-    renderAll();
     closeModal();
+    showPage(currentPage);
     showToast('success', 'Rechnung erstellt', `${invoiceId} für €${amount.toLocaleString()}`);
     
-    // Clear form
-    document.getElementById('invoiceCustomer').value = '';
-    document.getElementById('invoiceAmount').value = '';
-    document.getElementById('invoiceDescription').value = '';
+    document.getElementById('iCustomer').value = '';
+    document.getElementById('iAmount').value = '';
+    document.getElementById('iDesc').value = '';
 }
 
+// ==================== DELETE FUNCTIONS ====================
 function deleteContact(id) {
     if (confirm('Kontakt wirklich löschen?')) {
-        appData.contacts = appData.contacts.filter(c => c.id !== id);
+        data.contacts = data.contacts.filter(c => c.id !== id);
         saveData();
-        renderAll();
+        showPage(currentPage);
         showToast('info', 'Gelöscht', 'Kontakt wurde entfernt.');
     }
 }
 
 function deleteLead(id) {
     if (confirm('Lead wirklich löschen?')) {
-        appData.leads = appData.leads.filter(l => l.id !== id);
+        data.leads = data.leads.filter(l => l.id !== id);
         saveData();
-        renderAll();
+        showPage(currentPage);
         showToast('info', 'Gelöscht', 'Lead wurde entfernt.');
     }
 }
 
-function editContact(id) {
-    showToast('info', 'Info', 'Edit-Funktion kommt bald!');
-}
-
-function editLead(id) {
-    showToast('info', 'Info', 'Edit-Funktion kommt bald!');
-}
-
-function saveSettings() {
-    showToast('success', 'Gespeichert', 'Einstellungen wurden aktualisiert.');
-}
-
-// ==================== TOAST ====================
-function showToast(type, title, message) {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
-        <div class="toast-content">
-            <div class="toast-title">${title}</div>
-            <div class="toast-message">${message}</div>
-        </div>
-    `;
-    container.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
-}
-
 // ==================== INIT ====================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Login form
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    
+    // Nav items
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const page = this.getAttribute('data-page');
+            if (page) showPage(page);
+        });
+    });
+    
+    // Modal overlay click
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    
+    // Modal close buttons
+    document.getElementById('closeContactModal').addEventListener('click', closeModal);
+    document.getElementById('closeLeadModal').addEventListener('click', closeModal);
+    document.getElementById('closeInvoiceModal').addEventListener('click', closeModal);
+    document.getElementById('cancelContactBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelLeadBtn').addEventListener('click', closeModal);
+    document.getElementById('cancelInvoiceBtn').addEventListener('click', closeModal);
+    
+    // Save buttons
+    document.getElementById('saveContactBtn').addEventListener('click', saveContact);
+    document.getElementById('saveLeadBtn').addEventListener('click', saveLead);
+    document.getElementById('saveInvoiceBtn').addEventListener('click', saveInvoice);
+    
+    // Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+    
     // Check if logged in
     if (currentUser) {
         showApp();
-        const savedPage = localStorage.getItem('westMoneyOS_page');
-        if (savedPage) showPage(savedPage);
     }
-    
-    // Keyboard shortcuts
-    document.addEventListener('keydown', e => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-            e.preventDefault();
-            document.getElementById('globalSearch').focus();
-        }
-        if (e.key === 'Escape') {
-            closeModal();
-        }
-    });
 });
 
-console.log('⚡ West Money OS v2.0');
-console.log('🔐 Demo Login: admin / admin');
-console.log('📦 Business Operating System');
+console.log('⚡ West Money OS v2.0 - Fully Functional');
 </script>
 
 </body>
