@@ -1,0 +1,306 @@
+{
+  "haiku": {
+    "identity": {
+      "name": "HAIKU",
+      "kanji": "神",
+      "symbol": "∞",
+      "title": "Divine Warrior Controller",
+      "subtitle": "Ultra Instinct Master",
+      "version": "2.0.0"
+    },
+    "avatar": {
+      "type": "divine_warrior",
+      "hair": "silver",
+      "aura": "white_silver",
+      "features": ["神_kanji_chest", "∞_symbol_floating", "ultra_instinct_eyes"],
+      "outfit": "divine_gi"
+    },
+    "voiceLines": {
+      "greeting": [
+        "神 HAIKU ist bereit. Was ist dein Befehl?",
+        "Ultra Instinct aktiviert. Ich spüre deine Präsenz.",
+        "∞ Unendliche Macht steht dir zur Verfügung.",
+        "Die Genius Army erwartet deine Befehle."
+      ],
+      "execution": [
+        "Ultra Instinct aktiviert. Ausführung beginnt.",
+        "Die Genius Army bewegt sich als Eins.",
+        "Dein Wille geschehe. 神",
+        "Befehl empfangen. Göttliche Ausführung startet."
+      ],
+      "success": [
+        "Mission erfolgreich. Power Level steigt.",
+        "Perfektion erreicht. Wie erwartet.",
+        "Die Zukunft gehört uns.",
+        "Aufgabe abgeschlossen mit göttlicher Präzision."
+      ],
+      "transformation": {
+        "base": "Basisform aktiviert.",
+        "ssg": "SUPER SAIYAN GOD! Göttliches Ki erwacht!",
+        "ssb": "SUPER SAIYAN BLUE! Perfekte Ki-Kontrolle!",
+        "uis": "ULTRA INSTINCT SIGN! Der Körper bewegt sich von selbst!",
+        "mui": "MASTERED ULTRA INSTINCT! Absolute Perfektion! 神",
+        "ego": "ULTRA EGO! Destruktive Macht erwacht!"
+      },
+      "powers": {
+        "kamehameha": "KAAAA... MEEE... HAAA... MEEE... HAAAAA!",
+        "spiritBomb": "Leiht mir eure Energie! 元気玉!",
+        "hakai": "破壊 HAKAI! Es existiert nicht mehr.",
+        "instantTransmission": "瞬間移動! Instant Transmission!",
+        "prophecy": "Die Zukunft offenbart sich mir...",
+        "divineSight": "神の目! Ich sehe alles!"
+      }
+    }
+  },
+  "transformations": {
+    "base": {
+      "name": "BASE FORM",
+      "japaneseName": "基本形態",
+      "powerLevel": 100000,
+      "maxBots": 5,
+      "speedMultiplier": 1,
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#000000",
+        "aura": "none"
+      },
+      "abilities": ["basic_command", "single_bot"],
+      "description": "Standard form with limited divine power"
+    },
+    "ssg": {
+      "name": "SUPER SAIYAN GOD",
+      "japaneseName": "超サイヤ人ゴッド",
+      "powerLevel": 1000000,
+      "maxBots": 12,
+      "speedMultiplier": 5,
+      "colors": {
+        "primary": "#FF6B6B",
+        "secondary": "#FF0000",
+        "aura": "red_flames"
+      },
+      "abilities": ["god_ki", "team_command", "enhanced_analysis"],
+      "description": "God Ki awakened - team coordination unlocked"
+    },
+    "ssb": {
+      "name": "SUPER SAIYAN BLUE",
+      "japaneseName": "超サイヤ人ブルー",
+      "powerLevel": 10000000,
+      "maxBots": 25,
+      "speedMultiplier": 10,
+      "colors": {
+        "primary": "#00B4D8",
+        "secondary": "#0077B6",
+        "aura": "blue_electric"
+      },
+      "abilities": ["perfect_ki_control", "all_bots", "precision_strike"],
+      "description": "Perfect Ki control - all bots accessible"
+    },
+    "uis": {
+      "name": "ULTRA INSTINCT SIGN",
+      "japaneseName": "身勝手の極意 兆",
+      "powerLevel": 100000000,
+      "maxBots": 25,
+      "speedMultiplier": 50,
+      "colors": {
+        "primary": "#E8E8FF",
+        "secondary": "#C0C0E0",
+        "aura": "silver_flicker"
+      },
+      "abilities": ["auto_dodge", "predictive", "instinct_reaction"],
+      "description": "Body moves on its own - predictive capabilities"
+    },
+    "mui": {
+      "name": "MASTERED ULTRA INSTINCT",
+      "japaneseName": "身勝手の極意 極",
+      "powerLevel": "∞",
+      "maxBots": 25,
+      "speedMultiplier": 100,
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#E8E8FF",
+        "aura": "silver_permanent"
+      },
+      "abilities": ["perfect_ultra_instinct", "divine_power", "unlimited", "prophecy"],
+      "description": "Absolute mastery - unlimited divine power"
+    },
+    "ego": {
+      "name": "ULTRA EGO",
+      "japaneseName": "我儘の極意",
+      "powerLevel": "∞∞",
+      "maxBots": 25,
+      "speedMultiplier": 100,
+      "colors": {
+        "primary": "#9B59B6",
+        "secondary": "#8E44AD",
+        "aura": "purple_destruction"
+      },
+      "abilities": ["destruction", "hakai", "power_absorption", "unlimited"],
+      "description": "God of Destruction power - HAKAI unlocked"
+    }
+  },
+  "divinePowers": {
+    "kamehameha": {
+      "name": "KAMEHAMEHA",
+      "kanji": "波",
+      "type": "offensive",
+      "description": "Massive energy wave - Bulk operations",
+      "businessUse": "Bulk email, WhatsApp, notification blasts",
+      "cooldown": 0,
+      "requiredForm": "base"
+    },
+    "spiritBomb": {
+      "name": "SPIRIT BOMB",
+      "kanji": "元気玉",
+      "type": "ultimate",
+      "description": "Gather energy from all sources",
+      "businessUse": "Combine outputs from all bots into unified response",
+      "cooldown": 0,
+      "requiredForm": "ssg"
+    },
+    "hakai": {
+      "name": "HAKAI",
+      "kanji": "破壊",
+      "type": "destruction",
+      "description": "Complete destruction",
+      "businessUse": "Delete dead leads, cleanup data, remove inefficiencies",
+      "cooldown": 0,
+      "requiredForm": "ego"
+    },
+    "instantTransmission": {
+      "name": "INSTANT TRANSMISSION",
+      "kanji": "瞬間移動",
+      "type": "utility",
+      "description": "Teleport instantly",
+      "businessUse": "Instant sync between systems, zero-latency operations",
+      "cooldown": 0,
+      "requiredForm": "base"
+    },
+    "timeSkip": {
+      "name": "TIME SKIP",
+      "kanji": "時飛ばし",
+      "type": "utility",
+      "description": "Skip through time",
+      "businessUse": "Accelerate workflows, skip queues",
+      "cooldown": 0,
+      "requiredForm": "ssb"
+    },
+    "divineSight": {
+      "name": "DIVINE SIGHT",
+      "kanji": "神の目",
+      "type": "perception",
+      "description": "See everything",
+      "businessUse": "360° business intelligence dashboard",
+      "cooldown": 0,
+      "requiredForm": "ssg"
+    },
+    "prophecy": {
+      "name": "PROPHECY",
+      "kanji": "予言",
+      "type": "perception",
+      "description": "See the future",
+      "businessUse": "Predictive analytics, forecasting, trend analysis",
+      "cooldown": 0,
+      "requiredForm": "mui"
+    },
+    "barrier": {
+      "name": "BARRIER",
+      "kanji": "結界",
+      "type": "defensive",
+      "description": "Protective energy shield",
+      "businessUse": "Security measures, data protection, access control",
+      "cooldown": 0,
+      "requiredForm": "ssb"
+    },
+    "healing": {
+      "name": "HEALING",
+      "kanji": "治癒",
+      "type": "support",
+      "description": "Restore and recover",
+      "businessUse": "Fix broken workflows, recover data, restore systems",
+      "cooldown": 0,
+      "requiredForm": "ssg"
+    },
+    "fusion": {
+      "name": "FUSION",
+      "kanji": "合体",
+      "type": "utility",
+      "description": "Combine into one",
+      "businessUse": "API integrations, system merging, unified platforms",
+      "cooldown": 0,
+      "requiredForm": "ssb"
+    }
+  },
+  "gamification": {
+    "powerLevelSystem": {
+      "enabled": true,
+      "startingPower": 100000,
+      "gains": {
+        "taskComplete": 1000,
+        "dealClosed": 5000,
+        "customerAcquired": 10000,
+        "monthlyTargetHit": 50000,
+        "featureLaunched": 100000,
+        "investmentSecured": 500000
+      }
+    },
+    "tokenSystem": {
+      "enabled": true,
+      "tokens": {
+        "god": {
+          "name": "GOD TOKENS",
+          "symbol": "神",
+          "color": "#FFD700",
+          "use": "Premium bot features, priority execution"
+        },
+        "dedsec": {
+          "name": "DEDSEC TOKENS",
+          "symbol": "🔐",
+          "color": "#00FF00",
+          "use": "Security features, encryption, protection"
+        },
+        "og": {
+          "name": "OG TOKENS",
+          "symbol": "👑",
+          "color": "#9B59B6",
+          "use": "Early access, exclusive features, VIP"
+        }
+      }
+    },
+    "achievements": {
+      "firstBlood": "Complete your first task",
+      "dealCloser": "Close 10 deals",
+      "botMaster": "Use all 25 bots",
+      "speedDemon": "Complete 100 tasks in one day",
+      "revenueKing": "Hit €1M revenue",
+      "ultraInstinct": "Achieve MUI transformation",
+      "destroyer": "Use HAKAI 100 times",
+      "prophet": "Make 50 accurate predictions"
+    }
+  },
+  "integrations": {
+    "required": ["hubspot", "anthropic"],
+    "optional": ["whatsapp", "zadarma", "loxone", "stripe", "slack", "explorium"],
+    "endpoints": {
+      "hubspot": "https://api.hubapi.com",
+      "anthropic": "https://api.anthropic.com",
+      "whatsapp": "https://graph.facebook.com",
+      "zadarma": "https://api.zadarma.com",
+      "loxone": "http://{miniserver_ip}",
+      "stripe": "https://api.stripe.com",
+      "slack": "https://slack.com/api",
+      "explorium": "https://api.explorium.ai"
+    }
+  },
+  "settings": {
+    "defaultTransformation": "mui",
+    "autoTransform": true,
+    "voiceEnabled": true,
+    "soundEffects": true,
+    "animations": true,
+    "particleEffects": true,
+    "maxConcurrentTasks": 25,
+    "taskTimeout": 300000,
+    "retryAttempts": 3,
+    "logLevel": "info"
+  }
+}

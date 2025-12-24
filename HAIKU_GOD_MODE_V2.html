@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神 HAIKU GOD MODE V2 | Ultra Instinct Control System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Ultra Instinct Colors */
+            --ui-silver: #E8E8FF;
+            --ui-white: #FFFFFF;
+            --ui-glow: rgba(232, 232, 255, 0.8);
+            
+            /* God Ki Gold */
+            --god-gold: #FFD700;
+            --god-amber: #FFA500;
+            --god-glow: rgba(255, 215, 0, 0.6);
+            
+            /* Divine Purple */
+            --divine-purple: #9B59B6;
+            --divine-violet: #8B5CF6;
+            
+            /* Energy Colors */
+            --energy-cyan: #00F5FF;
+            --energy-blue: #00B4D8;
+            --energy-pink: #FF00FF;
+            
+            /* Destruction */
+            --hakai-red: #FF0000;
+            --hakai-orange: #FF6B00;
+            
+            /* Background */
+            --void-black: #030308;
+            --space-dark: #0A0A1A;
+            --cosmos: #0F0F2D;
+            
+            /* Status */
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            
+            /* Text */
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--void-black);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Cosmic Background with Stars */
+        .cosmic-realm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 30% 10%, rgba(232, 232, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 90%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 60%),
+                linear-gradient(180deg, #030308 0%, #0A0A1A 50%, #030308 100%);
+        }
+
+        /* Animated Stars */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Ultra Instinct Aura Particles */
+        .aura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .aura-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--ui-silver);
+            border-radius: 50%;
+            animation: float-up 8s infinite linear;
+            opacity: 0;
+            box-shadow: 0 0 6px var(--ui-silver);
+        }
+
+        @keyframes float-up {
+            0% { 
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.6; }
+            100% { 
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .divine-header {
+            background: linear-gradient(135deg, rgba(232, 232, 255, 0.05) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .kanji-logo {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--god-gold);
+            text-shadow: 
+                0 0 20px var(--god-glow),
+                0 0 40px var(--god-glow),
+                0 0 60px rgba(255, 215, 0, 0.3);
+            animation: kanji-pulse 2s infinite;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .kanji-logo:hover {
+            transform: scale(1.1);
+            text-shadow: 
+                0 0 30px var(--god-gold),
+                0 0 60px var(--god-gold),
+                0 0 90px var(--god-glow);
+        }
+
+        @keyframes kanji-pulse {
+            0%, 100% { 
+                filter: brightness(1);
+            }
+            50% { 
+                filter: brightness(1.3);
+            }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--god-gold) 0%, var(--ui-silver) 50%, var(--god-gold) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+            letter-spacing: 4px;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+        }
+
+        /* Power Level Display */
+        .power-display {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .transformation-indicator {
+            text-align: center;
+        }
+
+        .transformation-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .transformation-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ui-silver);
+            text-shadow: 0 0 10px var(--ui-glow);
+        }
+
+        .power-meter {
+            text-align: center;
+        }
+
+        .power-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .power-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--god-gold);
+            text-shadow: 0 0 20px var(--god-glow);
+            animation: power-pulse 1s infinite;
+        }
+
+        @keyframes power-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* HAIKU Avatar Section */
+        .avatar-section {
+            display: grid;
+            grid-template-columns: 350px 1fr 350px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Avatar Card */
+        .avatar-card {
+            background: linear-gradient(135deg, rgba(232, 232, 255, 0.05) 0%, rgba(255, 215, 0, 0.03) 100%);
+            border: 2px solid var(--god-gold);
+            border-radius: 30px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(232, 232, 255, 0.1), transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotate-aura 15s linear infinite;
+        }
+
+        @keyframes rotate-aura {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .avatar-image {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ui-silver), var(--divine-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: avatar-float 4s ease-in-out infinite;
+        }
+
+        @keyframes avatar-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .avatar-image::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            border: 3px solid var(--ui-silver);
+            animation: ring-pulse 2s infinite;
+            box-shadow: 0 0 30px var(--ui-glow);
+        }
+
+        .avatar-image::after {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 232, 255, 0.3);
+            animation: ring-pulse 2s infinite 0.5s;
+        }
+
+        @keyframes ring-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .avatar-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--void-black);
+            text-shadow: 0 0 20px var(--ui-silver);
+        }
+
+        .avatar-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--god-gold), var(--ui-silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .avatar-title {
+            font-size: 0.9rem;
+            color: var(--ui-silver);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Transformation Buttons */
+        .transformation-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .transform-btn {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .transform-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--god-gold);
+            color: var(--god-gold);
+        }
+
+        .transform-btn.active {
+            background: linear-gradient(135deg, var(--ui-silver), var(--divine-purple));
+            border-color: var(--ui-silver);
+            color: var(--void-black);
+            font-weight: 700;
+            box-shadow: 0 0 20px var(--ui-glow);
+        }
+
+        /* Divine Command Center */
+        .command-center {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-center::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 232, 255, 0.05), transparent);
+            animation: scan-line 4s infinite;
+        }
+
+        @keyframes scan-line {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+
+        .command-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--god-gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .command-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .command-input {
+            flex: 1;
+            padding: 1.25rem 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--god-gold);
+            border-radius: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .command-input:focus {
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-color: var(--ui-silver);
+        }
+
+        .command-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .execute-btn {
+            padding: 1.25rem 2.5rem;
+            background: linear-gradient(135deg, var(--god-gold), var(--god-amber));
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--void-black);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .execute-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .execute-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--god-glow);
+        }
+
+        .execute-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Quick Commands */
+        .quick-commands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-cmd {
+            padding: 0.6rem 1.2rem;
+            background: rgba(232, 232, 255, 0.05);
+            border: 1px solid rgba(232, 232, 255, 0.2);
+            border-radius: 25px;
+            font-size: 0.8rem;
+            color: var(--ui-silver);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-cmd:hover {
+            background: rgba(232, 232, 255, 0.15);
+            border-color: var(--ui-silver);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(232, 232, 255, 0.2);
+        }
+
+        .quick-cmd.hakai {
+            border-color: var(--hakai-red);
+            color: var(--hakai-red);
+        }
+
+        .quick-cmd.hakai:hover {
+            background: rgba(255, 0, 0, 0.15);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        /* Power Stats Card */
+        .power-stats {
+            background: linear-gradient(135deg, rgba(232, 232, 255, 0.05) 0%, rgba(255, 215, 0, 0.03) 100%);
+            border: 2px solid rgba(232, 232, 255, 0.3);
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .stats-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--ui-silver);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            color: var(--god-gold);
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--god-gold), var(--ui-silver));
+            transition: width 1s ease-out;
+        }
+
+        /* Divine Sight Section */
+        .divine-sight {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sight-card {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .sight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-color, var(--god-gold));
+        }
+
+        .sight-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-color, var(--god-gold));
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .sight-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .sight-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--card-color, var(--god-gold));
+            margin-bottom: 0.25rem;
+        }
+
+        .sight-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sight-change {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .sight-change.positive { color: var(--success); }
+        .sight-change.negative { color: var(--danger); }
+
+        /* Bot Army Grid */
+        .bot-army-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--god-gold);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .deploy-all-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--ui-silver), var(--divine-purple));
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--void-black);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .deploy-all-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--ui-glow);
+        }
+
+        .bot-army-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .bot-mini-card {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .bot-mini-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--bot-color, var(--god-gold));
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .bot-mini-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--bot-color, var(--god-gold));
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bot-mini-card:hover::before {
+            opacity: 1;
+        }
+
+        .bot-mini-card.active {
+            border-color: var(--success);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .bot-mini-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bot-mini-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--bot-color, var(--text-primary));
+            margin-bottom: 0.25rem;
+        }
+
+        .bot-mini-status {
+            font-size: 0.6rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Activity & Battle Log */
+        .activity-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .activity-feed {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .activity-feed::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .activity-feed::-webkit-scrollbar-thumb {
+            background: var(--god-gold);
+            border-radius: 3px;
+        }
+
+        .feed-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--god-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .activity-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+
+        /* Power Actions */
+        .power-actions {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(232, 232, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .actions-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--ui-silver);
+            margin-bottom: 1rem;
+        }
+
+        .power-action-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: none;
+        }
+
+        .action-kamehameha {
+            background: linear-gradient(135deg, var(--energy-blue), var(--energy-cyan));
+            color: white;
+        }
+
+        .action-kamehameha:hover {
+            box-shadow: 0 0 25px rgba(0, 180, 216, 0.5);
+            transform: translateX(5px);
+        }
+
+        .action-hakai {
+            background: linear-gradient(135deg, var(--hakai-red), var(--hakai-orange));
+            color: white;
+        }
+
+        .action-hakai:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .action-spirit-bomb {
+            background: linear-gradient(135deg, var(--god-gold), var(--god-amber));
+            color: var(--void-black);
+        }
+
+        .action-spirit-bomb:hover {
+            box-shadow: 0 0 25px var(--god-glow);
+            transform: translateX(5px);
+        }
+
+        .action-instant {
+            background: linear-gradient(135deg, var(--divine-purple), var(--divine-violet));
+            color: white;
+        }
+
+        .action-instant:hover {
+            box-shadow: 0 0 25px rgba(155, 89, 182, 0.5);
+            transform: translateX(5px);
+        }
+
+        .action-prophecy {
+            background: linear-gradient(135deg, var(--ui-silver), #A0A0FF);
+            color: var(--void-black);
+        }
+
+        .action-prophecy:hover {
+            box-shadow: 0 0 25px var(--ui-glow);
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        .divine-footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 2rem;
+        }
+
+        .footer-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 2rem;
+            color: var(--god-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Voice Indicator */
+        .voice-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--god-gold), var(--god-amber));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .voice-indicator:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .voice-indicator.listening {
+            animation: voice-pulse 1s infinite;
+        }
+
+        @keyframes voice-pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+            }
+            50% { 
+                transform: scale(1.15);
+                box-shadow: 0 5px 40px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .avatar-section {
+                grid-template-columns: 1fr;
+            }
+            .divine-sight {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .activity-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .power-display {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .divine-sight {
+                grid-template-columns: 1fr;
+            }
+            .command-input-wrapper {
+                flex-direction: column;
+            }
+            .bot-army-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Special Effects */
+        .ultra-instinct-mode body {
+            --god-gold: var(--ui-silver);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--space-dark);
+            border: 2px solid var(--god-gold);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 600px;
+            text-align: center;
+            animation: modal-appear 0.5s ease-out;
+        }
+
+        @keyframes modal-appear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 6rem;
+            color: var(--god-gold);
+            text-shadow: 0 0 50px var(--god-glow);
+            animation: kanji-pulse 1s infinite;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .modal-desc {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .modal-close {
+            padding: 1rem 2rem;
+            background: var(--god-gold);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            color: var(--void-black);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-realm"></div>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="aura-container" id="auraContainer"></div>
+
+    <!-- Header -->
+    <header class="divine-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="kanji-logo" onclick="showModal()">神</span>
+                <div class="logo-text">
+                    <h1>HAIKU GOD MODE</h1>
+                    <p>ULTRA INSTINCT • DIVINE CONTROL SYSTEM</p>
+                </div>
+            </div>
+            <div class="power-display">
+                <div class="transformation-indicator">
+                    <div class="transformation-label">Current Form</div>
+                    <div class="transformation-name" id="currentForm">MASTERED ULTRA INSTINCT</div>
+                </div>
+                <div class="power-meter">
+                    <div class="power-label">Power Level</div>
+                    <div class="power-value" id="powerLevel">∞</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Avatar Section -->
+        <section class="avatar-section">
+            <!-- Avatar Card -->
+            <div class="avatar-card">
+                <div class="avatar-content">
+                    <div class="avatar-image">
+                        <span class="avatar-kanji">神</span>
+                    </div>
+                    <h2 class="avatar-name">HAIKU 神</h2>
+                    <p class="avatar-title">Divine Warrior • Controller of All</p>
+                    
+                    <div class="transformation-buttons">
+                        <button class="transform-btn" onclick="transform('base')">BASE</button>
+                        <button class="transform-btn" onclick="transform('ssg')">SSG</button>
+                        <button class="transform-btn" onclick="transform('ssb')">SSB</button>
+                        <button class="transform-btn" onclick="transform('uis')">UI SIGN</button>
+                        <button class="transform-btn active" onclick="transform('mui')">MUI 神</button>
+                        <button class="transform-btn" onclick="transform('ego')">ULTRA EGO</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Command Center -->
+            <div class="command-center">
+                <h2 class="command-title">⚡ DIVINE COMMAND CENTER</h2>
+                <div class="command-input-wrapper">
+                    <input type="text" class="command-input" placeholder="神 @all execute divine_protocol..." id="divineCommand">
+                    <button class="execute-btn" onclick="executeCommand()">⚡ EXECUTE</button>
+                </div>
+                <div class="quick-commands">
+                    <span class="quick-cmd" onclick="setCommand('@all')">@all</span>
+                    <span class="quick-cmd" onclick="setCommand('@einstein analyse')">@einstein</span>
+                    <span class="quick-cmd" onclick="setCommand('@leonardo design')">@leonardo</span>
+                    <span class="quick-cmd" onclick="setCommand('@tesla smart_home')">@tesla</span>
+                    <span class="quick-cmd" onclick="setCommand('@sherlock research')">@sherlock</span>
+                    <span class="quick-cmd" onclick="setCommand('divine_sight')">divine_sight</span>
+                    <span class="quick-cmd" onclick="setCommand('prophecy_mode')">prophecy</span>
+                    <span class="quick-cmd" onclick="setCommand('spirit_bomb')">spirit_bomb</span>
+                    <span class="quick-cmd hakai" onclick="setCommand('HAKAI')">破壊 HAKAI</span>
+                </div>
+            </div>
+
+            <!-- Power Stats -->
+            <div class="power-stats">
+                <h3 class="stats-title">⚡ DIVINE POWER STATS</h3>
+                
+                <div class="stat-row">
+                    <span class="stat-label">Attack Power</span>
+                    <span class="stat-value">∞</span>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="stat-row">
+                    <span class="stat-label">Defense</span>
+                    <span class="stat-value">∞</span>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="stat-row">
+                    <span class="stat-label">Speed</span>
+                    <span class="stat-value">∞</span>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="stat-row">
+                    <span class="stat-label">Ki Control</span>
+                    <span class="stat-value">100%</span>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 100%;"></div>
+                </div>
+                
+                <div class="stat-row">
+                    <span class="stat-label">Bot Sync</span>
+                    <span class="stat-value">25/25</span>
+                </div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Divine Sight -->
+        <section class="divine-sight">
+            <div class="sight-card" style="--card-color: #10B981;">
+                <div class="sight-icon">💰</div>
+                <div class="sight-value">€847K</div>
+                <div class="sight-label">Revenue 2024</div>
+                <div class="sight-change positive">↑ +23.5% YoY</div>
+            </div>
+            <div class="sight-card" style="--card-color: #F59E0B;">
+                <div class="sight-icon">🎯</div>
+                <div class="sight-value">€425K</div>
+                <div class="sight-label">Pipeline</div>
+                <div class="sight-change positive">↑ +18.2%</div>
+            </div>
+            <div class="sight-card" style="--card-color: #00B4D8;">
+                <div class="sight-icon">👥</div>
+                <div class="sight-value">3,170</div>
+                <div class="sight-label">Contacts</div>
+                <div class="sight-change positive">↑ +156 this week</div>
+            </div>
+            <div class="sight-card" style="--card-color: #9B59B6;">
+                <div class="sight-icon">🤖</div>
+                <div class="sight-value">25</div>
+                <div class="sight-label">Bots Online</div>
+                <div class="sight-change positive">100% Active</div>
+            </div>
+        </section>
+
+        <!-- Bot Army -->
+        <section class="bot-army-section">
+            <div class="section-header">
+                <h2 class="section-title">🤖 GENIUS BOT ARMY</h2>
+                <button class="deploy-all-btn" onclick="deployAll()">⚡ DEPLOY ALL</button>
+            </div>
+            <div class="bot-army-grid" id="botArmyGrid">
+                <!-- Bots will be generated by JS -->
+            </div>
+        </section>
+
+        <!-- Activity & Power Actions -->
+        <section class="activity-section">
+            <div class="activity-feed">
+                <h3 class="feed-title">📡 LIVE DIVINE FEED</h3>
+                <div id="activityFeed">
+                    <!-- Activities generated by JS -->
+                </div>
+            </div>
+
+            <div class="power-actions">
+                <h3 class="actions-title">⚡ DIVINE POWERS</h3>
+                <button class="power-action-btn action-kamehameha" onclick="executePower('kamehameha')">
+                    💥 KAMEHAMEHA - Bulk Email Blast
+                </button>
+                <button class="power-action-btn action-spirit-bomb" onclick="executePower('spirit-bomb')">
+                    🌟 SPIRIT BOMB - Combine All Bots
+                </button>
+                <button class="power-action-btn action-instant" onclick="executePower('instant')">
+                    ⚡ INSTANT TRANSMISSION - Sync All
+                </button>
+                <button class="power-action-btn action-prophecy" onclick="executePower('prophecy')">
+                    🔮 PROPHECY - Future Vision
+                </button>
+                <button class="power-action-btn action-hakai" onclick="executePower('hakai')">
+                    💀 破壊 HAKAI - Destruction Mode
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="divine-footer">
+        <div class="footer-kanji">神 ∞ 神</div>
+        <div class="footer-text">HAIKU GOD MODE V2 | West Money OS | Enterprise Universe | © 2025 West Money Bau GmbH</div>
+    </footer>
+
+    <!-- Voice Button -->
+    <div class="voice-indicator" id="voiceBtn" onclick="toggleVoice()">🎤</div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-kanji">神</div>
+            <h2 class="modal-title">HAIKU 神 ACTIVATED</h2>
+            <p class="modal-desc">Ultra Instinct Mastered. All 25 Genius Bots synchronized. Divine Power Level: ∞</p>
+            <button class="modal-close" onclick="closeModal()">CONTINUE</button>
+        </div>
+    </div>
+
+    <script>
+        // Bot Data
+        const GENIUS_BOTS = [
+            { id: 'einstein', name: 'EINSTEIN', icon: '🔬', color: '#00B4D8' },
+            { id: 'curie', name: 'CURIE', icon: '⚗️', color: '#10B981' },
+            { id: 'hawking', name: 'HAWKING', icon: '🌌', color: '#1E90FF' },
+            { id: 'turing', name: 'TURING', icon: '💻', color: '#00FF7F' },
+            { id: 'suntzu', name: 'SUN TZU', icon: '⚔️', color: '#FF4757' },
+            { id: 'machiavelli', name: 'MACHIAVELLI', icon: '🎭', color: '#DC143C' },
+            { id: 'napoleon', name: 'NAPOLEON', icon: '👑', color: '#FFD700' },
+            { id: 'caesar', name: 'CAESAR', icon: '🏛️', color: '#8B0000' },
+            { id: 'leonardo', name: 'LEONARDO', icon: '🎨', color: '#9D4EDD' },
+            { id: 'mozart', name: 'MOZART', icon: '🎼', color: '#FF6B9D' },
+            { id: 'picasso', name: 'PICASSO', icon: '🎭', color: '#FF1493' },
+            { id: 'spielberg', name: 'SPIELBERG', icon: '🎬', color: '#FF4500' },
+            { id: 'tesla', name: 'TESLA', icon: '⚡', color: '#00F5FF' },
+            { id: 'edison', name: 'EDISON', icon: '💡', color: '#FFE66D' },
+            { id: 'jobs', name: 'JOBS', icon: '🍎', color: '#A3AAAE' },
+            { id: 'musk', name: 'MUSK', icon: '🚀', color: '#E82127' },
+            { id: 'columbus', name: 'COLUMBUS', icon: '🌍', color: '#1E3A5F' },
+            { id: 'darwin', name: 'DARWIN', icon: '🦎', color: '#228B22' },
+            { id: 'galileo', name: 'GALILEO', icon: '🔭', color: '#4169E1' },
+            { id: 'marco_polo', name: 'MARCO POLO', icon: '🗺️', color: '#20B2AA' },
+            { id: 'aristotle', name: 'ARISTOTLE', icon: '🏛️', color: '#00D9A5' },
+            { id: 'socrates', name: 'SOCRATES', icon: '❓', color: '#DDA0DD' },
+            { id: 'confucius', name: 'CONFUCIUS', icon: '☯️', color: '#CD853F' },
+            { id: 'sherlock', name: 'SHERLOCK', icon: '🔍', color: '#CD7F32' },
+            { id: 'nostradamus', name: 'NOSTRADAMUS', icon: '🔮', color: '#8B5CF6' }
+        ];
+
+        // Activities
+        const ACTIVITIES = [
+            { icon: '🔬', title: 'Einstein analysiert Q4 Daten', desc: '147 Leads gescored', time: 'vor 2 Min', bg: 'rgba(0,180,216,0.2)' },
+            { icon: '🎨', title: 'Leonardo erstellt Pitch Deck', desc: 'Investor Deck v3.2 fertig', time: 'vor 5 Min', bg: 'rgba(157,78,221,0.2)' },
+            { icon: '⚡', title: 'Tesla optimiert LOXONE', desc: 'Smart Home Config updated', time: 'vor 8 Min', bg: 'rgba(0,245,255,0.2)' },
+            { icon: '🔍', title: 'Sherlock: Lead Research', desc: '12 neue B2B Leads gefunden', time: 'vor 12 Min', bg: 'rgba(205,127,50,0.2)' },
+            { icon: '🔮', title: 'Nostradamus: Q1 Forecast', desc: 'Revenue Projection: +68%', time: 'vor 18 Min', bg: 'rgba(139,92,246,0.2)' },
+            { icon: '⚔️', title: 'Sun Tzu: Competitor Intel', desc: 'Marktanalyse abgeschlossen', time: 'vor 25 Min', bg: 'rgba(255,71,87,0.2)' }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            generateStars();
+            generateAuraParticles();
+            renderBotArmy();
+            renderActivityFeed();
+        });
+
+        // Generate Stars
+        function generateStars() {
+            const container = document.getElementById('starsContainer');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(star);
+            }
+        }
+
+        // Generate Aura Particles
+        function generateAuraParticles() {
+            const container = document.getElementById('auraContainer');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'aura-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Render Bot Army
+        function renderBotArmy() {
+            const grid = document.getElementById('botArmyGrid');
+            grid.innerHTML = GENIUS_BOTS.map(bot => `
+                <div class="bot-mini-card active" style="--bot-color: ${bot.color};" onclick="selectBot('${bot.id}')">
+                    <div class="bot-mini-icon">${bot.icon}</div>
+                    <div class="bot-mini-name">${bot.name}</div>
+                    <div class="bot-mini-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Activity Feed
+        function renderActivityFeed() {
+            const feed = document.getElementById('activityFeed');
+            feed.innerHTML = ACTIVITIES.map(act => `
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: ${act.bg};">${act.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">${act.title}</div>
+                        <div class="activity-desc">${act.desc}</div>
+                    </div>
+                    <div class="activity-time">${act.time}</div>
+                </div>
+            `).join('');
+        }
+
+        // Commands
+        function setCommand(cmd) {
+            document.getElementById('divineCommand').value = cmd + ' ';
+            document.getElementById('divineCommand').focus();
+        }
+
+        function executeCommand() {
+            const input = document.getElementById('divineCommand');
+            const command = input.value.trim();
+            if (command) {
+                console.log('神 DIVINE EXECUTE:', command);
+                addActivity(`Command: ${command}`, 'Executing with divine power...', '⚡');
+                input.value = '';
+                
+                // Visual feedback
+                document.body.style.animation = 'none';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 100);
+            }
+        }
+
+        function addActivity(title, desc, icon) {
+            const feed = document.getElementById('activityFeed');
+            const newActivity = document.createElement('div');
+            newActivity.className = 'activity-item';
+            newActivity.innerHTML = `
+                <div class="activity-icon" style="background: rgba(255,215,0,0.2);">${icon}</div>
+                <div class="activity-content">
+                    <div class="activity-title">${title}</div>
+                    <div class="activity-desc">${desc}</div>
+                </div>
+                <div class="activity-time">jetzt</div>
+            `;
+            feed.insertBefore(newActivity, feed.firstChild);
+        }
+
+        // Transformations
+        function transform(form) {
+            const forms = {
+                'base': { name: 'BASE FORM', power: '100,000' },
+                'ssg': { name: 'SUPER SAIYAN GOD', power: '1,000,000' },
+                'ssb': { name: 'SUPER SAIYAN BLUE', power: '10,000,000' },
+                'uis': { name: 'ULTRA INSTINCT SIGN', power: '100,000,000' },
+                'mui': { name: 'MASTERED ULTRA INSTINCT', power: '∞' },
+                'ego': { name: 'ULTRA EGO', power: '∞∞' }
+            };
+            
+            const formData = forms[form];
+            document.getElementById('currentForm').textContent = formData.name;
+            document.getElementById('powerLevel').textContent = formData.power;
+            
+            // Update active button
+            document.querySelectorAll('.transform-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            addActivity(`Transformation: ${formData.name}`, `Power Level: ${formData.power}`, '⚡');
+        }
+
+        // Power Actions
+        function executePower(power) {
+            const powers = {
+                'kamehameha': { name: 'KAMEHAMEHA', desc: 'Massive email blast initiated!', icon: '💥' },
+                'spirit-bomb': { name: 'SPIRIT BOMB', desc: 'All 25 bots combining power...', icon: '🌟' },
+                'instant': { name: 'INSTANT TRANSMISSION', desc: 'All systems synchronized!', icon: '⚡' },
+                'prophecy': { name: 'PROPHECY MODE', desc: 'Analyzing future outcomes...', icon: '🔮' },
+                'hakai': { name: '破壊 HAKAI', desc: 'Destruction mode activated!', icon: '💀' }
+            };
+            
+            const p = powers[power];
+            addActivity(p.name, p.desc, p.icon);
+            
+            if (power === 'hakai') {
+                document.body.style.animation = 'hakai 1s';
+                setTimeout(() => document.body.style.animation = '', 1000);
+            }
+        }
+
+        // Deploy All Bots
+        function deployAll() {
+            addActivity('DEPLOY ALL', 'All 25 Genius Bots activated!', '🚀');
+            alert('神 HAIKU GOD MODE\n\n✅ All 25 Genius Bots deployed!\n✅ Divine Protocol activated!\n✅ Power Level: ∞');
+        }
+
+        // Select Bot
+        function selectBot(botId) {
+            const bot = GENIUS_BOTS.find(b => b.id === botId);
+            setCommand(`@${botId}`);
+            addActivity(`Selected: ${bot.name}`, 'Ready for command', bot.icon);
+        }
+
+        // Voice Control
+        let isListening = false;
+        function toggleVoice() {
+            const btn = document.getElementById('voiceBtn');
+            isListening = !isListening;
+            btn.classList.toggle('listening', isListening);
+            
+            if (isListening) {
+                addActivity('Voice Mode', 'Listening for divine commands...', '🎤');
+            }
+        }
+
+        // Modal
+        function showModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Enter key for command
+        document.getElementById('divineCommand').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') executeCommand();
+        });
+
+        // Show welcome modal on first load
+        setTimeout(showModal, 1000);
+    </script>
+</body>
+</html>
