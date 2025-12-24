@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 WhatsApp Auth Hub | West Money OS - Consent Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
+            --whatsapp-light: #DCF8C6;
+            --hubspot-orange: #FF7A59;
+            --bg-dark: #0A0F0D;
+            --bg-card: rgba(15, 25, 20, 0.95);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --border-glow: rgba(37, 211, 102, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(37, 211, 102, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(18, 140, 126, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0A0F0D 0%, #0D1510 50%, #0A0F0D 100%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(18, 140, 126, 0.1) 100%);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .whatsapp-icon {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 15px rgba(37, 211, 102, 0.5));
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--whatsapp-green) 0%, var(--whatsapp-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(37, 211, 102, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--whatsapp-green);
+            color: var(--whatsapp-green);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(37, 211, 102, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--stat-color, var(--whatsapp-green));
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--stat-color, var(--whatsapp-green));
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--danger); }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--whatsapp-green), transparent);
+        }
+
+        /* Consent Manager */
+        .consent-manager {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contacts-panel {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: rgba(37, 211, 102, 0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(37, 211, 102, 0.2);
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--whatsapp-green);
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1rem;
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 10px;
+            color: var(--whatsapp-green);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(37, 211, 102, 0.2);
+        }
+
+        /* Contacts Table */
+        .contacts-table {
+            width: 100%;
+        }
+
+        .contacts-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contacts-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .contacts-table tr:hover {
+            background: rgba(37, 211, 102, 0.05);
+        }
+
+        .contact-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--whatsapp-green);
+        }
+
+        .contact-name {
+            font-weight: 600;
+        }
+
+        .contact-phone {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .consent-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .consent-optin {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .consent-optout {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .consent-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        /* Actions Panel */
+        .actions-panel {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            padding: 1.5rem;
+        }
+
+        .action-section {
+            margin-bottom: 2rem;
+        }
+
+        .action-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--whatsapp-green);
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border-radius: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .action-btn-optin {
+            background: linear-gradient(135deg, var(--success), #059669);
+            border: none;
+            color: white;
+        }
+
+        .action-btn-optin:hover {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .action-btn-optout {
+            background: linear-gradient(135deg, var(--danger), #DC2626);
+            border: none;
+            color: white;
+        }
+
+        .action-btn-optout:hover {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .action-btn-sync {
+            background: linear-gradient(135deg, var(--hubspot-orange), #E5684A);
+            border: none;
+            color: white;
+        }
+
+        .action-btn-sync:hover {
+            box-shadow: 0 0 20px rgba(255, 122, 89, 0.4);
+        }
+
+        /* Legal Basis Selector */
+        .legal-basis-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .legal-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .legal-select option {
+            background: var(--bg-dark);
+        }
+
+        .explanation-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+            margin-top: 0.75rem;
+        }
+
+        /* HubSpot Integration Info */
+        .hubspot-info {
+            background: rgba(255, 122, 89, 0.1);
+            border: 1px solid rgba(255, 122, 89, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .hubspot-info-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--hubspot-orange);
+        }
+
+        .hubspot-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Workflow Section */
+        .workflow-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--whatsapp-green), var(--hubspot-orange), var(--success));
+        }
+
+        .workflow-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 0.75rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--whatsapp-green);
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* API Integration Panel */
+        .api-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .api-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .api-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .api-icon {
+            font-size: 1.5rem;
+        }
+
+        .api-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        .api-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+
+        .api-connected {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+
+        .api-endpoint {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            word-break: break-all;
+        }
+
+        .api-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .api-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .api-btn:hover {
+            background: rgba(37, 211, 102, 0.1);
+            border-color: var(--whatsapp-green);
+            color: var(--whatsapp-green);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .consent-manager {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .api-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .workflow-steps {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .workflow-steps::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="whatsapp-icon">📱</span>
+                <div class="logo-text">
+                    <h1>WHATSAPP AUTH HUB</h1>
+                    <p>West Money OS • Consent Management System</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn btn-secondary">📊 Export</button>
+                <button class="header-btn btn-secondary">⚙️ Settings</button>
+                <button class="header-btn btn-primary">🔄 Sync HubSpot</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card" style="--stat-color: var(--success);">
+                <div class="stat-icon">✅</div>
+                <div class="stat-value">2,847</div>
+                <div class="stat-label">Opt-In Kontakte</div>
+                <div class="stat-change positive">↑ +156 diese Woche</div>
+            </div>
+            <div class="stat-card" style="--stat-color: var(--danger);">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value">234</div>
+                <div class="stat-label">Opt-Out Kontakte</div>
+                <div class="stat-change negative">↑ +12 diese Woche</div>
+            </div>
+            <div class="stat-card" style="--stat-color: var(--warning);">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-value">89</div>
+                <div class="stat-label">Ausstehend</div>
+                <div class="stat-change">Warten auf Bestätigung</div>
+            </div>
+            <div class="stat-card" style="--stat-color: var(--whatsapp-green);">
+                <div class="stat-icon">📱</div>
+                <div class="stat-value">3,170</div>
+                <div class="stat-label">Gesamt Kontakte</div>
+                <div class="stat-change positive">89.8% Opt-In Rate</div>
+            </div>
+        </div>
+
+        <!-- Workflow Section -->
+        <section class="workflow-section">
+            <h2 class="section-title">🔄 CONSENT WORKFLOW</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <div class="step-icon">📋</div>
+                    <div class="step-title">1. Kontakte wählen</div>
+                    <div class="step-desc">Bulk-Auswahl oder Filter</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">⚖️</div>
+                    <div class="step-title">2. Rechtsgrundlage</div>
+                    <div class="step-desc">DSGVO-konforme Basis</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">✍️</div>
+                    <div class="step-title">3. Erklärung</div>
+                    <div class="step-desc">Dokumentation</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">🔄</div>
+                    <div class="step-title">4. HubSpot Sync</div>
+                    <div class="step-desc">Automatische Übertragung</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-icon">✅</div>
+                    <div class="step-title">5. Fertig</div>
+                    <div class="step-desc">Status aktualisiert</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consent Manager -->
+        <h2 class="section-title">📱 WHATSAPP CONSENT MANAGER</h2>
+        <div class="consent-manager">
+            <!-- Contacts Panel -->
+            <div class="contacts-panel">
+                <div class="panel-header">
+                    <span class="panel-title">Kontakte (3,170)</span>
+                    <span>23 ausgewählt</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="🔍 Kontakte suchen...">
+                    <button class="filter-btn">Filter ▾</button>
+                </div>
+                <table class="contacts-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" class="contact-checkbox" id="selectAll"></th>
+                            <th>Name</th>
+                            <th>Telefon</th>
+                            <th>Status</th>
+                            <th>Letzte Änderung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox" checked></td>
+                            <td class="contact-name">Max Mustermann</td>
+                            <td class="contact-phone">+49 176 12345678</td>
+                            <td><span class="consent-status consent-optin">✓ Opt-In</span></td>
+                            <td>24.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox" checked></td>
+                            <td class="contact-name">Anna Schmidt</td>
+                            <td class="contact-phone">+49 151 98765432</td>
+                            <td><span class="consent-status consent-pending">⏳ Pending</span></td>
+                            <td>23.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox"></td>
+                            <td class="contact-name">Thomas Weber</td>
+                            <td class="contact-phone">+49 170 55443322</td>
+                            <td><span class="consent-status consent-optin">✓ Opt-In</span></td>
+                            <td>22.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox"></td>
+                            <td class="contact-name">Lisa Meyer</td>
+                            <td class="contact-phone">+49 157 11223344</td>
+                            <td><span class="consent-status consent-optout">✗ Opt-Out</span></td>
+                            <td>20.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox" checked></td>
+                            <td class="contact-name">Klaus Fischer</td>
+                            <td class="contact-phone">+49 162 99887766</td>
+                            <td><span class="consent-status consent-optin">✓ Opt-In</span></td>
+                            <td>19.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox"></td>
+                            <td class="contact-name">Maria Wagner</td>
+                            <td class="contact-phone">+49 173 44556677</td>
+                            <td><span class="consent-status consent-pending">⏳ Pending</span></td>
+                            <td>18.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox"></td>
+                            <td class="contact-name">Stefan Bauer</td>
+                            <td class="contact-phone">+49 155 22334455</td>
+                            <td><span class="consent-status consent-optin">✓ Opt-In</span></td>
+                            <td>17.12.2025</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="contact-checkbox"></td>
+                            <td class="contact-name">Julia Hoffmann</td>
+                            <td class="contact-phone">+49 178 66778899</td>
+                            <td><span class="consent-status consent-optin">✓ Opt-In</span></td>
+                            <td>16.12.2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Actions Panel -->
+            <div class="actions-panel">
+                <div class="action-section">
+                    <h3 class="action-title">⚡ BULK AKTIONEN</h3>
+                    <button class="action-btn action-btn-optin" onclick="bulkOptIn()">
+                        ✅ Bulk Opt-In (23 Kontakte)
+                    </button>
+                    <button class="action-btn action-btn-optout" onclick="bulkOptOut()">
+                        ❌ Bulk Opt-Out
+                    </button>
+                    <button class="action-btn action-btn-sync">
+                        🧡 Mit HubSpot synchronisieren
+                    </button>
+                </div>
+
+                <div class="legal-basis-section">
+                    <label class="legal-label">⚖️ Rechtsgrundlage (DSGVO)</label>
+                    <select class="legal-select" id="legalBasis">
+                        <option value="">-- Rechtsgrundlage wählen --</option>
+                        <option value="consent">Einwilligung (Art. 6 Abs. 1 lit. a)</option>
+                        <option value="contract">Vertragserfüllung (Art. 6 Abs. 1 lit. b)</option>
+                        <option value="legal">Rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c)</option>
+                        <option value="interest">Berechtigtes Interesse (Art. 6 Abs. 1 lit. f)</option>
+                    </select>
+                    <textarea class="explanation-input" placeholder="Erklärung für die Aktualisierung der Rechtsgrundlage eingeben..."></textarea>
+                </div>
+
+                <div class="hubspot-info">
+                    <div class="hubspot-info-header">
+                        🧡 HubSpot Integration
+                    </div>
+                    <p>
+                        Änderungen werden automatisch mit HubSpot CRM synchronisiert. 
+                        Die Kontakt-Eigenschaften "WhatsApp Consent Status" und 
+                        "WhatsApp Legal Basis" werden aktualisiert.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Integration Panel -->
+        <h2 class="section-title">🔌 API INTEGRATIONEN</h2>
+        <div class="api-panel">
+            <div class="api-card">
+                <div class="api-header">
+                    <span class="api-icon">📱</span>
+                    <span class="api-name">WhatsApp Business API</span>
+                    <span class="api-status api-connected">● Connected</span>
+                </div>
+                <div class="api-endpoint">/v17.0/{phone-number-id}/messages</div>
+                <div class="api-actions">
+                    <button class="api-btn">Test</button>
+                    <button class="api-btn">Logs</button>
+                    <button class="api-btn">Config</button>
+                </div>
+            </div>
+
+            <div class="api-card">
+                <div class="api-header">
+                    <span class="api-icon">🧡</span>
+                    <span class="api-name">HubSpot CRM API</span>
+                    <span class="api-status api-connected">● Connected</span>
+                </div>
+                <div class="api-endpoint">/crm/v3/objects/contacts</div>
+                <div class="api-actions">
+                    <button class="api-btn">Test</button>
+                    <button class="api-btn">Logs</button>
+                    <button class="api-btn">Config</button>
+                </div>
+            </div>
+
+            <div class="api-card">
+                <div class="api-header">
+                    <span class="api-icon">🔐</span>
+                    <span class="api-name">Consent Webhook</span>
+                    <span class="api-status api-connected">● Active</span>
+                </div>
+                <div class="api-endpoint">https://api.west-money-os.de/webhooks/consent</div>
+                <div class="api-actions">
+                    <button class="api-btn">Test</button>
+                    <button class="api-btn">Logs</button>
+                    <button class="api-btn">Config</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-text">
+            📱 WhatsApp Auth Hub | West Money OS | Enterprise Universe | © 2025 West Money Bau GmbH
+        </div>
+    </footer>
+
+    <script>
+        // Bulk Actions
+        function bulkOptIn() {
+            const legalBasis = document.getElementById('legalBasis').value;
+            if (!legalBasis) {
+                alert('Bitte wählen Sie eine Rechtsgrundlage!');
+                return;
+            }
+            
+            const confirmed = confirm('23 Kontakte auf Opt-In setzen?');
+            if (confirmed) {
+                // Simulate API call
+                console.log('Bulk Opt-In:', { contacts: 23, legalBasis });
+                alert('✅ 23 Kontakte erfolgreich auf Opt-In gesetzt!');
+            }
+        }
+
+        function bulkOptOut() {
+            const confirmed = confirm('Ausgewählte Kontakte auf Opt-Out setzen?');
+            if (confirmed) {
+                console.log('Bulk Opt-Out executed');
+                alert('❌ Kontakte erfolgreich auf Opt-Out gesetzt!');
+            }
+        }
+
+        // Select All Checkbox
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.contacts-table tbody input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+    </script>
+</body>
+</html>

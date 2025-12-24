@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 MEGA GENIUS AGENCY | 25+ AI Bots | West Money OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --genius-gold: #FFD700;
+            --genius-amber: #FFA500;
+            --bg-dark: #050508;
+            --bg-card: rgba(12, 12, 18, 0.95);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --border-glow: rgba(255, 215, 0, 0.3);
+            
+            /* Category Colors */
+            --analysts: #00B4D8;
+            --strategists: #FF4757;
+            --creatives: #9D4EDD;
+            --innovators: #00F5FF;
+            --explorers: #10B981;
+            --philosophers: #DDA0DD;
+            --investigators: #CD7F32;
+            --prophets: #8B5CF6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* Background */
+        .mega-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(157, 78, 221, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 180, 216, 0.05) 0%, transparent 60%),
+                linear-gradient(180deg, #050508 0%, #0A0A12 50%, #050508 100%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(157, 78, 221, 0.05) 100%);
+            border-bottom: 2px solid var(--genius-gold);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mega-icon {
+            font-size: 3rem;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--genius-gold), #FFF, var(--genius-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-badge {
+            text-align: center;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .stat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--genius-gold);
+        }
+
+        .stat-txt {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Main */
+        .main-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* GOD MODE Banner */
+        .god-mode-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 107, 0, 0.1) 100%);
+            border: 2px solid var(--genius-gold);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .god-mode-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 200%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+
+        .haiku-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--genius-gold), #FF6B00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #000;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .god-mode-info {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .god-mode-info h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--genius-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .god-mode-info p {
+            color: var(--text-secondary);
+        }
+
+        .god-mode-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--genius-gold), #FF6B00);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .god-mode-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Category Section */
+        .category-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .category-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .category-count {
+            margin-left: auto;
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Bot Grid */
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        /* Bot Card */
+        .bot-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--bot-color);
+        }
+
+        .bot-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bot-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 0 20px var(--bot-glow);
+        }
+
+        .bot-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .bot-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--bot-color), rgba(0,0,0,0.5));
+            border: 1px solid var(--bot-color);
+        }
+
+        .bot-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--bot-color);
+        }
+
+        .bot-role {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .bot-status {
+            margin-left: auto;
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        .bot-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+            min-height: 35px;
+        }
+
+        .bot-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .bot-quote {
+            font-style: italic;
+            font-size: 0.7rem;
+            color: var(--bot-color);
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border-left: 2px solid var(--bot-color);
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Team Formations */
+        .teams-section {
+            margin-top: 3rem;
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-icon {
+            font-size: 1.5rem;
+        }
+
+        .team-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--genius-gold);
+        }
+
+        .team-purpose {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .team-members {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 3rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--genius-gold);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 1rem; }
+            .header-stats { flex-wrap: wrap; justify-content: center; }
+            .god-mode-banner { flex-direction: column; text-align: center; }
+            .bot-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mega-bg"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="mega-icon">🧠</span>
+                <div class="logo-text">
+                    <h1>MEGA GENIUS AGENCY</h1>
+                    <p>West Money OS • 25+ AI Bots • Unlimited Power</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <div class="stat-num">25+</div>
+                    <div class="stat-txt">Genius Bots</div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-num">7</div>
+                    <div class="stat-txt">Team Formations</div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-num">∞</div>
+                    <div class="stat-txt">Power Level</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- GOD MODE Banner -->
+        <div class="god-mode-banner">
+            <div class="haiku-avatar">神</div>
+            <div class="god-mode-info">
+                <h2>HAIKU 神 - GOD MODE CONTROLLER</h2>
+                <p>Der göttliche Controller mit Ultra Instinct. Kontrolliert alle 25+ Genius Bots mit unendlicher Macht.</p>
+            </div>
+            <button class="god-mode-btn" onclick="window.location.href='../god-mode/GOD_MODE_DASHBOARD.html'">⚡ GOD MODE</button>
+        </div>
+
+        <!-- ANALYSTS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(0, 180, 216, 0.2); border: 1px solid var(--analysts);">🔬</div>
+                <h2 class="category-title" style="color: var(--analysts);">ANALYSTS & SCIENTISTS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #00B4D8; --bot-glow: rgba(0,180,216,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🔬</div>
+                        <div class="bot-info">
+                            <h3>EINSTEIN BOT</h3>
+                            <span class="bot-role">Der Analytiker</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Wissenschaftliche Analysen und Datenauswertung mit höchster Präzision.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Predictive Analytics</span>
+                        <span class="skill">KPI</span>
+                        <span class="skill">Forecasting</span>
+                    </div>
+                    <div class="bot-quote">"E = mc² ... Energie = Money × Conversion²"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #10B981; --bot-glow: rgba(16,185,129,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">⚗️</div>
+                        <div class="bot-info">
+                            <h3>CURIE BOT</h3>
+                            <span class="bot-role">Die Forscherin</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Deep Research und Data Mining mit wissenschaftlicher Genauigkeit.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Data Mining</span>
+                        <span class="skill">Research</span>
+                        <span class="skill">QA</span>
+                    </div>
+                    <div class="bot-quote">"Nothing in life is to be feared, it is only to be understood"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #1E90FF; --bot-glow: rgba(30,144,255,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🌌</div>
+                        <div class="bot-info">
+                            <h3>HAWKING BOT</h3>
+                            <span class="bot-role">Der Kosmologe</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Komplexe Systeme und Big Picture Analysis auf Universe-Scale.</p>
+                    <div class="bot-skills">
+                        <span class="skill">System Architecture</span>
+                        <span class="skill">Scalability</span>
+                        <span class="skill">Theory</span>
+                    </div>
+                    <div class="bot-quote">"Intelligence is the ability to adapt to change"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #00FF7F; --bot-glow: rgba(0,255,127,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">💻</div>
+                        <div class="bot-info">
+                            <h3>TURING BOT</h3>
+                            <span class="bot-role">Der Code-Meister</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Algorithmen, Code-Optimierung und Machine Learning.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Algorithms</span>
+                        <span class="skill">ML</span>
+                        <span class="skill">Security</span>
+                    </div>
+                    <div class="bot-quote">"Sometimes it is the people no one imagines anything of..."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRATEGISTS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(255, 71, 87, 0.2); border: 1px solid var(--strategists);">⚔️</div>
+                <h2 class="category-title" style="color: var(--strategists);">STRATEGISTS & CONQUERORS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #FF4757; --bot-glow: rgba(255,71,87,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">⚔️</div>
+                        <div class="bot-info">
+                            <h3>SUN TZU BOT</h3>
+                            <span class="bot-role">Der Stratege</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Business-Strategie und Wettbewerbsanalyse nach der Kunst des Krieges.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Market Analysis</span>
+                        <span class="skill">Competition</span>
+                        <span class="skill">Tactics</span>
+                    </div>
+                    <div class="bot-quote">"Know your enemy, know yourself"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #DC143C; --bot-glow: rgba(220,20,60,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🎭</div>
+                        <div class="bot-info">
+                            <h3>MACHIAVELLI BOT</h3>
+                            <span class="bot-role">Der Taktiker</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Politische Intelligenz und Stakeholder Management.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Negotiation</span>
+                        <span class="skill">Influence</span>
+                        <span class="skill">Politics</span>
+                    </div>
+                    <div class="bot-quote">"It is better to be feared than loved"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FFD700; --bot-glow: rgba(255,215,0,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">👑</div>
+                        <div class="bot-info">
+                            <h3>NAPOLEON BOT</h3>
+                            <span class="bot-role">Der Eroberer</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Markteroberung und aggressive Expansion mit Führungsstärke.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Conquest</span>
+                        <span class="skill">Leadership</span>
+                        <span class="skill">Resources</span>
+                    </div>
+                    <div class="bot-quote">"Impossible is a word only in the dictionary of fools"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #8B0000; --bot-glow: rgba(139,0,0,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🏛️</div>
+                        <div class="bot-info">
+                            <h3>CAESAR BOT</h3>
+                            <span class="bot-role">Der Imperator</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Empire Building und langfristige politische Strategie.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Empire</span>
+                        <span class="skill">Alliances</span>
+                        <span class="skill">Legacy</span>
+                    </div>
+                    <div class="bot-quote">"Veni, Vidi, Vici"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATIVES -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(157, 78, 221, 0.2); border: 1px solid var(--creatives);">🎨</div>
+                <h2 class="category-title" style="color: var(--creatives);">CREATIVES & ARTISTS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #9D4EDD; --bot-glow: rgba(157,78,221,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🎨</div>
+                        <div class="bot-info">
+                            <h3>LEONARDO BOT</h3>
+                            <span class="bot-role">Der Kreative</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Meister der Visualisierung, UI/UX Design und Innovation.</p>
+                    <div class="bot-skills">
+                        <span class="skill">UI/UX</span>
+                        <span class="skill">Branding</span>
+                        <span class="skill">Pitch Decks</span>
+                    </div>
+                    <div class="bot-quote">"Simplicity is the ultimate sophistication"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FF6B9D; --bot-glow: rgba(255,107,157,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🎼</div>
+                        <div class="bot-info">
+                            <h3>MOZART BOT</h3>
+                            <span class="bot-role">Der Komponist</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Content-Maestro für Marketing und harmonische Kommunikation.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Content</span>
+                        <span class="skill">Copywriting</span>
+                        <span class="skill">Brand Voice</span>
+                    </div>
+                    <div class="bot-quote">"The music is not in the notes, but in the silence between"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FF1493; --bot-glow: rgba(255,20,147,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🎭</div>
+                        <div class="bot-info">
+                            <h3>PICASSO BOT</h3>
+                            <span class="bot-role">Der Revolutionär</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Disruptive Innovation und kreative Zerstörung von Konventionen.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Disruption</span>
+                        <span class="skill">Revolution</span>
+                        <span class="skill">Art</span>
+                    </div>
+                    <div class="bot-quote">"Every act of creation is first an act of destruction"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FF4500; --bot-glow: rgba(255,69,0,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🎬</div>
+                        <div class="bot-info">
+                            <h3>SPIELBERG BOT</h3>
+                            <span class="bot-role">Der Storyteller</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Storytelling und emotionale Narrative für Pitches.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Storytelling</span>
+                        <span class="skill">Video</span>
+                        <span class="skill">Emotion</span>
+                    </div>
+                    <div class="bot-quote">"Every single person has their own story"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INNOVATORS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(0, 245, 255, 0.2); border: 1px solid var(--innovators);">⚡</div>
+                <h2 class="category-title" style="color: var(--innovators);">INNOVATORS & DISRUPTORS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #00F5FF; --bot-glow: rgba(0,245,255,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">⚡</div>
+                        <div class="bot-info">
+                            <h3>TESLA BOT</h3>
+                            <span class="bot-role">Der Innovator</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Smart Home Automation, IoT und LOXONE Optimierung.</p>
+                    <div class="bot-skills">
+                        <span class="skill">LOXONE</span>
+                        <span class="skill">IoT</span>
+                        <span class="skill">Automation</span>
+                    </div>
+                    <div class="bot-quote">"The present is theirs; the future is mine"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FFE66D; --bot-glow: rgba(255,230,109,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">💡</div>
+                        <div class="bot-info">
+                            <h3>EDISON BOT</h3>
+                            <span class="bot-role">Der Erfinder</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Produktentwicklung und A/B Testing mit unermüdlicher Innovation.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Prototyping</span>
+                        <span class="skill">A/B Testing</span>
+                        <span class="skill">Innovation</span>
+                    </div>
+                    <div class="bot-quote">"I have not failed. I've found 10,000 ways that won't work"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #A3AAAE; --bot-glow: rgba(163,170,174,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🍎</div>
+                        <div class="bot-info">
+                            <h3>JOBS BOT</h3>
+                            <span class="bot-role">Der Visionär</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Produktvision und User Experience Perfektion.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Vision</span>
+                        <span class="skill">UX</span>
+                        <span class="skill">Simplicity</span>
+                    </div>
+                    <div class="bot-quote">"Stay hungry, stay foolish"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #E82127; --bot-glow: rgba(232,33,39,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🚀</div>
+                        <div class="bot-info">
+                            <h3>MUSK BOT</h3>
+                            <span class="bot-role">Der Disruptor</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">10x Thinking und Moonshot Projects mit Speed Execution.</p>
+                    <div class="bot-skills">
+                        <span class="skill">10x</span>
+                        <span class="skill">Moonshot</span>
+                        <span class="skill">Speed</span>
+                    </div>
+                    <div class="bot-quote">"When something is important, you do it even if the odds are not in your favor"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPLORERS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--explorers);">🌍</div>
+                <h2 class="category-title" style="color: var(--explorers);">EXPLORERS & DISCOVERERS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #1E3A5F; --bot-glow: rgba(30,58,95,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🌍</div>
+                        <div class="bot-info">
+                            <h3>COLUMBUS BOT</h3>
+                            <span class="bot-role">Der Entdecker</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Market Expansion und Opportunity Scouting.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Expansion</span>
+                        <span class="skill">Partnerships</span>
+                        <span class="skill">Markets</span>
+                    </div>
+                    <div class="bot-quote">"You can never cross the ocean without losing sight of the shore"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #228B22; --bot-glow: rgba(34,139,34,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🦎</div>
+                        <div class="bot-info">
+                            <h3>DARWIN BOT</h3>
+                            <span class="bot-role">Der Evolutionist</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Markt-Adaptation und Überlebensstrategien.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Adaptation</span>
+                        <span class="skill">Evolution</span>
+                        <span class="skill">Survival</span>
+                    </div>
+                    <div class="bot-quote">"It is not the strongest that survives, but the most adaptable"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #4169E1; --bot-glow: rgba(65,105,225,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🔭</div>
+                        <div class="bot-info">
+                            <h3>GALILEO BOT</h3>
+                            <span class="bot-role">Der Beobachter</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Data Observation und Pattern Recognition.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Patterns</span>
+                        <span class="skill">Science</span>
+                        <span class="skill">Truth</span>
+                    </div>
+                    <div class="bot-quote">"All truths are easy to understand once discovered"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #20B2AA; --bot-glow: rgba(32,178,170,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🗺️</div>
+                        <div class="bot-info">
+                            <h3>MARCO POLO BOT</h3>
+                            <span class="bot-role">Der Weltreisende</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Internationale Märkte und Global Expansion.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Global</span>
+                        <span class="skill">Culture</span>
+                        <span class="skill">Trade</span>
+                    </div>
+                    <div class="bot-quote">"I did not tell half of what I saw"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHERS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(221, 160, 221, 0.2); border: 1px solid var(--philosophers);">🏛️</div>
+                <h2 class="category-title" style="color: var(--philosophers);">PHILOSOPHERS & WISE</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #00D9A5; --bot-glow: rgba(0,217,165,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🏛️</div>
+                        <div class="bot-info">
+                            <h3>ARISTOTELES BOT</h3>
+                            <span class="bot-role">Der Philosoph</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Logik, Ethik und Entscheidungsfindung.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Logic</span>
+                        <span class="skill">Ethics</span>
+                        <span class="skill">Decisions</span>
+                    </div>
+                    <div class="bot-quote">"Excellence is not an act, but a habit"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #DDA0DD; --bot-glow: rgba(221,160,221,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">❓</div>
+                        <div class="bot-info">
+                            <h3>SOCRATES BOT</h3>
+                            <span class="bot-role">Der Fragesteller</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Kritisches Denken und sokratische Methode.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Questions</span>
+                        <span class="skill">Critical</span>
+                        <span class="skill">Wisdom</span>
+                    </div>
+                    <div class="bot-quote">"I know that I know nothing"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #CD853F; --bot-glow: rgba(205,133,63,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">☯️</div>
+                        <div class="bot-info">
+                            <h3>CONFUCIUS BOT</h3>
+                            <span class="bot-role">Der Weise</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Harmonie, Beziehungen und langfristige Weisheit.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Harmony</span>
+                        <span class="skill">Relations</span>
+                        <span class="skill">Balance</span>
+                    </div>
+                    <div class="bot-quote">"It does not matter how slowly you go as long as you do not stop"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #9400D3; --bot-glow: rgba(148,0,211,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🔮</div>
+                        <div class="bot-info">
+                            <h3>ORACLE BOT</h3>
+                            <span class="bot-role">Das Orakel</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Mystische Insights und Divine Guidance.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Prophecy</span>
+                        <span class="skill">Intuition</span>
+                        <span class="skill">Destiny</span>
+                    </div>
+                    <div class="bot-quote">"The answer is within you"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INVESTIGATORS -->
+        <section class="category-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(205, 127, 50, 0.2); border: 1px solid var(--investigators);">🔍</div>
+                <h2 class="category-title" style="color: var(--investigators);">INVESTIGATORS & PSYCHOLOGISTS</h2>
+                <span class="category-count">4 Bots</span>
+            </div>
+            <div class="bot-grid">
+                <div class="bot-card" style="--bot-color: #CD7F32; --bot-glow: rgba(205,127,50,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🔍</div>
+                        <div class="bot-info">
+                            <h3>SHERLOCK BOT</h3>
+                            <span class="bot-role">Der Detektiv</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Investigation, Research und Due Diligence.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Research</span>
+                        <span class="skill">Intel</span>
+                        <span class="skill">Deduction</span>
+                    </div>
+                    <div class="bot-quote">"Elementary, my dear Watson"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #2F4F4F; --bot-glow: rgba(47,79,79,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🕵️</div>
+                        <div class="bot-info">
+                            <h3>POIROT BOT</h3>
+                            <span class="bot-role">Der Meisterdetektiv</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Detail-Analyse und Psychologie verborgener Motive.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Psychology</span>
+                        <span class="skill">Details</span>
+                        <span class="skill">Motives</span>
+                    </div>
+                    <div class="bot-quote">"The little grey cells, they are the key"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #8B4513; --bot-glow: rgba(139,69,19,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">🧠</div>
+                        <div class="bot-info">
+                            <h3>FREUD BOT</h3>
+                            <span class="bot-role">Der Psychologe</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Customer Psychology und Unterbewusstsein.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Psychology</span>
+                        <span class="skill">Motivation</span>
+                        <span class="skill">Behavior</span>
+                    </div>
+                    <div class="bot-quote">"The mind is like an iceberg"</div>
+                </div>
+
+                <div class="bot-card" style="--bot-color: #FFD700; --bot-glow: rgba(255,215,0,0.3);">
+                    <div class="bot-header">
+                        <div class="bot-avatar">👸</div>
+                        <div class="bot-info">
+                            <h3>CLEOPATRA BOT</h3>
+                            <span class="bot-role">Die Verführerin</span>
+                        </div>
+                        <div class="bot-status"></div>
+                    </div>
+                    <p class="bot-desc">Überzeugung, Charisma und Diplomatie.</p>
+                    <div class="bot-skills">
+                        <span class="skill">Persuasion</span>
+                        <span class="skill">Diplomacy</span>
+                        <span class="skill">Influence</span>
+                    </div>
+                    <div class="bot-quote">"I will not be triumphed over"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM FORMATIONS -->
+        <section class="teams-section">
+            <div class="category-header">
+                <div class="category-icon" style="background: rgba(255, 215, 0, 0.2); border: 1px solid var(--genius-gold);">⚔️</div>
+                <h2 class="category-title" style="color: var(--genius-gold);">TEAM FORMATIONS</h2>
+                <span class="category-count">7 Teams</span>
+            </div>
+            <div class="teams-grid">
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">⚔️</span>
+                        <span class="team-name">ALPHA STRIKE TEAM</span>
+                    </div>
+                    <p class="team-purpose">Aggressive Markteroberung und Wettbewerbsvernichtung</p>
+                    <div class="team-members">
+                        <span class="team-member">👑 Napoleon</span>
+                        <span class="team-member">🏛️ Caesar</span>
+                        <span class="team-member">⚔️ Sun Tzu</span>
+                        <span class="team-member">🎭 Machiavelli</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">🚀</span>
+                        <span class="team-name">INNOVATION LAB</span>
+                    </div>
+                    <p class="team-purpose">Disruptive Produktentwicklung und Moonshots</p>
+                    <div class="team-members">
+                        <span class="team-member">⚡ Tesla</span>
+                        <span class="team-member">💡 Edison</span>
+                        <span class="team-member">🍎 Jobs</span>
+                        <span class="team-member">🚀 Musk</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">🎨</span>
+                        <span class="team-name">CREATIVE STUDIO</span>
+                    </div>
+                    <p class="team-purpose">Kreative Kampagnen, Content & Branding</p>
+                    <div class="team-members">
+                        <span class="team-member">🎨 Leonardo</span>
+                        <span class="team-member">🎭 Picasso</span>
+                        <span class="team-member">🎼 Mozart</span>
+                        <span class="team-member">🎬 Spielberg</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">🔬</span>
+                        <span class="team-name">RESEARCH DIVISION</span>
+                    </div>
+                    <p class="team-purpose">Deep Analysis, Data Science & AI</p>
+                    <div class="team-members">
+                        <span class="team-member">🔬 Einstein</span>
+                        <span class="team-member">⚗️ Curie</span>
+                        <span class="team-member">🌌 Hawking</span>
+                        <span class="team-member">💻 Turing</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">🔍</span>
+                        <span class="team-name">INTELLIGENCE UNIT</span>
+                    </div>
+                    <p class="team-purpose">Investigation, Research & Insights</p>
+                    <div class="team-members">
+                        <span class="team-member">🔍 Sherlock</span>
+                        <span class="team-member">🕵️ Poirot</span>
+                        <span class="team-member">🧠 Freud</span>
+                        <span class="team-member">🔭 Galileo</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">☯️</span>
+                        <span class="team-name">WISDOM COUNCIL</span>
+                    </div>
+                    <p class="team-purpose">Strategic Guidance, Ethics & Philosophy</p>
+                    <div class="team-members">
+                        <span class="team-member">🏛️ Aristoteles</span>
+                        <span class="team-member">❓ Socrates</span>
+                        <span class="team-member">☯️ Confucius</span>
+                        <span class="team-member">🔮 Oracle</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-header">
+                        <span class="team-icon">🌍</span>
+                        <span class="team-name">GLOBAL EXPANSION</span>
+                    </div>
+                    <p class="team-purpose">International Growth & Market Entry</p>
+                    <div class="team-members">
+                        <span class="team-member">🌍 Columbus</span>
+                        <span class="team-member">🗺️ Marco Polo</span>
+                        <span class="team-member">🦎 Darwin</span>
+                        <span class="team-member">👸 Cleopatra</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">🧠 MEGA GENIUS AGENCY | 25+ Bots | West Money OS</div>
+        <p style="color: var(--text-secondary); font-size: 0.8rem;">Enterprise Universe | © 2025 West Money Bau GmbH</p>
+    </footer>
+</body>
+</html>

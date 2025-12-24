@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 GENIUS AGENCY | West Money OS - AI Bot Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --genius-gold: #FFD700;
+            --genius-amber: #FFA500;
+            --einstein-blue: #00B4D8;
+            --leonardo-purple: #9D4EDD;
+            --tesla-cyan: #00F5FF;
+            --sun-tzu-red: #FF4757;
+            --aristotle-green: #00D9A5;
+            --nostradamus-violet: #8B5CF6;
+            --machiavelli-crimson: #DC143C;
+            --sherlock-bronze: #CD7F32;
+            --edison-yellow: #FFE66D;
+            --mozart-pink: #FF6B9D;
+            --columbus-navy: #1E3A5F;
+            --curie-emerald: #10B981;
+            --bg-dark: #0A0A0F;
+            --bg-card: rgba(15, 15, 25, 0.95);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --border-glow: rgba(255, 215, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 180, 216, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 60%),
+                linear-gradient(180deg, #0A0A0F 0%, #0F0F1A 50%, #0A0A0F 100%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(157, 78, 221, 0.1) 100%);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brain-icon {
+            font-size: 3rem;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--genius-gold) 0%, var(--genius-amber) 50%, var(--genius-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            letter-spacing: 2px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 215, 0, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--genius-gold);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--genius-gold), transparent);
+        }
+
+        /* Bot Grid */
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Bot Card */
+        .bot-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .bot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--bot-color, var(--genius-gold));
+            opacity: 0.8;
+        }
+
+        .bot-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .bot-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--bot-color, var(--genius-gold));
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--bot-glow, rgba(255, 215, 0, 0.2));
+        }
+
+        .bot-card:hover::after {
+            left: 100%;
+        }
+
+        /* Bot Colors */
+        .bot-einstein { --bot-color: var(--einstein-blue); --bot-glow: rgba(0, 180, 216, 0.3); }
+        .bot-leonardo { --bot-color: var(--leonardo-purple); --bot-glow: rgba(157, 78, 221, 0.3); }
+        .bot-tesla { --bot-color: var(--tesla-cyan); --bot-glow: rgba(0, 245, 255, 0.3); }
+        .bot-suntzu { --bot-color: var(--sun-tzu-red); --bot-glow: rgba(255, 71, 87, 0.3); }
+        .bot-aristotle { --bot-color: var(--aristotle-green); --bot-glow: rgba(0, 217, 165, 0.3); }
+        .bot-nostradamus { --bot-color: var(--nostradamus-violet); --bot-glow: rgba(139, 92, 246, 0.3); }
+        .bot-machiavelli { --bot-color: var(--machiavelli-crimson); --bot-glow: rgba(220, 20, 60, 0.3); }
+        .bot-sherlock { --bot-color: var(--sherlock-bronze); --bot-glow: rgba(205, 127, 50, 0.3); }
+        .bot-edison { --bot-color: var(--edison-yellow); --bot-glow: rgba(255, 230, 109, 0.3); }
+        .bot-mozart { --bot-color: var(--mozart-pink); --bot-glow: rgba(255, 107, 157, 0.3); }
+        .bot-columbus { --bot-color: var(--columbus-navy); --bot-glow: rgba(30, 58, 95, 0.3); }
+        .bot-curie { --bot-color: var(--curie-emerald); --bot-glow: rgba(16, 185, 129, 0.3); }
+
+        .bot-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .bot-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--bot-color, var(--genius-gold)), rgba(0, 0, 0, 0.5));
+            border: 2px solid var(--bot-color, var(--genius-gold));
+            box-shadow: 0 0 20px var(--bot-glow, rgba(255, 215, 0, 0.3));
+        }
+
+        .bot-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--bot-color, var(--genius-gold));
+            margin-bottom: 0.25rem;
+        }
+
+        .bot-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .bot-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(0, 217, 165, 0.1);
+            border: 1px solid rgba(0, 217, 165, 0.3);
+            border-radius: 20px;
+            color: var(--aristotle-green);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--aristotle-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .bot-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            min-height: 45px;
+        }
+
+        .bot-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tag {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bot-quote {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: var(--bot-color, var(--genius-gold));
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 2px solid var(--bot-color, var(--genius-gold));
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+        }
+
+        .bot-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .bot-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .bot-btn-primary {
+            background: linear-gradient(135deg, var(--bot-color, var(--genius-gold)), rgba(0, 0, 0, 0.3));
+            color: white;
+        }
+
+        .bot-btn-primary:hover {
+            box-shadow: 0 0 20px var(--bot-glow, rgba(255, 215, 0, 0.4));
+            transform: scale(1.02);
+        }
+
+        .bot-btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .bot-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        /* Command Center */
+        .command-center {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .command-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .command-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .command-input:focus {
+            border-color: var(--genius-gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .command-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .command-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--genius-gold), var(--genius-amber));
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--bg-dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .command-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .quick-commands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .quick-cmd {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-cmd:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--genius-gold);
+            color: var(--genius-gold);
+        }
+
+        /* Activity Feed */
+        .activity-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .activity-feed {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Performance Panel */
+        .performance-panel {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .perf-stat {
+            margin-bottom: 1.5rem;
+        }
+
+        .perf-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .perf-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .perf-value {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            color: var(--genius-gold);
+        }
+
+        .perf-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .perf-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 2rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--genius-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .activity-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .bot-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .command-input-wrapper {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-universe"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="brain-icon">🧠</span>
+                <div class="logo-text">
+                    <h1>GENIUS AGENCY</h1>
+                    <p>West Money OS • AI Bot Command Center</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-box">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Active Bots</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">847</div>
+                    <div class="stat-label">Tasks Today</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">99.7%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Online</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Command Center -->
+        <section class="command-center">
+            <h2 class="section-title">⚡ GENIUS COMMAND CENTER</h2>
+            <div class="command-input-wrapper">
+                <input type="text" class="command-input" placeholder="@einstein analyse die Q4 Verkaufsdaten..." id="commandInput">
+                <button class="command-btn" onclick="sendCommand()">🚀 EXECUTE</button>
+            </div>
+            <div class="quick-commands">
+                <span class="quick-cmd" onclick="setCommand('@einstein')">@einstein - Analyse</span>
+                <span class="quick-cmd" onclick="setCommand('@leonardo')">@leonardo - Design</span>
+                <span class="quick-cmd" onclick="setCommand('@tesla')">@tesla - Automation</span>
+                <span class="quick-cmd" onclick="setCommand('@suntzu')">@suntzu - Strategie</span>
+                <span class="quick-cmd" onclick="setCommand('@sherlock')">@sherlock - Research</span>
+                <span class="quick-cmd" onclick="setCommand('@all')">@all - Alle Bots</span>
+            </div>
+        </section>
+
+        <!-- Bot Grid -->
+        <h2 class="section-title">🤖 GENIUS BOT ARMY</h2>
+        <div class="bot-grid">
+            <!-- Einstein Bot -->
+            <div class="bot-card bot-einstein">
+                <div class="bot-header">
+                    <div class="bot-avatar">🔬</div>
+                    <div class="bot-info">
+                        <h3>EINSTEIN BOT</h3>
+                        <span class="bot-role">Der Analytiker</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Wissenschaftliche Analysen, Datenauswertung und komplexe Berechnungen mit höchster Präzision.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Predictive Analytics</span>
+                    <span class="skill-tag">KPI Analyse</span>
+                    <span class="skill-tag">Finanzprognosen</span>
+                </div>
+                <div class="bot-quote">"E = mc² ... Energie = Money × Conversion²"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Leonardo Bot -->
+            <div class="bot-card bot-leonardo">
+                <div class="bot-header">
+                    <div class="bot-avatar">🎨</div>
+                    <div class="bot-info">
+                        <h3>LEONARDO BOT</h3>
+                        <span class="bot-role">Der Kreative</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Meister der Visualisierung, UI/UX Design und kreative Innovation für unvergessliche Erlebnisse.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">UI/UX Design</span>
+                    <span class="skill-tag">Branding</span>
+                    <span class="skill-tag">Pitch Decks</span>
+                </div>
+                <div class="bot-quote">"Simplicity is the ultimate sophistication"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Tesla Bot -->
+            <div class="bot-card bot-tesla">
+                <div class="bot-header">
+                    <div class="bot-avatar">⚡</div>
+                    <div class="bot-info">
+                        <h3>TESLA BOT</h3>
+                        <span class="bot-role">Der Innovator</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Technologie-Genie für Smart Home Automation, IoT-Integration und LOXONE Optimierung.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">LOXONE</span>
+                    <span class="skill-tag">IoT</span>
+                    <span class="skill-tag">Automation</span>
+                </div>
+                <div class="bot-quote">"The present is theirs; the future is mine"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Sun Tzu Bot -->
+            <div class="bot-card bot-suntzu">
+                <div class="bot-header">
+                    <div class="bot-avatar">⚔️</div>
+                    <div class="bot-info">
+                        <h3>SUN TZU BOT</h3>
+                        <span class="bot-role">Der Stratege</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Meister der Kriegskunst für Business-Strategie, Wettbewerbsanalyse und taktische Planung.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Marktanalyse</span>
+                    <span class="skill-tag">Wettbewerb</span>
+                    <span class="skill-tag">Sales Taktik</span>
+                </div>
+                <div class="bot-quote">"Know your enemy, know yourself"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Aristotle Bot -->
+            <div class="bot-card bot-aristotle">
+                <div class="bot-header">
+                    <div class="bot-avatar">🏛️</div>
+                    <div class="bot-info">
+                        <h3>ARISTOTELES BOT</h3>
+                        <span class="bot-role">Der Philosoph</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Logisches Denken, ethische Entscheidungsfindung und philosophische Analyse für kluge Entscheidungen.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Logik</span>
+                    <span class="skill-tag">Ethik</span>
+                    <span class="skill-tag">Entscheidungen</span>
+                </div>
+                <div class="bot-quote">"Excellence is not an act, but a habit"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Nostradamus Bot -->
+            <div class="bot-card bot-nostradamus">
+                <div class="bot-header">
+                    <div class="bot-avatar">🔮</div>
+                    <div class="bot-info">
+                        <h3>NOSTRADAMUS BOT</h3>
+                        <span class="bot-role">Der Prophet</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Zukunftsvisionen durch Trend-Forecasting, Marktprognosen und vorausschauende Analysen.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Forecasting</span>
+                    <span class="skill-tag">Trends</span>
+                    <span class="skill-tag">Risk Analysis</span>
+                </div>
+                <div class="bot-quote">"The future belongs to those who prepare"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Machiavelli Bot -->
+            <div class="bot-card bot-machiavelli">
+                <div class="bot-header">
+                    <div class="bot-avatar">🎭</div>
+                    <div class="bot-info">
+                        <h3>MACHIAVELLI BOT</h3>
+                        <span class="bot-role">Der Taktiker</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Politische Intelligenz für Verhandlungen, Investor Relations und Stakeholder Management.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Verhandlung</span>
+                    <span class="skill-tag">Investor Relations</span>
+                    <span class="skill-tag">Politik</span>
+                </div>
+                <div class="bot-quote">"It is better to be feared than loved"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Sherlock Bot -->
+            <div class="bot-card bot-sherlock">
+                <div class="bot-header">
+                    <div class="bot-avatar">🔍</div>
+                    <div class="bot-info">
+                        <h3>SHERLOCK BOT</h3>
+                        <span class="bot-role">Der Detektiv</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Investigation und Deep Research für Lead-Analyse, Due Diligence und Competitor Intelligence.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Research</span>
+                    <span class="skill-tag">Due Diligence</span>
+                    <span class="skill-tag">Intel</span>
+                </div>
+                <div class="bot-quote">"Elementary, my dear Watson"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Edison Bot -->
+            <div class="bot-card bot-edison">
+                <div class="bot-header">
+                    <div class="bot-avatar">💡</div>
+                    <div class="bot-info">
+                        <h3>EDISON BOT</h3>
+                        <span class="bot-role">Der Erfinder</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Produktentwicklung und Innovation durch kontinuierliches Testing und Prototyping.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Prototyping</span>
+                    <span class="skill-tag">A/B Testing</span>
+                    <span class="skill-tag">Innovation</span>
+                </div>
+                <div class="bot-quote">"I have not failed. I've found 10,000 ways that won't work"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Mozart Bot -->
+            <div class="bot-card bot-mozart">
+                <div class="bot-header">
+                    <div class="bot-avatar">🎼</div>
+                    <div class="bot-info">
+                        <h3>MOZART BOT</h3>
+                        <span class="bot-role">Der Komponist</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Content-Maestro für Marketing-Texte, Brand Voice und harmonische Kommunikation.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Content</span>
+                    <span class="skill-tag">Copywriting</span>
+                    <span class="skill-tag">Brand Voice</span>
+                </div>
+                <div class="bot-quote">"The music is not in the notes, but in the silence between"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Columbus Bot -->
+            <div class="bot-card bot-columbus">
+                <div class="bot-header">
+                    <div class="bot-avatar">🌍</div>
+                    <div class="bot-info">
+                        <h3>COLUMBUS BOT</h3>
+                        <span class="bot-role">Der Entdecker</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Marktexpansion und neue Territorien durch Opportunity Scouting und Partnership Discovery.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Expansion</span>
+                    <span class="skill-tag">Partnerships</span>
+                    <span class="skill-tag">Markets</span>
+                </div>
+                <div class="bot-quote">"You can never cross the ocean without losing sight of the shore"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+
+            <!-- Curie Bot -->
+            <div class="bot-card bot-curie">
+                <div class="bot-header">
+                    <div class="bot-avatar">⚗️</div>
+                    <div class="bot-info">
+                        <h3>CURIE BOT</h3>
+                        <span class="bot-role">Die Forscherin</span>
+                    </div>
+                    <div class="bot-status">
+                        <span class="status-dot"></span>
+                        ONLINE
+                    </div>
+                </div>
+                <p class="bot-description">Deep Research und Data Mining mit höchster Präzision und wissenschaftlicher Genauigkeit.</p>
+                <div class="bot-skills">
+                    <span class="skill-tag">Data Mining</span>
+                    <span class="skill-tag">Research</span>
+                    <span class="skill-tag">QA</span>
+                </div>
+                <div class="bot-quote">"Nothing in life is to be feared, it is only to be understood"</div>
+                <div class="bot-actions">
+                    <button class="bot-btn bot-btn-primary">Aktivieren</button>
+                    <button class="bot-btn bot-btn-secondary">Config</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Section -->
+        <div class="activity-section">
+            <div class="activity-feed">
+                <h2 class="section-title">📊 LIVE ACTIVITY FEED</h2>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(0, 180, 216, 0.2);">🔬</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Einstein Bot analysiert Q4 Daten</div>
+                        <div class="activity-desc">147 Leads gescored, 23 Hot Leads identifiziert</div>
+                    </div>
+                    <div class="activity-time">vor 2 Min</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(157, 78, 221, 0.2);">🎨</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Leonardo Bot erstellt Pitch Deck</div>
+                        <div class="activity-desc">Investor Deck v3.2 für SWF Meeting fertig</div>
+                    </div>
+                    <div class="activity-time">vor 8 Min</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(0, 245, 255, 0.2);">⚡</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Tesla Bot optimiert LOXONE Config</div>
+                        <div class="activity-desc">Smart Home Setup für Projekt Müller abgeschlossen</div>
+                    </div>
+                    <div class="activity-time">vor 15 Min</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(205, 127, 50, 0.2);">🔍</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Sherlock Bot: Lead Research</div>
+                        <div class="activity-desc">12 neue B2B Leads via Explorium identifiziert</div>
+                    </div>
+                    <div class="activity-time">vor 23 Min</div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: rgba(139, 92, 246, 0.2);">🔮</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Nostradamus Bot: Q1 2026 Forecast</div>
+                        <div class="activity-desc">Revenue Projection: €312K (+68% QoQ)</div>
+                    </div>
+                    <div class="activity-time">vor 31 Min</div>
+                </div>
+            </div>
+
+            <div class="performance-panel">
+                <h2 class="section-title">⚡ PERFORMANCE</h2>
+                <div class="perf-stat">
+                    <div class="perf-header">
+                        <span class="perf-label">CPU Auslastung</span>
+                        <span class="perf-value">42%</span>
+                    </div>
+                    <div class="perf-bar">
+                        <div class="perf-fill" style="width: 42%; background: linear-gradient(90deg, var(--einstein-blue), var(--tesla-cyan));"></div>
+                    </div>
+                </div>
+                <div class="perf-stat">
+                    <div class="perf-header">
+                        <span class="perf-label">Memory Usage</span>
+                        <span class="perf-value">8.4 GB</span>
+                    </div>
+                    <div class="perf-bar">
+                        <div class="perf-fill" style="width: 52%; background: linear-gradient(90deg, var(--leonardo-purple), var(--nostradamus-violet));"></div>
+                    </div>
+                </div>
+                <div class="perf-stat">
+                    <div class="perf-header">
+                        <span class="perf-label">Tasks Completed</span>
+                        <span class="perf-value">847</span>
+                    </div>
+                    <div class="perf-bar">
+                        <div class="perf-fill" style="width: 85%; background: linear-gradient(90deg, var(--genius-gold), var(--genius-amber));"></div>
+                    </div>
+                </div>
+                <div class="perf-stat">
+                    <div class="perf-header">
+                        <span class="perf-label">Success Rate</span>
+                        <span class="perf-value">99.7%</span>
+                    </div>
+                    <div class="perf-bar">
+                        <div class="perf-fill" style="width: 99.7%; background: linear-gradient(90deg, var(--aristotle-green), var(--curie-emerald));"></div>
+                    </div>
+                </div>
+                <div class="perf-stat">
+                    <div class="perf-header">
+                        <span class="perf-label">API Calls Today</span>
+                        <span class="perf-value">12,847</span>
+                    </div>
+                    <div class="perf-bar">
+                        <div class="perf-fill" style="width: 64%; background: linear-gradient(90deg, var(--sun-tzu-red), var(--machiavelli-crimson));"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">🧠 GENIUS AGENCY</div>
+        <div class="footer-text">West Money OS | Enterprise Universe | © 2025 West Money Bau GmbH</div>
+    </footer>
+
+    <script>
+        // Generate Stars
+        function generateStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.opacity = Math.random() * 0.5 + 0.3;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Command Functions
+        function setCommand(cmd) {
+            document.getElementById('commandInput').value = cmd + ' ';
+            document.getElementById('commandInput').focus();
+        }
+
+        function sendCommand() {
+            const input = document.getElementById('commandInput');
+            const command = input.value.trim();
+            if (command) {
+                console.log('Executing:', command);
+                // Add to activity feed
+                addActivity(command);
+                input.value = '';
+            }
+        }
+
+        function addActivity(command) {
+            const feed = document.querySelector('.activity-feed');
+            const firstItem = feed.querySelector('.activity-item');
+            
+            const newItem = document.createElement('div');
+            newItem.className = 'activity-item';
+            newItem.innerHTML = `
+                <div class="activity-icon" style="background: rgba(255, 215, 0, 0.2);">⚡</div>
+                <div class="activity-content">
+                    <div class="activity-title">Command Executed</div>
+                    <div class="activity-desc">${command}</div>
+                </div>
+                <div class="activity-time">jetzt</div>
+            `;
+            
+            feed.insertBefore(newItem, firstItem);
+        }
+
+        // Enter key support
+        document.getElementById('commandInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendCommand();
+        });
+
+        // Initialize
+        generateStars();
+    </script>
+</body>
+</html>
