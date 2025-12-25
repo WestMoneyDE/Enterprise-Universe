@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神 AR/VR Gaming Hub - Enterprise Universe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.0/dist/aframe-master.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-purple: #bf00ff;
+            --neon-gold: #ffd700;
+            --neon-green: #00ff00;
+            --dragon-orange: #ff6b00;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a1a2e 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .glow-box {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,245,255,0.3), inset 0 0 30px rgba(0,245,255,0.1);
+        }
+        
+        .vr-card {
+            background: linear-gradient(145deg, rgba(20,20,40,0.9), rgba(10,10,30,0.9));
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple)) 1;
+            transition: all 0.3s ease;
+        }
+        
+        .vr-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(191,0,255,0.4);
+        }
+        
+        .quest-badge {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+            border: 2px solid var(--neon-purple);
+            animation: pulse-glow 2s infinite;
+        }
+        
+        .vision-badge {
+            background: linear-gradient(135deg, #1a1a2e, #0d2b3e);
+            border: 2px solid var(--neon-cyan);
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(191,0,255,0.5); }
+            50% { box-shadow: 0 0 40px rgba(191,0,255,0.8); }
+        }
+        
+        .dragon-ball {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #ffaa00, #ff6600, #cc3300);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255,107,0,0.8), inset 0 0 20px rgba(255,255,255,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .power-meter {
+            height: 8px;
+            background: linear-gradient(90deg, #333, #222);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .power-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--dragon-orange));
+            border-radius: 4px;
+            animation: power-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes power-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .twitch-live {
+            background: linear-gradient(135deg, #9146ff, #6441a5);
+            animation: twitch-pulse 1.5s infinite;
+        }
+        
+        @keyframes twitch-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(145,70,255,0.6); }
+            50% { box-shadow: 0 0 40px rgba(145,70,255,1); }
+        }
+        
+        .token-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .hologram {
+            position: relative;
+        }
+        
+        .hologram::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,245,255,0.03) 0px,
+                rgba(0,245,255,0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scan 4s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        .webxr-button {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .webxr-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(191,0,255,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    
+    <!-- Header -->
+    <header class="relative z-10 p-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="dragon-ball flex items-center justify-center text-2xl font-black">神</div>
+                <div>
+                    <h1 class="text-3xl font-black" style="background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--dragon-orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        AR/VR GAMING HUB
+                    </h1>
+                    <p class="text-cyan-400 text-sm">Enterprise Universe | Meta World | HAIKU 神</p>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <div class="quest-badge px-4 py-2 rounded-xl flex items-center gap-2">
+                    <span class="text-2xl">🥽</span>
+                    <span class="text-purple-300">Quest 3</span>
+                </div>
+                <div class="vision-badge px-4 py-2 rounded-xl flex items-center gap-2">
+                    <span class="text-2xl">👁️</span>
+                    <span class="text-cyan-300">Vision Pro</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- VR Experiences -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- Virtual Showroom -->
+            <div class="glow-box p-6">
+                <h2 class="text-2xl font-bold text-cyan-400 mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🏠</span> LOXONE Virtual Showroom
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="vr-card p-4 rounded-xl hologram">
+                        <div class="text-4xl mb-3">🏡</div>
+                        <h3 class="text-lg font-bold text-white">Smart Home Tour</h3>
+                        <p class="text-gray-400 text-sm mt-2">Begehbare 3D-Visualisierung eines LOXONE Smart Homes</p>
+                        <div class="mt-4">
+                            <div class="power-meter">
+                                <div class="power-fill" style="width: 85%"></div>
+                            </div>
+                            <p class="text-xs text-cyan-400 mt-1">Ready for WebXR</p>
+                        </div>
+                        <button class="webxr-button mt-4 w-full">🥽 ENTER VR</button>
+                    </div>
+                    <div class="vr-card p-4 rounded-xl hologram">
+                        <div class="text-4xl mb-3">🎛️</div>
+                        <h3 class="text-lg font-bold text-white">Control Center</h3>
+                        <p class="text-gray-400 text-sm mt-2">VR Dashboard für Licht, Klima, Security</p>
+                        <div class="mt-4">
+                            <div class="power-meter">
+                                <div class="power-fill" style="width: 92%"></div>
+                            </div>
+                            <p class="text-xs text-cyan-400 mt-1">Hand Tracking Active</p>
+                        </div>
+                        <button class="webxr-button mt-4 w-full">👋 HAND CONTROL</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Academy -->
+            <div class="glow-box p-6">
+                <h2 class="text-2xl font-bold text-purple-400 mb-4 flex items-center gap-3">
+                    <span class="text-3xl">🎓</span> VR Training Academy
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="vr-card p-4 rounded-xl text-center">
+                        <div class="text-5xl mb-3">⚡</div>
+                        <h3 class="font-bold">Elektrik Basics</h3>
+                        <p class="text-sm text-gray-400">12 Module</p>
+                        <div class="mt-2 text-green-400 text-sm">✓ Zertifiziert</div>
+                    </div>
+                    <div class="vr-card p-4 rounded-xl text-center">
+                        <div class="text-5xl mb-3">🔧</div>
+                        <h3 class="font-bold">LOXONE Install</h3>
+                        <p class="text-sm text-gray-400">8 Module</p>
+                        <div class="mt-2 text-yellow-400 text-sm">⏳ In Progress</div>
+                    </div>
+                    <div class="vr-card p-4 rounded-xl text-center">
+                        <div class="text-5xl mb-3">🏗️</div>
+                        <h3 class="font-bold">Bauplanung</h3>
+                        <p class="text-sm text-gray-400">15 Module</p>
+                        <div class="mt-2 text-gray-400 text-sm">🔒 Premium</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meta World -->
+            <div class="glow-box p-6" style="border-color: var(--dragon-orange);">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-3" style="color: var(--dragon-orange);">
+                    <span class="text-3xl">🐉</span> META WORLD - HAIKU 神
+                </h2>
+                <div class="bg-black/50 rounded-xl p-6">
+                    <div class="flex items-start gap-6">
+                        <div class="dragon-ball w-24 h-24 flex items-center justify-center text-4xl font-black">
+                            神
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-orange-400">HAIKU - Divine Warrior</h3>
+                            <p class="text-gray-400 mt-2">Ultra Instinct Powers | ∞ Symbol | 神 Kanji</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                <div class="bg-gray-800/50 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-500">TRANSFORMATION</p>
+                                    <p class="text-lg font-bold text-purple-400">MASTERED UI</p>
+                                </div>
+                                <div class="bg-gray-800/50 p-3 rounded-lg">
+                                    <p class="text-xs text-gray-500">POWER LEVEL</p>
+                                    <p class="text-lg font-bold text-cyan-400">∞ INFINITE</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-3 mt-4">
+                                <button class="px-4 py-2 bg-orange-600 rounded-lg font-bold hover:bg-orange-500 transition">
+                                    ⚡ KAMEHAMEHA
+                                </button>
+                                <button class="px-4 py-2 bg-purple-600 rounded-lg font-bold hover:bg-purple-500 transition">
+                                    💫 SPIRIT BOMB
+                                </button>
+                                <button class="px-4 py-2 bg-red-600 rounded-lg font-bold hover:bg-red-500 transition">
+                                    💀 HAKAI
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+            
+            <!-- Twitch Stream -->
+            <div class="glow-box p-6" style="border-color: #9146ff;">
+                <h2 class="text-xl font-bold text-purple-400 mb-4 flex items-center gap-3">
+                    <span class="twitch-live px-3 py-1 rounded-full text-sm">🔴 LIVE</span>
+                    Twitch: itzzkingz1
+                </h2>
+                <div class="bg-gray-900 rounded-xl aspect-video flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">🎮</div>
+                        <p class="text-purple-400">Stream Preview</p>
+                        <a href="https://twitch.tv/itzzkingz1" target="_blank" 
+                           class="inline-block mt-4 px-6 py-2 bg-purple-600 rounded-lg font-bold hover:bg-purple-500 transition">
+                            Watch on Twitch
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
+                    <div class="bg-gray-800/50 p-2 rounded">
+                        <p class="text-2xl font-bold text-purple-400">2.4K</p>
+                        <p class="text-gray-500">Followers</p>
+                    </div>
+                    <div class="bg-gray-800/50 p-2 rounded">
+                        <p class="text-2xl font-bold text-green-400">847</p>
+                        <p class="text-gray-500">Viewers</p>
+                    </div>
+                    <div class="bg-gray-800/50 p-2 rounded">
+                        <p class="text-2xl font-bold text-cyan-400">12h</p>
+                        <p class="text-gray-500">This Week</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Token Economy -->
+            <div class="glow-box p-6" style="border-color: var(--neon-gold);">
+                <h2 class="text-xl font-bold text-yellow-400 mb-4">🪙 Token Economy</h2>
+                <div class="space-y-3">
+                    <div class="token-card bg-gradient-to-r from-yellow-900/50 to-yellow-700/30 p-4 rounded-xl border border-yellow-500/50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">👑</span>
+                                <div>
+                                    <p class="font-bold text-yellow-400">GOD Token</p>
+                                    <p class="text-xs text-gray-400">Premium Features</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-yellow-400">€10.00</p>
+                                <p class="text-xs text-green-400">+5.2%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="token-card bg-gradient-to-r from-green-900/50 to-green-700/30 p-4 rounded-xl border border-green-500/50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">🔓</span>
+                                <div>
+                                    <p class="font-bold text-green-400">DEDSEC Token</p>
+                                    <p class="text-xs text-gray-400">Security Access</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-green-400">€2.50</p>
+                                <p class="text-xs text-green-400">+12.8%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="token-card bg-gradient-to-r from-purple-900/50 to-purple-700/30 p-4 rounded-xl border border-purple-500/50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">💎</span>
+                                <div>
+                                    <p class="font-bold text-purple-400">OG Token</p>
+                                    <p class="text-xs text-gray-400">Exclusive Access</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-purple-400">€50.00</p>
+                                <p class="text-xs text-red-400">-2.1%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="token-card bg-gradient-to-r from-blue-900/50 to-blue-700/30 p-4 rounded-xl border border-blue-500/50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="text-3xl">🗼</span>
+                                <div>
+                                    <p class="font-bold text-blue-400">TOWER Token</p>
+                                    <p class="text-xs text-gray-400">Data & Compute</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-blue-400">€0.50</p>
+                                <p class="text-xs text-green-400">+8.4%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discord Community -->
+            <div class="glow-box p-6" style="border-color: #5865F2;">
+                <h2 class="text-xl font-bold text-indigo-400 mb-4">💬 Discord Community</h2>
+                <div class="bg-indigo-900/30 rounded-xl p-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-xl">
+                            🎮
+                        </div>
+                        <div>
+                            <p class="font-bold">GTzMeta Gaming</p>
+                            <p class="text-sm text-green-400">● 342 Online</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center gap-2 text-gray-400">
+                            <span>#</span> general <span class="ml-auto text-indigo-400">24</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-400">
+                            <span>#</span> gaming <span class="ml-auto text-indigo-400">18</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-400">
+                            <span>#</span> smart-home <span class="ml-auto text-indigo-400">7</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-400">
+                            <span>🔊</span> Voice Chat <span class="ml-auto text-green-400">5</span>
+                        </div>
+                    </div>
+                    <button class="w-full mt-4 py-2 bg-indigo-600 rounded-lg font-bold hover:bg-indigo-500 transition">
+                        Join Server
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- WebXR Scene (Hidden, activated on button click) -->
+    <div id="vr-scene" class="hidden fixed inset-0 z-50">
+        <a-scene>
+            <a-sky color="#1a0a2e"></a-sky>
+            <a-box position="-1 0.5 -3" rotation="0 45 0" color="#bf00ff"></a-box>
+            <a-sphere position="0 1.25 -5" radius="1.25" color="#00f5ff"></a-sphere>
+            <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#ffd700"></a-cylinder>
+            <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#0a0a1a"></a-plane>
+            <a-text value="ENTERPRISE UNIVERSE VR" position="0 2.5 -5" align="center" color="#00f5ff"></a-text>
+        </a-scene>
+    </div>
+
+    <script>
+        // WebXR Support Check
+        if (navigator.xr) {
+            navigator.xr.isSessionSupported('immersive-vr').then((supported) => {
+                if (supported) {
+                    console.log('🥽 WebXR VR Supported!');
+                }
+            });
+            navigator.xr.isSessionSupported('immersive-ar').then((supported) => {
+                if (supported) {
+                    console.log('📱 WebXR AR Supported!');
+                }
+            });
+        }
+
+        // Token Price Animation
+        function animateTokenPrices() {
+            const tokens = document.querySelectorAll('.token-card');
+            tokens.forEach(token => {
+                const priceEl = token.querySelector('.font-bold:last-child');
+                if (priceEl) {
+                    const currentPrice = parseFloat(priceEl.textContent.replace('€', ''));
+                    const change = (Math.random() - 0.5) * 0.1;
+                    const newPrice = (currentPrice + change).toFixed(2);
+                    // Price update logic here
+                }
+            });
+        }
+
+        // Twitch API Integration placeholder
+        const TWITCH_CONFIG = {
+            channel: 'itzzkingz1',
+            clientId: 'YOUR_TWITCH_CLIENT_ID',
+            // Add OAuth flow for full integration
+        };
+
+        // Discord Bot Integration placeholder
+        const DISCORD_CONFIG = {
+            serverId: 'YOUR_DISCORD_SERVER_ID',
+            botToken: 'YOUR_BOT_TOKEN',
+            // Requires Discord.js on backend
+        };
+
+        console.log('🎮 AR/VR Gaming Hub initialized');
+        console.log('🥽 Meta Quest 3 Ready');
+        console.log('👁️ Apple Vision Pro Ready');
+        console.log('🐉 HAIKU GOD MODE Active');
+    </script>
+</body>
+</html>

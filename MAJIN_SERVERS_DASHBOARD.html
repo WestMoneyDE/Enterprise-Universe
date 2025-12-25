@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ MAJIN SERVERS - Taskforce Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --majin-purple: #9333ea;
+            --majin-pink: #ec4899;
+            --broly-green: #22c55e;
+            --ultra-blue: #3b82f6;
+            --legendary-gold: #eab308;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .orbitron { font-family: 'Orbitron', monospace; }
+        
+        .majin-gradient {
+            background: linear-gradient(135deg, var(--majin-purple), var(--majin-pink));
+        }
+        
+        .broly-gradient {
+            background: linear-gradient(135deg, var(--broly-green), var(--legendary-gold));
+        }
+        
+        .ultra-gradient {
+            background: linear-gradient(135deg, var(--ultra-blue), #06b6d4);
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(147, 51, 234, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(147, 51, 234, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .glow-purple { box-shadow: 0 0 30px rgba(147, 51, 234, 0.5); }
+        .glow-green { box-shadow: 0 0 30px rgba(34, 197, 94, 0.5); }
+        .glow-gold { box-shadow: 0 0 30px rgba(234, 179, 8, 0.5); }
+        
+        .card {
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 16px;
+        }
+        
+        .power-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .power-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        @keyframes legendary-aura {
+            0%, 100% { box-shadow: 0 0 30px var(--broly-green), 0 0 60px var(--legendary-gold); }
+            50% { box-shadow: 0 0 60px var(--broly-green), 0 0 120px var(--legendary-gold); }
+        }
+        
+        .legendary-mode {
+            animation: legendary-aura 2s ease-in-out infinite;
+        }
+        
+        @keyframes ultra-instinct {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .ultra-instinct-bg {
+            background: linear-gradient(270deg, #60a5fa, #c084fc, #f472b6, #60a5fa);
+            background-size: 400% 400%;
+            animation: ultra-instinct 8s ease infinite;
+        }
+        
+        .agent-card {
+            transition: all 0.3s ease;
+        }
+        
+        .agent-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--majin-purple);
+        }
+        
+        .status-active { color: #22c55e; }
+        .status-working { color: #eab308; }
+        .status-legendary { color: #f472b6; animation: pulse-glow 1s infinite; }
+        
+        .metric-value {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .task-queue {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .task-queue::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .task-queue::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .task-queue::-webkit-scrollbar-thumb {
+            background: var(--majin-purple);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    
+    <!-- Header -->
+    <header class="p-6 border-b border-purple-500/20">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 majin-gradient rounded-2xl flex items-center justify-center text-2xl font-black glow-purple">
+                    M
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black orbitron">MAJIN SERVERS</h1>
+                    <p class="text-purple-400">Taskforce Command Center</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- Mode Selector -->
+                <div class="flex rounded-xl overflow-hidden border border-purple-500/30">
+                    <button onclick="setMode('standard')" id="mode-standard" class="px-4 py-2 text-sm font-semibold transition hover:bg-purple-500/20">
+                        STANDARD
+                    </button>
+                    <button onclick="setMode('ultra')" id="mode-ultra" class="px-4 py-2 text-sm font-semibold transition hover:bg-purple-500/20">
+                        ULTRA INSTINCT
+                    </button>
+                    <button onclick="setMode('broly')" id="mode-broly" class="px-4 py-2 text-sm font-semibold transition hover:bg-purple-500/20 broly-gradient text-black">
+                        BROLY MODE
+                    </button>
+                </div>
+                
+                <!-- Server Status -->
+                <div class="card px-4 py-2 flex items-center gap-2">
+                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm">MAJIN-PRIME Online</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="p-6 grid grid-cols-1 xl:grid-cols-4 gap-6">
+        
+        <!-- Left Panel - Metrics -->
+        <div class="xl:col-span-1 space-y-6">
+            
+            <!-- Server Info -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center gap-2">
+                    <span>🖥️</span> Server Status
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">CPU Usage</span>
+                            <span class="metric-value">42%</span>
+                        </div>
+                        <div class="power-bar">
+                            <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-400" style="width: 42%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">RAM Usage</span>
+                            <span class="metric-value">8.2 / 16 GB</span>
+                        </div>
+                        <div class="power-bar">
+                            <div class="power-fill bg-gradient-to-r from-blue-500 to-cyan-400" style="width: 51%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-gray-400">Storage</span>
+                            <span class="metric-value">142 / 400 GB</span>
+                        </div>
+                        <div class="power-bar">
+                            <div class="power-fill bg-gradient-to-r from-purple-500 to-pink-400" style="width: 35%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 pt-4 border-t border-white/10 text-sm">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-400">IP Address</span>
+                        <span class="font-mono">81.88.26.204</span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-400">Provider</span>
+                        <span>one.com Cloud L</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">OS</span>
+                        <span>Ubuntu 24.04 LTS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-Time Metrics -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center gap-2">
+                    <span>📊</span> Live Metrics
+                </h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-3 bg-white/5 rounded-xl">
+                        <p class="text-2xl font-black text-green-400 metric-value" id="tasks-completed">1,250</p>
+                        <p class="text-xs text-gray-400">Tasks / 24h</p>
+                    </div>
+                    <div class="text-center p-3 bg-white/5 rounded-xl">
+                        <p class="text-2xl font-black text-blue-400 metric-value" id="response-time">2.3ms</p>
+                        <p class="text-xs text-gray-400">Avg Response</p>
+                    </div>
+                    <div class="text-center p-3 bg-white/5 rounded-xl">
+                        <p class="text-2xl font-black text-purple-400 metric-value">48</p>
+                        <p class="text-xs text-gray-400">Workflows</p>
+                    </div>
+                    <div class="text-center p-3 bg-white/5 rounded-xl">
+                        <p class="text-2xl font-black text-amber-400 metric-value">99.9%</p>
+                        <p class="text-xs text-gray-400">Uptime</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center gap-2">
+                    <span>⚡</span> Quick Actions
+                </h3>
+                <div class="space-y-2">
+                    <button onclick="triggerKamehameha()" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        💥 KAMEHAMEHA
+                    </button>
+                    <button onclick="triggerSpiritBomb()" class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-500 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        💫 SPIRIT BOMB
+                    </button>
+                    <button onclick="triggerHakai()" class="w-full py-2 px-4 bg-red-600 hover:bg-red-500 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        💀 HAKAI
+                    </button>
+                    <button onclick="syncAll()" class="w-full py-2 px-4 bg-green-600 hover:bg-green-500 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                        🔄 SYNC ALL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Panel - Agents Grid -->
+        <div class="xl:col-span-2 space-y-6">
+            
+            <!-- Current Mode Display -->
+            <div id="mode-display" class="card p-6 text-center majin-gradient glow-purple">
+                <h2 class="text-3xl font-black orbitron mb-2">STANDARD MODE</h2>
+                <p class="text-white/80">25 AI Agents | Efficiency: 100%</p>
+            </div>
+            
+            <!-- Agents Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                
+                <!-- BROLY - Always First -->
+                <div id="agent-broly" class="agent-card card p-4 border-2 border-yellow-500/50">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 broly-gradient rounded-xl flex items-center justify-center text-xl font-black">
+                            ⚡
+                        </div>
+                        <div>
+                            <p class="font-bold text-yellow-400">BROLY</p>
+                            <p class="text-xs text-gray-400">Legendary</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono text-yellow-400">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill broly-gradient" style="width: 100%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-legendary">● LEGENDARY</p>
+                </div>
+                
+                <!-- Einstein -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-xl">🧠</div>
+                        <div>
+                            <p class="font-bold">Einstein</p>
+                            <p class="text-xs text-gray-400">Analytics</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-cyan-400" style="width: 95%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+                
+                <!-- Tesla -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-xl">🔌</div>
+                        <div>
+                            <p class="font-bold">Tesla</p>
+                            <p class="text-xs text-gray-400">IoT/LOXONE</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">92</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-400" style="width: 92%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-working">● WORKING</p>
+                </div>
+                
+                <!-- Sherlock -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center text-xl">🔍</div>
+                        <div>
+                            <p class="font-bold">Sherlock</p>
+                            <p class="text-xs text-gray-400">Research</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-purple-500 to-pink-400" style="width: 94%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+                
+                <!-- Turing -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-xl">🔒</div>
+                        <div>
+                            <p class="font-bold">Turing</p>
+                            <p class="text-xs text-gray-400">Security</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-orange-400" style="width: 94%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+                
+                <!-- Da Vinci -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center text-xl">🎨</div>
+                        <div>
+                            <p class="font-bold">Da Vinci</p>
+                            <p class="text-xs text-gray-400">Cross-func</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-pink-500 to-rose-400" style="width: 95%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+                
+                <!-- Sun Tzu -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-xl">⚔️</div>
+                        <div>
+                            <p class="font-bold">Sun Tzu</p>
+                            <p class="text-xs text-gray-400">Strategy</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">93</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-orange-500 to-amber-400" style="width: 93%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+                
+                <!-- Hawking -->
+                <div class="agent-card card p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center text-xl">🤖</div>
+                        <div>
+                            <p class="font-bold">Hawking</p>
+                            <p class="text-xs text-gray-400">AI Strategy</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="text-gray-400">Power</span>
+                        <span class="font-mono">92</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-cyan-500 to-teal-400" style="width: 92%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2 status-active">● ACTIVE</p>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-500 text-sm">+ 17 weitere Agents aktiv</p>
+        </div>
+
+        <!-- Right Panel - Tasks & Logs -->
+        <div class="xl:col-span-1 space-y-6">
+            
+            <!-- Task Queue -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center justify-between">
+                    <span class="flex items-center gap-2"><span>📋</span> Task Queue</span>
+                    <span class="text-sm font-normal text-gray-400">12 pending</span>
+                </h3>
+                <div class="task-queue space-y-3">
+                    <div class="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-semibold text-green-400">Completed</span>
+                            <span class="text-xs text-gray-400">2s ago</span>
+                        </div>
+                        <p class="text-sm text-gray-300">Lead scoring for batch #2847</p>
+                        <p class="text-xs text-gray-500 mt-1">Agent: Einstein</p>
+                    </div>
+                    
+                    <div class="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-semibold text-yellow-400">Processing</span>
+                            <span class="text-xs text-gray-400">now</span>
+                        </div>
+                        <p class="text-sm text-gray-300">WhatsApp campaign dispatch</p>
+                        <p class="text-xs text-gray-500 mt-1">Agent: Mozart</p>
+                    </div>
+                    
+                    <div class="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-semibold text-blue-400">Queued</span>
+                            <span class="text-xs text-gray-400">in 30s</span>
+                        </div>
+                        <p class="text-sm text-gray-300">LOXONE device sync</p>
+                        <p class="text-xs text-gray-500 mt-1">Agent: Tesla</p>
+                    </div>
+                    
+                    <div class="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-semibold text-purple-400">Queued</span>
+                            <span class="text-xs text-gray-400">in 1m</span>
+                        </div>
+                        <p class="text-sm text-gray-300">Security audit scan</p>
+                        <p class="text-xs text-gray-500 mt-1">Agent: Turing</p>
+                    </div>
+                    
+                    <div class="p-3 bg-white/5 border border-white/10 rounded-lg">
+                        <div class="flex justify-between items-start mb-1">
+                            <span class="text-sm font-semibold text-gray-400">Scheduled</span>
+                            <span class="text-xs text-gray-400">in 5m</span>
+                        </div>
+                        <p class="text-sm text-gray-300">Daily analytics report</p>
+                        <p class="text-xs text-gray-500 mt-1">Agent: Einstein</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Logs -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center gap-2">
+                    <span>📜</span> System Logs
+                </h3>
+                <div class="space-y-2 text-xs font-mono">
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:45:32</span>
+                        <span class="text-green-400">[OK]</span>
+                        <span class="text-gray-300">BROLY orchestration complete</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:45:28</span>
+                        <span class="text-blue-400">[INFO]</span>
+                        <span class="text-gray-300">2,500 API calls processed</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:45:15</span>
+                        <span class="text-green-400">[OK]</span>
+                        <span class="text-gray-300">WhatsApp sync: 450 msgs</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:44:58</span>
+                        <span class="text-yellow-400">[WARN]</span>
+                        <span class="text-gray-300">High load detected</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:44:42</span>
+                        <span class="text-green-400">[OK]</span>
+                        <span class="text-gray-300">HubSpot sync: 3,170 contacts</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-gray-500">12:44:30</span>
+                        <span class="text-purple-400">[AGENT]</span>
+                        <span class="text-gray-300">Sherlock: research complete</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integration Status -->
+            <div class="card p-6">
+                <h3 class="text-lg font-bold text-purple-400 mb-4 flex items-center gap-2">
+                    <span>🔗</span> Integrations
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            HubSpot CRM
+                        </span>
+                        <span class="text-xs text-green-400">3,170 synced</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            WhatsApp API
+                        </span>
+                        <span class="text-xs text-green-400">450/24h</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            Anthropic Claude
+                        </span>
+                        <span class="text-xs text-green-400">2.5K req</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            Zadarma VoIP
+                        </span>
+                        <span class="text-xs text-green-400">28 calls</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            LOXONE
+                        </span>
+                        <span class="text-xs text-green-400">12 projects</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            Stripe Payments
+                        </span>
+                        <span class="text-xs text-green-400">€847K rev</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mode switching
+        function setMode(mode) {
+            const display = document.getElementById('mode-display');
+            const brolyCard = document.getElementById('agent-broly');
+            
+            // Reset all buttons
+            document.querySelectorAll('[id^="mode-"]').forEach(btn => {
+                btn.classList.remove('bg-purple-500', 'ultra-instinct-bg', 'broly-gradient');
+            });
+            
+            switch(mode) {
+                case 'standard':
+                    document.getElementById('mode-standard').classList.add('bg-purple-500');
+                    display.className = 'card p-6 text-center majin-gradient glow-purple';
+                    display.innerHTML = `
+                        <h2 class="text-3xl font-black orbitron mb-2">STANDARD MODE</h2>
+                        <p class="text-white/80">25 AI Agents | Efficiency: 100%</p>
+                    `;
+                    brolyCard.classList.remove('legendary-mode');
+                    break;
+                    
+                case 'ultra':
+                    document.getElementById('mode-ultra').classList.add('ultra-instinct-bg', 'text-white');
+                    display.className = 'card p-6 text-center ultra-instinct-bg glow-purple';
+                    display.innerHTML = `
+                        <h2 class="text-3xl font-black orbitron mb-2">⚡ ULTRA INSTINCT MODE</h2>
+                        <p class="text-white/80">25 AI Agents | Efficiency: 150% | Response: 0.5ms</p>
+                    `;
+                    brolyCard.classList.remove('legendary-mode');
+                    break;
+                    
+                case 'broly':
+                    document.getElementById('mode-broly').classList.add('broly-gradient');
+                    display.className = 'card p-6 text-center legendary-mode';
+                    display.style.background = 'linear-gradient(135deg, #22c55e, #eab308)';
+                    display.innerHTML = `
+                        <h2 class="text-3xl font-black orbitron mb-2 text-black">🔥 LEGENDARY BROLY MODE</h2>
+                        <p class="text-black/80">BROLY Orchestrating ALL Agents | Power: ∞ INFINITE</p>
+                    `;
+                    brolyCard.classList.add('legendary-mode');
+                    break;
+            }
+        }
+        
+        // Quick Actions
+        function triggerKamehameha() {
+            alert('💥 KAMEHAMEHA! Bulk campaign launched to all 3,170 contacts!');
+        }
+        
+        function triggerSpiritBomb() {
+            alert('💫 SPIRIT BOMB! Combining intelligence from all 25 agents...');
+        }
+        
+        function triggerHakai() {
+            if(confirm('💀 HAKAI - This will destroy all dead leads. Continue?')) {
+                alert('Destroyed 145 dead leads from the database.');
+            }
+        }
+        
+        function syncAll() {
+            alert('🔄 Syncing all integrations... HubSpot, WhatsApp, LOXONE, Stripe...');
+        }
+        
+        // Initialize
+        setMode('standard');
+        
+        // Update metrics periodically
+        setInterval(() => {
+            const tasks = document.getElementById('tasks-completed');
+            const current = parseInt(tasks.textContent.replace(',', ''));
+            tasks.textContent = (current + Math.floor(Math.random() * 3)).toLocaleString();
+        }, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Kundenportal - West Money Bau</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+        
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-progress { background: #dbeafe; color: #1d4ed8; }
+        .status-completed { background: #dcfce7; color: #15803d; }
+        .status-pending { background: #fef3c7; color: #b45309; }
+        .status-scheduled { background: #e0e7ff; color: #4338ca; }
+    </style>
+</head>
+<body>
+    <div class="flex min-h-screen">
+        
+        <!-- Sidebar -->
+        <aside class="w-72 bg-white shadow-xl p-6">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold">
+                    WM
+                </div>
+                <div>
+                    <h1 class="font-bold text-gray-800">West Money Bau</h1>
+                    <p class="text-sm text-gray-500">Kundenportal</p>
+                </div>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-4 mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                        MK
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-800">Max Kunde</p>
+                        <p class="text-sm text-gray-500">Premium Kunde</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="space-y-2">
+                <a href="#" class="nav-item active flex items-center gap-3 p-3 rounded-xl">
+                    <span class="text-xl">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">📁</span>
+                    <span>Meine Projekte</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">📄</span>
+                    <span>Dokumente</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">💰</span>
+                    <span>Rechnungen</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">📅</span>
+                    <span>Termine</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">🎫</span>
+                    <span>Support</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">🎛️</span>
+                    <span>Smart Home</span>
+                </a>
+                <a href="#" class="nav-item flex items-center gap-3 p-3 rounded-xl text-gray-600">
+                    <span class="text-xl">⚙️</span>
+                    <span>Einstellungen</span>
+                </a>
+            </nav>
+            
+            <!-- Help Box -->
+            <div class="mt-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-5 text-white">
+                <p class="font-semibold mb-2">Brauchen Sie Hilfe?</p>
+                <p class="text-sm opacity-90 mb-4">Unser Team ist für Sie da!</p>
+                <button class="w-full bg-white text-blue-600 py-2 rounded-xl font-semibold hover:bg-blue-50 transition">
+                    💬 Chat starten
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800">Willkommen zurück, Max! 👋</h2>
+                    <p class="text-gray-500 mt-1">Hier ist Ihr aktueller Projektstatus</p>
+                </div>
+                <div class="flex gap-4">
+                    <button class="p-3 bg-white rounded-xl shadow hover:shadow-lg transition">
+                        <span class="text-xl">🔔</span>
+                    </button>
+                    <button class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:opacity-90 transition">
+                        + Neues Projekt
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm">Aktive Projekte</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-1">2</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">
+                            🏗️
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm">Offene Rechnungen</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-1">€4,250</p>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">
+                            💰
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm">Nächster Termin</p>
+                            <p class="text-xl font-bold text-gray-800 mt-1">28.12.</p>
+                            <p class="text-sm text-gray-500">10:00 Uhr</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">
+                            📅
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm">Support Tickets</p>
+                            <p class="text-3xl font-bold text-gray-800 mt-1">1</p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl">
+                            🎫
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Project -->
+            <div class="card p-8 mb-8">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <span class="status-badge status-progress">In Arbeit</span>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-2">Smart Home Villa Musterstadt</h3>
+                        <p class="text-gray-500">LOXONE Vollinstallation • Projekt #2024-0042</p>
+                    </div>
+                    <button class="px-4 py-2 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
+                        Details →
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium text-gray-700">Fortschritt</span>
+                        <span class="font-bold text-blue-600">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-green-50 rounded-xl">
+                        <p class="text-2xl mb-1">✓</p>
+                        <p class="text-sm font-medium text-green-700">Planung</p>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 rounded-xl">
+                        <p class="text-2xl mb-1">✓</p>
+                        <p class="text-sm font-medium text-green-700">Verkabelung</p>
+                    </div>
+                    <div class="text-center p-4 bg-blue-50 rounded-xl border-2 border-blue-200">
+                        <p class="text-2xl mb-1">🔧</p>
+                        <p class="text-sm font-medium text-blue-700">Installation</p>
+                    </div>
+                    <div class="text-center p-4 bg-gray-50 rounded-xl">
+                        <p class="text-2xl mb-1">⏳</p>
+                        <p class="text-sm font-medium text-gray-500">Inbetriebnahme</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Recent Documents -->
+                <div class="card p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">📄 Dokumente</h3>
+                        <a href="#" class="text-blue-600 font-medium hover:underline">Alle anzeigen</a>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">📕</div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Angebot_2024-0042.pdf</p>
+                                    <p class="text-sm text-gray-500">Hochgeladen am 15.11.2024</p>
+                                </div>
+                            </div>
+                            <button class="text-blue-600">↓</button>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">📘</div>
+                                <div>
+                                    <p class="font-medium text-gray-800">Elektroplanung.pdf</p>
+                                    <p class="text-sm text-gray-500">Hochgeladen am 20.11.2024</p>
+                                </div>
+                            </div>
+                            <button class="text-blue-600">↓</button>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">📗</div>
+                                <div>
+                                    <p class="font-medium text-gray-800">LOXONE_Config.loxcc</p>
+                                    <p class="text-sm text-gray-500">Hochgeladen am 10.12.2024</p>
+                                </div>
+                            </div>
+                            <button class="text-blue-600">↓</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Appointments -->
+                <div class="card p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800">📅 Termine</h3>
+                        <button class="px-4 py-2 bg-blue-100 text-blue-600 rounded-xl font-medium hover:bg-blue-200 transition">
+                            + Termin anfragen
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 border border-blue-200 bg-blue-50 rounded-xl">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-blue-600">28</p>
+                                <p class="text-sm text-blue-600">Dez</p>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Installation Lichtsteuerung</p>
+                                <p class="text-sm text-gray-500">10:00 - 14:00 Uhr • Vor Ort</p>
+                            </div>
+                            <span class="status-badge status-scheduled">Bestätigt</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-xl">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-gray-600">05</p>
+                                <p class="text-sm text-gray-500">Jan</p>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Klimasteuerung Einrichtung</p>
+                                <p class="text-sm text-gray-500">09:00 - 12:00 Uhr • Vor Ort</p>
+                            </div>
+                            <span class="status-badge status-pending">Ausstehend</span>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-xl">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-gray-600">15</p>
+                                <p class="text-sm text-gray-500">Jan</p>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">Abnahme & Einweisung</p>
+                                <p class="text-sm text-gray-500">14:00 - 16:00 Uhr • Vor Ort</p>
+                            </div>
+                            <span class="status-badge status-pending">Geplant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoices Section -->
+            <div class="card p-6 mt-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">💰 Rechnungen</h3>
+                    <a href="#" class="text-blue-600 font-medium hover:underline">Alle anzeigen</a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left text-gray-500 text-sm border-b">
+                                <th class="pb-4">Rechnung</th>
+                                <th class="pb-4">Projekt</th>
+                                <th class="pb-4">Betrag</th>
+                                <th class="pb-4">Datum</th>
+                                <th class="pb-4">Status</th>
+                                <th class="pb-4">Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="py-4 font-medium">#RE-2024-0089</td>
+                                <td class="py-4 text-gray-600">Smart Home Villa</td>
+                                <td class="py-4 font-semibold">€4,250.00</td>
+                                <td class="py-4 text-gray-500">15.12.2024</td>
+                                <td class="py-4"><span class="status-badge status-pending">Offen</span></td>
+                                <td class="py-4">
+                                    <button class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition">
+                                        Bezahlen
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-4 font-medium">#RE-2024-0075</td>
+                                <td class="py-4 text-gray-600">Smart Home Villa</td>
+                                <td class="py-4 font-semibold">€8,500.00</td>
+                                <td class="py-4 text-gray-500">01.11.2024</td>
+                                <td class="py-4"><span class="status-badge status-completed">Bezahlt</span></td>
+                                <td class="py-4">
+                                    <button class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                                        Download
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-medium">#RE-2024-0060</td>
+                                <td class="py-4 text-gray-600">Erstberatung</td>
+                                <td class="py-4 font-semibold">€450.00</td>
+                                <td class="py-4 text-gray-500">15.09.2024</td>
+                                <td class="py-4"><span class="status-badge status-completed">Bezahlt</span></td>
+                                <td class="py-4">
+                                    <button class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                                        Download
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Smart Home Quick Access -->
+            <div class="card p-6 mt-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">🎛️ Smart Home Fernsteuerung</h3>
+                        <p class="opacity-90">Steuern Sie Ihr LOXONE System von überall</p>
+                    </div>
+                    <button class="px-6 py-3 bg-white text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition">
+                        Jetzt steuern →
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Live Chat Widget -->
+    <div class="fixed bottom-6 right-6">
+        <button class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-lg flex items-center justify-center text-white text-2xl hover:scale-110 transition">
+            💬
+        </button>
+    </div>
+
+    <script>
+        // Animate progress bars on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
