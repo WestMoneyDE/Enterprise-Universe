@@ -1,0 +1,13 @@
+# West Money OS - GitHub Pages Configuration
+title: West Money OS
+description: Die führende SaaS-Plattform für Smart Home, PropTech und Barrierefreies Bauen
+url: "https://westmoneyde.github.io"
+baseurl: "/Enterprise-Universe"
+theme: null
+plugins: []
+
+# Disable Jekyll processing for faster builds
+exclude:
+  - README.md
+  - LICENSE
+  - CNAME
