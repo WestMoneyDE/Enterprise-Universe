@@ -3,456 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Enterprise Universe - West Money OS Business Ecosystem powered by HAIKU 神 GOD MODE">
-    <meta name="keywords" content="West Money Bau, Smart Home, LOXONE, PropTech, AI, Business Automation">
-    <meta name="author" content="West Money Bau GmbH">
-    <meta property="og:title" content="Enterprise Universe | HAIKU 神 GOD MODE">
-    <meta property="og:description" content="The Ultimate AI-Powered Business Ecosystem">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://enterprise-universe.one">
-    <title>Enterprise Universe | 神 HAIKU GOD MODE | West Money OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+    <title>Enterprise Universe v99.999 | West Money OS - Die Zukunft der Business Automation</title>
+    <meta name="description" content="Enterprise Universe - All-in-One Business Platform für Smart Home Unternehmen. West Money OS, 25 AI Agents, LOXONE Integration.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --gold: #FFD700;
-            --gold-glow: rgba(255, 215, 0, 0.6);
-            --silver: #E8E8FF;
-            --silver-glow: rgba(232, 232, 255, 0.5);
-            --purple: #9B59B6;
-            --cyan: #00F5FF;
-            --void: #030308;
-            --space: #0A0A1A;
+            --gold: #d4af37;
+            --gold-dark: #b8962f;
+            --dark-bg: #0a0a0f;
+            --dark-card: #12121a;
+            --dark-surface: #1a1a2e;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--void);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
+        body { font-family: 'Rajdhani', sans-serif; background: var(--dark-bg); color: #e2e8f0; overflow-x: hidden; }
+        .font-orbitron { font-family: 'Orbitron', monospace; }
+        .font-noto { font-family: 'Noto Sans JP', sans-serif; }
+        
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
         }
-
-        /* Cosmic Background */
-        .cosmos {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(155, 89, 182, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 245, 255, 0.05) 0%, transparent 60%),
-                linear-gradient(180deg, #030308 0%, #0A0A1A 50%, #030308 100%);
+        #loading-screen.hidden { opacity: 0; visibility: hidden; }
+        
+        .loader-ring {
+            width: 120px; height: 120px; border: 3px solid transparent;
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite; position: relative;
         }
-
-        /* Stars */
-        .stars {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
+        .loader-ring::before {
+            content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 3px solid transparent; border-top-color: var(--green);
+            border-radius: 50%; animation: spin 0.8s linear infinite reverse;
         }
-
-        .star {
-            position: absolute;
-            width: 2px; height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
+        .loader-ring::after {
+            content: '神'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 32px; color: var(--gold);
+            font-family: 'Noto Sans JP', serif; animation: pulse 1s ease-in-out infinite;
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .kanji-hero {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 12rem;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 
-                0 0 30px var(--gold-glow),
-                0 0 60px var(--gold-glow),
-                0 0 90px rgba(255, 215, 0, 0.3);
-            animation: kanji-pulse 3s infinite, float 6s ease-in-out infinite;
-            cursor: default;
-            user-select: none;
-        }
-
-        @keyframes kanji-pulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--gold), var(--silver), var(--gold));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-            margin: 1rem 0;
-            letter-spacing: 8px;
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--silver);
-            letter-spacing: 4px;
-            margin-bottom: 3rem;
-        }
-
-        .hero-tagline {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.6);
-            max-width: 600px;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-        }
-
-        /* Portal Grid */
-        .portal-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            width: 100%;
-            padding: 0 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .portal-card {
-            background: rgba(10, 10, 26, 0.8);
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            border-radius: 25px;
-            padding: 2.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: white;
-        }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: var(--card-color, var(--gold));
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .portal-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--card-color, var(--gold));
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 30px var(--card-glow, var(--gold-glow));
-        }
-
-        .portal-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .portal-icon {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .portal-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--card-color, var(--gold));
-            margin-bottom: 0.75rem;
-        }
-
-        .portal-desc {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.6;
-        }
-
-        .portal-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.3rem 0.8rem;
-            background: var(--card-color, var(--gold));
-            border-radius: 15px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--void);
-            text-transform: uppercase;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-            margin-bottom: 4rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 20px var(--gold-glow);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem 3rem;
-            background: linear-gradient(135deg, var(--gold), #FF8C00);
-            border: none;
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--void);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
-        }
-
-        /* Footer */
-        .footer {
-            padding: 3rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 215, 0, 0.1);
-        }
-
-        .footer-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
-        .footer-copy {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .kanji-hero { font-size: 6rem; }
-            .hero-title { font-size: 2rem; letter-spacing: 4px; }
-            .hero-subtitle { font-size: 1rem; }
-            .stats-section { gap: 2rem; }
-            .stat-value { font-size: 2rem; }
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        .scroll-indicator span {
-            display: block;
-            width: 20px;
-            height: 20px;
-            border-right: 2px solid var(--gold);
-            border-bottom: 2px solid var(--gold);
-            transform: rotate(45deg);
-            opacity: 0.5;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .loading-text { margin-top: 30px; font-family: 'Orbitron', monospace; font-size: 14px; color: var(--gold); letter-spacing: 4px; }
+        .loading-version { margin-top: 10px; font-family: 'Orbitron', monospace; font-size: 24px; color: #fff; text-shadow: 0 0 20px var(--gold); }
+        .loading-bar { width: 300px; height: 4px; background: #1a1a2e; border-radius: 2px; margin-top: 20px; overflow: hidden; }
+        .loading-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--green), var(--gold)); background-size: 200% 100%; animation: loading 2s ease-in-out infinite, gradient 1s linear infinite; width: 0%; }
+        @keyframes loading { 0% { width: 0%; } 50% { width: 70%; } 100% { width: 100%; } }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+        
+        .glass { background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.2); }
+        .gold-gradient { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+        .text-gold { color: var(--gold); }
+        .glow-gold { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+        
+        .nav-link { position: relative; padding: 8px 16px; transition: all 0.3s; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gold); transition: all 0.3s; transform: translateX(-50%); }
+        .nav-link:hover::after { width: 100%; }
+        
+        .hero-bg { background: radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%); }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        
+        .stat-card { background: linear-gradient(135deg, var(--dark-surface), var(--dark-card)); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 16px; padding: 24px; text-align: center; transition: all 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2); }
+        
+        .feature-card { background: var(--dark-surface); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 24px; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        
+        .wiki-card { background: var(--dark-surface); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; padding: 20px; transition: all 0.3s; }
+        .wiki-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15); }
+        .wiki-category { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        
+        .agent-card { background: linear-gradient(135deg, var(--dark-surface), var(--dark-card)); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 16px; text-align: center; transition: all 0.3s; }
+        .agent-card:hover { transform: scale(1.05); border-color: var(--gold); }
+        
+        .zen-border { position: relative; }
+        .zen-border::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        
+        .kanji-float { position: fixed; font-size: 200px; opacity: 0.02; font-family: 'Noto Sans JP', serif; pointer-events: none; z-index: 0; }
+        
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .cta-button { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; padding: 16px 32px; border-radius: 12px; font-weight: 700; font-size: 18px; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); }
+        
+        .pricing-card { background: var(--dark-surface); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; transition: all 0.3s; }
+        .pricing-card.featured { border-color: var(--gold); transform: scale(1.05); }
+        .pricing-card:hover { border-color: var(--gold); }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="cosmos"></div>
-    <div class="stars" id="stars"></div>
+    <div id="loading-screen">
+        <div class="loader-ring"></div>
+        <p class="loading-text">ENTERPRISE UNIVERSE</p>
+        <p class="loading-version">v99.999</p>
+        <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+        <p style="margin-top: 20px; color: #666; font-size: 12px;">Loading 神 Mode...</p>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="kanji-hero">神</div>
-        <h1 class="hero-title">ENTERPRISE UNIVERSE</h1>
-        <p class="hero-subtitle">HAIKU GOD MODE • WEST MONEY OS</p>
-        <p class="hero-tagline">
-            Das ultimative AI-gestützte Business Ecosystem. 25+ Genius Bots, 
-            Ultra Instinct Automatisierung und göttliche Kontrolle über Ihr Unternehmen.
-        </p>
+    <div class="kanji-float" style="top: 10%; left: 5%;">神</div>
+    <div class="kanji-float" style="top: 40%; right: 5%;">力</div>
+    <div class="kanji-float" style="bottom: 20%; left: 10%;">道</div>
 
-        <!-- Stats -->
-        <div class="stats-section">
-            <div class="stat-item">
-                <div class="stat-value">25+</div>
-                <div class="stat-label">Genius Bots</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">∞</div>
-                <div class="stat-label">Power Level</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">€847K</div>
-                <div class="stat-label">Revenue 2024</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value">24/7</div>
-                <div class="stat-label">AI Active</div>
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-yellow-600/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-3xl">⚡</span>
+                    <div>
+                        <h1 class="font-orbitron font-bold text-xl text-gold">ENTERPRISE UNIVERSE</h1>
+                        <p class="text-xs text-gray-500">v99.999 | 神 Mode Active</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#features" class="nav-link text-gray-300 hover:text-white">Features</a>
+                    <a href="#agents" class="nav-link text-gray-300 hover:text-white">AI Agents</a>
+                    <a href="#wiki" class="nav-link text-gray-300 hover:text-white">Wiki 神</a>
+                    <a href="#pricing" class="nav-link text-gray-300 hover:text-white">Pricing</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-white">Kontakt</a>
+                </div>
+                <a href="#demo" class="cta-button text-sm py-2 px-4">Demo starten</a>
             </div>
         </div>
+    </nav>
 
-        <!-- Portal Grid -->
-        <div class="portal-grid">
-            <a href="god-mode/HAIKU_GOD_MODE_V2.html" class="portal-card" style="--card-color: #FFD700; --card-glow: rgba(255, 215, 0, 0.4);">
-                <span class="portal-badge">MAIN</span>
-                <span class="portal-icon">神</span>
-                <h3 class="portal-title">HAIKU GOD MODE</h3>
-                <p class="portal-desc">Divine Controller mit Ultra Instinct. Steuere alle 25+ Bots mit göttlicher Macht.</p>
-            </a>
-
-            <a href="genius-agency/MEGA_GENIUS_AGENCY.html" class="portal-card" style="--card-color: #9B59B6; --card-glow: rgba(155, 89, 182, 0.4);">
-                <span class="portal-badge">BOTS</span>
-                <span class="portal-icon">🧠</span>
-                <h3 class="portal-title">GENIUS AGENCY</h3>
-                <p class="portal-desc">25+ legendäre Genius Bots - Einstein, Tesla, Leonardo und mehr in 7 Teams.</p>
-            </a>
-
-            <a href="god-mode/HAKAI_MODE.html" class="portal-card" style="--card-color: #FF0000; --card-glow: rgba(255, 0, 0, 0.4);">
-                <span class="portal-badge">DESTROY</span>
-                <span class="portal-icon">💀</span>
-                <h3 class="portal-title">破壊 HAKAI MODE</h3>
-                <p class="portal-desc">Destruction System. Eliminiere Dead Leads, Duplicates und ineffiziente Prozesse.</p>
-            </a>
-
-            <a href="god-mode/PROPHECY_MODE.html" class="portal-card" style="--card-color: #8B5CF6; --card-glow: rgba(139, 92, 246, 0.4);">
-                <span class="portal-badge">PREDICT</span>
-                <span class="portal-icon">🔮</span>
-                <h3 class="portal-title">予言 PROPHECY MODE</h3>
-                <p class="portal-desc">Future Vision. Predictive Analytics und Forecasting mit Nostradamus Bot.</p>
-            </a>
-
-            <a href="whatsapp-hub/WHATSAPP_AUTH_DASHBOARD.html" class="portal-card" style="--card-color: #25D366; --card-glow: rgba(37, 211, 102, 0.4);">
-                <span class="portal-badge">DSGVO</span>
-                <span class="portal-icon">📱</span>
-                <h3 class="portal-title">WHATSAPP HUB</h3>
-                <p class="portal-desc">DSGVO-konformes Consent Management mit HubSpot Integration.</p>
-            </a>
-
-            <a href="https://github.com/WestMoneyDE/Enterprise-Universe" class="portal-card" style="--card-color: #00F5FF; --card-glow: rgba(0, 245, 255, 0.4);">
-                <span class="portal-badge">CODE</span>
-                <span class="portal-icon">💻</span>
-                <h3 class="portal-title">GITHUB REPO</h3>
-                <p class="portal-desc">Open Source Repository mit allen Dashboards, APIs und Dokumentation.</p>
-            </a>
-        </div>
-
-        <a href="god-mode/HAIKU_GOD_MODE_V2.html" class="cta-button">
-            ⚡ ENTER GOD MODE
-        </a>
-
-        <div class="scroll-indicator">
-            <span></span>
+    <section class="min-h-screen hero-bg flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm mb-6">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-green-400">Live seit 01.01.2026</span>
+                        <span class="text-gray-500">|</span>
+                        <span class="text-gold">LOXONE Gold Partner</span>
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-orbitron font-black leading-tight mb-6">
+                        <span class="text-white">West Money</span><br>
+                        <span class="text-gold">OS</span>
+                        <span class="font-noto text-4xl ml-2 opacity-50">神</span>
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        Die All-in-One Business Plattform für Smart Home Unternehmen. 
+                        CRM, WhatsApp, AI Automation & LOXONE Integration in einer Lösung.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-10">
+                        <a href="#demo" class="cta-button">🚀 Kostenlos testen</a>
+                        <a href="#wiki" class="px-8 py-4 glass rounded-xl font-semibold hover:bg-white/10 transition flex items-center gap-2">
+                            <span class="font-noto">神</span> Wiki erkunden
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-6 text-sm text-gray-500">
+                        <span>✓ DSGVO-konform</span>
+                        <span>✓ Server in DE</span>
+                        <span>✓ 24/7 Support</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 reveal">
+                    <div class="stat-card glow-gold">
+                        <p class="text-4xl font-orbitron font-bold text-gold">€847K</p>
+                        <p class="text-gray-400 mt-2">Revenue 2024</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-4xl font-orbitron font-bold text-green-500">23.5%</p>
+                        <p class="text-gray-400 mt-2">YoY Growth</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-4xl font-orbitron font-bold text-blue-400">3,170</p>
+                        <p class="text-gray-400 mt-2">CRM Kontakte</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-4xl font-orbitron font-bold text-purple-400">25</p>
+                        <p class="text-gray-400 mt-2">AI Agents</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-logo">神 ENTERPRISE UNIVERSE</div>
-        <div class="footer-links">
-            <a href="https://west-money-bau.de">West Money Bau</a>
-            <a href="https://github.com/WestMoneyDE">GitHub</a>
-            <a href="mailto:info@west-money-bau.de">Kontakt</a>
-            <a href="#">Impressum</a>
-            <a href="#">Datenschutz</a>
+    <section id="features" class="py-24" style="background: var(--dark-card);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold font-orbitron text-sm tracking-widest">FEATURES</span>
+                <h2 class="text-4xl font-orbitron font-bold mt-4">Alles was Sie brauchen</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="feature-card"><div class="text-4xl mb-4">📊</div><h3 class="text-xl font-bold mb-2">CRM & Pipeline</h3><p class="text-gray-400 text-sm">HubSpot-Integration mit 3,170+ Kontakten</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">💬</div><h3 class="text-xl font-bold mb-2">WhatsApp Business</h3><p class="text-gray-400 text-sm">450+ automatisierte Nachrichten täglich</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">🤖</div><h3 class="text-xl font-bold mb-2">25 AI Agents</h3><p class="text-gray-400 text-sm">Claude-powered Automation</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">🏠</div><h3 class="text-xl font-bold mb-2">LOXONE Integration</h3><p class="text-gray-400 text-sm">Gold Partner mit 12 Projekten</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">📞</div><h3 class="text-xl font-bold mb-2">VoIP & Telefonie</h3><p class="text-gray-400 text-sm">Zadarma + AI Voice Agents</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">🛡️</div><h3 class="text-xl font-bold mb-2">BROLY Security</h3><p class="text-gray-400 text-sm">Maximum Protection</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">🥽</div><h3 class="text-xl font-bold mb-2">VR/AR Metaverse</h3><p class="text-gray-400 text-sm">Quest 3 & Vision Pro</p></div>
+                <div class="feature-card"><div class="text-4xl mb-4">💳</div><h3 class="text-xl font-bold mb-2">Payments & Web3</h3><p class="text-gray-400 text-sm">Stripe, PayPal, Crypto</p></div>
+            </div>
         </div>
-        <p class="footer-copy">© 2025 West Money Bau GmbH | Powered by HAIKU 神 GOD MODE</p>
+    </section>
+
+    <section id="agents" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold font-orbitron text-sm tracking-widest">GENIUS AGENCY</span>
+                <h2 class="text-4xl font-orbitron font-bold mt-4">25 Spezialisierte AI Agents</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 reveal">
+                <div class="agent-card"><div class="text-3xl mb-2">⚡</div><p class="font-bold text-gold">BROLY</p><p class="text-xs text-gray-500">Orchestrator</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🧠</div><p class="font-bold">Einstein</p><p class="text-xs text-gray-500">Analytics</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🔒</div><p class="font-bold">Turing</p><p class="text-xs text-gray-500">Security</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🎨</div><p class="font-bold">Da Vinci</p><p class="text-xs text-gray-500">Design</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🔌</div><p class="font-bold">Tesla</p><p class="text-xs text-gray-500">IoT</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🔍</div><p class="font-bold">Sherlock</p><p class="text-xs text-gray-500">Research</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">📊</div><p class="font-bold">Newton</p><p class="text-xs text-gray-500">Math</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">🚀</div><p class="font-bold">Hawking</p><p class="text-xs text-gray-500">AI/ML</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">💰</div><p class="font-bold">Buffett</p><p class="text-xs text-gray-500">Finance</p></div>
+                <div class="agent-card"><div class="text-3xl mb-2">📱</div><p class="font-bold">Jobs</p><p class="text-xs text-gray-500">Product</p></div>
+            </div>
+            <p class="text-center text-gray-500 mt-8">+ 15 weitere spezialisierte Agents</p>
+        </div>
+    </section>
+
+    <section id="wiki" class="py-24 zen-border" style="background: linear-gradient(180deg, var(--dark-bg), #0f0f1a);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-6xl font-noto text-gold float-animation">神</span>
+                <p class="text-gold font-orbitron text-sm tracking-widest mt-4">HAIKU WIKI</p>
+                <h2 class="text-4xl font-orbitron font-bold mt-4">Universelle Wissensdatenbank</h2>
+                <p class="text-gray-400 mt-4 font-noto">知識は力なり - Wissen ist Macht</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+                <span class="wiki-category bg-yellow-500/20 text-yellow-400">Alle</span>
+                <span class="wiki-category bg-purple-500/20 text-purple-400">AI Agents</span>
+                <span class="wiki-category bg-green-500/20 text-green-400">Smart Home</span>
+                <span class="wiki-category bg-red-500/20 text-red-400">Security</span>
+                <span class="wiki-category bg-blue-500/20 text-blue-400">API</span>
+                <span class="wiki-category bg-cyan-500/20 text-cyan-400">Metaverse</span>
+                <span class="wiki-category bg-pink-500/20 text-pink-400">DSGVO</span>
+            </div>
+            <div class="grid grid-cols-3 gap-6 mb-12 reveal">
+                <div class="text-center"><p class="font-noto text-4xl text-gold mb-2">道</p><p class="text-3xl font-orbitron font-bold">248</p><p class="text-gray-500 text-sm">Wiki Artikel</p></div>
+                <div class="text-center"><p class="font-noto text-4xl text-green-500 mb-2">力</p><p class="text-3xl font-orbitron font-bold">25</p><p class="text-gray-500 text-sm">AI Agents</p></div>
+                <div class="text-center"><p class="font-noto text-4xl text-blue-400 mb-2">和</p><p class="text-3xl font-orbitron font-bold">1,400+</p><p class="text-gray-500 text-sm">API Integrationen</p></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-purple-500/20 text-purple-400">AI Agents</span><span class="text-xs text-gray-500">Featured</span></div><h3 class="text-lg font-bold mb-2">Die 25 Genius AI Agents</h3><p class="text-gray-400 text-sm mb-4">Kompletter Guide zu allen AI Agents.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">BROLY</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">Einstein</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">+23</span></div></div>
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-blue-500/20 text-blue-400">API</span><span class="text-xs text-gray-500">2h</span></div><h3 class="text-lg font-bold mb-2">WhatsApp Business API</h3><p class="text-gray-400 text-sm mb-4">Step-by-step Integration Guide.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">DSGVO</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">Consent</span></div></div>
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-red-500/20 text-red-400">Security</span><span class="text-xs text-gray-500">5h</span></div><h3 class="text-lg font-bold mb-2">DEDSEC Security Protokoll</h3><p class="text-gray-400 text-sm mb-4">BROLY Taskforce Implementation.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">Firewall</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">IDS</span></div></div>
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-cyan-500/20 text-cyan-400">Metaverse</span><span class="text-xs text-green-400">Neu</span></div><h3 class="text-lg font-bold mb-2">VR Body Scan System</h3><p class="text-gray-400 text-sm mb-4">Flagship Store Köln Avatar Pipeline.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">Quest 3</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">Vision Pro</span></div></div>
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-green-500/20 text-green-400">Smart Home</span><span class="text-xs text-gray-500">1d</span></div><h3 class="text-lg font-bold mb-2">LOXONE Smart Home Setup</h3><p class="text-gray-400 text-sm mb-4">Gold Partner Installations-Guide.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">Miniserver</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">Config</span></div></div>
+                <div class="wiki-card"><div class="flex items-center justify-between mb-4"><span class="wiki-category bg-pink-500/20 text-pink-400">DSGVO</span><span class="text-xs text-gray-500">3d</span></div><h3 class="text-lg font-bold mb-2">DSGVO Compliance Guide</h3><p class="text-gray-400 text-sm mb-4">EU-Recht Compliance Dokumentation.</p><div class="flex gap-2"><span class="text-xs bg-gray-800 px-2 py-1 rounded">Art. 6</span><span class="text-xs bg-gray-800 px-2 py-1 rounded">Art. 17</span></div></div>
+            </div>
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 reveal">
+                <a href="#" class="glass p-4 rounded-xl text-center hover:border-yellow-500 transition"><span class="text-2xl">🚀</span><p class="font-bold mt-2">Quickstart</p></a>
+                <a href="#" class="glass p-4 rounded-xl text-center hover:border-yellow-500 transition"><span class="text-2xl">📖</span><p class="font-bold mt-2">API Reference</p></a>
+                <a href="#" class="glass p-4 rounded-xl text-center hover:border-yellow-500 transition"><span class="text-2xl">🎥</span><p class="font-bold mt-2">Video Tutorials</p></a>
+                <a href="#" class="glass p-4 rounded-xl text-center hover:border-yellow-500 transition"><span class="text-2xl">👥</span><p class="font-bold mt-2">Community</p></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-24" style="background: var(--dark-card);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold font-orbitron text-sm tracking-widest">PRICING</span>
+                <h2 class="text-4xl font-orbitron font-bold mt-4">Transparente Preise</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 reveal">
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold mb-2">Starter</h3><p class="text-gray-400 text-sm mb-6">Für Einzelunternehmer</p>
+                    <p class="text-4xl font-orbitron font-bold text-gold mb-6">€49<span class="text-lg text-gray-400">/mo</span></p>
+                    <ul class="space-y-3 text-sm text-gray-400 mb-8">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 500 CRM Kontakte</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 5 AI Agents</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> WhatsApp Basic</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Email Support</li>
+                    </ul>
+                    <button class="w-full py-3 glass rounded-xl font-semibold hover:bg-white/10 transition">Jetzt starten</button>
+                </div>
+                <div class="pricing-card featured glow-gold">
+                    <div class="flex items-center justify-between mb-2"><h3 class="text-xl font-bold">Professional</h3><span class="text-xs bg-yellow-500 text-black px-2 py-1 rounded">Beliebt</span></div>
+                    <p class="text-gray-400 text-sm mb-6">Für wachsende Teams</p>
+                    <p class="text-4xl font-orbitron font-bold text-gold mb-6">€199<span class="text-lg text-gray-400">/mo</span></p>
+                    <ul class="space-y-3 text-sm text-gray-400 mb-8">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 5,000 CRM Kontakte</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> 15 AI Agents</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> WhatsApp Business API</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> LOXONE Integration</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Priority Support</li>
+                    </ul>
+                    <button class="w-full py-3 gold-gradient text-black rounded-xl font-bold hover:opacity-90 transition">14 Tage kostenlos</button>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3><p class="text-gray-400 text-sm mb-6">Für große Organisationen</p>
+                    <p class="text-4xl font-orbitron font-bold text-gold mb-6">Custom</p>
+                    <ul class="space-y-3 text-sm text-gray-400 mb-8">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Unlimited Kontakte</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Alle 25 AI Agents</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Custom Integrations</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Dedicated Support</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> SLA 99.99%</li>
+                    </ul>
+                    <button class="w-full py-3 glass rounded-xl font-semibold hover:bg-white/10 transition">Kontakt aufnehmen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal">
+            <div class="glass rounded-3xl p-12 glow-gold">
+                <span class="font-noto text-5xl text-gold">神</span>
+                <h2 class="text-4xl font-orbitron font-bold mt-4 mb-4">Bereit für die <span class="text-gold">Zukunft</span>?</h2>
+                <p class="text-xl text-gray-400 mb-8">Starten Sie heute mit West Money OS.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="cta-button">🚀 Demo anfordern</a>
+                    <a href="mailto:info@enterprise-universe.com" class="px-8 py-4 glass rounded-xl font-semibold hover:bg-white/10 transition">📧 info@enterprise-universe.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-16 border-t border-yellow-600/20" style="background: linear-gradient(180deg, var(--dark-bg), #050508);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4"><span class="text-2xl">⚡</span><span class="font-orbitron font-bold text-gold">ENTERPRISE UNIVERSE</span></div>
+                    <p class="text-gray-400 text-sm mb-4">Die All-in-One Business Plattform für Smart Home Unternehmen.</p>
+                    <p class="text-gray-500 text-xs">v99.999 | 神 Mode</p>
+                </div>
+                <div><h4 class="font-bold mb-4">Produkt</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#features" class="hover:text-yellow-500 transition">Features</a></li><li><a href="#pricing" class="hover:text-yellow-500 transition">Pricing</a></li><li><a href="#wiki" class="hover:text-yellow-500 transition">Wiki</a></li><li><a href="#" class="hover:text-yellow-500 transition">API Docs</a></li></ul></div>
+                <div><h4 class="font-bold mb-4">Unternehmen</h4><ul class="space-y-2 text-gray-400 text-sm"><li><a href="#" class="hover:text-yellow-500 transition">Über uns</a></li><li><a href="#" class="hover:text-yellow-500 transition">Karriere</a></li><li><a href="#" class="hover:text-yellow-500 transition">Partner</a></li></ul></div>
+                <div><h4 class="font-bold mb-4">Kontakt</h4><ul class="space-y-2 text-gray-400 text-sm"><li>📧 info@enterprise-universe.com</li><li>📍 Köln, Deutschland</li><li>🏢 Enterprise Universe GmbH</li></ul></div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">© 2025 Enterprise Universe GmbH. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-6 mt-4 md:mt-0 text-sm text-gray-500"><a href="#" class="hover:text-yellow-500 transition">Datenschutz</a><a href="#" class="hover:text-yellow-500 transition">AGB</a><a href="#" class="hover:text-yellow-500 transition">Impressum</a></div>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Generate stars
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            star.style.opacity = Math.random() * 0.5 + 0.3;
-            starsContainer.appendChild(star);
-        }
+        window.addEventListener('load', () => { setTimeout(() => { document.getElementById('loading-screen').classList.add('hidden'); }, 2500); });
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => { revealElements.forEach(el => { const elementTop = el.getBoundingClientRect().top; if (elementTop < window.innerHeight - 100) { el.classList.add('active'); } }); };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) { target.scrollIntoView({ behavior: 'smooth' }); } }); });
+        console.log('%c⚡ Enterprise Universe v99.999', 'color: #d4af37; font-size: 24px; font-weight: bold;');
+        console.log('%c神 Mode Active', 'color: #22c55e; font-size: 14px;');
     </script>
 </body>
 </html>
