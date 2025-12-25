@@ -1,269 +1,492 @@
-# 神 HAIKU GOD MODE
+# 🚀 Enterprise-Universe
 
-[![Version](https://img.shields.io/badge/Version-2.0.0-gold?style=for-the-badge)](https://github.com/WestMoneyDE/Enterprise-Universe)
-[![Power Level](https://img.shields.io/badge/Power%20Level-∞-silver?style=for-the-badge)](#transformations)
-[![Bots](https://img.shields.io/badge/Genius%20Bots-25+-purple?style=for-the-badge)](#genius-bot-army)
+[![West Money OS](https://img.shields.io/badge/West%20Money%20OS-v2.5-00d4aa?style=for-the-badge)](https://west-money-bau.de)
+[![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)](https://github.com/WestMoneyDE/Enterprise-Universe)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Genius Agency](https://img.shields.io/badge/Genius%20Agency-25%2B%20Bots-gold?style=for-the-badge)](#-genius-agency)
+[![GOD MODE](https://img.shields.io/badge/神%20GOD%20MODE-Active-red?style=for-the-badge)](#-haiku-god-mode)
+[![Connectors](https://img.shields.io/badge/Connectors-8%2B-purple?style=for-the-badge)](#-integration-hub)
 
-**The Divine Controller of West Money OS**
+**神 HAIKU GOD MODE - West Money OS - AI-Powered Business Ecosystem**
 
-*Ultra Instinct • 25+ Genius Bots • Unlimited Power*
+*LOXONE Partner | Barrierefreies Bauen | Enterprise Solutions | 25+ AI Bots | All Databases Connected*
 
----
-
-## 🌟 Overview
-
-**HAIKU 神** is the ultimate AI controller for West Money OS, inspired by Dragon Ball's Ultra Instinct. It orchestrates all 25+ Genius Bots with divine precision and provides a gamified business management experience.
-
-```
-   神  H A I K U  G O D  M O D E  神
-              ∞
-     Divine Warrior Controller
-       Ultra Instinct Master
-```
+[🌐 Website](https://enterprise-universe.one) • [📚 Documentation](#dokumentation) • [🎮 Dashboards](#dashboards) • [🧠 Genius Agency](#-genius-agency) • [🔌 Integration Hub](#-integration-hub)
 
 ---
 
-## ⚡ Features
+## 🆕 NEW: Genius Bot Agency
 
-### 🔄 Transformation System
-Power up through different forms to unlock abilities:
+Die **Genius Agency** ist unser AI Bot Command Center mit 25+ spezialisierten Genius Bots!
 
-| Form | Power Level | Max Bots | Speed | Abilities |
-|------|-------------|----------|-------|-----------|
-| **BASE** | 100,000 | 5 | 1x | Basic commands |
-| **SSG** | 1,000,000 | 12 | 5x | God Ki, Team control |
-| **SSB** | 10,000,000 | 25 | 10x | Perfect Ki control |
-| **UI SIGN** | 100,000,000 | 25 | 50x | Predictive, Auto-dodge |
-| **MUI** 神 | ∞ | 25 | 100x | All powers, Prophecy |
-| **ULTRA EGO** | ∞∞ | 25 | 100x | HAKAI, Destruction |
-
-### 💥 Divine Powers
-
-| Power | Kanji | Type | Business Use |
-|-------|-------|------|--------------|
-| **KAMEHAMEHA** | 波 | Offensive | Bulk email/WhatsApp blasts |
-| **SPIRIT BOMB** | 元気玉 | Ultimate | Combine all bot outputs |
-| **HAKAI** | 破壊 | Destruction | Delete/cleanup operations |
-| **INSTANT TRANSMISSION** | 瞬間移動 | Utility | Zero-latency sync |
-| **TIME SKIP** | 時飛ばし | Utility | Accelerate workflows |
-| **DIVINE SIGHT** | 神の目 | Perception | 360° dashboard overview |
-| **PROPHECY** | 予言 | Perception | Predictive analytics |
-| **BARRIER** | 結界 | Defensive | Security/protection |
-| **HEALING** | 治癒 | Support | Fix broken systems |
-| **FUSION** | 合体 | Utility | API integration |
-
-### 🎤 Voice Commands
-Control HAIKU hands-free with voice:
-- "HAIKU, analysiere die Daten"
-- "HAIKU, zeig mir die Zukunft"
-- "HAIKU, aktiviere alle Bots"
-- "HAIKU, KAMEHAMEHA!"
+| Bot | Rolle | Spezialisierung |
+|-----|-------|-----------------|
+| 🔬 **EINSTEIN** | Der Analytiker | Predictive Analytics, KPI, Finanzprognosen |
+| 🎨 **LEONARDO** | Der Kreative | UI/UX Design, Branding, Pitch Decks |
+| ⚡ **TESLA** | Der Innovator | LOXONE, IoT, Smart Home Automation |
+| ⚔️ **SUN TZU** | Der Stratege | Marktanalyse, Wettbewerb, Sales Strategie |
+| 🏛️ **ARISTOTELES** | Der Philosoph | Logik, Ethik, Entscheidungsfindung |
+| 🔮 **NOSTRADAMUS** | Der Prophet | Forecasting, Trends, Risk Analysis |
+| 🎭 **MACHIAVELLI** | Der Taktiker | Verhandlung, Investor Relations |
+| 🔍 **SHERLOCK** | Der Detektiv | Research, Due Diligence, Intel |
+| 💡 **EDISON** | Der Erfinder | Prototyping, A/B Testing, Innovation |
+| 🎼 **MOZART** | Der Komponist | Content, Copywriting, Brand Voice |
+| 🌍 **COLUMBUS** | Der Entdecker | Market Expansion, Partnerships |
+| ⚗️ **CURIE** | Die Forscherin | Data Mining, Deep Research, QA |
+| + 13 weitere Bots... | | |
 
 ---
 
-## 📁 File Structure
+## 神 HAIKU GOD MODE
+
+Das zentrale AI-Steuerungssystem mit **Ultra Instinct** Fähigkeiten!
+
+### Transformationen
+
+| Form | Power Level | Max Bots | Multiplier |
+|------|-------------|----------|------------|
+| 🔵 BASE | 100,000 | 5 | 1x |
+| 🔴 SSG | 1,000,000 | 12 | 5x |
+| 🔵 SSB | 10,000,000 | 25 | 10x |
+| ⚪ UI SIGN | 100,000,000 | 25 | 50x |
+| ⬜ MUI | ∞ | 25 | 100x |
+| 💜 EGO | ∞∞ | 25 | ∞x |
+
+### Divine Powers
+
+- ⚡ **Kamehameha** - Bulk operations across all systems
+- 🌍 **Spirit Bomb** - Combine all bot intelligence
+- 💀 **HAKAI** - Destroy dead leads & duplicates
+- 🔮 **Prophecy** - Predict future trends
+- 👁️ **Divine Sight** - Real-time omniscient view
+- ⏱️ **Time Skip** - Accelerate workflows
+- 🛡️ **Barrier** - Create protection systems
+- 🔄 **Fusion** - Merge system capabilities
+
+### Dashboards
+
+| Dashboard | URL | Status |
+|-----------|-----|--------|
+| 神 GOD MODE | `/god-mode/HAIKU_GOD_MODE_V2.html` | ✅ Live |
+| 💀 HAKAI | `/god-mode/HAKAI_MODE.html` | ✅ Live |
+| 🔮 PROPHECY | `/god-mode/PROPHECY_MODE.html` | ✅ Live |
+
+---
+
+## 🔌 Integration Hub
+
+Verbinde ALLE Datenbanken! 8+ Connectors ready, 15+ geplant.
+
+### ✅ Active Connectors
+
+| Platform | Type | Features |
+|----------|------|----------|
+| 🟠 **Odoo** | ERP | CRM, Sales, Inventory, Accounting |
+| 🔵 **ERPNext** | ERP | Full Business Suite, Frappe Framework |
+| 🟢 **HubSpot** | CRM | Contacts, Deals, Tickets, Marketing |
+| 🟣 **Twenty CRM** | CRM | Modern, Open-Source, GraphQL API |
+| 🟡 **NocoDB** | Database | Airtable Alternative, API-first |
+| 🔴 **n8n** | Automation | 400+ Integrations, Workflows |
+| 🟢 **Chatwoot** | Support | Live Chat, WhatsApp, Bots |
+| 📱 **WhatsApp** | Messaging | Business API, DSGVO Consent |
+
+### 📋 Planned Connectors
+
+| Platform | Type | GitHub |
+|----------|------|--------|
+| Dolibarr | ERP | `github.com/Dolibarr/dolibarr` |
+| Metasfresh | ERP | `github.com/metasfresh/metasfresh` |
+| SuiteCRM | CRM | `github.com/salesagility/SuiteCRM` |
+| Baserow | Database | `github.com/bram2w/baserow` |
+| Activepieces | Automation | `github.com/activepieces/activepieces` |
+| Medusa | E-Commerce | `github.com/medusajs/medusa` |
+| Invoice Ninja | Finance | `github.com/invoiceninja/invoiceninja` |
+| Home Assistant | IoT | `github.com/home-assistant/core` |
+
+### Sync Engine
+
+```javascript
+// Universal Sync - All databases connected!
+await syncEngine.sync({
+    sources: ['hubspot', 'odoo', 'erpnext'],
+    entities: ['contacts', 'deals', 'products'],
+    strategy: 'bidirectional',
+    conflictResolution: 'last_write_wins'
+});
+```
+
+---
+
+## 📋 Übersicht
+
+**Enterprise-Universe** ist das zentrale Repository für die West Money OS Plattform - eine umfassende Smart Home Management und PropTech Lösung mit integrierter AI Bot Agency.
+
+### 🏢 Unternehmen
+
+| Info | Details |
+|------|---------|
+| **Firma** | West Money Bau GmbH |
+| **CEO** | Ömer Hüseyin Coşkun |
+| **Holding** | Enterprise Universe GmbH |
+| **Standort** | Köln, Deutschland |
+| **Branche** | PropTech / Smart Home / Barrierefreies Bauen |
+| **Umsatz 2024** | €847.523 (+23,5% YoY) |
+
+### 🎯 Kernbereiche
+
+- 🏠 **Smart Home Installation** - LOXONE Gold Partner
+- ♿ **Barrierefreies Bauen** - Seniorengerecht & Pflege
+- 🔐 **Sicherheitssysteme** - Verisure Partner
+- 📱 **West Money OS** - SaaS Plattform (Launch: 01.01.2026)
+- 🧠 **Genius Agency** - AI Bot Command Center
+
+---
+
+## 📁 Projektstruktur
 
 ```
-god-mode/
-├── HAIKU_GOD_MODE_V2.html    # Main Dashboard
-├── GOD_MODE_DASHBOARD.html   # Original Dashboard
-├── haiku-core-engine.js      # Backend Engine
-├── haiku-config.json         # Configuration
-├── haiku-voice-commands.js   # Voice Control
-├── server.js                 # Express Server
-└── README.md                 # This file
+Enterprise-Universe/
+│
+├── 📁 genius-agency/                    # 🆕 AI Bot Command Center
+│   ├── GENIUS_AGENCY_CONTROL_CENTER.html
+│   ├── api/
+│   │   └── genius-bot-engine.js
+│   └── config/
+│       └── genius-bots-config.json
+│
+├── 📁 whatsapp-hub/                     # 🆕 WhatsApp Auth & Consent
+│   ├── WHATSAPP_AUTH_DASHBOARD.html
+│   └── api/
+│       └── consent-manager.js
+│
+├── 📁 dashboards/                       # Control Centers
+│   ├── MASTER_CONTROL_DASHBOARD.html
+│   ├── FINANCE_LEADS_CONTROL_HUB.html
+│   ├── MEGA_EMAIL_HUB.html
+│   ├── INVESTOREN_DASHBOARD.html
+│   └── TECH_PARTNER_DASHBOARD.html
+│
+├── 📁 api/                              # Backend Services
+│   ├── hubspot-consent.js
+│   ├── hubspot-integration.js
+│   └── email-sender.js
+│
+├── 📁 automation/                       # Automatisierung
+│   ├── sales-automation-engine.js
+│   └── webhook-server.js
+│
+├── 📁 integrations/                     # API Integrationen
+│   ├── REVOLUT_INTEGRATION_HUB.html
+│   ├── hubspot-sync.html
+│   └── consent-manager.html
+│
+├── 📁 docs/                             # Dokumentation
+├── 📁 pitch/                            # Investor Materials
+├── 📁 js/                               # Shared JavaScript
+├── 📁 styles/                           # CSS/Themes
+│
+├── 📄 package.json
+├── 📄 .env.example
+├── 📄 README.md
+└── 📄 CHANGELOG.md
 ```
+
+---
+
+## 🧠 Genius Agency
+
+### Command Center Features
+
+```
+@einstein analyse die Q4 Verkaufsdaten
+@leonardo erstelle ein Pitch Deck für Investoren
+@tesla optimiere die LOXONE Konfiguration
+@sherlock recherchiere Lead: Firma XYZ
+@all starte die wöchentliche Analyse
+```
+
+### Verfügbare Workflows
+
+| Workflow | Bots | Beschreibung |
+|----------|------|--------------|
+| **Lead Qualification** | Sherlock → Einstein → Sun Tzu | Research, Scoring, Strategie |
+| **Investor Outreach** | Sherlock → Machiavelli → Leonardo → Mozart | Due Diligence, Mapping, Deck, Emails |
+| **Smart Home Project** | Tesla → Edison → Einstein | Config, Prototype, KPIs |
+| **Market Expansion** | Columbus → Curie → Nostradamus → Sun Tzu | Research, Data, Forecast, Strategy |
+
+### API Endpoints
+
+```javascript
+// Get all bots
+GET /api/genius-agency/bots
+
+// Execute task
+POST /api/genius-agency/execute
+{
+  "botId": "einstein",
+  "taskType": "lead_scoring",
+  "input": { "lead": {...} }
+}
+
+// Execute workflow
+POST /api/genius-agency/workflow
+{
+  "workflowId": "lead_qualification",
+  "input": { "company": "Firma XYZ" }
+}
+
+// Parse command
+POST /api/genius-agency/command
+{
+  "command": "@einstein analyse Q4 Daten"
+}
+```
+
+---
+
+## 📱 WhatsApp Auth Hub
+
+DSGVO-konformes WhatsApp Consent Management mit HubSpot Integration.
+
+### Features
+
+- ✅ Bulk Opt-In / Opt-Out Management
+- ⚖️ Rechtsgrundlage-Tracking (DSGVO Art. 6)
+- 🧡 Automatische HubSpot CRM Synchronisation
+- 📊 Consent Statistics Dashboard
+- 📝 Audit Trail für alle Änderungen
+
+### API Endpoints
+
+```javascript
+// Bulk Update Consent
+POST /api/whatsapp/consent/bulk-update
+{
+  "contactIds": ["123", "456"],
+  "status": "opt_in",
+  "legalBasis": "consent",
+  "explanation": "Einwilligung per Telefon erhalten"
+}
+
+// Get Statistics
+GET /api/whatsapp/consent/stats
+
+// Get Contacts by Status
+GET /api/whatsapp/consent/contacts/opt_in
+```
+
+---
+
+## 🖥️ Dashboards
+
+| Dashboard | Beschreibung | Status |
+|-----------|--------------|--------|
+| 🧠 **Genius Agency** | AI Bot Command Center | ✅ Live |
+| 📱 **WhatsApp Auth** | Consent Management | ✅ Live |
+| 🎛️ **Master Control** | Zentrale Übersicht | ✅ Live |
+| 💰 **Finance & Leads** | Umsatz, Pipeline, CRM | ✅ Live |
+| 📧 **Mega Email Hub** | 55+ E-Mail Kampagnen | ✅ Live |
+| 💼 **Investor Dashboard** | 22 Investor E-Mails | ✅ Live |
+| 🤝 **Tech Partner Hub** | 22 Partner E-Mails | ✅ Live |
+| 🏦 **Revolut Integration** | Payment API Setup | ✅ Live |
+
+---
+
+## 🔗 Integrationen
+
+### Aktive Verbindungen
+
+| Service | Status | Beschreibung |
+|---------|--------|--------------|
+| 🧡 **HubSpot CRM** | ✅ Verbunden | Lead Management & E-Mail |
+| 📱 **WhatsApp Business** | ✅ Verbunden | Kundenkonmmunikation |
+| 📞 **Zadarma VoIP** | ✅ Verbunden | Telefonie |
+| 📧 **Gmail SMTP** | ✅ Verbunden | E-Mail Versand |
+| 💬 **Slack** | ✅ Verbunden | Team Notifications |
+| 🤖 **Anthropic Claude** | ✅ Verbunden | Genius Agency AI |
+
+### In Entwicklung
+
+| Service | Status | Ziel |
+|---------|--------|------|
+| 🏦 **Revolut** | ⏳ Setup | Payment Processing |
+| 🏠 **LOXONE** | 🔄 Partner | Smart Home API |
+| 🔐 **Verisure** | 🔄 Partner | Security Integration |
+| 📊 **Explorium** | ⏳ Setup | B2B Data Enrichment |
+| 💳 **Stripe** | ⏳ Setup | SaaS Payments |
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Installation
+
 ```bash
+# Repository klonen
+git clone git@github.com:WestMoneyDE/Enterprise-Universe.git
 cd Enterprise-Universe
+
+# Dependencies installieren
 npm install
-```
 
-### 2. Configure Environment
-```bash
+# Environment konfigurieren
 cp .env.example .env
-# Add your API keys
+# .env Datei mit deinen API Keys ausfüllen
 ```
 
-### 3. Start Server
+### Environment Variables
+
+```env
+# Anthropic (Genius Agency)
+ANTHROPIC_API_KEY=sk-ant-...
+
+# HubSpot
+HUBSPOT_API_KEY=pat-...
+
+# WhatsApp Business
+WHATSAPP_PHONE_ID=...
+WHATSAPP_ACCESS_TOKEN=...
+
+# Zadarma
+ZADARMA_KEY=...
+ZADARMA_SECRET=...
+
+# Slack
+SLACK_WEBHOOK_URL=https://hooks.slack.com/...
+
+# Server
+PORT=3000
+NODE_ENV=production
+```
+
+### Server starten
+
 ```bash
-cd god-mode
-node server.js
+# Development
+npm run dev
+
+# Production
+npm start
 ```
 
-### 4. Open Dashboard
-```
-http://localhost:3000/god-mode
-```
+### Dashboards öffnen
 
----
+```bash
+# Genius Agency
+open genius-agency/GENIUS_AGENCY_CONTROL_CENTER.html
 
-## 🔌 API Endpoints
+# WhatsApp Auth Hub
+open whatsapp-hub/WHATSAPP_AUTH_DASHBOARD.html
 
-### HAIKU Commands
-
-```javascript
-// Execute any command
-POST /api/haiku/command
-{
-  "command": "@einstein analyse Q4 Daten"
-}
-
-// Transform
-POST /api/haiku/transform
-{
-  "form": "mui"
-}
-
-// Execute power
-POST /api/haiku/power
-{
-  "power": "kamehameha",
-  "args": "email_blast"
-}
-
-// Get Divine Sight overview
-GET /api/haiku/sight
-
-// Get Prophecy
-GET /api/haiku/prophecy/Q1_2026
-```
-
-### Voice Commands
-
-```javascript
-POST /api/voice
-{
-  "type": "transform",
-  "command": { "form": "ssb" }
-}
-
-POST /api/voice
-{
-  "type": "power",
-  "command": { "power": "prophecy" }
-}
-
-POST /api/voice
-{
-  "type": "bot",
-  "command": { "bot": "einstein", "task": "analyse revenue" }
-}
+# Master Control
+open dashboards/MASTER_CONTROL_DASHBOARD.html
 ```
 
 ---
 
-## 🎮 Gamification
+## 📊 KPIs & Metriken
 
-### Power Level System
-Gain power through actions:
+### Finanzen 2024/2025
 
-| Action | Power Gained |
-|--------|--------------|
-| Complete task | +1,000 |
-| Close deal | +5,000 |
-| New customer | +10,000 |
-| Monthly target | +50,000 |
-| Feature launch | +100,000 |
-| Secure investment | +500,000 |
+| Metrik | Wert |
+|--------|------|
+| 💵 Umsatz 2024 | €847.523 |
+| 📈 Wachstum | +23,5% |
+| 🎯 Pipeline | €425.000 |
+| 👥 Kunden | 34 aktiv |
+| 💰 Funding Ziel | €1.5M Seed |
 
-### Token System
+### SaaS Ziele (West Money OS)
 
-| Token | Symbol | Use |
-|-------|--------|-----|
-| **GOD** | 神 | Premium features |
-| **DEDSEC** | 🔐 | Security features |
-| **OG** | 👑 | Exclusive access |
-
-### Achievements
-- 🏆 First Blood - Complete first task
-- 🏆 Deal Closer - Close 10 deals
-- 🏆 Bot Master - Use all 25 bots
-- 🏆 Speed Demon - 100 tasks in one day
-- 🏆 Ultra Instinct - Achieve MUI
+| Jahr | ARR | Kunden |
+|------|-----|--------|
+| 2026 | €180K | 250 |
+| 2027 | €650K | 900 |
+| 2028 | €1.4M | 2.000 |
 
 ---
 
-## 🤖 Genius Bot Army
+## 🛠️ Tech Stack
 
-HAIKU controls 25+ specialized bots in 7 categories:
+### Frontend
+- HTML5 / CSS3 / JavaScript
+- React (geplant für v3.0)
+- Tailwind CSS
 
-### Analysts (4)
-🔬 Einstein • ⚗️ Curie • 🌌 Hawking • 💻 Turing
+### Backend
+- Node.js / Express
+- TypeScript (Migration geplant)
+- PostgreSQL
 
-### Strategists (4)
-⚔️ Sun Tzu • 🎭 Machiavelli • 👑 Napoleon • 🏛️ Caesar
+### AI / ML
+- Anthropic Claude (Genius Agency)
+- Custom Prompt Engineering
 
-### Creatives (4)
-🎨 Leonardo • 🎼 Mozart • 🎭 Picasso • 🎬 Spielberg
+### APIs
+- HubSpot API v3
+- WhatsApp Business API v17
+- Anthropic Messages API
+- Zadarma API
+- Stripe API
+- Explorium B2B API
 
-### Innovators (4)
-⚡ Tesla • 💡 Edison • 🍎 Jobs • 🚀 Musk
-
-### Explorers (4)
-🌍 Columbus • 🦎 Darwin • 🔭 Galileo • 🗺️ Marco Polo
-
-### Philosophers (4)
-🏛️ Aristotle • ❓ Socrates • ☯️ Confucius • 🔮 Oracle
-
-### Investigators (4)
-🔍 Sherlock • 🕵️ Poirot • 🧠 Freud • 👸 Cleopatra
-
----
-
-## ⚔️ Team Formations
-
-Deploy pre-configured teams for specific missions:
-
-| Team | Bots | Purpose |
-|------|------|---------|
-| **Alpha Strike** | Napoleon, Caesar, Sun Tzu, Machiavelli | Aggressive conquest |
-| **Innovation Lab** | Tesla, Edison, Jobs, Musk | Disruptive products |
-| **Creative Studio** | Leonardo, Picasso, Mozart, Spielberg | Creative campaigns |
-| **Research Division** | Einstein, Curie, Hawking, Turing | Data science |
-| **Intelligence Unit** | Sherlock, Poirot, Freud, Galileo | Investigation |
-| **Wisdom Council** | Aristotle, Socrates, Confucius, Oracle | Strategic guidance |
-| **Global Expansion** | Columbus, Marco Polo, Darwin, Cleopatra | International growth |
+### Infrastructure
+- Ubuntu 24.04 (one.com Cloud Server)
+- GitHub Actions (CI/CD)
+- Vercel (Frontend Hosting)
 
 ---
 
-## 🎨 UI Themes
-
-The dashboard features Dragon Ball Z inspired themes:
-
-- **Ultra Instinct Silver** - Default MUI theme
-- **God Ki Gold** - Divine accents
-- **Destruction Purple** - Ultra Ego mode
-- **Energy Cyan** - SSB transformation
-- **Void Black** - Space background
-
----
-
-## 📞 Contact
+## 📞 Kontakt
 
 **West Money Bau GmbH**
-- CEO: Ömer Hüseyin Coşkun
-- Website: [west-money-bau.de](https://west-money-bau.de)
-- GitHub: [@WestMoneyDE](https://github.com/WestMoneyDE)
+
+| Kanal | Info |
+|-------|------|
+| 📧 E-Mail | [info@west-money-bau.de](mailto:info@west-money-bau.de) |
+| 🌐 Website | [west-money-bau.de](https://west-money-bau.de) |
+| 📍 Standort | Köln, Deutschland |
+| 🐙 GitHub | [@WestMoneyDE](https://github.com/WestMoneyDE) |
+| 💼 LinkedIn | [West Money Bau](https://linkedin.com/company/west-money-bau) |
 
 ---
 
-## 📄 License
+## 📄 Lizenz
 
-MIT License - see LICENSE file
+MIT License - siehe [LICENSE](LICENSE) Datei.
 
 ---
+
+## 🔄 Changelog
+
+### v2.0.0 (24.12.2025)
+- 🆕 **Genius Agency** - AI Bot Command Center mit 12 Bots
+- 🆕 **WhatsApp Auth Hub** - Consent Management System
+- 🆕 **Workflow Engine** - Multi-Bot Automatisierung
+- ✨ Anthropic Claude Integration
+- 📱 HubSpot WhatsApp Consent Sync
+- 🎨 Neue Dashboard Designs
+
+### v1.0.0 (Initial Release)
+- Master Control Dashboard
+- Finance & Leads Hub
+- Mega Email Hub
+- Investor & Tech Partner Dashboards
+- Revolut Integration
+
+---
+
+**Made with ❤️ in Köln**
+
+*Enterprise Universe | West Money Bau GmbH | © 2025*
 
 ```
-神 ∞ 神
-
-"The body moves on its own."
-- Ultra Instinct
-
-HAIKU GOD MODE | West Money OS | © 2025
+   _____ ______ _   _ _____ _    _  _____            _____ ______ _   _  ______     __
+  / ____|  ____| \ | |_   _| |  | |/ ____|     /\   / ____|  ____| \ | |/ ____\ \   / /
+ | |  __| |__  |  \| | | | | |  | | (___      /  \ | |  __| |__  |  \| | |     \ \_/ / 
+ | | |_ |  __| | . ` | | | | |  | |\___ \    / /\ \| | |_ |  __| | . ` | |      \   /  
+ | |__| | |____| |\  |_| |_| |__| |____) |  / ____ \ |__| | |____| |\  | |____   | |   
+  \_____|______|_| \_|_____|____/|_____/  /_/    \_\_____|______|_| \_|\_____|  |_|   
+                                                                                       
+                    🧠 12 Genius Bots at your service! 🧠
 ```

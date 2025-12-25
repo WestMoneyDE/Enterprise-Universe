@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💀 破壊 HAKAI MODE | Destruction System | West Money OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --hakai-red: #FF0000;
+            --hakai-orange: #FF6B00;
+            --hakai-purple: #8B00FF;
+            --hakai-glow: rgba(255, 0, 0, 0.5);
+            --void: #050505;
+            --dark: #0A0A0F;
+            --gold: #FFD700;
+            --text: #FFFFFF;
+            --text-dim: #666;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--void);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Background Effect */
+        .hakai-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(139, 0, 255, 0.1) 0%, transparent 40%),
+                linear-gradient(180deg, #050505 0%, #0A0A0F 100%);
+        }
+
+        /* Destruction Particles */
+        .destruction-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--hakai-red);
+            border-radius: 50%;
+            animation: disintegrate 4s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes disintegrate {
+            0% { 
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.5; }
+            100% { 
+                transform: translateY(-50px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        .hakai-header {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(139, 0, 255, 0.05) 100%);
+            border-bottom: 2px solid var(--hakai-red);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .hakai-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--hakai-red);
+            text-shadow: 
+                0 0 20px var(--hakai-glow),
+                0 0 40px var(--hakai-glow);
+            animation: hakai-pulse 2s infinite;
+        }
+
+        @keyframes hakai-pulse {
+            0%, 100% { 
+                filter: brightness(1);
+                transform: scale(1);
+            }
+            50% { 
+                filter: brightness(1.5);
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--hakai-red);
+            letter-spacing: 5px;
+        }
+
+        .logo-text p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .warning-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid var(--hakai-red);
+            border-radius: 10px;
+            animation: warning-blink 1s infinite;
+        }
+
+        @keyframes warning-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .warning-badge span {
+            color: var(--hakai-red);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            background: linear-gradient(90deg, rgba(255, 0, 0, 0.2) 0%, rgba(139, 0, 255, 0.1) 100%);
+            border: 2px solid var(--hakai-red);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .warning-banner h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--hakai-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-banner p {
+            color: var(--text-dim);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--hakai-red);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--hakai-red);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        /* Targets Section */
+        .targets-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .targets-list {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .targets-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .targets-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--hakai-red);
+        }
+
+        .select-all-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--hakai-red);
+            border-radius: 8px;
+            color: var(--hakai-red);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .select-all-btn:hover {
+            background: var(--hakai-red);
+            color: white;
+        }
+
+        .target-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .target-item:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .target-item.selected {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid var(--hakai-red);
+        }
+
+        .target-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--hakai-red);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .target-item.selected .target-checkbox {
+            background: var(--hakai-red);
+        }
+
+        .target-checkbox::after {
+            content: '✓';
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .target-item.selected .target-checkbox::after {
+            opacity: 1;
+        }
+
+        .target-icon {
+            font-size: 1.5rem;
+        }
+
+        .target-info {
+            flex: 1;
+        }
+
+        .target-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .target-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .target-count {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--hakai-red);
+        }
+
+        /* Destruction Panel */
+        .destruction-panel {
+            background: rgba(10, 10, 15, 0.8);
+            border: 2px solid var(--hakai-red);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .destruction-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--hakai-red);
+            text-shadow: 0 0 50px var(--hakai-glow);
+            margin-bottom: 1rem;
+            animation: destruction-float 3s ease-in-out infinite;
+        }
+
+        @keyframes destruction-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .destruction-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--hakai-red);
+            margin-bottom: 1rem;
+        }
+
+        .destruction-count {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .destruction-label {
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .hakai-btn {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--hakai-red), var(--hakai-purple));
+            border: none;
+            border-radius: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hakai-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .hakai-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--hakai-glow);
+        }
+
+        .hakai-btn:hover::before {
+            left: 100%;
+        }
+
+        .hakai-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* History Section */
+        .history-section {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .history-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--hakai-red);
+            margin-bottom: 1rem;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 0, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-action {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .history-time {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .history-count {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--hakai-red);
+        }
+
+        /* Confirmation Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border: 2px solid var(--hakai-red);
+            border-radius: 30px;
+            padding: 3rem;
+            max-width: 500px;
+            text-align: center;
+            animation: modal-shake 0.5s ease-out;
+        }
+
+        @keyframes modal-shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .modal-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 8rem;
+            color: var(--hakai-red);
+            text-shadow: 0 0 50px var(--hakai-glow);
+            animation: modal-pulse 1s infinite;
+        }
+
+        @keyframes modal-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--hakai-red);
+            margin: 1rem 0;
+        }
+
+        .modal-desc {
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .modal-btn.confirm {
+            background: var(--hakai-red);
+            border: none;
+            color: white;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .targets-section { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 1rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .hakai-kanji { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hakai-bg"></div>
+    <div class="destruction-particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="hakai-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="hakai-kanji">破壊</span>
+                <div class="logo-text">
+                    <h1>HAKAI MODE</h1>
+                    <p>DESTRUCTION SYSTEM • ULTRA EGO POWER</p>
+                </div>
+            </div>
+            <div class="warning-badge">
+                <span>⚠️</span>
+                <span>DESTRUCTION MODE ACTIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <h2>⚠️ WARNUNG: HAKAI MODUS</h2>
+            <p>Alle ausgewählten Daten werden permanent gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💀</div>
+                <div class="stat-value" id="deadLeads">847</div>
+                <div class="stat-label">Dead Leads</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-value" id="failedWorkflows">23</div>
+                <div class="stat-label">Failed Workflows</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="duplicates">156</div>
+                <div class="stat-label">Duplicates</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-value" id="expired">12</div>
+                <div class="stat-label">Expired Items</div>
+            </div>
+        </div>
+
+        <!-- Targets Section -->
+        <div class="targets-section">
+            <div class="targets-list">
+                <div class="targets-header">
+                    <h3 class="targets-title">🎯 SELECT TARGETS FOR DESTRUCTION</h3>
+                    <button class="select-all-btn" onclick="selectAll()">Select All</button>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="dead_leads" data-count="847">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">💀</div>
+                    <div class="target-info">
+                        <div class="target-name">Dead Leads</div>
+                        <div class="target-desc">Kontakte ohne Reaktion seit 90+ Tagen</div>
+                    </div>
+                    <div class="target-count">847</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="failed_workflows" data-count="23">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">🔄</div>
+                    <div class="target-info">
+                        <div class="target-name">Failed Workflows</div>
+                        <div class="target-desc">Steckengebliebene Automationen</div>
+                    </div>
+                    <div class="target-count">23</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="duplicates" data-count="156">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">👥</div>
+                    <div class="target-info">
+                        <div class="target-name">Duplicate Contacts</div>
+                        <div class="target-desc">Mehrfach vorhandene Kontakte</div>
+                    </div>
+                    <div class="target-count">156</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="expired_campaigns" data-count="12">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">📅</div>
+                    <div class="target-info">
+                        <div class="target-name">Expired Campaigns</div>
+                        <div class="target-desc">Abgelaufene Marketing-Kampagnen</div>
+                    </div>
+                    <div class="target-count">12</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="inactive_integrations" data-count="3">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">🔌</div>
+                    <div class="target-info">
+                        <div class="target-name">Inactive Integrations</div>
+                        <div class="target-desc">Nicht verbundene API-Integrationen</div>
+                    </div>
+                    <div class="target-count">3</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="old_files" data-count="89">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">📁</div>
+                    <div class="target-info">
+                        <div class="target-name">Old Files</div>
+                        <div class="target-desc">Veraltete Dokumente (>1 Jahr)</div>
+                    </div>
+                    <div class="target-count">89</div>
+                </div>
+
+                <div class="target-item" onclick="toggleTarget(this)" data-type="spam_contacts" data-count="234">
+                    <div class="target-checkbox"></div>
+                    <div class="target-icon">🚫</div>
+                    <div class="target-info">
+                        <div class="target-name">Spam Contacts</div>
+                        <div class="target-desc">Als Spam markierte Einträge</div>
+                    </div>
+                    <div class="target-count">234</div>
+                </div>
+            </div>
+
+            <!-- Destruction Panel -->
+            <div class="destruction-panel">
+                <div class="destruction-kanji">破壊</div>
+                <h3 class="destruction-title">HAKAI</h3>
+                <div class="destruction-count" id="totalCount">0</div>
+                <div class="destruction-label">Items zur Zerstörung ausgewählt</div>
+                <button class="hakai-btn" id="hakaiBtn" onclick="showConfirmation()" disabled>
+                    💀 EXECUTE HAKAI 💀
+                </button>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <h3 class="history-title">📜 DESTRUCTION HISTORY</h3>
+            <div class="history-item">
+                <div class="history-icon">💀</div>
+                <div class="history-info">
+                    <div class="history-action">Dead Leads eliminiert</div>
+                    <div class="history-time">24.12.2024, 14:32 Uhr</div>
+                </div>
+                <div class="history-count">1,247</div>
+            </div>
+            <div class="history-item">
+                <div class="history-icon">👥</div>
+                <div class="history-info">
+                    <div class="history-action">Duplicates entfernt</div>
+                    <div class="history-time">23.12.2024, 09:15 Uhr</div>
+                </div>
+                <div class="history-count">89</div>
+            </div>
+            <div class="history-item">
+                <div class="history-icon">📅</div>
+                <div class="history-info">
+                    <div class="history-action">Expired Campaigns gelöscht</div>
+                    <div class="history-time">20.12.2024, 16:45 Uhr</div>
+                </div>
+                <div class="history-count">8</div>
+            </div>
+            <div class="history-item">
+                <div class="history-icon">🔄</div>
+                <div class="history-info">
+                    <div class="history-action">Failed Workflows bereinigt</div>
+                    <div class="history-time">18.12.2024, 11:20 Uhr</div>
+                </div>
+                <div class="history-count">34</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-kanji">破壊</div>
+            <h3 class="modal-title">⚠️ CONFIRM DESTRUCTION</h3>
+            <p class="modal-desc">
+                Du bist dabei, <strong id="modalCount">0</strong> Items permanent zu löschen.
+                <br><br>
+                Diese Aktion kann NICHT rückgängig gemacht werden!
+            </p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeModal()">ABBRECHEN</button>
+                <button class="modal-btn confirm" onclick="executeHakai()">💀 HAKAI AUSFÜHREN</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (3 + Math.random() * 2) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Selection logic
+        let selectedTargets = new Set();
+
+        function toggleTarget(element) {
+            const type = element.dataset.type;
+            const count = parseInt(element.dataset.count);
+            
+            element.classList.toggle('selected');
+            
+            if (element.classList.contains('selected')) {
+                selectedTargets.add({ type, count });
+            } else {
+                selectedTargets.forEach(t => {
+                    if (t.type === type) selectedTargets.delete(t);
+                });
+            }
+            
+            updateTotalCount();
+        }
+
+        function selectAll() {
+            const items = document.querySelectorAll('.target-item');
+            const allSelected = Array.from(items).every(item => item.classList.contains('selected'));
+            
+            items.forEach(item => {
+                if (allSelected) {
+                    item.classList.remove('selected');
+                    selectedTargets.clear();
+                } else {
+                    item.classList.add('selected');
+                    selectedTargets.add({
+                        type: item.dataset.type,
+                        count: parseInt(item.dataset.count)
+                    });
+                }
+            });
+            
+            updateTotalCount();
+        }
+
+        function updateTotalCount() {
+            let total = 0;
+            selectedTargets.forEach(t => total += t.count);
+            
+            document.getElementById('totalCount').textContent = total.toLocaleString();
+            document.getElementById('hakaiBtn').disabled = total === 0;
+        }
+
+        function showConfirmation() {
+            let total = 0;
+            selectedTargets.forEach(t => total += t.count);
+            
+            document.getElementById('modalCount').textContent = total.toLocaleString();
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        function executeHakai() {
+            closeModal();
+            
+            // Visual effect
+            document.body.style.animation = 'none';
+            document.body.style.background = 'linear-gradient(135deg, #FF0000, #8B00FF)';
+            
+            setTimeout(() => {
+                document.body.style.background = '';
+                
+                let total = 0;
+                selectedTargets.forEach(t => total += t.count);
+                
+                alert(`💀 HAKAI COMPLETE!\n\n${total.toLocaleString()} items wurden vernichtet.\n\n破壊 - DESTRUCTION SUCCESSFUL`);
+                
+                // Reset selection
+                document.querySelectorAll('.target-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                selectedTargets.clear();
+                updateTotalCount();
+                
+                // Update stats (demo)
+                document.getElementById('deadLeads').textContent = '0';
+                document.getElementById('failedWorkflows').textContent = '0';
+                document.getElementById('duplicates').textContent = '0';
+                document.getElementById('expired').textContent = '0';
+                
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

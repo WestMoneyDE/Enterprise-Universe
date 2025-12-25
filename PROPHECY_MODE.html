@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔮 予言 PROPHECY MODE | Future Vision | West Money OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --prophecy-purple: #8B5CF6;
+            --prophecy-blue: #6366F1;
+            --prophecy-glow: rgba(139, 92, 246, 0.5);
+            --gold: #FFD700;
+            --silver: #E8E8FF;
+            --void: #030308;
+            --dark: #0A0A1A;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text: #FFFFFF;
+            --text-dim: #94A3B8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--void);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Mystical Background */
+        .prophecy-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 60%),
+                linear-gradient(180deg, #030308 0%, #0A0A1A 50%, #030308 100%);
+        }
+
+        /* Constellation Stars */
+        .constellation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .constellation-star {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: var(--prophecy-purple);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--prophecy-glow);
+            animation: constellation-pulse 4s infinite;
+        }
+
+        @keyframes constellation-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* Header */
+        .prophecy-header {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+            border-bottom: 2px solid var(--prophecy-purple);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .prophecy-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--prophecy-purple);
+            text-shadow: 
+                0 0 20px var(--prophecy-glow),
+                0 0 40px var(--prophecy-glow);
+            animation: prophecy-glow 3s infinite;
+        }
+
+        @keyframes prophecy-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.4); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--prophecy-purple), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+        }
+
+        .logo-text p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .timeframe-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .timeframe-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            color: var(--prophecy-purple);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timeframe-btn:hover, .timeframe-btn.active {
+            background: var(--prophecy-purple);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Vision Statement */
+        .vision-statement {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%);
+            border: 1px solid var(--prophecy-purple);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .vision-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--silver);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vision-source {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--prophecy-purple);
+        }
+
+        /* Prediction Grid */
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .prediction-card {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .prediction-card:hover {
+            border-color: var(--prophecy-purple);
+            box-shadow: 0 0 30px var(--prophecy-glow);
+            transform: translateY(-5px);
+        }
+
+        .prediction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--prophecy-purple);
+        }
+
+        .confidence-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .confidence-high {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .confidence-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .confidence-low {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .prediction-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .prediction-change.positive { color: var(--success); }
+        .prediction-change.negative { color: var(--danger); }
+
+        /* Forecast Chart Area */
+        .forecast-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .chart-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--prophecy-purple);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-area {
+            height: 300px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        /* Simple CSS Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            padding: 0 1rem;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bar {
+            width: 50px;
+            background: linear-gradient(180deg, var(--prophecy-purple), var(--prophecy-blue));
+            border-radius: 5px 5px 0 0;
+            transition: height 1s ease-out;
+            position: relative;
+        }
+
+        .bar.forecast {
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.5), rgba(99, 102, 241, 0.3));
+            border: 2px dashed var(--prophecy-purple);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--prophecy-purple);
+            white-space: nowrap;
+        }
+
+        .bar-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Risk Predictions */
+        .risks-card {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .risks-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--prophecy-purple);
+            margin-bottom: 1rem;
+        }
+
+        .risk-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .risk-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        .risk-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .risk-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .risk-low {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .risk-info {
+            flex: 1;
+        }
+
+        .risk-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .risk-desc {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Action Recommendations */
+        .recommendations-section {
+            background: rgba(10, 10, 26, 0.8);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .rec-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--prophecy-purple);
+            margin-bottom: 1rem;
+        }
+
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .rec-card {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 1.25rem;
+            transition: all 0.3s;
+        }
+
+        .rec-card:hover {
+            background: rgba(139, 92, 246, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .rec-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .rec-action {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .rec-reason {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+
+        .rec-impact {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--success);
+        }
+
+        /* Nostradamus Bot */
+        .nostradamus-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%);
+            border: 1px solid var(--prophecy-purple);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .nostradamus-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--prophecy-purple), var(--prophecy-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 0 30px var(--prophecy-glow);
+            animation: avatar-float 4s ease-in-out infinite;
+        }
+
+        @keyframes avatar-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nostradamus-info {
+            flex: 1;
+        }
+
+        .nostradamus-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--prophecy-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        .nostradamus-quote {
+            font-style: italic;
+            color: var(--silver);
+            margin-bottom: 1rem;
+        }
+
+        .nostradamus-status {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--prophecy-purple);
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .prediction-grid { grid-template-columns: repeat(2, 1fr); }
+            .forecast-section { grid-template-columns: 1fr; }
+            .rec-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .prediction-grid { grid-template-columns: 1fr; }
+            .rec-grid { grid-template-columns: 1fr; }
+            .header-content { flex-direction: column; gap: 1rem; }
+            .nostradamus-section { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="prophecy-bg"></div>
+    <div class="constellation" id="constellation"></div>
+
+    <!-- Header -->
+    <header class="prophecy-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="prophecy-kanji">予言</span>
+                <div class="logo-text">
+                    <h1>PROPHECY MODE</h1>
+                    <p>FUTURE VISION • PREDICTIVE ANALYTICS</p>
+                </div>
+            </div>
+            <div class="timeframe-selector">
+                <button class="timeframe-btn" onclick="setTimeframe('Q1')">Q1 2026</button>
+                <button class="timeframe-btn active" onclick="setTimeframe('Q2')">Q2 2026</button>
+                <button class="timeframe-btn" onclick="setTimeframe('2026')">Full 2026</button>
+                <button class="timeframe-btn" onclick="setTimeframe('2027')">2027</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Vision Statement -->
+        <div class="vision-statement">
+            <p class="vision-text">
+                "Die Zukunft offenbart sich denen, die bereit sind zu sehen. 
+                West Money OS wird €1.4M ARR erreichen bis Ende 2028."
+            </p>
+            <p class="vision-source">— 🔮 Nostradamus Bot, Prophecy vom 24.12.2025</p>
+        </div>
+
+        <!-- Prediction Grid -->
+        <div class="prediction-grid">
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">💰 REVENUE FORECAST</span>
+                    <span class="confidence-badge confidence-high">95% Confidence</span>
+                </div>
+                <div class="prediction-value">€425K</div>
+                <div class="prediction-change positive">↑ +68% vs Q2 2025</div>
+            </div>
+
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">👥 NEW CUSTOMERS</span>
+                    <span class="confidence-badge confidence-high">87% Confidence</span>
+                </div>
+                <div class="prediction-value">156</div>
+                <div class="prediction-change positive">↑ +124% growth</div>
+            </div>
+
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">📊 SAAS ARR</span>
+                    <span class="confidence-badge confidence-medium">72% Confidence</span>
+                </div>
+                <div class="prediction-value">€180K</div>
+                <div class="prediction-change positive">↑ Target on track</div>
+            </div>
+
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">🏠 SMART HOME PROJECTS</span>
+                    <span class="confidence-badge confidence-high">91% Confidence</span>
+                </div>
+                <div class="prediction-value">24</div>
+                <div class="prediction-change positive">↑ +45% vs last year</div>
+            </div>
+
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">💼 DEAL CLOSE RATE</span>
+                    <span class="confidence-badge confidence-medium">78% Confidence</span>
+                </div>
+                <div class="prediction-value">34%</div>
+                <div class="prediction-change positive">↑ +8pp improvement</div>
+            </div>
+
+            <div class="prediction-card">
+                <div class="prediction-header">
+                    <span class="prediction-title">💰 SEED FUNDING</span>
+                    <span class="confidence-badge confidence-medium">68% Confidence</span>
+                </div>
+                <div class="prediction-value">€1.5M</div>
+                <div class="prediction-change positive">Q1 2026 target</div>
+            </div>
+        </div>
+
+        <!-- Forecast Chart & Risks -->
+        <div class="forecast-section">
+            <div class="chart-card">
+                <h3 class="chart-title">📈 REVENUE FORECAST 2025-2027</h3>
+                <div class="chart-area">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar" style="height: 100px;">
+                                <span class="bar-value">€312K</span>
+                            </div>
+                            <span class="bar-label">Q3 '25</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 130px;">
+                                <span class="bar-value">€385K</span>
+                            </div>
+                            <span class="bar-label">Q4 '25</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar forecast" style="height: 160px;">
+                                <span class="bar-value">€425K</span>
+                            </div>
+                            <span class="bar-label">Q1 '26</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar forecast" style="height: 190px;">
+                                <span class="bar-value">€520K</span>
+                            </div>
+                            <span class="bar-label">Q2 '26</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar forecast" style="height: 220px;">
+                                <span class="bar-value">€650K</span>
+                            </div>
+                            <span class="bar-label">Q3 '26</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar forecast" style="height: 250px;">
+                                <span class="bar-value">€780K</span>
+                            </div>
+                            <span class="bar-label">Q4 '26</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risks-card">
+                <h3 class="risks-title">⚠️ RISK PREDICTIONS</h3>
+                
+                <div class="risk-item">
+                    <div class="risk-indicator risk-low">12%</div>
+                    <div class="risk-info">
+                        <div class="risk-name">Market Disruption</div>
+                        <div class="risk-desc">Neue Wettbewerber im PropTech</div>
+                    </div>
+                </div>
+
+                <div class="risk-item">
+                    <div class="risk-indicator risk-medium">34%</div>
+                    <div class="risk-info">
+                        <div class="risk-name">Funding Gap</div>
+                        <div class="risk-desc">Seed-Runde verzögert sich</div>
+                    </div>
+                </div>
+
+                <div class="risk-item">
+                    <div class="risk-indicator risk-low">18%</div>
+                    <div class="risk-info">
+                        <div class="risk-name">Tech Delays</div>
+                        <div class="risk-desc">SaaS Launch Verzögerung</div>
+                    </div>
+                </div>
+
+                <div class="risk-item">
+                    <div class="risk-indicator risk-medium">28%</div>
+                    <div class="risk-info">
+                        <div class="risk-name">Customer Churn</div>
+                        <div class="risk-desc">Erhöhte Kündigungsrate</div>
+                    </div>
+                </div>
+
+                <div class="risk-item">
+                    <div class="risk-indicator risk-high">45%</div>
+                    <div class="risk-info">
+                        <div class="risk-name">Economic Downturn</div>
+                        <div class="risk-desc">Baubranche-Rezession 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Recommendations -->
+        <div class="recommendations-section">
+            <h3 class="rec-title">🎯 RECOMMENDED ACTIONS</h3>
+            <div class="rec-grid">
+                <div class="rec-card">
+                    <div class="rec-icon">🤝</div>
+                    <div class="rec-action">LOXONE Deal priorisieren</div>
+                    <div class="rec-reason">95% Abschlusswahrscheinlichkeit in den nächsten 30 Tagen</div>
+                    <div class="rec-impact">Impact: +€85K Revenue</div>
+                </div>
+
+                <div class="rec-card">
+                    <div class="rec-icon">💰</div>
+                    <div class="rec-action">Investor Outreach starten</div>
+                    <div class="rec-reason">Optimales Timing für Seed-Runde basierend auf Marktdaten</div>
+                    <div class="rec-impact">Impact: €1.5M Funding</div>
+                </div>
+
+                <div class="rec-card">
+                    <div class="rec-icon">🚀</div>
+                    <div class="rec-action">SaaS Beta Launch</div>
+                    <div class="rec-reason">Januar 2026 optimal für B2B Entscheider</div>
+                    <div class="rec-impact">Impact: 50 Early Adopters</div>
+                </div>
+
+                <div class="rec-card">
+                    <div class="rec-icon">📱</div>
+                    <div class="rec-action">WhatsApp Automation</div>
+                    <div class="rec-reason">Lead Response Time auf &lt;5 Min senken</div>
+                    <div class="rec-impact">Impact: +34% Conversion</div>
+                </div>
+
+                <div class="rec-card">
+                    <div class="rec-icon">🎓</div>
+                    <div class="rec-action">Team Expansion</div>
+                    <div class="rec-reason">2 Sales Reps für Q2 2026 Growth</div>
+                    <div class="rec-impact">Impact: 2x Pipeline</div>
+                </div>
+
+                <div class="rec-card">
+                    <div class="rec-icon">🌍</div>
+                    <div class="rec-action">Österreich Expansion</div>
+                    <div class="rec-reason">DACH-Markt Opportunity Q3 2026</div>
+                    <div class="rec-impact">Impact: +€200K TAM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nostradamus Bot -->
+        <div class="nostradamus-section">
+            <div class="nostradamus-avatar">🔮</div>
+            <div class="nostradamus-info">
+                <h3 class="nostradamus-name">NOSTRADAMUS BOT</h3>
+                <p class="nostradamus-quote">"The future belongs to those who prepare for it today."</p>
+                <div class="nostradamus-status">
+                    <div class="status-item">
+                        <div class="status-value">847</div>
+                        <div class="status-label">Predictions Made</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-value">89%</div>
+                        <div class="status-label">Accuracy Rate</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-value">24/7</div>
+                        <div class="status-label">Active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Generate constellation
+        const constellation = document.getElementById('constellation');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'constellation-star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            constellation.appendChild(star);
+        }
+
+        function setTimeframe(tf) {
+            document.querySelectorAll('.timeframe-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            console.log('Timeframe set to:', tf);
+        }
+    </script>
+</body>
+</html>
