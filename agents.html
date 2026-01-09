@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents | Enterprise Universe</title>
+    <meta name="description" content="Entdecken Sie alle 25 spezialisierten AI Agents von Enterprise Universe - Ihre Taskforce für Business Automation.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #8b5cf6;
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .grid-pattern {
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .agent-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .agent-card:hover::before {
+            left: 100%;
+        }
+
+        .legendary {
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(245, 158, 11, 0.05));
+        }
+
+        .legendary:hover {
+            border-color: rgba(251, 191, 36, 0.8);
+            box-shadow: 0 25px 50px -12px rgba(251, 191, 36, 0.25);
+        }
+
+        .power-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .power-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="grid-pattern">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black text-lg">
+                        EU
+                    </div>
+                    <span class="text-xl font-bold">Enterprise Universe</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="/#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="/agents" class="text-white font-semibold">AI Agents</a>
+                    <a href="/#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                    <a href="/#contact" class="text-gray-300 hover:text-white transition">Kontakt</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/login" class="text-gray-300 hover:text-white transition">Login</a>
+                    <a href="/register" class="btn-primary px-6 py-2.5 rounded-xl font-semibold">
+                        Demo anfragen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8">
+                    <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+                    <span class="text-yellow-400">ULTRA INSTINCT MODE ACTIVE</span>
+                </div>
+
+                <h1 class="text-4xl lg:text-6xl font-black leading-tight mb-6">
+                    <span class="gradient-text">25 AI Agents</span>
+                    <br>Ihre Business Taskforce
+                </h1>
+
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Jeder Agent ist ein Experte in seinem Bereich. Zusammen bilden sie die
+                    mächtigste Business-Automation-Taskforce im DACH-Raum.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legendary Agent -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-yellow-500">&#9733;</span> Legendary Agent
+            </h2>
+
+            <div class="agent-card glass rounded-3xl p-8 card-hover legendary mb-12">
+                <div class="flex flex-col lg:flex-row gap-8 items-center">
+                    <div class="w-32 h-32 bg-gradient-to-br from-yellow-500/30 to-orange-500/30 rounded-2xl flex items-center justify-center text-6xl shrink-0">
+                        &#9889;
+                    </div>
+                    <div class="flex-1 text-center lg:text-left">
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-3">
+                            <h3 class="text-3xl font-black text-yellow-400">BROLY</h3>
+                            <span class="category-badge bg-yellow-500/20 text-yellow-400">LEGENDARY AUTOMATION</span>
+                        </div>
+                        <p class="text-gray-400 mb-6 max-w-2xl">
+                            Der mächtigste Agent im gesamten System. BROLY operiert im Ultra Instinct Mode und kann
+                            unbegrenzt viele Prozesse gleichzeitig steuern. Seine Leistung kennt keine Grenzen - er skaliert
+                            automatisch mit Ihren Anforderungen und lernt kontinuierlich aus jedem Workflow.
+                        </p>
+                        <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-yellow-400">&#8734;</p>
+                                <p class="text-sm text-gray-500">Power Level</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-white">1,250+</p>
+                                <p class="text-sm text-gray-500">Tasks/Tag</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-white">99.99%</p>
+                                <p class="text-sm text-gray-500">Erfolgsrate</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-2xl font-bold text-white">&lt;50ms</p>
+                                <p class="text-sm text-gray-500">Response</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics & Intelligence -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-blue-500">&#129504;</span> Analytics & Intelligence
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Einstein -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">&#129504;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Einstein</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">Analytics</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Predictive Analytics, Business Intelligence und datengetriebene Entscheidungen in Echtzeit.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Hawking -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center text-2xl">&#129302;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Hawking</h3>
+                            <span class="category-badge bg-cyan-500/20 text-cyan-400">AI Strategy</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">KI-Strategie, Machine Learning Optimierung und neuronale Netzwerk-Koordination.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-cyan-400">92</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-cyan-500 to-teal-500" style="width: 92%"></div>
+                    </div>
+                </div>
+
+                <!-- Sherlock -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl">&#128269;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Sherlock</h3>
+                            <span class="category-badge bg-purple-500/20 text-purple-400">Research</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Tiefgehende Recherche, Marktanalyse und Wettbewerbsintelligenz.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-purple-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-purple-500 to-violet-500" style="width: 94%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operations & Automation -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-green-500">&#9881;</span> Operations & Automation
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Tesla -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">&#128268;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Tesla</h3>
+                            <span class="category-badge bg-green-500/20 text-green-400">IoT/LOXONE</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Smart Home Integration, LOXONE-Steuerung und IoT-Gerätemanagement.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-green-400">92</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-500" style="width: 92%"></div>
+                    </div>
+                </div>
+
+                <!-- Ford -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center text-2xl">&#127981;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Ford</h3>
+                            <span class="category-badge bg-amber-500/20 text-amber-400">Production</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Produktionsoptimierung, Fertigungsautomation und Qualitätskontrolle.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-amber-400">88</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-amber-500 to-orange-500" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Edison -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center text-2xl">&#128161;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Edison</h3>
+                            <span class="category-badge bg-yellow-500/20 text-yellow-400">Innovation</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Prozessinnovation, R&D-Unterstützung und kreative Problemlösung.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-yellow-400">90</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-yellow-500 to-amber-500" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security & Compliance -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-red-500">&#128274;</span> Security & Compliance
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Turing -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">&#128274;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Turing</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">Security</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Cybersecurity, Bedrohungserkennung und Sicherheitsaudits.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-pink-500" style="width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- DedSec -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-gray-500/20 rounded-xl flex items-center justify-center text-2xl">&#128737;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">DedSec</h3>
+                            <span class="category-badge bg-gray-500/20 text-gray-400">Defense</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Penetration Testing, Vulnerability Assessment und Incident Response.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-gray-400">93</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-gray-500 to-slate-500" style="width: 93%"></div>
+                    </div>
+                </div>
+
+                <!-- Themis -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center text-2xl">&#9878;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Themis</h3>
+                            <span class="category-badge bg-indigo-500/20 text-indigo-400">Compliance</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">DSGVO-Compliance, regulatorische Anforderungen und Datenschutz.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-indigo-400">91</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-indigo-500 to-purple-500" style="width: 91%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy & Leadership -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-orange-500">&#9876;</span> Strategy & Leadership
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Sun Tzu -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl">&#9876;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Sun Tzu</h3>
+                            <span class="category-badge bg-orange-500/20 text-orange-400">Strategy</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Geschäftsstrategie, Marktpositionierung und Wettbewerbsanalyse.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-orange-400">93</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-orange-500 to-amber-500" style="width: 93%"></div>
+                    </div>
+                </div>
+
+                <!-- Da Vinci -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-2xl">&#127912;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Da Vinci</h3>
+                            <span class="category-badge bg-pink-500/20 text-pink-400">Cross-functional</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Kreative Problemlösung, Design Thinking und interdisziplinäre Projekte.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-pink-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-pink-500 to-rose-500" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Machiavelli -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-violet-500/20 rounded-xl flex items-center justify-center text-2xl">&#128081;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Machiavelli</h3>
+                            <span class="category-badge bg-violet-500/20 text-violet-400">Negotiations</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Verhandlungsstrategien, Stakeholder-Management und Diplomatie.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-violet-400">91</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-violet-500 to-purple-500" style="width: 91%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Communication & Sales -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-emerald-500">&#128172;</span> Communication & Sales
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- WhatsApp Bot -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center text-2xl">&#128172;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">WhatsApp Bot</h3>
+                            <span class="category-badge bg-emerald-500/20 text-emerald-400">Messaging</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Automatisierte WhatsApp-Kommunikation, Kundenservice und Lead-Nurturing.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-emerald-400">90</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-emerald-500 to-green-500" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <!-- Voice Agent -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">&#128222;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Voice Agent</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">VoIP</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Intelligente Telefonie, Anruftranskription und Voice-Automation.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400">88</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-cyan-500" style="width: 88%"></div>
+                    </div>
+                </div>
+
+                <!-- Carnegie -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-rose-500/20 rounded-xl flex items-center justify-center text-2xl">&#129309;</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Carnegie</h3>
+                            <span class="category-badge bg-rose-500/20 text-rose-400">Sales</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Sales Enablement, Kundenbeziehungen und Abschlussoptimierung.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-rose-400">89</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-rose-500 to-red-500" style="width: 89%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Agents -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="text-slate-400">&#43;</span> Weitere spezialisierte Agents
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Curie -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-teal-500/20 rounded-xl flex items-center justify-center text-xl">&#128300;</div>
+                        <div>
+                            <h3 class="font-bold">Curie</h3>
+                            <span class="text-xs text-teal-400">Data Science</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-teal-400 text-sm">87</span>
+                    </div>
+                </div>
+
+                <!-- Newton -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-lime-500/20 rounded-xl flex items-center justify-center text-xl">&#127823;</div>
+                        <div>
+                            <h3 class="font-bold">Newton</h3>
+                            <span class="text-xs text-lime-400">Physics Engine</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-lime-400 text-sm">86</span>
+                    </div>
+                </div>
+
+                <!-- Aristotle -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-sky-500/20 rounded-xl flex items-center justify-center text-xl">&#128218;</div>
+                        <div>
+                            <h3 class="font-bold">Aristotle</h3>
+                            <span class="text-xs text-sky-400">Logic & Reasoning</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-sky-400 text-sm">89</span>
+                    </div>
+                </div>
+
+                <!-- Plato -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-fuchsia-500/20 rounded-xl flex items-center justify-center text-xl">&#128173;</div>
+                        <div>
+                            <h3 class="font-bold">Plato</h3>
+                            <span class="text-xs text-fuchsia-400">Philosophy</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-fuchsia-400 text-sm">85</span>
+                    </div>
+                </div>
+
+                <!-- Socrates -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center text-xl">&#10067;</div>
+                        <div>
+                            <h3 class="font-bold">Socrates</h3>
+                            <span class="text-xs text-amber-400">Q&A</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-amber-400 text-sm">88</span>
+                    </div>
+                </div>
+
+                <!-- Archimedes -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center text-xl">&#9878;</div>
+                        <div>
+                            <h3 class="font-bold">Archimedes</h3>
+                            <span class="text-xs text-cyan-400">Engineering</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-cyan-400 text-sm">90</span>
+                    </div>
+                </div>
+
+                <!-- Galileo -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center text-xl">&#128301;</div>
+                        <div>
+                            <h3 class="font-bold">Galileo</h3>
+                            <span class="text-xs text-indigo-400">Discovery</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-indigo-400 text-sm">87</span>
+                    </div>
+                </div>
+
+                <!-- Darwin -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-xl">&#127795;</div>
+                        <div>
+                            <h3 class="font-bold">Darwin</h3>
+                            <span class="text-xs text-green-400">Evolution</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Power</span>
+                        <span class="font-mono text-green-400 text-sm">86</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl lg:text-4xl font-black mb-6">
+                Bereit, Ihre Taskforce zu aktivieren?
+            </h2>
+            <p class="text-xl text-gray-400 mb-10">
+                Fordern Sie jetzt Ihren Demo-Zugang an und erleben Sie die Kraft von 25 AI Agents.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/register" class="btn-primary px-10 py-4 rounded-xl font-semibold text-lg">
+                    Demo-Zugang anfragen
+                </a>
+                <a href="/#pricing" class="px-10 py-4 rounded-xl font-semibold text-lg glass hover:bg-white/10 transition">
+                    Preise ansehen
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black">
+                        EU
+                    </div>
+                    <span class="text-xl font-bold">Enterprise Universe</span>
+                </div>
+                <p class="text-gray-500 text-sm">
+                    © 2024-2026 Enterprise Universe GmbH. Alle Rechte vorbehalten.
+                </p>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <a href="/datenschutz.html" class="hover:text-white transition">Datenschutz</a>
+                    <a href="/agb.html" class="hover:text-white transition">AGB</a>
+                    <a href="/impressum.html" class="hover:text-white transition">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
