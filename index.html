@@ -3,885 +3,825 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>West Money OS - Smart Home & PropTech SaaS Platform</title>
-    <meta name="description" content="Die führende SaaS-Plattform für Smart Home, PropTech und Barrierefreies Bauen. LOXONE Gold Partner. Enterprise Universe GmbH.">
-    <meta name="keywords" content="West Money OS, Smart Home, LOXONE, PropTech, CRM, SaaS, Enterprise Universe">
-    <meta name="author" content="Ömer Hüseyin Coşkun - Enterprise Universe GmbH">
-    <meta property="og:title" content="West Money OS - Smart Home & PropTech Platform">
-    <meta property="og:description" content="Die führende SaaS-Plattform für Smart Home Integratoren">
-    <meta property="og:type" content="website">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23FF5722' rx='20' width='100' height='100'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>W</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Enterprise Universe | AI-Powered Business Automation Platform</title>
+    <meta name="description" content="Enterprise Universe - Die intelligente SaaS-Plattform für KMU im DACH-Raum. AI Agents, Automation, CRM, ERP in einem System.">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #FF5722;
-            --primary-light: #FF9800;
-            --gold: #FFD700;
-            --success: #4CAF50;
-            --dark: #0a0a0a;
-            --dark-card: #1a1a2e;
-            --text: #ffffff;
-            --text-muted: rgba(255,255,255,0.6);
-            --gradient: linear-gradient(135deg, #FF5722 0%, #FF9800 50%, #FFD700 100%);
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            color: #fff;
             overflow-x: hidden;
         }
         
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10,10,10,0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 900;
-            color: white;
-            box-shadow: 0 4px 20px rgba(255,87,34,0.4);
-        }
-        
-        .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            background: var(--gradient);
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
         }
         
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
-            transition: color 0.3s;
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .nav-links a:hover { color: var(--primary); }
-        
-        /* Buttons */
-        .btn {
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+        .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: none;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.6); }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        
+        .stat-counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .award-badge {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
         }
         
         .btn-primary {
-            background: var(--gradient);
-            color: white;
-            box-shadow: 0 4px 20px rgba(255,87,34,0.3);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(255,87,34,0.5);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
         }
         
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-        
-        .btn-outline:hover {
-            border-color: var(--primary);
-            background: rgba(255,87,34,0.1);
-        }
-        
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 5% 80px;
+        .agent-card {
             position: relative;
             overflow: hidden;
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 80%;
-            height: 150%;
-            background: radial-gradient(ellipse, rgba(255,87,34,0.15) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -20%;
-            width: 60%;
-            height: 100%;
-            background: radial-gradient(ellipse, rgba(255,152,0,0.1) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        
-        .hero-content {
-            max-width: 700px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,87,34,0.1);
-            border: 1px solid rgba(255,87,34,0.3);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 24px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,87,34,0.4); }
-            50% { box-shadow: 0 0 20px 5px rgba(255,87,34,0.2); }
-        }
-        
-        .hero h1 {
-            font-size: clamp(48px, 6vw, 72px);
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -2px;
-        }
-        
-        .hero h1 span {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            max-width: 560px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .hero-stats {
-            display: flex;
-            gap: 48px;
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .stat-item h3 {
-            font-size: 36px;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .stat-item p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 0;
-        }
-        
-        /* Awards */
-        .awards {
-            padding: 40px 5%;
-            background: rgba(255,255,255,0.02);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .awards-inner {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
-        }
-        
-        .award-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .award-item:hover { opacity: 1; }
-        
-        .award-icon { font-size: 32px; }
-        
-        .award-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-        
-        .award-text span {
-            display: block;
-            color: var(--gold);
-            font-size: 11px;
-        }
-        
-        /* Features */
-        .features {
-            padding: 120px 5%;
-        }
-        
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 80px;
-        }
-        
-        .section-header h2 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-        
-        .section-header p {
-            font-size: 18px;
-            color: var(--text-muted);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .feature-card {
-            background: linear-gradient(135deg, var(--dark-card), rgba(15,15,26,0.8));
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 40px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card::before {
+        .agent-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.3s;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
         }
         
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255,87,34,0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        .agent-card:hover::before {
+            left: 100%;
         }
         
-        .feature-card:hover::before { opacity: 1; }
-        
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(255,87,34,0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 24px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.7;
-        }
-        
-        /* Pricing */
-        .pricing {
-            padding: 120px 5%;
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .pricing-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 40px 32px;
-            text-align: center;
-            position: relative;
-            transition: all 0.4s ease;
-        }
-        
-        .pricing-card.featured {
-            background: linear-gradient(135deg, rgba(255,87,34,0.1), rgba(255,152,0,0.05));
-            border-color: rgba(255,87,34,0.3);
+        .pricing-popular {
+            border: 2px solid var(--primary);
             transform: scale(1.05);
         }
         
-        .pricing-card.featured::before {
-            content: 'BELIEBT';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient);
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 20px;
+        .trusted-logo {
+            filter: grayscale(1) brightness(0.7);
+            transition: all 0.3s ease;
         }
         
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255,87,34,0.4);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-8px);
-        }
-        
-        .pricing-tier {
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-        
-        .pricing-price {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        
-        .pricing-price span {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        
-        .pricing-desc {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 32px;
-        }
-        
-        .pricing-features {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 32px;
-        }
-        
-        .pricing-features li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .pricing-features li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: 700;
-        }
-        
-        .pricing-card .btn { width: 100%; justify-content: center; }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 120px 5%;
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .testimonial-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 24px;
-            padding: 40px;
-        }
-        
-        .testimonial-text {
-            font-size: 17px;
-            line-height: 1.8;
-            margin-bottom: 32px;
-            color: var(--text-muted);
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .testimonial-avatar {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        .testimonial-info h4 {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .testimonial-info p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin: 0;
-        }
-        
-        /* CTA */
-        .cta {
-            padding: 120px 5%;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at center, rgba(255,87,34,0.2) 0%, transparent 60%);
-        }
-        
-        .cta-content {
-            position: relative;
-            z-index: 1;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .cta h2 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            font-size: 20px;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-        
-        /* Footer */
-        .footer {
-            padding: 80px 5% 40px;
-            background: rgba(0,0,0,0.5);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 48px;
-            max-width: 1400px;
-            margin: 0 auto 60px;
-        }
-        
-        .footer-brand .logo { margin-bottom: 20px; }
-        
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.8;
-        }
-        
-        .footer-col h4 {
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 24px;
-            color: var(--text-muted);
-        }
-        
-        .footer-col a {
-            display: block;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 0;
-            transition: color 0.3s;
-        }
-        
-        .footer-col a:hover { color: var(--primary); }
-        
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-        
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-            .pricing-card.featured { transform: none; }
-            .pricing-card.featured:hover { transform: translateY(-8px); }
-        }
-        
-        @media (max-width: 992px) {
-            .features-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-grid { grid-template-columns: repeat(3, 1fr); }
-            .nav-links { display: none; }
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 40px; }
-            .hero-stats { flex-direction: column; gap: 24px; }
-            .features-grid, .testimonials-grid, .pricing-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .awards-inner { gap: 32px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        .trusted-logo:hover {
+            filter: grayscale(0) brightness(1);
         }
     </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="logo">
-            <div class="logo-icon">W</div>
-            <span class="logo-text">West Money OS</span>
-        </a>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#pricing">Preise</a>
-            <a href="#testimonials">Referenzen</a>
-            <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank">GitHub</a>
-            <a href="#pricing" class="btn btn-primary">Kostenlos testen</a>
+<body class="grid-pattern">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black text-lg">
+                        EU
+                    </div>
+                    <span class="text-xl font-bold">Enterprise Universe</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="#agents" class="text-gray-300 hover:text-white transition">AI Agents</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                    <a href="#awards" class="text-gray-300 hover:text-white transition">Awards</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition">Kontakt</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/login" class="text-gray-300 hover:text-white transition">Login</a>
+                    <a href="/signup" class="btn-primary px-6 py-2.5 rounded-xl font-semibold">
+                        Kostenlos starten
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
-    
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">🏆 LOXONE Gold Partner 2024</div>
-            <h1>Die <span>Smart Home</span> & PropTech Plattform der Zukunft</h1>
-            <p>Verwalten Sie Leads, Projekte und Kunden mit KI-gestützter Automatisierung. Gebaut für Smart Home Integratoren und Bauunternehmen.</p>
-            <div class="hero-buttons">
-                <a href="#pricing" class="btn btn-primary">🚀 14 Tage kostenlos testen</a>
-                <a href="#features" class="btn btn-outline">📺 Features ansehen</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item"><h3>€847K+</h3><p>Umsatz verwaltet</p></div>
-                <div class="stat-item"><h3>250+</h3><p>Aktive Nutzer</p></div>
-                <div class="stat-item"><h3>99.9%</h3><p>Uptime SLA</p></div>
-                <div class="stat-item"><h3>4.9⭐</h3><p>Kundenbewertung</p></div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Awards -->
-    <section class="awards">
-        <div class="awards-inner">
-            <div class="award-item"><div class="award-icon">🏆</div><div class="award-text">LOXONE Gold Partner<span>Zertifiziert 2024</span></div></div>
-            <div class="award-item"><div class="award-icon">🏅</div><div class="award-text">PropTech Germany<span>Top 50 Startup</span></div></div>
-            <div class="award-item"><div class="award-icon">🔒</div><div class="award-text">ISO 27001<span>Zertifiziert</span></div></div>
-            <div class="award-item"><div class="award-icon">✅</div><div class="award-text">DSGVO<span>100% Compliant</span></div></div>
-            <div class="award-item"><div class="award-icon">🇩🇪</div><div class="award-text">Made in Germany<span>Hosting Frankfurt</span></div></div>
-        </div>
-    </section>
-    
-    <!-- Features -->
-    <section class="features" id="features">
-        <div class="section-header">
-            <h2>Alles was Sie brauchen</h2>
-            <p>Eine Plattform für Lead Management, Projektsteuerung und Kundenbeziehungen - powered by AI.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3>HAIKU AI Scoring</h3>
-                <p>Unsere KI analysiert und bewertet Leads automatisch. Priorisieren Sie die vielversprechendsten Kontakte mit Claude AI.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🏠</div>
-                <h3>Smart Home Integration</h3>
-                <p>Native Integration mit LOXONE, KNX und anderen Smart Home Systemen. Projekte direkt verwalten.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💬</div>
-                <h3>WhatsApp Business</h3>
-                <p>Kommunizieren Sie direkt mit Kunden über WhatsApp. Meta API Integration mit Consent Management.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Einstein Analytics</h3>
-                <p>Echtzeit-Dashboards mit Umsatzprognosen, Pipeline-Analyse und KPI-Tracking.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3>CRM Sync</h3>
-                <p>Automatische Synchronisation mit HubSpot, Salesforce und anderen CRM-Systemen.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Enterprise Security</h3>
-                <p>ISO 27001 zertifiziert. SSO, 2FA und rollenbasierte Zugriffskontrolle.</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Pricing -->
-    <section class="pricing" id="pricing">
-        <div class="section-header">
-            <h2>Transparente Preise</h2>
-            <p>Starten Sie kostenlos und skalieren Sie mit Ihrem Business.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="pricing-tier">Starter</div>
-                <div class="pricing-price">€49<span>/Monat</span></div>
-                <div class="pricing-desc">Perfekt für Einzelunternehmer</div>
-                <ul class="pricing-features">
-                    <li>5 Benutzer</li>
-                    <li>500 Kontakte</li>
-                    <li>Basic CRM</li>
-                    <li>E-Mail Support</li>
-                    <li>1 Integration</li>
-                </ul>
-                <a href="mailto:info@enterprise-universe.com?subject=Starter%20Plan" class="btn btn-outline">Kostenlos testen</a>
-            </div>
-            
-            <div class="pricing-card featured">
-                <div class="pricing-tier">Business</div>
-                <div class="pricing-price">€149<span>/Monat</span></div>
-                <div class="pricing-desc">Für wachsende Teams</div>
-                <ul class="pricing-features">
-                    <li>25 Benutzer</li>
-                    <li>5.000 Kontakte</li>
-                    <li>HAIKU AI Scoring</li>
-                    <li>WhatsApp Business</li>
-                    <li>Alle Integrationen</li>
-                    <li>Priority Support</li>
-                </ul>
-                <a href="mailto:info@enterprise-universe.com?subject=Business%20Plan" class="btn btn-primary">Kostenlos testen</a>
-            </div>
-            
-            <div class="pricing-card">
-                <div class="pricing-tier">Enterprise</div>
-                <div class="pricing-price">€449<span>/Monat</span></div>
-                <div class="pricing-desc">Für große Unternehmen</div>
-                <ul class="pricing-features">
-                    <li>Unlimited Benutzer</li>
-                    <li>Unlimited Kontakte</li>
-                    <li>White-Label Option</li>
-                    <li>Dedicated Server</li>
-                    <li>Custom Integrationen</li>
-                    <li>24/7 Phone Support</li>
-                </ul>
-                <a href="mailto:info@enterprise-universe.com?subject=Enterprise%20Plan" class="btn btn-outline">Kontakt aufnehmen</a>
-            </div>
-            
-            <div class="pricing-card">
-                <div class="pricing-tier">🔥 GOD MODE</div>
-                <div class="pricing-price">Custom</div>
-                <div class="pricing-desc">Full Source Access</div>
-                <ul class="pricing-features">
-                    <li>Alles aus Enterprise</li>
-                    <li>Source Code Lizenz</li>
-                    <li>On-Premise Deployment</li>
-                    <li>Custom Development</li>
-                    <li>SLA 99.99%</li>
-                    <li>Dedicated Team</li>
-                </ul>
-                <a href="mailto:info@enterprise-universe.com?subject=GOD%20MODE" class="btn btn-outline">Anfragen</a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-header">
-            <h2>Was unsere Kunden sagen</h2>
-            <p>Über 250 Unternehmen vertrauen auf West Money OS.</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <p class="testimonial-text">"West Money OS hat unseren Vertrieb revolutioniert. Die HAIKU AI spart uns täglich Stunden bei der Lead-Qualifizierung."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">TM</div>
-                    <div class="testimonial-info">
-                        <h4>Thomas Moser</h4>
-                        <p>Gründer, LOXONE Electronics</p>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-gray-300">Trusted by 280+ Unternehmen im DACH-Raum</span>
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
+                        Ihr Business auf
+                        <span class="gradient-text">Autopilot</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        25 spezialisierte AI Agents arbeiten 24/7 im Hintergrund. 
+                        Automatisieren Sie CRM, ERP, Marketing und Operations – 
+                        während Sie sich auf Wachstum konzentrieren.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="/demo" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg flex items-center gap-2">
+                            🚀 Live Demo starten
+                        </a>
+                        <a href="#video" class="px-8 py-4 rounded-xl font-semibold text-lg glass flex items-center gap-2 hover:bg-white/10 transition">
+                            ▶️ Video ansehen
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-8">
+                        <div>
+                            <p class="text-3xl font-bold text-white stat-counter">€847K</p>
+                            <p class="text-gray-500 text-sm">Generierter Umsatz 2024</p>
+                        </div>
+                        <div class="w-px h-12 bg-gray-700"></div>
+                        <div>
+                            <p class="text-3xl font-bold text-white stat-counter">3,170</p>
+                            <p class="text-gray-500 text-sm">Aktive Kontakte</p>
+                        </div>
+                        <div class="w-px h-12 bg-gray-700"></div>
+                        <div>
+                            <p class="text-3xl font-bold text-white stat-counter">23.5%</p>
+                            <p class="text-gray-500 text-sm">YoY Wachstum</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Die Integration mit LOXONE ist nahtlos. Endlich können wir Projekte und Kundenbeziehungen an einem Ort verwalten."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">AM</div>
-                    <div class="testimonial-info">
-                        <h4>Anna Müller</h4>
-                        <p>Geschäftsführerin, Smart Home Bayern</p>
+                
+                <div class="relative">
+                    <div class="glass rounded-3xl p-8 pulse-glow">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg">TASKFORCE COMMAND CENTER</h3>
+                            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm flex items-center gap-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                LIVE
+                            </span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">🧠</div>
+                                    <div>
+                                        <p class="font-semibold">Einstein Analytics</p>
+                                        <p class="text-sm text-gray-400">Processing 2.5K requests/24h</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-sm">ACTIVE</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">⚡</div>
+                                    <div>
+                                        <p class="font-semibold">BROLY Automation</p>
+                                        <p class="text-sm text-gray-400">1,250 tasks completed</p>
+                                    </div>
+                                </div>
+                                <span class="text-yellow-400 text-sm">ULTRA INSTINCT</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">💬</div>
+                                    <div>
+                                        <p class="font-semibold">WhatsApp Bot</p>
+                                        <p class="text-sm text-gray-400">450 messages/24h</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-sm">ACTIVE</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">🔒</div>
+                                    <div>
+                                        <p class="font-semibold">DedSec Security</p>
+                                        <p class="text-sm text-gray-400">0 threats detected</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-sm">SECURED</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-white/10">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Server Status</span>
+                                <span class="text-green-400">● Majin Server Online</span>
+                            </div>
+                            <div class="flex justify-between text-sm mt-2">
+                                <span class="text-gray-400">Response Time</span>
+                                <span class="text-white">2.3ms avg</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Der ROI war innerhalb von 3 Monaten erreicht. Die WhatsApp-Integration allein hat unsere Response-Rate verdoppelt."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">MH</div>
-                    <div class="testimonial-info">
-                        <h4>Max Hofmann</h4>
-                        <p>Vorstand, Hofmann Bau AG</p>
-                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl float"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- CTA -->
-    <section class="cta">
-        <div class="cta-content">
-            <h2>Bereit durchzustarten?</h2>
-            <p>Starten Sie noch heute Ihre 14-tägige kostenlose Testversion. Keine Kreditkarte erforderlich.</p>
-            <a href="mailto:info@enterprise-universe.com?subject=Demo%20Anfrage" class="btn btn-primary" style="font-size: 18px; padding: 18px 40px;">🚀 Jetzt kostenlos starten</a>
+
+    <!-- Trusted By -->
+    <section class="py-16 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-gray-500 mb-8">Vertraut von führenden Unternehmen</p>
+            <div class="flex flex-wrap justify-center items-center gap-12">
+                <div class="trusted-logo text-2xl font-bold text-gray-600">LOXONE</div>
+                <div class="trusted-logo text-2xl font-bold text-gray-600">ComfortClick</div>
+                <div class="trusted-logo text-2xl font-bold text-gray-600">Verisure</div>
+                <div class="trusted-logo text-2xl font-bold text-gray-600">HubSpot</div>
+                <div class="trusted-logo text-2xl font-bold text-gray-600">Anthropic</div>
+                <div class="trusted-logo text-2xl font-bold text-gray-600">Stripe</div>
+            </div>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <a href="/" class="logo">
-                    <div class="logo-icon">W</div>
-                    <span class="logo-text">West Money OS</span>
+
+    <!-- Awards Section -->
+    <section id="awards" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">Auszeichnungen & Zertifizierungen</h2>
+                <p class="text-gray-400 text-lg">Anerkannte Exzellenz in Innovation und Technologie</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="glass rounded-2xl p-6 text-center card-hover">
+                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                        🏆
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">LOXONE Gold Partner</h3>
+                    <p class="text-gray-400 text-sm">Zertifizierter Premium Partner für Smart Home Automation</p>
+                    <p class="text-indigo-400 text-sm mt-2">2024</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 text-center card-hover">
+                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                        🥇
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Best AI Startup DACH</h3>
+                    <p class="text-gray-400 text-sm">Auszeichnung für innovative KI-Lösungen im B2B-Bereich</p>
+                    <p class="text-indigo-400 text-sm mt-2">2024</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 text-center card-hover">
+                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                        ⭐
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Top 50 PropTech</h3>
+                    <p class="text-gray-400 text-sm">Führend in der digitalen Transformation der Baubranche</p>
+                    <p class="text-indigo-400 text-sm mt-2">2024</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-6 text-center card-hover">
+                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                        🛡️
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">ISO 27001 Certified</h3>
+                    <p class="text-gray-400 text-sm">Höchste Standards für Informationssicherheit</p>
+                    <p class="text-indigo-400 text-sm mt-2">2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agents Section -->
+    <section id="agents" class="py-24 bg-gradient-to-b from-transparent via-indigo-950/20 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="px-4 py-2 rounded-full glass text-sm text-indigo-400 mb-4 inline-block">
+                    ULTRA INSTINCT BROLY MODE
+                </span>
+                <h2 class="text-4xl font-black mb-4">25 Spezialisierte AI Agents</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Jeder Agent ist ein Experte in seinem Bereich. Zusammen bilden sie die 
+                    mächtigste Business-Automation-Taskforce.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Einstein -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">🧠</div>
+                        <div>
+                            <h3 class="font-bold">Einstein</h3>
+                            <p class="text-sm text-gray-400">Analytics</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-indigo-400">95</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <!-- BROLY -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover border border-yellow-500/30">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center text-2xl">⚡</div>
+                        <div>
+                            <h3 class="font-bold text-yellow-400">BROLY</h3>
+                            <p class="text-sm text-yellow-400/70">Legendary Automation</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-yellow-400">∞</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+                
+                <!-- Tesla -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">🔌</div>
+                        <div>
+                            <h3 class="font-bold">Tesla</h3>
+                            <p class="text-sm text-gray-400">IoT/LOXONE</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-green-400">92</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 92%"></div>
+                    </div>
+                </div>
+                
+                <!-- Turing -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🔒</div>
+                        <div>
+                            <h3 class="font-bold">Turing</h3>
+                            <p class="text-sm text-gray-400">Security</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">94</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-red-500 to-pink-500" style="width: 94%"></div>
+                    </div>
+                </div>
+                
+                <!-- Sherlock -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl">🔍</div>
+                        <div>
+                            <h3 class="font-bold">Sherlock</h3>
+                            <p class="text-sm text-gray-400">Research</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-purple-400">94</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-purple-500 to-violet-500" style="width: 94%"></div>
+                    </div>
+                </div>
+                
+                <!-- Da Vinci -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-2xl">🎨</div>
+                        <div>
+                            <h3 class="font-bold">Da Vinci</h3>
+                            <p class="text-sm text-gray-400">Cross-functional</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-pink-400">95</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-pink-500 to-rose-500" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <!-- Sun Tzu -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl">⚔️</div>
+                        <div>
+                            <h3 class="font-bold">Sun Tzu</h3>
+                            <p class="text-sm text-gray-400">Strategy</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-orange-400">93</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-orange-500 to-amber-500" style="width: 93%"></div>
+                    </div>
+                </div>
+                
+                <!-- Hawking -->
+                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center text-2xl">🤖</div>
+                        <div>
+                            <h3 class="font-bold">Hawking</h3>
+                            <p class="text-sm text-gray-400">AI Strategy</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-cyan-400">92</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-cyan-500 to-teal-500" style="width: 92%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-400 mb-4">+ 17 weitere spezialisierte Agents</p>
+                <a href="/agents" class="btn-primary px-8 py-3 rounded-xl font-semibold inline-block">
+                    Alle Agents entdecken →
                 </a>
-                <p>Die führende SaaS-Plattform für Smart Home Integratoren und PropTech Unternehmen. Made with ❤️ in Köln.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Produkt</h4>
-                <a href="#features">Features</a>
-                <a href="#pricing">Preise</a>
-                <a href="https://github.com/WestMoneyDE/Enterprise-Universe">GitHub</a>
-            </div>
-            <div class="footer-col">
-                <h4>Investoren</h4>
-                <a href="Data%20Room/">Investor Data Room</a>
-                <a href="Data%20Room/04_Outreach/investor-database.html">Investor Database</a>
-                <a href="dashboards/FULL_EMAIL_TRACKING_DASHBOARD.html">Outreach Tracking</a>
-                <a href="mailto:invest@enterprise-universe.one">Investor Contact</a>
-            </div>
-            <div class="footer-col">
-                <h4>Unternehmen</h4>
-                <a href="mailto:info@enterprise-universe.one">Kontakt</a>
-                <a href="https://www.linkedin.com/in/%C3%B6mer-c-644208370/" target="_blank">CEO LinkedIn</a>
-                <a href="https://app.enterprise-universe.one">AI Platform</a>
-                <a href="https://github.com/WestMoneyDE/Enterprise-Universe">GitHub</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="datenschutz.html">Datenschutz</a>
-                <a href="agb.html">AGB</a>
-                <a href="impressum.html">Impressum</a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2024-2026 Enterprise Universe GmbH. Alle Rechte vorbehalten.</p>
-            <p>CEO: Ömer Hüseyin Coşkun | Eitorf, Deutschland</p>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">Alles was Sie brauchen</h2>
+                <p class="text-gray-400 text-lg">Eine Plattform. Unendliche Möglichkeiten.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">📊</div>
+                    <h3 class="text-xl font-bold mb-3">CRM & Sales Pipeline</h3>
+                    <p class="text-gray-400">Vollständige Kundenübersicht mit HubSpot-Integration. 3,170 Kontakte, automatisches Lead Scoring, intelligente Segmentierung.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">💬</div>
+                    <h3 class="text-xl font-bold mb-3">WhatsApp Business API</h3>
+                    <p class="text-gray-400">450+ Nachrichten täglich, automatische Antworten, DSGVO-konform. 2,450 Kontakte mit Opt-in.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">🤖</div>
+                    <h3 class="text-xl font-bold mb-3">Claude AI Integration</h3>
+                    <p class="text-gray-400">2,500 Anfragen pro Tag, 1.25M Tokens. Anthropic Claude für intelligente Automatisierung.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">📞</div>
+                    <h3 class="text-xl font-bold mb-3">VoIP & Voice Agent</h3>
+                    <p class="text-gray-400">Zadarma-Integration, 28 Anrufe täglich, 4:32 min Durchschnittsdauer, AI-gestützte Transkription.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">💳</div>
+                    <h3 class="text-xl font-bold mb-3">Payments & Billing</h3>
+                    <p class="text-gray-400">Stripe, PayPal, Klarna, Krypto. Automatische Rechnungsstellung, Subscriptions, €1.25M Pipeline.</p>
+                </div>
+                
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">🔒</div>
+                    <h3 class="text-xl font-bold mb-3">Enterprise Security</h3>
+                    <p class="text-gray-400">ISO 27001, DSGVO-konform, 2FA, End-to-End Verschlüsselung, DedSec Security Layer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 bg-gradient-to-b from-transparent via-purple-950/20 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">Einfache, transparente Preise</h2>
+                <p class="text-gray-400 text-lg">Starten Sie kostenlos. Skalieren Sie grenzenlos.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Starter -->
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <h3 class="text-xl font-bold mb-2">Starter</h3>
+                    <p class="text-gray-400 text-sm mb-6">Perfekt für kleine Teams</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black">€49</span>
+                        <span class="text-gray-400">/Monat</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> 5 AI Agents
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> 1,000 Kontakte
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> WhatsApp Basic
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Email Support
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-xl font-semibold glass hover:bg-white/10 transition">
+                        Kostenlos testen
+                    </button>
+                </div>
+                
+                <!-- Professional -->
+                <div class="glass rounded-2xl p-8 card-hover pricing-popular relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 rounded-full text-sm font-semibold">
+                        Beliebt
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Professional</h3>
+                    <p class="text-gray-400 text-sm mb-6">Für wachsende Unternehmen</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black">€199</span>
+                        <span class="text-gray-400">/Monat</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> 15 AI Agents
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> 10,000 Kontakte
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> WhatsApp Pro + Voice
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Priority Support
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> API Zugang
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-xl font-semibold btn-primary">
+                        Jetzt starten
+                    </button>
+                </div>
+                
+                <!-- Enterprise -->
+                <div class="glass rounded-2xl p-8 card-hover">
+                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
+                    <p class="text-gray-400 text-sm mb-6">Für große Organisationen</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-black">Custom</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Alle 25 AI Agents
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Unlimited Kontakte
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> BROLY ULTRA INSTINCT
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Dedicated Account Manager
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> Custom Integrations
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <span class="text-green-400">✓</span> SLA 99.9%
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-xl font-semibold glass hover:bg-white/10 transition">
+                        Kontakt aufnehmen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glass rounded-3xl p-12">
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p class="text-5xl font-black gradient-text mb-2">€847K</p>
+                        <p class="text-gray-400">Umsatz 2024</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-black gradient-text mb-2">280+</p>
+                        <p class="text-gray-400">Aktive Kunden</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-black gradient-text mb-2">48</p>
+                        <p class="text-gray-400">Aktive Workflows</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-black gradient-text mb-2">99.9%</p>
+                        <p class="text-gray-400">Uptime</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl lg:text-5xl font-black mb-6">
+                Bereit für die Zukunft?
+            </h2>
+            <p class="text-xl text-gray-400 mb-10">
+                Starten Sie heute kostenlos und erleben Sie die Kraft von 25 AI Agents.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/signup" class="btn-primary px-10 py-4 rounded-xl font-semibold text-lg">
+                    Kostenlos starten →
+                </a>
+                <a href="/demo" class="px-10 py-4 rounded-xl font-semibold text-lg glass hover:bg-white/10 transition">
+                    Demo vereinbaren
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-5 gap-8 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black">
+                            EU
+                        </div>
+                        <span class="text-xl font-bold">Enterprise Universe</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Die intelligente SaaS-Plattform für KMU im DACH-Raum.
+                        AI-powered Business Automation.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        Enterprise Universe GmbH (i.G.)<br>
+                        Leienbergstr. 1<br>
+                        53783 Eitorf, Deutschland
+                    </p>
+                    <p class="text-gray-500 text-sm mt-2">
+                        <a href="mailto:info@enterprise-universe.one" class="hover:text-indigo-400 transition">info@enterprise-universe.one</a>
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Produkt</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#agents" class="hover:text-white transition">AI Agents</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+                        <li><a href="https://enterprise-universe.one" class="hover:text-white transition">West Money OS</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Investoren</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://enterprise-universe.one/Data%20Room/" class="hover:text-white transition">Investor Data Room</a></li>
+                        <li><a href="https://enterprise-universe.one/Data%20Room/04_Outreach/investor-database.html" class="hover:text-white transition">Investor Database</a></li>
+                        <li><a href="https://enterprise-universe.one/dashboards/FULL_EMAIL_TRACKING_DASHBOARD.html" class="hover:text-white transition">Outreach Tracking</a></li>
+                        <li><a href="mailto:invest@enterprise-universe.one" class="hover:text-white transition">Investor Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Unternehmen</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://www.linkedin.com/in/%C3%B6mer-c-644208370/" target="_blank" class="hover:text-white transition">CEO LinkedIn</a></li>
+                        <li><a href="mailto:info@enterprise-universe.one" class="hover:text-white transition">Kontakt</a></li>
+                        <li><a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="hover:text-white transition">GitHub</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="datenschutz.html" class="hover:text-white transition">Datenschutz</a></li>
+                        <li><a href="agb.html" class="hover:text-white transition">AGB</a></li>
+                        <li><a href="impressum.html" class="hover:text-white transition">Impressum</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-wrap justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    © 2024-2026 Enterprise Universe GmbH. Alle Rechte vorbehalten.
+                </p>
+                <div class="flex gap-6">
+                    <a href="https://www.linkedin.com/in/%C3%B6mer-c-644208370/" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-counter').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
