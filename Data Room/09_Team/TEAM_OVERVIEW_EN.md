@@ -54,7 +54,7 @@ Enterprise Universe is led by a founder with deep expertise in enterprise softwa
 |   KEY ACHIEVEMENTS                                                              |
 |   --------------------------------------------------------------------------   |
 |   * Built €847K revenue business with minimal team                              |
-|   * Secured €335M in won deals for customers                                    |
+|   * Secured €1B+ in won deals for customers                                     |
 |   * Established partnerships with leading software vendors                      |
 |   * Developed proprietary AI-powered matching technology                        |
 |                                                                                 |
@@ -309,7 +309,7 @@ Enterprise Universe is led by a founder with deep expertise in enterprise softwa
 |      Join at seed stage with significant equity upside                          |
 |                                                                                 |
 |   2. PROVEN TRACTION                                                            |
-|      €847K revenue, €335M won deals - not a concept, a real business           |
+|      €847K revenue, €1B+ won deals - not a concept, a real business            |
 |                                                                                 |
 |   3. MASSIVE MARKET                                                             |
 |      €800B+ TAM in enterprise software - huge opportunity                       |

@@ -34,7 +34,7 @@
 
 ```
 ───────────────────────────────────────────────────────────────────────────────
-BETREFF: Enterprise Universe | €847K Revenue, €335M Won Deals - Seed Round
+BETREFF: Enterprise Universe | €847K Revenue, €1B+ Won Deals - Seed Round
 ───────────────────────────────────────────────────────────────────────────────
 
 Sehr geehrte/r [Name],
@@ -44,8 +44,8 @@ den €800 Mrd. Enterprise-Software-Markt.
 
 Unsere Zahlen:
 • €847K Revenue (2024)
-• €335M vertraglich gesicherte Deals
-• €10 Mrd. gewichtete Pipeline
+• €1+ Mrd. vertraglich gesicherte Deals
+• €37 Mrd. gewichtete Pipeline
 • 12:1 LTV:CAC Ratio
 
 Wir raisen €1,5M Seed bei €15M Pre-Money.
@@ -87,7 +87,7 @@ Mit Enterprise Universe haben wir die Lösung gebaut:
 
 Das Ergebnis nach 12 Monaten:
 • €847K Revenue
-• €335M Won Deals
+• €1B+ Won Deals
 • 12 Enterprise-Kunden
 
 Wir suchen €1,5M Seed-Kapital, um in DACH und EU zu skalieren.
@@ -120,7 +120,7 @@ Enterprise Universe ist eine B2B-Plattform für Enterprise-Software-Implementier
 In 12 Monaten haben wir:
 
 • €847K Revenue generiert
-• €335M in Deals abgeschlossen
+• €1B+ in Deals abgeschlossen
 • 12 Enterprise-Kunden gewonnen (inkl. [bekannte Namen])
 
 Wir raisen €1,5M bei €15M Pre-Money.
@@ -160,7 +160,7 @@ gerade unsere Seed-Runde und [Fonds] wäre ein idealer Partner:
 
 Kurz zu uns:
 • €847K Revenue in 12 Monaten
-• €335M vertraglich gesicherte Deals
+• €1B+ vertraglich gesicherte Deals
 • €1,5M Seed Round @ €15M Pre-Money
 
 Wärst du bereit, eine kurze Intro zu machen? Ich habe unten einen
@@ -175,7 +175,7 @@ FORWARDABLE PARAGRAPH:
 
 "[Investor Name], ich möchte dir Ömer Coskun vorstellen, Gründer von
 Enterprise Universe. Sie bauen eine Plattform für Enterprise-Software-
-Implementierung und haben in 12 Monaten €847K Revenue und €335M in
+Implementierung und haben in 12 Monaten €847K Revenue und €1B+ in
 Deals erreicht. Sie raisen €1,5M Seed – ich denke, das könnte für
 [Fonds] interessant sein. Ich vernetze euch hier, ihr könnt direkt
 in Kontakt treten."
@@ -198,7 +198,7 @@ vielen Dank an [Vermittler] für die Vorstellung!
 
 Kurz zu Enterprise Universe:
 • Wir lösen das €500 Mrd. Problem gescheiterter Enterprise-IT-Projekte
-• €847K Revenue, €335M Won Deals in 12 Monaten
+• €847K Revenue, €1B+ Won Deals in 12 Monaten
 • Seed Round: €1,5M @ €15M Pre-Money
 
 Ich würde Ihnen gerne in 20-30 Minuten unsere Vision und Zahlen präsentieren.
@@ -305,8 +305,8 @@ Wie besprochen, hier die wichtigsten Punkte:
 
 📊 KEY METRICS:
 • Revenue 2024: €847K
-• Won Deals: €335M (vertraglich gesichert)
-• Pipeline: €10 Mrd. (gewichtet)
+• Won Deals: €1B+ (vertraglich gesichert)
+• Pipeline: €37 Mrd. (gewichtet)
 • LTV:CAC: 12:1
 
 💰 INVESTMENT:

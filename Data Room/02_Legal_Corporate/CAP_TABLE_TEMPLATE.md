@@ -61,8 +61,8 @@
 | **Preis pro Anteil** | €600,00 (€1 Nennwert + €599 Agio) |
 
 **Bewertungsgrundlage:**
-- €335 Mio. vertraglich gesicherte Won Deals
-- €10 Mrd. gewichtete Pipeline
+- €1+ Mrd. vertraglich gesicherte Won Deals
+- €37 Mrd. gewichtete Pipeline
 - €847K Revenue 2024
 
 ### 2.2 Berechnung

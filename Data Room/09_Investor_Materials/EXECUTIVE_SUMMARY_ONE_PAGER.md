@@ -50,15 +50,15 @@ Eine **All-in-One SaaS-Plattform** speziell für Smart Home Integratoren:
 
 ```
 ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐
-│    €847K        │     +23.5%      │      280        │     €1.25M      │
-│  Revenue 2024   │   YoY Growth    │    Kunden       │  Pipeline 2025  │
+│    €37 MRD.     │     €1+ MRD.    │     €847K       │     +23.5%      │
+│    Pipeline     │    Won Deals    │  Revenue 2025   │   YoY Growth    │
 └─────────────────┴─────────────────┴─────────────────┴─────────────────┘
 ```
 
 | Metrik | Wert |
 |--------|------|
 | **Kontakte im CRM** | 3.170 |
-| **Conversion Rate** | 17.3% |
+| **Aktive Kunden** | 280 |
 | **LOXONE Partner Status** | Gold Partner 2024 |
 | **Already Committed** | €425.000 (28% der Runde) |
 
@@ -98,17 +98,17 @@ Eine **All-in-One SaaS-Plattform** speziell für Smart Home Integratoren:
 
 ---
 
-## FINANZPLANUNG
+## FINANZPLANUNG - PIPELINE EXECUTION
 
-| Jahr | Revenue | ARR (SaaS) | Kunden | Growth |
-|------|---------|------------|--------|--------|
-| 2024 | €847K | - | 280 | +23.5% |
-| 2025 | €1.25M | €180K | 50 | +47% |
-| 2026 | €1.80M | €540K | 150 | +200% |
-| 2027 | €3.20M | €1.75M | 500 | +224% |
-| 2028 | €6.50M | €4.20M | 1.200 | +140% |
+| Jahr | Project Rev. | SaaS ARR | Total Revenue | Growth |
+|------|--------------|----------|---------------|--------|
+| 2025 | €847K | - | €847K | - |
+| 2026 | €8.5M | €540K | €9.04M | +967% |
+| 2027 | €25M | €1.75M | €26.75M | +196% |
+| 2028 | €45M | €4.20M | €49.20M | +84% |
+| 2029 | €75M | €7.50M | €82.50M | +68% |
 
-**Break-Even:** Q3 2027 bei 300 Kunden / €1.05M ARR
+**Annahme:** Nur 5% der €1 Mrd. Won Deals executed in 5 Jahren = €50M+ Revenue
 
 ---
 
@@ -139,11 +139,11 @@ Eine **All-in-One SaaS-Plattform** speziell für Smart Home Integratoren:
 
 | # | Highlight |
 |---|-----------|
-| 1 | **Proven Revenue:** €847K in 2024 mit +23.5% Wachstum |
-| 2 | **First Mover:** Einzige KI-Plattform für Smart Home Vertical |
-| 3 | **Strong Moat:** LOXONE Partnership + Proprietäre Daten |
-| 4 | **Capital Efficient:** €847K Revenue mit minimalem Team |
-| 5 | **Clear Path:** €12M ARR bis 2028, 5:1 LTV:CAC |
+| 1 | **€1 Mrd. Won Deals:** Vertraglich gesicherte Aufträge, ready to execute |
+| 2 | **€37 Mrd. Pipeline:** Massive langfristige Opportunity |
+| 3 | **Proven Revenue:** €847K in 2025 mit solidem Wachstum |
+| 4 | **Strong Moat:** LOXONE Partnership + Proprietäre Daten |
+| 5 | **Capital Efficient:** €847K Revenue mit minimalem Team |
 | 6 | **Committed Capital:** €425K bereits signed (28%) |
 
 ---

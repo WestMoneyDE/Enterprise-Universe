@@ -149,7 +149,7 @@
 │   ✓ 70% Zeitersparnis bei der Angebotsstellung                                  │
 │   ✓ 3x höhere Gewinnrate durch bessere Angebote                                 │
 │   ✓ 100% Compliance durch automatische Prüfungen                                │
-│   ✓ €335 Mio. gewonnene Aufträge für unsere Kunden                              │
+│   ✓ €1+ Mrd. gewonnene Aufträge für unsere Kunden                               │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -1131,7 +1131,7 @@
 │   KENNZAHLEN                                                                    │
 │   ──────────                                                                    │
 │   Kunden:           12 Enterprise, 8 Mid-Market                                │
-│   Gewonnene Deals:  €335 Mio. Auftragsvolumen                                  │
+│   Gewonnene Deals:  €1+ Mrd. Auftragsvolumen                                   │
 │   Avg. Win Rate:    47% (vs. 18% Branchendurchschnitt)                         │
 │   NPS:              72                                                          │
 │                                                                                 │

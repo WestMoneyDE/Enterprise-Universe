@@ -52,7 +52,7 @@
 
 ```
 AN: info@htgf.de
-BETREFF: Enterprise Universe | €847K Revenue, €335M Won Deals - Seed Round
+BETREFF: Enterprise Universe | €847K Revenue, €1B+ Won Deals - Seed Round
 
 Sehr geehrtes HTGF Investment Team,
 
@@ -67,7 +67,7 @@ Warum HTGF der perfekte Partner ist:
 
 Unsere Zahlen (12 Monate):
 • €847K Revenue
-• €335M vertraglich gesicherte Deals
+• €1B+ vertraglich gesicherte Deals
 • 12:1 LTV:CAC | 65% Gross Margin
 
 Wir raisen €1,5M Seed bei €15M Pre-Money.
@@ -107,7 +107,7 @@ genau Ihr Investmentfokus auf Industrial Technologies und Enterprise Software.
 
 Highlights:
 • €847K Revenue in 12 Monaten
-• €335M Won Deals für unsere Kunden
+• €1B+ Won Deals für unsere Kunden
 • Plattform für digitale Transformation im Mittelstand
 • 12:1 LTV:CAC Ratio
 
@@ -149,7 +149,7 @@ Enterprise Universe fits your thesis perfectly.
 
 The Numbers:
 • €847K revenue (first 12 months)
-• €335M in contracted deals
+• €1B+ in contracted deals
 • 12:1 LTV:CAC ratio
 • 65% gross margin
 • €250K average deal size
@@ -195,7 +195,7 @@ und Digitalisierung des deutschen Mittelstands.
 Unser Profil:
 • KI-gestützte Plattform für Enterprise-Software-Matching
 • €847K Revenue in 12 Monaten
-• €335M gewonnene Deals für Kunden
+• €1B+ gewonnene Deals für Kunden
 • Fokus auf Industrie 4.0 und digitale Transformation
 
 Als staatlicher Fonds unterstützen Sie genau solche Technologie-Champions.
@@ -235,7 +235,7 @@ Ihr Fokus auf IoT, Industry 4.0 und AI/ML trifft exakt unser Profil.
 
 Enterprise Universe:
 • KI-gestützte Plattform für Enterprise-Software-Implementierung
-• €847K Revenue | €335M Won Deals
+• €847K Revenue | €1B+ Won Deals
 • Fokus: Industrie 4.0, digitale Transformation
 • 12:1 LTV:CAC | 65% Gross Margin
 
@@ -278,7 +278,7 @@ You invest exclusively in B2B. Enterprise Universe is pure B2B Enterprise.
 
 Quick facts:
 • €847K revenue (12 months)
-• €335M contracted deals
+• €1B+ contracted deals
 • 12 enterprise customers
 • 12:1 LTV:CAC
 • €250K average deal size
@@ -323,7 +323,7 @@ Enterprise Universe kombiniert:
 • AI-gestütztes Matching für Enterprise Software
 • B2B SaaS Business Model
 • €847K Revenue in 12 Monaten
-• €335M Won Deals
+• €1B+ Won Deals
 
 Wir raisen €1,5M Seed bei €15M Pre-Money.
 
@@ -362,7 +362,7 @@ That's exactly what we're building.
 Enterprise Universe:
 • AI-powered matching for enterprise software
 • Automating the €500B wasted on failed IT projects annually
-• €847K revenue | €335M won deals | 12:1 LTV:CAC
+• €847K revenue | €1B+ won deals | 12:1 LTV:CAC
 
 We're transforming how enterprises implement software - 50% faster,
 guaranteed ROI.
@@ -404,7 +404,7 @@ a natural strategic fit with Siemens' ecosystem.
 
 Why this matters for Siemens:
 • We connect enterprises with best-fit software (including Siemens solutions)
-• €335M in deals closed for customers
+• €1B+ in deals closed for customers
 • Deep expertise in Smart Manufacturing digitalization
 • Potential channel partner for Siemens Digital Industries
 
@@ -450,7 +450,7 @@ manufacturers with best-fit Industrial IoT and software solutions.
 
 Strategic value for Bosch:
 • Channel for Bosch Industrial IoT solutions
-• €335M in deals closed (including manufacturing sector)
+• €1B+ in deals closed (including manufacturing sector)
 • Platform for Industry 4.0 implementations
 • Expertise in German Mittelstand digitalization
 
@@ -497,7 +497,7 @@ zu Enterprise Universe.
 Unser Profil:
 • KI-gestützte Plattform für Enterprise-Software
 • €847K Revenue in 12 Monaten
-• €335M vertraglich gesicherte Deals
+• €1B+ vertraglich gesicherte Deals
 • Fokus auf Industrie 4.0 Transformation
 
 Wir unterstützen den deutschen Mittelstand bei der Digitalisierung -
@@ -540,7 +540,7 @@ B2B Enterprise Software.
 
 Enterprise Universe in Kürze:
 • €847K Revenue in 12 Monaten
-• €335M gewonnene Deals für Kunden
+• €1B+ gewonnene Deals für Kunden
 • 12:1 LTV:CAC Ratio
 • Plattform für Enterprise-Software-Implementierung
 

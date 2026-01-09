@@ -65,8 +65,8 @@
 | **Preis pro Anteil** | [Berechnung basierend auf Stammkapital] |
 
 **Bewertungsgrundlage:**
-- €335 Mio. vertraglich gesicherte Won Deals
-- €10 Mrd. gewichtete Pipeline
+- €1+ Mrd. vertraglich gesicherte Won Deals
+- €37 Mrd. gewichtete Pipeline
 - €847K Revenue 2024 mit +23,5% YoY Growth
 - Operativer Track Record als LOXONE Gold Partner
 

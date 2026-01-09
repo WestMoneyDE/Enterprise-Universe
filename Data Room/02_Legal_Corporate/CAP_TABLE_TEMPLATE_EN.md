@@ -59,8 +59,8 @@
 | **Price per Share** | €600.00 (€1 nominal + €599 premium) |
 
 **Valuation Basis:**
-- €335M contractually secured won deals
-- €10B weighted pipeline
+- €1B+ contractually secured won deals
+- €37B weighted pipeline
 - €847K Revenue 2024
 
 ### 2.2 Calculation

@@ -75,7 +75,7 @@ scaling B2B companies need. Enterprise Universe fits your AI thesis.
 
 Key metrics:
 • €847K revenue (12 months)
-• €335M in won deals
+• €1B+ in won deals
 • AI-powered enterprise software matching
 • 12:1 LTV:CAC ratio
 
@@ -118,7 +118,7 @@ You back lean startups. We're the definition of capital efficient:
 
 Enterprise Universe:
 • €847K revenue (bootstrapped to date)
-• €335M won deals for customers
+• €1B+ won deals for customers
 • 5 person team
 • 12:1 LTV:CAC
 
@@ -191,7 +191,7 @@ Founder & CEO | invest@enterprise-universe.one
 
 ```
 AN: hello@cherry.vc
-BETREFF: Early Stage B2B | €847K Revenue, €335M Deals - Enterprise Universe
+BETREFF: Early Stage B2B | €847K Revenue, €1B+ Deals - Enterprise Universe
 
 Hi Cherry Team,
 
@@ -200,7 +200,7 @@ Enterprise Universe is pure B2B with proven traction.
 
 The numbers:
 • €847K revenue (year 1)
-• €335M in contracted deals
+• €1B+ in contracted deals
 • 12 enterprise customers
 • 12:1 LTV:CAC
 
@@ -242,7 +242,7 @@ early - we'll be Series A ready within 12-18 months.
 
 Current traction:
 • €847K revenue
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 • Clear path to €3M+ ARR
 
@@ -282,7 +282,7 @@ in the mid-market.
 
 Our platform:
 • Connects enterprises with best-fit software (including SAP)
-• €335M in deals already closed
+• €1B+ in deals already closed
 • Focus on ERP, CRM, and enterprise implementations
 • Integration expertise across platforms
 
@@ -326,7 +326,7 @@ platform has applications in automotive digitalization.
 What we do:
 • AI-powered enterprise software matching
 • Industry 4.0 implementation expertise
-• €335M in digital transformation deals
+• €1B+ in digital transformation deals
 
 Metrics:
 • €847K revenue
@@ -368,7 +368,7 @@ KI-gestützten Plattform für Enterprise-Software.
 
 Kennzahlen:
 • €847K Revenue in 12 Monaten
-• €335M gewonnene Deals
+• €1B+ gewonnene Deals
 • 12:1 LTV:CAC Ratio
 • Fokus auf Industrie 4.0
 
@@ -407,7 +407,7 @@ proven product-market fit.
 
 Metrics:
 • €847K revenue (12 months)
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 • 65% gross margin
 
@@ -472,7 +472,7 @@ invest@enterprise-universe.one
 
 ```
 AN: info@accel.com
-BETREFF: European B2B SaaS | €847K Revenue, €335M Deals - Enterprise Universe
+BETREFF: European B2B SaaS | €847K Revenue, €1B+ Deals - Enterprise Universe
 
 Hi Accel Team,
 
@@ -481,9 +481,9 @@ in the €800B enterprise software market.
 
 Metrics:
 • €847K revenue (year 1)
-• €335M in contracted deals
+• €1B+ in contracted deals
 • 12:1 LTV:CAC
-• €10B weighted pipeline
+• €37B weighted pipeline
 
 While we're raising Seed (€1.5M at €15M), wanted to get on your
 radar for Series A.
@@ -518,7 +518,7 @@ Ihr Fokus auf B2B Software Wachstum passt perfekt zu Enterprise Universe.
 
 Unsere Wachstumszahlen:
 • €847K Revenue in 12 Monaten
-• €335M Won Deals
+• €1B+ Won Deals
 • 12:1 LTV:CAC
 • Ziel: €2,5M Revenue 2026
 
@@ -553,7 +553,7 @@ Sehr geehrtes ALSTIN Team,
 Enterprise Universe - B2B SaaS mit starker Traktion:
 
 • €847K Revenue
-• €335M Won Deals
+• €1B+ Won Deals
 • 12:1 LTV:CAC
 • 65% Gross Margin
 
@@ -595,7 +595,7 @@ Our AI stack:
 
 Metrics:
 • €847K revenue
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 
 Raising €1.5M Seed at €15M pre-money.
@@ -638,7 +638,7 @@ Our Deep Tech elements:
 
 Metrics:
 • €847K revenue
-• €335M deals
+• €1B+ deals
 • 12:1 LTV:CAC
 
 Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
@@ -673,7 +673,7 @@ IT projects (€500B annually).
 
 Metrics:
 • €847K revenue
-• €335M deals closed
+• €1B+ deals closed
 • 50% faster implementations = less resource waste
 
 Raising €1.5M Seed at €15M pre-money.
@@ -708,7 +708,7 @@ wir suchen B2B Software-erfahrene Angels für unsere Seed-Runde.
 
 Enterprise Universe:
 • €847K Revenue
-• €335M Won Deals
+• €1B+ Won Deals
 • B2B Enterprise Software Plattform
 • 12:1 LTV:CAC
 
@@ -743,7 +743,7 @@ Sehr geehrtes INWI Team,
 Enterprise Universe - B2B Software Plattform sucht Angels:
 
 • €847K Revenue
-• €335M Won Deals
+• €1B+ Won Deals
 • 12:1 LTV:CAC
 
 Tickets ab €50K willkommen.
@@ -816,7 +816,7 @@ the model in Germany.
 
 Traction:
 • €847K revenue in Germany
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 
 The US enterprise software market is 10x larger. Interested in your
@@ -853,7 +853,7 @@ software solutions - right in your investment thesis.
 
 Metrics:
 • €847K revenue
-• €335M deals (including supply chain/manufacturing)
+• €1B+ deals (including supply chain/manufacturing)
 • Industry 4.0 focus
 
 Interested in your Germany accelerator program.
@@ -889,7 +889,7 @@ solutions - a natural fit with Telekom's ecosystem.
 
 Our platform:
 • Connects companies with IoT/Cloud vendors
-• €335M in digital transformation deals
+• €1B+ in digital transformation deals
 • Industry 4.0 expertise
 
 Metrics:
@@ -929,7 +929,7 @@ for software matching and implementation.
 
 Metrics:
 • €847K revenue
-• €335M won deals
+• €1B+ won deals
 • AI-powered platform
 
 Interested in your accelerator and corporate connections.
@@ -963,7 +963,7 @@ Sehr geehrtes UnternehmerTUM Team,
 Enterprise Universe ist ein B2B SaaS Startup mit starker Traktion:
 
 • €847K Revenue
-• €335M Won Deals
+• €1B+ Won Deals
 • 12:1 LTV:CAC
 
 Wir suchen Zugang zu Ihrem VC-Netzwerk und potenziell Incubator-Support.
@@ -999,7 +999,7 @@ after bootstrapping to €847K revenue.
 
 Metrics:
 • €847K revenue (year 1)
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 • 5-person team
 
@@ -1040,7 +1040,7 @@ Our Deep Tech:
 
 Metrics:
 • €847K revenue
-• €335M won deals
+• €1B+ won deals
 • 12:1 LTV:CAC
 
 Raising €1.5M Seed at €15M pre-money.

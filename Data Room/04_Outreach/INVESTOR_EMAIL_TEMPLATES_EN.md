@@ -34,7 +34,7 @@
 
 ```
 ───────────────────────────────────────────────────────────────────────────────
-SUBJECT: Enterprise Universe | €847K Revenue, €335M Won Deals - Seed Round
+SUBJECT: Enterprise Universe | €847K Revenue, €1B+ Won Deals - Seed Round
 ───────────────────────────────────────────────────────────────────────────────
 
 Hi [Name],
@@ -44,8 +44,8 @@ I'm Ömer Coskun, founder of Enterprise Universe. We're transforming the
 
 Our numbers:
 • €847K revenue (2024)
-• €335M contracted deals
-• €10B weighted pipeline
+• €1B+ contracted deals
+• €37B weighted pipeline
 • 12:1 LTV:CAC ratio
 
 We're raising €1.5M Seed at €15M pre-money.
@@ -87,7 +87,7 @@ With Enterprise Universe, we built the solution:
 
 The results after 12 months:
 • €847K revenue
-• €335M won deals
+• €1B+ won deals
 • 12 enterprise customers
 
 We're looking for €1.5M seed capital to scale across DACH and EU.
@@ -120,7 +120,7 @@ Enterprise Universe is a B2B platform for enterprise software implementation.
 In 12 months, we've:
 
 • Generated €847K in revenue
-• Closed €335M in deals
+• Closed €1B+ in deals
 • Won 12 enterprise customers (including [notable names])
 
 We're raising €1.5M at €15M pre-money.
@@ -160,7 +160,7 @@ raising our seed round and [Fund] would be an ideal partner:
 
 Quick intro on us:
 • €847K revenue in 12 months
-• €335M in contracted deals
+• €1B+ in contracted deals
 • €1.5M seed round @ €15M pre-money
 
 Would you be willing to make a quick intro? I've prepared a forwardable
@@ -175,7 +175,7 @@ FORWARDABLE PARAGRAPH:
 
 "[Investor Name], I'd like to introduce you to Ömer Coskun, founder of
 Enterprise Universe. They're building a platform for enterprise software
-implementation and have reached €847K revenue and €335M in deals in
+implementation and have reached €847K revenue and €1B+ in deals in
 12 months. They're raising a €1.5M seed – I think this could be interesting
 for [Fund]. Connecting you here, feel free to take it from here."
 
@@ -197,7 +197,7 @@ Thanks to [Connector] for the introduction!
 
 Quick overview of Enterprise Universe:
 • We're solving the €500B problem of failed enterprise IT projects
-• €847K revenue, €335M won deals in 12 months
+• €847K revenue, €1B+ won deals in 12 months
 • Seed round: €1.5M @ €15M pre-money
 
 I'd love to present our vision and numbers in a 20-30 minute call.
@@ -303,8 +303,8 @@ As discussed, here are the key points:
 
 📊 KEY METRICS:
 • Revenue 2024: €847K
-• Won Deals: €335M (contracted)
-• Pipeline: €10B (weighted)
+• Won Deals: €1B+ (contracted)
+• Pipeline: €37B (weighted)
 • LTV:CAC: 12:1
 
 💰 INVESTMENT:

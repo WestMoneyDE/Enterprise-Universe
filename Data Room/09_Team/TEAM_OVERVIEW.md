@@ -54,7 +54,7 @@ Enterprise Universe wird von einem Gründer mit tiefgreifender Expertise in Ente
 |   WICHTIGE ERFOLGE                                                              |
 |   --------------------------------------------------------------------------   |
 |   * €847K Umsatz mit minimalem Team aufgebaut                                   |
-|   * €335M an gewonnenen Deals für Kunden gesichert                              |
+|   * €1B+ an gewonnenen Deals für Kunden gesichert                               |
 |   * Partnerschaften mit führenden Software-Anbietern etabliert                  |
 |   * Proprietäre KI-gestützte Matching-Technologie entwickelt                    |
 |                                                                                 |
@@ -309,7 +309,7 @@ Enterprise Universe wird von einem Gründer mit tiefgreifender Expertise in Ente
 |      In der Seed-Phase einsteigen mit signifikantem Equity-Potenzial           |
 |                                                                                 |
 |   2. BEWIESENE TRAKTION                                                         |
-|      €847K Umsatz, €335M gewonnene Deals - kein Konzept, ein echtes Geschäft   |
+|      €847K Umsatz, €1B+ gewonnene Deals - kein Konzept, ein echtes Geschäft    |
 |                                                                                 |
 |   3. RIESIGER MARKT                                                             |
 |      €800B+ TAM in Enterprise Software - enorme Chance                          |

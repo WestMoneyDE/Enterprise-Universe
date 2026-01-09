@@ -324,8 +324,8 @@ Data Room/
 │   💰 INVESTMENT                          📈 TRAKTION                            │
 │   ─────────────                          ──────────                             │
 │   Seed Round:     €1.500.000             Revenue 2024:    €847.000              │
-│   Pre-Money:      €15.000.000            Won Deals:       €335 Mio.             │
-│   Equity:         9,09%                  Pipeline:        €10 Mrd.              │
+│   Pre-Money:      €15.000.000            Won Deals:       €1+ Mrd.              │
+│   Equity:         9,09%                  Pipeline:        €37 Mrd.              │
 │   Min. Ticket:    €100.000               Kunden:          12                    │
 │                                                                                 │
 │   🎯 BEWERTUNG                           📊 UNIT ECONOMICS                      │

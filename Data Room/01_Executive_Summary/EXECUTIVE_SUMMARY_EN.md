@@ -20,9 +20,9 @@
 | **Founded** | 2024 |
 | **Location** | Germany |
 | **Industry** | Enterprise Software / B2B SaaS |
-| **Revenue 2024** | €847,000 |
-| **Won Deals (Contracted)** | €335M |
-| **Pipeline (Weighted)** | €10B |
+| **Revenue 2025** | €847,000 |
+| **Won Deals (Contracted)** | €1B+ |
+| **Pipeline (Weighted)** | €37B |
 | **Valuation (Pre-Money)** | €15M |
 | **Funding Sought** | €1.5M |
 
@@ -177,8 +177,8 @@ Revenue Development (€K)
 | Metric | 2024 | 2025 (Proj.) | Growth |
 |--------|------|--------------|--------|
 | **Revenue** | €847K | €2.5M | +195% |
-| **Won Deals** | €335M | €750M | +124% |
-| **Pipeline** | €10B | €25B | +150% |
+| **Won Deals** | €1B+ | €1.5B | +50% |
+| **Pipeline** | €37B | €50B | +35% |
 | **Customers** | 12 | 35 | +192% |
 | **Team** | 5 | 15 | +200% |
 
