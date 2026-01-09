@@ -3,11 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo | Enterprise Universe</title>
-    <meta http-equiv="refresh" content="0;url=/register.html">
-    <script>window.location.href = '/register.html';</script>
+    <title>Live Demo | Enterprise Universe 3.0 GOD MODE</title>
+    <meta name="description" content="Erleben Sie Enterprise Universe 3.0 in Aktion - 34 AI Agents, €37B Pipeline, GOD MODE aktiviert.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+        .gradient-text { background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .god-gradient { background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-gradient { background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.2) 0%, transparent 50%), radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.15) 0%, transparent 50%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-god { background: linear-gradient(135deg, #8b5cf6, #06b6d4); transition: all 0.3s ease; }
+        .btn-god:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5); }
+        .grid-pattern { background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.3); } 50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.6); } }
+        .god-pulse { animation: godPulse 2s ease-in-out infinite; }
+        @keyframes godPulse { 0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); } 50% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.9); } }
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .kanji { font-family: 'Noto Sans JP', sans-serif; }
+        .demo-card { transition: all 0.3s ease; }
+        .demo-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
 </head>
-<body>
-    <p>Sie werden weitergeleitet... <a href="/register.html">Klicken Sie hier, falls die Weiterleitung nicht funktioniert.</a></p>
+<body class="grid-pattern">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black text-2xl god-pulse">
+                        <span class="kanji">神</span>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">Enterprise Universe</span>
+                        <span class="text-xs text-cyan-400 block">LIVE DEMO</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-4">
+                    <a href="/login.html" class="text-gray-300 hover:text-white transition">Login</a>
+                    <a href="/register.html" class="btn-god px-6 py-2.5 rounded-xl font-semibold">Demo anfragen</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-gradient min-h-screen pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-6 god-pulse">
+                    <span class="kanji text-xl">神</span>
+                    <span class="text-yellow-400 font-bold">GOD MODE DEMO</span>
+                </div>
+                <h1 class="text-4xl lg:text-6xl font-black mb-4">
+                    <span class="gradient-text">ENTERPRISE UNIVERSE</span>
+                    <br><span class="god-gradient">in Aktion</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Erleben Sie die Macht von 34 AI Agents, €37B Pipeline und dem legendären GOD MODE.
+                </p>
+            </div>
+
+            <!-- Main Demo Video -->
+            <div class="glass rounded-3xl p-6 mb-12 pulse-glow">
+                <div class="video-container bg-zinc-900">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:scale-110 transition" onclick="playDemo()">
+                                <svg class="w-12 h-12 text-white ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                            <p class="text-xl font-bold text-white">Enterprise Universe 3.0 Demo</p>
+                            <p class="text-gray-400">Klicken zum Abspielen</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Demos -->
+            <h2 class="text-3xl font-black text-center mb-8">
+                <span class="god-gradient">Module Demos</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Haiku God Mode -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl kanji">神</span>
+                        <div>
+                            <h3 class="font-bold text-purple-400">HAIKU GOD MODE</h3>
+                            <p class="text-xs text-gray-400">Divine Warrior Controller</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Steuern Sie alle 34 AI Agents von einem zentralen Command Center aus.</p>
+                    <a href="/HAIKU_GOD_MODE_V2.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+
+                <!-- Genius Hub -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🧠</span>
+                        <div>
+                            <h3 class="font-bold text-blue-400">GENIUS HUB</h3>
+                            <p class="text-xs text-gray-400">34 AI Agents</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Einstein, BROLY, Tesla, Sherlock und 30 weitere spezialisierte Agents.</p>
+                    <a href="/MEGA_GENIUS_AGENCY.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+
+                <!-- Majin Servers -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">⚡</span>
+                        <div>
+                            <h3 class="font-bold text-yellow-400">MAJIN SERVERS</h3>
+                            <p class="text-xs text-gray-400">Infrastructure Control</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Legendary Server Infrastructure mit 99.99% Uptime.</p>
+                    <a href="/MAJIN_SERVERS_DASHBOARD.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+
+                <!-- HAKAI Mode -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">💥</span>
+                        <div>
+                            <h3 class="font-bold text-red-400">HAKAI MODE</h3>
+                            <p class="text-xs text-gray-400">Destruction Power</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Ultimative Automatisierung für komplexe Geschäftsprozesse.</p>
+                    <a href="/HAKAI_MODE.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+
+                <!-- Prophecy Mode -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">🔮</span>
+                        <div>
+                            <h3 class="font-bold text-purple-400">PROPHECY MODE</h3>
+                            <p class="text-xs text-gray-400">Predictive Analytics</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">KI-gestützte Vorhersagen für Deals, Leads und Revenue.</p>
+                    <a href="/PROPHECY_MODE.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="demo-card glass rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-3xl">💬</span>
+                        <div>
+                            <h3 class="font-bold text-green-400">WHATSAPP</h3>
+                            <p class="text-xs text-gray-400">Business Messaging</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Automatisierte WhatsApp Business API Integration.</p>
+                    <a href="/WHATSAPP_AUTH_DASHBOARD.html" class="btn-god px-4 py-2 rounded-lg text-sm font-medium inline-block">Demo starten</a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="glass rounded-3xl p-8 mb-12">
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <p class="text-4xl font-black text-green-400">3.3M+</p>
+                        <p class="text-gray-400">Deals</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-black text-blue-400">14.3M+</p>
+                        <p class="text-gray-400">Contacts</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-black text-amber-400">€37B</p>
+                        <p class="text-gray-400">Pipeline</p>
+                    </div>
+                    <div>
+                        <p class="text-4xl font-black text-purple-400">€1B+</p>
+                        <p class="text-gray-400">Won Deals</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center">
+                <h2 class="text-3xl font-black mb-4">Bereit für <span class="gradient-text">GOD MODE</span>?</h2>
+                <p class="text-gray-400 mb-8">Fordern Sie jetzt Ihren persönlichen Demo-Zugang an.</p>
+                <div class="flex justify-center gap-4">
+                    <a href="/register.html" class="btn-god px-8 py-4 rounded-xl font-semibold text-lg">Demo anfragen</a>
+                    <a href="/login.html" class="glass px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 transition">Login</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2024-2026 Enterprise Universe GmbH</p>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <a href="/datenschutz.html" class="hover:text-white transition">Datenschutz</a>
+                    <a href="/impressum.html" class="hover:text-white transition">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function playDemo() {
+            alert('Demo-Video wird geladen...\n\nFür eine persönliche Demo kontaktieren Sie uns unter:\ndemo@enterprise-universe.one');
+        }
+    </script>
 </body>
 </html>
