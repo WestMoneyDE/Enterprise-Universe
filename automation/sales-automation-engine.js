@@ -43,10 +43,10 @@ const CONFIG = {
         baseUrl: 'https://api.zadarma.com'
     },
 
-    // OpenAI für AI-Funktionen
-    openai: {
-        apiKey: process.env.OPENAI_API_KEY || 'YOUR_OPENAI_KEY',
-        model: 'gpt-4-turbo-preview'
+    // Anthropic Claude Haiku 4.5 für AI-Funktionen
+    anthropic: {
+        apiKey: process.env.ANTHROPIC_API_KEY || 'YOUR_ANTHROPIC_KEY',
+        model: 'claude-haiku-4-5-20241022'
     },
 
     // Unternehmensdaten
@@ -385,8 +385,8 @@ Sie können diese Einwilligung jederzeit widerrufen.`;
 // ============================================================================
 
 class AILeadScoringEngine {
-    constructor(openaiConfig) {
-        this.config = openaiConfig;
+    constructor(anthropicConfig) {
+        this.config = anthropicConfig;
     }
 
     // Lead Score berechnen (0-100)
@@ -453,21 +453,22 @@ Antworte im JSON-Format:
 }`;
 
         try {
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${this.config.apiKey}`,
+                    'x-api-key': this.config.apiKey,
+                    'anthropic-version': '2023-06-01',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: this.config.model,
-                    messages: [{ role: 'user', content: prompt }],
-                    temperature: 0.3
+                    max_tokens: 1024,
+                    messages: [{ role: 'user', content: prompt }]
                 })
             });
 
             const data = await response.json();
-            return JSON.parse(data.choices[0].message.content);
+            return JSON.parse(data.content[0].text);
         } catch (error) {
             console.error('AI Classification Error:', error);
             return null;
@@ -492,22 +493,22 @@ Die Nachricht soll:
 Nur die Nachricht ausgeben, keine Erklärungen.`;
 
         try {
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${this.config.apiKey}`,
+                    'x-api-key': this.config.apiKey,
+                    'anthropic-version': '2023-06-01',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: this.config.model,
-                    messages: [{ role: 'user', content: prompt }],
-                    temperature: 0.7,
-                    max_tokens: 150
+                    max_tokens: 200,
+                    messages: [{ role: 'user', content: prompt }]
                 })
             });
 
             const data = await response.json();
-            return data.choices[0].message.content.trim();
+            return data.content[0].text.trim();
         } catch (error) {
             console.error('AI Message Generation Error:', error);
             return null;
@@ -519,6 +520,161 @@ Nur die Nachricht ausgeben, keine Erklärungen.`;
         const date = new Date(dateString);
         const now = new Date();
         return Math.floor((now - date) / (1000 * 60 * 60 * 24));
+    }
+
+    // =========================================================================
+    // ML SCORING INTEGRATION (West Money OS API)
+    // =========================================================================
+
+    /**
+     * Holt ML-basierten Score von West Money OS API
+     * Fallback auf lokales rule-based Scoring wenn API nicht verfügbar
+     */
+    async getMLScore(contactId, dealData = {}) {
+        const apiUrl = process.env.WEST_MONEY_API_URL || 'http://localhost:8000';
+        const apiKey = process.env.WEST_MONEY_API_KEY;
+
+        // Prüfen ob ML Scoring aktiviert ist
+        if (process.env.USE_ML_SCORING !== 'true') {
+            return null;
+        }
+
+        try {
+            const response = await fetch(`${apiUrl}/api/v1/scoring/score-contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(apiKey && { 'Authorization': `Bearer ${apiKey}` })
+                },
+                body: JSON.stringify({
+                    hubspot_contact_id: contactId,
+                    email: dealData.email,
+                    phone: dealData.phone,
+                    name: dealData.name,
+                    company: dealData.company,
+                    amount: dealData.amount || 0,
+                    probability: dealData.probability || 20,
+                    stage: dealData.stage || 'lead',
+                    source: 'hubspot',
+                    description: dealData.description
+                })
+            });
+
+            if (!response.ok) {
+                console.warn(`ML Scoring API returned ${response.status}`);
+                return null;
+            }
+
+            const result = await response.json();
+            return {
+                score: result.score,
+                probability: result.conversion_probability,
+                tier: result.score_tier,
+                priority: result.priority,
+                action: result.recommended_action,
+                factors: result.feature_contributions,
+                modelVersion: result.model_version,
+                source: 'ml_model'
+            };
+        } catch (error) {
+            console.warn('ML Scoring unavailable, using local scoring:', error.message);
+            return null;
+        }
+    }
+
+    /**
+     * Erweiterte Lead-Qualifizierung mit ML-Support
+     * Versucht erst ML-Score, dann Fallback auf lokales Scoring
+     */
+    async qualifyLeadWithML(contact, interactions = []) {
+        // Erst ML-Score versuchen
+        const mlScore = await this.getMLScore(contact.id || contact.hs_object_id, {
+            email: contact.email,
+            phone: contact.phone,
+            name: `${contact.firstname || ''} ${contact.lastname || ''}`.trim(),
+            company: contact.company,
+            amount: contact.deal_amount || contact.amount,
+            probability: contact.probability,
+            stage: contact.lifecyclestage || 'lead',
+            description: contact.description
+        });
+
+        if (mlScore) {
+            console.log(`ML Score für ${contact.email}: ${mlScore.score} (${mlScore.tier})`);
+            return {
+                score: mlScore.score,
+                status: mlScore.tier,
+                priority: mlScore.priority,
+                action: this.mapActionToLocal(mlScore.action),
+                factors: mlScore.factors,
+                source: 'ml_model',
+                modelVersion: mlScore.modelVersion
+            };
+        }
+
+        // Fallback auf lokales rule-based Scoring
+        const score = this.calculateLeadScore(contact, interactions);
+        const qualification = this.qualifyLead(score);
+
+        return {
+            score,
+            status: qualification.status,
+            priority: qualification.priority,
+            action: qualification.action,
+            factors: this.getLocalFactors(contact, interactions),
+            source: 'rule_based'
+        };
+    }
+
+    /**
+     * Mapped ML-Actions zu lokalen Actions
+     */
+    mapActionToLocal(mlAction) {
+        const actionMapping = {
+            'immediate_call': 'immediate_call',
+            'send_proposal': 'send_proposal',
+            'email_sequence': 'email_sequence',
+            'long_term_nurture': 'long_term_nurture'
+        };
+        return actionMapping[mlAction] || 'email_sequence';
+    }
+
+    /**
+     * Gibt lokale Scoring-Faktoren zurück (für Fallback)
+     */
+    getLocalFactors(contact, interactions = []) {
+        return {
+            has_email: contact.email ? 0.15 : 0,
+            has_phone: contact.phone ? 0.15 : 0,
+            has_company: contact.company ? 0.15 : 0,
+            whatsapp_consent: contact.hs_whatsapp_consent === 'opt_in' ? 0.20 : 0,
+            engagement: Math.min(interactions.length * 0.05, 0.25),
+            freshness: this.daysSince(contact.createdate) < 7 ? 0.10 : 0
+        };
+    }
+
+    /**
+     * Tier zu Priorität konvertieren
+     */
+    tierToPriority(tier) {
+        const mapping = { hot: 1, warm: 2, nurture: 3, cold: 4 };
+        return mapping[tier] || 4;
+    }
+
+    /**
+     * Batch-Scoring für mehrere Kontakte
+     */
+    async batchScoreContacts(contacts) {
+        const results = [];
+        for (const contact of contacts) {
+            const result = await this.qualifyLeadWithML(contact);
+            results.push({
+                contactId: contact.id || contact.hs_object_id,
+                email: contact.email,
+                ...result
+            });
+        }
+        return results;
     }
 }
 
@@ -1237,7 +1393,7 @@ class AutomaticLeadFinder {
 // Singleton-Instanzen erstellen
 const hubspotClient = new HubSpotClient(CONFIG.hubspot);
 const whatsappClient = new WhatsAppClient(CONFIG.whatsapp);
-const aiEngine = new AILeadScoringEngine(CONFIG.openai);
+const aiEngine = new AILeadScoringEngine(CONFIG.anthropic);
 const contractGenerator = new ContractGenerator(CONFIG.company);
 
 const automationEngine = new AutomationWorkflowEngine(

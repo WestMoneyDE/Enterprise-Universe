@@ -462,9 +462,9 @@ class UniversalAPIConnector {
     }
 
     /**
-     * AI Chat completion
+     * AI Chat completion - Claude Haiku 4.5
      */
-    async aiChat(messages, model = 'claude-3-5-sonnet-20241022') {
+    async aiChat(messages, model = 'claude-haiku-4-5-20241022') {
         return this.call('ai', 'anthropic', '/messages', {
             method: 'POST',
             body: {

@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM MEGA MODULE | Enterprise Universe .ONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #00f0ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gold: #ffd700;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-sidebar: #0d0d12;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sidebar-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-title span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-section {
+            padding: 1rem 0;
+        }
+
+        .nav-section-title {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item .icon { font-size: 1.25rem; }
+
+        .nav-item .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .nav-item .badge.success { background: var(--success); }
+        .nav-item .badge.warning { background: var(--warning); }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            width: 400px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #d97706);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 2rem;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .stat-icon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Contact List */
+        .contact-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .contact-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .contact-item.selected {
+            background: rgba(139, 92, 246, 0.2);
+            border-left: 3px solid var(--primary);
+        }
+
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .contact-action {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .contact-action.call {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .contact-action.email {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .contact-action.whatsapp {
+            background: rgba(37, 211, 102, 0.2);
+            color: #25d366;
+        }
+
+        .contact-action:hover {
+            transform: scale(1.1);
+        }
+
+        /* Contact Detail */
+        .contact-detail {
+            padding: 2rem;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .detail-info h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-info p {
+            color: var(--text-muted);
+        }
+
+        .detail-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-row .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-row .label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .detail-row .value {
+            margin-left: auto;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .detail-row .value a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        /* Activity Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--bg-card);
+        }
+
+        .timeline-item.call::before { background: var(--success); }
+        .timeline-item.email::before { background: #3b82f6; }
+        .timeline-item.meeting::before { background: var(--warning); }
+        .timeline-item.note::before { background: var(--text-muted); }
+
+        .timeline-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content {
+            background: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Quick Actions Panel */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .quick-action {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .quick-action .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-action .label {
+            font-weight: 600;
+        }
+
+        .quick-action .desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Call Panel */
+        .call-panel {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--success);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .call-panel .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+        }
+
+        .call-panel .name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .call-panel .number {
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 1rem;
+        }
+
+        .call-panel .status {
+            color: var(--success);
+            margin-bottom: 1.5rem;
+        }
+
+        .call-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .call-control {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .call-control.end {
+            background: var(--danger);
+            color: white;
+        }
+
+        .call-control.mute {
+            background: var(--bg-dark);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .call-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Email Templates */
+        .template-list {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .template-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .template-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .template-info {
+            flex: 1;
+        }
+
+        .template-name {
+            font-weight: 600;
+        }
+
+        .template-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1200px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">🎯</div>
+            <div class="sidebar-title">
+                <h1>CRM MEGA</h1>
+                <span>Enterprise Universe .ONE</span>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Übersicht</div>
+            <div class="nav-item active">
+                <span class="icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" onclick="showSection('contacts')">
+                <span class="icon">👥</span>
+                <span>Kontakte</span>
+                <span class="badge success">5M+</span>
+            </div>
+            <div class="nav-item" onclick="showSection('deals')">
+                <span class="icon">💰</span>
+                <span>Deals</span>
+                <span class="badge warning">200K</span>
+            </div>
+            <div class="nav-item" onclick="showSection('companies')">
+                <span class="icon">🏢</span>
+                <span>Unternehmen</span>
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Kommunikation</div>
+            <div class="nav-item" onclick="showSection('calls')">
+                <span class="icon">📞</span>
+                <span>Anrufe</span>
+                <span class="badge">12</span>
+            </div>
+            <div class="nav-item" onclick="showSection('emails')">
+                <span class="icon">📧</span>
+                <span>E-Mails</span>
+                <span class="badge">48</span>
+            </div>
+            <div class="nav-item" onclick="showSection('meetings')">
+                <span class="icon">📅</span>
+                <span>Meetings</span>
+            </div>
+            <div class="nav-item" onclick="showSection('tasks')">
+                <span class="icon">✅</span>
+                <span>Aufgaben</span>
+                <span class="badge">7</span>
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Automation</div>
+            <div class="nav-item" onclick="showSection('workflows')">
+                <span class="icon">⚡</span>
+                <span>Workflows</span>
+            </div>
+            <div class="nav-item" onclick="showSection('sequences')">
+                <span class="icon">🔄</span>
+                <span>Sequenzen</span>
+            </div>
+            <div class="nav-item" onclick="showSection('templates')">
+                <span class="icon">📝</span>
+                <span>Templates</span>
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Analytics</div>
+            <div class="nav-item" onclick="showSection('reports')">
+                <span class="icon">📈</span>
+                <span>Reports</span>
+            </div>
+            <div class="nav-item" onclick="showSection('forecasts')">
+                <span class="icon">🎯</span>
+                <span>Forecasts</span>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="header-title">CRM Dashboard</h1>
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Suche nach Kontakten, Deals, Unternehmen..." id="globalSearch">
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="openEmailComposer()">📧 E-Mail</button>
+                <button class="btn btn-success" onclick="openCallDialog()">📞 Anrufen</button>
+                <button class="btn btn-primary" onclick="openNewContact()">➕ Kontakt</button>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" style="color: var(--primary);" id="totalContacts">5.2M</div>
+                    <div class="stat-label">Kontakte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" style="color: var(--success);" id="totalDeals">€2.8B</div>
+                    <div class="stat-label">Pipeline</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📞</div>
+                    <div class="stat-value" style="color: var(--warning);" id="todayCalls">47</div>
+                    <div class="stat-label">Anrufe Heute</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📧</div>
+                    <div class="stat-value" style="color: #3b82f6;" id="todayEmails">234</div>
+                    <div class="stat-label">E-Mails Heute</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" style="color: var(--secondary);" id="todayMeetings">8</div>
+                    <div class="stat-label">Meetings Heute</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" style="color: var(--gold);" id="tasksOpen">23</div>
+                    <div class="stat-label">Offene Tasks</div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="grid-3">
+                <!-- Left Column -->
+                <div>
+                    <!-- Recent Contacts -->
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <h3 class="card-title">👥 Letzte Kontakte</h3>
+                            <button class="btn btn-outline" onclick="refreshContacts()">🔄</button>
+                        </div>
+                        <div class="contact-list" id="contactList">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">⚡ Aktivitäten</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="timeline" id="activityTimeline">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <!-- Quick Actions -->
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <h3 class="card-title">🚀 Quick Actions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions">
+                                <div class="quick-action" onclick="openCallDialog()">
+                                    <div class="icon">📞</div>
+                                    <div class="label">Anrufen</div>
+                                    <div class="desc">Direkter Anruf</div>
+                                </div>
+                                <div class="quick-action" onclick="openEmailComposer()">
+                                    <div class="icon">📧</div>
+                                    <div class="label">E-Mail</div>
+                                    <div class="desc">Outlook senden</div>
+                                </div>
+                                <div class="quick-action" onclick="openWhatsApp()">
+                                    <div class="icon">💬</div>
+                                    <div class="label">WhatsApp</div>
+                                    <div class="desc">Nachricht senden</div>
+                                </div>
+                                <div class="quick-action" onclick="openMeetingScheduler()">
+                                    <div class="icon">📅</div>
+                                    <div class="label">Meeting</div>
+                                    <div class="desc">Termin planen</div>
+                                </div>
+                                <div class="quick-action" onclick="openTaskDialog()">
+                                    <div class="icon">✅</div>
+                                    <div class="label">Task</div>
+                                    <div class="desc">Aufgabe erstellen</div>
+                                </div>
+                                <div class="quick-action" onclick="openNoteDialog()">
+                                    <div class="icon">📝</div>
+                                    <div class="label">Notiz</div>
+                                    <div class="desc">Notiz hinzufügen</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Tasks -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📋 Anstehende Aufgaben</h3>
+                        </div>
+                        <div class="card-body" id="tasksList">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Call Modal -->
+    <div class="modal-overlay" id="callModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📞 Anruf starten</h2>
+                <button class="modal-close" onclick="closeModal('callModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="call-panel" id="callPanel">
+                    <div class="avatar" id="callAvatar">👤</div>
+                    <div class="name" id="callName">Kontakt auswählen</div>
+                    <div class="number" id="callNumber">-</div>
+                    <div class="status" id="callStatus">Bereit zum Anrufen</div>
+                    <div class="call-controls">
+                        <button class="call-control mute" onclick="toggleMute()">🔇</button>
+                        <button class="call-control end" onclick="endCall()">📵</button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>Telefonnummer eingeben oder Kontakt suchen</label>
+                    <input type="text" id="phoneInput" placeholder="+49 211 1234567">
+                </div>
+
+                <div class="template-list" style="margin-top: 1rem;">
+                    <div class="template-item" onclick="selectCallContact('Max Mustermann', '+49 211 9876543')">
+                        <div class="template-icon">👤</div>
+                        <div class="template-info">
+                            <div class="template-name">Max Mustermann</div>
+                            <div class="template-desc">+49 211 9876543 • CEO bei TechCorp GmbH</div>
+                        </div>
+                    </div>
+                    <div class="template-item" onclick="selectCallContact('Anna Schmidt', '+49 221 5551234')">
+                        <div class="template-icon">👤</div>
+                        <div class="template-info">
+                            <div class="template-name">Anna Schmidt</div>
+                            <div class="template-desc">+49 221 5551234 • CTO bei Innovation AG</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('callModal')">Abbrechen</button>
+                <button class="btn btn-success" onclick="startCall()">📞 Anruf starten</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div class="modal-overlay" id="emailModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>📧 E-Mail verfassen</h2>
+                <button class="modal-close" onclick="closeModal('emailModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Von</label>
+                    <input type="text" value="info@enterprise-universe.com" readonly style="background: var(--bg-card);">
+                </div>
+                <div class="form-group">
+                    <label>An</label>
+                    <input type="email" id="emailTo" placeholder="empfaenger@example.com">
+                </div>
+                <div class="form-group">
+                    <label>CC</label>
+                    <input type="email" id="emailCc" placeholder="cc@example.com (optional)">
+                </div>
+                <div class="form-group">
+                    <label>Betreff</label>
+                    <input type="text" id="emailSubject" placeholder="Betreff eingeben...">
+                </div>
+                <div class="form-group">
+                    <label>Nachricht</label>
+                    <textarea id="emailBody" placeholder="Ihre Nachricht..."></textarea>
+                </div>
+
+                <div style="margin-top: 1rem;">
+                    <label style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; display: block;">📝 E-Mail Templates</label>
+                    <div class="template-list">
+                        <div class="template-item" onclick="useEmailTemplate('intro')">
+                            <div class="template-icon">📨</div>
+                            <div class="template-info">
+                                <div class="template-name">Erstkontakt</div>
+                                <div class="template-desc">Professionelle Vorstellung & Angebot</div>
+                            </div>
+                        </div>
+                        <div class="template-item" onclick="useEmailTemplate('followup')">
+                            <div class="template-icon">🔄</div>
+                            <div class="template-info">
+                                <div class="template-name">Follow-Up</div>
+                                <div class="template-desc">Nach Gespräch oder Meeting</div>
+                            </div>
+                        </div>
+                        <div class="template-item" onclick="useEmailTemplate('proposal')">
+                            <div class="template-icon">📋</div>
+                            <div class="template-info">
+                                <div class="template-name">Angebot</div>
+                                <div class="template-desc">Angebot mit Details</div>
+                            </div>
+                        </div>
+                        <div class="template-item" onclick="useEmailTemplate('thankyou')">
+                            <div class="template-icon">🙏</div>
+                            <div class="template-info">
+                                <div class="template-name">Dankeschön</div>
+                                <div class="template-desc">Nach Vertragsabschluss</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('emailModal')">Abbrechen</button>
+                <button class="btn btn-outline" onclick="saveDraft()">💾 Entwurf</button>
+                <button class="btn btn-primary" onclick="sendEmail()">📧 In Outlook öffnen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>➕ Neuer Kontakt</h2>
+                <button class="modal-close" onclick="closeModal('contactModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="grid-2" style="gap: 1rem;">
+                    <div class="form-group">
+                        <label>Vorname *</label>
+                        <input type="text" id="contactFirstName" placeholder="Max">
+                    </div>
+                    <div class="form-group">
+                        <label>Nachname *</label>
+                        <input type="text" id="contactLastName" placeholder="Mustermann">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>E-Mail *</label>
+                    <input type="email" id="contactEmail" placeholder="max@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Telefon</label>
+                    <input type="tel" id="contactPhone" placeholder="+49 211 1234567">
+                </div>
+                <div class="form-group">
+                    <label>Unternehmen</label>
+                    <input type="text" id="contactCompany" placeholder="Firma GmbH">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <input type="text" id="contactPosition" placeholder="CEO, CTO, Manager...">
+                </div>
+                <div class="form-group">
+                    <label>Lead-Quelle</label>
+                    <select id="contactSource">
+                        <option value="website">Website</option>
+                        <option value="referral">Empfehlung</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="cold">Kaltakquise</option>
+                        <option value="event">Event/Messe</option>
+                        <option value="other">Sonstiges</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('contactModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="saveContact()">💾 Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // CRM MEGA MODULE - Enterprise Universe .ONE
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        const OUTLOOK_EMAIL = 'info@enterprise-universe.com';
+        const HUBSPOT_TOKEN = 'pat-eu1-4f5a4658-c4cb-4757-8f70-d3c235bf3cfc';
+
+        // Sample data
+        const sampleContacts = [
+            { id: 1, name: 'Thomas Wagner', company: 'TechVision GmbH', email: 'wagner@techvision.de', phone: '+49 211 9876543', position: 'CEO', avatar: 'TW' },
+            { id: 2, name: 'Sarah Müller', company: 'InnoSoft AG', email: 'mueller@innosoft.de', phone: '+49 221 5551234', position: 'CTO', avatar: 'SM' },
+            { id: 3, name: 'Michael Schmidt', company: 'BuildPro Deutschland', email: 'schmidt@buildpro.de', phone: '+49 201 4443210', position: 'Geschäftsführer', avatar: 'MS' },
+            { id: 4, name: 'Lisa Hoffmann', company: 'SmartHome Solutions', email: 'hoffmann@smarthome.de', phone: '+49 211 7778899', position: 'Sales Director', avatar: 'LH' },
+            { id: 5, name: 'Jan Becker', company: 'EcoEnergy Systems', email: 'becker@ecoenergy.de', phone: '+49 231 6665544', position: 'Head of Projects', avatar: 'JB' },
+            { id: 6, name: 'Anna Richter', company: 'DigitalFirst GmbH', email: 'richter@digitalfirst.de', phone: '+49 211 3332211', position: 'Marketing Lead', avatar: 'AR' }
+        ];
+
+        const sampleActivities = [
+            { type: 'call', time: 'Vor 15 Min', title: 'Anruf mit Thomas Wagner', text: 'Interesse an LOXONE Smart Home System bestätigt. Follow-up Meeting geplant.' },
+            { type: 'email', time: 'Vor 1 Std', title: 'E-Mail an Sarah Müller', text: 'Angebot für Gebäudeautomation versendet. Wartung auf Rückmeldung.' },
+            { type: 'meeting', time: 'Vor 3 Std', title: 'Meeting: BuildPro Projektbesprechung', text: 'Neubauprojekt Düsseldorf-Mörsenbroich. 240 Wohnungen, KfW 40.' },
+            { type: 'note', time: 'Gestern', title: 'Notiz zu Lisa Hoffmann', text: 'Sehr interessiert an KNX-Integration. Budget ca. €150.000.' }
+        ];
+
+        const emailTemplates = {
+            intro: {
+                subject: 'Innovative Gebäudeautomation für Ihr Unternehmen - Enterprise Universe',
+                body: `Sehr geehrte Damen und Herren,
+
+mein Name ist [IHR NAME] von Enterprise Universe.
+
+Wir sind spezialisiert auf:
+• LOXONE Smart Home & Gebäudeautomation
+• KNX-Systeme für gewerbliche Projekte
+• Energieeffiziente Gebäudetechnik
+• Barrierefreies Bauen
+
+Gerne würde ich Ihnen in einem persönlichen Gespräch zeigen, wie wir Ihre Projekte mit modernster Technologie aufwerten können.
+
+Haben Sie in den nächsten Tagen Zeit für ein kurzes Telefonat?
+
+Mit freundlichen Grüßen
+
+[IHR NAME]
+Enterprise Universe
+info@enterprise-universe.com
+www.enterprise-universe.one`
+            },
+            followup: {
+                subject: 'Bezugnehmend auf unser Gespräch - Enterprise Universe',
+                body: `Sehr geehrte/r [NAME],
+
+vielen Dank für das angenehme Gespräch [heute/gestern].
+
+Wie besprochen, hier die wichtigsten Punkte zusammengefasst:
+• [PUNKT 1]
+• [PUNKT 2]
+• [PUNKT 3]
+
+Die besprochenen Unterlagen finden Sie im Anhang.
+
+Für Rückfragen stehe ich Ihnen jederzeit zur Verfügung.
+
+Mit freundlichen Grüßen
+
+[IHR NAME]
+Enterprise Universe`
+            },
+            proposal: {
+                subject: 'Ihr individuelles Angebot - Enterprise Universe',
+                body: `Sehr geehrte/r [NAME],
+
+basierend auf unseren Gesprächen freue ich mich, Ihnen folgendes Angebot zu unterbreiten:
+
+PROJEKTÜBERSICHT:
+[PROJEKTBESCHREIBUNG]
+
+LEISTUNGSUMFANG:
+• [LEISTUNG 1]
+• [LEISTUNG 2]
+• [LEISTUNG 3]
+
+INVESTITION:
+[BETRAG] EUR zzgl. MwSt.
+
+Das detaillierte Angebot finden Sie im Anhang.
+
+Ich freue mich auf Ihre Rückmeldung.
+
+Mit freundlichen Grüßen
+
+[IHR NAME]
+Enterprise Universe`
+            },
+            thankyou: {
+                subject: 'Vielen Dank für Ihr Vertrauen - Enterprise Universe',
+                body: `Sehr geehrte/r [NAME],
+
+herzlichen Dank für Ihren Auftrag!
+
+Wir freuen uns sehr, Sie als Kunden bei Enterprise Universe begrüßen zu dürfen.
+
+Ihre nächsten Schritte:
+1. Sie erhalten in Kürze die Auftragsbestätigung
+2. Ihr persönlicher Projektmanager wird sich bei Ihnen melden
+3. Kick-off Meeting zur Projektplanung
+
+Bei Fragen erreichen Sie uns jederzeit unter:
+📞 +49 211 XXX XXXX
+📧 info@enterprise-universe.com
+
+Mit freundlichen Grüßen
+
+[IHR NAME]
+Enterprise Universe`
+            }
+        };
+
+        let selectedContact = null;
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderContacts();
+            renderActivities();
+            renderTasks();
+            loadStats();
+        });
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // RENDER FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function renderContacts() {
+            const list = document.getElementById('contactList');
+            list.innerHTML = sampleContacts.map(contact => `
+                <div class="contact-item" onclick="selectContact(${contact.id})">
+                    <div class="contact-avatar">${contact.avatar}</div>
+                    <div class="contact-info">
+                        <div class="contact-name">${contact.name}</div>
+                        <div class="contact-company">${contact.position} bei ${contact.company}</div>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="contact-action call" onclick="event.stopPropagation(); quickCall('${contact.name}', '${contact.phone}')">📞</button>
+                        <button class="contact-action email" onclick="event.stopPropagation(); quickEmail('${contact.email}', '${contact.name}')">📧</button>
+                        <button class="contact-action whatsapp" onclick="event.stopPropagation(); quickWhatsApp('${contact.phone}')">💬</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderActivities() {
+            const timeline = document.getElementById('activityTimeline');
+            timeline.innerHTML = sampleActivities.map(activity => `
+                <div class="timeline-item ${activity.type}">
+                    <div class="timeline-time">${activity.time}</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">${activity.title}</div>
+                        <div class="timeline-text">${activity.text}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTasks() {
+            const tasks = [
+                { title: 'Follow-up Thomas Wagner', due: 'Heute 14:00', priority: 'high' },
+                { title: 'Angebot BuildPro senden', due: 'Heute 17:00', priority: 'high' },
+                { title: 'Meeting vorbereiten', due: 'Morgen 09:00', priority: 'medium' },
+                { title: 'CRM Daten aktualisieren', due: 'Diese Woche', priority: 'low' }
+            ];
+
+            const list = document.getElementById('tasksList');
+            list.innerHTML = tasks.map(task => `
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-dark); border-radius: 10px; margin-bottom: 0.5rem;">
+                    <input type="checkbox" style="width: 20px; height: 20px;">
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">${task.title}</div>
+                        <div style="font-size: 0.8rem; color: ${task.priority === 'high' ? 'var(--danger)' : task.priority === 'medium' ? 'var(--warning)' : 'var(--text-muted)'};">${task.due}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadStats() {
+            // Load real stats from HubSpot
+            try {
+                const response = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ filterGroups: [], limit: 1 })
+                });
+                const data = await response.json();
+                if (data.total) {
+                    document.getElementById('totalContacts').textContent = formatNumber(data.total);
+                }
+            } catch (e) {
+                console.log('Using sample data');
+            }
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toLocaleString('de-DE');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // MODAL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function openCallDialog() {
+            document.getElementById('callModal').classList.add('active');
+        }
+
+        function openEmailComposer() {
+            document.getElementById('emailModal').classList.add('active');
+        }
+
+        function openNewContact() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // CALL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function selectCallContact(name, phone) {
+            document.getElementById('callName').textContent = name;
+            document.getElementById('callNumber').textContent = phone;
+            document.getElementById('phoneInput').value = phone;
+            document.getElementById('callAvatar').textContent = name.split(' ').map(n => n[0]).join('');
+        }
+
+        function startCall() {
+            const phone = document.getElementById('phoneInput').value;
+            if (!phone) {
+                alert('Bitte Telefonnummer eingeben!');
+                return;
+            }
+
+            document.getElementById('callStatus').textContent = '🔔 Verbindung wird aufgebaut...';
+            document.getElementById('callStatus').style.color = 'var(--warning)';
+
+            // Open tel: link to initiate call
+            window.location.href = `tel:${phone.replace(/\s/g, '')}`;
+
+            setTimeout(() => {
+                document.getElementById('callStatus').textContent = '📞 Anruf aktiv';
+                document.getElementById('callStatus').style.color = 'var(--success)';
+            }, 2000);
+        }
+
+        function quickCall(name, phone) {
+            selectCallContact(name, phone);
+            openCallDialog();
+        }
+
+        function endCall() {
+            document.getElementById('callStatus').textContent = 'Anruf beendet';
+            document.getElementById('callStatus').style.color = 'var(--text-muted)';
+            setTimeout(() => closeModal('callModal'), 1000);
+        }
+
+        function toggleMute() {
+            alert('Stummschaltung umgeschaltet');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // EMAIL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function useEmailTemplate(templateKey) {
+            const template = emailTemplates[templateKey];
+            if (template) {
+                document.getElementById('emailSubject').value = template.subject;
+                document.getElementById('emailBody').value = template.body;
+            }
+        }
+
+        function quickEmail(email, name) {
+            document.getElementById('emailTo').value = email;
+            document.getElementById('emailSubject').value = `Kontaktaufnahme - Enterprise Universe`;
+            openEmailComposer();
+        }
+
+        function sendEmail() {
+            const to = document.getElementById('emailTo').value;
+            const cc = document.getElementById('emailCc').value;
+            const subject = encodeURIComponent(document.getElementById('emailSubject').value);
+            const body = encodeURIComponent(document.getElementById('emailBody').value);
+
+            if (!to) {
+                alert('Bitte Empfänger eingeben!');
+                return;
+            }
+
+            // Construct Outlook mailto link
+            let mailtoUrl = `mailto:${to}?subject=${subject}&body=${body}`;
+            if (cc) {
+                mailtoUrl += `&cc=${cc}`;
+            }
+
+            // Open in default email client (Outlook)
+            window.location.href = mailtoUrl;
+
+            // Log activity
+            console.log('Email sent via Outlook:', { to, subject });
+
+            // Close modal
+            setTimeout(() => closeModal('emailModal'), 500);
+        }
+
+        function saveDraft() {
+            alert('Entwurf gespeichert!');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // WHATSAPP FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function quickWhatsApp(phone) {
+            const cleanPhone = phone.replace(/\s/g, '').replace('+', '');
+            window.open(`https://wa.me/${cleanPhone}`, '_blank');
+        }
+
+        function openWhatsApp() {
+            const phone = prompt('WhatsApp Nummer eingeben (z.B. +49 211 1234567):');
+            if (phone) {
+                quickWhatsApp(phone);
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // CONTACT FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function selectContact(id) {
+            selectedContact = sampleContacts.find(c => c.id === id);
+            document.querySelectorAll('.contact-item').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+        }
+
+        function saveContact() {
+            const contact = {
+                firstName: document.getElementById('contactFirstName').value,
+                lastName: document.getElementById('contactLastName').value,
+                email: document.getElementById('contactEmail').value,
+                phone: document.getElementById('contactPhone').value,
+                company: document.getElementById('contactCompany').value,
+                position: document.getElementById('contactPosition').value,
+                source: document.getElementById('contactSource').value
+            };
+
+            if (!contact.firstName || !contact.lastName || !contact.email) {
+                alert('Bitte alle Pflichtfelder ausfüllen!');
+                return;
+            }
+
+            console.log('Saving contact:', contact);
+            alert(`Kontakt ${contact.firstName} ${contact.lastName} gespeichert!`);
+            closeModal('contactModal');
+
+            // Would send to HubSpot API here
+        }
+
+        function refreshContacts() {
+            alert('Kontakte werden aktualisiert...');
+            renderContacts();
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // OTHER ACTIONS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function openMeetingScheduler() {
+            alert('Meeting Scheduler öffnet sich...\n\nIntegration mit Outlook/Google Calendar möglich.');
+        }
+
+        function openTaskDialog() {
+            alert('Task Dialog - Neue Aufgabe erstellen');
+        }
+
+        function openNoteDialog() {
+            alert('Notiz Dialog - Notiz hinzufügen');
+        }
+
+        function showSection(section) {
+            alert(`Navigiere zu: ${section}\n\nDiese Sektion wird geladen...`);
+        }
+    </script>
+</body>
+</html>

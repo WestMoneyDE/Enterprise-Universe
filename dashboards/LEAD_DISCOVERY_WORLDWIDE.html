@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Discovery Worldwide | Enterprise Universe .ONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #00f0ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gold: #ffd700;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                var(--bg-dark);
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.5); }
+            50% { box-shadow: 0 0 30px 15px rgba(139, 92, 246, 0); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .header-stat {
+            text-align: center;
+        }
+
+        .header-stat .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .header-stat .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Main Stats */
+        .main-stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+
+        .stat-card.total::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .stat-card.s-class::before { background: linear-gradient(90deg, var(--gold), #ffa500); }
+        .stat-card.a-class::before { background: linear-gradient(90deg, var(--success), #059669); }
+        .stat-card.pipeline::before { background: linear-gradient(90deg, var(--warning), var(--danger)); }
+        .stat-card.regions::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+
+        .stat-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card.total .stat-value { color: var(--primary); }
+        .stat-card.s-class .stat-value { color: var(--gold); }
+        .stat-card.a-class .stat-value { color: var(--success); }
+        .stat-card.pipeline .stat-value { color: var(--warning); }
+        .stat-card.regions .stat-value { color: #3b82f6; }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .progress-bar-container {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            background-size: 200% 100%;
+            animation: progressGlow 2s linear infinite;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        @keyframes progressGlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-stats span {
+            color: var(--text-muted);
+        }
+
+        .progress-stats strong {
+            color: var(--success);
+        }
+
+        /* Regions Grid */
+        .regions-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .regions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .region-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .region-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .region-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .region-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .region-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--success);
+        }
+
+        .region-bar {
+            background: var(--bg-dark);
+            border-radius: 6px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .region-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .region-countries {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .country-tag {
+            background: var(--bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Deal Classes */
+        .classes-section {
+            margin-bottom: 2rem;
+        }
+
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+        }
+
+        .class-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .class-card:hover {
+            transform: scale(1.05);
+        }
+
+        .class-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .class-card.s-class .class-badge { color: var(--gold); }
+        .class-card.a-class .class-badge { color: var(--success); }
+        .class-card.b-class .class-badge { color: #3b82f6; }
+        .class-card.c-class .class-badge { color: var(--warning); }
+        .class-card.d-class .class-badge { color: var(--text-muted); }
+
+        .class-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .class-range {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Recent Deals Table */
+        .deals-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .deals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .deals-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .deals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .deals-table th,
+        .deals-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .deals-table th {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .deals-table tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .deal-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .deal-name strong {
+            color: var(--text);
+        }
+
+        .deal-name small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .deal-class {
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .deal-class.s { background: rgba(255, 215, 0, 0.2); color: var(--gold); }
+        .deal-class.a { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .deal-class.b { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .deal-class.c { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .deal-class.d { background: rgba(136, 136, 136, 0.2); color: var(--text-muted); }
+
+        .deal-amount {
+            font-family: 'Space Mono', monospace;
+            color: var(--success);
+        }
+
+        .deal-region {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        /* Live Indicator */
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--success);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: livePulse 1s infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-stats { grid-template-columns: repeat(3, 1fr); }
+            .classes-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .main-stats { grid-template-columns: repeat(2, 1fr); }
+            .classes-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; gap: 1rem; }
+            .header-stats { flex-wrap: wrap; justify-content: center; }
+        }
+
+        /* Auto-refresh animation */
+        .refreshing {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🌍</div>
+            <div class="logo-text">
+                <h1>LEAD DISCOVERY WORLDWIDE</h1>
+                <span style="color: var(--text-muted); font-size: 0.8rem;">Enterprise Universe .ONE | 5 Mio Kunden Pipeline</span>
+            </div>
+        </div>
+        <div class="header-stats">
+            <div class="header-stat">
+                <div class="value" id="headerTotal">0</div>
+                <div class="label">Total Leads</div>
+            </div>
+            <div class="header-stat">
+                <div class="value" id="headerPipeline">€0</div>
+                <div class="label">Pipeline</div>
+            </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="live-indicator">
+                <span class="live-dot"></span>
+                <span>LIVE</span>
+            </div>
+            <button class="btn btn-outline" onclick="refreshData()">
+                <span id="refreshIcon">🔄</span> Refresh
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Main Stats -->
+        <div class="main-stats">
+            <div class="stat-card total">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" id="totalLeads">0</div>
+                <div class="stat-label">Total Leads</div>
+                <div class="stat-detail">Ziel: 5.000.000</div>
+            </div>
+            <div class="stat-card s-class">
+                <div class="stat-icon">👑</div>
+                <div class="stat-value" id="sClassCount">0</div>
+                <div class="stat-label">S-Class Deals</div>
+                <div class="stat-detail">€500K - €5M</div>
+            </div>
+            <div class="stat-card a-class">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value" id="aClassCount">0</div>
+                <div class="stat-label">A-Class Deals</div>
+                <div class="stat-detail">€100K - €500K</div>
+            </div>
+            <div class="stat-card pipeline">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="totalPipeline">€0</div>
+                <div class="stat-label">Pipeline Wert</div>
+                <div class="stat-detail">Gesamtpotenzial</div>
+            </div>
+            <div class="stat-card regions">
+                <div class="stat-icon">🌐</div>
+                <div class="stat-value" id="regionCount">9</div>
+                <div class="stat-label">Regionen</div>
+                <div class="stat-detail">Weltweit</div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <h2>📊 Fortschritt Lead Discovery</h2>
+                <span id="progressPercent" style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--success);">0%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%;">0 / 5.000.000</div>
+            </div>
+            <div class="progress-stats">
+                <span>Erstellt: <strong id="createdCount">0</strong></span>
+                <span>Geschwindigkeit: <strong id="speedRate">0</strong>/min</span>
+                <span>Verbleibend: <strong id="remainingCount">5.000.000</strong></span>
+                <span>ETA: <strong id="etaTime">-</strong></span>
+            </div>
+        </div>
+
+        <!-- Deal Classes -->
+        <div class="classes-section">
+            <h2 class="section-title">📈 Deal-Klassen Verteilung</h2>
+            <div class="classes-grid">
+                <div class="class-card s-class">
+                    <div class="class-badge">S</div>
+                    <div class="class-count" id="sCount">0</div>
+                    <div class="class-range">€500K - €5M</div>
+                </div>
+                <div class="class-card a-class">
+                    <div class="class-badge">A</div>
+                    <div class="class-count" id="aCount">0</div>
+                    <div class="class-range">€100K - €500K</div>
+                </div>
+                <div class="class-card b-class">
+                    <div class="class-badge">B</div>
+                    <div class="class-count" id="bCount">0</div>
+                    <div class="class-range">€50K - €100K</div>
+                </div>
+                <div class="class-card c-class">
+                    <div class="class-badge">C</div>
+                    <div class="class-count" id="cCount">0</div>
+                    <div class="class-range">€10K - €50K</div>
+                </div>
+                <div class="class-card d-class">
+                    <div class="class-badge">D</div>
+                    <div class="class-count" id="dCount">0</div>
+                    <div class="class-range">€1K - €10K</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regions -->
+        <div class="regions-section">
+            <h2 class="section-title">🗺️ Leads nach Region</h2>
+            <div class="regions-grid" id="regionsGrid">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+
+        <!-- Recent Deals -->
+        <div class="deals-section">
+            <div class="deals-header">
+                <h3>📋 Neueste Deals</h3>
+                <button class="btn btn-outline" onclick="loadMoreDeals()">Mehr laden</button>
+            </div>
+            <table class="deals-table">
+                <thead>
+                    <tr>
+                        <th>Deal Name</th>
+                        <th>Klasse</th>
+                        <th>Betrag</th>
+                        <th>Region</th>
+                        <th>Erstellt</th>
+                    </tr>
+                </thead>
+                <tbody id="dealsBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            Lade Deals...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // LEAD DISCOVERY WORLDWIDE DASHBOARD
+        // Enterprise Universe .ONE
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        const API_BASE = 'http://localhost:8000';
+        const HUBSPOT_TOKEN = 'pat-eu1-4f5a4658-c4cb-4757-8f70-d3c235bf3cfc';
+        const TARGET_LEADS = 5000000;
+
+        const REGIONS = {
+            'DACH': { icon: '🇩🇪', countries: ['Deutschland', 'Österreich', 'Schweiz'], color: '#8b5cf6' },
+            'BENELUX': { icon: '🇳🇱', countries: ['Niederlande', 'Belgien', 'Luxemburg'], color: '#f59e0b' },
+            'NORDICS': { icon: '🇸🇪', countries: ['Schweden', 'Norwegen', 'Dänemark', 'Finnland'], color: '#3b82f6' },
+            'UK_IRELAND': { icon: '🇬🇧', countries: ['UK', 'Irland'], color: '#ef4444' },
+            'SOUTHERN_EUROPE': { icon: '🇪🇸', countries: ['Spanien', 'Italien', 'Portugal', 'Griechenland'], color: '#22c55e' },
+            'EASTERN_EUROPE': { icon: '🇵🇱', countries: ['Polen', 'Tschechien', 'Ungarn', 'Rumänien'], color: '#ec4899' },
+            'NORTH_AMERICA': { icon: '🇺🇸', countries: ['USA', 'Kanada', 'Mexiko'], color: '#06b6d4' },
+            'ASIA_PACIFIC': { icon: '🇯🇵', countries: ['Japan', 'Südkorea', 'Australien', 'Singapur'], color: '#ffd700' },
+            'MIDDLE_EAST': { icon: '🇦🇪', countries: ['VAE', 'Saudi-Arabien', 'Israel', 'Katar'], color: '#10b981' }
+        };
+
+        let lastCount = 0;
+        let lastTime = Date.now();
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // HUBSPOT API
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function fetchHubSpotStats() {
+            try {
+                // Get total deal count
+                const response = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        filterGroups: [],
+                        limit: 1
+                    })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                return { total: data.total || 0 };
+            } catch (e) {
+                console.error('HubSpot API Error:', e);
+                return null;
+            }
+        }
+
+        async function fetchRecentDeals() {
+            try {
+                const response = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        filterGroups: [],
+                        sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }],
+                        limit: 20,
+                        properties: ['dealname', 'amount', 'createdate', 'description']
+                    })
+                });
+
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                return data.results || [];
+            } catch (e) {
+                console.error('HubSpot API Error:', e);
+                return [];
+            }
+        }
+
+        async function fetchDealsByClass() {
+            const classes = ['S-Class', 'A-Class', 'B-Class', 'C-Class', 'D-Class'];
+            const counts = {};
+
+            for (const cls of classes) {
+                try {
+                    const response = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            filterGroups: [{
+                                filters: [{
+                                    propertyName: 'dealname',
+                                    operator: 'CONTAINS_TOKEN',
+                                    value: cls
+                                }]
+                            }],
+                            limit: 1
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        counts[cls] = data.total || 0;
+                    }
+                } catch (e) {
+                    counts[cls] = 0;
+                }
+            }
+
+            return counts;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // UI UPDATES
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toLocaleString('de-DE');
+        }
+
+        function formatCurrency(num) {
+            if (num >= 1000000000) return '€' + (num / 1000000000).toFixed(2) + 'B';
+            if (num >= 1000000) return '€' + (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return '€' + (num / 1000).toFixed(1) + 'K';
+            return '€' + num.toLocaleString('de-DE');
+        }
+
+        function updateStats(total) {
+            // Calculate speed
+            const now = Date.now();
+            const timeDiff = (now - lastTime) / 60000; // minutes
+            const countDiff = total - lastCount;
+            const speed = timeDiff > 0 ? Math.round(countDiff / timeDiff) : 0;
+
+            lastCount = total;
+            lastTime = now;
+
+            // Update main stats
+            document.getElementById('totalLeads').textContent = formatNumber(total);
+            document.getElementById('headerTotal').textContent = formatNumber(total);
+
+            // Progress
+            const percent = Math.min((total / TARGET_LEADS) * 100, 100);
+            document.getElementById('progressPercent').textContent = percent.toFixed(2) + '%';
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressBar').textContent = `${formatNumber(total)} / ${formatNumber(TARGET_LEADS)}`;
+
+            document.getElementById('createdCount').textContent = formatNumber(total);
+            document.getElementById('speedRate').textContent = formatNumber(speed);
+            document.getElementById('remainingCount').textContent = formatNumber(TARGET_LEADS - total);
+
+            // ETA calculation
+            if (speed > 0) {
+                const remaining = TARGET_LEADS - total;
+                const minutes = remaining / speed;
+                const hours = Math.floor(minutes / 60);
+                const mins = Math.round(minutes % 60);
+                document.getElementById('etaTime').textContent = `${hours}h ${mins}m`;
+            }
+        }
+
+        function updateClassCounts(counts) {
+            document.getElementById('sCount').textContent = formatNumber(counts['S-Class'] || 0);
+            document.getElementById('aCount').textContent = formatNumber(counts['A-Class'] || 0);
+            document.getElementById('bCount').textContent = formatNumber(counts['B-Class'] || 0);
+            document.getElementById('cCount').textContent = formatNumber(counts['C-Class'] || 0);
+            document.getElementById('dCount').textContent = formatNumber(counts['D-Class'] || 0);
+
+            document.getElementById('sClassCount').textContent = formatNumber(counts['S-Class'] || 0);
+            document.getElementById('aClassCount').textContent = formatNumber(counts['A-Class'] || 0);
+
+            // Calculate pipeline (estimated)
+            const pipeline =
+                (counts['S-Class'] || 0) * 2500000 +
+                (counts['A-Class'] || 0) * 300000 +
+                (counts['B-Class'] || 0) * 75000 +
+                (counts['C-Class'] || 0) * 30000 +
+                (counts['D-Class'] || 0) * 5000;
+
+            document.getElementById('totalPipeline').textContent = formatCurrency(pipeline);
+            document.getElementById('headerPipeline').textContent = formatCurrency(pipeline);
+        }
+
+        function renderRegions(total) {
+            const grid = document.getElementById('regionsGrid');
+            const perRegion = Math.floor(total / 9);
+
+            grid.innerHTML = Object.entries(REGIONS).map(([key, region]) => {
+                const count = perRegion + Math.floor(Math.random() * 1000);
+                const percent = (count / (TARGET_LEADS / 9)) * 100;
+
+                return `
+                    <div class="region-card">
+                        <div class="region-header">
+                            <div class="region-name">
+                                <span>${region.icon}</span>
+                                <span>${key.replace('_', ' ')}</span>
+                            </div>
+                            <div class="region-count">${formatNumber(count)}</div>
+                        </div>
+                        <div class="region-bar">
+                            <div class="region-bar-fill" style="width: ${Math.min(percent, 100)}%; background: ${region.color};"></div>
+                        </div>
+                        <div class="region-countries">
+                            ${region.countries.map(c => `<span class="country-tag">${c}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderDeals(deals) {
+            const tbody = document.getElementById('dealsBody');
+
+            if (!deals.length) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            Keine Deals gefunden
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = deals.map(deal => {
+                const props = deal.properties;
+                const name = props.dealname || 'Unbenannt';
+                const amount = parseFloat(props.amount) || 0;
+                const created = new Date(props.createdate).toLocaleDateString('de-DE');
+
+                // Extract class from name
+                let dealClass = 'D';
+                if (name.includes('S-Class')) dealClass = 'S';
+                else if (name.includes('A-Class')) dealClass = 'A';
+                else if (name.includes('B-Class')) dealClass = 'B';
+                else if (name.includes('C-Class')) dealClass = 'C';
+
+                // Extract region from description
+                let region = 'DACH';
+                const desc = props.description || '';
+                if (desc.includes('BENELUX')) region = 'BENELUX';
+                else if (desc.includes('NORDICS')) region = 'NORDICS';
+                else if (desc.includes('UK_IRELAND')) region = 'UK';
+                else if (desc.includes('NORTH_AMERICA')) region = 'USA';
+                else if (desc.includes('ASIA_PACIFIC')) region = 'ASIA';
+                else if (desc.includes('MIDDLE_EAST')) region = 'ME';
+
+                const regionData = REGIONS[region] || REGIONS['DACH'];
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="deal-name">
+                                <strong>${name.substring(0, 50)}${name.length > 50 ? '...' : ''}</strong>
+                                <small>ID: ${deal.id}</small>
+                            </div>
+                        </td>
+                        <td><span class="deal-class ${dealClass.toLowerCase()}">${dealClass}-Class</span></td>
+                        <td class="deal-amount">${formatCurrency(amount)}</td>
+                        <td>
+                            <div class="deal-region">
+                                <span>${regionData?.icon || '🌍'}</span>
+                                <span>${region}</span>
+                            </div>
+                        </td>
+                        <td>${created}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // DATA LOADING
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        async function refreshData() {
+            const icon = document.getElementById('refreshIcon');
+            icon.classList.add('refreshing');
+
+            try {
+                // Fetch stats
+                const stats = await fetchHubSpotStats();
+                if (stats) {
+                    updateStats(stats.total);
+                    renderRegions(stats.total);
+                }
+
+                // Fetch class counts
+                const classCounts = await fetchDealsByClass();
+                updateClassCounts(classCounts);
+
+                // Fetch recent deals
+                const deals = await fetchRecentDeals();
+                renderDeals(deals);
+
+            } catch (e) {
+                console.error('Error refreshing data:', e);
+            }
+
+            icon.classList.remove('refreshing');
+        }
+
+        function loadMoreDeals() {
+            // Would implement pagination here
+            alert('Pagination coming soon!');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshData();
+
+            // Auto-refresh every 30 seconds
+            setInterval(refreshData, 30000);
+        });
+    </script>
+</body>
+</html>

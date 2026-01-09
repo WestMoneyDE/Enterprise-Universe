@@ -10,7 +10,7 @@
 ### Holding
 | Feld | Wert |
 |------|------|
-| **Unternehmen** | Enterprise Universe GmbH |
+| **Unternehmen** | Enterprise Universe GmbH i.G. |
 | **Typ** | Holding / Muttergesellschaft |
 | **Sitz** | Köln, Deutschland |
 | **Gründer & CEO** | Ömer Hüseyin Coşkun |

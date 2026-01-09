@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM ULTRA V2 | Enterprise Universe .ONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #00f0ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gold: #ffd700;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-sidebar: #0d0d12;
+            --text: #ffffff;
+            --text-muted: #888;
+            --border: #2a2a3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sidebar-logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .sidebar-title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section {
+            padding: 0.75rem 0;
+        }
+
+        .nav-section-title {
+            padding: 0.5rem 1.25rem;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1.25rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--primary);
+            border-left-color: var(--primary);
+        }
+
+        .nav-item .badge {
+            margin-left: auto;
+            background: var(--danger);
+            color: white;
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .nav-item .badge.success { background: var(--success); }
+        .nav-item .badge.warning { background: var(--warning); }
+        .nav-item .badge.gold { background: var(--gold); color: #000; }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(18, 18, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.875rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.4rem 0.75rem;
+            width: 300px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .btn-success { background: linear-gradient(135deg, var(--success), #059669); color: white; }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), #d97706); color: white; }
+        .btn-danger { background: linear-gradient(135deg, var(--danger), #dc2626); color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #ffa500); color: #000; }
+
+        .btn:hover { transform: translateY(-2px); }
+
+        /* Content */
+        .content {
+            padding: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: var(--text-muted);
+        }
+
+        .tab:hover { background: rgba(139, 92, 246, 0.1); color: var(--text); }
+        .tab.active { background: var(--primary); color: white; }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-body { padding: 1.25rem; }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+        .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+
+        /* Stats */
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+
+        .stat-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 700; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Lead Score */
+        .lead-score {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .lead-score.hot { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .lead-score.warm { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .lead-score.cold { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .lead-score.gold { background: rgba(255, 215, 0, 0.2); color: var(--gold); }
+
+        .score-bar {
+            height: 6px;
+            background: var(--bg-dark);
+            border-radius: 3px;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table th {
+            background: var(--bg-dark);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .table tr:hover td { background: rgba(139, 92, 246, 0.05); }
+
+        /* Sequence Timeline */
+        .sequence-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+
+        .sequence-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .sequence-step .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .sequence-step.email .icon { background: rgba(59, 130, 246, 0.2); }
+        .sequence-step.call .icon { background: rgba(16, 185, 129, 0.2); }
+        .sequence-step.wait .icon { background: rgba(136, 136, 136, 0.2); }
+        .sequence-step.task .icon { background: rgba(245, 158, 11, 0.2); }
+
+        .sequence-step .label { font-size: 0.7rem; color: var(--text-muted); }
+
+        .sequence-connector {
+            width: 40px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        /* Call Panel */
+        .call-active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--success);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .call-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--success), #059669);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            animation: callPulse 2s infinite;
+        }
+
+        @keyframes callPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+        }
+
+        .call-timer {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--success);
+            margin: 1rem 0;
+        }
+
+        .call-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .call-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .call-btn.end { background: var(--danger); color: white; }
+        .call-btn.mute { background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); }
+        .call-btn.hold { background: var(--warning); color: white; }
+
+        .call-btn:hover { transform: scale(1.1); }
+
+        /* Charts */
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s;
+            position: relative;
+        }
+
+        .chart-bar:hover { opacity: 0.8; }
+
+        .chart-bar .value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .chart-bar .label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Funnel */
+        .funnel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .funnel-stage {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .funnel-bar {
+            height: 40px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-weight: 600;
+            transition: width 0.5s;
+        }
+
+        .funnel-stage:nth-child(1) .funnel-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .funnel-stage:nth-child(2) .funnel-bar { background: linear-gradient(90deg, var(--primary), #a78bfa); }
+        .funnel-stage:nth-child(3) .funnel-bar { background: linear-gradient(90deg, var(--warning), #fbbf24); }
+        .funnel-stage:nth-child(4) .funnel-bar { background: linear-gradient(90deg, #ec4899, #f472b6); }
+        .funnel-stage:nth-child(5) .funnel-bar { background: linear-gradient(90deg, var(--success), #34d399); }
+
+        .funnel-label {
+            width: 100px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .funnel-value {
+            margin-left: auto;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Calendar */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            padding: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day:hover { background: rgba(139, 92, 246, 0.2); }
+        .calendar-day.today { background: var(--primary); color: white; }
+        .calendar-day.has-event { position: relative; }
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .event-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .event-item.meeting { border-left-color: var(--warning); }
+        .event-item.call { border-left-color: var(--success); }
+        .event-item.task { border-left-color: var(--danger); }
+
+        .event-time {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .event-title { font-weight: 600; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.25rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.6rem 0.875rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea { min-height: 120px; resize: vertical; }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Section containers */
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .grid-6 { grid-template-columns: repeat(3, 1fr); }
+            .grid-5 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1200px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">🚀</div>
+            <div class="sidebar-title">
+                <h1>CRM ULTRA V2</h1>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">Enterprise Universe .ONE</span>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Übersicht</div>
+            <div class="nav-item active" onclick="showSection('dashboard')">
+                <span>📊</span> Dashboard
+            </div>
+            <div class="nav-item" onclick="showSection('leads')">
+                <span>🎯</span> Lead Scoring
+                <span class="badge gold">KI</span>
+            </div>
+            <div class="nav-item" onclick="showSection('contacts')">
+                <span>👥</span> Kontakte
+                <span class="badge success">5M+</span>
+            </div>
+            <div class="nav-item" onclick="showSection('deals')">
+                <span>💰</span> Deals
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Kommunikation</div>
+            <div class="nav-item" onclick="showSection('calls')">
+                <span>📞</span> VOIP Telefonie
+                <span class="badge">Live</span>
+            </div>
+            <div class="nav-item" onclick="showSection('emails')">
+                <span>📧</span> E-Mails
+            </div>
+            <div class="nav-item" onclick="showSection('sequences')">
+                <span>🔄</span> Sequenzen
+                <span class="badge warning">Auto</span>
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Planung</div>
+            <div class="nav-item" onclick="showSection('calendar')">
+                <span>📅</span> Kalender
+            </div>
+            <div class="nav-item" onclick="showSection('tasks')">
+                <span>✅</span> Aufgaben
+                <span class="badge">7</span>
+            </div>
+        </nav>
+
+        <nav class="nav-section">
+            <div class="nav-section-title">Analytics</div>
+            <div class="nav-item" onclick="showSection('analytics')">
+                <span>📈</span> Analytics
+            </div>
+            <div class="nav-item" onclick="showSection('reports')">
+                <span>📋</span> Reports
+            </div>
+            <div class="nav-item" onclick="showSection('forecast')">
+                <span>🎯</span> Forecast
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Suche..." id="globalSearch">
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline" onclick="openSequenceBuilder()">🔄 Sequenz</button>
+                <button class="btn btn-warning" onclick="openEmailComposer()">📧 E-Mail</button>
+                <button class="btn btn-success" onclick="startCall()">📞 Anrufen</button>
+                <button class="btn btn-primary" onclick="openNewLead()">➕ Lead</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- DASHBOARD SECTION -->
+            <div class="section active" id="section-dashboard">
+                <!-- Stats Row -->
+                <div class="grid-6" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-value" style="color: var(--primary);">5.2M</div>
+                        <div class="stat-label">Kontakte</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-value" style="color: var(--danger);">12.4K</div>
+                        <div class="stat-label">Hot Leads</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" style="color: var(--success);">€2.8B</div>
+                        <div class="stat-label">Pipeline</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📞</div>
+                        <div class="stat-value" style="color: var(--warning);">147</div>
+                        <div class="stat-label">Anrufe Heute</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📧</div>
+                        <div class="stat-value" style="color: #3b82f6;">892</div>
+                        <div class="stat-label">E-Mails</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-value" style="color: var(--gold);">87%</div>
+                        <div class="stat-label">KI Score</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Conversion Funnel -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📊 Conversion Funnel</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="funnel">
+                                <div class="funnel-stage">
+                                    <span class="funnel-label">Leads</span>
+                                    <div class="funnel-bar" style="width: 100%;">5.200.000</div>
+                                    <span class="funnel-value">100%</span>
+                                </div>
+                                <div class="funnel-stage">
+                                    <span class="funnel-label">Qualified</span>
+                                    <div class="funnel-bar" style="width: 60%;">3.120.000</div>
+                                    <span class="funnel-value">60%</span>
+                                </div>
+                                <div class="funnel-stage">
+                                    <span class="funnel-label">Proposal</span>
+                                    <div class="funnel-bar" style="width: 25%;">1.300.000</div>
+                                    <span class="funnel-value">25%</span>
+                                </div>
+                                <div class="funnel-stage">
+                                    <span class="funnel-label">Negotiation</span>
+                                    <div class="funnel-bar" style="width: 10%;">520.000</div>
+                                    <span class="funnel-value">10%</span>
+                                </div>
+                                <div class="funnel-stage">
+                                    <span class="funnel-label">Won</span>
+                                    <div class="funnel-bar" style="width: 3%;">156.000</div>
+                                    <span class="funnel-value">3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Sequences -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">🔄 Aktive E-Mail Sequenzen</h3>
+                            <button class="btn btn-outline" onclick="openSequenceBuilder()">+ Neu</button>
+                        </div>
+                        <div class="card-body">
+                            <div style="margin-bottom: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600;">🚀 Onboarding Sequenz</span>
+                                    <span style="color: var(--success);">2.340 aktiv</span>
+                                </div>
+                                <div class="score-bar">
+                                    <div class="score-bar-fill" style="width: 78%; background: var(--success);"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">78% Open Rate • 23% Reply Rate</div>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600;">🔥 Hot Lead Follow-Up</span>
+                                    <span style="color: var(--warning);">890 aktiv</span>
+                                </div>
+                                <div class="score-bar">
+                                    <div class="score-bar-fill" style="width: 65%; background: var(--warning);"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">65% Open Rate • 31% Reply Rate</div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span style="font-weight: 600;">💼 Enterprise Outreach</span>
+                                    <span style="color: var(--primary);">456 aktiv</span>
+                                </div>
+                                <div class="score-bar">
+                                    <div class="score-bar-fill" style="width: 52%; background: var(--primary);"></div>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">52% Open Rate • 18% Reply Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Leads by AI Score -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">🤖 KI Lead Scoring - Top Leads</h3>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-outline" onclick="refreshScores()">🔄 Refresh</button>
+                            <button class="btn btn-gold">🧠 KI Analyse</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Lead</th>
+                                <th>Unternehmen</th>
+                                <th>KI Score</th>
+                                <th>Scoring Faktoren</th>
+                                <th>Deal Wert</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadScoreTable">
+                            <!-- Filled by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- LEAD SCORING SECTION -->
+            <div class="section" id="section-leads">
+                <div class="grid-4" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-value" style="color: var(--danger);">12.4K</div>
+                        <div class="stat-label">Hot (90-100)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🌡️</div>
+                        <div class="stat-value" style="color: var(--warning);">89.2K</div>
+                        <div class="stat-label">Warm (60-89)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❄️</div>
+                        <div class="stat-value" style="color: #3b82f6;">456K</div>
+                        <div class="stat-label">Cold (30-59)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🧊</div>
+                        <div class="stat-value" style="color: var(--text-muted);">4.6M</div>
+                        <div class="stat-label">Nurture (0-29)</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">🧠 KI Scoring Kriterien</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-3">
+                            <div style="padding: 1rem; background: var(--bg-dark); border-radius: 8px;">
+                                <h4 style="margin-bottom: 0.5rem;">📊 Firmendaten (30%)</h4>
+                                <ul style="font-size: 0.85rem; color: var(--text-muted); list-style: none;">
+                                    <li>• Unternehmensgröße</li>
+                                    <li>• Branche (LOXONE-Fit)</li>
+                                    <li>• Standort</li>
+                                    <li>• Umsatzpotenzial</li>
+                                </ul>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-dark); border-radius: 8px;">
+                                <h4 style="margin-bottom: 0.5rem;">📧 Engagement (40%)</h4>
+                                <ul style="font-size: 0.85rem; color: var(--text-muted); list-style: none;">
+                                    <li>• E-Mail Öffnungsrate</li>
+                                    <li>• Klickrate</li>
+                                    <li>• Antwortrate</li>
+                                    <li>• Website-Besuche</li>
+                                </ul>
+                            </div>
+                            <div style="padding: 1rem; background: var(--bg-dark); border-radius: 8px;">
+                                <h4 style="margin-bottom: 0.5rem;">🎯 Verhalten (30%)</h4>
+                                <ul style="font-size: 0.85rem; color: var(--text-muted); list-style: none;">
+                                    <li>• Seiten besucht</li>
+                                    <li>• Downloads</li>
+                                    <li>• Demo-Anfragen</li>
+                                    <li>• Kontaktaufnahmen</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VOIP CALLS SECTION -->
+            <div class="section" id="section-calls">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📞 VOIP Telefonie</h3>
+                            <span class="lead-score hot">🔴 Live</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="call-active" id="callPanel">
+                                <div class="call-avatar">👤</div>
+                                <h3 style="font-size: 1.25rem;">Bereit zum Anrufen</h3>
+                                <p style="color: var(--text-muted);">Wähle einen Kontakt oder gib eine Nummer ein</p>
+                                <div class="call-timer" id="callTimer">00:00</div>
+                                <div class="form-group" style="max-width: 300px; margin: 1rem auto;">
+                                    <input type="tel" id="phoneNumber" placeholder="+49 211 1234567" style="text-align: center;">
+                                </div>
+                                <div class="call-controls">
+                                    <button class="call-btn mute" onclick="toggleMute()">🔇</button>
+                                    <button class="call-btn end" onclick="endCall()">📵</button>
+                                    <button class="call-btn hold" onclick="holdCall()">⏸️</button>
+                                </div>
+                                <button class="btn btn-success" style="margin-top: 1rem;" onclick="initiateCall()">📞 Anruf starten</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📋 Anruf-Historie</h3>
+                        </div>
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            <div id="callHistory">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Anruf-Statistiken</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-5">
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--success);">147</div>
+                                <div class="stat-label">Anrufe Heute</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--primary);">4:32</div>
+                                <div class="stat-label">Ø Dauer</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--warning);">78%</div>
+                                <div class="stat-label">Erreichbar</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--danger);">12</div>
+                                <div class="stat-label">Rückrufe</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--gold);">23</div>
+                                <div class="stat-label">Termine</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEQUENCES SECTION -->
+            <div class="section" id="section-sequences">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">🔄 E-Mail Sequenzen Builder</h3>
+                        <button class="btn btn-primary" onclick="createNewSequence()">+ Neue Sequenz</button>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-bottom: 2rem;">
+                            <h4 style="margin-bottom: 1rem;">🚀 Onboarding Sequenz</h4>
+                            <div class="sequence-timeline">
+                                <div class="sequence-step email">
+                                    <div class="icon">📧</div>
+                                    <div class="label">Tag 0</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step wait">
+                                    <div class="icon">⏱️</div>
+                                    <div class="label">3 Tage</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step email">
+                                    <div class="icon">📧</div>
+                                    <div class="label">Tag 3</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step wait">
+                                    <div class="icon">⏱️</div>
+                                    <div class="label">5 Tage</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step call">
+                                    <div class="icon">📞</div>
+                                    <div class="label">Tag 8</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step email">
+                                    <div class="icon">📧</div>
+                                    <div class="label">Tag 10</div>
+                                </div>
+                                <div class="sequence-connector"></div>
+                                <div class="sequence-step task">
+                                    <div class="icon">✅</div>
+                                    <div class="label">Tag 14</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sequenz</th>
+                                    <th>Kontakte</th>
+                                    <th>Open Rate</th>
+                                    <th>Reply Rate</th>
+                                    <th>Conversions</th>
+                                    <th>Status</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>🚀 Onboarding</strong></td>
+                                    <td>2.340</td>
+                                    <td><span style="color: var(--success);">78%</span></td>
+                                    <td><span style="color: var(--warning);">23%</span></td>
+                                    <td>187</td>
+                                    <td><span class="lead-score hot">Aktiv</span></td>
+                                    <td>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">✏️</button>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">⏸️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>🔥 Hot Lead Follow-Up</strong></td>
+                                    <td>890</td>
+                                    <td><span style="color: var(--success);">65%</span></td>
+                                    <td><span style="color: var(--success);">31%</span></td>
+                                    <td>94</td>
+                                    <td><span class="lead-score hot">Aktiv</span></td>
+                                    <td>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">✏️</button>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">⏸️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>💼 Enterprise Outreach</strong></td>
+                                    <td>456</td>
+                                    <td><span style="color: var(--warning);">52%</span></td>
+                                    <td><span style="color: var(--warning);">18%</span></td>
+                                    <td>28</td>
+                                    <td><span class="lead-score hot">Aktiv</span></td>
+                                    <td>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">✏️</button>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">⏸️</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>❄️ Re-Engagement</strong></td>
+                                    <td>1.230</td>
+                                    <td><span style="color: var(--text-muted);">34%</span></td>
+                                    <td><span style="color: var(--text-muted);">8%</span></td>
+                                    <td>12</td>
+                                    <td><span class="lead-score cold">Pausiert</span></td>
+                                    <td>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">✏️</button>
+                                        <button class="btn btn-outline" style="padding: 0.25rem 0.5rem;">▶️</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CALENDAR SECTION -->
+            <div class="section" id="section-calendar">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📅 Kalender - Januar 2026</h3>
+                            <div>
+                                <button class="btn btn-outline" onclick="prevMonth()">◀</button>
+                                <button class="btn btn-outline" onclick="nextMonth()">▶</button>
+                                <button class="btn btn-primary" onclick="syncOutlook()">🔄 Outlook Sync</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="calendar">
+                                <div class="calendar-header">Mo</div>
+                                <div class="calendar-header">Di</div>
+                                <div class="calendar-header">Mi</div>
+                                <div class="calendar-header">Do</div>
+                                <div class="calendar-header">Fr</div>
+                                <div class="calendar-header">Sa</div>
+                                <div class="calendar-header">So</div>
+
+                                <div class="calendar-day" style="color: var(--text-muted);">30</div>
+                                <div class="calendar-day" style="color: var(--text-muted);">31</div>
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day has-event">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <div class="calendar-day">5</div>
+
+                                <div class="calendar-day has-event">6</div>
+                                <div class="calendar-day">7</div>
+                                <div class="calendar-day has-event">8</div>
+                                <div class="calendar-day today has-event">9</div>
+                                <div class="calendar-day has-event">10</div>
+                                <div class="calendar-day">11</div>
+                                <div class="calendar-day">12</div>
+
+                                <div class="calendar-day has-event">13</div>
+                                <div class="calendar-day">14</div>
+                                <div class="calendar-day has-event">15</div>
+                                <div class="calendar-day">16</div>
+                                <div class="calendar-day">17</div>
+                                <div class="calendar-day">18</div>
+                                <div class="calendar-day">19</div>
+
+                                <div class="calendar-day">20</div>
+                                <div class="calendar-day has-event">21</div>
+                                <div class="calendar-day">22</div>
+                                <div class="calendar-day">23</div>
+                                <div class="calendar-day">24</div>
+                                <div class="calendar-day">25</div>
+                                <div class="calendar-day">26</div>
+
+                                <div class="calendar-day">27</div>
+                                <div class="calendar-day">28</div>
+                                <div class="calendar-day">29</div>
+                                <div class="calendar-day">30</div>
+                                <div class="calendar-day">31</div>
+                                <div class="calendar-day" style="color: var(--text-muted);">1</div>
+                                <div class="calendar-day" style="color: var(--text-muted);">2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📋 Heute - 9. Januar 2026</h3>
+                            <button class="btn btn-primary" onclick="newEvent()">+ Termin</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="event-list">
+                                <div class="event-item meeting">
+                                    <div class="event-time">09:00</div>
+                                    <div>
+                                        <div class="event-title">Team Standup</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">Microsoft Teams</div>
+                                    </div>
+                                </div>
+                                <div class="event-item call">
+                                    <div class="event-time">10:30</div>
+                                    <div>
+                                        <div class="event-title">Call: Thomas Wagner (TechVision)</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">+49 211 9876543</div>
+                                    </div>
+                                </div>
+                                <div class="event-item meeting">
+                                    <div class="event-time">14:00</div>
+                                    <div>
+                                        <div class="event-title">Projektbesprechung BuildPro</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">Zoom Meeting</div>
+                                    </div>
+                                </div>
+                                <div class="event-item task">
+                                    <div class="event-time">16:00</div>
+                                    <div>
+                                        <div class="event-title">Angebot SmartHome Solutions</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">Deadline</div>
+                                    </div>
+                                </div>
+                                <div class="event-item call">
+                                    <div class="event-time">17:00</div>
+                                    <div>
+                                        <div class="event-title">Follow-Up EcoEnergy</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted);">+49 231 6665544</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS SECTION -->
+            <div class="section" id="section-analytics">
+                <div class="grid-4" style="margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);">€2.8B</div>
+                        <div class="stat-label">Pipeline Gesamt</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary);">€156M</div>
+                        <div class="stat-label">Won YTD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning);">3.2%</div>
+                        <div class="stat-label">Win Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--gold);">€48K</div>
+                        <div class="stat-label">Ø Deal Size</div>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📈 Umsatz pro Monat</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <div class="chart-bar" style="height: 60%;"><span class="value">€12M</span><span class="label">Jan</span></div>
+                                <div class="chart-bar" style="height: 75%;"><span class="value">€15M</span><span class="label">Feb</span></div>
+                                <div class="chart-bar" style="height: 65%;"><span class="value">€13M</span><span class="label">Mär</span></div>
+                                <div class="chart-bar" style="height: 85%;"><span class="value">€17M</span><span class="label">Apr</span></div>
+                                <div class="chart-bar" style="height: 70%;"><span class="value">€14M</span><span class="label">Mai</span></div>
+                                <div class="chart-bar" style="height: 90%;"><span class="value">€18M</span><span class="label">Jun</span></div>
+                                <div class="chart-bar" style="height: 80%;"><span class="value">€16M</span><span class="label">Jul</span></div>
+                                <div class="chart-bar" style="height: 95%;"><span class="value">€19M</span><span class="label">Aug</span></div>
+                                <div class="chart-bar" style="height: 88%;"><span class="value">€17.5M</span><span class="label">Sep</span></div>
+                                <div class="chart-bar" style="height: 92%;"><span class="value">€18.5M</span><span class="label">Okt</span></div>
+                                <div class="chart-bar" style="height: 85%;"><span class="value">€17M</span><span class="label">Nov</span></div>
+                                <div class="chart-bar" style="height: 100%;"><span class="value">€20M</span><span class="label">Dez</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">🎯 Top Performer</h3>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Verkäufer</th>
+                                    <th>Deals</th>
+                                    <th>Umsatz</th>
+                                    <th>Win Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>🥇 神 THE ONE</td>
+                                    <td>1.247</td>
+                                    <td style="color: var(--success);">€89.4M</td>
+                                    <td>4.8%</td>
+                                </tr>
+                                <tr>
+                                    <td>🥈 Max Mustermann</td>
+                                    <td>342</td>
+                                    <td style="color: var(--success);">€24.1M</td>
+                                    <td>3.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>🥉 Anna Schmidt</td>
+                                    <td>289</td>
+                                    <td style="color: var(--success);">€18.7M</td>
+                                    <td>3.5%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Email Modal -->
+    <div class="modal-overlay" id="emailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📧 E-Mail verfassen</h2>
+                <button class="modal-close" onclick="closeModal('emailModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Von</label>
+                    <input type="text" value="info@enterprise-universe.com" readonly style="background: var(--bg-card);">
+                </div>
+                <div class="form-group">
+                    <label>An</label>
+                    <input type="email" id="emailTo" placeholder="empfaenger@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Betreff</label>
+                    <input type="text" id="emailSubject" placeholder="Betreff...">
+                </div>
+                <div class="form-group">
+                    <label>Nachricht</label>
+                    <textarea id="emailBody" placeholder="Ihre Nachricht..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('emailModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="sendViaOutlook()">📧 In Outlook öffnen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sequence Builder Modal -->
+    <div class="modal-overlay" id="sequenceModal">
+        <div class="modal" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>🔄 Sequenz Builder</h2>
+                <button class="modal-close" onclick="closeModal('sequenceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Sequenz Name</label>
+                    <input type="text" id="sequenceName" placeholder="z.B. Hot Lead Follow-Up">
+                </div>
+
+                <h4 style="margin: 1rem 0;">Schritte hinzufügen:</h4>
+                <div class="grid-4" style="margin-bottom: 1rem;">
+                    <button class="btn btn-outline" onclick="addStep('email')">📧 E-Mail</button>
+                    <button class="btn btn-outline" onclick="addStep('wait')">⏱️ Warten</button>
+                    <button class="btn btn-outline" onclick="addStep('call')">📞 Anruf</button>
+                    <button class="btn btn-outline" onclick="addStep('task')">✅ Task</button>
+                </div>
+
+                <div id="sequenceSteps" style="min-height: 100px; background: var(--bg-dark); border-radius: 8px; padding: 1rem;">
+                    <p style="color: var(--text-muted); text-align: center;">Klicke auf die Buttons oben um Schritte hinzuzufügen</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('sequenceModal')">Abbrechen</button>
+                <button class="btn btn-success" onclick="saveSequence()">💾 Sequenz speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════════════
+        // CRM ULTRA V2 - Enterprise Universe .ONE
+        // All-in-One CRM with AI Scoring, VOIP, Sequences, Analytics
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        const OUTLOOK_EMAIL = 'info@enterprise-universe.com';
+        let callTimer = null;
+        let callSeconds = 0;
+        let sequenceSteps = [];
+
+        // Sample leads with AI scores
+        const sampleLeads = [
+            { name: 'Thomas Wagner', company: 'TechVision GmbH', score: 98, factors: ['Enterprise', 'LOXONE Interest', 'High Engagement'], value: '€450.000', email: 'wagner@techvision.de', phone: '+49 211 9876543' },
+            { name: 'Sarah Müller', company: 'BuildPro Deutschland', score: 94, factors: ['Neubau-Projekt', 'Budget confirmed', 'Decision Maker'], value: '€320.000', email: 'mueller@buildpro.de', phone: '+49 221 5551234' },
+            { name: 'Michael Schmidt', company: 'SmartHome Solutions', score: 91, factors: ['KNX Expert', 'Multiple Projects', 'Referral'], value: '€180.000', email: 'schmidt@smarthome.de', phone: '+49 201 4443210' },
+            { name: 'Lisa Hoffmann', company: 'EcoEnergy Systems', score: 87, factors: ['Green Building', 'Government Funding', 'Fast Decision'], value: '€250.000', email: 'hoffmann@ecoenergy.de', phone: '+49 211 7778899' },
+            { name: 'Jan Becker', company: 'InnoConstruct AG', score: 82, factors: ['Large Portfolio', 'Previous Customer', 'Upsell'], value: '€520.000', email: 'becker@innoconstruct.de', phone: '+49 231 6665544' }
+        ];
+
+        const callHistory = [
+            { name: 'Thomas Wagner', time: 'Vor 2 Std', duration: '12:34', status: 'completed', notes: 'Interesse bestätigt, Termin vereinbart' },
+            { name: 'Sarah Müller', time: 'Vor 4 Std', duration: '08:21', status: 'completed', notes: 'Angebot wird geprüft' },
+            { name: 'Unbekannt', time: 'Gestern', duration: '00:45', status: 'missed', notes: 'Rückruf erforderlich' },
+            { name: 'Michael Schmidt', time: 'Gestern', duration: '15:02', status: 'completed', notes: 'Demo geplant für nächste Woche' }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLeadScoreTable();
+            renderCallHistory();
+        });
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById('section-' + sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            // Update title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'leads': 'KI Lead Scoring',
+                'contacts': 'Kontakte',
+                'deals': 'Deals',
+                'calls': 'VOIP Telefonie',
+                'emails': 'E-Mails',
+                'sequences': 'E-Mail Sequenzen',
+                'calendar': 'Kalender',
+                'tasks': 'Aufgaben',
+                'analytics': 'Analytics',
+                'reports': 'Reports',
+                'forecast': 'Forecast'
+            };
+            document.getElementById('pageTitle').textContent = titles[sectionId] || sectionId;
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // LEAD SCORING
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function renderLeadScoreTable() {
+            const table = document.getElementById('leadScoreTable');
+            table.innerHTML = sampleLeads.map(lead => {
+                const scoreClass = lead.score >= 90 ? 'gold' : lead.score >= 70 ? 'hot' : lead.score >= 50 ? 'warm' : 'cold';
+                return `
+                    <tr>
+                        <td>
+                            <strong>${lead.name}</strong><br>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">${lead.email}</span>
+                        </td>
+                        <td>${lead.company}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span class="lead-score ${scoreClass}">${lead.score}</span>
+                                <div class="score-bar" style="width: 80px;">
+                                    <div class="score-bar-fill" style="width: ${lead.score}%; background: ${scoreClass === 'gold' ? 'var(--gold)' : scoreClass === 'hot' ? 'var(--danger)' : scoreClass === 'warm' ? 'var(--warning)' : '#3b82f6'};"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            ${lead.factors.map(f => `<span style="display: inline-block; padding: 0.1rem 0.4rem; background: var(--bg-dark); border-radius: 4px; font-size: 0.7rem; margin-right: 0.25rem;">${f}</span>`).join('')}
+                        </td>
+                        <td style="color: var(--success); font-family: 'Space Mono', monospace;">${lead.value}</td>
+                        <td>
+                            <button class="btn btn-success" style="padding: 0.25rem 0.5rem;" onclick="quickCall('${lead.phone}')">📞</button>
+                            <button class="btn btn-warning" style="padding: 0.25rem 0.5rem;" onclick="quickEmail('${lead.email}')">📧</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function refreshScores() {
+            alert('🧠 KI analysiert Leads...\n\nScores werden basierend auf aktuellem Engagement aktualisiert.');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // VOIP CALLS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function renderCallHistory() {
+            const container = document.getElementById('callHistory');
+            container.innerHTML = callHistory.map(call => `
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg-dark); border-radius: 8px; margin-bottom: 0.5rem; border-left: 3px solid ${call.status === 'completed' ? 'var(--success)' : 'var(--danger)'};">
+                    <div style="font-size: 1.5rem;">${call.status === 'completed' ? '✅' : '📵'}</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">${call.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">${call.notes}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: 'Space Mono', monospace;">${call.duration}</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">${call.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initiateCall() {
+            const phone = document.getElementById('phoneNumber').value;
+            if (!phone) {
+                alert('Bitte Telefonnummer eingeben!');
+                return;
+            }
+
+            // Start timer
+            callSeconds = 0;
+            callTimer = setInterval(() => {
+                callSeconds++;
+                const mins = Math.floor(callSeconds / 60).toString().padStart(2, '0');
+                const secs = (callSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('callTimer').textContent = `${mins}:${secs}`;
+            }, 1000);
+
+            // Open tel: link
+            window.location.href = `tel:${phone.replace(/\s/g, '')}`;
+        }
+
+        function startCall() {
+            showSection('calls');
+            document.querySelector('[onclick="showSection(\'calls\')"]').classList.add('active');
+        }
+
+        function quickCall(phone) {
+            document.getElementById('phoneNumber').value = phone;
+            showSection('calls');
+            setTimeout(() => initiateCall(), 500);
+        }
+
+        function endCall() {
+            if (callTimer) {
+                clearInterval(callTimer);
+                callTimer = null;
+            }
+            document.getElementById('callTimer').textContent = '00:00';
+            alert('Anruf beendet. Notizen hinzufügen?');
+        }
+
+        function toggleMute() { alert('Stummschaltung umgeschaltet'); }
+        function holdCall() { alert('Anruf auf Halten gesetzt'); }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // EMAIL
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function openEmailComposer() {
+            document.getElementById('emailModal').classList.add('active');
+        }
+
+        function quickEmail(email) {
+            document.getElementById('emailTo').value = email;
+            openEmailComposer();
+        }
+
+        function sendViaOutlook() {
+            const to = document.getElementById('emailTo').value;
+            const subject = encodeURIComponent(document.getElementById('emailSubject').value);
+            const body = encodeURIComponent(document.getElementById('emailBody').value);
+
+            window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+            closeModal('emailModal');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // SEQUENCES
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function openSequenceBuilder() {
+            sequenceSteps = [];
+            document.getElementById('sequenceModal').classList.add('active');
+        }
+
+        function addStep(type) {
+            sequenceSteps.push({ type, delay: type === 'wait' ? 3 : 0 });
+            renderSequenceSteps();
+        }
+
+        function renderSequenceSteps() {
+            const container = document.getElementById('sequenceSteps');
+            if (sequenceSteps.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Klicke auf die Buttons oben um Schritte hinzuzufügen</p>';
+                return;
+            }
+
+            const icons = { email: '📧', wait: '⏱️', call: '📞', task: '✅' };
+            const labels = { email: 'E-Mail senden', wait: '3 Tage warten', call: 'Anrufen', task: 'Task erstellen' };
+
+            container.innerHTML = '<div class="sequence-timeline" style="flex-wrap: wrap;">' +
+                sequenceSteps.map((step, i) => `
+                    <div class="sequence-step ${step.type}">
+                        <div class="icon">${icons[step.type]}</div>
+                        <div class="label">${labels[step.type]}</div>
+                    </div>
+                    ${i < sequenceSteps.length - 1 ? '<div class="sequence-connector"></div>' : ''}
+                `).join('') + '</div>';
+        }
+
+        function createNewSequence() { openSequenceBuilder(); }
+
+        function saveSequence() {
+            const name = document.getElementById('sequenceName').value;
+            if (!name || sequenceSteps.length === 0) {
+                alert('Bitte Namen eingeben und mindestens einen Schritt hinzufügen!');
+                return;
+            }
+            alert(`Sequenz "${name}" mit ${sequenceSteps.length} Schritten gespeichert!`);
+            closeModal('sequenceModal');
+        }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // CALENDAR
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function syncOutlook() {
+            alert('🔄 Outlook Sync gestartet...\n\nKalender wird mit Outlook 365 synchronisiert.\ninfo@enterprise-universe.com');
+        }
+
+        function newEvent() {
+            const title = prompt('Termin-Titel:');
+            if (title) {
+                alert(`Termin "${title}" erstellt!\n\nWird mit Outlook synchronisiert.`);
+            }
+        }
+
+        function prevMonth() { alert('← Dezember 2025'); }
+        function nextMonth() { alert('Februar 2026 →'); }
+
+        // ═══════════════════════════════════════════════════════════════════════════
+        // MODALS
+        // ═══════════════════════════════════════════════════════════════════════════
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function openNewLead() {
+            alert('Neuer Lead Dialog\n\n[Formular zum Erstellen eines neuen Leads]');
+        }
+    </script>
+</body>
+</html>

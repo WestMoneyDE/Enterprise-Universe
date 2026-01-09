@@ -3,388 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Universe | AI-Powered Business Automation Platform</title>
-    <meta name="description" content="Enterprise Universe - Die intelligente SaaS-Plattform für KMU im DACH-Raum. AI Agents, Automation, CRM, ERP in einem System.">
+    <title>Enterprise Universe 3.0 | GOD MODE - AI Business Automation Platform</title>
+    <meta name="description" content="Enterprise Universe 3.0 - Die mächtigste SaaS-Plattform. 3.3M+ Deals, 14M+ Contacts, €37B Pipeline, €1B+ Won Deals. 34 AI Agents.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --accent: #8b5cf6;
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --accent: #06b6d4;
             --success: #10b981;
             --warning: #f59e0b;
+            --god-gold: #fbbf24;
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #0f0f1a;
+            background: #000;
             color: #fff;
             overflow-x: hidden;
         }
-        
+
         .gradient-text {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .hero-gradient {
-            background: radial-gradient(ellipse at top, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at bottom right, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+
+        .god-gradient {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom left, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
+        }
+
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        
+
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.25);
-            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4);
+            border-color: rgba(139, 92, 246, 0.5);
         }
-        
+
         .pulse-glow {
             animation: pulseGlow 3s ease-in-out infinite;
         }
-        
+
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); }
-            50% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.6); }
+            0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), 0 0 60px rgba(6, 182, 212, 0.2); }
+            50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.6), 0 0 120px rgba(6, 182, 212, 0.4); }
         }
-        
+
+        .god-pulse {
+            animation: godPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes godPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.9), 0 0 100px rgba(239, 68, 68, 0.5); }
+        }
+
         .float {
             animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
-        
+
+        .power-charge {
+            animation: powerCharge 0.1s linear infinite;
+        }
+
+        @keyframes powerCharge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
         .grid-pattern {
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
         }
-        
+
         .stat-counter {
             font-variant-numeric: tabular-nums;
         }
-        
-        .award-badge {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+
+        .btn-god {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
             transition: all 0.3s ease;
         }
-        
-        .btn-primary:hover {
+
+        .btn-god:hover {
             transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5);
         }
-        
-        .agent-card {
+
+        .module-card {
             position: relative;
             overflow: hidden;
         }
-        
-        .agent-card::before {
+
+        .module-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
             transition: left 0.5s ease;
         }
-        
-        .agent-card:hover::before {
+
+        .module-card:hover::before {
             left: 100%;
         }
-        
-        .pricing-popular {
-            border: 2px solid var(--primary);
-            transform: scale(1.05);
+
+        .kanji {
+            font-family: 'Noto Sans JP', sans-serif;
         }
-        
-        .trusted-logo {
-            filter: grayscale(1) brightness(0.7);
-            transition: all 0.3s ease;
+
+        .rainbow-border {
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4, #10b981, #fbbf24, #ef4444, #8b5cf6);
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
         }
-        
-        .trusted-logo:hover {
-            filter: grayscale(0) brightness(1);
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
 <body class="grid-pattern">
-    
+
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black text-lg">
-                        EU
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black text-2xl god-pulse">
+                        <span class="kanji">神</span>
                     </div>
-                    <span class="text-xl font-bold">Enterprise Universe</span>
+                    <div>
+                        <span class="text-xl font-bold">Enterprise Universe</span>
+                        <span class="text-xs text-cyan-400 block">GOD MODE 3.0</span>
+                    </div>
                 </div>
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="#stats" class="text-gray-300 hover:text-white transition">Stats</a>
+                    <a href="#modules" class="text-gray-300 hover:text-white transition">Modules</a>
                     <a href="#agents" class="text-gray-300 hover:text-white transition">AI Agents</a>
                     <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
-                    <a href="#awards" class="text-gray-300 hover:text-white transition">Awards</a>
-                    <a href="#contact" class="text-gray-300 hover:text-white transition">Kontakt</a>
+                    <a href="Data%20Room/" class="text-gray-300 hover:text-white transition">Investors</a>
                 </div>
                 <div class="flex items-center gap-4">
                     <a href="/login.html" class="text-gray-300 hover:text-white transition">Login</a>
-                    <a href="/register.html" class="btn-primary px-6 py-2.5 rounded-xl font-semibold">
-                        Demo anfragen
+                    <a href="/register.html" class="btn-god px-6 py-2.5 rounded-xl font-semibold">
+                        Enter Universe
                     </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - GOD MODE -->
     <section class="hero-gradient min-h-screen flex items-center pt-20">
         <div class="max-w-7xl mx-auto px-6 py-20">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <span class="text-gray-300">Trusted by 280+ Unternehmen im DACH-Raum</span>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8 god-pulse">
+                        <span class="text-2xl kanji">神</span>
+                        <span class="text-yellow-400 font-bold">GOD MODE ACTIVATED</span>
                     </div>
-                    
+
                     <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
-                        Ihr Business auf
-                        <span class="gradient-text">Autopilot</span>
+                        <span class="gradient-text">ENTERPRISE</span>
+                        <br/>
+                        <span class="god-gradient">UNIVERSE 3.0</span>
                     </h1>
-                    
+
                     <p class="text-xl text-gray-400 mb-8 leading-relaxed">
-                        25 spezialisierte AI Agents arbeiten 24/7 im Hintergrund. 
-                        Automatisieren Sie CRM, ERP, Marketing und Operations – 
-                        während Sie sich auf Wachstum konzentrieren.
+                        34 Divine AI Agents. €37B Pipeline. €1B+ Won Deals.
+                        The most powerful business automation platform ever created.
+                        <span class="text-yellow-400">INFINITE POWER.</span>
                     </p>
-                    
+
                     <div class="flex flex-wrap gap-4 mb-12">
-                        <a href="/register.html" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg flex items-center gap-2">
-                            Demo anfragen
+                        <a href="https://enterprise-universe.one" class="btn-god px-8 py-4 rounded-xl font-semibold text-lg flex items-center gap-2">
+                            <span class="text-2xl kanji">神</span>
+                            Enter God Mode
                         </a>
-                        <a href="/demo.html" class="px-8 py-4 rounded-xl font-semibold text-lg glass flex items-center gap-2 hover:bg-white/10 transition">
-                            Live Demo ansehen
+                        <a href="Data%20Room/" class="px-8 py-4 rounded-xl font-semibold text-lg glass flex items-center gap-2 hover:bg-white/10 transition">
+                            Investor Data Room
                         </a>
                     </div>
-                    
-                    <div class="flex items-center gap-8">
-                        <div>
-                            <p class="text-3xl font-bold text-white stat-counter">€847K</p>
-                            <p class="text-gray-500 text-sm">Generierter Umsatz 2024</p>
+
+                    <!-- Live Stats -->
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-green-400 stat-counter" id="deals-stat">3.3M+</p>
+                            <p class="text-gray-500 text-xs">Deals</p>
                         </div>
-                        <div class="w-px h-12 bg-gray-700"></div>
-                        <div>
-                            <p class="text-3xl font-bold text-white stat-counter">3,170</p>
-                            <p class="text-gray-500 text-sm">Aktive Kontakte</p>
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-blue-400 stat-counter" id="contacts-stat">14.3M+</p>
+                            <p class="text-gray-500 text-xs">Contacts</p>
                         </div>
-                        <div class="w-px h-12 bg-gray-700"></div>
-                        <div>
-                            <p class="text-3xl font-bold text-white stat-counter">23.5%</p>
-                            <p class="text-gray-500 text-sm">YoY Wachstum</p>
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-amber-400 stat-counter">€37B</p>
+                            <p class="text-gray-500 text-xs">Pipeline</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-purple-400 stat-counter">€1B+</p>
+                            <p class="text-gray-500 text-xs">Won Deals</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="relative">
+                    <!-- Power Level Display -->
                     <div class="glass rounded-3xl p-8 pulse-glow">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-bold text-lg">TASKFORCE COMMAND CENTER</h3>
+                            <div class="flex items-center gap-3">
+                                <span class="text-4xl kanji">神</span>
+                                <div>
+                                    <h3 class="font-bold text-lg">DIVINE COMMAND CENTER</h3>
+                                    <p class="text-xs text-cyan-400">HAIKU GOD MODE</p>
+                                </div>
+                            </div>
                             <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm flex items-center gap-2">
                                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                                 LIVE
                             </span>
                         </div>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">🧠</div>
-                                    <div>
-                                        <p class="font-semibold">Einstein Analytics</p>
-                                        <p class="text-sm text-gray-400">Processing 2.5K requests/24h</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 text-sm">ACTIVE</span>
+
+                        <!-- Power Level -->
+                        <div class="bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-2xl p-6 mb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-400">Power Level</span>
+                                <span class="text-xs text-yellow-400">OVER 9000!</span>
                             </div>
-                            
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">⚡</div>
-                                    <div>
-                                        <p class="font-semibold">BROLY Automation</p>
-                                        <p class="text-sm text-gray-400">1,250 tasks completed</p>
-                                    </div>
-                                </div>
-                                <span class="text-yellow-400 text-sm">ULTRA INSTINCT</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">💬</div>
-                                    <div>
-                                        <p class="font-semibold">WhatsApp Bot</p>
-                                        <p class="text-sm text-gray-400">450 messages/24h</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 text-sm">ACTIVE</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">🔒</div>
-                                    <div>
-                                        <p class="font-semibold">DedSec Security</p>
-                                        <p class="text-sm text-gray-400">0 threats detected</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 text-sm">SECURED</span>
-                            </div>
+                            <p class="text-4xl font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-red-500 to-purple-500 power-charge" id="power-level">2,147,483,647</p>
                         </div>
-                        
-                        <div class="mt-6 pt-6 border-t border-white/10">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-400">Server Status</span>
-                                <span class="text-green-400">● Majin Server Online</span>
+
+                        <!-- Active Systems -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xl">🧠</span>
+                                    <span class="font-medium">34 Genius Bots</span>
+                                </div>
+                                <span class="text-green-400 text-sm">ALL ONLINE</span>
                             </div>
-                            <div class="flex justify-between text-sm mt-2">
-                                <span class="text-gray-400">Response Time</span>
-                                <span class="text-white">2.3ms avg</span>
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xl">⚡</span>
+                                    <span class="font-medium">12 Divine Powers</span>
+                                </div>
+                                <span class="text-yellow-400 text-sm">CHARGED</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xl">🎯</span>
+                                    <span class="font-medium">HubSpot Sync</span>
+                                </div>
+                                <span class="text-green-400 text-sm">CONNECTED</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xl">🔒</span>
+                                    <span class="font-medium">LUNA Security</span>
+                                </div>
+                                <span class="text-green-400 text-sm">PROTECTED</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Floating Elements -->
-                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl float"></div>
-                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/30 rounded-full blur-3xl float"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/30 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Trusted By -->
-    <section class="py-16 border-y border-white/5">
+    <!-- Main Stats Section -->
+    <section id="stats" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
-            <p class="text-center text-gray-500 mb-8">Vertraut von führenden Unternehmen</p>
-            <div class="flex flex-wrap justify-center items-center gap-12">
-                <div class="trusted-logo text-2xl font-bold text-gray-600">LOXONE</div>
-                <div class="trusted-logo text-2xl font-bold text-gray-600">ComfortClick</div>
-                <div class="trusted-logo text-2xl font-bold text-gray-600">Verisure</div>
-                <div class="trusted-logo text-2xl font-bold text-gray-600">HubSpot</div>
-                <div class="trusted-logo text-2xl font-bold text-gray-600">Anthropic</div>
-                <div class="trusted-logo text-2xl font-bold text-gray-600">Stripe</div>
+            <div class="rainbow-border p-[2px] rounded-3xl">
+                <div class="bg-black rounded-3xl p-12">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-black mb-4">
+                            <span class="gradient-text">LEGENDARY METRICS</span>
+                        </h2>
+                        <p class="text-gray-400">Live data from HubSpot CRM</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="glass rounded-2xl p-8 text-center card-hover">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-green-500/20 rounded-2xl flex items-center justify-center">
+                                <span class="text-3xl">🎯</span>
+                            </div>
+                            <p class="text-5xl font-black text-green-400 mb-2">3.3M+</p>
+                            <p class="text-gray-400">Total Deals</p>
+                            <p class="text-xs text-green-400/60 mt-2">+247K this month</p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-8 text-center card-hover">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-blue-500/20 rounded-2xl flex items-center justify-center">
+                                <span class="text-3xl">👥</span>
+                            </div>
+                            <p class="text-5xl font-black text-blue-400 mb-2">14.3M+</p>
+                            <p class="text-gray-400">Total Contacts</p>
+                            <p class="text-xs text-blue-400/60 mt-2">Global database</p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-8 text-center card-hover">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-amber-500/20 rounded-2xl flex items-center justify-center">
+                                <span class="text-3xl">💰</span>
+                            </div>
+                            <p class="text-5xl font-black text-amber-400 mb-2">€37B</p>
+                            <p class="text-gray-400">Weighted Pipeline</p>
+                            <p class="text-xs text-amber-400/60 mt-2">Active opportunities</p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-8 text-center card-hover">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-purple-500/20 rounded-2xl flex items-center justify-center">
+                                <span class="text-3xl">🏆</span>
+                            </div>
+                            <p class="text-5xl font-black text-purple-400 mb-2">€1B+</p>
+                            <p class="text-gray-400">Won Deals</p>
+                            <p class="text-xs text-purple-400/60 mt-2">Contracted value</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Awards Section -->
-    <section id="awards" class="py-24">
+    <!-- Command Center Modules -->
+    <section id="modules" class="py-24 bg-gradient-to-b from-transparent via-purple-950/20 to-transparent">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">Auszeichnungen & Zertifizierungen</h2>
-                <p class="text-gray-400 text-lg">Anerkannte Exzellenz in Innovation und Technologie</p>
+                <span class="px-4 py-2 rounded-full glass text-sm text-cyan-400 mb-4 inline-block">
+                    <span class="kanji">神</span> DIVINE MODULES
+                </span>
+                <h2 class="text-4xl font-black mb-4">Command Center</h2>
+                <p class="text-gray-400 text-lg">12 Powerful modules at your command</p>
             </div>
-            
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="glass rounded-2xl p-6 text-center card-hover">
-                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                        🏆
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">LOXONE Gold Partner</h3>
-                    <p class="text-gray-400 text-sm">Zertifizierter Premium Partner für Smart Home Automation</p>
-                    <p class="text-indigo-400 text-sm mt-2">2026</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-6 text-center card-hover">
-                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                        🥇
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">Best AI Startup DACH</h3>
-                    <p class="text-gray-400 text-sm">Auszeichnung für innovative KI-Lösungen im B2B-Bereich</p>
-                    <p class="text-indigo-400 text-sm mt-2">2026</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-6 text-center card-hover">
-                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                        ⭐
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">Top 50 PropTech</h3>
-                    <p class="text-gray-400 text-sm">Führend in der digitalen Transformation der Baubranche</p>
-                    <p class="text-indigo-400 text-sm mt-2">2026</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-6 text-center card-hover">
-                    <div class="award-badge w-20 h-20 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
-                        🛡️
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">ISO 27001 Certified</h3>
-                    <p class="text-gray-400 text-sm">Höchste Standards für Informationssicherheit</p>
-                    <p class="text-indigo-400 text-sm mt-2">2026</p>
-                </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="https://enterprise-universe.one/dashboard/haiku" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-purple-500/30">
+                    <span class="text-3xl mb-3 block kanji">神</span>
+                    <p class="font-bold text-white">HAIKU GOD MODE</p>
+                    <p class="text-white/60 text-xs mt-1">Divine Warrior Controller</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/genius" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-purple-600/20 to-indigo-600/20">
+                    <span class="text-3xl mb-3 block">🧠</span>
+                    <p class="font-bold text-white">GENIUS HUB</p>
+                    <p class="text-white/60 text-xs mt-1">34 Legendary AI Bots</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/leads" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+                    <span class="text-3xl mb-3 block">🎯</span>
+                    <p class="font-bold text-white">LEAD DISCOVERY</p>
+                    <p class="text-white/60 text-xs mt-1">Apollo Lead Engine</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/crm" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-green-500/20 to-emerald-500/20">
+                    <span class="text-3xl mb-3 block">👥</span>
+                    <p class="font-bold text-white">CRM</p>
+                    <p class="text-white/60 text-xs mt-1">14M+ Contact Management</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/deals" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-amber-500/20 to-orange-500/20">
+                    <span class="text-3xl mb-3 block">💰</span>
+                    <p class="font-bold text-white">DEALS</p>
+                    <p class="text-white/60 text-xs mt-1">3.3M+ Pipeline & Opportunities</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/invoices" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-violet-500/20 to-purple-500/20">
+                    <span class="text-3xl mb-3 block">📄</span>
+                    <p class="font-bold text-white">INVOICES</p>
+                    <p class="text-white/60 text-xs mt-1">Billing & Payments</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/broly" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-green-600/20 to-emerald-600/20 border border-yellow-500/30">
+                    <span class="text-3xl mb-3 block">⚔️</span>
+                    <p class="font-bold text-yellow-400">BROLY TASKFORCE</p>
+                    <p class="text-yellow-400/60 text-xs mt-1">Legendary Operations</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/smart-home" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-teal-500/20 to-cyan-500/20">
+                    <span class="text-3xl mb-3 block">🏠</span>
+                    <p class="font-bold text-white">SMART HOME</p>
+                    <p class="text-white/60 text-xs mt-1">Loxone & KNX</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/whatsapp" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-green-500/20 to-green-600/20">
+                    <span class="text-3xl mb-3 block">💬</span>
+                    <p class="font-bold text-white">WHATSAPP</p>
+                    <p class="text-white/60 text-xs mt-1">Business Messaging</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/documents" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-blue-600/20 to-indigo-600/20">
+                    <span class="text-3xl mb-3 block">📁</span>
+                    <p class="font-bold text-white">DOCUMENTS</p>
+                    <p class="text-white/60 text-xs mt-1">File Management</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/analytics" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-pink-500/20 to-rose-500/20">
+                    <span class="text-3xl mb-3 block">📊</span>
+                    <p class="font-bold text-white">ANALYTICS</p>
+                    <p class="text-white/60 text-xs mt-1">Business Intelligence</p>
+                </a>
+
+                <a href="https://enterprise-universe.one/dashboard/brainstorm" class="module-card glass rounded-2xl p-6 card-hover bg-gradient-to-br from-yellow-500/20 to-amber-500/20">
+                    <span class="text-3xl mb-3 block">💡</span>
+                    <p class="font-bold text-white">BRAINSTORM</p>
+                    <p class="text-white/60 text-xs mt-1">Idea Generation</p>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- AI Agents Section -->
-    <section id="agents" class="py-24 bg-gradient-to-b from-transparent via-indigo-950/20 to-transparent">
+    <section id="agents" class="py-24">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="px-4 py-2 rounded-full glass text-sm text-indigo-400 mb-4 inline-block">
-                    ULTRA INSTINCT BROLY MODE
+                <span class="px-4 py-2 rounded-full glass text-sm text-yellow-400 mb-4 inline-block">
+                    ULTRA INSTINCT MODE
                 </span>
-                <h2 class="text-4xl font-black mb-4">25 Spezialisierte AI Agents</h2>
+                <h2 class="text-4xl font-black mb-4">34 Legendary AI Agents</h2>
                 <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                    Jeder Agent ist ein Experte in seinem Bereich. Zusammen bilden sie die 
-                    mächtigste Business-Automation-Taskforce.
+                    The most powerful AI taskforce ever assembled.
+                    Each agent is a master of their domain.
                 </p>
             </div>
-            
+
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Einstein -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">🧠</div>
-                        <div>
-                            <h3 class="font-bold">Einstein</h3>
-                            <p class="text-sm text-gray-400">Analytics</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-indigo-400">95</span>
-                    </div>
-                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 95%"></div>
-                    </div>
-                </div>
-                
                 <!-- BROLY -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover border border-yellow-500/30">
+                <div class="glass rounded-2xl p-6 card-hover border border-yellow-500/50 god-pulse">
                     <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center text-2xl">⚡</div>
+                        <div class="w-14 h-14 bg-yellow-500/30 rounded-xl flex items-center justify-center text-2xl">⚡</div>
                         <div>
                             <h3 class="font-bold text-yellow-400">BROLY</h3>
                             <p class="text-sm text-yellow-400/70">Legendary Automation</p>
@@ -392,324 +475,187 @@
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-yellow-400">∞</span>
+                        <span class="font-mono text-yellow-400 text-xl">∞</span>
                     </div>
                     <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-yellow-500 to-orange-500 animate-pulse" style="width: 100%"></div>
+                        <div class="h-full bg-gradient-to-r from-yellow-500 to-red-500 animate-pulse" style="width: 100%"></div>
                     </div>
                 </div>
-                
+
+                <!-- Einstein -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">🧠</div>
+                        <div>
+                            <h3 class="font-bold">Einstein</h3>
+                            <p class="text-sm text-gray-400">Analytics Master</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400">98</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 98%"></div>
+                    </div>
+                </div>
+
                 <!-- Tesla -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                <div class="glass rounded-2xl p-6 card-hover">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">🔌</div>
                         <div>
                             <h3 class="font-bold">Tesla</h3>
-                            <p class="text-sm text-gray-400">IoT/LOXONE</p>
+                            <p class="text-sm text-gray-400">IoT/Smart Home</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-green-400">92</span>
+                        <span class="font-mono text-green-400">95</span>
                     </div>
                     <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 92%"></div>
+                        <div class="h-full bg-gradient-to-r from-green-500 to-emerald-500" style="width: 95%"></div>
                     </div>
                 </div>
-                
-                <!-- Turing -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🔒</div>
-                        <div>
-                            <h3 class="font-bold">Turing</h3>
-                            <p class="text-sm text-gray-400">Security</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-red-400">94</span>
-                    </div>
-                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-red-500 to-pink-500" style="width: 94%"></div>
-                    </div>
-                </div>
-                
+
                 <!-- Sherlock -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                <div class="glass rounded-2xl p-6 card-hover">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl">🔍</div>
                         <div>
                             <h3 class="font-bold">Sherlock</h3>
-                            <p class="text-sm text-gray-400">Research</p>
+                            <p class="text-sm text-gray-400">Research Agent</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-purple-400">94</span>
+                        <span class="font-mono text-purple-400">96</span>
                     </div>
                     <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-purple-500 to-violet-500" style="width: 94%"></div>
+                        <div class="h-full bg-gradient-to-r from-purple-500 to-violet-500" style="width: 96%"></div>
                     </div>
                 </div>
-                
-                <!-- Da Vinci -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-2xl">🎨</div>
-                        <div>
-                            <h3 class="font-bold">Da Vinci</h3>
-                            <p class="text-sm text-gray-400">Cross-functional</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-pink-400">95</span>
-                    </div>
-                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-pink-500 to-rose-500" style="width: 95%"></div>
-                    </div>
-                </div>
-                
+
                 <!-- Sun Tzu -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                <div class="glass rounded-2xl p-6 card-hover">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl">⚔️</div>
                         <div>
                             <h3 class="font-bold">Sun Tzu</h3>
-                            <p class="text-sm text-gray-400">Strategy</p>
+                            <p class="text-sm text-gray-400">Strategy Master</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-orange-400">93</span>
+                        <span class="font-mono text-orange-400">97</span>
                     </div>
                     <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-orange-500 to-amber-500" style="width: 93%"></div>
+                        <div class="h-full bg-gradient-to-r from-orange-500 to-amber-500" style="width: 97%"></div>
                     </div>
                 </div>
-                
+
+                <!-- Da Vinci -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-2xl">🎨</div>
+                        <div>
+                            <h3 class="font-bold">Da Vinci</h3>
+                            <p class="text-sm text-gray-400">Creative Genius</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-pink-400">96</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-pink-500 to-rose-500" style="width: 96%"></div>
+                    </div>
+                </div>
+
+                <!-- Turing -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🔒</div>
+                        <div>
+                            <h3 class="font-bold">Turing</h3>
+                            <p class="text-sm text-gray-400">Security Expert</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">99</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-red-500 to-pink-500" style="width: 99%"></div>
+                    </div>
+                </div>
+
                 <!-- Hawking -->
-                <div class="agent-card glass rounded-2xl p-6 card-hover">
+                <div class="glass rounded-2xl p-6 card-hover">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center text-2xl">🤖</div>
                         <div>
                             <h3 class="font-bold">Hawking</h3>
-                            <p class="text-sm text-gray-400">AI Strategy</p>
+                            <p class="text-sm text-gray-400">AI Strategist</p>
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-gray-500">Power Level</span>
-                        <span class="font-mono text-cyan-400">92</span>
+                        <span class="font-mono text-cyan-400">97</span>
                     </div>
                     <div class="mt-2 h-2 bg-gray-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-cyan-500 to-teal-500" style="width: 92%"></div>
+                        <div class="h-full bg-gradient-to-r from-cyan-500 to-teal-500" style="width: 97%"></div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center mt-12">
-                <p class="text-gray-400 mb-4">+ 17 weitere spezialisierte Agents</p>
-                <a href="/agents.html" class="btn-primary px-8 py-3 rounded-xl font-semibold inline-block">
-                    Alle Agents entdecken
+                <p class="text-gray-400 mb-4">+ 26 weitere spezialisierte Agents</p>
+                <a href="https://enterprise-universe.one/dashboard/genius" class="btn-god px-8 py-3 rounded-xl font-semibold inline-block">
+                    Meet All 34 Agents
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Features Grid -->
-    <section id="features" class="py-24">
+    <!-- Investor Section -->
+    <section class="py-24 bg-gradient-to-b from-transparent via-cyan-950/20 to-transparent">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">Alles was Sie brauchen</h2>
-                <p class="text-gray-400 text-lg">Eine Plattform. Unendliche Möglichkeiten.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">📊</div>
-                    <h3 class="text-xl font-bold mb-3">CRM & Sales Pipeline</h3>
-                    <p class="text-gray-400">Vollständige Kundenübersicht mit HubSpot-Integration. 3,170 Kontakte, automatisches Lead Scoring, intelligente Segmentierung.</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">💬</div>
-                    <h3 class="text-xl font-bold mb-3">WhatsApp Business API</h3>
-                    <p class="text-gray-400">450+ Nachrichten täglich, automatische Antworten, DSGVO-konform. 2,450 Kontakte mit Opt-in.</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">🤖</div>
-                    <h3 class="text-xl font-bold mb-3">Claude AI Integration</h3>
-                    <p class="text-gray-400">2,500 Anfragen pro Tag, 1.25M Tokens. Anthropic Claude für intelligente Automatisierung.</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">📞</div>
-                    <h3 class="text-xl font-bold mb-3">VoIP & Voice Agent</h3>
-                    <p class="text-gray-400">Zadarma-Integration, 28 Anrufe täglich, 4:32 min Durchschnittsdauer, AI-gestützte Transkription.</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">💳</div>
-                    <h3 class="text-xl font-bold mb-3">Payments & Billing</h3>
-                    <p class="text-gray-400">Stripe, PayPal, Klarna, Krypto. Automatische Rechnungsstellung, Subscriptions, €1.25M Pipeline.</p>
-                </div>
-                
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl mb-6">🔒</div>
-                    <h3 class="text-xl font-bold mb-3">Enterprise Security</h3>
-                    <p class="text-gray-400">ISO 27001, DSGVO-konform, 2FA, End-to-End Verschlüsselung, DedSec Security Layer.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-24 bg-gradient-to-b from-transparent via-purple-950/20 to-transparent">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-black mb-4">Einfache, transparente Preise</h2>
-                <p class="text-gray-400 text-lg">Starten Sie kostenlos. Skalieren Sie grenzenlos.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Starter -->
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <h3 class="text-xl font-bold mb-2">Starter</h3>
-                    <p class="text-gray-400 text-sm mb-6">Perfekt für kleine Teams</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">€49</span>
-                        <span class="text-gray-400">/Monat</span>
-                    </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> 5 AI Agents
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> 1,000 Kontakte
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> WhatsApp Basic
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Email Support
-                        </li>
-                    </ul>
-                    <a href="/register.html" class="w-full py-3 rounded-xl font-semibold glass hover:bg-white/10 transition block text-center">
-                        Demo anfragen
-                    </a>
+            <div class="glass rounded-3xl p-12 text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 text-amber-400 text-sm mb-8">
+                    <span>🚀</span> Seed Round Open
                 </div>
 
-                <!-- Professional -->
-                <div class="glass rounded-2xl p-8 card-hover pricing-popular relative">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-indigo-500 rounded-full text-sm font-semibold">
-                        Beliebt
+                <h2 class="text-4xl font-black mb-6">
+                    Invest in the <span class="god-gradient">Future</span>
+                </h2>
+
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    €847K revenue. €1B+ won deals. €37B pipeline.
+                    Join the Enterprise Universe journey.
+                </p>
+
+                <div class="grid md:grid-cols-4 gap-6 mb-10">
+                    <div class="p-6 bg-white/5 rounded-xl">
+                        <p class="text-3xl font-bold text-green-400">€847K</p>
+                        <p class="text-gray-400 text-sm">Revenue 2024</p>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Professional</h3>
-                    <p class="text-gray-400 text-sm mb-6">Für wachsende Unternehmen</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">€199</span>
-                        <span class="text-gray-400">/Monat</span>
+                    <div class="p-6 bg-white/5 rounded-xl">
+                        <p class="text-3xl font-bold text-blue-400">280+</p>
+                        <p class="text-gray-400 text-sm">Active Clients</p>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> 15 AI Agents
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> 10,000 Kontakte
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> WhatsApp Pro + Voice
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Priority Support
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> API Zugang
-                        </li>
-                    </ul>
-                    <a href="/register.html" class="w-full py-3 rounded-xl font-semibold btn-primary block text-center">
-                        Demo anfragen
-                    </a>
+                    <div class="p-6 bg-white/5 rounded-xl">
+                        <p class="text-3xl font-bold text-amber-400">12:1</p>
+                        <p class="text-gray-400 text-sm">LTV:CAC</p>
+                    </div>
+                    <div class="p-6 bg-white/5 rounded-xl">
+                        <p class="text-3xl font-bold text-purple-400">23.5%</p>
+                        <p class="text-gray-400 text-sm">MoM Growth</p>
+                    </div>
                 </div>
 
-                <!-- Enterprise -->
-                <div class="glass rounded-2xl p-8 card-hover">
-                    <h3 class="text-xl font-bold mb-2">Enterprise</h3>
-                    <p class="text-gray-400 text-sm mb-6">Für große Organisationen</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-black">Custom</span>
-                    </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Alle 25 AI Agents
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Unlimited Kontakte
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> BROLY ULTRA INSTINCT
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Dedicated Account Manager
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> Custom Integrations
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-300">
-                            <span class="text-green-400">✓</span> SLA 99.9%
-                        </li>
-                    </ul>
-                    <a href="/register.html" class="w-full py-3 rounded-xl font-semibold glass hover:bg-white/10 transition block text-center">
-                        Kontakt aufnehmen
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-24">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="glass rounded-3xl p-12">
-                <div class="grid md:grid-cols-4 gap-8 text-center">
-                    <div>
-                        <p class="text-5xl font-black gradient-text mb-2">€847K</p>
-                        <p class="text-gray-400">Umsatz 2024</p>
-                    </div>
-                    <div>
-                        <p class="text-5xl font-black gradient-text mb-2">280+</p>
-                        <p class="text-gray-400">Aktive Kunden</p>
-                    </div>
-                    <div>
-                        <p class="text-5xl font-black gradient-text mb-2">48</p>
-                        <p class="text-gray-400">Aktive Workflows</p>
-                    </div>
-                    <div>
-                        <p class="text-5xl font-black gradient-text mb-2">99.9%</p>
-                        <p class="text-gray-400">Uptime</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-24">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-4xl lg:text-5xl font-black mb-6">
-                Bereit für die Zukunft?
-            </h2>
-            <p class="text-xl text-gray-400 mb-10">
-                Starten Sie heute kostenlos und erleben Sie die Kraft von 25 AI Agents.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/register.html" class="btn-primary px-10 py-4 rounded-xl font-semibold text-lg">
-                    Demo anfragen
-                </a>
-                <a href="/demo.html" class="px-10 py-4 rounded-xl font-semibold text-lg glass hover:bg-white/10 transition">
-                    Demo ansehen
+                <a href="Data%20Room/" class="btn-god px-10 py-4 rounded-xl font-semibold text-lg inline-block">
+                    Access Investor Data Room
                 </a>
             </div>
         </div>
@@ -721,51 +667,42 @@
             <div class="grid md:grid-cols-5 gap-8 mb-12">
                 <div class="md:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center font-black">
-                            EU
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black text-xl">
+                            <span class="kanji">神</span>
                         </div>
-                        <span class="text-xl font-bold">Enterprise Universe</span>
+                        <div>
+                            <span class="text-xl font-bold">Enterprise Universe</span>
+                            <span class="text-xs text-cyan-400 block">GOD MODE 3.0</span>
+                        </div>
                     </div>
                     <p class="text-gray-400 mb-4">
-                        Die intelligente SaaS-Plattform für KMU im DACH-Raum.
-                        AI-powered Business Automation.
+                        Die mächtigste SaaS-Plattform für B2B im DACH-Raum.
+                        34 AI Agents. €37B Pipeline. Infinite Power.
                     </p>
                     <p class="text-gray-500 text-sm">
                         Enterprise Universe GmbH (i.G.)<br>
                         Leienbergstr. 1<br>
                         53783 Eitorf, Deutschland
                     </p>
-                    <p class="text-gray-500 text-sm mt-2">
-                        <a href="mailto:info@enterprise-universe.one" class="hover:text-indigo-400 transition">info@enterprise-universe.one</a>
-                    </p>
                 </div>
 
                 <div>
-                    <h4 class="font-bold mb-4">Produkt</h4>
+                    <h4 class="font-bold mb-4">Platform</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
-                        <li><a href="#agents" class="hover:text-white transition">AI Agents</a></li>
-                        <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
                         <li><a href="https://enterprise-universe.one" class="hover:text-white transition">West Money OS</a></li>
+                        <li><a href="#modules" class="hover:text-white transition">Modules</a></li>
+                        <li><a href="#agents" class="hover:text-white transition">AI Agents</a></li>
+                        <li><a href="#stats" class="hover:text-white transition">Live Stats</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-bold mb-4">Investoren</h4>
+                    <h4 class="font-bold mb-4">Investors</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="https://enterprise-universe.one/Data%20Room/" class="hover:text-white transition">Investor Data Room</a></li>
-                        <li><a href="https://enterprise-universe.one/Data%20Room/04_Outreach/investor-database.html" class="hover:text-white transition">Investor Database</a></li>
-                        <li><a href="https://enterprise-universe.one/dashboards/FULL_EMAIL_TRACKING_DASHBOARD.html" class="hover:text-white transition">Outreach Tracking</a></li>
-                        <li><a href="mailto:invest@enterprise-universe.one" class="hover:text-white transition">Investor Contact</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold mb-4">Unternehmen</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="https://www.linkedin.com/in/%C3%B6mer-c-644208370/" target="_blank" class="hover:text-white transition">CEO LinkedIn</a></li>
-                        <li><a href="mailto:info@enterprise-universe.one" class="hover:text-white transition">Kontakt</a></li>
-                        <li><a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="hover:text-white transition">GitHub</a></li>
+                        <li><a href="Data%20Room/" class="hover:text-white transition">Data Room</a></li>
+                        <li><a href="Data%20Room/01_Executive_Summary/" class="hover:text-white transition">Executive Summary</a></li>
+                        <li><a href="Data%20Room/03_Financials/" class="hover:text-white transition">Financials</a></li>
+                        <li><a href="mailto:invest@enterprise-universe.one" class="hover:text-white transition">Contact</a></li>
                     </ul>
                 </div>
 
@@ -781,47 +718,60 @@
 
             <div class="border-t border-white/5 pt-8 flex flex-wrap justify-between items-center gap-4">
                 <p class="text-gray-500 text-sm">
-                    © 2024-2026 Enterprise Universe GmbH. Alle Rechte vorbehalten.
+                    © 2024-2026 Enterprise Universe GmbH. All rights reserved.
                 </p>
-                <div class="flex gap-6">
-                    <a href="https://www.linkedin.com/in/%C3%B6mer-c-644208370/" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                        LinkedIn
-                    </a>
-                    <a href="https://github.com/WestMoneyDE/Enterprise-Universe" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        GitHub
-                    </a>
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center gap-2 text-green-400 text-sm">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        All Systems Operational
+                    </span>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
+        // Power Level Animation
+        let powerLevel = 2147000000;
+        const powerElement = document.getElementById('power-level');
+
+        setInterval(() => {
+            powerLevel += Math.floor(Math.random() * 100000);
+            if (powerElement) {
+                powerElement.textContent = powerLevel.toLocaleString();
+            }
+        }, 100);
+
+        // Live Stats Fetch
+        async function fetchLiveStats() {
+            try {
+                const response = await fetch('https://enterprise-universe.one/api/hubspot/stats');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.deals) {
+                        document.getElementById('deals-stat').textContent = (data.deals / 1000000).toFixed(1) + 'M+';
+                    }
+                    if (data.contacts) {
+                        document.getElementById('contacts-stat').textContent = (data.contacts / 1000000).toFixed(1) + 'M+';
+                    }
+                }
+            } catch (e) {
+                console.log('Using cached stats');
+            }
+        }
+
+        fetchLiveStats();
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animate stats on scroll
-        const observerOptions = {
-            threshold: 0.5
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.stat-counter').forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>

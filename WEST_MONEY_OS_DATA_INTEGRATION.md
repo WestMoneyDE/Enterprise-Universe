@@ -1,16 +1,16 @@
 # 神 WEST MONEY OS - ECHTE DATENBANK INTEGRATION
 
-## Enterprise Universe GmbH - Produktionsdaten
+## Enterprise Universe GmbH i.G. - Produktionsdaten
 
 ---
 
 ## 🏢 UNTERNEHMENSDATEN
 
-### Enterprise Universe GmbH (Holding)
+### Enterprise Universe GmbH i.G. (Holding)
 ```json
 {
     "company": {
-        "name": "Enterprise Universe GmbH",
+        "name": "Enterprise Universe GmbH i.G.",
         "type": "Holding",
         "ceo": "Ömer Hüseyin Coşkun",
         "location": "Köln, Deutschland",
