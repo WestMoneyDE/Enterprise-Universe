@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Tracking | Enterprise Universe - Investor Outreach</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f3460 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+
+    .header {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+      border-radius: 16px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+    .header h1 {
+      color: #c9a227;
+      font-size: 28px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .header p { color: #888; }
+    .header .data-room-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: rgba(201, 162, 39, 0.2);
+      border: 1px solid rgba(201, 162, 39, 0.4);
+      border-radius: 8px;
+      color: #c9a227;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .header .data-room-link:hover { background: rgba(201, 162, 39, 0.3); }
+
+    /* Stats Grid */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 1200px) { .stats { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .stat:hover { border-color: rgba(201, 162, 39, 0.5); transform: translateY(-2px); }
+    .stat-number { font-size: 32px; font-weight: bold; }
+    .stat-label { color: #888; font-size: 11px; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+    .stat.total .stat-number { color: #c9a227; }
+    .stat.pending .stat-number { color: #64748b; }
+    .stat.sent .stat-number { color: #3b82f6; }
+    .stat.replied .stat-number { color: #8b5cf6; }
+    .stat.call .stat-number { color: #22c55e; }
+    .stat.declined .stat-number { color: #ef4444; }
+
+    /* Pipeline Funnel */
+    .funnel {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .funnel h3 { color: #c9a227; margin-bottom: 20px; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+    .funnel-stages {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+    .funnel-stage {
+      flex: 1;
+      text-align: center;
+      padding: 20px 10px;
+      position: relative;
+    }
+    .funnel-stage::after {
+      content: '→';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #444;
+      font-size: 20px;
+    }
+    .funnel-stage:last-child::after { display: none; }
+    .funnel-count { font-size: 36px; font-weight: bold; }
+    .funnel-label { font-size: 11px; color: #888; margin-top: 5px; text-transform: uppercase; }
+    .stage-pending .funnel-count { color: #64748b; }
+    .stage-sent .funnel-count { color: #3b82f6; }
+    .stage-replied .funnel-count { color: #8b5cf6; }
+    .stage-call .funnel-count { color: #22c55e; }
+    .stage-termsheet .funnel-count { color: #c9a227; }
+
+    /* Investor Table */
+    .table-container {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 30px;
+    }
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(201, 162, 39, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .table-header h3 { color: #c9a227; font-size: 16px; }
+    .filter-btns { display: flex; gap: 10px; }
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #888;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(201, 162, 39, 0.2);
+      border-color: #c9a227;
+      color: #c9a227;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    th {
+      background: rgba(0,0,0,0.3);
+      color: #c9a227;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    tr:hover { background: rgba(201, 162, 39, 0.05); }
+
+    .investor-name { font-weight: 600; }
+    .investor-type {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      color: #888;
+    }
+    .investor-type.vc { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .investor-type.corporate { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+    .investor-type.staatlich { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .investor-type.angels { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .status-pending { background: rgba(100, 116, 139, 0.2); color: #94a3b8; }
+    .status-sent { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .status-opened { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+    .status-replied { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+    .status-call { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .status-meeting { background: rgba(14, 165, 233, 0.2); color: #0ea5e9; }
+    .status-termsheet { background: rgba(201, 162, 39, 0.2); color: #c9a227; }
+    .status-declined { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+    .action-btns { display: flex; gap: 8px; }
+    .action-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-send { background: #3b82f6; color: white; }
+    .btn-send:hover { background: #2563eb; }
+    .btn-gmail { background: #ea4335; color: white; }
+    .btn-gmail:hover { background: #dc2626; }
+    .btn-update { background: rgba(255,255,255,0.1); color: #888; }
+    .btn-update:hover { background: rgba(255,255,255,0.2); color: white; }
+
+    /* Email Preview Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: #1a1a2e;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+    .modal-header {
+      padding: 20px;
+      background: rgba(201, 162, 39, 0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { color: #c9a227; }
+    .modal-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .modal-body { padding: 20px; }
+    .email-field { margin-bottom: 15px; }
+    .email-field label {
+      display: block;
+      font-size: 11px;
+      color: #c9a227;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .email-field-value {
+      background: rgba(255,255,255,0.05);
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .email-body-text {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      font-size: 13px;
+    }
+    .modal-footer {
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .btn-large {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary { background: #c9a227; color: #000; }
+    .btn-primary:hover { background: #d4af37; }
+    .btn-secondary { background: rgba(255,255,255,0.1); color: #888; }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .quick-action {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .quick-action:hover {
+      border-color: #c9a227;
+      background: rgba(201, 162, 39, 0.1);
+      transform: translateY(-2px);
+    }
+    .quick-action-icon { font-size: 28px; margin-bottom: 10px; }
+    .quick-action-label { font-size: 13px; color: #888; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #22c55e;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      display: none;
+      z-index: 1001;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Notes */
+    .notes-section {
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .notes-section h3 { color: #c9a227; margin-bottom: 15px; font-size: 14px; text-transform: uppercase; }
+    .note-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 15px;
+      color: white;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 100px;
+    }
+    .note-input:focus { outline: none; border-color: #c9a227; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>📧 Email Tracking Dashboard</h1>
+    <p>Enterprise Universe - Seed Round 2026 | Priority A Investors</p>
+    <a href="https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/" target="_blank" class="data-room-link">
+      📁 Open Data Room
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat total">
+      <div class="stat-number" id="totalInvestors">12</div>
+      <div class="stat-label">Total Investors</div>
+    </div>
+    <div class="stat pending">
+      <div class="stat-number" id="pendingCount">12</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat sent">
+      <div class="stat-number" id="sentCount">0</div>
+      <div class="stat-label">Sent</div>
+    </div>
+    <div class="stat replied">
+      <div class="stat-number" id="repliedCount">0</div>
+      <div class="stat-label">Replied</div>
+    </div>
+    <div class="stat call">
+      <div class="stat-number" id="callCount">0</div>
+      <div class="stat-label">Call Scheduled</div>
+    </div>
+    <div class="stat declined">
+      <div class="stat-number" id="declinedCount">0</div>
+      <div class="stat-label">Declined</div>
+    </div>
+  </div>
+
+  <!-- Pipeline Funnel -->
+  <div class="funnel">
+    <h3>📊 Fundraising Pipeline</h3>
+    <div class="funnel-stages">
+      <div class="funnel-stage stage-pending">
+        <div class="funnel-count" id="funnelPending">12</div>
+        <div class="funnel-label">To Contact</div>
+      </div>
+      <div class="funnel-stage stage-sent">
+        <div class="funnel-count" id="funnelSent">0</div>
+        <div class="funnel-label">Contacted</div>
+      </div>
+      <div class="funnel-stage stage-replied">
+        <div class="funnel-count" id="funnelReplied">0</div>
+        <div class="funnel-label">In Dialog</div>
+      </div>
+      <div class="funnel-stage stage-call">
+        <div class="funnel-count" id="funnelCall">0</div>
+        <div class="funnel-label">Meetings</div>
+      </div>
+      <div class="funnel-stage stage-termsheet">
+        <div class="funnel-count" id="funnelTermsheet">0</div>
+        <div class="funnel-label">Term Sheet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <div class="quick-action" onclick="sendAllPending()">
+      <div class="quick-action-icon">📤</div>
+      <div class="quick-action-label">Send All Pending Emails</div>
+    </div>
+    <div class="quick-action" onclick="exportCSV()">
+      <div class="quick-action-icon">📊</div>
+      <div class="quick-action-label">Export to CSV</div>
+    </div>
+    <div class="quick-action" onclick="window.open('PRIORITY_A_OUTREACH_CAMPAIGN.md')">
+      <div class="quick-action-icon">📄</div>
+      <div class="quick-action-label">View Email Templates</div>
+    </div>
+    <div class="quick-action" onclick="scheduleFollowups()">
+      <div class="quick-action-icon">🔔</div>
+      <div class="quick-action-label">Schedule Follow-ups</div>
+    </div>
+  </div>
+
+  <!-- Investor Table -->
+  <div class="table-container">
+    <div class="table-header">
+      <h3>Priority A Investors (12)</h3>
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="filterTable('all')">All</button>
+        <button class="filter-btn" onclick="filterTable('pending')">Pending</button>
+        <button class="filter-btn" onclick="filterTable('sent')">Sent</button>
+        <button class="filter-btn" onclick="filterTable('replied')">Replied</button>
+        <button class="filter-btn" onclick="filterTable('call')">Calls</button>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Investor</th>
+          <th>Type</th>
+          <th>Email</th>
+          <th>Ticket Size</th>
+          <th>Status</th>
+          <th>Last Activity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="investorTable">
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notes Section -->
+  <div class="notes-section">
+    <h3>📝 Campaign Notes</h3>
+    <textarea class="note-input" id="campaignNotes" placeholder="Add notes about your fundraising campaign..."></textarea>
+  </div>
+</div>
+
+<!-- Email Preview Modal -->
+<div class="modal" id="emailModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Email Preview</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="email-field">
+        <label>To</label>
+        <div class="email-field-value" id="modalTo"></div>
+      </div>
+      <div class="email-field">
+        <label>Subject</label>
+        <div class="email-field-value" id="modalSubject"></div>
+      </div>
+      <div class="email-field">
+        <label>Body</label>
+        <div class="email-field-value email-body-text" id="modalBody"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-large btn-secondary" onclick="closeModal()">Close</button>
+      <button class="btn-large btn-secondary" onclick="copyEmail()">📋 Copy</button>
+      <button class="btn-large btn-primary" id="modalGmailBtn">📧 Open in Gmail</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Action completed!</div>
+
+<script>
+  // Investor Data
+  const investors = [
+    { id: 1, name: "High-Tech Gründerfonds (HTGF)", type: "staatlich", email: "info@htgf.de", ticket: "€1-30M", status: "pending", lastActivity: "-", subject: "Enterprise Universe | €847K Revenue, €335M Won Deals - Seed Round", body: `Sehr geehrtes HTGF Investment Team,
+
+ich bin Ömer Coskun, Gründer von Enterprise Universe. Wir revolutionieren den €800 Mrd. Enterprise-Software-Markt mit einer KI-gestützten Plattform für Industrie 4.0 und digitale Transformation.
+
+Warum HTGF der perfekte Partner ist:
+• Industrial Tech, AI und Deep Tech - exakt Ihr Investmentprofil
+• 780+ Portfolio-Unternehmen = ideales Netzwerk für B2B-Enterprise
+• Deutscher Mittelstand ist unser Kernmarkt
+
+Unsere Zahlen (12 Monate):
+• €847K Revenue
+• €335M vertraglich gesicherte Deals
+• 12:1 LTV:CAC | 65% Gross Margin
+
+Wir raisen €1,5M Seed bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Hätten Sie 20 Minuten für einen Call?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 2, name: "UVC Partners", type: "vc", email: "office@uvcpartners.com", ticket: "€0.5-10M", status: "pending", lastActivity: "-", subject: "Enterprise Universe | B2B SaaS für Industrial Tech - €847K Revenue", body: `Sehr geehrtes UVC Partners Team,
+
+Enterprise Universe verbindet Enterprise-Software mit Industrie 4.0 - genau Ihr Investmentfokus auf Industrial Technologies und Enterprise Software.
+
+Highlights:
+• €847K Revenue in 12 Monaten
+• €335M Won Deals für unsere Kunden
+• Plattform für digitale Transformation im Mittelstand
+• 12:1 LTV:CAC Ratio
+
+Als Industrial Tech Spezialist mit Fokus DACH verstehen Sie den Markt. Wir raisen €1,5M Seed bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Wäre ein kurzer Call möglich?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 3, name: "Point Nine Capital", type: "vc", email: "team@pointnine.com", ticket: "€0.5-3.5M", status: "pending", lastActivity: "-", subject: "B2B SaaS | €847K ARR, 12:1 LTV:CAC - Enterprise Universe Seed", body: `Hi Point Nine Team,
+
+I know you pioneered B2B SaaS investing in Europe (Pipedrive, Algolia, Zenloop). Enterprise Universe fits your thesis perfectly.
+
+The Numbers:
+• €847K revenue (first 12 months)
+• €335M in contracted deals
+• 12:1 LTV:CAC ratio
+• 65% gross margin
+• €250K average deal size
+
+We're building the platform for enterprise software implementation.
+
+Raising €1.5M Seed at €15M pre-money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Best,
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 4, name: "NRW.BANK Venture Fonds", type: "staatlich", email: "venture@nrwbank.de", ticket: "bis €15M", status: "pending", lastActivity: "-", subject: "Enterprise Universe | KI & Enterprise Software - Seed Round", body: `Sehr geehrtes NRW.BANK Venture Team,
+
+Enterprise Universe adressiert Ihren Investmentfokus: KI, Enterprise Software und Digitalisierung des deutschen Mittelstands.
+
+Unser Profil:
+• KI-gestützte Plattform für Enterprise-Software-Matching
+• €847K Revenue in 12 Monaten
+• €335M gewonnene Deals für Kunden
+• Fokus auf Industrie 4.0 und digitale Transformation
+
+Wir raisen €1,5M Seed bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Hätten Sie Zeit für ein Gespräch?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 5, name: "LBBW Venture Capital", type: "vc", email: "venture-capital@lbbw.de", ticket: "bis €3M", status: "pending", lastActivity: "-", subject: "Enterprise Universe | Industry 4.0 & AI - Seed Round", body: `Sehr geehrtes LBBW Venture Capital Team,
+
+Ihr Fokus auf IoT, Industry 4.0 und AI/ML trifft exakt unser Profil.
+
+Enterprise Universe:
+• KI-gestützte Plattform für Enterprise-Software-Implementierung
+• €847K Revenue | €335M Won Deals
+• 12:1 LTV:CAC | 65% Gross Margin
+
+Seed Round: €1,5M bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Interesse an einem Austausch?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 6, name: "Paua Ventures", type: "vc", email: "hello@paua.vc", ticket: "€0.5-5M", status: "pending", lastActivity: "-", subject: "B2B Enterprise SaaS | €847K Revenue - Enterprise Universe", body: `Hi Paua Team,
+
+You invest exclusively in B2B. Enterprise Universe is pure B2B Enterprise.
+
+Quick facts:
+• €847K revenue (12 months)
+• €335M contracted deals
+• 12:1 LTV:CAC
+• €250K average deal size
+
+Raising €1.5M Seed at €15M pre-money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+20 minutes for a call?
+
+Best,
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 7, name: "Senovo", type: "vc", email: "kontakt@senovo.vc", ticket: "€0.5-3M", status: "pending", lastActivity: "-", subject: "B2B SaaS + Deep Tech | Enterprise Universe Seed Round", body: `Liebes Senovo Team,
+
+B2B SaaS mit Deep Tech Komponente - genau Ihr Fokus.
+
+Enterprise Universe kombiniert:
+• AI-gestütztes Matching für Enterprise Software
+• B2B SaaS Business Model
+• €847K Revenue in 12 Monaten
+• €335M Won Deals
+
+Wir raisen €1,5M Seed bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Freue mich auf einen persönlichen Austausch.
+
+Ömer Hüseyin Coskun
+invest@enterprise-universe.one` },
+    { id: 8, name: "Fly Ventures", type: "vc", email: "hello@fly.vc", ticket: "€0.5-3M", status: "pending", lastActivity: "-", subject: "AI + Automation for Industry Transformation | Enterprise Universe", body: `Hi Fly Ventures Team,
+
+You're data-driven investors focused on AI, Automation, and Industry Transformation. That's exactly what we're building.
+
+Enterprise Universe:
+• AI-powered matching for enterprise software
+• €847K revenue | €335M won deals | 12:1 LTV:CAC
+
+Raising €1.5M Seed at €15M pre-money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Would love to share our data story.
+
+Best,
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 9, name: "Siemens Next47", type: "corporate", email: "next47@siemens.com", ticket: "€1-20M", status: "pending", lastActivity: "-", subject: "Industry 4.0 Platform | Strategic Fit with Siemens Ecosystem", body: `Dear Next47 Team,
+
+Enterprise Universe is building the Industry 4.0 implementation platform - a natural strategic fit with Siemens' ecosystem.
+
+Why this matters for Siemens:
+• We connect enterprises with best-fit software (including Siemens solutions)
+• €335M in deals closed for customers
+• Deep expertise in Smart Manufacturing digitalization
+
+Our traction:
+• €847K revenue (12 months)
+• 12:1 LTV:CAC ratio
+
+Raising €1.5M Seed at €15M pre-money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Would welcome a conversation about strategic alignment.
+
+Best regards,
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 10, name: "Bosch Ventures", type: "corporate", email: "bosch.ventures@bosch.com", ticket: "€1-20M", status: "pending", lastActivity: "-", subject: "Industrial IoT & Smart Factory | Enterprise Universe - Strategic Investment", body: `Dear Bosch Ventures Team,
+
+Enterprise Universe enables Smart Factory transformations - connecting manufacturers with best-fit Industrial IoT and software solutions.
+
+Strategic value for Bosch:
+• Channel for Bosch Industrial IoT solutions
+• €335M in deals closed (including manufacturing sector)
+• Platform for Industry 4.0 implementations
+
+Metrics:
+• €847K revenue (first year)
+• 12:1 LTV:CAC
+
+Raising €1.5M Seed at €15M pre-money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Interested in exploring strategic synergies?
+
+Best regards,
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 11, name: "TGFS", type: "staatlich", email: "info@tgfs.de", ticket: "bis €5M", status: "pending", lastActivity: "-", subject: "Enterprise Universe | Software & Industrie 4.0 - Seed Round", body: `Sehr geehrtes TGFS Team,
+
+Ihr Fokus auf Software, Industrie 4.0, IoT und Big Data passt perfekt zu Enterprise Universe.
+
+Unser Profil:
+• KI-gestützte Plattform für Enterprise-Software
+• €847K Revenue in 12 Monaten
+• €335M vertraglich gesicherte Deals
+• Fokus auf Industrie 4.0 Transformation
+
+Seed Round: €1,5M bei €15M Pre-Money.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Hätten Sie Interesse an einem Gespräch?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` },
+    { id: 12, name: "Business Angels Deutschland", type: "angels", email: "info@business-angels.de", ticket: "€50-250K", status: "pending", lastActivity: "-", subject: "Enterprise Universe sucht Business Angels - B2B SaaS, €847K Revenue", body: `Sehr geehrtes BAND Team,
+
+wir suchen erfahrene Business Angels für unsere Seed-Runde im Bereich B2B Enterprise Software.
+
+Enterprise Universe in Kürze:
+• €847K Revenue in 12 Monaten
+• €335M gewonnene Deals für Kunden
+• 12:1 LTV:CAC Ratio
+
+Wir raisen €1,5M Seed bei €15M Pre-Money.
+Angel-Tickets ab €50K willkommen.
+
+Data Room: https://westmoneyde.github.io/Enterprise-Universe/Data%20Room/
+
+Könnten Sie uns mit passenden Angels aus Ihrem Netzwerk verbinden?
+
+Beste Grüße
+Ömer Hüseyin Coskun
+Founder & CEO | invest@enterprise-universe.one` }
+  ];
+
+  let currentInvestor = null;
+
+  // Load from localStorage
+  function loadData() {
+    const saved = localStorage.getItem('investorTracking');
+    if (saved) {
+      const data = JSON.parse(saved);
+      data.forEach(saved => {
+        const inv = investors.find(i => i.id === saved.id);
+        if (inv) {
+          inv.status = saved.status;
+          inv.lastActivity = saved.lastActivity;
+        }
+      });
+    }
+    const notes = localStorage.getItem('campaignNotes');
+    if (notes) document.getElementById('campaignNotes').value = notes;
+  }
+
+  // Save to localStorage
+  function saveData() {
+    const data = investors.map(i => ({ id: i.id, status: i.status, lastActivity: i.lastActivity }));
+    localStorage.setItem('investorTracking', JSON.stringify(data));
+    localStorage.setItem('campaignNotes', document.getElementById('campaignNotes').value);
+  }
+
+  // Render table
+  function renderTable(filter = 'all') {
+    const tbody = document.getElementById('investorTable');
+    const filtered = filter === 'all' ? investors : investors.filter(i => i.status === filter);
+
+    tbody.innerHTML = filtered.map(inv => `
+      <tr data-id="${inv.id}">
+        <td class="investor-name">${inv.name}</td>
+        <td><span class="investor-type ${inv.type}">${inv.type}</span></td>
+        <td><a href="mailto:${inv.email}" style="color:#c9a227">${inv.email}</a></td>
+        <td>${inv.ticket}</td>
+        <td>
+          <select class="status-select" onchange="updateStatus(${inv.id}, this.value)" style="background:transparent;border:none;color:inherit;cursor:pointer;">
+            <option value="pending" ${inv.status==='pending'?'selected':''}>⏳ Pending</option>
+            <option value="sent" ${inv.status==='sent'?'selected':''}>📤 Sent</option>
+            <option value="opened" ${inv.status==='opened'?'selected':''}>👁️ Opened</option>
+            <option value="replied" ${inv.status==='replied'?'selected':''}>💬 Replied</option>
+            <option value="call" ${inv.status==='call'?'selected':''}>📞 Call</option>
+            <option value="meeting" ${inv.status==='meeting'?'selected':''}>🤝 Meeting</option>
+            <option value="termsheet" ${inv.status==='termsheet'?'selected':''}>📝 Term Sheet</option>
+            <option value="declined" ${inv.status==='declined'?'selected':''}>❌ Declined</option>
+          </select>
+        </td>
+        <td style="color:#888;font-size:12px;">${inv.lastActivity}</td>
+        <td>
+          <div class="action-btns">
+            <button class="action-btn btn-send" onclick="previewEmail(${inv.id})">Preview</button>
+            <button class="action-btn btn-gmail" onclick="openGmail(${inv.id})">Gmail</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+
+    updateStats();
+  }
+
+  // Update stats
+  function updateStats() {
+    const counts = {
+      pending: investors.filter(i => i.status === 'pending').length,
+      sent: investors.filter(i => i.status === 'sent' || i.status === 'opened').length,
+      replied: investors.filter(i => i.status === 'replied').length,
+      call: investors.filter(i => i.status === 'call' || i.status === 'meeting').length,
+      termsheet: investors.filter(i => i.status === 'termsheet').length,
+      declined: investors.filter(i => i.status === 'declined').length
+    };
+
+    document.getElementById('pendingCount').textContent = counts.pending;
+    document.getElementById('sentCount').textContent = counts.sent;
+    document.getElementById('repliedCount').textContent = counts.replied;
+    document.getElementById('callCount').textContent = counts.call;
+    document.getElementById('declinedCount').textContent = counts.declined;
+
+    document.getElementById('funnelPending').textContent = counts.pending;
+    document.getElementById('funnelSent').textContent = counts.sent;
+    document.getElementById('funnelReplied').textContent = counts.replied;
+    document.getElementById('funnelCall').textContent = counts.call;
+    document.getElementById('funnelTermsheet').textContent = counts.termsheet;
+  }
+
+  // Update status
+  function updateStatus(id, status) {
+    const inv = investors.find(i => i.id === id);
+    if (inv) {
+      inv.status = status;
+      inv.lastActivity = new Date().toLocaleDateString('de-DE');
+      saveData();
+      updateStats();
+      showToast('Status updated!');
+    }
+  }
+
+  // Preview email
+  function previewEmail(id) {
+    currentInvestor = investors.find(i => i.id === id);
+    if (currentInvestor) {
+      document.getElementById('modalTitle').textContent = currentInvestor.name;
+      document.getElementById('modalTo').textContent = currentInvestor.email;
+      document.getElementById('modalSubject').textContent = currentInvestor.subject;
+      document.getElementById('modalBody').textContent = currentInvestor.body;
+      document.getElementById('modalGmailBtn').onclick = () => openGmail(id);
+      document.getElementById('emailModal').classList.add('active');
+    }
+  }
+
+  // Open Gmail
+  function openGmail(id) {
+    const inv = investors.find(i => i.id === id);
+    if (inv) {
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(inv.email)}&su=${encodeURIComponent(inv.subject)}&body=${encodeURIComponent(inv.body)}`;
+      window.open(gmailUrl, '_blank');
+      inv.status = 'sent';
+      inv.lastActivity = new Date().toLocaleDateString('de-DE');
+      saveData();
+      renderTable();
+      closeModal();
+      showToast('Email opened in Gmail!');
+    }
+  }
+
+  // Copy email
+  function copyEmail() {
+    if (currentInvestor) {
+      const text = `To: ${currentInvestor.email}\nSubject: ${currentInvestor.subject}\n\n${currentInvestor.body}`;
+      navigator.clipboard.writeText(text);
+      showToast('Email copied to clipboard!');
+    }
+  }
+
+  // Close modal
+  function closeModal() {
+    document.getElementById('emailModal').classList.remove('active');
+  }
+
+  // Filter table
+  function filterTable(filter) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderTable(filter);
+  }
+
+  // Send all pending
+  function sendAllPending() {
+    const pending = investors.filter(i => i.status === 'pending');
+    if (pending.length === 0) {
+      showToast('No pending emails!');
+      return;
+    }
+    if (confirm(`Open ${pending.length} emails in Gmail?`)) {
+      pending.forEach((inv, i) => {
+        setTimeout(() => openGmail(inv.id), i * 500);
+      });
+    }
+  }
+
+  // Export CSV
+  function exportCSV() {
+    const headers = ['Investor', 'Type', 'Email', 'Ticket', 'Status', 'Last Activity'];
+    const rows = investors.map(i => [i.name, i.type, i.email, i.ticket, i.status, i.lastActivity]);
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'investor_tracking.csv';
+    a.click();
+    showToast('CSV exported!');
+  }
+
+  // Schedule followups
+  function scheduleFollowups() {
+    showToast('Follow-up reminders will be added to calendar!');
+  }
+
+  // Show toast
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 3000);
+  }
+
+  // Auto-save notes
+  document.getElementById('campaignNotes').addEventListener('input', saveData);
+
+  // Initialize
+  loadData();
+  renderTable();
+</script>
+
+</body>
+</html>
