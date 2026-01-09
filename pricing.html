@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Enterprise Universe 3.0 GOD MODE</title>
+    <meta name="description" content="Enterprise Universe Preise - Starter, Professional, Enterprise. 34 AI Agents, GOD MODE.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+        .gradient-text { background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .god-gradient { background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-gradient { background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.2) 0%, transparent 50%), radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.15) 0%, transparent 50%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-god { background: linear-gradient(135deg, #8b5cf6, #06b6d4); transition: all 0.3s ease; }
+        .btn-god:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5); }
+        .grid-pattern { background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        .god-pulse { animation: godPulse 2s ease-in-out infinite; }
+        @keyframes godPulse { 0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); } 50% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.9); } }
+        .kanji { font-family: 'Noto Sans JP', sans-serif; }
+        .pricing-card { transition: all 0.3s ease; }
+        .pricing-card:hover { transform: translateY(-10px); }
+        .pricing-popular { border: 2px solid #8b5cf6; transform: scale(1.05); }
+        .pricing-popular:hover { transform: scale(1.08); }
+        .rainbow-border { background: linear-gradient(90deg, #8b5cf6, #06b6d4, #10b981, #fbbf24, #ef4444, #8b5cf6); background-size: 400% 400%; animation: rainbow 3s ease infinite; padding: 2px; border-radius: 1.5rem; }
+        @keyframes rainbow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    </style>
+</head>
+<body class="grid-pattern">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black text-2xl god-pulse">
+                        <span class="kanji">神</span>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">Enterprise Universe</span>
+                        <span class="text-xs text-cyan-400 block">PRICING</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="/" class="text-gray-300 hover:text-white transition">Home</a>
+                    <a href="/demo.html" class="text-gray-300 hover:text-white transition">Demo</a>
+                    <a href="/agents.html" class="text-gray-300 hover:text-white transition">AI Agents</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/login.html" class="text-gray-300 hover:text-white transition">Login</a>
+                    <a href="/register.html" class="btn-god px-6 py-2.5 rounded-xl font-semibold">Demo anfragen</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-gradient pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-6">
+                <span class="kanji text-xl">神</span>
+                <span class="text-yellow-400 font-bold">TRANSPARENTE PREISE</span>
+            </div>
+            <h1 class="text-4xl lg:text-6xl font-black mb-4">
+                <span class="gradient-text">Einfache Preise,</span>
+                <br><span class="god-gradient">unbegrenzte Power</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Starten Sie kostenlos. Skalieren Sie grenzenlos mit der Macht von 34 AI Agents.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="pb-24">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Starter -->
+                <div class="pricing-card glass rounded-3xl p-8">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Starter</h3>
+                        <p class="text-gray-400">Perfekt für kleine Teams</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-5xl font-black">€99</span>
+                        <span class="text-gray-400">/Monat</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3"><span class="text-green-400">✓</span> 5 AI Agents</li>
+                        <li class="flex items-center gap-3"><span class="text-green-400">✓</span> 1,000 Kontakte</li>
+                        <li class="flex items-center gap-3"><span class="text-green-400">✓</span> CRM Basic</li>
+                        <li class="flex items-center gap-3"><span class="text-green-400">✓</span> WhatsApp Basic</li>
+                        <li class="flex items-center gap-3"><span class="text-green-400">✓</span> E-Mail Support</li>
+                        <li class="flex items-center gap-3 text-gray-500"><span>—</span> BROLY Mode</li>
+                        <li class="flex items-center gap-3 text-gray-500"><span>—</span> GOD MODE</li>
+                    </ul>
+                    <a href="/register.html" class="block w-full py-4 rounded-xl font-semibold text-center glass hover:bg-white/10 transition">
+                        Demo anfragen
+                    </a>
+                </div>
+
+                <!-- Professional - Popular -->
+                <div class="rainbow-border">
+                    <div class="pricing-card pricing-popular bg-black rounded-3xl p-8 relative">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full text-sm font-bold">
+                            BELIEBT
+                        </div>
+                        <div class="mb-6">
+                            <h3 class="text-2xl font-bold mb-2 god-gradient">Professional</h3>
+                            <p class="text-gray-400">Für wachsende Unternehmen</p>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-5xl font-black">€299</span>
+                            <span class="text-gray-400">/Monat</span>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> 15 AI Agents</li>
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> 10,000 Kontakte</li>
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> CRM & Deals</li>
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> WhatsApp Pro + VoIP</li>
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> Priority Support</li>
+                            <li class="flex items-center gap-3"><span class="text-green-400">✓</span> API Access</li>
+                            <li class="flex items-center gap-3 text-gray-500"><span>—</span> GOD MODE</li>
+                        </ul>
+                        <a href="/register.html" class="btn-god block w-full py-4 rounded-xl font-semibold text-center">
+                            Demo anfragen
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card glass rounded-3xl p-8 border border-yellow-500/30">
+                    <div class="mb-6">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="kanji text-2xl">神</span>
+                            <h3 class="text-2xl font-bold text-yellow-400">Enterprise</h3>
+                        </div>
+                        <p class="text-gray-400">GOD MODE unlocked</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-5xl font-black gradient-text">Custom</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> <strong>Alle 34 AI Agents</strong></li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> Unlimited Kontakte</li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> Full CRM Suite</li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> <strong>BROLY ULTRA INSTINCT</strong></li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> <strong>GOD MODE</strong></li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> Dedicated Account Manager</li>
+                        <li class="flex items-center gap-3"><span class="text-yellow-400">✓</span> SLA 99.99%</li>
+                    </ul>
+                    <a href="/register.html" class="block w-full py-4 rounded-xl font-semibold text-center glass hover:bg-white/10 transition border border-yellow-500/50">
+                        Kontakt aufnehmen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Comparison -->
+    <section class="py-24 bg-gradient-to-b from-transparent via-purple-950/20 to-transparent">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-black text-center mb-12">
+                <span class="god-gradient">Was ist enthalten?</span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass rounded-2xl p-6 text-center">
+                    <span class="text-4xl mb-4 block">🧠</span>
+                    <h3 class="font-bold mb-2">AI Agents</h3>
+                    <p class="text-gray-400 text-sm">Bis zu 34 spezialisierte KI-Assistenten für jede Aufgabe</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center">
+                    <span class="text-4xl mb-4 block">📊</span>
+                    <h3 class="font-bold mb-2">CRM & Deals</h3>
+                    <p class="text-gray-400 text-sm">Vollständiges CRM mit HubSpot Integration</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center">
+                    <span class="text-4xl mb-4 block">💬</span>
+                    <h3 class="font-bold mb-2">WhatsApp & VoIP</h3>
+                    <p class="text-gray-400 text-sm">Business Messaging & Telefonie</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center">
+                    <span class="text-4xl mb-4 block kanji">神</span>
+                    <h3 class="font-bold mb-2">GOD MODE</h3>
+                    <p class="text-gray-400 text-sm">Divine Command Center für ultimative Kontrolle</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-black mb-4">
+                Bereit für <span class="gradient-text">INFINITE POWER</span>?
+            </h2>
+            <p class="text-xl text-gray-400 mb-8">
+                Starten Sie noch heute und erleben Sie die Zukunft der Business Automation.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="/register.html" class="btn-god px-10 py-4 rounded-xl font-semibold text-lg">Demo anfragen</a>
+                <a href="/demo.html" class="glass px-10 py-4 rounded-xl font-semibold text-lg hover:bg-white/10 transition">Live Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2024-2026 Enterprise Universe GmbH</p>
+                <div class="flex gap-6 text-sm text-gray-400">
+                    <a href="/datenschutz.html" class="hover:text-white transition">Datenschutz</a>
+                    <a href="/agb.html" class="hover:text-white transition">AGB</a>
+                    <a href="/impressum.html" class="hover:text-white transition">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

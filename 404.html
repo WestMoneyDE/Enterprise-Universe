@@ -3,25 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - West Money OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>404 - Seite nicht gefunden | Enterprise Universe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0a0a, #1a1a2e); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
-        .container { text-align: center; padding: 40px; }
-        .logo { width: 80px; height: 80px; background: linear-gradient(135deg, #FF5722, #FF9800); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; margin: 0 auto 32px; }
-        h1 { font-size: 120px; font-weight: 900; background: linear-gradient(135deg, #FF5722, #FF9800); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 16px; }
-        p { font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
-        .btn { display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #FF5722, #FF9800); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; transition: all 0.3s; }
-        .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(255,87,34,0.4); }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .gradient-text { background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .god-gradient { background: linear-gradient(135deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-gradient { background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.2) 0%, transparent 50%), radial-gradient(ellipse at bottom right, rgba(6, 182, 212, 0.15) 0%, transparent 50%); }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-god { background: linear-gradient(135deg, #8b5cf6, #06b6d4); transition: all 0.3s ease; }
+        .btn-god:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5); }
+        .grid-pattern { background-image: linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.3); } 50% { box-shadow: 0 0 60px rgba(239, 68, 68, 0.6); } }
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .kanji { font-family: 'Noto Sans JP', sans-serif; }
+        .glitch { animation: glitch 1s infinite; }
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-5px, 5px); }
+            94% { transform: translate(5px, -5px); }
+            96% { transform: translate(-5px, -5px); }
+            98% { transform: translate(5px, 5px); }
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="logo">W</div>
-        <h1>404</h1>
-        <p>Seite nicht gefunden</p>
-        <a href="/" class="btn">🏠 Zur Startseite</a>
+<body class="grid-pattern hero-gradient">
+    <div class="text-center px-6">
+        <div class="relative inline-block mb-8">
+            <div class="glass rounded-3xl p-12 pulse-glow">
+                <div class="w-32 h-32 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 glitch">
+                    <span class="text-6xl">⚠️</span>
+                </div>
+                <h1 class="text-8xl font-black mb-4 gradient-text glitch">404</h1>
+                <p class="text-2xl font-bold mb-2 text-red-400">DIMENSION NOT FOUND</p>
+                <p class="text-gray-400 mb-8">Diese Seite existiert in diesem Universum nicht.</p>
+
+                <div class="space-y-4">
+                    <a href="/" class="btn-god px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-3">
+                        <span class="kanji text-xl">神</span>
+                        Zurück zum Universe
+                    </a>
+                    <div class="flex justify-center gap-4 mt-4">
+                        <a href="/demo.html" class="text-gray-400 hover:text-white transition">Demo</a>
+                        <span class="text-gray-600">•</span>
+                        <a href="/register.html" class="text-gray-400 hover:text-white transition">Registrieren</a>
+                        <span class="text-gray-600">•</span>
+                        <a href="/login.html" class="text-gray-400 hover:text-white transition">Login</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-500/30 rounded-full blur-3xl float"></div>
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-orange-500/30 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+        </div>
+
+        <p class="text-gray-500 text-sm">
+            Enterprise Universe 3.0 | GOD MODE
+        </p>
     </div>
 </body>
 </html>
