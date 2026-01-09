@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Database | Enterprise Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --gold: #c9a227;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --card-bg: rgba(22, 33, 62, 0.95);
+            --border: rgba(201, 162, 39, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            min-height: 100vh;
+            color: var(--text);
+            padding: 20px;
+        }
+
+        .container { max-width: 1600px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle { color: var(--text-muted); font-size: 16px; }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filters {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group { display: flex; flex-direction: column; gap: 5px; }
+        .filter-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+
+        input, select {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus, select:focus { border-color: var(--gold); }
+        input::placeholder { color: var(--text-muted); }
+
+        #searchInput { min-width: 300px; }
+
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(0,0,0,0.3);
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover { background: rgba(201, 162, 39, 0.1); }
+
+        tr:hover { background: rgba(201, 162, 39, 0.05); }
+
+        .priority-A {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .priority-B {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .priority-C {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        a:hover { text-decoration: underline; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .back-link:hover { color: var(--gold); }
+
+        .focus-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            max-width: 250px;
+        }
+
+        .focus-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1200px) {
+            .table-container { overflow-x: auto; }
+            table { min-width: 1200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">Back to Data Room</a>
+
+        <header>
+            <h1>Investor Database</h1>
+            <p class="subtitle">Curated list of VCs, Angels, and Accelerators for Enterprise Universe</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalCount">48</div>
+                    <div class="stat-label">Total Investors</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="priorityACount">10</div>
+                    <div class="stat-label">Priority A</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="priorityBCount">28</div>
+                    <div class="stat-label">Priority B</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="priorityCCount">10</div>
+                    <div class="stat-label">Priority C</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Search</span>
+                <input type="text" id="searchInput" placeholder="Search by name, focus, or notes...">
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Priority</span>
+                <select id="priorityFilter">
+                    <option value="">All Priorities</option>
+                    <option value="A">Priority A (High)</option>
+                    <option value="B">Priority B (Medium)</option>
+                    <option value="C">Priority C (Lower)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Type</span>
+                <select id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="VC">Venture Capital</option>
+                    <option value="Corporate">Corporate VC</option>
+                    <option value="Angel">Angel / Business Angel</option>
+                    <option value="Accelerator">Accelerator</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="investorTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Investor</th>
+                        <th onclick="sortTable(1)">Contact</th>
+                        <th onclick="sortTable(2)">Focus Areas</th>
+                        <th onclick="sortTable(3)">Ticket Size</th>
+                        <th onclick="sortTable(4)">Priority</th>
+                        <th>Links</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const investors = [
+            {name: "High-Tech Grunderfonds (HTGF)", contact: "Investment Team", email: "info@htgf.de", focus: ["Industrial Tech", "AI", "Deep Tech", "Climate Tech"], ticket: "1M - 30M", priority: "A", website: "https://www.htgf.de/", linkedin: "https://linkedin.com/company/high-tech-gruenderfonds", notes: "Staatlicher Seed-Investor - 780+ Startups finanziert - Perfekter Fit fur Industrie 4.0"},
+            {name: "UVC Partners", contact: "Investment Team", email: "office@uvcpartners.com", focus: ["Enterprise Software", "Industrial Technologies", "Mobility"], ticket: "0.5M - 10M", priority: "A", website: "https://www.uvcpartners.com/", linkedin: "https://linkedin.com/company/uvc-partners", notes: "Munchen/Berlin - Industrial Tech Spezialist"},
+            {name: "Point Nine Capital", contact: "Christoph Janz / Pawel Chudzinski", email: "team@pointnine.com", focus: ["B2B SaaS", "B2B Marketplaces"], ticket: "0.5M - 3.5M", priority: "A", website: "https://www.pointnine.com/", linkedin: "https://linkedin.com/company/point-nine-capital", notes: "Berlin/London/Zurich - B2B SaaS Pionier"},
+            {name: "NRW.BANK Venture Fonds", contact: "Investment Team", email: "venture@nrwbank.de", focus: ["Climate Tech", "KI", "Enterprise Software", "Robotics"], ticket: "bis 15M", priority: "A", website: "https://www.nrwbank.de/", linkedin: "https://linkedin.com/company/nrw-bank", notes: "Staatlicher Fonds - NRW-fokussiert aber bundesweit aktiv"},
+            {name: "LBBW Venture Capital", contact: "Investment Team", email: "venture-capital@lbbw.de", focus: ["IoT", "Industry 4.0", "AI/ML", "Big Data"], ticket: "bis 3M", priority: "A", website: "https://www.lbbw-vc.de/", linkedin: "https://linkedin.com/company/lbbw", notes: "Baden-Wurttemberg-Fokus - Bank-backed VC"},
+            {name: "Paua Ventures", contact: "Investment Team", email: "hello@paua.vc", focus: ["Early Stage B2B Tech"], ticket: "0.5M - 5M", priority: "A", website: "https://paua.vc/", linkedin: "https://linkedin.com/company/paua-ventures", notes: "Berlin - Ausschliesslich B2B - Early investor in Pipedrive"},
+            {name: "Senovo", contact: "Investment Team", email: "Siehe Website", focus: ["B2B SaaS", "Deep Tech"], ticket: "0.5M - 3M", priority: "A", website: "https://www.senovo.vc/", linkedin: "https://linkedin.com/company/senovo", notes: "Personlicher Kontakt betont - Team-E-Mails offentlich"},
+            {name: "Fly Ventures", contact: "Investment Team", email: "hello@fly.vc", focus: ["Deep Tech", "Automation", "AI"], ticket: "500K - 3M", priority: "A", website: "https://www.fly.vc/", linkedin: "https://linkedin.com/company/fly-ventures", notes: "Berlin - Datengetriebener VC fur Industrie-Transformation"},
+            {name: "Siemens Next47", contact: "Investment Team", email: "next47@siemens.com", focus: ["Industry 4.0", "Smart Manufacturing"], ticket: "1M - 20M", priority: "A", website: "https://next47.com/", linkedin: "https://linkedin.com/company/next47", notes: "Corporate VC - Strategischer Partner fur Industrie 4.0"},
+            {name: "Bosch Ventures", contact: "Investment Team", email: "bosch.ventures@bosch.com", focus: ["Climate Tech", "Industrial IoT"], ticket: "1M - 20M", priority: "A", website: "https://www.bosch-ventures.com/", linkedin: "https://linkedin.com/company/robert-bosch-venture-capital", notes: "Corporate VC - Perfect strategic fit fur Smart Factory"},
+            {name: "Technologiegrunderfonds Sachsen (TGFS)", contact: "Investment Team", email: "info@tgfs.de", focus: ["Software", "Industrie 4.0", "IoT", "Big Data"], ticket: "bis 5M", priority: "A", website: "https://www.tgfs.de/", linkedin: "https://linkedin.com/company/tgfs", notes: "Sachsen - Software & Industrie 4.0 Fokus"},
+            {name: "Business Angels Deutschland (BAND)", contact: "Tobias Wittich", email: "info@business-angels.de", focus: ["Business Angel Netzwerk"], ticket: "50K - 250K pro Angel", priority: "A", website: "https://www.business-angels.de/", linkedin: "https://linkedin.com/company/business-angels-deutschland", notes: "Grosstes BA-Netzwerk - Zugang zu 500+ Angels"},
+            {name: "Project A Ventures", contact: "Investment Team", email: "contact@project-a.com", focus: ["AI", "eCommerce", "FinTech", "HealthTech"], ticket: "$1M - $10M", priority: "B", website: "https://www.project-a.com/", linkedin: "https://linkedin.com/company/project-a-ventures", notes: "Berlin - Pre-Seed bis Series D - Operativer Support"},
+            {name: "Motu Ventures", contact: "Investment Team", email: "hello@motu.vc", focus: ["Lean Startups", "First-Round"], ticket: "500K - 2M", priority: "B", website: "https://www.motu.vc/", linkedin: "https://linkedin.com/company/motu-ventures", notes: "Berlin Seed Fund - Lean Startup Spezialist"},
+            {name: "SaaSgarage", contact: "Investment Team", email: "info@saasgarage.vc", focus: ["Pre-Seed", "SaaS"], ticket: "50K - 500K", priority: "B", website: "https://www.saasgarage.com/", linkedin: "https://linkedin.com/company/saasgarage", notes: "Pre-Seed Angel Fund - Value-Add Mentoring"},
+            {name: "Cherry Ventures", contact: "Investment Team", email: "hello@cherry.vc", focus: ["Early Stage B2B"], ticket: "1M - 10M", priority: "B", website: "https://cherry.vc/", linkedin: "https://linkedin.com/company/cherry-ventures", notes: "Berlin - Einer der aktivsten Early Stage VCs"},
+            {name: "Earlybird", contact: "Investment Team", email: "info@earlybird.com", focus: ["Series A/B Leader"], ticket: "2M - 15M", priority: "B", website: "https://www.earlybird.com/", linkedin: "https://linkedin.com/company/earlybird-venture-capital", notes: "Berlin/Munchen - Established Series A Leader"},
+            {name: "SAP.iO", contact: "Investment Team", email: "sap.io@sap.com", focus: ["Enterprise Software", "B2B SaaS"], ticket: "Accelerator + Funding", priority: "B", website: "https://sap.io/", linkedin: "https://linkedin.com/company/sap-io", notes: "Corporate Accelerator - SAP-Integration moglich"},
+            {name: "BMW i Ventures", contact: "Investment Team", email: "info@bmwiventures.com", focus: ["Mobility", "Smart Technologies"], ticket: "2M - 20M", priority: "B", website: "https://www.bmw-i-ventures.com/", linkedin: "https://linkedin.com/company/bmw-i-ventures", notes: "Corporate VC - Mobility & Smart Tech Fokus"},
+            {name: "Bayern Kapital", contact: "Investment Team", email: "info@bayernkapital.de", focus: ["Tech Startups in Bayern"], ticket: "500K - 5M", priority: "B", website: "https://www.bayernkapital.de/", linkedin: "https://linkedin.com/company/bayern-kapital", notes: "Bayern - Beteiligungsprogramm mit Fokus Bayern"},
+            {name: "415 Capital", contact: "Investment Team", email: "info@415capital.com", focus: ["Early Stage VC"], ticket: "500K - 3M", priority: "B", website: "https://415capital.com/", linkedin: "https://linkedin.com/company/415-capital", notes: "Oberhaching - Early Stage Generalist"},
+            {name: "Abacus Alpha", contact: "Investment Team", email: "info@ab-alpha.de", focus: ["Early Stage VC", "PE"], ticket: "1M - 10M", priority: "B", website: "https://ab-alpha.de/", linkedin: "https://linkedin.com/company/abacus-alpha", notes: "Frankental - Early Stage & PE"},
+            {name: "Accel", contact: "Investment Team", email: "info@accel.com", focus: ["Early/Growth Stage VC"], ticket: "3M - 50M", priority: "B", website: "https://www.accel.com/", linkedin: "https://linkedin.com/company/accel", notes: "International - Top-Tier VC (Spotify, Facebook invested)"},
+            {name: "Acorda", contact: "Investment Team", email: "info@acorda.de", focus: ["B2B Software", "Wachstum"], ticket: "2M - 10M", priority: "B", website: "https://acorda.de/", linkedin: "https://linkedin.com/company/acorda", notes: "B2B Software Spezialist"},
+            {name: "ALSTIN Capital", contact: "Investment Team", email: "info@alstin.capital", focus: ["VC"], ticket: "1M - 5M", priority: "B", website: "https://alstin.capital/", linkedin: "https://linkedin.com/company/alstin-capital", notes: "Munchen - VC Generalist"},
+            {name: "Calm/Storm Ventures", contact: "Investment Team", email: "hello@calmstorm.vc", focus: ["AI", "Deep Tech"], ticket: "500K - 5M", priority: "B", website: "https://calmstorm.vc/", linkedin: "https://linkedin.com/company/calm-storm-ventures", notes: "HTGF Co-Investor - AI Fokus"},
+            {name: "B4i (Bosch for Innovation)", contact: "Investment Team", email: "b4i@bosch.com", focus: ["German Deep Tech"], ticket: "500K - 5M", priority: "B", website: "https://www.bosch.com/", linkedin: "https://linkedin.com/company/bosch", notes: "Bosch-backed Deep Tech Investor"},
+            {name: "Norrsken", contact: "Investment Team", email: "hello@norrsken.org", focus: ["Climate Tech", "AI"], ticket: "1M - 10M", priority: "B", website: "https://www.norrsken.org/", linkedin: "https://linkedin.com/company/norrsken-foundation", notes: "Skandinavien - Climate Tech & AI"},
+            {name: "Business Angel Club Berlin Brandenburg (BACB)", contact: "Matthias Helfrich", email: "info@bacb.de", focus: ["B2B Software", "GreenTech", "Food Impact"], ticket: "50K - 250K pro Angel", priority: "B", website: "https://www.bacb.de/", linkedin: "https://linkedin.com/company/bacb", notes: "Berlin/Brandenburg - B2B Software Fokus"},
+            {name: "InvestorenNetzwerk Wiesbaden (INWI)", contact: "Matthias Helfrich", email: "info@inwi.vc", focus: ["B2B Software"], ticket: "50K - 250K pro Angel", priority: "B", website: "https://www.inwi.vc/", linkedin: "https://linkedin.com/company/inwi", notes: "Wiesbaden - B2B Software Angels"},
+            {name: "Venture Stars", contact: "Investment Team", email: "hello@venture-stars.com", focus: ["B2B SaaS"], ticket: "100K - 1M", priority: "B", website: "https://www.venture-stars.com/", linkedin: "https://linkedin.com/company/venture-stars", notes: "Munchen - B2B SaaS Angel Syndicate"},
+            {name: "German Accelerator", contact: "Program Team", email: "info@germanaccelerator.com", focus: ["Tech Startups (US Market Entry)"], ticket: "Accelerator + Network", priority: "B", website: "https://www.germanaccelerator.com/", linkedin: "https://linkedin.com/company/german-accelerator", notes: "Staatlich - US Market Entry Support"},
+            {name: "Plug and Play Tech Center", contact: "Investment Team", email: "info@pnptc.com", focus: ["IoT", "Supply Chain", "Mobility"], ticket: "Accelerator + 100K-500K", priority: "B", website: "https://www.plugandplaytechcenter.com/", linkedin: "https://linkedin.com/company/plug-and-play-tech-center", notes: "Global Accelerator mit Deutschland-Office"},
+            {name: "Hub:raum (Deutsche Telekom)", contact: "Investment Team", email: "info@hubraum.com", focus: ["IoT", "5G", "Cloud"], ticket: "Accelerator + Funding", priority: "B", website: "https://www.hubraum.com/", linkedin: "https://linkedin.com/company/hubraum", notes: "Telekom Corporate Accelerator - IoT/Cloud Fokus"},
+            {name: "TechFounders", contact: "Program Team", email: "info@techfounders.com", focus: ["DeepTech", "Enterprise Software"], ticket: "Accelerator + 25K", priority: "B", website: "https://www.techfounders.com/", linkedin: "https://linkedin.com/company/techfounders", notes: "Munchen - UnternehmerTUM - Corporate Connections"},
+            {name: "UnternehmerTUM", contact: "Investment Team", email: "info@unternehmertum.de", focus: ["Tech Startups"], ticket: "Incubator + VC Access", priority: "B", website: "https://www.unternehmertum.de/", linkedin: "https://linkedin.com/company/unternehmertum", notes: "Munchen - TU Munchen - Largest Startup Center Europe"},
+            {name: "Atlantic Labs", contact: "Investment Team", email: "hello@atlantic-labs.de", focus: ["Pre-Seed", "Seed"], ticket: "100K - 1M", priority: "B", website: "https://www.atlantic-labs.de/", linkedin: "https://linkedin.com/company/atlantic-labs", notes: "Berlin - Pre-Seed Spezialist"},
+            {name: "Creathor Ventures", contact: "Investment Team", email: "info@creathor.vc", focus: ["Deep Tech", "B2B"], ticket: "500K - 5M", priority: "B", website: "https://creathor.vc/", linkedin: "https://linkedin.com/company/creathor-ventures", notes: "Munchen - Deep Tech Fokus"},
+            {name: "Visionaries Club", contact: "Investment Team", email: "info@visionaries.club", focus: ["B2B SaaS", "FinTech"], ticket: "500K - 5M", priority: "B", website: "https://visionaries.club/", linkedin: "https://linkedin.com/company/visionaries-club", notes: "Berlin - B2B Fokus"},
+            {name: "HV Capital", contact: "Investment Team", email: "info@hvcapital.com", focus: ["Scale-up Fokus"], ticket: "5M - 50M", priority: "C", website: "https://hvcapital.com/", linkedin: "https://linkedin.com/company/hv-capital", notes: "Munchen - Eher fur spatere Stages (Series A+)"},
+            {name: "Femventix", contact: "Investment Team", email: "info@femventix.com", focus: ["AI Investments"], ticket: "100K - 2M", priority: "C", website: "https://femventix.com/", linkedin: "https://linkedin.com/company/femventix", notes: "AI-fokussierter Angel Fund"},
+            {name: "Business Angels Aachen", contact: "Investment Team", email: "info@business-angels-aachen.de", focus: ["Tech Startups"], ticket: "25K - 150K pro Angel", priority: "C", website: "https://www.business-angels-aachen.de/", linkedin: "https://linkedin.com/company/business-angels-aachen", notes: "Aachen - Regional fokussiert"},
+            {name: "SpinLab - The HHL Accelerator", contact: "Program Team", email: "info@spinlab.co", focus: ["Tech Startups"], ticket: "Accelerator + bis 25K", priority: "C", website: "https://www.spinlab.co/", linkedin: "https://linkedin.com/company/spinlab", notes: "Leipzig - HHL-backed Accelerator"},
+            {name: "Main Incubator (Commerzbank)", contact: "Investment Team", email: "info@main-incubator.com", focus: ["FinTech", "B2B SaaS"], ticket: "Accelerator + bis 1M", priority: "C", website: "https://www.main-incubator.com/", linkedin: "https://linkedin.com/company/main-incubator", notes: "Commerzbank - FinTech fokussiert"},
+            {name: "Axel Springer Plug and Play", contact: "Investment Team", email: "info@axelspringerplugandplay.com", focus: ["Media", "AdTech", "MarTech"], ticket: "Accelerator + 150K", priority: "C", website: "https://www.axelspringerplugandplay.com/", linkedin: "https://linkedin.com/company/axel-springer-plug-and-play", notes: "Axel Springer - Media Tech Fokus"},
+            {name: "EQT Ventures", contact: "Investment Team", email: "ventures@eqtpartners.com", focus: ["Series A/B"], ticket: "5M - 30M", priority: "C", website: "https://eqtventures.com/", linkedin: "https://linkedin.com/company/eqt-ventures", notes: "Stockholm/Berlin - Fur spatere Stages"},
+            {name: "Lakestar", contact: "Investment Team", email: "info@lakestar.com", focus: ["Series A/B"], ticket: "3M - 30M", priority: "C", website: "https://lakestar.com/", linkedin: "https://linkedin.com/company/lakestar", notes: "Zurich/Berlin - Top-Tier VC (Spotify investor)"},
+            {name: "Target Global", contact: "Investment Team", email: "info@target-global.com", focus: ["Series A+"], ticket: "5M - 50M", priority: "C", website: "https://target-global.com/", linkedin: "https://linkedin.com/company/target-global", notes: "Berlin/London - Scale-up Stage"}
+        ];
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = data.map(inv => `
+                <tr>
+                    <td><strong>${inv.name}</strong></td>
+                    <td>
+                        ${inv.contact}<br>
+                        <a href="mailto:${inv.email}">${inv.email}</a>
+                    </td>
+                    <td>
+                        <div class="focus-tags">
+                            ${inv.focus.map(f => `<span class="focus-tag">${f}</span>`).join('')}
+                        </div>
+                    </td>
+                    <td>${inv.ticket}</td>
+                    <td><span class="priority-${inv.priority}">Priority ${inv.priority}</span></td>
+                    <td>
+                        <a href="${inv.website}" target="_blank">Website</a><br>
+                        <a href="${inv.linkedin}" target="_blank">LinkedIn</a>
+                    </td>
+                    <td style="font-size: 12px; max-width: 200px;">${inv.notes}</td>
+                </tr>
+            `).join('');
+
+            // Update counts
+            document.getElementById('totalCount').textContent = data.length;
+            document.getElementById('priorityACount').textContent = data.filter(i => i.priority === 'A').length;
+            document.getElementById('priorityBCount').textContent = data.filter(i => i.priority === 'B').length;
+            document.getElementById('priorityCCount').textContent = data.filter(i => i.priority === 'C').length;
+        }
+
+        function filterData() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const priority = document.getElementById('priorityFilter').value;
+            const type = document.getElementById('typeFilter').value;
+
+            let filtered = investors.filter(inv => {
+                const matchSearch = !search ||
+                    inv.name.toLowerCase().includes(search) ||
+                    inv.focus.some(f => f.toLowerCase().includes(search)) ||
+                    inv.notes.toLowerCase().includes(search);
+                const matchPriority = !priority || inv.priority === priority;
+                const matchType = !type ||
+                    (type === 'VC' && !inv.notes.toLowerCase().includes('corporate') && !inv.notes.toLowerCase().includes('angel') && !inv.notes.toLowerCase().includes('accelerator')) ||
+                    (type === 'Corporate' && inv.notes.toLowerCase().includes('corporate')) ||
+                    (type === 'Angel' && (inv.notes.toLowerCase().includes('angel') || inv.name.toLowerCase().includes('angel'))) ||
+                    (type === 'Accelerator' && (inv.notes.toLowerCase().includes('accelerator') || inv.notes.toLowerCase().includes('incubator')));
+
+                return matchSearch && matchPriority && matchType;
+            });
+
+            renderTable(filtered);
+        }
+
+        let sortDirection = {};
+        function sortTable(column) {
+            sortDirection[column] = !sortDirection[column];
+            const keys = ['name', 'contact', 'focus', 'ticket', 'priority'];
+            const key = keys[column];
+
+            investors.sort((a, b) => {
+                let valA = key === 'focus' ? a[key].join(' ') : a[key];
+                let valB = key === 'focus' ? b[key].join(' ') : b[key];
+                return sortDirection[column] ?
+                    valA.localeCompare(valB) :
+                    valB.localeCompare(valA);
+            });
+
+            filterData();
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('priorityFilter').addEventListener('change', filterData);
+        document.getElementById('typeFilter').addEventListener('change', filterData);
+
+        renderTable(investors);
+    </script>
+</body>
+</html>

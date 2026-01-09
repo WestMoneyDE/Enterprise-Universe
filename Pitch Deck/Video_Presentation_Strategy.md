@@ -1,6 +1,6 @@
 # 🎬 VIDEO PRÄSENTATION - STRATEGIE & BRAINSTORMING
 
-## Enterprise Universe GmbH - Investor Video Pitch
+## Enterprise Universe GmbH i.G. - Investor Video Pitch
 
 ---
 
@@ -198,7 +198,7 @@ Für Fragen stehe ich gerne zur Verfügung.
 Mit freundlichen Grüßen,
 Ömer Hüseyin Coşkun
 Founder & CEO
-Enterprise Universe GmbH
+Enterprise Universe GmbH i.G.
 
 info@enterprise-universe.com
 ```
@@ -230,7 +230,7 @@ info@enterprise-universe.com
 
 ## 📞 KONTAKT
 
-**Enterprise Universe GmbH**
+**Enterprise Universe GmbH i.G.**
 E-Mail: info@enterprise-universe.com
 
 ---

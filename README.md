@@ -54,8 +54,8 @@ python westmoney_divine.py
 
 - **CEO:** Ömer Hüseyin Coşkun
 - **Email:** info@enterprise-universe.com
-- **Company:** Enterprise Universe GmbH, Köln, Germany
+- **Company:** Enterprise Universe GmbH i.G., Köln, Germany
 
 ---
 
-© 2024-2026 Enterprise Universe GmbH. All rights reserved.
+© 2024-2026 Enterprise Universe GmbH i.G.. All rights reserved.
