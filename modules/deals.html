@@ -15,44 +15,74 @@
             --ui-blue: #7B9FFF;
             --ui-purple: #9B7BFF;
             --ui-silver: #C0C0E0;
+            --auto-cyan: #00F5FF;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
 
         .header {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
-            border-bottom: 2px solid var(--god-gold);
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--auto-cyan);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--auto-cyan); }
         .back-btn {
             padding: 0.5rem 1rem;
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid var(--god-gold);
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid var(--auto-cyan);
             border-radius: 8px;
-            color: var(--god-gold);
+            color: var(--auto-cyan);
             text-decoration: none;
+        }
+        .auto-badge {
+            background: linear-gradient(135deg, var(--auto-cyan), var(--ui-purple));
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #000;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         .main { max-width: 1800px; margin: 0 auto; padding: 1.5rem; }
 
+        .auto-status {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(155, 123, 255, 0.05));
+            border: 1px solid var(--auto-cyan);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .auto-status-left { display: flex; align-items: center; gap: 1rem; }
+        .auto-icon { font-size: 2rem; }
+        .auto-info h3 { color: var(--auto-cyan); font-size: 1rem; }
+        .auto-info p { color: var(--ui-silver); font-size: 0.8rem; }
+        .auto-actions { display: flex; gap: 0.5rem; }
+
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
         .stat-box {
             background: rgba(10, 10, 26, 0.9);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(0, 245, 255, 0.2);
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
         }
-        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: bold; color: var(--god-gold); }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: bold; color: var(--auto-cyan); }
         .stat-label { font-size: 0.75rem; color: var(--ui-silver); }
 
         .actions {
@@ -63,16 +93,17 @@
         }
         .action-btn {
             padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            background: linear-gradient(135deg, var(--auto-cyan), var(--ui-blue));
             border: none;
             border-radius: 8px;
             color: #000;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s;
         }
-        .action-btn:hover { transform: translateY(-2px); }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 245, 255, 0.3); }
         .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
-        .action-btn.danger { background: linear-gradient(135deg, var(--hot-red), #dc2626); color: #fff; }
+        .action-btn.success { background: linear-gradient(135deg, var(--success-green), #16a34a); color: #fff; }
 
         .pipeline {
             display: grid;
@@ -82,7 +113,7 @@
         }
         .stage {
             background: rgba(10, 10, 26, 0.9);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(0, 245, 255, 0.2);
             border-radius: 12px;
             padding: 1rem;
             min-height: 400px;
@@ -93,23 +124,16 @@
             align-items: center;
             margin-bottom: 1rem;
             padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(0, 245, 255, 0.3);
         }
-        .stage-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--god-gold); }
+        .stage-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--auto-cyan); }
         .stage-count {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(0, 245, 255, 0.2);
             padding: 0.2rem 0.5rem;
             border-radius: 10px;
             font-size: 0.7rem;
         }
         .stage-value { font-size: 0.7rem; color: var(--success-green); margin-top: 0.25rem; }
-
-        .stage.lead .stage-header { border-color: var(--ui-blue); }
-        .stage.qualified .stage-header { border-color: var(--ui-purple); }
-        .stage.proposal .stage-header { border-color: var(--warning-amber); }
-        .stage.negotiation .stage-header { border-color: #FF8C00; }
-        .stage.won .stage-header { border-color: var(--success-green); }
-        .stage.lost .stage-header { border-color: var(--hot-red); }
 
         .deals-list { display: flex; flex-direction: column; gap: 0.5rem; }
 
@@ -118,71 +142,88 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             padding: 0.75rem;
-            cursor: grab;
             transition: all 0.3s;
         }
         .deal-card:hover {
-            border-color: var(--god-gold);
+            border-color: var(--auto-cyan);
             transform: translateY(-2px);
         }
-        .deal-card.dragging { opacity: 0.5; }
-        .deal-card.locked { border-color: var(--hot-red); }
+        .deal-card.auto-moving {
+            border-color: var(--auto-cyan);
+            animation: autoMove 1.5s ease-in-out infinite;
+        }
+        @keyframes autoMove {
+            0%, 100% { box-shadow: 0 0 5px rgba(0, 245, 255, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(0, 245, 255, 0.6); }
+        }
 
         .deal-name { font-weight: bold; font-size: 0.85rem; margin-bottom: 0.25rem; }
         .deal-company { font-size: 0.75rem; color: var(--ui-silver); }
         .deal-amount { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--success-green); margin-top: 0.5rem; }
         .deal-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
-        .deal-prob { font-size: 0.7rem; color: var(--ui-silver); }
-        .lock-icon { cursor: pointer; }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active { display: flex; }
-        .modal-content {
-            background: var(--bg-void);
-            border: 2px solid var(--god-gold);
-            border-radius: 16px;
-            padding: 2rem;
-            width: 500px;
-            max-width: 90%;
-        }
-        .modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--god-gold); margin-bottom: 1.5rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 0.8rem; color: var(--ui-silver); margin-bottom: 0.5rem; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .deal-days { font-size: 0.65rem; color: var(--warning-amber); }
+        .deal-auto-badge {
+            font-size: 0.6rem;
+            background: rgba(0, 245, 255, 0.2);
+            padding: 0.1rem 0.4rem;
             border-radius: 8px;
-            color: #fff;
-            font-size: 0.9rem;
+            color: var(--auto-cyan);
         }
-        .form-group input:focus { border-color: var(--god-gold); outline: none; }
 
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success-green); color: #fff; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1001; }
+        .pending-moves {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .pending-moves h3 { font-family: 'Orbitron', sans-serif; color: var(--auto-cyan); margin-bottom: 1rem; }
+        .pending-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.75rem; }
+        .pending-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+        }
+        .pending-item-header { display: flex; justify-content: space-between; align-items: center; }
+        .pending-item-name { font-weight: bold; font-size: 0.8rem; }
+        .pending-item-countdown {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--warning-amber);
+        }
+        .pending-item-info { font-size: 0.7rem; color: var(--ui-silver); margin-top: 0.25rem; }
 
-        @media (max-width: 1200px) { .pipeline { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .pipeline { grid-template-columns: 1fr; } }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--auto-cyan); color: #000; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1001; font-weight: bold; }
+
+        @media (max-width: 1200px) { .pipeline { grid-template-columns: repeat(3, 1fr); } .stats-row { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .pipeline { grid-template-columns: 1fr; } .stats-row { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>💰 DEALS PIPELINE - KANBAN BOARD</h1>
-        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <h1>🤖 DEALS PIPELINE - AUTO MODE</h1>
+            <span class="auto-badge">⚡ AUTOMATISCH</span>
+        </div>
+        <a href="/v5" class="back-btn">← Back to Dashboard</a>
     </header>
 
     <main class="main">
+        <div class="auto-status">
+            <div class="auto-status-left">
+                <span class="auto-icon">🤖</span>
+                <div class="auto-info">
+                    <h3>Auto Lead Mover AKTIV</h3>
+                    <p>Deals werden automatisch durch die Pipeline bewegt • Nächster Run: <span id="nextRun">--</span></p>
+                </div>
+            </div>
+            <div class="auto-actions">
+                <button class="action-btn" onclick="runAutoMove(false)">▶️ Jetzt ausführen</button>
+                <button class="action-btn secondary" onclick="runAutoMove(true)">👁️ Simulation</button>
+            </div>
+        </div>
+
         <div class="stats-row">
             <div class="stat-box">
                 <div class="stat-value" id="totalDeals">0</div>
@@ -193,8 +234,12 @@
                 <div class="stat-label">PIPELINE VALUE</div>
             </div>
             <div class="stat-box">
-                <div class="stat-value" id="weightedValue">€0</div>
-                <div class="stat-label">WEIGHTED VALUE</div>
+                <div class="stat-value" id="pendingMoves">0</div>
+                <div class="stat-label">PENDING MOVES</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="movedToday">0</div>
+                <div class="stat-label">MOVED TODAY</div>
             </div>
             <div class="stat-box">
                 <div class="stat-value" id="wonValue">€0</div>
@@ -203,14 +248,13 @@
         </div>
 
         <div class="actions">
-            <button class="action-btn" onclick="openCreateModal()">➕ New Deal</button>
-            <button class="action-btn secondary" onclick="syncFromHubSpot()">📥 Sync from HubSpot</button>
-            <button class="action-btn secondary" onclick="uploadToHubSpot()">📤 Upload to HubSpot</button>
-            <button class="action-btn secondary" onclick="refreshDeals()">🔄 Refresh</button>
+            <button class="action-btn success" onclick="syncFromHubSpot()">📥 Sync from HubSpot</button>
+            <button class="action-btn secondary" onclick="refreshAll()">🔄 Refresh</button>
+            <button class="action-btn secondary" onclick="openCreateModal()">➕ Neuer Deal</button>
         </div>
 
         <div class="pipeline" id="pipeline">
-            <div class="stage lead" data-stage="lead">
+            <div class="stage" data-stage="lead">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">📥 LEAD</div>
@@ -220,7 +264,7 @@
                 </div>
                 <div class="deals-list" id="lead-deals"></div>
             </div>
-            <div class="stage qualified" data-stage="qualified">
+            <div class="stage" data-stage="qualified">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">✅ QUALIFIED</div>
@@ -230,7 +274,7 @@
                 </div>
                 <div class="deals-list" id="qualified-deals"></div>
             </div>
-            <div class="stage proposal" data-stage="proposal">
+            <div class="stage" data-stage="proposal">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">📄 PROPOSAL</div>
@@ -240,7 +284,7 @@
                 </div>
                 <div class="deals-list" id="proposal-deals"></div>
             </div>
-            <div class="stage negotiation" data-stage="negotiation">
+            <div class="stage" data-stage="negotiation">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">🤝 NEGOTIATION</div>
@@ -250,7 +294,7 @@
                 </div>
                 <div class="deals-list" id="negotiation-deals"></div>
             </div>
-            <div class="stage won" data-stage="won">
+            <div class="stage" data-stage="won">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">🏆 WON</div>
@@ -260,7 +304,7 @@
                 </div>
                 <div class="deals-list" id="won-deals"></div>
             </div>
-            <div class="stage lost" data-stage="lost">
+            <div class="stage" data-stage="lost">
                 <div class="stage-header">
                     <div>
                         <div class="stage-title">❌ LOST</div>
@@ -271,56 +315,19 @@
                 <div class="deals-list" id="lost-deals"></div>
             </div>
         </div>
-    </main>
 
-    <!-- Create Deal Modal -->
-    <div class="modal" id="createModal">
-        <div class="modal-content">
-            <h2 class="modal-title">➕ Create New Deal</h2>
-            <form id="createForm" onsubmit="createDeal(event)">
-                <div class="form-group">
-                    <label>Deal Name *</label>
-                    <input type="text" name="name" required placeholder="e.g., Smart Home Project Munich">
-                </div>
-                <div class="form-group">
-                    <label>Company Name</label>
-                    <input type="text" name="company_name" placeholder="e.g., Enterprise GmbH">
-                </div>
-                <div class="form-group">
-                    <label>Amount (€) *</label>
-                    <input type="number" name="amount" required placeholder="50000">
-                </div>
-                <div class="form-group">
-                    <label>Stage</label>
-                    <select name="stage">
-                        <option value="lead">Lead</option>
-                        <option value="qualified">Qualified</option>
-                        <option value="proposal">Proposal</option>
-                        <option value="negotiation">Negotiation</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Contact Name</label>
-                    <input type="text" name="contact_name" placeholder="Max Mustermann">
-                </div>
-                <div class="form-group">
-                    <label>Contact Email</label>
-                    <input type="email" name="contact_email" placeholder="max@enterprise.de">
-                </div>
-                <div class="actions" style="margin-top:1.5rem">
-                    <button type="submit" class="action-btn">Create Deal</button>
-                    <button type="button" class="action-btn secondary" onclick="closeModal()">Cancel</button>
-                </div>
-            </form>
+        <div class="pending-moves">
+            <h3>⏳ Anstehende Auto-Moves</h3>
+            <div class="pending-list" id="pendingList"></div>
         </div>
-    </div>
+    </main>
 
     <div class="toast" id="toast"></div>
 
     <script>
         const API_BASE = '/api/v1';
         let allDeals = [];
-        let draggedDeal = null;
+        let autoMoveStatus = null;
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -353,10 +360,8 @@
                     const data = await res.json();
                     document.getElementById('totalDeals').textContent = data.total_deals || 0;
                     document.getElementById('totalValue').textContent = formatCurrency(data.total_value || 0);
-                    document.getElementById('weightedValue').textContent = formatCurrency(data.weighted_value || 0);
                     document.getElementById('wonValue').textContent = formatCurrency(data.won_value || 0);
 
-                    // Update stage values
                     (data.by_stage || []).forEach(s => {
                         const el = document.getElementById(`${s.stage}Value`);
                         if (el) el.textContent = formatCurrency(s.total_value || 0);
@@ -367,101 +372,90 @@
             } catch (e) { console.error('Failed to fetch summary'); }
         }
 
+        async function fetchAutoMoveStatus() {
+            try {
+                const res = await fetch(`${API_BASE}/deals/auto-move/status`);
+                if (res.ok) {
+                    autoMoveStatus = await res.json();
+                    document.getElementById('pendingMoves').textContent = autoMoveStatus.total_pending || 0;
+                    renderPendingMoves();
+                }
+            } catch (e) { console.error('Failed to fetch auto-move status'); }
+        }
+
         function renderPipeline() {
             const stages = ['lead', 'qualified', 'proposal', 'negotiation', 'won', 'lost'];
+            const thresholds = { lead: 2, qualified: 3, proposal: 5 };
+
             stages.forEach(stage => {
                 const container = document.getElementById(`${stage}-deals`);
                 const stageDeals = allDeals.filter(d => d.stage === stage);
-                container.innerHTML = stageDeals.map(deal => `
-                    <div class="deal-card ${deal.is_locked ? 'locked' : ''}" draggable="true" data-id="${deal.id}"
-                         ondragstart="dragStart(event, ${deal.id})" ondragend="dragEnd(event)">
-                        <div class="deal-name">${deal.name}</div>
-                        <div class="deal-company">${deal.company_name || 'No company'}</div>
-                        <div class="deal-amount">${formatCurrency(deal.amount || 0)}</div>
-                        <div class="deal-meta">
-                            <span class="deal-prob">${deal.probability || 20}%</span>
-                            <span class="lock-icon" onclick="toggleLock(${deal.id}, ${deal.is_locked})">${deal.is_locked ? '🔒' : '🔓'}</span>
+
+                container.innerHTML = stageDeals.map(deal => {
+                    const daysInStage = deal.created_at ? Math.floor((Date.now() - new Date(deal.created_at)) / 86400000) : 0;
+                    const threshold = thresholds[stage] || 999;
+                    const isAutoMoving = daysInStage >= threshold && stage !== 'won' && stage !== 'lost' && stage !== 'negotiation';
+
+                    return `
+                        <div class="deal-card ${isAutoMoving ? 'auto-moving' : ''}" data-id="${deal.id}">
+                            <div class="deal-name">${deal.name}</div>
+                            <div class="deal-company">${deal.company_name || 'Keine Firma'}</div>
+                            <div class="deal-amount">${formatCurrency(deal.amount || 0)}</div>
+                            <div class="deal-meta">
+                                <span class="deal-days">${daysInStage}d in Stage</span>
+                                ${isAutoMoving ? '<span class="deal-auto-badge">⚡ AUTO</span>' : ''}
+                            </div>
                         </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        function renderPendingMoves() {
+            if (!autoMoveStatus || !autoMoveStatus.pending_moves) return;
+
+            const container = document.getElementById('pendingList');
+            const moves = autoMoveStatus.pending_moves.filter(m => m.days_until_auto_move <= 3);
+
+            container.innerHTML = moves.slice(0, 12).map(move => `
+                <div class="pending-item">
+                    <div class="pending-item-header">
+                        <span class="pending-item-name">${move.name}</span>
+                        <span class="pending-item-countdown">${move.days_until_auto_move === 0 ? '🔥 JETZT' : move.days_until_auto_move + 'd'}</span>
                     </div>
-                `).join('');
-            });
-
-            // Setup drop zones
-            document.querySelectorAll('.deals-list').forEach(list => {
-                list.ondragover = (e) => e.preventDefault();
-                list.ondrop = (e) => handleDrop(e, list.id.replace('-deals', ''));
-            });
+                    <div class="pending-item-info">
+                        ${move.current_stage} → ${move.current_stage === 'lead' ? 'qualified' : move.current_stage === 'qualified' ? 'proposal' : 'negotiation'}
+                        • ${formatCurrency(move.amount || 0)}
+                    </div>
+                </div>
+            `).join('') || '<p style="color: var(--ui-silver); font-size: 0.8rem;">Keine anstehenden Auto-Moves in den nächsten 3 Tagen</p>';
         }
 
-        function dragStart(e, dealId) {
-            draggedDeal = dealId;
-            e.target.classList.add('dragging');
-        }
-
-        function dragEnd(e) {
-            e.target.classList.remove('dragging');
-        }
-
-        async function handleDrop(e, newStage) {
-            e.preventDefault();
-            if (!draggedDeal) return;
+        async function runAutoMove(dryRun = false) {
+            showToast(dryRun ? '👁️ Simulation läuft...' : '🤖 Auto-Move wird ausgeführt...');
 
             try {
-                const res = await fetch(`${API_BASE}/deals/${draggedDeal}/stage?auto_invoice=true`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ stage: newStage })
-                });
+                const res = await fetch(`${API_BASE}/deals/auto-move?dry_run=${dryRun}`, { method: 'POST' });
                 if (res.ok) {
-                    showToast(`✅ Deal moved to ${newStage}!`);
-                    await fetchDeals();
-                    await fetchSummary();
+                    const data = await res.json();
+                    if (data.moved_count > 0) {
+                        showToast(`✅ ${data.moved_count} Deals ${dryRun ? 'würden' : 'wurden'} verschoben!`);
+                        document.getElementById('movedToday').textContent = data.moved_count;
+                    } else {
+                        showToast('ℹ️ Keine Deals zum Verschieben');
+                    }
+
+                    if (!dryRun) {
+                        await refreshAll();
+                    }
+
+                    // Log moves
+                    console.log('Auto-Move Result:', data);
                 }
-            } catch (e) { showToast('❌ Failed to update deal'); }
-            draggedDeal = null;
-        }
-
-        async function toggleLock(dealId, isLocked) {
-            const endpoint = isLocked ? 'unlock' : 'lock';
-            try {
-                const res = await fetch(`${API_BASE}/deals/${dealId}/${endpoint}`, { method: 'POST' });
-                if (res.ok) {
-                    showToast(`✅ Deal ${isLocked ? 'unlocked' : 'locked'}!`);
-                    await fetchDeals();
-                }
-            } catch (e) { showToast('❌ Failed to update lock'); }
-        }
-
-        function openCreateModal() { document.getElementById('createModal').classList.add('active'); }
-        function closeModal() { document.getElementById('createModal').classList.remove('active'); }
-
-        async function createDeal(e) {
-            e.preventDefault();
-            const form = e.target;
-            const data = {
-                name: form.name.value,
-                company_name: form.company_name.value,
-                amount: parseFloat(form.amount.value),
-                stage: form.stage.value,
-                contact_name: form.contact_name.value,
-                contact_email: form.contact_email.value,
-                probability: form.stage.value === 'lead' ? 20 : form.stage.value === 'qualified' ? 40 : 60
-            };
-
-            try {
-                const res = await fetch(`${API_BASE}/deals?sync_to_hubspot=true`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                if (res.ok) {
-                    showToast('✅ Deal created!');
-                    closeModal();
-                    form.reset();
-                    await fetchDeals();
-                    await fetchSummary();
-                }
-            } catch (e) { showToast('❌ Failed to create deal'); }
+            } catch (e) {
+                showToast('❌ Auto-Move fehlgeschlagen');
+                console.error(e);
+            }
         }
 
         async function syncFromHubSpot() {
@@ -469,32 +463,48 @@
             try {
                 const res = await fetch(`${API_BASE}/deals/sync/from-hubspot`, { method: 'POST' });
                 if (res.ok) {
-                    showToast('✅ Sync complete!');
-                    await fetchDeals();
-                    await fetchSummary();
+                    const data = await res.json();
+                    showToast(`✅ ${data.synced_count || 0} Deals synchronisiert!`);
+                    await refreshAll();
                 }
-            } catch (e) { showToast('❌ Sync failed'); }
+            } catch (e) { showToast('❌ Sync fehlgeschlagen'); }
         }
 
-        async function uploadToHubSpot() {
-            showToast('📤 Uploading to HubSpot...');
-            try {
-                const res = await fetch(`${API_BASE}/deals/upload-all`, { method: 'POST' });
-                if (res.ok) {
-                    showToast('✅ Upload complete!');
-                }
-            } catch (e) { showToast('❌ Upload failed'); }
+        async function refreshAll() {
+            await Promise.all([fetchDeals(), fetchSummary(), fetchAutoMoveStatus()]);
+            showToast('🔄 Aktualisiert!');
         }
 
-        function refreshDeals() {
-            fetchDeals();
-            fetchSummary();
-            showToast('🔄 Refreshed!');
+        function openCreateModal() {
+            // Simplified - redirect to full create page or show modal
+            alert('Deal-Erstellung: Deals werden primär über HubSpot-Sync importiert.\n\nFür manuelle Erstellung: /deals');
+        }
+
+        function updateNextRun() {
+            const now = new Date();
+            const nextRun = new Date(now);
+            nextRun.setHours(nextRun.getHours() + 1);
+            nextRun.setMinutes(0);
+            nextRun.setSeconds(0);
+
+            const diff = nextRun - now;
+            const mins = Math.floor(diff / 60000);
+            document.getElementById('nextRun').textContent = `${mins} Min`;
         }
 
         // Init
         fetchDeals();
         fetchSummary();
+        fetchAutoMoveStatus();
+        updateNextRun();
+
+        // Auto-refresh every 60 seconds
+        setInterval(() => {
+            fetchDeals();
+            fetchSummary();
+            fetchAutoMoveStatus();
+            updateNextRun();
+        }, 60000);
     </script>
 </body>
 </html>
