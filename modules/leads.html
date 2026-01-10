@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Discovery | Enterprise Universe 5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --bg-void: #030308;
+            --bg-space: #0A0A1A;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --ui-silver: #C0C0E0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--god-gold);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .back-btn:hover { background: rgba(255, 215, 0, 0.2); }
+
+        .main { max-width: 1600px; margin: 0 auto; padding: 1.5rem; }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-box.hot { border-color: var(--hot-red); }
+        .stat-box.warm { border-color: var(--warning-amber); }
+        .stat-box.nurture { border-color: var(--ui-blue); }
+        .stat-box.cold { border-color: var(--ui-silver); }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: bold; }
+        .stat-box.hot .stat-value { color: var(--hot-red); }
+        .stat-box.warm .stat-value { color: var(--warning-amber); }
+        .stat-box.nurture .stat-value { color: var(--ui-blue); }
+        .stat-box.cold .stat-value { color: var(--ui-silver); }
+        .stat-label { font-size: 0.85rem; color: var(--ui-silver); margin-top: 0.5rem; }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3); }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
+
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .filter-btn.active { background: var(--god-gold); color: #000; border-color: var(--god-gold); }
+        .filter-btn:hover { background: rgba(255, 215, 0, 0.2); }
+
+        .leads-table {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: rgba(255, 215, 0, 0.1); padding: 1rem; text-align: left; font-size: 0.8rem; color: var(--god-gold); }
+        td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; }
+        tr:hover { background: rgba(255, 215, 0, 0.05); }
+
+        .tier-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .tier-badge.hot { background: var(--hot-red); }
+        .tier-badge.warm { background: var(--warning-amber); color: #000; }
+        .tier-badge.nurture { background: var(--ui-blue); }
+        .tier-badge.cold { background: var(--ui-silver); color: #000; }
+
+        .score-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .score-fill { height: 100%; border-radius: 4px; }
+        .score-fill.hot { background: var(--hot-red); }
+        .score-fill.warm { background: var(--warning-amber); }
+        .score-fill.nurture { background: var(--ui-blue); }
+        .score-fill.cold { background: var(--ui-silver); }
+
+        .loading { text-align: center; padding: 2rem; color: var(--ui-silver); }
+        .toast {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--success-green); color: #fff;
+            padding: 1rem 1.5rem; border-radius: 8px;
+            display: none; z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🎯 LEAD DISCOVERY - ML SCORING ENGINE</h1>
+        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main class="main">
+        <div class="stats-row">
+            <div class="stat-box hot">
+                <div class="stat-value" id="hotCount">0</div>
+                <div class="stat-label">HOT LEADS (80-100)</div>
+            </div>
+            <div class="stat-box warm">
+                <div class="stat-value" id="warmCount">0</div>
+                <div class="stat-label">WARM LEADS (60-79)</div>
+            </div>
+            <div class="stat-box nurture">
+                <div class="stat-value" id="nurtureCount">0</div>
+                <div class="stat-label">NURTURE (40-59)</div>
+            </div>
+            <div class="stat-box cold">
+                <div class="stat-value" id="coldCount">0</div>
+                <div class="stat-label">COLD LEADS (0-39)</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" onclick="scoreBatch()">🎯 Score All Leads</button>
+            <button class="action-btn secondary" onclick="refreshLeads()">🔄 Refresh</button>
+            <button class="action-btn secondary" onclick="syncFromHubSpot()">📥 Sync from HubSpot</button>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-tier="all" onclick="filterByTier('all')">All Leads</button>
+            <button class="filter-btn" data-tier="hot" onclick="filterByTier('hot')">🔥 HOT</button>
+            <button class="filter-btn" data-tier="warm" onclick="filterByTier('warm')">☀️ WARM</button>
+            <button class="filter-btn" data-tier="nurture" onclick="filterByTier('nurture')">🌱 NURTURE</button>
+            <button class="filter-btn" data-tier="cold" onclick="filterByTier('cold')">❄️ COLD</button>
+        </div>
+
+        <div class="leads-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>LEAD / DEAL</th>
+                        <th>COMPANY</th>
+                        <th>CONTACT</th>
+                        <th>AMOUNT</th>
+                        <th>SCORE</th>
+                        <th>TIER</th>
+                        <th>PROBABILITY</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsBody">
+                    <tr><td colspan="8" class="loading">Loading leads...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let allLeads = [];
+        let currentFilter = 'all';
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function getTierClass(score) {
+            if (score >= 80) return 'hot';
+            if (score >= 60) return 'warm';
+            if (score >= 40) return 'nurture';
+            return 'cold';
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/stats`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('hotCount').textContent = data.tier_counts?.hot || 0;
+                    document.getElementById('warmCount').textContent = data.tier_counts?.warm || 0;
+                    document.getElementById('nurtureCount').textContent = data.tier_counts?.nurture || 0;
+                    document.getElementById('coldCount').textContent = data.tier_counts?.cold || 0;
+                }
+            } catch (e) { console.error('Failed to fetch stats'); }
+        }
+
+        async function fetchLeads() {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/top-leads?limit=100`);
+                if (res.ok) {
+                    const data = await res.json();
+                    allLeads = data.leads || [];
+                    renderLeads();
+                } else {
+                    // Fallback to deals if no scores
+                    const dealsRes = await fetch(`${API_BASE}/deals?per_page=50`);
+                    if (dealsRes.ok) {
+                        const dealsData = await dealsRes.json();
+                        allLeads = (dealsData.deals || []).map(d => ({
+                            deal_id: d.id,
+                            deal_name: d.name,
+                            company_name: d.company_name,
+                            contact_name: d.contact_name,
+                            contact_email: d.contact_email,
+                            amount: d.amount,
+                            score: d.probability || 50,
+                            score_tier: getTierClass(d.probability || 50),
+                            conversion_probability: (d.probability || 50) / 100
+                        }));
+                        renderLeads();
+                    }
+                }
+            } catch (e) {
+                document.getElementById('leadsBody').innerHTML = '<tr><td colspan="8" class="loading">API not available</td></tr>';
+            }
+        }
+
+        function renderLeads() {
+            const filtered = currentFilter === 'all' ? allLeads : allLeads.filter(l => l.score_tier === currentFilter);
+            const tbody = document.getElementById('leadsBody');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="loading">No leads found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(lead => {
+                const tier = lead.score_tier || getTierClass(lead.score || 0);
+                const score = lead.score || 0;
+                return `
+                    <tr>
+                        <td><strong>${lead.deal_name || 'N/A'}</strong></td>
+                        <td>${lead.company_name || '-'}</td>
+                        <td>${lead.contact_name || '-'}<br><small style="color:#888">${lead.contact_email || ''}</small></td>
+                        <td>€${(lead.amount || 0).toLocaleString()}</td>
+                        <td>
+                            <div style="display:flex;align-items:center;gap:0.5rem">
+                                <span>${score}</span>
+                                <div class="score-bar"><div class="score-fill ${tier}" style="width:${score}%"></div></div>
+                            </div>
+                        </td>
+                        <td><span class="tier-badge ${tier}">${tier.toUpperCase()}</span></td>
+                        <td>${Math.round((lead.conversion_probability || 0) * 100)}%</td>
+                        <td>
+                            <button onclick="scoreDeal(${lead.deal_id})" style="padding:0.25rem 0.5rem;background:var(--god-gold);border:none;border-radius:4px;cursor:pointer;font-size:0.7rem">Score</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterByTier(tier) {
+            currentFilter = tier;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tier === tier);
+            });
+            renderLeads();
+        }
+
+        async function scoreBatch() {
+            showToast('🎯 Scoring all leads...');
+            try {
+                const res = await fetch(`${API_BASE}/scoring/score-batch`, { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(`✅ Scored ${data.scored_count || 0} leads!`);
+                    await fetchStats();
+                    await fetchLeads();
+                }
+            } catch (e) { showToast('❌ Scoring failed'); }
+        }
+
+        async function scoreDeal(dealId) {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/score-deal/${dealId}`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Lead scored!');
+                    await fetchStats();
+                    await fetchLeads();
+                }
+            } catch (e) { showToast('❌ Scoring failed'); }
+        }
+
+        async function syncFromHubSpot() {
+            showToast('📥 Syncing from HubSpot...');
+            try {
+                const res = await fetch(`${API_BASE}/deals/sync/from-hubspot`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Sync complete!');
+                    await fetchLeads();
+                }
+            } catch (e) { showToast('❌ Sync failed'); }
+        }
+
+        function refreshLeads() {
+            fetchStats();
+            fetchLeads();
+            showToast('🔄 Refreshed!');
+        }
+
+        // Init
+        fetchStats();
+        fetchLeads();
+    </script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deals Pipeline | Enterprise Universe 5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --bg-void: #030308;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --ui-silver: #C0C0E0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--god-gold);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+        }
+
+        .main { max-width: 1800px; margin: 0 auto; padding: 1.5rem; }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: bold; color: var(--god-gold); }
+        .stat-label { font-size: 0.75rem; color: var(--ui-silver); }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
+        .action-btn.danger { background: linear-gradient(135deg, var(--hot-red), #dc2626); color: #fff; }
+
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            min-height: 500px;
+        }
+        .stage {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            min-height: 400px;
+        }
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .stage-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--god-gold); }
+        .stage-count {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+        .stage-value { font-size: 0.7rem; color: var(--success-green); margin-top: 0.25rem; }
+
+        .stage.lead .stage-header { border-color: var(--ui-blue); }
+        .stage.qualified .stage-header { border-color: var(--ui-purple); }
+        .stage.proposal .stage-header { border-color: var(--warning-amber); }
+        .stage.negotiation .stage-header { border-color: #FF8C00; }
+        .stage.won .stage-header { border-color: var(--success-green); }
+        .stage.lost .stage-header { border-color: var(--hot-red); }
+
+        .deals-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .deal-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: grab;
+            transition: all 0.3s;
+        }
+        .deal-card:hover {
+            border-color: var(--god-gold);
+            transform: translateY(-2px);
+        }
+        .deal-card.dragging { opacity: 0.5; }
+        .deal-card.locked { border-color: var(--hot-red); }
+
+        .deal-name { font-weight: bold; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .deal-company { font-size: 0.75rem; color: var(--ui-silver); }
+        .deal-amount { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--success-green); margin-top: 0.5rem; }
+        .deal-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+        .deal-prob { font-size: 0.7rem; color: var(--ui-silver); }
+        .lock-icon { cursor: pointer; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-void);
+            border: 2px solid var(--god-gold);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 500px;
+            max-width: 90%;
+        }
+        .modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--god-gold); margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--ui-silver); margin-bottom: 0.5rem; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .form-group input:focus { border-color: var(--god-gold); outline: none; }
+
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success-green); color: #fff; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1001; }
+
+        @media (max-width: 1200px) { .pipeline { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .pipeline { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>💰 DEALS PIPELINE - KANBAN BOARD</h1>
+        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main class="main">
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-value" id="totalDeals">0</div>
+                <div class="stat-label">TOTAL DEALS</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="totalValue">€0</div>
+                <div class="stat-label">PIPELINE VALUE</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="weightedValue">€0</div>
+                <div class="stat-label">WEIGHTED VALUE</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="wonValue">€0</div>
+                <div class="stat-label">WON DEALS</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" onclick="openCreateModal()">➕ New Deal</button>
+            <button class="action-btn secondary" onclick="syncFromHubSpot()">📥 Sync from HubSpot</button>
+            <button class="action-btn secondary" onclick="uploadToHubSpot()">📤 Upload to HubSpot</button>
+            <button class="action-btn secondary" onclick="refreshDeals()">🔄 Refresh</button>
+        </div>
+
+        <div class="pipeline" id="pipeline">
+            <div class="stage lead" data-stage="lead">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">📥 LEAD</div>
+                        <div class="stage-value" id="leadValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="leadCount">0</span>
+                </div>
+                <div class="deals-list" id="lead-deals"></div>
+            </div>
+            <div class="stage qualified" data-stage="qualified">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">✅ QUALIFIED</div>
+                        <div class="stage-value" id="qualifiedValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="qualifiedCount">0</span>
+                </div>
+                <div class="deals-list" id="qualified-deals"></div>
+            </div>
+            <div class="stage proposal" data-stage="proposal">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">📄 PROPOSAL</div>
+                        <div class="stage-value" id="proposalValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="proposalCount">0</span>
+                </div>
+                <div class="deals-list" id="proposal-deals"></div>
+            </div>
+            <div class="stage negotiation" data-stage="negotiation">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">🤝 NEGOTIATION</div>
+                        <div class="stage-value" id="negotiationValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="negotiationCount">0</span>
+                </div>
+                <div class="deals-list" id="negotiation-deals"></div>
+            </div>
+            <div class="stage won" data-stage="won">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">🏆 WON</div>
+                        <div class="stage-value" id="wonStageValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="wonCount">0</span>
+                </div>
+                <div class="deals-list" id="won-deals"></div>
+            </div>
+            <div class="stage lost" data-stage="lost">
+                <div class="stage-header">
+                    <div>
+                        <div class="stage-title">❌ LOST</div>
+                        <div class="stage-value" id="lostValue">€0</div>
+                    </div>
+                    <span class="stage-count" id="lostCount">0</span>
+                </div>
+                <div class="deals-list" id="lost-deals"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Deal Modal -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <h2 class="modal-title">➕ Create New Deal</h2>
+            <form id="createForm" onsubmit="createDeal(event)">
+                <div class="form-group">
+                    <label>Deal Name *</label>
+                    <input type="text" name="name" required placeholder="e.g., Smart Home Project Munich">
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" name="company_name" placeholder="e.g., Enterprise GmbH">
+                </div>
+                <div class="form-group">
+                    <label>Amount (€) *</label>
+                    <input type="number" name="amount" required placeholder="50000">
+                </div>
+                <div class="form-group">
+                    <label>Stage</label>
+                    <select name="stage">
+                        <option value="lead">Lead</option>
+                        <option value="qualified">Qualified</option>
+                        <option value="proposal">Proposal</option>
+                        <option value="negotiation">Negotiation</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Contact Name</label>
+                    <input type="text" name="contact_name" placeholder="Max Mustermann">
+                </div>
+                <div class="form-group">
+                    <label>Contact Email</label>
+                    <input type="email" name="contact_email" placeholder="max@enterprise.de">
+                </div>
+                <div class="actions" style="margin-top:1.5rem">
+                    <button type="submit" class="action-btn">Create Deal</button>
+                    <button type="button" class="action-btn secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let allDeals = [];
+        let draggedDeal = null;
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function formatCurrency(num) {
+            if (num >= 1000000) return '€' + (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return '€' + (num / 1000).toFixed(0) + 'K';
+            return '€' + num.toLocaleString();
+        }
+
+        async function fetchDeals() {
+            try {
+                const res = await fetch(`${API_BASE}/deals?per_page=500`);
+                if (res.ok) {
+                    const data = await res.json();
+                    allDeals = data.deals || [];
+                    renderPipeline();
+                }
+            } catch (e) { console.error('Failed to fetch deals'); }
+        }
+
+        async function fetchSummary() {
+            try {
+                const res = await fetch(`${API_BASE}/deals/summary`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('totalDeals').textContent = data.total_deals || 0;
+                    document.getElementById('totalValue').textContent = formatCurrency(data.total_value || 0);
+                    document.getElementById('weightedValue').textContent = formatCurrency(data.weighted_value || 0);
+                    document.getElementById('wonValue').textContent = formatCurrency(data.won_value || 0);
+
+                    // Update stage values
+                    (data.by_stage || []).forEach(s => {
+                        const el = document.getElementById(`${s.stage}Value`);
+                        if (el) el.textContent = formatCurrency(s.total_value || 0);
+                        const countEl = document.getElementById(`${s.stage}Count`);
+                        if (countEl) countEl.textContent = s.count || 0;
+                    });
+                }
+            } catch (e) { console.error('Failed to fetch summary'); }
+        }
+
+        function renderPipeline() {
+            const stages = ['lead', 'qualified', 'proposal', 'negotiation', 'won', 'lost'];
+            stages.forEach(stage => {
+                const container = document.getElementById(`${stage}-deals`);
+                const stageDeals = allDeals.filter(d => d.stage === stage);
+                container.innerHTML = stageDeals.map(deal => `
+                    <div class="deal-card ${deal.is_locked ? 'locked' : ''}" draggable="true" data-id="${deal.id}"
+                         ondragstart="dragStart(event, ${deal.id})" ondragend="dragEnd(event)">
+                        <div class="deal-name">${deal.name}</div>
+                        <div class="deal-company">${deal.company_name || 'No company'}</div>
+                        <div class="deal-amount">${formatCurrency(deal.amount || 0)}</div>
+                        <div class="deal-meta">
+                            <span class="deal-prob">${deal.probability || 20}%</span>
+                            <span class="lock-icon" onclick="toggleLock(${deal.id}, ${deal.is_locked})">${deal.is_locked ? '🔒' : '🔓'}</span>
+                        </div>
+                    </div>
+                `).join('');
+            });
+
+            // Setup drop zones
+            document.querySelectorAll('.deals-list').forEach(list => {
+                list.ondragover = (e) => e.preventDefault();
+                list.ondrop = (e) => handleDrop(e, list.id.replace('-deals', ''));
+            });
+        }
+
+        function dragStart(e, dealId) {
+            draggedDeal = dealId;
+            e.target.classList.add('dragging');
+        }
+
+        function dragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        async function handleDrop(e, newStage) {
+            e.preventDefault();
+            if (!draggedDeal) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/deals/${draggedDeal}/stage?auto_invoice=true`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stage: newStage })
+                });
+                if (res.ok) {
+                    showToast(`✅ Deal moved to ${newStage}!`);
+                    await fetchDeals();
+                    await fetchSummary();
+                }
+            } catch (e) { showToast('❌ Failed to update deal'); }
+            draggedDeal = null;
+        }
+
+        async function toggleLock(dealId, isLocked) {
+            const endpoint = isLocked ? 'unlock' : 'lock';
+            try {
+                const res = await fetch(`${API_BASE}/deals/${dealId}/${endpoint}`, { method: 'POST' });
+                if (res.ok) {
+                    showToast(`✅ Deal ${isLocked ? 'unlocked' : 'locked'}!`);
+                    await fetchDeals();
+                }
+            } catch (e) { showToast('❌ Failed to update lock'); }
+        }
+
+        function openCreateModal() { document.getElementById('createModal').classList.add('active'); }
+        function closeModal() { document.getElementById('createModal').classList.remove('active'); }
+
+        async function createDeal(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                name: form.name.value,
+                company_name: form.company_name.value,
+                amount: parseFloat(form.amount.value),
+                stage: form.stage.value,
+                contact_name: form.contact_name.value,
+                contact_email: form.contact_email.value,
+                probability: form.stage.value === 'lead' ? 20 : form.stage.value === 'qualified' ? 40 : 60
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/deals?sync_to_hubspot=true`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    showToast('✅ Deal created!');
+                    closeModal();
+                    form.reset();
+                    await fetchDeals();
+                    await fetchSummary();
+                }
+            } catch (e) { showToast('❌ Failed to create deal'); }
+        }
+
+        async function syncFromHubSpot() {
+            showToast('📥 Syncing from HubSpot...');
+            try {
+                const res = await fetch(`${API_BASE}/deals/sync/from-hubspot`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Sync complete!');
+                    await fetchDeals();
+                    await fetchSummary();
+                }
+            } catch (e) { showToast('❌ Sync failed'); }
+        }
+
+        async function uploadToHubSpot() {
+            showToast('📤 Uploading to HubSpot...');
+            try {
+                const res = await fetch(`${API_BASE}/deals/upload-all`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Upload complete!');
+                }
+            } catch (e) { showToast('❌ Upload failed'); }
+        }
+
+        function refreshDeals() {
+            fetchDeals();
+            fetchSummary();
+            showToast('🔄 Refreshed!');
+        }
+
+        // Init
+        fetchDeals();
+        fetchSummary();
+    </script>
+</body>
+</html>

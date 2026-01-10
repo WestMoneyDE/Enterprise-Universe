@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainstorm Hub | Enterprise Universe 5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --bg-void: #030308;
+            --bg-space: #0A0A1A;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --ui-silver: #C0C0E0;
+            --aura-cyan: #00F5FF;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--god-gold);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+        }
+
+        .main { max-width: 1600px; margin: 0 auto; padding: 1.5rem; }
+
+        .modes-section { margin-bottom: 2rem; }
+        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--god-gold); margin-bottom: 1rem; }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .mode-card {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .mode-card:hover {
+            border-color: var(--god-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
+        }
+        .mode-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .mode-name { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--god-gold); margin-bottom: 0.5rem; }
+        .mode-desc { font-size: 0.7rem; color: var(--ui-silver); }
+
+        .sessions-section { margin-top: 2rem; }
+
+        .sessions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .session-card {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .session-card:hover { border-color: var(--god-gold); transform: translateY(-2px); }
+
+        .session-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+        .session-title { font-weight: bold; font-size: 1rem; }
+        .session-mode {
+            padding: 0.2rem 0.5rem;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 4px;
+            font-size: 0.65rem;
+            color: var(--god-gold);
+        }
+        .session-desc { font-size: 0.8rem; color: var(--ui-silver); margin-bottom: 0.75rem; }
+        .session-stats { display: flex; gap: 1rem; font-size: 0.75rem; color: var(--ui-silver); }
+        .session-stat { display: flex; align-items: center; gap: 0.25rem; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-void);
+            border: 2px solid var(--god-gold);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 600px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--god-gold); margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--ui-silver); margin-bottom: 0.5rem; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+
+        /* Session Detail View */
+        .session-detail { display: none; }
+        .session-detail.active { display: block; }
+
+        .ideas-container {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .idea-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .idea-input input {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .ideas-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .idea-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .idea-content { flex: 1; }
+        .idea-title { font-weight: bold; margin-bottom: 0.25rem; }
+        .idea-text { font-size: 0.85rem; color: var(--ui-silver); }
+        .idea-votes {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .vote-btn {
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            color: var(--god-gold);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .vote-count { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--god-gold); }
+
+        .ai-suggestions {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(155, 123, 255, 0.1);
+            border: 1px solid rgba(155, 123, 255, 0.3);
+            border-radius: 8px;
+        }
+        .ai-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--ui-purple); margin-bottom: 0.75rem; }
+
+        .empty-state { text-align: center; padding: 2rem; color: var(--ui-silver); }
+
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success-green); color: #fff; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1001; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>💡 BRAINSTORM HUB - 13 IDEATION MODES</h1>
+        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main class="main">
+        <!-- Modes Section -->
+        <div class="modes-section">
+            <h2 class="section-title">🧠 SELECT BRAINSTORM MODE</h2>
+            <div class="modes-grid">
+                <div class="mode-card" onclick="openCreateModal('mind_map')">
+                    <div class="mode-icon">🗺️</div>
+                    <div class="mode-name">MIND MAP</div>
+                    <div class="mode-desc">Visual idea mapping</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('swot')">
+                    <div class="mode-icon">📊</div>
+                    <div class="mode-name">SWOT</div>
+                    <div class="mode-desc">Strengths, Weaknesses, Opportunities, Threats</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('idea_generation')">
+                    <div class="mode-icon">💡</div>
+                    <div class="mode-name">IDEA GEN</div>
+                    <div class="mode-desc">Free-form brainstorming</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('business_model')">
+                    <div class="mode-icon">🏢</div>
+                    <div class="mode-name">BUSINESS MODEL</div>
+                    <div class="mode-desc">Canvas framework</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('problem_solution')">
+                    <div class="mode-icon">🎯</div>
+                    <div class="mode-name">PROBLEM/SOLUTION</div>
+                    <div class="mode-desc">Root cause analysis</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('feature_planning')">
+                    <div class="mode-icon">📱</div>
+                    <div class="mode-name">FEATURE PLANNING</div>
+                    <div class="mode-desc">Product roadmap</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('pros_cons')">
+                    <div class="mode-icon">⚖️</div>
+                    <div class="mode-name">PROS & CONS</div>
+                    <div class="mode-desc">Decision matrix</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('six_thinking_hats')">
+                    <div class="mode-icon">🎩</div>
+                    <div class="mode-name">6 THINKING HATS</div>
+                    <div class="mode-desc">De Bono method</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('scamper')">
+                    <div class="mode-icon">🔧</div>
+                    <div class="mode-name">SCAMPER</div>
+                    <div class="mode-desc">Innovation technique</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('five_whys')">
+                    <div class="mode-icon">❓</div>
+                    <div class="mode-name">5 WHYS</div>
+                    <div class="mode-desc">Deep dive analysis</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('brainwriting')">
+                    <div class="mode-icon">✍️</div>
+                    <div class="mode-name">BRAINWRITING</div>
+                    <div class="mode-desc">Silent brainstorming</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('reverse_brainstorm')">
+                    <div class="mode-icon">🔄</div>
+                    <div class="mode-name">REVERSE</div>
+                    <div class="mode-desc">Inverse thinking</div>
+                </div>
+                <div class="mode-card" onclick="openCreateModal('starbursting')">
+                    <div class="mode-icon">⭐</div>
+                    <div class="mode-name">STARBURSTING</div>
+                    <div class="mode-desc">Question-based exploration</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sessions Section -->
+        <div class="sessions-section" id="sessionsSection">
+            <div class="sessions-header">
+                <h2 class="section-title">📂 YOUR SESSIONS</h2>
+                <button class="action-btn secondary" onclick="refreshSessions()">🔄 Refresh</button>
+            </div>
+            <div class="sessions-grid" id="sessionsGrid">
+                <div class="empty-state">No sessions yet. Select a mode above to start brainstorming!</div>
+            </div>
+        </div>
+
+        <!-- Session Detail View -->
+        <div class="session-detail" id="sessionDetail">
+            <div class="sessions-header">
+                <h2 class="section-title" id="detailTitle">Session</h2>
+                <button class="action-btn secondary" onclick="closeDetail()">← Back to Sessions</button>
+            </div>
+
+            <div class="ideas-container">
+                <div class="idea-input">
+                    <input type="text" id="newIdeaInput" placeholder="Enter your idea...">
+                    <button class="action-btn" onclick="addIdea()">➕ Add Idea</button>
+                    <button class="action-btn secondary" onclick="getAISuggestions()">🧠 AI Suggestions</button>
+                </div>
+
+                <div class="ideas-list" id="ideasList">
+                    <div class="empty-state">No ideas yet. Start adding!</div>
+                </div>
+
+                <div class="ai-suggestions" id="aiSuggestions" style="display:none">
+                    <div class="ai-title">🧠 AI SUGGESTIONS</div>
+                    <div id="suggestionsContent"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Session Modal -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <h2 class="modal-title">💡 Create Brainstorm Session</h2>
+            <form id="createForm" onsubmit="createSession(event)">
+                <input type="hidden" name="mode" id="modeInput">
+                <div class="form-group">
+                    <label>Session Title *</label>
+                    <input type="text" name="title" required placeholder="e.g., Q1 2026 Strategy Planning">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" placeholder="What's the goal of this brainstorm?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option value="strategy">Strategy</option>
+                        <option value="product">Product</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="sales">Sales</option>
+                        <option value="operations">Operations</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="actions" style="margin-top:1.5rem;display:flex;gap:1rem">
+                    <button type="submit" class="action-btn">Create Session</button>
+                    <button type="button" class="action-btn secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let allSessions = [];
+        let currentSession = null;
+
+        const modeNames = {
+            'mind_map': 'Mind Map',
+            'swot': 'SWOT Analysis',
+            'idea_generation': 'Idea Generation',
+            'business_model': 'Business Model',
+            'problem_solution': 'Problem/Solution',
+            'feature_planning': 'Feature Planning',
+            'pros_cons': 'Pros & Cons',
+            'six_thinking_hats': '6 Thinking Hats',
+            'scamper': 'SCAMPER',
+            'five_whys': '5 Whys',
+            'brainwriting': 'Brainwriting',
+            'reverse_brainstorm': 'Reverse Brainstorm',
+            'starbursting': 'Starbursting'
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function openCreateModal(mode) {
+            document.getElementById('modeInput').value = mode;
+            document.getElementById('createModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('createModal').classList.remove('active');
+        }
+
+        async function fetchSessions() {
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions?limit=50`);
+                if (res.ok) {
+                    const data = await res.json();
+                    allSessions = data.sessions || [];
+                    renderSessions();
+                }
+            } catch (e) {
+                console.error('Failed to fetch sessions');
+                document.getElementById('sessionsGrid').innerHTML = '<div class="empty-state">API not available</div>';
+            }
+        }
+
+        function renderSessions() {
+            const grid = document.getElementById('sessionsGrid');
+            if (allSessions.length === 0) {
+                grid.innerHTML = '<div class="empty-state">No sessions yet. Select a mode above to start brainstorming!</div>';
+                return;
+            }
+
+            grid.innerHTML = allSessions.map(s => `
+                <div class="session-card" onclick="openSession(${s.id})">
+                    <div class="session-header">
+                        <div class="session-title">${s.title}</div>
+                        <span class="session-mode">${modeNames[s.mode] || s.mode}</span>
+                    </div>
+                    <div class="session-desc">${s.description || 'No description'}</div>
+                    <div class="session-stats">
+                        <span class="session-stat">💡 ${s.idea_count || 0} ideas</span>
+                        <span class="session-stat">👍 ${s.vote_count || 0} votes</span>
+                        <span class="session-stat">📁 ${s.category || 'general'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function createSession(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {
+                title: form.title.value,
+                description: form.description.value,
+                mode: form.mode.value,
+                category: form.category.value,
+                status: 'active'
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    const session = await res.json();
+                    showToast('✅ Session created!');
+                    closeModal();
+                    form.reset();
+                    await fetchSessions();
+                    openSession(session.id || session.session?.id);
+                }
+            } catch (e) { showToast('❌ Failed to create session'); }
+        }
+
+        async function openSession(sessionId) {
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions/${sessionId}`);
+                if (res.ok) {
+                    currentSession = await res.json();
+                    document.getElementById('sessionsSection').style.display = 'none';
+                    document.getElementById('sessionDetail').classList.add('active');
+                    document.getElementById('detailTitle').textContent = currentSession.title || 'Session';
+                    renderIdeas();
+                }
+            } catch (e) { showToast('❌ Failed to load session'); }
+        }
+
+        function closeDetail() {
+            document.getElementById('sessionsSection').style.display = 'block';
+            document.getElementById('sessionDetail').classList.remove('active');
+            currentSession = null;
+            document.getElementById('aiSuggestions').style.display = 'none';
+        }
+
+        function renderIdeas() {
+            const list = document.getElementById('ideasList');
+            const ideas = currentSession?.ideas || [];
+
+            if (ideas.length === 0) {
+                list.innerHTML = '<div class="empty-state">No ideas yet. Start adding!</div>';
+                return;
+            }
+
+            list.innerHTML = ideas.map(idea => `
+                <div class="idea-card">
+                    <div class="idea-content">
+                        <div class="idea-title">${idea.title}</div>
+                        <div class="idea-text">${idea.content || ''}</div>
+                    </div>
+                    <div class="idea-votes">
+                        <button class="vote-btn" onclick="voteIdea(${idea.id})">👍</button>
+                        <span class="vote-count">${idea.votes || 0}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function addIdea() {
+            const input = document.getElementById('newIdeaInput');
+            const title = input.value.trim();
+            if (!title || !currentSession) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions/${currentSession.id}/ideas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content: '' })
+                });
+                if (res.ok) {
+                    input.value = '';
+                    showToast('✅ Idea added!');
+                    await openSession(currentSession.id);
+                }
+            } catch (e) { showToast('❌ Failed to add idea'); }
+        }
+
+        async function voteIdea(ideaId) {
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/ideas/${ideaId}/vote`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ vote_type: 'upvote', value: 1 })
+                });
+                if (res.ok) {
+                    await openSession(currentSession.id);
+                }
+            } catch (e) { showToast('❌ Failed to vote'); }
+        }
+
+        async function getAISuggestions() {
+            if (!currentSession) return;
+            showToast('🧠 Getting AI suggestions...');
+
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions/${currentSession.id}/ai-suggestions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ count: 5 })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const suggestions = data.suggestions || [];
+                    const container = document.getElementById('aiSuggestions');
+                    const content = document.getElementById('suggestionsContent');
+                    content.innerHTML = suggestions.map(s => `
+                        <div class="idea-card" style="margin-top:0.5rem">
+                            <div class="idea-content">
+                                <div class="idea-title">${s.title || s}</div>
+                            </div>
+                            <button class="vote-btn" onclick="addSuggestionAsIdea('${(s.title || s).replace(/'/g, "\\'")}')">➕</button>
+                        </div>
+                    `).join('');
+                    container.style.display = 'block';
+                }
+            } catch (e) {
+                showToast('❌ AI suggestions not available');
+            }
+        }
+
+        async function addSuggestionAsIdea(title) {
+            document.getElementById('newIdeaInput').value = title;
+            await addIdea();
+        }
+
+        function refreshSessions() {
+            fetchSessions();
+            showToast('🔄 Refreshed!');
+        }
+
+        // Init
+        fetchSessions();
+    </script>
+</body>
+</html>

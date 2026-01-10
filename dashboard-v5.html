@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Universe 5.0 | GOD MODE ULTRA DASHBOARD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --ultra-instinct: #E8E8FF;
+            --ui-silver: #C0C0E0;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --aura-cyan: #00F5FF;
+            --aura-pink: #FF00FF;
+            --power-orange: #FF6B00;
+            --bg-void: #030308;
+            --bg-space: #0A0A1A;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-void);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Cosmic Background with Stars */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(155, 123, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                linear-gradient(180deg, var(--bg-void) 0%, var(--bg-space) 100%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 160px 120px, #fff, transparent);
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Aura Particles */
+        .aura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .aura-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--ultra-instinct);
+            border-radius: 50%;
+            animation: float-up 8s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(155, 123, 255, 0.1) 100%);
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .kanji-symbol {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--god-gold);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.4); text-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 80px rgba(255, 215, 0, 0.8); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--god-gold) 0%, var(--ultra-instinct) 50%, var(--aura-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--ui-silver);
+            letter-spacing: 2px;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, var(--hot-red), var(--power-orange));
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 1rem;
+        }
+
+        .power-display {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .power-level {
+            text-align: right;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--god-gold);
+        }
+
+        .power-label {
+            font-size: 0.65rem;
+            color: var(--ui-silver);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .power-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--god-gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1900px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Stats Grid - Enterprise Data */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--god-gold);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.deals::before { background: linear-gradient(90deg, var(--success-green), #10b981); }
+        .stat-card.contacts::before { background: linear-gradient(90deg, var(--ui-blue), var(--aura-cyan)); }
+        .stat-card.pipeline::before { background: linear-gradient(90deg, var(--warning-amber), var(--power-orange)); }
+        .stat-card.won::before { background: linear-gradient(90deg, var(--ui-purple), var(--aura-pink)); }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-icon { font-size: 2rem; }
+
+        .stat-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .stat-card.deals .stat-badge { background: rgba(34, 197, 94, 0.2); color: var(--success-green); }
+        .stat-card.contacts .stat-badge { background: rgba(0, 245, 255, 0.2); color: var(--aura-cyan); }
+        .stat-card.pipeline .stat-badge { background: rgba(245, 158, 11, 0.2); color: var(--warning-amber); }
+        .stat-card.won .stat-badge { background: rgba(155, 123, 255, 0.2); color: var(--ui-purple); }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card.deals .stat-value { color: var(--success-green); }
+        .stat-card.contacts .stat-value { color: var(--aura-cyan); }
+        .stat-card.pipeline .stat-value { color: var(--warning-amber); }
+        .stat-card.won .stat-value { color: var(--ui-purple); }
+
+        .stat-label { font-size: 0.85rem; color: var(--ui-silver); }
+        .stat-change { font-size: 0.75rem; color: var(--success-green); margin-top: 0.5rem; }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, rgba(155, 123, 255, 0.2), rgba(0, 245, 255, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(155, 123, 255, 0.2));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            border-color: var(--god-gold);
+        }
+
+        .action-btn.primary { border-color: var(--god-gold); background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 107, 0, 0.1)); }
+        .action-btn.success { border-color: var(--success-green); background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.1)); }
+        .action-btn.danger { border-color: var(--hot-red); background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1)); }
+
+        .action-icon { font-size: 1.75rem; }
+        .action-text { font-size: 0.75rem; font-weight: 600; text-align: center; }
+
+        /* Module Grid */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--god-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, rgba(10, 10, 26, 0.95), rgba(20, 20, 40, 0.9));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 14px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--god-gold);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
+        }
+
+        .module-card:hover::before { left: 100%; }
+
+        .module-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+
+        .module-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            color: var(--god-gold);
+        }
+
+        .module-desc { font-size: 0.7rem; color: var(--ui-silver); margin-bottom: 0.75rem; }
+
+        .module-status {
+            padding: 0.3rem 0.6rem;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--success-green);
+        }
+
+        .module-status.hot { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: var(--hot-red); }
+        .module-status.warning { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: var(--warning-amber); }
+
+        /* AI Agents Section */
+        .agents-section {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 0.75rem;
+        }
+
+        .agent-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .agent-card:hover {
+            border-color: var(--god-gold);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.15);
+        }
+
+        .agent-card.active { border-color: var(--success-green); box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+
+        .agent-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+        .agent-name { font-family: 'Orbitron', sans-serif; font-size: 0.55rem; font-weight: 600; color: var(--god-gold); }
+        .agent-status { font-size: 0.5rem; color: var(--success-green); }
+
+        /* Activity & System Grid */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .panel {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--god-gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Activity Feed */
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover { background: rgba(255, 215, 0, 0.05); }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .activity-text { flex: 1; }
+        .activity-title { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.15rem; }
+        .activity-time { font-size: 0.65rem; color: var(--ui-silver); }
+
+        /* System Status */
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-item:last-child { border-bottom: none; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success-green);
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .status-dot.warning { background: var(--warning-amber); box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+        .status-dot.error { background: var(--hot-red); box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); }
+
+        .status-text { flex: 1; font-size: 0.75rem; }
+        .status-value { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--god-gold); }
+
+        /* Lead Scoring Panel */
+        .lead-tier {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+
+        .tier-badge.hot { background: var(--hot-red); }
+        .tier-badge.warm { background: var(--warning-amber); }
+        .tier-badge.nurture { background: var(--ui-blue); }
+        .tier-badge.cold { background: var(--ui-silver); color: #333; }
+
+        .tier-count { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: bold; }
+        .tier-label { font-size: 0.7rem; color: var(--ui-silver); }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 1.5rem;
+        }
+
+        .footer-kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.5rem;
+            color: var(--god-gold);
+            margin-bottom: 0.25rem;
+        }
+
+        .footer-text { font-size: 0.7rem; color: var(--ui-silver); }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--success-green), #059669);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1600px) {
+            .modules-grid { grid-template-columns: repeat(4, 1fr); }
+            .agents-grid { grid-template-columns: repeat(8, 1fr); }
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .quick-actions { grid-template-columns: repeat(3, 1fr); }
+            .modules-grid { grid-template-columns: repeat(3, 1fr); }
+            .agents-grid { grid-template-columns: repeat(6, 1fr); }
+            .bottom-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 1rem; }
+            .stats-grid, .modules-grid { grid-template-columns: 1fr; }
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
+            .agents-grid { grid-template-columns: repeat(4, 1fr); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+    <div class="aura-container" id="auraContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <span class="kanji-symbol">神</span>
+                <div class="logo-text">
+                    <h1>ENTERPRISE UNIVERSE <span class="version-badge">v5.0</span></h1>
+                    <p>GOD MODE ULTRA | FULL INSTINCT DASHBOARD</p>
+                </div>
+            </div>
+            <div class="power-display">
+                <div class="nav-links">
+                    <a href="modules/leads.html" class="nav-link">LEADS</a>
+                    <a href="modules/deals.html" class="nav-link">DEALS</a>
+                    <a href="modules/invoices.html" class="nav-link">INVOICES</a>
+                    <a href="modules/brainstorm.html" class="nav-link">BRAINSTORM</a>
+                    <a href="modules/analytics.html" class="nav-link">ANALYTICS</a>
+                </div>
+                <div class="power-level">
+                    <div class="power-label">Power Level</div>
+                    <div class="power-value" id="powerLevel">∞</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Live Stats -->
+        <div class="stats-grid">
+            <div class="stat-card deals">
+                <div class="stat-header">
+                    <span class="stat-icon">🎯</span>
+                    <span class="stat-badge">LIVE</span>
+                </div>
+                <div class="stat-value" id="dealsCount">3,305,514</div>
+                <div class="stat-label">Total Deals</div>
+                <div class="stat-change">+12,847 today</div>
+            </div>
+            <div class="stat-card contacts">
+                <div class="stat-header">
+                    <span class="stat-icon">👥</span>
+                    <span class="stat-badge">LIVE</span>
+                </div>
+                <div class="stat-value" id="contactsCount">14,302,736</div>
+                <div class="stat-label">Total Contacts</div>
+                <div class="stat-change">+45,231 today</div>
+            </div>
+            <div class="stat-card pipeline">
+                <div class="stat-header">
+                    <span class="stat-icon">💰</span>
+                    <span class="stat-badge">PIPELINE</span>
+                </div>
+                <div class="stat-value" id="pipelineValue">€37B</div>
+                <div class="stat-label">Pipeline Value</div>
+                <div class="stat-change">+€1.2B this week</div>
+            </div>
+            <div class="stat-card won">
+                <div class="stat-header">
+                    <span class="stat-icon">🏆</span>
+                    <span class="stat-badge">WON</span>
+                </div>
+                <div class="stat-value" id="wonValue">€1B+</div>
+                <div class="stat-label">Won Deals</div>
+                <div class="stat-change">+€127M this month</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="HAIKU_GOD_MODE_V2.html" class="action-btn primary">
+                <span class="action-icon">神</span>
+                <span class="action-text">GOD MODE</span>
+            </a>
+            <button class="action-btn success" onclick="syncPipelines()">
+                <span class="action-icon">🔄</span>
+                <span class="action-text">SYNC ALL</span>
+            </button>
+            <button class="action-btn" onclick="scoreAllLeads()">
+                <span class="action-icon">🎯</span>
+                <span class="action-text">SCORE LEADS</span>
+            </button>
+            <button class="action-btn" onclick="generateInvoices()">
+                <span class="action-icon">📄</span>
+                <span class="action-text">AUTO INVOICE</span>
+            </button>
+            <a href="modules/brainstorm.html" class="action-btn danger">
+                <span class="action-icon">🧠</span>
+                <span class="action-text">BRAINSTORM</span>
+            </a>
+        </div>
+
+        <!-- Command Center Modules -->
+        <h2 class="section-title">⚡ COMMAND CENTER - 12 MODULES</h2>
+        <div class="modules-grid">
+            <a href="HAIKU_GOD_MODE_V2.html" class="module-card">
+                <div class="module-icon">神</div>
+                <div class="module-name">HAIKU GOD MODE</div>
+                <div class="module-desc">Divine Warrior Controller</div>
+                <div class="module-status">ULTRA INSTINCT</div>
+            </a>
+            <a href="GENIUS_AGENCY_CONTROL_CENTER.html" class="module-card">
+                <div class="module-icon">🧠</div>
+                <div class="module-name">GENIUS HUB</div>
+                <div class="module-desc">34 Legendary AI Bots</div>
+                <div class="module-status" id="botsOnline">34 ONLINE</div>
+            </a>
+            <a href="modules/leads.html" class="module-card">
+                <div class="module-icon">🎯</div>
+                <div class="module-name">LEAD DISCOVERY</div>
+                <div class="module-desc">ML Scoring Engine</div>
+                <div class="module-status hot" id="hotLeadsCount">0 HOT</div>
+            </a>
+            <a href="dashboards/CRM_ULTRA_V2.html" class="module-card">
+                <div class="module-icon">👥</div>
+                <div class="module-name">CRM</div>
+                <div class="module-desc">Contact Management</div>
+                <div class="module-status">SYNCED</div>
+            </a>
+            <a href="modules/deals.html" class="module-card">
+                <div class="module-icon">💰</div>
+                <div class="module-name">DEALS</div>
+                <div class="module-desc">Pipeline Kanban</div>
+                <div class="module-status" id="dealsPipeline">0 ACTIVE</div>
+            </a>
+            <a href="modules/invoices.html" class="module-card">
+                <div class="module-icon">📄</div>
+                <div class="module-name">INVOICES</div>
+                <div class="module-desc">Auto-Generate</div>
+                <div class="module-status" id="invoicesStatus">READY</div>
+            </a>
+            <a href="modules/analytics.html" class="module-card">
+                <div class="module-icon">📊</div>
+                <div class="module-name">ANALYTICS</div>
+                <div class="module-desc">BI Reports</div>
+                <div class="module-status">REAL-TIME</div>
+            </a>
+            <a href="modules/brainstorm.html" class="module-card">
+                <div class="module-icon">💡</div>
+                <div class="module-name">BRAINSTORM</div>
+                <div class="module-desc">13 Ideation Modi</div>
+                <div class="module-status" id="brainstormSessions">0 SESSIONS</div>
+            </a>
+            <a href="modules/broly.html" class="module-card">
+                <div class="module-icon">⚔️</div>
+                <div class="module-name">BROLY TASKFORCE</div>
+                <div class="module-desc">Bot Task Queue</div>
+                <div class="module-status" id="tasksPending">0 PENDING</div>
+            </a>
+            <a href="WHATSAPP_AUTH_DASHBOARD.html" class="module-card">
+                <div class="module-icon">💬</div>
+                <div class="module-name">WHATSAPP</div>
+                <div class="module-desc">GDPR Consent</div>
+                <div class="module-status">COMPLIANT</div>
+            </a>
+            <a href="dashboards/MEGA_EMAIL_HUB.html" class="module-card">
+                <div class="module-icon">📧</div>
+                <div class="module-name">E-MAIL HUB</div>
+                <div class="module-desc">Campaigns</div>
+                <div class="module-status">55 READY</div>
+            </a>
+            <a href="integrations/REVOLUT_INTEGRATION_HUB.html" class="module-card">
+                <div class="module-icon">💳</div>
+                <div class="module-name">PAYMENTS</div>
+                <div class="module-desc">Stripe + PayPal</div>
+                <div class="module-status">ACTIVE</div>
+            </a>
+        </div>
+
+        <!-- 34 AI Agents -->
+        <div class="agents-section">
+            <h2 class="section-title">🧠 34 LEGENDARY AI AGENTS - FULL INSTINCT MODE</h2>
+            <div class="agents-grid" id="agentsGrid">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+
+        <!-- Bottom Grid -->
+        <div class="bottom-grid">
+            <!-- Activity Feed -->
+            <div class="panel">
+                <h3 class="panel-title">📡 LIVE ACTIVITY FEED</h3>
+                <div id="activityFeed">
+                    <div class="activity-item">
+                        <div class="activity-icon">🎯</div>
+                        <div class="activity-text">
+                            <div class="activity-title">New HOT Lead: Munich Enterprise</div>
+                            <div class="activity-time">vor 2 Min</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">💰</div>
+                        <div class="activity-text">
+                            <div class="activity-title">Deal WON: €2.5M Smart Home</div>
+                            <div class="activity-time">vor 8 Min</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🔬</div>
+                        <div class="activity-text">
+                            <div class="activity-title">EINSTEIN: Q4 Analysis Complete</div>
+                            <div class="activity-time">vor 15 Min</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">📧</div>
+                        <div class="activity-text">
+                            <div class="activity-title">Campaign: 1,247 Emails Sent</div>
+                            <div class="activity-time">vor 23 Min</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">💡</div>
+                        <div class="activity-text">
+                            <div class="activity-title">Brainstorm: SWOT Session Started</div>
+                            <div class="activity-time">vor 31 Min</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Scoring -->
+            <div class="panel">
+                <h3 class="panel-title">🎯 LEAD SCORING</h3>
+                <div id="leadScoring">
+                    <div class="lead-tier">
+                        <span class="tier-badge hot">HOT</span>
+                        <span class="tier-count" id="tierHot">0</span>
+                        <span class="tier-label">80-100 Score</span>
+                    </div>
+                    <div class="lead-tier">
+                        <span class="tier-badge warm">WARM</span>
+                        <span class="tier-count" id="tierWarm">0</span>
+                        <span class="tier-label">60-79 Score</span>
+                    </div>
+                    <div class="lead-tier">
+                        <span class="tier-badge nurture">NURTURE</span>
+                        <span class="tier-count" id="tierNurture">0</span>
+                        <span class="tier-label">40-59 Score</span>
+                    </div>
+                    <div class="lead-tier">
+                        <span class="tier-badge cold">COLD</span>
+                        <span class="tier-count" id="tierCold">0</span>
+                        <span class="tier-label">0-39 Score</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="panel">
+                <h3 class="panel-title">⚡ SYSTEM STATUS</h3>
+                <div class="status-item">
+                    <div class="status-dot" id="hubspotStatus"></div>
+                    <span class="status-text">HubSpot API</span>
+                    <span class="status-value">CONNECTED</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot" id="dbStatus"></div>
+                    <span class="status-text">PostgreSQL</span>
+                    <span class="status-value">HEALTHY</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot" id="backendStatus"></div>
+                    <span class="status-text">Backend API</span>
+                    <span class="status-value" id="backendStatusText">CHECKING</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot" id="mlStatus"></div>
+                    <span class="status-text">ML Model</span>
+                    <span class="status-value">LOADED</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span class="status-text">Stripe</span>
+                    <span class="status-value">ACTIVE</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span class="status-text">PayPal</span>
+                    <span class="status-value">ACTIVE</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-kanji">神 ENTERPRISE UNIVERSE 5.0 神</div>
+        <div class="footer-text">GOD MODE ULTRA Dashboard | West Money Bau GmbH | CEO: Omer Hüseyin Coskun | 2026</div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'http://localhost:8000/api/v1';
+        const HUBSPOT_STATS = { deals: 3305514, contacts: 14302736, pipeline: 37000000000, wonDeals: 1000000000 };
+
+        // 34 AI Agents
+        const agents = [
+            { name: 'EINSTEIN', icon: '🔬', status: 'ANALYZING' },
+            { name: 'TESLA', icon: '⚡', status: 'ACTIVE' },
+            { name: 'NOSTRADAMUS', icon: '🔮', status: 'PREDICTING' },
+            { name: 'DA VINCI', icon: '🎨', status: 'CREATING' },
+            { name: 'ARISTOTLE', icon: '📜', status: 'THINKING' },
+            { name: 'CAESAR', icon: '🏛️', status: 'COMMANDING' },
+            { name: 'ROCKEFELLER', icon: '💎', status: 'INVESTING' },
+            { name: 'MUSK', icon: '🚀', status: 'INNOVATING' },
+            { name: 'JOBS', icon: '📱', status: 'DESIGNING' },
+            { name: 'GATES', icon: '💻', status: 'CODING' },
+            { name: 'SHAKESPEARE', icon: '🎭', status: 'WRITING' },
+            { name: 'NEWTON', icon: '🌟', status: 'CALCULATING' },
+            { name: 'CURIE', icon: '⚗️', status: 'RESEARCHING' },
+            { name: 'HAWKING', icon: '🌌', status: 'EXPLORING' },
+            { name: 'TURING', icon: '🤖', status: 'COMPUTING' },
+            { name: 'PICASSO', icon: '🖼️', status: 'VISUALIZING' },
+            { name: 'MOZART', icon: '🎵', status: 'COMPOSING' },
+            { name: 'BUFFETT', icon: '📈', status: 'ANALYZING' },
+            { name: 'BEZOS', icon: '📦', status: 'OPTIMIZING' },
+            { name: 'ZUCKERBERG', icon: '👥', status: 'CONNECTING' },
+            { name: 'SOCRATES', icon: '🏺', status: 'QUESTIONING' },
+            { name: 'ARCHIMEDES', icon: '⚙️', status: 'ENGINEERING' },
+            { name: 'DARWIN', icon: '🦎', status: 'EVOLVING' },
+            { name: 'FREUD', icon: '🧠', status: 'ANALYZING' },
+            { name: 'CONFUCIUS', icon: '☯️', status: 'BALANCING' },
+            { name: 'ALEXANDER', icon: '⚔️', status: 'CONQUERING' },
+            { name: 'CLEOPATRA', icon: '👑', status: 'RULING' },
+            { name: 'NAPOLEON', icon: '🎖️', status: 'STRATEGIZING' },
+            { name: 'GANDHI', icon: '🕊️', status: 'PEACEKEEPING' },
+            { name: 'MANDELA', icon: '✊', status: 'LEADING' },
+            { name: 'OPRAH', icon: '🎤', status: 'INSPIRING' },
+            { name: 'BRANSON', icon: '🎈', status: 'ADVENTURING' },
+            { name: 'DISNEY', icon: '🏰', status: 'IMAGINING' },
+            { name: 'HAIKU', icon: '神', status: 'GOD MODE' }
+        ];
+
+        // Generate Aura Particles
+        function generateAuraParticles() {
+            const container = document.getElementById('auraContainer');
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'aura-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Render AI Agents
+        function renderAgents() {
+            const grid = document.getElementById('agentsGrid');
+            grid.innerHTML = agents.map((agent, i) => `
+                <div class="agent-card ${i === agents.length - 1 ? 'active' : ''}" onclick="activateAgent('${agent.name}')">
+                    <div class="agent-icon">${agent.icon}</div>
+                    <div class="agent-name">${agent.name}</div>
+                    <div class="agent-status">${agent.status}</div>
+                </div>
+            `).join('');
+        }
+
+        // Power Level Animation
+        let powerLevel = 2147000000;
+        function updatePowerLevel() {
+            powerLevel += Math.floor(Math.random() * 100000);
+            if (powerLevel > 9999999999) {
+                document.getElementById('powerLevel').textContent = '∞';
+            } else {
+                document.getElementById('powerLevel').textContent = powerLevel.toLocaleString();
+            }
+        }
+
+        // Format Numbers
+        function formatNumber(num) {
+            if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(0) + 'K';
+            return num.toLocaleString();
+        }
+
+        // Show Toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'success'
+                ? 'linear-gradient(135deg, #22c55e, #059669)'
+                : 'linear-gradient(135deg, #ef4444, #dc2626)';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        // API Calls
+        async function fetchDealsSummary() {
+            try {
+                const res = await fetch(`${API_BASE}/deals/summary`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('dealsPipeline').textContent = `${data.total_deals} ACTIVE`;
+                    document.getElementById('backendStatus').className = 'status-dot';
+                    document.getElementById('backendStatusText').textContent = 'ONLINE';
+                    return data;
+                }
+            } catch (e) {
+                document.getElementById('backendStatus').className = 'status-dot warning';
+                document.getElementById('backendStatusText').textContent = 'OFFLINE';
+            }
+            return null;
+        }
+
+        async function fetchScoringStats() {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/stats`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('tierHot').textContent = data.tier_counts?.hot || 0;
+                    document.getElementById('tierWarm').textContent = data.tier_counts?.warm || 0;
+                    document.getElementById('tierNurture').textContent = data.tier_counts?.nurture || 0;
+                    document.getElementById('tierCold').textContent = data.tier_counts?.cold || 0;
+                    document.getElementById('hotLeadsCount').textContent = `${data.tier_counts?.hot || 0} HOT`;
+                    return data;
+                }
+            } catch (e) { console.log('Scoring API not available'); }
+            return null;
+        }
+
+        async function fetchBrainstormSessions() {
+            try {
+                const res = await fetch(`${API_BASE}/brainstorm/sessions?limit=100`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('brainstormSessions').textContent = `${data.total || 0} SESSIONS`;
+                    return data;
+                }
+            } catch (e) { console.log('Brainstorm API not available'); }
+            return null;
+        }
+
+        async function fetchTaskStats() {
+            try {
+                const res = await fetch(`${API_BASE}/tasks/statistics`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('tasksPending').textContent = `${data.pending || 0} PENDING`;
+                    return data;
+                }
+            } catch (e) { console.log('Tasks API not available'); }
+            return null;
+        }
+
+        // Quick Actions
+        async function syncPipelines() {
+            showToast('🔄 Syncing all pipelines...');
+            try {
+                const res = await fetch(`${API_BASE}/deals/sync/from-hubspot`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Pipeline sync complete!');
+                    fetchDealsSummary();
+                } else {
+                    showToast('⚠️ Sync failed - check HubSpot token', 'error');
+                }
+            } catch (e) {
+                showToast('⚠️ Backend not available', 'error');
+            }
+        }
+
+        async function scoreAllLeads() {
+            showToast('🎯 Scoring all leads...');
+            try {
+                const res = await fetch(`${API_BASE}/scoring/score-batch`, { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(`✅ Scored ${data.scored_count || 0} leads!`);
+                    fetchScoringStats();
+                }
+            } catch (e) {
+                showToast('⚠️ Scoring service not available', 'error');
+            }
+        }
+
+        async function generateInvoices() {
+            showToast('📄 Generating invoices for WON deals...');
+            try {
+                const res = await fetch(`${API_BASE}/invoices/bulk/create-all`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stage_filter: 'won', limit: 100 })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(`✅ Generated ${data.created || 0} invoices!`);
+                }
+            } catch (e) {
+                showToast('⚠️ Invoice service not available', 'error');
+            }
+        }
+
+        function activateAgent(name) {
+            showToast(`🧠 ${name} activated - processing request...`);
+        }
+
+        // Initialize
+        async function init() {
+            generateAuraParticles();
+            renderAgents();
+
+            // Set initial values from HubSpot cache
+            document.getElementById('dealsCount').textContent = formatNumber(HUBSPOT_STATS.deals);
+            document.getElementById('contactsCount').textContent = formatNumber(HUBSPOT_STATS.contacts);
+            document.getElementById('pipelineValue').textContent = '€' + formatNumber(HUBSPOT_STATS.pipeline);
+            document.getElementById('wonValue').textContent = '€' + formatNumber(HUBSPOT_STATS.wonDeals);
+
+            // Fetch live data
+            await Promise.all([
+                fetchDealsSummary(),
+                fetchScoringStats(),
+                fetchBrainstormSessions(),
+                fetchTaskStats()
+            ]);
+
+            // Start power level animation
+            setInterval(updatePowerLevel, 100);
+
+            // Refresh data every 30 seconds
+            setInterval(async () => {
+                await fetchDealsSummary();
+                await fetchScoringStats();
+            }, 30000);
+        }
+
+        init();
+    </script>
+</body>
+</html>

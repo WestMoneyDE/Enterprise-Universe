@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Enterprise Universe 5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --bg-void: #030308;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --ui-silver: #C0C0E0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--god-gold);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+        }
+
+        .main { max-width: 1600px; margin: 0 auto; padding: 1.5rem; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-card {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: bold; color: var(--god-gold); }
+        .stat-label { font-size: 0.75rem; color: var(--ui-silver); margin-top: 0.5rem; }
+        .stat-change { font-size: 0.7rem; color: var(--success-green); margin-top: 0.25rem; }
+        .stat-change.negative { color: var(--hot-red); }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .chart-card {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .chart-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--god-gold); margin-bottom: 1rem; }
+
+        .pipeline-bar {
+            display: flex;
+            height: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .pipeline-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .pipeline-segment:hover { filter: brightness(1.2); }
+        .pipeline-segment.lead { background: var(--ui-blue); }
+        .pipeline-segment.qualified { background: var(--ui-purple); }
+        .pipeline-segment.proposal { background: var(--warning-amber); }
+        .pipeline-segment.negotiation { background: #FF8C00; }
+        .pipeline-segment.won { background: var(--success-green); }
+        .pipeline-segment.lost { background: var(--hot-red); }
+
+        .pipeline-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        .legend-dot.lead { background: var(--ui-blue); }
+        .legend-dot.qualified { background: var(--ui-purple); }
+        .legend-dot.proposal { background: var(--warning-amber); }
+        .legend-dot.negotiation { background: #FF8C00; }
+        .legend-dot.won { background: var(--success-green); }
+        .legend-dot.lost { background: var(--hot-red); }
+
+        .forecast-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .forecast-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        .forecast-label { font-size: 0.85rem; }
+        .forecast-value { font-family: 'Orbitron', sans-serif; font-size: 1rem; }
+        .forecast-value.best { color: var(--success-green); }
+        .forecast-value.weighted { color: var(--warning-amber); }
+        .forecast-value.commit { color: var(--ui-blue); }
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .top-deals {
+            list-style: none;
+        }
+        .deal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .deal-name { font-size: 0.85rem; }
+        .deal-amount { font-family: 'Orbitron', sans-serif; color: var(--success-green); }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .activity-icon { font-size: 1.25rem; }
+        .activity-text { font-size: 0.8rem; }
+        .activity-time { font-size: 0.7rem; color: var(--ui-silver); }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        .perf-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .perf-value { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--god-gold); }
+        .perf-label { font-size: 0.7rem; color: var(--ui-silver); }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
+
+        .actions { margin-bottom: 1.5rem; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success-green); color: #fff; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1000; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>📊 ANALYTICS - BUSINESS INTELLIGENCE</h1>
+        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main class="main">
+        <div class="actions">
+            <button class="action-btn" onclick="refreshAll()">🔄 Refresh All</button>
+            <button class="action-btn secondary" onclick="exportCSV()">📥 Export CSV</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalDeals">0</div>
+                <div class="stat-label">TOTAL DEALS</div>
+                <div class="stat-change">+12% vs last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPipeline">€0</div>
+                <div class="stat-label">PIPELINE VALUE</div>
+                <div class="stat-change">+8% growth</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="wonValue">€0</div>
+                <div class="stat-label">WON THIS MONTH</div>
+                <div class="stat-change">+23% vs target</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="winRate">0%</div>
+                <div class="stat-label">WIN RATE</div>
+                <div class="stat-change">Above average</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgDealSize">€0</div>
+                <div class="stat-label">AVG DEAL SIZE</div>
+                <div class="stat-change">+15% increase</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-title">📈 PIPELINE BY STAGE</div>
+                <div class="pipeline-bar" id="pipelineBar">
+                    <div class="pipeline-segment lead" style="width:20%">Lead</div>
+                    <div class="pipeline-segment qualified" style="width:15%">Qualified</div>
+                    <div class="pipeline-segment proposal" style="width:25%">Proposal</div>
+                    <div class="pipeline-segment negotiation" style="width:20%">Negotiation</div>
+                    <div class="pipeline-segment won" style="width:15%">Won</div>
+                    <div class="pipeline-segment lost" style="width:5%">Lost</div>
+                </div>
+                <div class="pipeline-legend" id="pipelineLegend">
+                    <div class="legend-item"><div class="legend-dot lead"></div><span>Lead: €0</span></div>
+                    <div class="legend-item"><div class="legend-dot qualified"></div><span>Qualified: €0</span></div>
+                    <div class="legend-item"><div class="legend-dot proposal"></div><span>Proposal: €0</span></div>
+                    <div class="legend-item"><div class="legend-dot negotiation"></div><span>Negotiation: €0</span></div>
+                    <div class="legend-item"><div class="legend-dot won"></div><span>Won: €0</span></div>
+                    <div class="legend-item"><div class="legend-dot lost"></div><span>Lost: €0</span></div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-title">🔮 FORECAST</div>
+                <div class="forecast-list" id="forecastList">
+                    <div class="forecast-item">
+                        <span class="forecast-label">Best Case</span>
+                        <span class="forecast-value best" id="bestCase">€0</span>
+                    </div>
+                    <div class="forecast-item">
+                        <span class="forecast-label">Weighted</span>
+                        <span class="forecast-value weighted" id="weighted">€0</span>
+                    </div>
+                    <div class="forecast-item">
+                        <span class="forecast-label">Commit</span>
+                        <span class="forecast-value commit" id="commit">€0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="chart-card">
+                <div class="chart-title">🏆 TOP DEALS</div>
+                <ul class="top-deals" id="topDeals">
+                    <li class="deal-item"><span class="deal-name">Loading...</span></li>
+                </ul>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-title">📡 RECENT ACTIVITY</div>
+                <div id="activityFeed">
+                    <div class="activity-item">
+                        <span class="activity-icon">🎯</span>
+                        <div>
+                            <div class="activity-text">New deal created</div>
+                            <div class="activity-time">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-title">⚡ PERFORMANCE</div>
+                <div class="performance-grid">
+                    <div class="perf-item">
+                        <div class="perf-value" id="conversionRate">0%</div>
+                        <div class="perf-label">Conversion Rate</div>
+                    </div>
+                    <div class="perf-item">
+                        <div class="perf-value" id="avgCycleTime">0d</div>
+                        <div class="perf-label">Avg Cycle Time</div>
+                    </div>
+                    <div class="perf-item">
+                        <div class="perf-value" id="hotLeads">0</div>
+                        <div class="perf-label">HOT Leads</div>
+                    </div>
+                    <div class="perf-item">
+                        <div class="perf-value" id="activeBots">34</div>
+                        <div class="perf-label">Active Bots</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function formatCurrency(num) {
+            if (num >= 1000000000) return '€' + (num / 1000000000).toFixed(1) + 'B';
+            if (num >= 1000000) return '€' + (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return '€' + (num / 1000).toFixed(0) + 'K';
+            return '€' + (num || 0).toLocaleString();
+        }
+
+        async function fetchDashboard() {
+            try {
+                const res = await fetch(`${API_BASE}/analytics/dashboard`);
+                if (res.ok) {
+                    const data = await res.json();
+                    updateDashboard(data);
+                }
+            } catch (e) { console.log('Dashboard API not available'); }
+        }
+
+        async function fetchSummary() {
+            try {
+                const res = await fetch(`${API_BASE}/deals/summary`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('totalDeals').textContent = data.total_deals || 0;
+                    document.getElementById('totalPipeline').textContent = formatCurrency(data.total_value);
+                    document.getElementById('wonValue').textContent = formatCurrency(data.won_value);
+
+                    // Update pipeline bar
+                    const stages = data.by_stage || [];
+                    const total = stages.reduce((sum, s) => sum + (s.total_value || 0), 0) || 1;
+                    const bar = document.getElementById('pipelineBar');
+                    const legend = document.getElementById('pipelineLegend');
+
+                    bar.innerHTML = stages.map(s => {
+                        const pct = Math.max(((s.total_value || 0) / total * 100), 5);
+                        return `<div class="pipeline-segment ${s.stage}" style="width:${pct}%">${s.count || 0}</div>`;
+                    }).join('');
+
+                    legend.innerHTML = stages.map(s => `
+                        <div class="legend-item">
+                            <div class="legend-dot ${s.stage}"></div>
+                            <span>${s.stage_name}: ${formatCurrency(s.total_value)}</span>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) { console.log('Summary API not available'); }
+        }
+
+        async function fetchForecast() {
+            try {
+                const res = await fetch(`${API_BASE}/analytics/forecast`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('bestCase').textContent = formatCurrency(data.best_case);
+                    document.getElementById('weighted').textContent = formatCurrency(data.weighted);
+                    document.getElementById('commit').textContent = formatCurrency(data.commit);
+                }
+            } catch (e) { console.log('Forecast API not available'); }
+        }
+
+        async function fetchTopDeals() {
+            try {
+                const res = await fetch(`${API_BASE}/deals?per_page=5`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const deals = (data.deals || []).sort((a, b) => (b.amount || 0) - (a.amount || 0)).slice(0, 5);
+                    const list = document.getElementById('topDeals');
+                    list.innerHTML = deals.map(d => `
+                        <li class="deal-item">
+                            <span class="deal-name">${d.name}</span>
+                            <span class="deal-amount">${formatCurrency(d.amount)}</span>
+                        </li>
+                    `).join('') || '<li class="deal-item"><span class="deal-name">No deals</span></li>';
+                }
+            } catch (e) { console.log('Deals API not available'); }
+        }
+
+        async function fetchScoring() {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/stats`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('hotLeads').textContent = data.tier_counts?.hot || 0;
+                }
+            } catch (e) { console.log('Scoring API not available'); }
+        }
+
+        function updateDashboard(data) {
+            if (data.overview) {
+                document.getElementById('totalDeals').textContent = data.overview.total_deals || 0;
+                document.getElementById('totalPipeline').textContent = formatCurrency(data.overview.total_value);
+                document.getElementById('wonValue').textContent = formatCurrency(data.overview.won_value);
+            }
+        }
+
+        async function exportCSV() {
+            showToast('📥 Generating CSV export...');
+            try {
+                const res = await fetch(`${API_BASE}/analytics/export/deals`);
+                if (res.ok) {
+                    const blob = await res.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'deals-export.csv';
+                    a.click();
+                    showToast('✅ Export downloaded!');
+                }
+            } catch (e) { showToast('❌ Export failed'); }
+        }
+
+        function refreshAll() {
+            fetchDashboard();
+            fetchSummary();
+            fetchForecast();
+            fetchTopDeals();
+            fetchScoring();
+            showToast('🔄 Refreshed!');
+        }
+
+        // Init
+        refreshAll();
+        setInterval(refreshAll, 60000); // Refresh every minute
+    </script>
+</body>
+</html>

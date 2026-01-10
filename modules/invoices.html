@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoices | Enterprise Universe 5.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --god-gold: #FFD700;
+            --bg-void: #030308;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --hot-red: #ef4444;
+            --ui-blue: #7B9FFF;
+            --ui-purple: #9B7BFF;
+            --ui-silver: #C0C0E0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: #fff; min-height: 100vh; }
+
+        .header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(155, 123, 255, 0.1));
+            border-bottom: 2px solid var(--god-gold);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--god-gold); }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--god-gold);
+            border-radius: 8px;
+            color: var(--god-gold);
+            text-decoration: none;
+        }
+
+        .main { max-width: 1600px; margin: 0 auto; padding: 1.5rem; }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-box {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: bold; }
+        .stat-box.draft .stat-value { color: var(--ui-silver); }
+        .stat-box.sent .stat-value { color: var(--ui-blue); }
+        .stat-box.paid .stat-value { color: var(--success-green); }
+        .stat-box.overdue .stat-value { color: var(--hot-red); }
+        .stat-box.total .stat-value { color: var(--god-gold); }
+        .stat-label { font-size: 0.75rem; color: var(--ui-silver); }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--god-gold), #FF8C00);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .action-btn:hover { transform: translateY(-2px); }
+        .action-btn.secondary { background: linear-gradient(135deg, var(--ui-purple), var(--ui-blue)); color: #fff; }
+        .action-btn.success { background: linear-gradient(135deg, var(--success-green), #059669); color: #fff; }
+        .action-btn.danger { background: linear-gradient(135deg, var(--hot-red), #dc2626); color: #fff; }
+
+        .filter-bar {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .filter-btn.active { background: var(--god-gold); color: #000; }
+
+        .invoices-table {
+            background: rgba(10, 10, 26, 0.9);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: rgba(255, 215, 0, 0.1); padding: 1rem; text-align: left; font-size: 0.8rem; color: var(--god-gold); }
+        td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; }
+        tr:hover { background: rgba(255, 215, 0, 0.05); }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .status-badge.draft { background: rgba(192, 192, 224, 0.2); color: var(--ui-silver); }
+        .status-badge.sent { background: rgba(123, 159, 255, 0.2); color: var(--ui-blue); }
+        .status-badge.paid { background: rgba(34, 197, 94, 0.2); color: var(--success-green); }
+        .status-badge.overdue { background: rgba(239, 68, 68, 0.2); color: var(--hot-red); }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-void);
+            border: 2px solid var(--god-gold);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 600px;
+            max-width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--god-gold); margin-bottom: 1.5rem; }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--ui-silver); margin-bottom: 0.5rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .won-deals-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        .won-deal-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+        .won-deal-item:hover { background: rgba(255, 215, 0, 0.1); }
+        .won-deal-item.selected { border: 1px solid var(--god-gold); }
+
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success-green); color: #fff; padding: 1rem 1.5rem; border-radius: 8px; display: none; z-index: 1001; }
+        .loading { text-align: center; padding: 2rem; color: var(--ui-silver); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>📄 INVOICES - AUTO GENERATION SYSTEM</h1>
+        <a href="../dashboard-v5.html" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main class="main">
+        <div class="stats-row">
+            <div class="stat-box draft">
+                <div class="stat-value" id="draftCount">0</div>
+                <div class="stat-label">DRAFT</div>
+            </div>
+            <div class="stat-box sent">
+                <div class="stat-value" id="sentCount">0</div>
+                <div class="stat-label">SENT</div>
+            </div>
+            <div class="stat-box paid">
+                <div class="stat-value" id="paidCount">0</div>
+                <div class="stat-label">PAID</div>
+            </div>
+            <div class="stat-box overdue">
+                <div class="stat-value" id="overdueCount">0</div>
+                <div class="stat-label">OVERDUE</div>
+            </div>
+            <div class="stat-box total">
+                <div class="stat-value" id="totalValue">€0</div>
+                <div class="stat-label">OUTSTANDING</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="action-btn" onclick="openCreateFromWonModal()">📄 Create from WON Deal</button>
+            <button class="action-btn success" onclick="autoGenerateAll()">⚡ Auto-Generate ALL</button>
+            <button class="action-btn secondary" onclick="sendAllPending()">📧 Send All Pending</button>
+            <button class="action-btn secondary" onclick="refreshInvoices()">🔄 Refresh</button>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-status="all" onclick="filterByStatus('all')">All</button>
+            <button class="filter-btn" data-status="DRAFT" onclick="filterByStatus('DRAFT')">Draft</button>
+            <button class="filter-btn" data-status="SENT" onclick="filterByStatus('SENT')">Sent</button>
+            <button class="filter-btn" data-status="PAID" onclick="filterByStatus('PAID')">Paid</button>
+            <button class="filter-btn" data-status="OVERDUE" onclick="filterByStatus('OVERDUE')">Overdue</button>
+        </div>
+
+        <div class="invoices-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>INVOICE #</th>
+                        <th>DEAL / CUSTOMER</th>
+                        <th>OWNER</th>
+                        <th>AMOUNT</th>
+                        <th>TAX</th>
+                        <th>TOTAL</th>
+                        <th>STATUS</th>
+                        <th>DUE DATE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="invoicesBody">
+                    <tr><td colspan="9" class="loading">Loading invoices...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Create from WON Modal -->
+    <div class="modal" id="wonModal">
+        <div class="modal-content">
+            <h2 class="modal-title">📄 Create Invoice from WON Deal</h2>
+            <p style="color:var(--ui-silver);margin-bottom:1rem;font-size:0.85rem">Select a WON deal to generate an invoice:</p>
+            <div class="won-deals-list" id="wonDealsList">
+                <div class="loading">Loading WON deals...</div>
+            </div>
+            <div class="actions" style="margin-top:1rem;display:flex;gap:1rem">
+                <button class="action-btn" onclick="createInvoiceFromSelected()">Create Invoice</button>
+                <button class="action-btn secondary" onclick="closeModal('wonModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let allInvoices = [];
+        let wonDeals = [];
+        let selectedDeal = null;
+        let currentFilter = 'all';
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function formatCurrency(num) {
+            return '€' + (num || 0).toLocaleString('de-DE', { minimumFractionDigits: 2 });
+        }
+
+        async function fetchInvoices() {
+            try {
+                const res = await fetch(`${API_BASE}/invoices?limit=100`);
+                if (res.ok) {
+                    const data = await res.json();
+                    allInvoices = data.invoices || data || [];
+                    renderInvoices();
+                } else {
+                    // Fallback - show empty
+                    allInvoices = [];
+                    renderInvoices();
+                }
+            } catch (e) {
+                allInvoices = [];
+                renderInvoices();
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const res = await fetch(`${API_BASE}/invoices/statistics`);
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('draftCount').textContent = data.draft || 0;
+                    document.getElementById('sentCount').textContent = data.sent || 0;
+                    document.getElementById('paidCount').textContent = data.paid || 0;
+                    document.getElementById('overdueCount').textContent = data.overdue || 0;
+                    document.getElementById('totalValue').textContent = formatCurrency(data.outstanding || 0);
+                }
+            } catch (e) { console.log('Stats not available'); }
+        }
+
+        function renderInvoices() {
+            const tbody = document.getElementById('invoicesBody');
+            let filtered = currentFilter === 'all' ? allInvoices : allInvoices.filter(i => i.status === currentFilter);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="loading">No invoices found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(inv => `
+                <tr>
+                    <td><strong>${inv.invoice_number || 'N/A'}</strong></td>
+                    <td>${inv.company_name || inv.contact_name || 'N/A'}</td>
+                    <td>${inv.owner_name || '-'}</td>
+                    <td>${formatCurrency(inv.amount)}</td>
+                    <td>${formatCurrency(inv.tax_amount)} (${inv.tax_rate || 19}%)</td>
+                    <td><strong>${formatCurrency(inv.total_amount)}</strong></td>
+                    <td><span class="status-badge ${inv.status?.toLowerCase()}">${inv.status}</span></td>
+                    <td>${inv.due_date ? new Date(inv.due_date).toLocaleDateString('de-DE') : '-'}</td>
+                    <td>
+                        ${inv.status === 'DRAFT' ? `<button onclick="sendInvoice('${inv.id}')" style="padding:0.2rem 0.5rem;background:var(--ui-blue);border:none;border-radius:4px;color:#fff;cursor:pointer;font-size:0.7rem">Send</button>` : ''}
+                        ${inv.status === 'SENT' ? `<button onclick="markPaid('${inv.id}')" style="padding:0.2rem 0.5rem;background:var(--success-green);border:none;border-radius:4px;color:#fff;cursor:pointer;font-size:0.7rem">Mark Paid</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterByStatus(status) {
+            currentFilter = status;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.status === status);
+            });
+            renderInvoices();
+        }
+
+        async function fetchWonDeals() {
+            try {
+                const res = await fetch(`${API_BASE}/deals/by-stage/won`);
+                if (res.ok) {
+                    const data = await res.json();
+                    wonDeals = data.deals || [];
+                    renderWonDeals();
+                }
+            } catch (e) {
+                wonDeals = [];
+                renderWonDeals();
+            }
+        }
+
+        function renderWonDeals() {
+            const list = document.getElementById('wonDealsList');
+            if (wonDeals.length === 0) {
+                list.innerHTML = '<div class="loading">No WON deals without invoices</div>';
+                return;
+            }
+
+            list.innerHTML = wonDeals.map(deal => `
+                <div class="won-deal-item" onclick="selectDeal(${deal.id})" data-id="${deal.id}">
+                    <div style="flex:1">
+                        <div style="font-weight:bold">${deal.name}</div>
+                        <div style="font-size:0.8rem;color:var(--ui-silver)">${deal.company_name || 'No company'} | Owner: ${deal.owner_name || 'Unassigned'}</div>
+                    </div>
+                    <div style="font-family:'Orbitron';color:var(--success-green)">${formatCurrency(deal.amount)}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectDeal(dealId) {
+            selectedDeal = wonDeals.find(d => d.id === dealId);
+            document.querySelectorAll('.won-deal-item').forEach(el => {
+                el.classList.toggle('selected', parseInt(el.dataset.id) === dealId);
+            });
+        }
+
+        function openCreateFromWonModal() {
+            fetchWonDeals();
+            document.getElementById('wonModal').classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            selectedDeal = null;
+        }
+
+        async function createInvoiceFromSelected() {
+            if (!selectedDeal) {
+                showToast('⚠️ Please select a deal first');
+                return;
+            }
+
+            const invoiceData = {
+                deal_id: selectedDeal.id,
+                company_name: selectedDeal.company_name,
+                contact_name: selectedDeal.contact_name,
+                contact_email: selectedDeal.contact_email,
+                amount: selectedDeal.amount,
+                tax_rate: 19,
+                owner_name: selectedDeal.owner_name,
+                notes: `Invoice for deal: ${selectedDeal.name}`
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/invoices`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(invoiceData)
+                });
+                if (res.ok) {
+                    showToast('✅ Invoice created!');
+                    closeModal('wonModal');
+                    await fetchInvoices();
+                    await fetchStats();
+                } else {
+                    showToast('❌ Failed to create invoice');
+                }
+            } catch (e) { showToast('❌ API error'); }
+        }
+
+        async function autoGenerateAll() {
+            showToast('⚡ Auto-generating invoices for all WON deals...');
+            try {
+                const res = await fetch(`${API_BASE}/invoices/bulk/create-all`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stage_filter: 'won', limit: 100 })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(`✅ Created ${data.created || 0} invoices!`);
+                    await fetchInvoices();
+                    await fetchStats();
+                }
+            } catch (e) { showToast('❌ Auto-generate failed'); }
+        }
+
+        async function sendInvoice(invoiceId) {
+            try {
+                const res = await fetch(`${API_BASE}/invoices/${invoiceId}/send`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Invoice sent!');
+                    await fetchInvoices();
+                    await fetchStats();
+                }
+            } catch (e) { showToast('❌ Failed to send'); }
+        }
+
+        async function markPaid(invoiceId) {
+            try {
+                const res = await fetch(`${API_BASE}/invoices/${invoiceId}/mark-paid?send_confirmation=true`, { method: 'POST' });
+                if (res.ok) {
+                    showToast('✅ Marked as paid!');
+                    await fetchInvoices();
+                    await fetchStats();
+                }
+            } catch (e) { showToast('❌ Failed to update'); }
+        }
+
+        async function sendAllPending() {
+            showToast('📧 Sending all pending invoices...');
+            for (const inv of allInvoices.filter(i => i.status === 'DRAFT')) {
+                await sendInvoice(inv.id);
+            }
+            showToast('✅ All pending invoices sent!');
+        }
+
+        function refreshInvoices() {
+            fetchInvoices();
+            fetchStats();
+            showToast('🔄 Refreshed!');
+        }
+
+        // Init
+        fetchInvoices();
+        fetchStats();
+    </script>
+</body>
+</html>
