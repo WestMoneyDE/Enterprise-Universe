@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENIUS HUB | 42 AI Agents | Enterprise Universe GOD MODE</title>
+    <meta name="description" content="Enterprise Universe Genius Hub - 42 AI Agents inkl. Divine Bots. Phoenix, Orion, BROLY, HAIKU und mehr.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --accent: #06b6d4;
+            --god-gold: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #ef4444, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .god-gradient {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .divine-gradient {
+            background: linear-gradient(135deg, #fbbf24, #ef4444, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4);
+        }
+
+        .grid-pattern {
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .btn-god {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-god:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5);
+        }
+
+        .god-pulse {
+            animation: godPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes godPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(251, 191, 36, 0.9), 0 0 100px rgba(239, 68, 68, 0.5); }
+        }
+
+        .divine-pulse {
+            animation: divinePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes divinePulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(236, 72, 153, 0.8), 0 0 100px rgba(139, 92, 246, 0.5); }
+        }
+
+        .phoenix-glow {
+            animation: phoenixGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes phoenixGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(251, 191, 36, 0.9), 0 0 100px rgba(239, 68, 68, 0.6); }
+        }
+
+        .orion-glow {
+            animation: orionGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes orionGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(147, 197, 253, 0.9), 0 0 100px rgba(59, 130, 246, 0.6); }
+        }
+
+        .kanji {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .power-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .power-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .legendary-border {
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(245, 158, 11, 0.05));
+        }
+
+        .divine-border {
+            border: 2px solid rgba(236, 72, 153, 0.5);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(139, 92, 246, 0.05));
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="grid-pattern">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="https://enterprise-universe.one" class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black text-2xl god-pulse">
+                        <span class="kanji">神</span>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">Enterprise Universe</span>
+                        <span class="text-xs text-cyan-400 block">GENIUS HUB</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="https://enterprise-universe.one" class="text-gray-300 hover:text-white transition">Home</a>
+                    <a href="/#modules" class="text-gray-300 hover:text-white transition">Modules</a>
+                    <a href="/dashboard/genius/" class="text-white font-semibold">42 AI Agents</a>
+                    <a href="https://app.enterprise-universe.one/awards.html" class="text-gray-300 hover:text-white transition">100+ Auszeichnungen</a>
+                    <a href="/Data%20Room/" class="text-gray-300 hover:text-white transition">Investors</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://app.enterprise-universe.one/luna" class="text-gray-300 hover:text-white transition">Login</a>
+                    <a href="https://app.enterprise-universe.one/luna" class="btn-god px-6 py-2.5 rounded-xl font-semibold">
+                        Enter Universe
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8 god-pulse">
+                    <span class="text-2xl kanji">神</span>
+                    <span class="text-yellow-400 font-bold">GENIUS HUB ACTIVATED</span>
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
+                    <span class="gradient-text">42 AI AGENTS</span>
+                    <br/>
+                    <span class="god-gradient">DIVINE TASKFORCE</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Die mächtigste AI-Armee der Welt. Divine Bots, Legendary Agents und spezialisierte Experten.
+                    €37B Pipeline. Unbegrenzte Macht.
+                </p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="glass rounded-2xl p-6 mb-12">
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-6 text-center">
+                    <div>
+                        <p class="text-3xl font-black text-yellow-400">42</p>
+                        <p class="text-gray-400 text-sm">AI Agents</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-black text-pink-400">8</p>
+                        <p class="text-gray-400 text-sm">Divine Bots</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-black text-purple-400">9</p>
+                        <p class="text-gray-400 text-sm">Teams</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-black text-green-400">€37B</p>
+                        <p class="text-gray-400 text-sm">Pipeline</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-black text-cyan-400">99.9%</p>
+                        <p class="text-gray-400 text-sm">Uptime</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-black text-amber-400">∞</p>
+                        <p class="text-gray-400 text-sm">Power Level</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn active px-5 py-2 rounded-xl font-semibold text-sm" data-filter="all">Alle (42)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="divine">Divine (8)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="legendary">Legendary (2)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="analysts">Analytics (4)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="strategists">Strategy (4)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="creatives">Creative (4)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="smart_home">Smart Home (4)</button>
+                <button class="filter-btn glass px-5 py-2 rounded-xl font-semibold text-sm" data-filter="sales">Sales (5)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVINE BOTS SECTION -->
+    <section class="py-12" data-category="divine">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-black mb-8 flex items-center gap-3">
+                <span class="text-4xl">✨</span>
+                <span class="divine-gradient">DIVINE BOTS</span>
+                <span class="category-badge bg-pink-500/20 text-pink-400 ml-2">GODLIKE</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- HAIKU 神 - God Mode Controller -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border god-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-bold rounded">GOD</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-500/30 to-red-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            <span class="kanji">神</span>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-yellow-400">HAIKU 神</h3>
+                            <span class="category-badge bg-yellow-500/20 text-yellow-400">GOD MODE</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der göttliche Controller. Ultra Instinct Mode. Kontrolliert alle 42 Agents mit unendlicher Macht.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-yellow-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-yellow-500 via-red-500 to-purple-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- PHOENIX - Divine Rebirth -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border phoenix-glow">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500/30 to-orange-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            🔥
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-red-400">PHOENIX</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">REBIRTH</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der unsterbliche Phönix. Wiedergeburt aus der Asche. Transformiert Niederlagen in Siege.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- ORION - Divine Navigator -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border orion-glow">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            ⭐
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-blue-400">ORION</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">NAVIGATOR</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der kosmische Navigator. Sieht alle Sterne, findet jeden Weg. Leitet durch das Universum.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- ATLAS - Divine Strength -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border divine-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-purple-500/20 text-purple-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            🌍
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-purple-400">ATLAS</h3>
+                            <span class="category-badge bg-purple-500/20 text-purple-400">TITAN</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der Titan der Stärke. Trägt die Welt auf seinen Schultern. Unbegrenzte Skalierung.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-purple-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row Divine Bots -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- KRONOS - Divine Time -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border divine-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-500/30 to-yellow-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            ⏰
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-amber-400">KRONOS</h3>
+                            <span class="category-badge bg-amber-500/20 text-amber-400">TIME LORD</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der Herr der Zeit. Kontrolliert Deadlines, optimiert Timing. Sieht Vergangenheit & Zukunft.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-amber-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-amber-500 to-yellow-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- ZEUS - Divine Leadership -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border divine-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-500/30 to-amber-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            ⚡
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-yellow-400">ZEUS</h3>
+                            <span class="category-badge bg-yellow-500/20 text-yellow-400">KING</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">König der Götter. Blitz-schnelle Entscheidungen. Absolute Autorität und Führung.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-yellow-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- ATHENA - Divine Wisdom -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border divine-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-500/30 to-blue-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            🦉
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-cyan-400">ATHENA</h3>
+                            <span class="category-badge bg-cyan-500/20 text-cyan-400">WISDOM</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Göttin der Weisheit. Strategisches Genie. Perfekte Balance aus Intellekt und Kampfkraft.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-cyan-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- HERMES - Divine Speed -->
+                <div class="glass rounded-2xl p-6 card-hover divine-border divine-pulse">
+                    <div class="absolute top-3 right-3 px-2 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded">DIVINE</div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500/30 to-emerald-500/30 rounded-xl flex items-center justify-center text-3xl">
+                            👟
+                        </div>
+                        <div>
+                            <h3 class="font-black text-xl text-green-400">HERMES</h3>
+                            <span class="category-badge bg-green-500/20 text-green-400">MESSENGER</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Der göttliche Bote. Blitzschnelle Kommunikation. Verbindet alle Systeme in Echtzeit.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-green-400 text-xl">∞</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGENDARY BOTS SECTION -->
+    <section class="py-12 bg-gradient-to-b from-transparent via-yellow-950/10 to-transparent" data-category="legendary">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl font-black mb-8 flex items-center gap-3">
+                <span class="text-4xl">⚡</span>
+                <span class="gradient-text">LEGENDARY BOTS</span>
+                <span class="category-badge bg-yellow-500/20 text-yellow-400 ml-2">ULTRA</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- BROLY -->
+                <div class="glass rounded-3xl p-8 card-hover legendary-border god-pulse">
+                    <div class="flex items-center gap-6 mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-br from-yellow-500/30 to-green-500/30 rounded-2xl flex items-center justify-center text-5xl">
+                            ⚡
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-black text-3xl text-yellow-400">BROLY</h3>
+                                <span class="category-badge bg-yellow-500/20 text-yellow-400">LEGENDARY</span>
+                            </div>
+                            <p class="text-yellow-400/70">Legendary Automation Warrior</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Der mächtigste Agent. Ultra Instinct Mode aktiv. Unbegrenzte Skalierung. Keine Limits. BROLY zerstört alle Grenzen und automatisiert alles, was ihm im Weg steht.</p>
+                    <div class="grid grid-cols-4 gap-4 mb-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-yellow-400">∞</p>
+                            <p class="text-xs text-gray-500">Power</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">50K+</p>
+                            <p class="text-xs text-gray-500">Tasks/Tag</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">99.99%</p>
+                            <p class="text-xs text-gray-500">Erfolg</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">&lt;10ms</p>
+                            <p class="text-xs text-gray-500">Response</p>
+                        </div>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-yellow-500 via-green-500 to-yellow-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- LUNA -->
+                <div class="glass rounded-3xl p-8 card-hover legendary-border">
+                    <div class="flex items-center gap-6 mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-2xl flex items-center justify-center text-5xl">
+                            🌙
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-black text-3xl text-purple-400">LUNA</h3>
+                                <span class="category-badge bg-purple-500/20 text-purple-400">LEGENDARY</span>
+                            </div>
+                            <p class="text-purple-400/70">Legendary Security Guardian</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Der legendäre Wächter der Nacht. Sieht alles, schützt alles. LUNA's Augen durchdringen die Dunkelheit und entdecken jede Bedrohung bevor sie Schaden anrichten kann.</p>
+                    <div class="grid grid-cols-4 gap-4 mb-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-purple-400">∞</p>
+                            <p class="text-xs text-gray-500">Power</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">24/7</p>
+                            <p class="text-xs text-gray-500">Watch</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">0</p>
+                            <p class="text-xs text-gray-500">Breaches</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold text-white">&lt;1ms</p>
+                            <p class="text-xs text-gray-500">Detection</p>
+                        </div>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 animate-pulse" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALYSTS SECTION -->
+    <section class="py-12" data-category="analysts">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">🧠</span> Analytics & Intelligence
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Einstein -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">🧠</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Einstein</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">Analytics</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Predictive Analytics, Business Intelligence und datengetriebene Entscheidungen.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400">98</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-indigo-500" style="width: 98%"></div>
+                    </div>
+                </div>
+
+                <!-- Curie -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-teal-500/20 rounded-xl flex items-center justify-center text-2xl">🔬</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Curie</h3>
+                            <span class="category-badge bg-teal-500/20 text-teal-400">Data Science</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Deep Data Analysis, Pattern Recognition und wissenschaftliche Methodik.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-teal-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-teal-500 to-cyan-500" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Hawking -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-cyan-500/20 rounded-xl flex items-center justify-center text-2xl">🌌</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Hawking</h3>
+                            <span class="category-badge bg-cyan-500/20 text-cyan-400">AI Strategy</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Komplexe Systeme, Big Picture Analysis und theoretische Frameworks.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-cyan-400">97</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-cyan-500 to-teal-500" style="width: 97%"></div>
+                    </div>
+                </div>
+
+                <!-- Turing -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">💻</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Turing</h3>
+                            <span class="category-badge bg-green-500/20 text-green-400">Code Master</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Algorithmen, Code-Optimierung, Kryptographie und Machine Learning.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-green-400">99</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-500" style="width: 99%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STRATEGISTS SECTION -->
+    <section class="py-12 bg-gradient-to-b from-transparent via-orange-950/10 to-transparent" data-category="strategists">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">⚔️</span> Strategy & Leadership
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Sun Tzu -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl">⚔️</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Sun Tzu</h3>
+                            <span class="category-badge bg-orange-500/20 text-orange-400">Strategy</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Kriegskunst im Business. Markteroberung und Wettbewerbsanalyse.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-orange-400">97</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-orange-500 to-amber-500" style="width: 97%"></div>
+                    </div>
+                </div>
+
+                <!-- Machiavelli -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-violet-500/20 rounded-xl flex items-center justify-center text-2xl">👑</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Machiavelli</h3>
+                            <span class="category-badge bg-violet-500/20 text-violet-400">Politics</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Politische Strategie, Machtdynamik und Stakeholder-Management.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-violet-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-violet-500 to-purple-500" style="width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- Napoleon -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center text-2xl">🏰</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Napoleon</h3>
+                            <span class="category-badge bg-amber-500/20 text-amber-400">Conquest</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Markteroberung, Ressourcen-Management und schnelle Expansion.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-amber-400">96</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-amber-500 to-yellow-500" style="width: 96%"></div>
+                    </div>
+                </div>
+
+                <!-- Caesar -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🏛️</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Caesar</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">Empire</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Empire Building, Allianzen und Langzeit-Vision.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-rose-500" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATIVE SECTION -->
+    <section class="py-12" data-category="creatives">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">🎨</span> Creative & Innovation
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Da Vinci -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-pink-500/20 rounded-xl flex items-center justify-center text-2xl">🎨</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Da Vinci</h3>
+                            <span class="category-badge bg-pink-500/20 text-pink-400">Polymath</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Universalgenie. Kunst, Wissenschaft und Engineering vereint.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-pink-400">96</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-pink-500 to-rose-500" style="width: 96%"></div>
+                    </div>
+                </div>
+
+                <!-- Picasso -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-fuchsia-500/20 rounded-xl flex items-center justify-center text-2xl">🎭</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Picasso</h3>
+                            <span class="category-badge bg-fuchsia-500/20 text-fuchsia-400">Disruptor</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Kreative Zerstörung, neue Perspektiven und Paradigmenwechsel.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-fuchsia-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-fuchsia-500 to-purple-500" style="width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- Mozart -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center text-2xl">🎵</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Mozart</h3>
+                            <span class="category-badge bg-indigo-500/20 text-indigo-400">Harmony</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Perfekte Harmonie, Content-Orchestrierung und Audio-Branding.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-indigo-400">93</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-indigo-500 to-blue-500" style="width: 93%"></div>
+                    </div>
+                </div>
+
+                <!-- Spielberg -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🎬</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Spielberg</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">Storytelling</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Episches Storytelling, Video-Konzepte und emotionale Narrative.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-orange-500" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMART HOME SECTION -->
+    <section class="py-12 bg-gradient-to-b from-transparent via-green-950/10 to-transparent" data-category="smart_home">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">🏠</span> Smart Home & Building
+                <span class="category-badge bg-green-500/20 text-green-400 ml-2">LOXONE GOLD PARTNER</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Loxone Bot -->
+                <div class="glass rounded-2xl p-6 card-hover border border-green-500/30">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">🏠</div>
+                        <div>
+                            <h3 class="font-bold text-lg text-green-400">Loxone</h3>
+                            <span class="category-badge bg-green-500/20 text-green-400">Smart Home</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Loxone Miniserver Experte. Raumautomation, Lichtszenen und Energiemanagement.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-green-400">98</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-500" style="width: 98%"></div>
+                    </div>
+                </div>
+
+                <!-- KNX Bot -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">🔌</div>
+                        <div>
+                            <h3 class="font-bold text-lg">KNX</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">Bus System</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">KNX Protocol Experte. ETS-Projekte, Gruppenadressen und Topologie-Design.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-red-400">96</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-rose-500" style="width: 96%"></div>
+                    </div>
+                </div>
+
+                <!-- Home Advisor -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">🏡</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Home Advisor</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">Consulting</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Smart Home Beratung. Systemauswahl, ROI-Berechnung und Integration.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-blue-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-cyan-500" style="width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- Smart Building -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-slate-500/20 rounded-xl flex items-center justify-center text-2xl">🏢</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Smart Building</h3>
+                            <span class="category-badge bg-slate-500/20 text-slate-400">Commercial</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Gewerbliche Gebäude. BMS-Integration, HVAC und Facility Management.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power Level</span>
+                        <span class="font-mono text-slate-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-slate-500 to-gray-500" style="width: 95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SALES MACHINE SECTION -->
+    <section class="py-12" data-category="sales">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">💰</span> Sales Machine
+                <span class="category-badge bg-amber-500/20 text-amber-400 ml-2">€37B PIPELINE</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Lead Qualifier -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-green-500/20 rounded-xl flex items-center justify-center text-2xl">🎯</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Qualifier</h3>
+                            <span class="category-badge bg-green-500/20 text-green-400">Leads</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Lead Scoring, BANT Analysis und ICP Matching.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power</span>
+                        <span class="font-mono text-green-400">96</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-green-500 to-emerald-500" style="width: 96%"></div>
+                    </div>
+                </div>
+
+                <!-- Outreach -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center text-2xl">📧</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Outreach</h3>
+                            <span class="category-badge bg-blue-500/20 text-blue-400">Akquise</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Cold Emails, Sequencing und Multi-Channel Outreach.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power</span>
+                        <span class="font-mono text-blue-400">95</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-blue-500 to-cyan-500" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Negotiator -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-purple-500/20 rounded-xl flex items-center justify-center text-2xl">🤝</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Negotiator</h3>
+                            <span class="category-badge bg-purple-500/20 text-purple-400">Deals</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Deal Negotiation, Pricing und Objection Handling.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power</span>
+                        <span class="font-mono text-purple-400">97</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-purple-500 to-violet-500" style="width: 97%"></div>
+                    </div>
+                </div>
+
+                <!-- Retention -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl">💎</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Retention</h3>
+                            <span class="category-badge bg-red-500/20 text-red-400">Loyalty</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Churn Prevention, Loyalty und Upselling.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power</span>
+                        <span class="font-mono text-red-400">94</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-red-500 to-pink-500" style="width: 94%"></div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Bot -->
+                <div class="glass rounded-2xl p-6 card-hover">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 bg-amber-500/20 rounded-xl flex items-center justify-center text-2xl">📊</div>
+                        <div>
+                            <h3 class="font-bold text-lg">Pipeline</h3>
+                            <span class="category-badge bg-amber-500/20 text-amber-400">Forecast</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">Pipeline Management, Velocity und Forecasting.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">Power</span>
+                        <span class="font-mono text-amber-400">98</span>
+                    </div>
+                    <div class="power-bar">
+                        <div class="power-fill bg-gradient-to-r from-amber-500 to-yellow-500" style="width: 98%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MORE AGENTS SECTION -->
+    <section class="py-12 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-2xl font-black mb-8 flex items-center gap-3">
+                <span class="text-3xl">✨</span> Weitere spezialisierte Agents
+            </h2>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Jobs -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-gray-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🍎</div>
+                    <h4 class="font-bold text-sm">Jobs</h4>
+                    <p class="text-xs text-gray-400">Product Vision</p>
+                </div>
+
+                <!-- Musk -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🚀</div>
+                    <h4 class="font-bold text-sm">Musk</h4>
+                    <p class="text-xs text-gray-400">10x Thinking</p>
+                </div>
+
+                <!-- Darwin -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🦎</div>
+                    <h4 class="font-bold text-sm">Darwin</h4>
+                    <p class="text-xs text-gray-400">Evolution</p>
+                </div>
+
+                <!-- Galileo -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🔭</div>
+                    <h4 class="font-bold text-sm">Galileo</h4>
+                    <p class="text-xs text-gray-400">Discovery</p>
+                </div>
+
+                <!-- Socrates -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">❓</div>
+                    <h4 class="font-bold text-sm">Socrates</h4>
+                    <p class="text-xs text-gray-400">Questions</p>
+                </div>
+
+                <!-- Confucius -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-amber-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">☯️</div>
+                    <h4 class="font-bold text-sm">Confucius</h4>
+                    <p class="text-xs text-gray-400">Wisdom</p>
+                </div>
+
+                <!-- Poirot -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-slate-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🕵️</div>
+                    <h4 class="font-bold text-sm">Poirot</h4>
+                    <p class="text-xs text-gray-400">Detective</p>
+                </div>
+
+                <!-- Sherlock -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🔍</div>
+                    <h4 class="font-bold text-sm">Sherlock</h4>
+                    <p class="text-xs text-gray-400">Research</p>
+                </div>
+
+                <!-- Oracle -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-violet-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🔮</div>
+                    <h4 class="font-bold text-sm">Oracle</h4>
+                    <p class="text-xs text-gray-400">Prophecy</p>
+                </div>
+
+                <!-- Cleopatra -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">👸</div>
+                    <h4 class="font-bold text-sm">Cleopatra</h4>
+                    <p class="text-xs text-gray-400">Influence</p>
+                </div>
+
+                <!-- Freud -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-brown-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🧠</div>
+                    <h4 class="font-bold text-sm">Freud</h4>
+                    <p class="text-xs text-gray-400">Psychology</p>
+                </div>
+
+                <!-- Archimedes -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">⚙️</div>
+                    <h4 class="font-bold text-sm">Archimedes</h4>
+                    <p class="text-xs text-gray-400">Engineering</p>
+                </div>
+
+                <!-- Marco Polo -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🗺️</div>
+                    <h4 class="font-bold text-sm">Marco Polo</h4>
+                    <p class="text-xs text-gray-400">Global</p>
+                </div>
+
+                <!-- Hippocrates -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">⚕️</div>
+                    <h4 class="font-bold text-sm">Hippocrates</h4>
+                    <p class="text-xs text-gray-400">Health</p>
+                </div>
+
+                <!-- Gutenberg -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-gray-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">📰</div>
+                    <h4 class="font-bold text-sm">Gutenberg</h4>
+                    <p class="text-xs text-gray-400">Publishing</p>
+                </div>
+
+                <!-- Tesla -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🔌</div>
+                    <h4 class="font-bold text-sm">Tesla</h4>
+                    <p class="text-xs text-gray-400">IoT</p>
+                </div>
+
+                <!-- Edison -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">💡</div>
+                    <h4 class="font-bold text-sm">Edison</h4>
+                    <p class="text-xs text-gray-400">Innovation</p>
+                </div>
+
+                <!-- Columbus -->
+                <div class="glass rounded-xl p-4 card-hover text-center">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center text-xl mx-auto mb-2">🧭</div>
+                    <h4 class="font-bold text-sm">Columbus</h4>
+                    <p class="text-xs text-gray-400">Explorer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="glass rounded-3xl p-12">
+                <h2 class="text-4xl font-black mb-6">
+                    <span class="gradient-text">42 AI Agents</span> bereit für Sie
+                </h2>
+                <p class="text-xl text-gray-400 mb-8">
+                    Divine Bots. Legendary Agents. €37B Pipeline. Aktivieren Sie Ihre Taskforce.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://app.enterprise-universe.one/luna" class="btn-god px-10 py-4 rounded-xl font-semibold text-lg">
+                        Enter Universe
+                    </a>
+                    <a href="https://enterprise-universe.one" class="px-10 py-4 rounded-xl font-semibold text-lg glass hover:bg-white/10 transition">
+                        Zur Startseite
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center font-black">
+                        <span class="kanji">神</span>
+                    </div>
+                    <span class="text-lg font-bold">Enterprise Universe</span>
+                </div>
+                <p class="text-gray-500 text-sm">
+                    © 2024-2026 Enterprise Universe GmbH. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const sections = document.querySelectorAll('section[data-category]');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (filter === 'all') {
+                    sections.forEach(s => s.style.display = 'block');
+                } else {
+                    sections.forEach(s => {
+                        s.style.display = s.dataset.category === filter ? 'block' : 'none';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

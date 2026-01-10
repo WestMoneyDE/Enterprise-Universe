@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Universe V10 | GOD MODE Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-void: #050508;
+            --bg-surface: #0a0a0f;
+            --bg-elevated: #111116;
+            --primary: #a855f7;
+            --secondary: #06b6d4;
+            --accent: #fbbf24;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-kanji { font-family: 'Noto Sans JP', sans-serif; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+            min-width: 80px;
+        }
+
+        .sidebar.collapsed .nav-text,
+        .sidebar.collapsed .section-title,
+        .sidebar.collapsed .stat-text,
+        .sidebar.collapsed .search-input {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 0.75rem;
+        }
+
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+
+        /* Nav Item */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 1rem;
+            border-radius: 0.5rem;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.1));
+            color: var(--text-primary);
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.1);
+        }
+
+        /* Bot Card */
+        .bot-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bot-card.thinking {
+            animation: thinking-pulse 2s infinite;
+        }
+
+        @keyframes thinking-pulse {
+            0%, 100% { border-color: rgba(168, 85, 247, 0.3); }
+            50% { border-color: rgba(168, 85, 247, 0.8); box-shadow: 0 0 30px rgba(168, 85, 247, 0.3); }
+        }
+
+        .bot-card.processing .processing-bar {
+            animation: processing 1.5s infinite;
+        }
+
+        @keyframes processing {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        /* Thinking Dots */
+        .thinking-dots span {
+            animation: bounce 1.4s infinite;
+        }
+
+        .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        /* Status Dot */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.pulse {
+            animation: dot-pulse 2s infinite;
+        }
+
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Sparkline */
+        .sparkline {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 24px;
+        }
+
+        .sparkline-bar {
+            width: 4px;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: height 0.3s;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 18px;
+            height: 18px;
+            background: var(--error);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-gold {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Timeline */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -16px;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Flash animation for new activities */
+        @keyframes flash-new {
+            0% { background: rgba(168, 85, 247, 0.3); }
+            100% { background: transparent; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar { width: 80px; min-width: 80px; }
+            .sidebar .nav-text,
+            .sidebar .section-title,
+            .sidebar .stat-text,
+            .sidebar .search-input,
+            .sidebar .logo-text { display: none; }
+            .sidebar .nav-item { justify-content: center; padding: 0.75rem; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                z-index: 100;
+                height: 100vh;
+            }
+            .sidebar.open { left: 0; width: 280px; }
+            .sidebar.open .nav-text,
+            .sidebar.open .section-title,
+            .sidebar.open .stat-text,
+            .sidebar.open .search-input,
+            .sidebar.open .logo-text { display: block; }
+        }
+    </style>
+</head>
+<body class="flex">
+
+    <!-- Sidebar -->
+    <aside class="sidebar bg-[var(--bg-surface)] border-r border-[var(--border)] h-screen sticky top-0 flex flex-col" id="sidebar">
+        <!-- Logo -->
+        <div class="p-4 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span class="font-kanji text-lg font-bold">神</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="font-orbitron text-sm font-bold gradient-text">ENTERPRISE</h1>
+                    <span class="text-xs text-[var(--text-muted)]">V10 GOD MODE</span>
+                </div>
+                <button class="ml-auto p-1.5 hover:bg-white/5 rounded-lg transition" onclick="toggleSidebar()">
+                    <svg class="w-4 h-4 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="p-3">
+            <div class="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)]">
+                <svg class="w-4 h-4 text-[var(--text-muted)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" placeholder="Suchen... (Cmd+K)" class="search-input bg-transparent text-sm text-white placeholder-[var(--text-muted)] outline-none w-full">
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto p-3 space-y-4">
+            <!-- Business -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">Business</p>
+                <div class="space-y-1">
+                    <a href="/v10" class="nav-item active">
+                        <span class="text-lg">📊</span>
+                        <span class="nav-text text-sm">Dashboard</span>
+                    </a>
+                    <a href="/crm-ultra" class="nav-item">
+                        <span class="text-lg">👥</span>
+                        <span class="nav-text text-sm">CRM Ultra</span>
+                    </a>
+                    <a href="/deals-pipeline" class="nav-item">
+                        <span class="text-lg">💰</span>
+                        <span class="nav-text text-sm">Deals Pipeline</span>
+                    </a>
+                    <a href="/lead-discovery" class="nav-item">
+                        <span class="text-lg">🔍</span>
+                        <span class="nav-text text-sm">Lead Discovery</span>
+                    </a>
+                    <a href="/email-hub" class="nav-item">
+                        <span class="text-lg">📧</span>
+                        <span class="nav-text text-sm">Email Hub</span>
+                    </a>
+                    <a href="/whatsapp-hub" class="nav-item">
+                        <span class="text-lg">💬</span>
+                        <span class="nav-text text-sm">WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI Power -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">AI Power</p>
+                <div class="space-y-1">
+                    <a href="/genius-agency" class="nav-item">
+                        <span class="text-lg">🧠</span>
+                        <span class="nav-text text-sm flex items-center gap-2">
+                            Genius Hub
+                            <span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">42</span>
+                        </span>
+                    </a>
+                    <a href="/god-mode" class="nav-item">
+                        <span class="text-lg font-kanji">神</span>
+                        <span class="nav-text text-sm">HAIKU God Mode</span>
+                    </a>
+                    <a href="/prophecy" class="nav-item">
+                        <span class="text-lg">🔮</span>
+                        <span class="nav-text text-sm">Prophecy</span>
+                    </a>
+                    <a href="/hakai" class="nav-item">
+                        <span class="text-lg">💥</span>
+                        <span class="nav-text text-sm">Hakai Mode</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">System</p>
+                <div class="space-y-1">
+                    <a href="/settings" class="nav-item">
+                        <span class="text-lg">⚙️</span>
+                        <span class="nav-text text-sm">Settings</span>
+                    </a>
+                    <a href="/analytics" class="nav-item">
+                        <span class="text-lg">📈</span>
+                        <span class="nav-text text-sm">Analytics</span>
+                    </a>
+                    <a href="https://app.enterprise-universe.one/awards.html" class="nav-item">
+                        <span class="text-lg">🏆</span>
+                        <span class="nav-text text-sm flex items-center gap-2">
+                            Awards
+                            <span class="px-1.5 py-0.5 bg-yellow-500/20 text-yellow-400 text-xs rounded">100+</span>
+                        </span>
+                    </a>
+                    <a href="/Data%20Room/" class="nav-item">
+                        <span class="text-lg">📁</span>
+                        <span class="nav-text text-sm">Data Room</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Live Stats -->
+        <div class="p-4 border-t border-[var(--border)]">
+            <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">Live Stats</p>
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="status-dot bg-red-500 pulse"></span>
+                    <span class="stat-text text-sm text-[var(--text-secondary)]" id="sidebarHotLeads">2,847 HOT Leads</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="status-dot bg-green-500 pulse"></span>
+                    <span class="stat-text text-sm text-[var(--text-secondary)]" id="sidebarPipeline">€37B Pipeline</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="status-dot bg-purple-500 pulse"></span>
+                    <span class="stat-text text-sm text-[var(--text-secondary)]" id="sidebarBots">42 Bots Active</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen">
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-[var(--bg-void)]/80 backdrop-blur-xl border-b border-[var(--border)]">
+            <div class="flex items-center justify-between px-6 py-4">
+                <!-- Mobile Menu -->
+                <button class="lg:hidden p-2 hover:bg-white/5 rounded-lg" onclick="toggleMobileSidebar()">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <!-- Title -->
+                <div>
+                    <h1 class="font-orbitron text-xl font-bold">Dashboard</h1>
+                    <p class="text-sm text-[var(--text-muted)]">Willkommen zurück, CEO</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search Button -->
+                    <button class="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg text-sm text-[var(--text-muted)] hover:bg-white/10 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <span>Suchen</span>
+                        <kbd class="px-1.5 py-0.5 bg-white/10 rounded text-xs">⌘K</kbd>
+                    </button>
+
+                    <!-- Notifications -->
+                    <button class="relative p-2 hover:bg-white/5 rounded-lg transition" id="notificationBtn">
+                        <svg class="w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+
+                    <!-- User -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center">
+                            <span class="font-kanji text-sm font-bold">神</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="p-6 space-y-6">
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Total Deals -->
+                <div class="card p-5 hover-lift">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <p class="text-sm text-[var(--text-muted)]">Total Deals</p>
+                            <p class="font-orbitron text-2xl font-bold mt-1" id="totalDeals">3,305,514</p>
+                        </div>
+                        <span class="text-2xl">💼</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-green-400 text-sm font-semibold">↑ +12,847</span>
+                        <span class="text-xs text-[var(--text-muted)]">heute</span>
+                    </div>
+                    <div class="sparkline">
+                        <div class="sparkline-bar" style="height: 30%"></div>
+                        <div class="sparkline-bar" style="height: 45%"></div>
+                        <div class="sparkline-bar" style="height: 60%"></div>
+                        <div class="sparkline-bar" style="height: 40%"></div>
+                        <div class="sparkline-bar" style="height: 75%"></div>
+                        <div class="sparkline-bar" style="height: 90%"></div>
+                        <div class="sparkline-bar" style="height: 70%"></div>
+                        <div class="sparkline-bar" style="height: 85%"></div>
+                        <div class="sparkline-bar" style="height: 100%"></div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span class="text-xs text-green-400">On Track</span>
+                    </div>
+                </div>
+
+                <!-- Contacts -->
+                <div class="card p-5 hover-lift">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <p class="text-sm text-[var(--text-muted)]">Total Contacts</p>
+                            <p class="font-orbitron text-2xl font-bold mt-1" id="totalContacts">14,302,736</p>
+                        </div>
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-cyan-400 text-sm font-semibold">↑ +45,231</span>
+                        <span class="text-xs text-[var(--text-muted)]">heute</span>
+                    </div>
+                    <div class="sparkline">
+                        <div class="sparkline-bar" style="height: 50%"></div>
+                        <div class="sparkline-bar" style="height: 65%"></div>
+                        <div class="sparkline-bar" style="height: 55%"></div>
+                        <div class="sparkline-bar" style="height: 80%"></div>
+                        <div class="sparkline-bar" style="height: 70%"></div>
+                        <div class="sparkline-bar" style="height: 85%"></div>
+                        <div class="sparkline-bar" style="height: 95%"></div>
+                        <div class="sparkline-bar" style="height: 75%"></div>
+                        <div class="sparkline-bar" style="height: 90%"></div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span class="text-xs text-green-400">On Track</span>
+                    </div>
+                </div>
+
+                <!-- Pipeline -->
+                <div class="card p-5 hover-lift">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <p class="text-sm text-[var(--text-muted)]">Pipeline Value</p>
+                            <p class="font-orbitron text-2xl font-bold mt-1 gradient-gold" id="pipelineValue">€37B</p>
+                        </div>
+                        <span class="text-2xl">📈</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-orange-400 text-sm font-semibold">↑ +€1.2B</span>
+                        <span class="text-xs text-[var(--text-muted)]">diese Woche</span>
+                    </div>
+                    <div class="sparkline">
+                        <div class="sparkline-bar" style="height: 40%"></div>
+                        <div class="sparkline-bar" style="height: 55%"></div>
+                        <div class="sparkline-bar" style="height: 65%"></div>
+                        <div class="sparkline-bar" style="height: 50%"></div>
+                        <div class="sparkline-bar" style="height: 70%"></div>
+                        <div class="sparkline-bar" style="height: 60%"></div>
+                        <div class="sparkline-bar" style="height: 80%"></div>
+                        <div class="sparkline-bar" style="height: 75%"></div>
+                        <div class="sparkline-bar" style="height: 95%"></div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                        <span class="text-xs text-yellow-400">At Risk</span>
+                    </div>
+                </div>
+
+                <!-- Won Deals -->
+                <div class="card p-5 hover-lift">
+                    <div class="flex items-start justify-between mb-3">
+                        <div>
+                            <p class="text-sm text-[var(--text-muted)]">Won Deals</p>
+                            <p class="font-orbitron text-2xl font-bold mt-1 gradient-text" id="wonDeals">€1B+</p>
+                        </div>
+                        <span class="text-2xl">🏆</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-purple-400 text-sm font-semibold">↑ +€127M</span>
+                        <span class="text-xs text-[var(--text-muted)]">diesen Monat</span>
+                    </div>
+                    <div class="sparkline">
+                        <div class="sparkline-bar" style="height: 60%"></div>
+                        <div class="sparkline-bar" style="height: 70%"></div>
+                        <div class="sparkline-bar" style="height: 65%"></div>
+                        <div class="sparkline-bar" style="height: 85%"></div>
+                        <div class="sparkline-bar" style="height: 75%"></div>
+                        <div class="sparkline-bar" style="height: 90%"></div>
+                        <div class="sparkline-bar" style="height: 80%"></div>
+                        <div class="sparkline-bar" style="height: 95%"></div>
+                        <div class="sparkline-bar" style="height: 100%"></div>
+                    </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                        <span class="text-xs text-purple-400">Achieved</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Bots + Notifications Row -->
+            <div class="grid lg:grid-cols-3 gap-6">
+                <!-- AI Bots Grid -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-orbitron text-lg font-bold gradient-text">AI AGENTS</h2>
+                        <a href="https://app.enterprise-universe.one/dashboard/genius/" class="text-sm text-purple-400 hover:text-purple-300 transition">
+                            Alle 42 ansehen →
+                        </a>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <!-- Einstein -->
+                        <div class="card bot-card thinking p-4">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🧠</span>
+                                    <div>
+                                        <h3 class="font-semibold">EINSTEIN</h3>
+                                        <p class="text-xs text-[var(--text-muted)]">Analytics & Intelligence</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="thinking-dots flex gap-1">
+                                        <span class="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                                        <span class="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                                        <span class="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                                    </div>
+                                    <span class="text-xs text-purple-400">THINKING</span>
+                                </div>
+                            </div>
+                            <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-purple-200 italic">💭 "Analysiere Q4 Pipeline-Daten. Sehe 23% Steigerung möglich."</p>
+                            </div>
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-3 mb-3">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">AKTUELLE PROGNOSE:</p>
+                                <p class="text-sm font-semibold">📈 Q1 2026 Umsatz: €127M</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="progress-bar flex-1">
+                                        <div class="progress-fill bg-gradient-to-r from-green-500 to-emerald-400" style="width: 82%"></div>
+                                    </div>
+                                    <span class="text-xs text-green-400">82%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-[var(--text-secondary)]">Lead Scoring abgeschlossen</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">2m</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-[var(--text-secondary)]">1,250 Kontakte analysiert</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">5m</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-yellow-400 animate-spin">⚙</span>
+                                    <span class="text-[var(--text-secondary)]">Pipeline-Forecast läuft...</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">now</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border)] text-xs">
+                                <span class="text-green-400">⚡ 98%</span>
+                                <span class="text-cyan-400">⏱ 2.3ms</span>
+                                <span class="text-purple-400">📊 1,250 Tasks</span>
+                            </div>
+                        </div>
+
+                        <!-- BROLY -->
+                        <div class="card bot-card p-4 border-yellow-500/30">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">⚡</span>
+                                    <div>
+                                        <h3 class="font-semibold gradient-gold">BROLY</h3>
+                                        <p class="text-xs text-yellow-400/70">Legendary Task Executor</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="status-dot bg-green-500 pulse"></span>
+                                    <span class="text-xs text-green-400">ACTIVE</span>
+                                </div>
+                            </div>
+                            <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-yellow-200 italic">💭 "5,000 E-Mails erfolgreich versendet. Open Rate bei 78%."</p>
+                            </div>
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-3 mb-3">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">TASK PERFORMANCE:</p>
+                                <p class="text-sm font-semibold">🚀 50,000 Tasks / 24h</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="progress-bar flex-1">
+                                        <div class="progress-fill bg-gradient-to-r from-yellow-500 to-orange-400" style="width: 100%"></div>
+                                    </div>
+                                    <span class="text-xs text-yellow-400">∞</span>
+                                </div>
+                            </div>
+                            <div class="space-y-1.5 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-[var(--text-secondary)]">E-Mail Kampagne abgeschlossen</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">1m</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-[var(--text-secondary)]">HubSpot Sync fertig</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">3m</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-green-400">✓</span>
+                                    <span class="text-[var(--text-secondary)]">Lead Import: 2,500 neue</span>
+                                    <span class="ml-auto text-[var(--text-muted)]">8m</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border)] text-xs">
+                                <span class="text-yellow-400">⚡ ∞</span>
+                                <span class="text-cyan-400">⏱ 1.2ms</span>
+                                <span class="text-purple-400">📊 50K+</span>
+                            </div>
+                        </div>
+
+                        <!-- ORION -->
+                        <div class="card bot-card p-4">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">⭐</span>
+                                    <div>
+                                        <h3 class="font-semibold">ORION</h3>
+                                        <p class="text-xs text-[var(--text-muted)]">Navigation & Strategy</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="status-dot bg-blue-500 pulse"></span>
+                                    <span class="text-xs text-blue-400">SCANNING</span>
+                                </div>
+                            </div>
+                            <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-blue-200 italic">💭 "Identifiziere 3 neue Marktchancen in DACH-Region."</p>
+                            </div>
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-3 mb-3">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">MARKT-ANALYSE:</p>
+                                <p class="text-sm font-semibold">🎯 PropTech Expansion: +45% Potenzial</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="progress-bar flex-1">
+                                        <div class="progress-fill bg-gradient-to-r from-blue-500 to-cyan-400" style="width: 91%"></div>
+                                    </div>
+                                    <span class="text-xs text-blue-400">91%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border)] text-xs">
+                                <span class="text-green-400">⚡ 95%</span>
+                                <span class="text-cyan-400">⏱ 3.1ms</span>
+                                <span class="text-purple-400">📊 890 Tasks</span>
+                            </div>
+                        </div>
+
+                        <!-- LUNA -->
+                        <div class="card bot-card p-4">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🌙</span>
+                                    <div>
+                                        <h3 class="font-semibold">LUNA</h3>
+                                        <p class="text-xs text-[var(--text-muted)]">Security & Monitoring</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="status-dot bg-violet-500 pulse"></span>
+                                    <span class="text-xs text-violet-400">WATCHING</span>
+                                </div>
+                            </div>
+                            <div class="bg-violet-500/10 border border-violet-500/20 rounded-lg p-3 mb-3">
+                                <p class="text-sm text-violet-200 italic">💭 "Alle Systeme sicher. 0 Bedrohungen in 24h."</p>
+                            </div>
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-3 mb-3">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">SICHERHEITSSTATUS:</p>
+                                <p class="text-sm font-semibold">🛡️ Threat Level: MINIMAL</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="progress-bar flex-1">
+                                        <div class="progress-fill bg-gradient-to-r from-violet-500 to-purple-400" style="width: 100%"></div>
+                                    </div>
+                                    <span class="text-xs text-green-400">100%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-[var(--border)] text-xs">
+                                <span class="text-green-400">⚡ 100%</span>
+                                <span class="text-cyan-400">⏱ 0.8ms</span>
+                                <span class="text-purple-400">📊 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Center - Dynamic -->
+                <div class="card p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-semibold flex items-center gap-2">
+                            🔔 Benachrichtigungen
+                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full" id="notificationCount">0</span>
+                        </h2>
+                        <button onclick="refreshNotifications()" class="text-xs text-[var(--text-muted)] hover:text-white transition">↻ Refresh</button>
+                    </div>
+
+                    <div class="space-y-4" id="notificationsContainer">
+                        <!-- System Status Section -->
+                        <div>
+                            <p class="text-xs font-semibold text-green-400 uppercase tracking-wider mb-2">System Status</p>
+                            <div class="bg-green-500/10 border border-green-500/30 rounded-lg p-3" id="systemStatusCard">
+                                <div class="flex items-start gap-2">
+                                    <span class="text-lg">✅</span>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold" id="systemStatusTitle">Alle Systeme operational</p>
+                                        <p class="text-xs text-[var(--text-muted)] mt-1" id="systemStatusDesc">Backend, HubSpot und DB sind verbunden</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Updates -->
+                        <div>
+                            <p class="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2">Live Updates</p>
+                            <div class="space-y-2" id="liveUpdates">
+                                <div class="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition">
+                                    <span class="text-lg">🔄</span>
+                                    <div class="flex-1">
+                                        <p class="text-sm" id="hubspotSyncStatus">HubSpot Sync aktiv</p>
+                                        <p class="text-xs text-[var(--text-muted)]" id="hubspotSyncTime">Lädt...</p>
+                                    </div>
+                                    <span class="status-dot bg-green-500 pulse" id="hubspotSyncDot"></span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition">
+                                    <span class="text-lg">📊</span>
+                                    <div class="flex-1">
+                                        <p class="text-sm" id="dealsUpdateStatus">Deals werden geladen...</p>
+                                        <p class="text-xs text-[var(--text-muted)]" id="dealsUpdateTime">-</p>
+                                    </div>
+                                    <span class="status-dot bg-cyan-500 pulse" id="dealsUpdateDot"></span>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-white/5 rounded-lg cursor-pointer transition">
+                                    <span class="text-lg">🧠</span>
+                                    <div class="flex-1">
+                                        <p class="text-sm">42 AI Agents aktiv</p>
+                                        <p class="text-xs text-[var(--text-muted)]">Bereit für Tasks</p>
+                                    </div>
+                                    <span class="status-dot bg-purple-500 pulse"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div>
+                            <p class="text-xs font-semibold text-orange-400 uppercase tracking-wider mb-2">Quick Actions</p>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="triggerSync()" class="flex items-center justify-center gap-2 p-2 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 rounded-lg transition text-sm">
+                                    <span>🔄</span> Sync Now
+                                </button>
+                                <button onclick="scoreLeads()" class="flex items-center justify-center gap-2 p-2 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg transition text-sm">
+                                    <span>🎯</span> Score Leads
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity + Status Row -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Activity Feed -->
+                <div class="card p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-semibold flex items-center gap-2">
+                            📋 Live Aktivität
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse" id="activityPulse"></span>
+                        </h2>
+                        <button onclick="loadActivities()" class="text-xs text-[var(--text-muted)] hover:text-white transition">↻ Refresh</button>
+                    </div>
+                    <div class="space-y-4" id="activityFeed">
+                        <!-- Activities will be loaded dynamically -->
+                        <div class="flex items-center justify-center py-8 text-[var(--text-muted)]">
+                            <span class="animate-spin mr-2">⏳</span> Aktivitäten werden geladen...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-semibold flex items-center gap-2">
+                            🖥️ System Status
+                        </h2>
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">99.99% Uptime</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">📊</span>
+                                <span class="text-sm">HubSpot CRM</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]" id="hubspotSynced">3,170 synced</span>
+                                <span class="status-dot bg-green-500" id="hubspotStatus"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🧠</span>
+                                <span class="text-sm">42 AI Agents</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]">All active</span>
+                                <span class="status-dot bg-green-500"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🗄️</span>
+                                <span class="text-sm">PostgreSQL DB</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]">142/400 GB</span>
+                                <span class="status-dot bg-green-500"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">💬</span>
+                                <span class="text-sm">WhatsApp API</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]">Connected</span>
+                                <span class="status-dot bg-green-500"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🤖</span>
+                                <span class="text-sm">Claude AI</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]">Opus 4.5</span>
+                                <span class="status-dot bg-green-500"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">🏠</span>
+                                <span class="text-sm">LOXONE</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-yellow-400">Gold Partner</span>
+                                <span class="status-dot bg-yellow-500"></span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <span class="text-lg">⚡</span>
+                                <span class="text-sm">Backend API</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-[var(--text-muted)]" id="backendLatency">2.3ms avg</span>
+                                <span class="status-dot bg-green-500" id="backendStatus"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // ENTERPRISE UNIVERSE V10 - API INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        const API_BASE = '/api/v1';
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Keyboard Shortcut (Cmd+K)
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('.search-input')?.focus();
+            }
+        });
+
+        // Format Numbers
+        function formatNumber(num) {
+            if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return num.toLocaleString('de-DE');
+            return num.toString();
+        }
+
+        function formatCurrency(num) {
+            if (num >= 1000000000) return '€' + (num / 1000000000).toFixed(1) + 'B';
+            if (num >= 1000000) return '€' + (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return '€' + (num / 1000).toFixed(0) + 'K';
+            return '€' + num.toLocaleString('de-DE');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // API CALLS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function fetchDealsSummary() {
+            try {
+                const start = performance.now();
+                const res = await fetch(`${API_BASE}/deals/summary`);
+                const latency = (performance.now() - start).toFixed(1);
+
+                if (res.ok) {
+                    const data = await res.json();
+
+                    // Update KPI Cards
+                    if (data.total_deals) {
+                        document.getElementById('totalDeals').textContent = formatNumber(data.total_deals);
+                    }
+
+                    if (data.total_value) {
+                        document.getElementById('pipelineValue').textContent = formatCurrency(data.total_value);
+                        document.getElementById('sidebarPipeline').textContent = formatCurrency(data.total_value) + ' Pipeline';
+                    }
+
+                    if (data.won_value) {
+                        document.getElementById('wonDeals').textContent = formatCurrency(data.won_value);
+                    }
+
+                    // Update sidebar synced count
+                    if (data.total_deals) {
+                        document.getElementById('hubspotSynced').textContent = formatNumber(data.total_deals) + ' synced';
+                    }
+
+                    // Update backend status
+                    document.getElementById('backendStatus').className = 'status-dot bg-green-500';
+                    document.getElementById('backendLatency').textContent = latency + 'ms avg';
+
+                    return data;
+                }
+            } catch (e) {
+                console.log('Deals API not available:', e);
+                document.getElementById('backendStatus').className = 'status-dot bg-red-500';
+                document.getElementById('backendLatency').textContent = 'Offline';
+            }
+            return null;
+        }
+
+        async function fetchScoringStats() {
+            try {
+                const res = await fetch(`${API_BASE}/scoring/stats`);
+                if (res.ok) {
+                    const data = await res.json();
+
+                    // Update HOT Leads
+                    if (data.tier_counts?.hot !== undefined) {
+                        const hotCount = data.tier_counts.hot;
+                        document.getElementById('sidebarHotLeads').textContent = formatNumber(hotCount) + ' HOT Leads';
+                    }
+
+                    return data;
+                }
+            } catch (e) {
+                console.log('Scoring API not available:', e);
+            }
+            return null;
+        }
+
+        async function fetchAnalyticsDashboard() {
+            try {
+                const res = await fetch(`${API_BASE}/analytics/dashboard`);
+                if (res.ok) {
+                    const data = await res.json();
+
+                    // Update total contacts if available
+                    if (data.total_contacts) {
+                        document.getElementById('totalContacts').textContent = formatNumber(data.total_contacts);
+                    }
+
+                    return data;
+                }
+            } catch (e) {
+                console.log('Analytics API not available:', e);
+            }
+            return null;
+        }
+
+        async function checkHubSpotStatus() {
+            try {
+                const res = await fetch(`${API_BASE}/hubspot/health`);
+                if (res.ok) {
+                    document.getElementById('hubspotStatus').className = 'status-dot bg-green-500';
+                } else {
+                    document.getElementById('hubspotStatus').className = 'status-dot bg-yellow-500';
+                }
+            } catch (e) {
+                document.getElementById('hubspotStatus').className = 'status-dot bg-red-500';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ACTIVITY FEED
+        // ═══════════════════════════════════════════════════════════════
+
+        const ACTIVITY_COLORS = {
+            green: 'bg-green-500/20',
+            blue: 'bg-blue-500/20',
+            purple: 'bg-purple-500/20',
+            yellow: 'bg-yellow-500/20',
+            orange: 'bg-orange-500/20',
+            cyan: 'bg-cyan-500/20',
+            red: 'bg-red-500/20',
+            gray: 'bg-gray-500/20'
+        };
+
+        const ACTIVITY_TEXT_COLORS = {
+            green: 'text-green-400',
+            blue: 'text-blue-400',
+            purple: 'text-purple-400',
+            yellow: 'text-yellow-400',
+            orange: 'text-orange-400',
+            cyan: 'text-cyan-400',
+            red: 'text-red-400',
+            gray: 'text-gray-400'
+        };
+
+        function renderActivityItem(activity, isLast = false) {
+            const bgColor = ACTIVITY_COLORS[activity.color] || ACTIVITY_COLORS.gray;
+            const textColor = ACTIVITY_TEXT_COLORS[activity.color] || ACTIVITY_TEXT_COLORS.gray;
+            const timelineClass = isLast ? '' : 'timeline-item';
+
+            return `
+                <div class="${timelineClass} relative flex gap-4">
+                    <div class="w-10 h-10 ${bgColor} rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-lg">${activity.icon || '📌'}</span>
+                    </div>
+                    <div class="flex-1 ${isLast ? '' : 'pb-4'}">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm font-semibold">${escapeHtml(activity.title)}</p>
+                                <p class="text-sm text-[var(--text-secondary)]">${escapeHtml(activity.description)}</p>
+                                ${activity.result ? `<p class="text-xs ${textColor} mt-1">→ ${escapeHtml(activity.result)}</p>` : ''}
+                            </div>
+                            <span class="text-xs text-[var(--text-muted)]">${activity.relativeTime || 'jetzt'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function loadActivities() {
+            const feedContainer = document.getElementById('activityFeed');
+
+            try {
+                // Try webhook-server activities API first (port 3000)
+                let res = await fetch('/api/activities?limit=6');
+
+                if (!res.ok) {
+                    // Fallback to app-server if available
+                    res = await fetch(`${API_BASE}/activities?limit=6`);
+                }
+
+                if (res.ok) {
+                    const data = await res.json();
+
+                    if (data.activities && data.activities.length > 0) {
+                        const html = data.activities.map((activity, index) =>
+                            renderActivityItem(activity, index === data.activities.length - 1)
+                        ).join('');
+
+                        feedContainer.innerHTML = html;
+                        document.getElementById('activityPulse').className = 'w-2 h-2 bg-green-500 rounded-full animate-pulse';
+                    } else {
+                        feedContainer.innerHTML = renderEmptyState();
+                    }
+                } else {
+                    throw new Error('API not available');
+                }
+            } catch (e) {
+                console.log('Activities API not available, showing fallback:', e);
+                feedContainer.innerHTML = renderFallbackActivities();
+            }
+        }
+
+        function renderEmptyState() {
+            return `
+                <div class="flex flex-col items-center justify-center py-8 text-[var(--text-muted)]">
+                    <span class="text-2xl mb-2">📭</span>
+                    <p class="text-sm">Keine Aktivitäten vorhanden</p>
+                    <p class="text-xs mt-1">Webhook-Events werden hier angezeigt</p>
+                </div>
+            `;
+        }
+
+        function renderFallbackActivities() {
+            // Fallback activities when API is not available
+            const fallbackActivities = [
+                { icon: '🧠', color: 'purple', title: 'Einstein', description: 'Analysierte Q4 Pipeline-Daten', result: 'Prognose: +23% Wachstum', relativeTime: '2m' },
+                { icon: '⚡', color: 'yellow', title: 'BROLY', description: '5,000 E-Mails versendet', result: '78% Open Rate', relativeTime: '5m' },
+                { icon: '💬', color: 'green', title: 'WhatsApp Bot', description: '89 neue Opt-Ins erhalten', result: '3,170 Gesamt-Kontakte', relativeTime: '8m' },
+                { icon: '🔄', color: 'cyan', title: 'HubSpot Sync', description: '1,250 Kontakte synchronisiert', result: 'Alle Daten aktuell', relativeTime: '12m' }
+            ];
+
+            return fallbackActivities.map((activity, index) =>
+                renderActivityItem(activity, index === fallbackActivities.length - 1)
+            ).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // WEBSOCKET REAL-TIME UPDATES
+        // ═══════════════════════════════════════════════════════════════
+
+        let activitySocket = null;
+        let activityCache = [];
+        const MAX_CACHED_ACTIVITIES = 20;
+
+        function connectActivityWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.hostname}:3000/ws/activities`;
+
+            try {
+                activitySocket = new WebSocket(wsUrl);
+
+                activitySocket.onopen = () => {
+                    console.log('📡 WebSocket connected to activity stream');
+                    document.getElementById('activityPulse').className = 'w-2 h-2 bg-green-500 rounded-full animate-pulse';
+                };
+
+                activitySocket.onmessage = (event) => {
+                    try {
+                        const message = JSON.parse(event.data);
+
+                        if (message.type === 'activity') {
+                            handleNewActivity(message.data);
+                        } else if (message.type === 'connected') {
+                            console.log('📡', message.message);
+                        }
+                    } catch (e) {
+                        console.error('Error parsing WebSocket message:', e);
+                    }
+                };
+
+                activitySocket.onclose = () => {
+                    console.log('📡 WebSocket disconnected, reconnecting in 5s...');
+                    document.getElementById('activityPulse').className = 'w-2 h-2 bg-yellow-500 rounded-full';
+                    setTimeout(connectActivityWebSocket, 5000);
+                };
+
+                activitySocket.onerror = (error) => {
+                    console.log('📡 WebSocket error, falling back to polling');
+                    document.getElementById('activityPulse').className = 'w-2 h-2 bg-yellow-500 rounded-full';
+                };
+
+            } catch (e) {
+                console.log('WebSocket not available, using polling');
+            }
+        }
+
+        function handleNewActivity(activity) {
+            // Add to cache
+            activityCache.unshift(activity);
+            if (activityCache.length > MAX_CACHED_ACTIVITIES) {
+                activityCache.pop();
+            }
+
+            // Update activity feed with animation
+            const feedContainer = document.getElementById('activityFeed');
+            const displayActivities = activityCache.slice(0, 6);
+
+            const html = displayActivities.map((act, index) =>
+                renderActivityItem(act, index === displayActivities.length - 1)
+            ).join('');
+
+            feedContainer.innerHTML = html;
+
+            // Flash animation for new activity
+            const firstItem = feedContainer.querySelector('.timeline-item, .relative');
+            if (firstItem) {
+                firstItem.style.animation = 'none';
+                firstItem.offsetHeight; // Trigger reflow
+                firstItem.style.animation = 'flash-new 0.5s ease-out';
+            }
+
+            // Update notification count
+            updateNotificationCount();
+        }
+
+        function updateNotificationCount() {
+            const countEl = document.getElementById('notificationCount');
+            if (countEl) {
+                const recentCount = activityCache.filter(a => {
+                    const actTime = new Date(a.timestamp);
+                    const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+                    return actTime > fiveMinAgo;
+                }).length;
+                countEl.textContent = recentCount;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+
+        async function initDashboard() {
+            console.log('🚀 Enterprise Universe V10 - Initializing...');
+
+            // Fetch all data in parallel
+            await Promise.all([
+                fetchDealsSummary(),
+                fetchScoringStats(),
+                fetchAnalyticsDashboard(),
+                checkHubSpotStatus(),
+                loadActivities()
+            ]);
+
+            // Connect WebSocket for real-time updates
+            connectActivityWebSocket();
+
+            console.log('✅ Dashboard data loaded');
+        }
+
+        // Initialize on page load
+        initDashboard();
+
+        // Refresh data every 30 seconds
+        setInterval(async () => {
+            await fetchDealsSummary();
+            await fetchScoringStats();
+        }, 30000);
+
+        // Refresh activities every 10 seconds
+        setInterval(async () => {
+            await loadActivities();
+        }, 10000);
+
+        // Sparkline animation
+        setInterval(() => {
+            document.querySelectorAll('.sparkline-bar').forEach(bar => {
+                const currentHeight = parseInt(bar.style.height);
+                const change = Math.random() * 10 - 5;
+                const newHeight = Math.max(20, Math.min(100, currentHeight + change));
+                bar.style.height = newHeight + '%';
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

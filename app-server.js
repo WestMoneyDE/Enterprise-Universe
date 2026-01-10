@@ -51,8 +51,10 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'register.html')));
 
-// Enterprise Universe v5.0 Dashboard (NEW MAIN DASHBOARD)
-app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
+// Enterprise Universe v11.0 Dashboard (MEGA GOD MODE - NEW MAIN DASHBOARD)
+app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.html')));
+app.get('/v11', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.html')));
+app.get('/v10', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v10.html')));
 app.get('/v5', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
 
 // GTZ Meta Legacy Ecosystem (Old Dashboard v3.0)
