@@ -51,6 +51,22 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'register.html')));
 
+// Enterprise Universe v5.0 Dashboard (NEW MAIN DASHBOARD)
+app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
+app.get('/v5', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
+
+// GTZ Meta Legacy Ecosystem (Old Dashboard v3.0)
+app.get('/gtzmeta', (req, res) => res.sendFile(path.join(__dirname, 'gtzmeta/index.html')));
+app.use('/gtzmeta', express.static(path.join(__dirname, 'gtzmeta')));
+
+// V5.0 Modules
+app.get('/modules/leads', (req, res) => res.sendFile(path.join(__dirname, 'modules/leads.html')));
+app.get('/modules/deals', (req, res) => res.sendFile(path.join(__dirname, 'modules/deals.html')));
+app.get('/modules/brainstorm', (req, res) => res.sendFile(path.join(__dirname, 'modules/brainstorm.html')));
+app.get('/modules/invoices', (req, res) => res.sendFile(path.join(__dirname, 'modules/invoices.html')));
+app.get('/modules/analytics', (req, res) => res.sendFile(path.join(__dirname, 'modules/analytics.html')));
+app.use('/modules', express.static(path.join(__dirname, 'modules')));
+
 // HAIKU God Mode Dashboards
 app.get('/god-mode', (req, res) => res.sendFile(path.join(__dirname, 'HAIKU_GOD_MODE_V2.html')));
 app.get('/haiku', (req, res) => res.sendFile(path.join(__dirname, 'HAIKU_GOD_MODE_V2.html')));
