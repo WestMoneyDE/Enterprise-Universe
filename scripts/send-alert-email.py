@@ -50,12 +50,13 @@ This is an automated alert from the service monitor.
 <html>
 <head>
     <style>
-        body {{ font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }}
-        .alert-box {{ background: #16213e; border-left: 4px solid #e94560; padding: 20px; border-radius: 8px; }}
-        .header {{ color: #e94560; font-size: 24px; margin-bottom: 10px; }}
-        .time {{ color: #888; font-size: 12px; }}
-        .message {{ margin: 20px 0; white-space: pre-wrap; }}
-        .footer {{ color: #666; font-size: 11px; margin-top: 20px; }}
+        body {{ font-family: Arial, sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 20px; }}
+        .alert-box {{ background: #ffffff; border-left: 4px solid #dc3545; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
+        .header {{ color: #dc3545; font-size: 24px; font-weight: bold; margin-bottom: 10px; }}
+        .time {{ color: #555555; font-size: 12px; }}
+        .message {{ margin: 20px 0; white-space: pre-wrap; color: #1a1a1a; font-size: 14px; line-height: 1.6; }}
+        .footer {{ color: #777777; font-size: 11px; margin-top: 20px; }}
+        .server {{ background: #f0f0f0; padding: 8px 12px; border-radius: 4px; display: inline-block; margin-top: 10px; color: #333; }}
     </style>
 </head>
 <body>
@@ -63,6 +64,7 @@ This is an automated alert from the service monitor.
         <div class="header">Server Alert</div>
         <div class="time">{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC</div>
         <div class="message">{message}</div>
+        <div class="server">Server: cloud-server-10325133</div>
     </div>
     <div class="footer">Automated alert from service-monitor.sh</div>
 </body>
