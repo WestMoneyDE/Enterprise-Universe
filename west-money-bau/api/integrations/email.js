@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 
 // West Money Bau specific settings
 const BAU_CONFIG = {
-    notificationEmail: 'info@west-money-bau.de',
+    notificationEmail: 'info@enterprise-universe.com',
     senderName: 'West Money Bau',
     senderEmail: process.env.SMTP_USER || 'info@enterprise-universe.com',
     signature: `
