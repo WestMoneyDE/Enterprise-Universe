@@ -2,13 +2,17 @@
   "name": "enterprise-universe-marketplace",
   "description": "Enterprise Universe Plugin Marketplace",
   "version": "1.0.0",
+  "owner": {
+    "name": "WestMoneyDE",
+    "email": "coskun.oemer@gmail.com",
+    "url": "https://github.com/WestMoneyDE"
+  },
   "plugins": [
     {
       "name": "enterprise-universe",
-      "path": ".",
       "description": "Business Management Plugin für HubSpot, Stripe & Invoicing",
       "version": "1.0.0",
-      "keywords": ["hubspot", "stripe", "invoicing", "crm", "payments"]
+      "source": "."
     }
   ]
 }
