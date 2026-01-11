@@ -22,7 +22,7 @@
 | **Branche** | Enterprise Software / B2B SaaS |
 | **Revenue 2025** | €847.000 |
 | **Won Deals (gesichert)** | €1+ Mrd. |
-| **Pipeline (gewichtet)** | €37 Mrd. |
+| **Pipeline (gewichtet)** | €411 Mrd. |
 | **Bewertung (Pre-Money)** | €15 Mio. |
 | **Funding gesucht** | €1,5 Mio. |
 
@@ -178,7 +178,7 @@ Revenue Development (€K)
 |--------|------|--------------|----------|
 | **Revenue** | €847K | €2.5M | +195% |
 | **Won Deals** | €1B+ | €1.5B | +50% |
-| **Pipeline** | €37B | €50B | +35% |
+| **Pipeline** | €411B | €550B | +34% |
 | **Kunden** | 12 | 35 | +192% |
 | **Team** | 5 | 15 | +200% |
 

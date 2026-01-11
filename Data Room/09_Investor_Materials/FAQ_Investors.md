@@ -954,7 +954,7 @@ Wir prüfen aktuell auch Software-Patente für spezifische Workflows."
 **Q8: "Wie kommt ihr auf die €15M Pre-Money Bewertung?"**
 
 **A:** "Wir haben eine einzigartige Ausgangslage:
-1. **€37B Pipeline (Weighted)**: Vertraglich gesicherte Projekte die nur auf Execution warten
+1. **€411B Pipeline (Weighted)**: Vertraglich gesicherte Projekte die nur auf Execution warten
 2. **€1B Won Deals**: Bereits gewonnene Aufträge die Revenue generieren werden
 3. **Forward Looking**: Bei projected €9M+ Revenue aus 5% der Won Deals = €18M+ fair value
 
@@ -1045,7 +1045,7 @@ Konservativ rechnen wir mit 8-10x ARR beim Exit. Bei €12M ARR (2028 Target) = 
 
 **A:** "Unsere Position ist einzigartig:
 - **€1B Won Deals**: Das ist kein normales Pre-Revenue Startup
-- **€37B Pipeline**: Massive langfristige Opportunity
+- **€411B Pipeline**: Massive langfristige Opportunity
 - **Execution Ready**: Das Kapital dient der Execution, nicht der Produktentwicklung
 
 Vergleichbare Deals mit ähnlicher Pipeline wären 2-3x höher bewertet. Die €15M Pre-Money bietet attraktiven Upside bei minimalem Risiko."
@@ -1077,7 +1077,7 @@ Die genauen Terms sind verhandelbar, aber wir wollen eine Founder-Friendly Struk
 **Response:**
 "Ich verstehe Ihre Sicht. Lassen Sie mich die Logik erklären:
 - €1B Won Deals bereits vertraglich gesichert
-- €37B Pipeline (weighted) - das ist keine Hoffnung, das sind reale Projekte
+- €411B Pipeline (weighted) - das ist keine Hoffnung, das sind reale Projekte
 - Bei nur 5% Execution = €50M+ Revenue über 5 Jahre
 - €425K bereits committed zu diesen Terms
 

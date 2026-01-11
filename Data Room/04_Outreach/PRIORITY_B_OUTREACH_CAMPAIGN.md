@@ -483,7 +483,7 @@ Metrics:
 • €847K revenue (year 1)
 • €1B+ in contracted deals
 • 12:1 LTV:CAC
-• €37B weighted pipeline
+• €411B weighted pipeline
 
 While we're raising Seed (€1.5M at €15M), wanted to get on your
 radar for Series A.

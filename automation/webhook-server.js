@@ -9,9 +9,63 @@
 
 const express = require('express');
 const crypto = require('crypto');
+const http = require('http');
 const { automationEngine, leadFinder, hubspotClient } = require('./sales-automation-engine');
+const { activityManager, ACTIVITY_TYPES } = require('./activity-manager');
 
 const app = express();
+const server = http.createServer(app);
+
+// ============================================================================
+// WEBSOCKET SETUP (Native WebSocket)
+// ============================================================================
+
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ server, path: '/ws/activities' });
+
+const wsClients = new Set();
+
+wss.on('connection', (ws, req) => {
+    console.log('📡 WebSocket client connected');
+    wsClients.add(ws);
+
+    // Send welcome message
+    ws.send(JSON.stringify({
+        type: 'connected',
+        message: 'Connected to GTz Activity Stream',
+        timestamp: new Date().toISOString()
+    }));
+
+    ws.on('close', () => {
+        console.log('📡 WebSocket client disconnected');
+        wsClients.delete(ws);
+    });
+
+    ws.on('error', (error) => {
+        console.error('WebSocket error:', error);
+        wsClients.delete(ws);
+    });
+});
+
+// Broadcast activity to all connected clients
+function broadcastActivity(activity) {
+    const message = JSON.stringify({
+        type: 'activity',
+        data: activity
+    });
+
+    wsClients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(message);
+        }
+    });
+}
+
+// Register activity listener for real-time broadcasts
+activityManager.addListener((activity) => {
+    broadcastActivity(activity);
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -117,6 +171,11 @@ async function processWhatsAppMessage(value) {
     for (const message of messages) {
         console.log(`📱 WhatsApp Message from ${message.from}:`, message.type);
 
+        const contactName = contacts[0]?.profile?.name || null;
+
+        // Log WhatsApp message activity
+        activityManager.logWhatsAppMessage(message.from, message.type, contactName);
+
         // Text-Nachricht
         if (message.type === 'text') {
             const result = await leadFinder.processIncomingWhatsApp({
@@ -134,6 +193,9 @@ async function processWhatsAppMessage(value) {
                     lastname: contacts[0]?.profile?.name?.split(' ').slice(1).join(' ') || 'Kontakt',
                     message: message.text?.body || ''
                 });
+
+                // Log new lead captured
+                activityManager.logLeadCaptured(result.contactId || message.from, 'whatsapp', contactName);
             }
         }
 
@@ -162,14 +224,19 @@ async function processInteractiveResponse(message) {
 
         if (contacts.total > 0) {
             const contactId = contacts.results[0].id;
+            const contact = await hubspotClient.getContact(contactId);
+            const contactName = `${contact.properties.firstname || ''} ${contact.properties.lastname || ''}`.trim();
+
             await hubspotClient.updateWhatsAppConsent(contactId, 'opt_in');
-            await hubspotClient.createNote(contactId, 
+            await hubspotClient.createNote(contactId,
                 `✅ WhatsApp Consent erteilt am ${new Date().toLocaleString('de-DE')}\n` +
                 `Rechtsgrundlage: Art. 6 Abs. 1 lit. a DSGVO`
             );
 
+            // Log consent activity
+            activityManager.logWhatsAppConsent(contactId, 'opt_in', contactName || null);
+
             // Willkommensnachricht senden
-            const contact = await hubspotClient.getContact(contactId);
             await automationEngine.executeFollowUp(contactId);
         }
     }
@@ -183,10 +250,16 @@ async function processInteractiveResponse(message) {
 
         if (contacts.total > 0) {
             const contactId = contacts.results[0].id;
+            const contact = await hubspotClient.getContact(contactId);
+            const contactName = `${contact.properties.firstname || ''} ${contact.properties.lastname || ''}`.trim();
+
             await hubspotClient.updateWhatsAppConsent(contactId, 'opt_out');
             await hubspotClient.createNote(contactId,
                 `❌ WhatsApp Consent abgelehnt am ${new Date().toLocaleString('de-DE')}`
             );
+
+            // Log consent activity
+            activityManager.logWhatsAppConsent(contactId, 'opt_out', contactName || null);
         }
     }
 
@@ -232,6 +305,8 @@ app.post('/webhook/zadarma', async (req, res) => {
             case 'NOTIFY_START':
                 // Anruf beginnt - Popup im Dashboard anzeigen
                 await notifyIncomingCall(caller_id, called_did);
+                // Log call start activity
+                activityManager.logCallStart(caller_id, called_did);
                 break;
 
             case 'NOTIFY_END':
@@ -243,6 +318,8 @@ app.post('/webhook/zadarma', async (req, res) => {
                     disposition,
                     timestamp: call_start
                 });
+                // Log call end activity
+                activityManager.logCallEnd(caller_id, duration || 0, disposition);
                 break;
 
             case 'NOTIFY_RECORD':
@@ -336,6 +413,14 @@ app.post('/api/lead', async (req, res) => {
             message: message || ''
         });
 
+        // Log lead captured activity
+        activityManager.logLeadCaptured(contact.id, 'webform', name, result.score);
+
+        // Log lead scored activity if score available
+        if (result.score && result.tier) {
+            activityManager.logLeadScored(contact.id, result.score, result.tier, name);
+        }
+
         res.json({
             success: true,
             message: 'Vielen Dank! Wir melden uns in Kürze.',
@@ -377,6 +462,8 @@ app.post('/webhook/hubspot', async (req, res) => {
 
                 case 'contact.creation':
                     // Neuer Kontakt über HubSpot UI erstellt
+                    const contactName = `${event.properties?.firstname || ''} ${event.properties?.lastname || ''}`.trim();
+
                     await automationEngine.processNewLead({
                         email: event.properties?.email,
                         firstname: event.properties?.firstname || '',
@@ -384,6 +471,13 @@ app.post('/webhook/hubspot', async (req, res) => {
                         phone: event.properties?.phone || '',
                         company: event.properties?.company || ''
                     });
+
+                    // Log contact created activity
+                    activityManager.logContactCreated(
+                        event.objectId,
+                        contactName || 'Neuer Kontakt',
+                        event.properties?.email
+                    );
                     break;
             }
         }
@@ -398,8 +492,12 @@ app.post('/webhook/hubspot', async (req, res) => {
 async function handleDealStageChange(event) {
     const dealId = event.objectId;
     const newStage = event.propertyValue;
+    const oldStage = event.previousValue || null;
 
     console.log(`💼 Deal ${dealId} moved to stage: ${newStage}`);
+
+    // Log deal stage change activity
+    activityManager.logDealStageChange(dealId, newStage, oldStage);
 
     // Bei "closedwon" - Vertrag generieren
     if (newStage === 'closedwon') {
@@ -550,6 +648,90 @@ app.get('/api/audit-log', (req, res) => {
 });
 
 // ============================================================================
+// ACTIVITIES API (Webhook Events)
+// ============================================================================
+
+// Alle Aktivitäten abrufen
+app.get('/api/activities', (req, res) => {
+    try {
+        const {
+            limit = 20,
+            offset = 0,
+            type,
+            source,
+            objectType,
+            objectId,
+            since,
+            until
+        } = req.query;
+
+        const result = activityManager.getActivities({
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+            type: type ? type.split(',') : null,
+            source,
+            objectType,
+            objectId,
+            since,
+            until
+        });
+
+        res.json(result);
+    } catch (error) {
+        console.error('Activities API Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Einzelne Aktivität abrufen
+app.get('/api/activities/:id', (req, res) => {
+    try {
+        const activity = activityManager.getActivity(req.params.id);
+        if (activity) {
+            res.json(activity);
+        } else {
+            res.status(404).json({ error: 'Activity not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Aktivitäten-Statistiken
+app.get('/api/activities/stats/summary', (req, res) => {
+    try {
+        const stats = activityManager.getStats();
+        res.json(stats);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Manuell Aktivität erstellen (für Tests/Admin)
+app.post('/api/activities', (req, res) => {
+    try {
+        const { type, title, description, result, source, metadata } = req.body;
+
+        if (!type) {
+            return res.status(400).json({ error: 'Type is required' });
+        }
+
+        const activity = activityManager.create(type, {
+            title,
+            description,
+            result,
+            source: source || 'manual',
+            metadata,
+            ip: req.ip
+        });
+
+        res.status(201).json(activity);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ============================================================================
 // HEALTH CHECK
 // ============================================================================
 
@@ -571,7 +753,7 @@ app.get('/health', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`
 ╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
@@ -579,7 +761,7 @@ app.listen(PORT, () => {
 ║                                                                ║
 ║   Server running on port ${PORT}                                  ║
 ║                                                                ║
-║   Endpoints:                                                   ║
+║   REST Endpoints:                                              ║
 ║   • POST /webhook/whatsapp  - WhatsApp Business Webhook        ║
 ║   • POST /webhook/zadarma   - Zadarma VoIP Webhook             ║
 ║   • POST /webhook/hubspot   - HubSpot Event Webhook            ║
@@ -587,7 +769,11 @@ app.listen(PORT, () => {
 ║   • GET  /api/stats/*       - Dashboard Statistics             ║
 ║   • GET  /api/leads         - All Leads from HubSpot           ║
 ║   • GET  /api/deals         - All Deals from HubSpot           ║
+║   • GET  /api/activities    - Activity Feed (Webhook Events)   ║
 ║   • GET  /health            - Health Check                     ║
+║                                                                ║
+║   WebSocket:                                                   ║
+║   • WS  /ws/activities      - Real-Time Activity Stream        ║
 ║                                                                ║
 ║   DSGVO-konform • WhatsApp Business API • HubSpot CRM          ║
 ║                                                                ║
@@ -595,4 +781,4 @@ app.listen(PORT, () => {
     `);
 });
 
-module.exports = app;
+module.exports = { app, server, wss, activityManager };

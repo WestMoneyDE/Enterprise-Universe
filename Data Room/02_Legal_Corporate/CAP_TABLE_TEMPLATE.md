@@ -62,7 +62,7 @@
 
 **Bewertungsgrundlage:**
 - €1+ Mrd. vertraglich gesicherte Won Deals
-- €37 Mrd. gewichtete Pipeline
+- €411 Mrd. gewichtete Pipeline
 - €847K Revenue 2024
 
 ### 2.2 Berechnung

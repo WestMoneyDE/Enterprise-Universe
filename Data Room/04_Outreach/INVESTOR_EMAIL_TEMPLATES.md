@@ -45,7 +45,7 @@ den €800 Mrd. Enterprise-Software-Markt.
 Unsere Zahlen:
 • €847K Revenue (2024)
 • €1+ Mrd. vertraglich gesicherte Deals
-• €37 Mrd. gewichtete Pipeline
+• €411 Mrd. gewichtete Pipeline
 • 12:1 LTV:CAC Ratio
 
 Wir raisen €1,5M Seed bei €15M Pre-Money.
@@ -306,7 +306,7 @@ Wie besprochen, hier die wichtigsten Punkte:
 📊 KEY METRICS:
 • Revenue 2024: €847K
 • Won Deals: €1B+ (vertraglich gesichert)
-• Pipeline: €37 Mrd. (gewichtet)
+• Pipeline: €411 Mrd. (gewichtet)
 • LTV:CAC: 12:1
 
 💰 INVESTMENT:

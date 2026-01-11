@@ -174,7 +174,7 @@
         <div class="p-4 border-t border-[var(--border)]">
             <div class="space-y-2 text-xs">
                 <div class="flex items-center gap-2"><span class="status-dot bg-red-500 pulse"></span><span class="nav-text" id="sidebarHotLeads">2,847 HOT</span></div>
-                <div class="flex items-center gap-2"><span class="status-dot bg-green-500 pulse"></span><span class="nav-text" id="sidebarPipeline">€37B Pipeline</span></div>
+                <div class="flex items-center gap-2"><span class="status-dot bg-green-500 pulse"></span><span class="nav-text" id="sidebarPipeline">€411B Pipeline</span></div>
                 <div class="flex items-center gap-2"><span class="status-dot bg-purple-500 pulse"></span><span class="nav-text">42 Bots Active</span></div>
             </div>
         </div>
@@ -233,7 +233,7 @@
                             <span class="text-2xl">📈</span>
                             <span class="text-yellow-400 text-xs">↑ 23%</span>
                         </div>
-                        <p class="font-orbitron text-xl font-bold gradient-gold" id="kpiPipeline">€37B</p>
+                        <p class="font-orbitron text-xl font-bold gradient-gold" id="kpiPipeline">€411B</p>
                         <p class="text-xs text-[var(--text-muted)]">Pipeline</p>
                     </div>
                     <div class="card p-4 hover:scale-[1.02] transition-transform">
@@ -579,7 +579,7 @@
             <!-- ═══════════════════════════════════════════════════════════════ -->
             <div id="tab-deals" class="tab-content space-y-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">DEALS PIPELINE - €37B</h2>
+                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">DEALS PIPELINE - €411B</h2>
                     <button class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neuer Deal</button>
                 </div>
 
@@ -1108,7 +1108,7 @@
             const deals = await fetchFromDB('deals/summary');
             if (deals) {
                 document.getElementById('kpiDeals').textContent = formatNumber(deals.total_deals || 3305514);
-                document.getElementById('kpiPipeline').textContent = '€' + formatNumber(deals.total_value || 37000000000);
+                document.getElementById('kpiPipeline').textContent = '€' + formatNumber(deals.total_value || 411000000000);
                 document.getElementById('kpiWon').textContent = '€' + formatNumber(deals.won_value || 1200000000);
             }
 

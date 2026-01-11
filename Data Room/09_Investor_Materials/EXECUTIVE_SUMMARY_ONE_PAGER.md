@@ -50,7 +50,7 @@ Eine **All-in-One SaaS-Plattform** speziell für Smart Home Integratoren:
 
 ```
 ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐
-│    €37 MRD.     │     €1+ MRD.    │     €847K       │     +23.5%      │
+│    €411 MRD.     │     €1+ MRD.    │     €847K       │     +23.5%      │
 │    Pipeline     │    Won Deals    │  Revenue 2025   │   YoY Growth    │
 └─────────────────┴─────────────────┴─────────────────┴─────────────────┘
 ```
@@ -140,7 +140,7 @@ Eine **All-in-One SaaS-Plattform** speziell für Smart Home Integratoren:
 | # | Highlight |
 |---|-----------|
 | 1 | **€1 Mrd. Won Deals:** Vertraglich gesicherte Aufträge, ready to execute |
-| 2 | **€37 Mrd. Pipeline:** Massive langfristige Opportunity |
+| 2 | **€411 Mrd. Pipeline:** Massive langfristige Opportunity |
 | 3 | **Proven Revenue:** €847K in 2025 mit solidem Wachstum |
 | 4 | **Strong Moat:** LOXONE Partnership + Proprietäre Daten |
 | 5 | **Capital Efficient:** €847K Revenue mit minimalem Team |

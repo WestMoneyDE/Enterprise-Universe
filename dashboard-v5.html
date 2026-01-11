@@ -683,7 +683,7 @@
                     <span class="stat-icon">💰</span>
                     <span class="stat-badge">PIPELINE</span>
                 </div>
-                <div class="stat-value" id="pipelineValue">€37B</div>
+                <div class="stat-value" id="pipelineValue">€411B</div>
                 <div class="stat-label">Pipeline Value</div>
                 <div class="stat-change">+€1.2B this week</div>
             </div>
@@ -924,8 +924,8 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // Configuration
-        const API_BASE = 'http://localhost:8000/api/v1';
+        // Configuration - using relative path for nginx proxy
+        const API_BASE = '/api/v1';
         const HUBSPOT_STATS = { deals: 3305514, contacts: 14302736, pipeline: 37000000000, wonDeals: 1000000000 };
 
         // 34 AI Agents

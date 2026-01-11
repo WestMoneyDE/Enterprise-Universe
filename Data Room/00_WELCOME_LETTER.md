@@ -25,7 +25,7 @@ Thank you for your interest in Enterprise Universe. This Data Room contains all 
 
 | Metric | Value |
 |--------|-------|
-| **Pipeline (Weighted)** | €37 Billion |
+| **Pipeline (Weighted)** | €411 Billion |
 | **Won Deals (Contracted)** | €1 Billion |
 | **Revenue 2025** | €847.000 |
 | **Seeking** | €1.500.000 |
@@ -102,7 +102,7 @@ We recommend reviewing these documents first:
 
 | Factor | Details |
 |--------|---------|
-| **Massive Pipeline** | €37B weighted pipeline built over 10+ years in Smart Home industry |
+| **Massive Pipeline** | €411B weighted pipeline built over 10+ years in Smart Home industry |
 | **Proven Execution** | €1B in contracted deals ready to execute |
 | **First Mover** | Only AI-powered platform for Smart Home integrators in DACH |
 | **Strong Partnerships** | LOXONE Gold Partner since 2020 |

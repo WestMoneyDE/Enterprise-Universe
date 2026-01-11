@@ -45,7 +45,7 @@ I'm Ömer Coskun, founder of Enterprise Universe. We're transforming the
 Our numbers:
 • €847K revenue (2024)
 • €1B+ contracted deals
-• €37B weighted pipeline
+• €411B weighted pipeline
 • 12:1 LTV:CAC ratio
 
 We're raising €1.5M Seed at €15M pre-money.
@@ -304,7 +304,7 @@ As discussed, here are the key points:
 📊 KEY METRICS:
 • Revenue 2024: €847K
 • Won Deals: €1B+ (contracted)
-• Pipeline: €37B (weighted)
+• Pipeline: €411B (weighted)
 • LTV:CAC: 12:1
 
 💰 INVESTMENT:

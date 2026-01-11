@@ -60,7 +60,7 @@
 
 **Valuation Basis:**
 - €1B+ contractually secured won deals
-- €37B weighted pipeline
+- €411B weighted pipeline
 - €847K Revenue 2024
 
 ### 2.2 Calculation
