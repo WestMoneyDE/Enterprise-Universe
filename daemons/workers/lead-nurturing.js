@@ -214,8 +214,8 @@ async function run() {
                     // Check if already sent
                     const sent = await db.query(`
                         SELECT 1 FROM bau.notifications
-                        WHERE entity_type = 'project' AND entity_id = $1
-                        AND notification_type = $2
+                        WHERE recipient_type = 'project' AND recipient_id = $1
+                        AND template = $2
                     `, [inquiry.id, step.template]);
 
                     if (sent.rows.length === 0) {
@@ -237,9 +237,9 @@ async function run() {
                                 emailsSent++;
                                 await db.query(`
                                     INSERT INTO bau.notifications
-                                    (entity_type, entity_id, notification_type, channel, recipient, status)
+                                    (recipient_type, recipient_id, recipient_email, template, channel, status)
                                     VALUES ($1, $2, $3, $4, $5, $6)
-                                `, ['project', inquiry.id, step.template, 'email', inquiry.email, 'sent']);
+                                `, ['project', inquiry.id, inquiry.email, step.template, 'email', 'sent']);
                             }
                         }
                         break; // Only send one email per lead per run
@@ -266,8 +266,8 @@ async function run() {
                 if (daysSince >= step.delay_days) {
                     const sent = await db.query(`
                         SELECT 1 FROM bau.notifications
-                        WHERE entity_type = 'application' AND entity_id = $1
-                        AND notification_type = $2
+                        WHERE recipient_type = 'application' AND recipient_id = $1
+                        AND template = $2
                     `, [app.id, step.template]);
 
                     if (sent.rows.length === 0) {
@@ -283,9 +283,9 @@ async function run() {
                                 emailsSent++;
                                 await db.query(`
                                     INSERT INTO bau.notifications
-                                    (entity_type, entity_id, notification_type, channel, recipient, status)
+                                    (recipient_type, recipient_id, recipient_email, template, channel, status)
                                     VALUES ($1, $2, $3, $4, $5, $6)
-                                `, ['application', app.id, step.template, 'email', app.email, 'sent']);
+                                `, ['application', app.id, app.email, step.template, 'email', 'sent']);
                             }
                         }
                         break;
