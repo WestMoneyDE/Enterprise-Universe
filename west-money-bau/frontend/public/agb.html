@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGB | West Money Bau</title>
+    <meta name="description" content="Allgemeine Geschaeftsbedingungen der West Money Bau GmbH fuer Smart Home, barrierefreies Bauen und Sicherheitssysteme.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+            --bau-surface: #112240;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00c853, #00b0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(0, 200, 83, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(0, 176, 255, 0.08) 0%, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .content-section h2 {
+            color: #00c853;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-section p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .content-section a {
+            color: #00c853;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .content-section a:hover {
+            color: #00e676;
+        }
+
+        .content-section ul, .content-section ol {
+            color: #94a3b8;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content-section ol {
+            list-style-type: decimal;
+        }
+
+        .highlight-box {
+            background: rgba(0, 200, 83, 0.1);
+            border-left: 3px solid #00c853;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 109, 0, 0.1);
+            border-left: 3px solid #ff6d00;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .warning-box p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="hero-gradient">
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center font-bold text-lg">
+                        WMB
+                    </div>
+                    <div>
+                        <span class="font-semibold text-white">West Money Bau</span>
+                        <span class="text-xs text-green-400 block">LOXONE Gold Partner</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-6">
+                    <a href="/#services" class="text-gray-400 hover:text-white transition text-sm">Leistungen</a>
+                    <a href="/#contact" class="text-gray-400 hover:text-white transition text-sm">Kontakt</a>
+                    <a href="/portal" class="bg-gradient-to-r from-green-500 to-blue-500 px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Kundenportal</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <div class="glass rounded-2xl p-8 md:p-12">
+            <!-- Header -->
+            <div class="mb-8 pb-8 border-b border-white/10">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">Allgemeine Geschaeftsbedingungen</h1>
+                <p class="text-gray-400">der West Money Bau GmbH fuer Dienstleistungen im Bereich Smart Home, barrierefreies Bauen und Sicherheitssysteme</p>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section">
+                <h2>§ 1 Geltungsbereich</h2>
+                <ol>
+                    <li>Diese Allgemeinen Geschaeftsbedingungen (AGB) gelten fuer alle Vertraege zwischen der West Money Bau GmbH (nachfolgend "Auftragnehmer") und dem Kunden (nachfolgend "Auftraggeber") ueber Leistungen im Bereich Smart Home Installation, barrierefreies Bauen und Sicherheitssysteme.</li>
+                    <li>Abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Auftragnehmer stimmt ihrer Geltung ausdruecklich schriftlich zu.</li>
+                    <li>Diese AGB gelten auch fuer alle kuenftigen Geschaefte mit dem Auftraggeber, soweit es sich um Rechtsgeschaefte verwandter Art handelt.</li>
+                </ol>
+
+                <h2>§ 2 Vertragsschluss</h2>
+                <ol>
+                    <li>Angebote des Auftragnehmers sind freibleibend und unverbindlich, sofern sie nicht ausdruecklich als verbindlich gekennzeichnet sind.</li>
+                    <li>Ein Vertrag kommt erst durch die schriftliche Auftragsbestaetigung des Auftragnehmers oder durch Beginn der Ausfuehrung der Leistung zustande.</li>
+                    <li>Der Auftraggeber ist an seinen Auftrag fuer die Dauer von 4 Wochen gebunden.</li>
+                    <li>Alle Vereinbarungen, die zwischen dem Auftragnehmer und dem Auftraggeber zum Zweck der Ausfuehrung des Auftrags getroffen werden, sind schriftlich niederzulegen.</li>
+                </ol>
+
+                <h2>§ 3 Leistungsumfang</h2>
+                <ol>
+                    <li>Der Umfang der zu erbringenden Leistungen ergibt sich aus der schriftlichen Auftragsbestaetigung des Auftragnehmers bzw. aus dem von beiden Parteien unterzeichneten Vertrag.</li>
+                    <li>Aenderungen und Ergaenzungen des Leistungsumfangs beduerfender Schriftform.</li>
+                    <li>Die Leistungen des Auftragnehmers umfassen insbesondere:
+                        <ul>
+                            <li>Planung und Beratung fuer Smart Home Systeme (LOXONE, KNX)</li>
+                            <li>Installation und Inbetriebnahme von Hausautomationssystemen</li>
+                            <li>Planung und Umbau fuer barrierefreies Wohnen nach DIN 18040</li>
+                            <li>Installation von Sicherheitssystemen (Alarmanlagen, Videoueberwachung)</li>
+                            <li>Wartung und Service bestehender Anlagen</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>§ 4 Mitwirkungspflichten des Auftraggebers</h2>
+                <ol>
+                    <li>Der Auftraggeber ist verpflichtet, dem Auftragnehmer alle fuer die Ausfuehrung des Auftrags erforderlichen Informationen rechtzeitig zur Verfuegung zu stellen.</li>
+                    <li>Der Auftraggeber hat dafuer Sorge zu tragen, dass die raeumlichen und technischen Voraussetzungen fuer die Installation am Installationsort erfuellt sind.</li>
+                    <li>Der Auftraggeber stellt kostenlos Strom und Wasser fuer die Durchfuehrung der Arbeiten zur Verfuegung.</li>
+                    <li>Der Auftraggeber gewaehrleistet den Zugang zu den Raeumlichkeiten waehrend der vereinbarten Arbeitszeiten.</li>
+                    <li>Verzoeagerungen durch mangelnde Mitwirkung des Auftraggebers berechtigen den Auftragnehmer zur Anpassung von Terminen und zur Geltendmachung von Mehrkosten.</li>
+                </ol>
+
+                <h2>§ 5 Preise und Zahlungsbedingungen</h2>
+                <ol>
+                    <li>Es gelten die im Angebot bzw. in der Auftragsbestaetigung genannten Preise. Alle Preise verstehen sich zuzueglich der gesetzlichen Mehrwertsteuer.</li>
+                    <li>Zahlungen sind wie folgt faellig:
+                        <ul>
+                            <li>30% bei Auftragserteilung (Anzahlung)</li>
+                            <li>40% nach Lieferung der Hauptkomponenten</li>
+                            <li>30% nach Fertigstellung und Abnahme</li>
+                        </ul>
+                    </li>
+                    <li>Rechnungen sind innerhalb von 14 Tagen nach Rechnungsstellung ohne Abzug zahlbar.</li>
+                    <li>Bei Zahlungsverzug ist der Auftragnehmer berechtigt, Verzugszinsen in Hoehe von 9 Prozentpunkten ueber dem Basiszinssatz zu berechnen.</li>
+                    <li>Aufrechnungsrechte stehen dem Auftraggeber nur zu, wenn seine Gegenansprueche rechtskraeftig festgestellt oder unbestritten sind.</li>
+                </ol>
+
+                <h2>§ 6 Lieferung und Ausfuehrung</h2>
+                <ol>
+                    <li>Liefertermine und Ausfuehrungsfristen sind nur verbindlich, wenn sie vom Auftragnehmer ausdruecklich als verbindlich bestaetigt wurden.</li>
+                    <li>Teillieferungen und Teilleistungen sind zulaessig, soweit sie dem Auftraggeber zumutbar sind.</li>
+                    <li>Geraten wir mit einer Lieferung oder Leistung in Verzug, so kann der Auftraggeber nach angemessener Nachfristsetzung vom Vertrag zuruecktreten.</li>
+                    <li>Hohere Gewalt, Streik, unvorhersehbare Hindernisse sowie andere vom Auftragnehmer nicht zu vertretende Umstaende verlaengern die Lieferfrist entsprechend.</li>
+                </ol>
+
+                <h2>§ 7 Abnahme</h2>
+                <ol>
+                    <li>Nach Fertigstellung der Leistung erfolgt eine gemeinsame Abnahme. Der Auftragnehmer laedt den Auftraggeber hierzu ein.</li>
+                    <li>Der Auftraggeber ist zur Abnahme verpflichtet, sobald die Leistung im Wesentlichen vertragsmaessig erbracht ist. Unwesentliche Maengel berechtigen nicht zur Verweigerung der Abnahme.</li>
+                    <li>Wird die Abnahme nicht innerhalb von 12 Werktagen nach Fertigstellungsanzeige durchgefuehrt und hat der Auftraggeber innerhalb dieser Frist keine wesentlichen Maengel schriftlich gerueget, gilt die Leistung als abgenommen.</li>
+                    <li>Mit der Abnahme geht die Gefahr auf den Auftraggeber ueber.</li>
+                </ol>
+
+                <h2>§ 8 Gewaehrleistung</h2>
+                <ol>
+                    <li>Die Gewaehrleistungsfrist betraegt 2 Jahre ab Abnahme der Leistung, sofern nichts anderes vereinbart wurde.</li>
+                    <li>Fuer LOXONE-Komponenten gelten die Herstellergarantiebedingungen zusaetzlich zu den gesetzlichen Gewaehrleistungsrechten.</li>
+                    <li>Maengel sind unverzueglich, spaetestens innerhalb von 14 Tagen nach Entdeckung, schriftlich anzuzeigen.</li>
+                    <li>Bei berechtigten Maengelruegen steht dem Auftragnehmer zunaechst das Recht zur Nacherfuellung (Nachbesserung oder Ersatzlieferung) zu.</li>
+                    <li>Schlaegt die Nacherfuellung fehl, kann der Auftraggeber nach seiner Wahl Minderung oder Ruecktritt vom Vertrag verlangen.</li>
+                    <li>Von der Gewaehrleistung ausgeschlossen sind Maengel, die durch:
+                        <ul>
+                            <li>unsachgemaesse Bedienung oder Behandlung</li>
+                            <li>natuerlichen Verschleiss</li>
+                            <li>Eingriffe Dritter oder des Auftraggebers</li>
+                            <li>aeussere Einfluesse (z.B. Ueberspannung, Blitzschlag)</li>
+                        </ul>
+                        entstanden sind.
+                    </li>
+                </ol>
+
+                <h2>§ 9 Haftung</h2>
+                <ol>
+                    <li>Der Auftragnehmer haftet unbeschraenkt fuer Vorsatz und grobe Fahrlaessigkeit sowie bei Verletzung von Leben, Koerper und Gesundheit.</li>
+                    <li>Bei leichter Fahrlaessigkeit haftet der Auftragnehmer nur bei Verletzung wesentlicher Vertragspflichten (Kardinalpflichten). In diesem Fall ist die Haftung auf den vorhersehbaren, vertragstypischen Schaden begrenzt.</li>
+                    <li>Die Haftung fuer mittelbare Schaeden und Folgeschaeden ist ausgeschlossen, soweit diese nicht auf einer vorsaetzlichen oder grob fahrlaessigen Pflichtverletzung beruhen.</li>
+                    <li>Die Haftungsbeschraenkungen gelten nicht fuer Ansprueche nach dem Produkthaftungsgesetz.</li>
+                </ol>
+
+                <h2>§ 10 Eigentumsvorbehalt</h2>
+                <ol>
+                    <li>Alle gelieferten Waren bleiben bis zur vollstaendigen Bezahlung aller Forderungen aus der Geschaeftsverbindung Eigentum des Auftragnehmers.</li>
+                    <li>Der Auftraggeber ist verpflichtet, die Vorbehaltsware pfleglich zu behandeln.</li>
+                    <li>Bei Zugriff Dritter auf die Vorbehaltsware ist der Auftragnehmer unverzueglich zu informieren.</li>
+                </ol>
+
+                <h2>§ 11 Smart Home spezifische Regelungen</h2>
+                <ol>
+                    <li><strong class="text-white">Systemkompatibilitaet:</strong> Der Auftragnehmer uebernimmt keine Gewaehr fuer die Kompatibilitaet mit Drittanbieter-Systemen, sofern diese nicht ausdruecklich im Leistungsumfang enthalten sind.</li>
+                    <li><strong class="text-white">Software-Updates:</strong> Die Pflicht zur Durchfuehrung von Software-Updates fuer Smart Home Komponenten liegt beim Auftraggeber, sofern kein Wartungsvertrag besteht.</li>
+                    <li><strong class="text-white">Datensicherheit:</strong> Der Auftraggeber ist fuer die Sicherheit seiner Zugangsdaten und Passwoerter selbst verantwortlich.</li>
+                    <li><strong class="text-white">Internetverbindung:</strong> Fuer Funktionen, die eine Internetverbindung erfordern, ist der Auftraggeber selbst fuer eine stabile Internetverbindung verantwortlich.</li>
+                </ol>
+
+                <h2>§ 12 Datenschutz</h2>
+                <ol>
+                    <li>Der Auftragnehmer verarbeitet personenbezogene Daten des Auftraggebers ausschliesslich zur Vertragserfuellung und unter Beachtung der geltenden Datenschutzbestimmungen.</li>
+                    <li>Weitere Informationen zum Datenschutz finden Sie in unserer <a href="/datenschutz">Datenschutzerklaerung</a>.</li>
+                </ol>
+
+                <h2>§ 13 Geheimhaltung</h2>
+                <ol>
+                    <li>Beide Parteien verpflichten sich, alle im Rahmen der Zusammenarbeit erlangten vertraulichen Informationen geheim zu halten.</li>
+                    <li>Diese Verpflichtung gilt auch nach Beendigung des Vertragsverhaeltnisses fort.</li>
+                </ol>
+
+                <h2>§ 14 Schlussbestimmungen</h2>
+                <ol>
+                    <li>Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts.</li>
+                    <li>Erfuellungsort fuer alle Verpflichtungen aus dem Vertragsverhaeltnis ist Koeln.</li>
+                    <li>Gerichtsstand fuer alle Streitigkeiten aus diesem Vertrag ist, soweit gesetzlich zulaessig, Koeln.</li>
+                    <li>Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, bleibt die Wirksamkeit der uebrigen Bestimmungen unberuehrt. Anstelle der unwirksamen Bestimmung gilt eine wirksame Bestimmung als vereinbart, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am naechsten kommt.</li>
+                    <li>Aenderungen und Ergaenzungen dieser AGB beduerfender Schriftform. Dies gilt auch fuer die Abaenderung dieser Schriftformklausel.</li>
+                </ol>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong class="text-white">Hinweis:</strong> Diese AGB wurden zuletzt im Januar 2026 aktualisiert.
+                        Bei Fragen zu unseren Geschaeftsbedingungen wenden Sie sich bitte an
+                        <a href="mailto:info@west-money-bau.de">info@west-money-bau.de</a>.
+                    </p>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-white/10 text-sm text-gray-500">
+                    <p>Stand: Januar 2026</p>
+                    <p class="mt-2">West Money Bau GmbH | Musterstrasse 123 | 50667 Koeln</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>&copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.</p>
+            <div class="flex justify-center gap-4 mt-2">
+                <a href="/impressum" class="hover:text-white transition">Impressum</a>
+                <a href="/datenschutz" class="hover:text-white transition">Datenschutz</a>
+                <a href="/agb" class="text-green-400 hover:text-green-300 transition">AGB</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
