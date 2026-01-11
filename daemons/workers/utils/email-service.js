@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const CONFIG = {
-    from: '"Enterprise Universe" <info@enterprise-universe.com>',
+    from: process.env.SMTP_FROM || `"Enterprise Universe" <${process.env.SMTP_USER}>`,
     adminEmail: 'info@enterprise-universe.com',
     replyTo: 'info@enterprise-universe.com'
 };
