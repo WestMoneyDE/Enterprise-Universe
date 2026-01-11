@@ -616,7 +616,7 @@ app.get('/api/subcontractors/:id', async (req, res) => {
              FROM bau.project_assignments pa
              JOIN bau.projects p ON pa.project_id = p.id
              WHERE pa.subcontractor_id = $1
-             ORDER BY pa.created_at DESC`,
+             ORDER BY pa.assigned_at DESC`,
             [req.params.id]
         );
 
