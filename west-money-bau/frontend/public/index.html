@@ -165,9 +165,32 @@
                 </div>
                 <div class="flex items-center gap-4">
                     <a href="/portal" class="text-gray-300 hover:text-white transition hidden md:block">Kundenportal</a>
-                    <a href="#contact" class="btn-primary px-6 py-2.5 rounded-xl font-semibold">
+                    <a href="#contact" class="btn-primary px-6 py-2.5 rounded-xl font-semibold hidden sm:block">
                         Projekt anfragen
                     </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition" aria-label="Menu">
+                        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0;">
+                <div class="py-4 border-t border-white/10">
+                    <div class="flex flex-col gap-2">
+                        <a href="#services" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Leistungen</a>
+                        <a href="#smart-home" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Smart Home</a>
+                        <a href="#about" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Ueber uns</a>
+                        <a href="#karriere" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Karriere</a>
+                        <a href="#contact" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Kontakt</a>
+                        <a href="/portal" class="mobile-nav-link px-4 py-3 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">Kundenportal</a>
+                        <a href="#contact" class="btn-primary px-4 py-3 rounded-lg font-semibold text-center mt-2">Projekt anfragen</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -791,6 +814,43 @@
             } catch (error) {
                 alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
             }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', function() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.style.maxHeight = '0';
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                setTimeout(() => {
+                    if (!isMenuOpen) mobileMenu.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                isMenuOpen = false;
+                mobileMenu.style.maxHeight = '0';
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            });
         });
     </script>
 </body>
