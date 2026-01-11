@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Enterprise Universe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 50%, #0a0a12 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: rgba(22, 33, 62, 0.95);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700, #FF6B00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        .logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #94A3B8;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px;
+            padding-right: 45px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            background: rgba(15, 15, 35, 0.8);
+            color: white;
+            font-size: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #64748B;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: #8b5cf6;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        .message.show {
+            display: flex;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #64748B;
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .register-link {
+            text-align: center;
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            color: #a78bfa;
+            text-decoration: underline;
+        }
+
+        .security-badge {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .security-badge span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            color: #64748B;
+        }
+
+        .security-badge span::before {
+            content: '🔒';
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            margin-top: 8px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.1);
+            overflow: hidden;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .password-strength-bar.weak { width: 33%; background: #ef4444; }
+        .password-strength-bar.medium { width: 66%; background: #f59e0b; }
+        .password-strength-bar.strong { width: 100%; background: #10b981; }
+
+        /* 2FA Styles */
+        .two-fa-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .two-fa-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .two-fa-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .two-fa-info h3 {
+            color: #a78bfa;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .two-fa-info p {
+            color: #94A3B8;
+            font-size: 0.85rem;
+        }
+
+        .totp-input {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 8px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: #94A3B8;
+            padding: 12px;
+            margin-top: 12px;
+        }
+
+        .back-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: #8b5cf6;
+            color: white;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .setup-2fa-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .setup-2fa-link a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+
+        .setup-2fa-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo">
+                <div class="logo-icon">神</div>
+                <h1>Enterprise Universe</h1>
+                <p>Secure Access Portal</p>
+            </div>
+
+            <div id="errorMsg" class="message error">
+                <span>⚠️</span>
+                <span id="errorText">Fehler</span>
+            </div>
+
+            <div id="successMsg" class="message success">
+                <span>✓</span>
+                <span id="successText">Erfolgreich! Weiterleitung...</span>
+            </div>
+
+            <form id="loginForm">
+                <!-- Step 1: Email & Password -->
+                <div id="credentialsSection">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" placeholder="ihre@email.de" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Passwort</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="toggle-password" onclick="togglePassword()">👁</button>
+                        </div>
+                        <div id="passwordStrength" class="password-strength">
+                            <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="submit-btn">
+                        Login
+                    </button>
+                </div>
+
+                <!-- Step 2: Two-Factor Authentication -->
+                <div id="twoFaSection" class="two-fa-section">
+                    <div class="two-fa-info">
+                        <h3>🔐 Zwei-Faktor-Authentifizierung</h3>
+                        <p>Geben Sie den 6-stelligen Code aus Ihrer Authenticator-App ein</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="totpCode">Authentifizierungscode</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="totpCode" class="totp-input" placeholder="000000" maxlength="8" autocomplete="one-time-code" inputmode="numeric">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="verify2faBtn" class="submit-btn">
+                        Verifizieren
+                    </button>
+
+                    <button type="button" id="backBtn" class="submit-btn back-btn" onclick="showCredentialsForm()">
+                        Zurück
+                    </button>
+
+                    <div class="setup-2fa-link">
+                        <p>Backup-Code verwenden? Einfach hier eingeben.</p>
+                    </div>
+                </div>
+            </form>
+
+            <div class="divider"><span>oder</span></div>
+
+            <p class="register-link">
+                Noch kein Konto? <a href="/register">Jetzt registrieren</a>
+            </p>
+
+            <div class="security-badge">
+                <span>SSL Verschlüsselt</span>
+                <span>DSGVO Konform</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '';
+
+        // State for 2FA flow
+        let pendingLoginData = null;
+
+        // Toggle password visibility
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const btn = document.querySelector('.toggle-password');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁';
+            }
+        }
+
+        // Show message
+        function showMessage(type, text) {
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+
+            if (type === 'error') {
+                document.getElementById('errorText').textContent = text;
+                errorMsg.classList.add('show');
+            } else {
+                document.getElementById('successText').textContent = text;
+                successMsg.classList.add('show');
+            }
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('errorMsg').classList.remove('show');
+            document.getElementById('successMsg').classList.remove('show');
+        }
+
+        // Show 2FA form
+        function show2FAForm(userData) {
+            document.getElementById('credentialsSection').style.display = 'none';
+            document.getElementById('twoFaSection').classList.add('show');
+            document.getElementById('totpCode').focus();
+
+            // Update logo subtitle
+            document.querySelector('.logo p').textContent = `Hallo, ${userData.firstName || userData.email}`;
+        }
+
+        // Show credentials form (go back)
+        function showCredentialsForm() {
+            document.getElementById('twoFaSection').classList.remove('show');
+            document.getElementById('credentialsSection').style.display = 'block';
+            document.getElementById('totpCode').value = '';
+            pendingLoginData = null;
+            hideMessages();
+
+            // Reset logo subtitle
+            document.querySelector('.logo p').textContent = 'Secure Access Portal';
+        }
+
+        // Complete login with token
+        function completeLogin(data) {
+            localStorage.setItem('eu_token', data.token);
+            localStorage.setItem('eu_user', JSON.stringify(data.user));
+
+            showMessage('success', `Willkommen, ${data.user.firstName || data.user.email}!`);
+
+            // Redirect to original destination or default based on role
+            setTimeout(() => {
+                const savedRedirect = sessionStorage.getItem('auth_redirect');
+                sessionStorage.removeItem('auth_redirect');
+
+                const defaultUrl = data.user.role === 'admin' ? '/haiku' : '/genius';
+                const redirectUrl = savedRedirect || defaultUrl;
+
+                window.location.href = redirectUrl;
+            }, 1000);
+        }
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            hideMessages();
+
+            const is2FAStep = document.getElementById('twoFaSection').classList.contains('show');
+
+            if (is2FAStep) {
+                // 2FA verification step
+                await handle2FAVerification();
+            } else {
+                // Initial login step
+                await handleInitialLogin();
+            }
+        });
+
+        // Handle initial login (email/password)
+        async function handleInitialLogin() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!email || !password) {
+                showMessage('error', 'Bitte Email und Passwort eingeben');
+                return;
+            }
+
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(API_BASE + '/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.requires2FA) {
+                        // 2FA required - store credentials and show 2FA form
+                        pendingLoginData = { email, password, userId: data.userId };
+                        show2FAForm(data.user);
+                    } else if (data.token) {
+                        // No 2FA - complete login
+                        completeLogin(data);
+                    } else {
+                        showMessage('error', 'Unbekannter Fehler');
+                    }
+                } else {
+                    showMessage('error', data.error || 'Login fehlgeschlagen');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('error', 'Verbindungsfehler. Bitte versuchen Sie es erneut.');
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Handle 2FA verification
+        async function handle2FAVerification() {
+            const totpCode = document.getElementById('totpCode').value.trim().replace(/\s/g, '');
+            const verifyBtn = document.getElementById('verify2faBtn');
+
+            if (!totpCode) {
+                showMessage('error', 'Bitte geben Sie den Authentifizierungscode ein');
+                return;
+            }
+
+            if (!pendingLoginData) {
+                showMessage('error', 'Sitzung abgelaufen. Bitte erneut anmelden.');
+                showCredentialsForm();
+                return;
+            }
+
+            verifyBtn.classList.add('loading');
+            verifyBtn.disabled = true;
+
+            try {
+                // Re-submit login with TOTP token
+                const response = await fetch(API_BASE + '/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: pendingLoginData.email,
+                        password: pendingLoginData.password,
+                        totpToken: totpCode
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.token) {
+                    completeLogin(data);
+                } else {
+                    showMessage('error', data.error || 'Ungültiger Code. Bitte erneut versuchen.');
+                    document.getElementById('totpCode').value = '';
+                    document.getElementById('totpCode').focus();
+                }
+            } catch (error) {
+                console.error('2FA verification error:', error);
+                showMessage('error', 'Verbindungsfehler. Bitte versuchen Sie es erneut.');
+            } finally {
+                verifyBtn.classList.remove('loading');
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // Auto-submit when 6 digits entered
+        document.getElementById('totpCode').addEventListener('input', function(e) {
+            // Only allow digits
+            this.value = this.value.replace(/[^0-9A-Za-z]/g, '').toUpperCase();
+
+            // Auto-submit when 6+ characters (for backup codes too)
+            if (this.value.length >= 6) {
+                // Small delay to show the complete code
+                setTimeout(() => {
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+                }, 200);
+            }
+        });
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('eu_token');
+            if (token) {
+                fetch(API_BASE + '/api/v1/auth/verify', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.valid) {
+                        window.location.href = '/genius';
+                    } else {
+                        localStorage.removeItem('eu_token');
+                        localStorage.removeItem('eu_user');
+                    }
+                })
+                .catch(() => {});
+            }
+        });
+    </script>
+</body>
+</html>
