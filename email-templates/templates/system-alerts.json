@@ -1,0 +1,103 @@
+{
+  "category": "System & Alerts",
+  "language": "de",
+  "templates": [
+    {
+      "id": "system_health_alert",
+      "name": "System Health Alert",
+      "trigger": "Service Down/Critical",
+      "recipient": "Admin",
+      "priority": "high",
+      "subject": "[ALERT] {{service_name}} ist nicht erreichbar",
+      "body": "KRITISCHER ALERT\n================\n\nService: {{service_name}}\nStatus: {{status}}\nZeit: {{timestamp}}\n\nFEHLERDETAILS\n=============\n{{error_details}}\n\nLETZTE BEKANNTE AKTIVITÄT\n=========================\n{{last_activity}}\n\nEMPFOHLENE AKTIONEN\n===================\n1. Service-Logs prüfen\n2. Neustart versuchen\n3. Ressourcen-Auslastung prüfen\n\nServer-Dashboard: {{dashboard_link}}",
+      "variables": ["service_name", "status", "timestamp", "error_details", "last_activity", "dashboard_link"]
+    },
+    {
+      "id": "system_health_recovery",
+      "name": "Service wiederhergestellt",
+      "trigger": "Service wieder online",
+      "recipient": "Admin",
+      "subject": "[RESOLVED] {{service_name}} ist wieder online",
+      "body": "SERVICE WIEDERHERGESTELLT\n=========================\n\nService: {{service_name}}\nStatus: Online\nDowntime: {{downtime_duration}}\nWiederherstellung: {{recovery_time}}\n\nKeine weitere Aktion erforderlich.",
+      "variables": ["service_name", "downtime_duration", "recovery_time"]
+    },
+    {
+      "id": "daily_report",
+      "name": "Täglicher Geschäftsbericht",
+      "trigger": "Täglich 08:00 (Mo-Fr)",
+      "recipient": "Admin",
+      "subject": "Tagesbericht West Money Bau - {{date}}",
+      "body": "TÄGLICHER GESCHÄFTSBERICHT\n{{date}}\n\n═══════════════════════════════════════\n\nPROJEKTE\n--------\nNeue Anfragen: {{new_inquiries}}\nIn Bearbeitung: {{in_progress}}\nAbgeschlossen: {{completed}}\n\nUMSATZ\n------\nEingegangen (24h): {{revenue_24h}} EUR\nAusstehend: {{outstanding}} EUR\nÜberfällig: {{overdue}} EUR\n\nSUBUNTERNEHMER\n--------------\nAktiv: {{active_subs}}\nNeue Bewerbungen: {{new_applications}}\nVerfügbar: {{available_subs}}\n\nAKTIONEN ERFORDERLICH\n---------------------\n{{action_items}}\n\nDashboard: https://west-money-bau.de/dashboard",
+      "variables": ["date", "new_inquiries", "in_progress", "completed", "revenue_24h", "outstanding", "overdue", "active_subs", "new_applications", "available_subs", "action_items"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "weekly_summary",
+      "name": "Wöchentliche Zusammenfassung",
+      "trigger": "Montag 08:00",
+      "recipient": "Admin",
+      "subject": "Wochenbericht KW{{week}} - West Money Bau",
+      "body": "WÖCHENTLICHER GESCHÄFTSBERICHT\nKW {{week}} ({{week_start}} - {{week_end}})\n\n═══════════════════════════════════════\n\nKENNZAHLEN\n----------\nProjekte gestartet: {{projects_started}}\nProjekte abgeschlossen: {{projects_completed}}\nAnfragen erhalten: {{total_inquiries}}\nConversion Rate: {{conversion_rate}}%\n\nFINANZEN\n--------\nUmsatz: {{weekly_revenue}} EUR\nAusstehend: {{total_outstanding}} EUR\nBezahlt: {{total_paid}} EUR\n\nPARTNERNETZWERK\n---------------\nNeue Partner: {{new_partners}}\nAktive Partner: {{active_partners}}\nDurchschnittsbewertung: {{avg_rating}}/5\n\nTRENDS VS. VORWOCHE\n-------------------\n{{trends}}\n\nTOP PERFORMER\n-------------\n{{top_performers}}\n\nHANDLUNGSBEDARF\n---------------\n{{action_required}}",
+      "variables": ["week", "week_start", "week_end", "projects_started", "projects_completed", "total_inquiries", "conversion_rate", "weekly_revenue", "total_outstanding", "total_paid", "new_partners", "active_partners", "avg_rating", "trends", "top_performers", "action_required"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "backup_success",
+      "name": "Backup erfolgreich",
+      "trigger": "Tägliches Backup abgeschlossen",
+      "recipient": "Admin",
+      "subject": "[Backup] Erfolgreich - {{date}}",
+      "body": "BACKUP BERICHT\n==============\n\nDatum: {{date}}\nStatus: Erfolgreich\n\nDATEIEN\n-------\nDatenbank: {{db_size}}\nDateien: {{files_size}}\nGesamt: {{total_size}}\n\nSPEICHERORTE\n------------\n- Lokal: {{local_path}}\n- Remote: {{remote_path}}\n\nRetention: {{retention_days}} Tage\nNächstes Backup: {{next_backup}}",
+      "variables": ["date", "db_size", "files_size", "total_size", "local_path", "remote_path", "retention_days", "next_backup"]
+    },
+    {
+      "id": "backup_failed",
+      "name": "Backup fehlgeschlagen",
+      "trigger": "Backup-Fehler",
+      "recipient": "Admin",
+      "priority": "high",
+      "subject": "[CRITICAL] Backup fehlgeschlagen - {{date}}",
+      "body": "BACKUP FEHLGESCHLAGEN\n=====================\n\nDatum: {{date}}\nStatus: FEHLER\n\nFEHLERMELDUNG\n-------------\n{{error_message}}\n\nLETZTES ERFOLGREICHES BACKUP\n----------------------------\n{{last_successful}}\n\nSOFORTMASSNAHMEN\n----------------\n1. Backup manuell starten\n2. Speicherplatz prüfen\n3. Logs analysieren: {{log_path}}",
+      "variables": ["date", "error_message", "last_successful", "log_path"]
+    },
+    {
+      "id": "high_server_load",
+      "name": "Hohe Serverauslastung",
+      "trigger": "CPU/RAM über 90%",
+      "recipient": "Admin",
+      "priority": "high",
+      "subject": "[WARNING] Hohe Serverauslastung",
+      "body": "WARNUNG: HOHE SERVERAUSLASTUNG\n==============================\n\nZeit: {{timestamp}}\n\nRESSOURCEN\n----------\nCPU: {{cpu_usage}}%\nRAM: {{ram_usage}}%\nDisk: {{disk_usage}}%\n\nTOP PROZESSE\n------------\n{{top_processes}}\n\nEMPFEHLUNGEN\n------------\n1. Nicht benötigte Prozesse beenden\n2. Logs rotieren\n3. Bei anhaltender Last: Skalierung prüfen",
+      "variables": ["timestamp", "cpu_usage", "ram_usage", "disk_usage", "top_processes"]
+    },
+    {
+      "id": "security_alert",
+      "name": "Sicherheitswarnung",
+      "trigger": "Verdächtige Aktivität erkannt",
+      "recipient": "Admin",
+      "priority": "critical",
+      "subject": "[SECURITY] Verdächtige Aktivität erkannt",
+      "body": "SICHERHEITSWARNUNG\n==================\n\nZeit: {{timestamp}}\nTyp: {{alert_type}}\nSchweregrad: {{severity}}\n\nDETAILS\n-------\n{{alert_details}}\n\nQUELLE\n------\nIP: {{source_ip}}\nLocation: {{source_location}}\nUser Agent: {{user_agent}}\n\nAUTOMATISCHE MASSNAHMEN\n-----------------------\n{{auto_actions}}\n\nEMPFOHLENE AKTIONEN\n-------------------\n{{recommended_actions}}\n\nLogs: {{log_link}}",
+      "variables": ["timestamp", "alert_type", "severity", "alert_details", "source_ip", "source_location", "user_agent", "auto_actions", "recommended_actions", "log_link"]
+    },
+    {
+      "id": "hubspot_sync_error",
+      "name": "HubSpot Sync Fehler",
+      "trigger": "HubSpot Synchronisation fehlgeschlagen",
+      "recipient": "Admin",
+      "subject": "[Integration] HubSpot Sync fehlgeschlagen",
+      "body": "HUBSPOT SYNCHRONISATIONSFEHLER\n==============================\n\nZeit: {{timestamp}}\nOperation: {{operation}}\n\nFEHLER\n------\n{{error_message}}\n\nBETROFFENE DATENSÄTZE\n---------------------\n{{affected_records}}\n\nMASSNAHMEN\n----------\n1. HubSpot API Status prüfen\n2. API Key validieren\n3. Sync manuell neu starten\n\nRetry in: {{retry_in}} Minuten",
+      "variables": ["timestamp", "operation", "error_message", "affected_records", "retry_in"]
+    },
+    {
+      "id": "stripe_webhook_failed",
+      "name": "Stripe Webhook Fehler",
+      "trigger": "Stripe Webhook verarbeitung fehlgeschlagen",
+      "recipient": "Admin",
+      "priority": "high",
+      "subject": "[Payment] Stripe Webhook Fehler",
+      "body": "STRIPE WEBHOOK FEHLER\n=====================\n\nEvent ID: {{event_id}}\nEvent Type: {{event_type}}\nZeit: {{timestamp}}\n\nFEHLER\n------\n{{error_message}}\n\nPAYLOAD\n-------\n{{payload_summary}}\n\nACHTUNG: Zahlungen könnten nicht korrekt verarbeitet worden sein.\n\nAKTIONEN\n--------\n1. Stripe Dashboard prüfen\n2. Event manuell verarbeiten\n3. Webhook Logs analysieren",
+      "variables": ["event_id", "event_type", "timestamp", "error_message", "payload_summary"]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "category": "Marketing & Newsletter",
+  "language": "de",
+  "templates": [
+    {
+      "id": "newsletter_welcome",
+      "name": "Newsletter Willkommen",
+      "trigger": "Newsletter Anmeldung",
+      "recipient": "Abonnent",
+      "subject": "Willkommen beim West Money Bau Newsletter!",
+      "body": "Hallo {{first_name}},\n\nvielen Dank für Ihre Anmeldung zu unserem Newsletter!\n\nSie erhalten ab jetzt:\n- Aktuelle Smart Home Trends\n- Exklusive Angebote\n- Projekt-Showcases\n- Tipps für Ihr Zuhause\n\nAls Dankeschön erhalten Sie 10% Rabatt auf Ihre erste Beratung:\nCode: WELCOME10\n\nBeratung buchen: {{booking_link}}\n\nBis bald!",
+      "variables": ["first_name", "booking_link"]
+    },
+    {
+      "id": "newsletter_monthly",
+      "name": "Monatlicher Newsletter",
+      "trigger": "Monatlich am 1.",
+      "recipient": "Newsletter-Abonnenten",
+      "subject": "Smart Home News {{month}} - West Money Bau",
+      "body": "Hallo {{first_name}},\n\nhier sind die Neuigkeiten des Monats!\n\n━━━━━━━━━━━━━━━━━━━━━━━━\nHIGHLIGHT DES MONATS\n━━━━━━━━━━━━━━━━━━━━━━━━\n{{highlight_title}}\n\n{{highlight_content}}\n\nMehr erfahren: {{highlight_link}}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\nPROJEKT-SHOWCASE\n━━━━━━━━━━━━━━━━━━━━━━━━\n{{project_showcase}}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\nSMART HOME TIPP\n━━━━━━━━━━━━━━━━━━━━━━━━\n{{smart_tip}}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\nAKTUELLES ANGEBOT\n━━━━━━━━━━━━━━━━━━━━━━━━\n{{current_offer}}\n\nAngebot sichern: {{offer_link}}\n\n---\nNewsletter abbestellen: {{unsubscribe_link}}",
+      "variables": ["first_name", "month", "highlight_title", "highlight_content", "highlight_link", "project_showcase", "smart_tip", "current_offer", "offer_link", "unsubscribe_link"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "referral_program",
+      "name": "Empfehlungsprogramm",
+      "trigger": "Kunde empfiehlt Freund",
+      "recipient": "Empfohlener",
+      "subject": "{{referrer_name}} empfiehlt Ihnen West Money Bau",
+      "body": "Hallo,\n\n{{referrer_name}} hat Ihnen West Money Bau empfohlen!\n\nAls Freundschaftsbonus erhalten Sie:\n- Kostenlose Erstberatung (Wert: 149€)\n- 5% Rabatt auf Ihr erstes Projekt\n\nIhr persönlicher Empfehlungscode: {{referral_code}}\n\nMehr erfahren: {{landing_link}}\n\n---\nWest Money Bau\nSmart Home & Barrierefreies Bauen",
+      "variables": ["referrer_name", "referral_code", "landing_link"]
+    },
+    {
+      "id": "referral_reward",
+      "name": "Empfehlungsbonus ausgezahlt",
+      "trigger": "Empfohlener wird Kunde",
+      "recipient": "Empfehlender",
+      "subject": "Ihr Empfehlungsbonus ist da!",
+      "body": "Hallo {{first_name}},\n\ngute Nachrichten! Ihre Empfehlung {{referred_name}} hat ein Projekt bei uns gestartet.\n\nIHR BONUS\n=========\n{{bonus_amount}} EUR Gutschrift\n\nDie Gutschrift wird mit Ihrer nächsten Rechnung verrechnet oder auf Wunsch ausgezahlt.\n\nWeiter empfehlen lohnt sich:\n- 50€ für jede erfolgreiche Empfehlung\n- Kein Limit bei der Anzahl\n\nIhr persönlicher Empfehlungslink:\n{{referral_link}}\n\nVielen Dank für Ihr Vertrauen!",
+      "variables": ["first_name", "referred_name", "bonus_amount", "referral_link"]
+    },
+    {
+      "id": "seasonal_promo_summer",
+      "name": "Sommer-Aktion",
+      "trigger": "Saisonale Kampagne",
+      "recipient": "Leads & Kunden",
+      "subject": "Sommer-Special: Beschattung & Klimasteuerung",
+      "body": "Hallo {{first_name}},\n\nder Sommer kommt - ist Ihr Zuhause bereit?\n\n☀️ SOMMER-SPECIAL ☀️\n\nINTELLIGENTE BESCHATTUNG\n========================\nAutomatische Jalousien, die mit der Sonne mitdenken.\n- Reduziert Raumtemperatur um bis zu 5°C\n- Spart Klimatisierungskosten\n- Schützt Möbel vor Ausbleichen\n\nAb {{shading_price}} EUR\n\nKLIMASTEUERUNG\n==============\nOptimale Temperatur, minimaler Energieverbrauch.\n- Räume individuell klimatisieren\n- Automatische Nachtabsenkung\n- Integration mit Wettervorhersage\n\nJetzt beraten lassen: {{booking_link}}\n\nAngebot gültig bis: {{offer_expiry}}",
+      "variables": ["first_name", "shading_price", "booking_link", "offer_expiry"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "seasonal_promo_winter",
+      "name": "Winter-Aktion",
+      "trigger": "Saisonale Kampagne",
+      "recipient": "Leads & Kunden",
+      "subject": "Winter-Special: Heizungssteuerung & Sicherheit",
+      "body": "Hallo {{first_name}},\n\nmachen Sie Ihr Zuhause winterfest - intelligent!\n\n❄️ WINTER-SPECIAL ❄️\n\nSMARTE HEIZUNGSSTEUERUNG\n========================\n- Bis zu 30% Heizkosten sparen\n- Raumweise Temperaturregelung\n- Urlaubsmodus & Frostschutz\n- Fenster-auf-Erkennung\n\nAb {{heating_price}} EUR\n\nSICHERHEIT IM WINTER\n====================\nAnwesenheitssimulation & Einbruchschutz:\n- Licht & Rollladen automatisch steuern\n- Alarmsystem mit App-Benachrichtigung\n- Kamera-Integration\n\nKostenloses Sicherheits-Audit: {{audit_link}}\n\nAngebot gültig bis: {{offer_expiry}}",
+      "variables": ["first_name", "heating_price", "audit_link", "offer_expiry"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "event_invitation",
+      "name": "Event-Einladung",
+      "trigger": "Event geplant",
+      "recipient": "Leads & Kunden",
+      "subject": "Einladung: {{event_name}}",
+      "body": "Hallo {{first_name}},\n\nwir laden Sie herzlich ein zu:\n\n{{event_name}}\n==============\n\nDatum: {{event_date}}\nUhrzeit: {{event_time}}\nOrt: {{event_location}}\n\nPROGRAMM\n========\n{{event_program}}\n\nHighlights:\n{{event_highlights}}\n\nTeilnahme ist kostenlos!\nPlätze sind begrenzt.\n\nJetzt anmelden: {{registration_link}}\n\nWir freuen uns auf Sie!",
+      "variables": ["first_name", "event_name", "event_date", "event_time", "event_location", "event_program", "event_highlights", "registration_link"]
+    },
+    {
+      "id": "customer_satisfaction",
+      "name": "Kundenzufriedenheit",
+      "trigger": "30 Tage nach Projektabschluss",
+      "recipient": "Kunde",
+      "subject": "Wie zufrieden sind Sie mit Ihrem Smart Home?",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvor einem Monat haben wir Ihr Smart Home Projekt abgeschlossen. Wir hoffen, Sie genießen Ihr neues System!\n\nIhre Meinung ist uns wichtig. Bitte nehmen Sie sich 2 Minuten für unsere Umfrage:\n\n{{survey_link}}\n\nAls Dankeschön verlosen wir unter allen Teilnehmern:\n{{prize}}\n\nBei Problemen oder Fragen erreichen Sie unseren Support unter:\n{{support_phone}}\n{{support_email}}\n\nVielen Dank!",
+      "variables": ["customer_name", "survey_link", "prize", "support_phone", "support_email"]
+    },
+    {
+      "id": "google_review_request",
+      "name": "Google Bewertung anfragen",
+      "trigger": "Positive Umfrage erhalten",
+      "recipient": "Kunde",
+      "subject": "Würden Sie uns weiterempfehlen?",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihr positives Feedback!\n\nWenn Sie mit unserer Arbeit zufrieden waren, würden wir uns sehr über eine Google-Bewertung freuen. Das hilft anderen Kunden, uns zu finden.\n\nBewertung schreiben (dauert nur 1 Minute):\n{{google_review_link}}\n\nVielen Dank für Ihre Unterstützung!",
+      "variables": ["customer_name", "google_review_link"]
+    },
+    {
+      "id": "reengagement_inactive",
+      "name": "Re-Engagement inaktive Leads",
+      "trigger": "90 Tage ohne Aktivität",
+      "recipient": "Inaktiver Lead",
+      "subject": "Wir vermissen Sie!",
+      "body": "Hallo {{first_name}},\n\nes ist eine Weile her, seit wir von Ihnen gehört haben.\n\nFalls Sie noch Interesse an einem Smart Home Projekt haben, sind wir gerne für Sie da!\n\nNEUIGKEITEN SEIT IHREM LETZTEN BESUCH\n=====================================\n{{news_updates}}\n\nMöchten Sie das Gespräch fortsetzen?\n\nTermin vereinbaren: {{calendar_link}}\n\nOder teilen Sie uns mit, wenn Sie kein Interesse mehr haben:\n{{optout_link}}\n\nWir wünschen Ihnen alles Gute!",
+      "variables": ["first_name", "news_updates", "calendar_link", "optout_link"]
+    }
+  ]
+}

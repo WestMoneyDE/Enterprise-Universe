@@ -1,0 +1,105 @@
+{
+  "category": "Lead Nurturing",
+  "language": "de",
+  "templates": [
+    {
+      "id": "inquiry_followup_1",
+      "name": "Projektanfrage Follow-up Tag 1",
+      "trigger": "1 Tag nach Projektanfrage ohne Antwort",
+      "recipient": "Lead",
+      "sequence": "project_inquiry",
+      "step": 1,
+      "subject": "Ihre Anfrage bei West Money Bau",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihr Interesse an unseren Leistungen!\n\nWir haben Ihre Anfrage erhalten und möchten sicherstellen, dass wir alle Ihre Fragen beantworten können.\n\nHaben Sie Zeit für ein kurzes Telefonat? Gerne rufen wir Sie an einem für Sie passenden Termin zurück.\n\nTermin vereinbaren: {{calendar_link}}\n\nIhr Ansprechpartner\n{{agent_name}}\n{{agent_phone}}",
+      "variables": ["customer_name", "calendar_link", "agent_name", "agent_phone"]
+    },
+    {
+      "id": "inquiry_followup_3",
+      "name": "Projektanfrage Follow-up Tag 3",
+      "trigger": "3 Tage nach Projektanfrage ohne Antwort",
+      "recipient": "Lead",
+      "sequence": "project_inquiry",
+      "step": 2,
+      "subject": "Smart Home Inspiration für Ihr Zuhause",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nwir möchten Ihnen zeigen, was mit moderner Gebäudeautomation möglich ist.\n\n3 BELIEBTE SMART HOME FUNKTIONEN\n================================\n\n1. Intelligente Beleuchtung\n   Licht, das sich Ihrem Tagesrhythmus anpasst\n\n2. Energie-Monitoring\n   Verbrauch optimieren, Kosten senken\n\n3. Sicherheit & Komfort\n   Türkommunikation, Alarmsystem, Beschattung\n\nKostenlose Beratung vereinbaren: {{calendar_link}}\n\nWir zeigen Ihnen gerne unser Referenzprojekt in Ihrer Nähe!",
+      "variables": ["customer_name", "calendar_link"]
+    },
+    {
+      "id": "inquiry_followup_7",
+      "name": "Projektanfrage Follow-up Tag 7",
+      "trigger": "7 Tage nach Projektanfrage ohne Antwort",
+      "recipient": "Lead",
+      "sequence": "project_inquiry",
+      "step": 3,
+      "subject": "Noch Fragen zu Ihrem Projekt?",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvor einer Woche haben Sie sich bei uns erkundigt. Wir würden uns freuen, Ihr Projekt zu realisieren.\n\nVielleicht helfen Ihnen unsere FAQs:\n\nWIE VIEL KOSTET SMART HOME?\n→ Je nach Umfang ab 5.000€ für Basisausstattung\n\nWIE LANGE DAUERT DIE INSTALLATION?\n→ Typischerweise 2-5 Tage je nach Projektgröße\n\nFUNKTIONIERT DAS AUCH IM ALTBAU?\n→ Ja! Funk-basierte Lösungen sind ideal für Bestandsgebäude\n\nLassen Sie uns Ihre Fragen persönlich besprechen:\n{{calendar_link}}\n\nOder antworten Sie einfach auf diese E-Mail.",
+      "variables": ["customer_name", "calendar_link"]
+    },
+    {
+      "id": "inquiry_followup_14",
+      "name": "Projektanfrage Follow-up Tag 14",
+      "trigger": "14 Tage nach Projektanfrage ohne Antwort",
+      "recipient": "Lead",
+      "sequence": "project_inquiry",
+      "step": 4,
+      "subject": "Sonderaktion: 10% auf Erstberatung",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nals Dankeschön für Ihr Interesse bieten wir Ihnen 10% Rabatt auf unsere Erstberatung inklusive Vor-Ort-Termin.\n\nDAS ERHALTEN SIE\n================\n- Persönliche Bedarfsanalyse\n- Individuelle Systemempfehlung\n- Detailliertes Angebot\n- Referenzbesichtigung (optional)\n\nNormalpreis: 149€ → Mit Code SMART10: 134€\n\nAngebot gilt bis: {{offer_expiry}}\n\nJetzt Termin sichern: {{calendar_link}}",
+      "variables": ["customer_name", "offer_expiry", "calendar_link"]
+    },
+    {
+      "id": "application_followup_1",
+      "name": "Bewerber Follow-up Tag 1",
+      "trigger": "1 Tag nach unvollständiger Bewerbung",
+      "recipient": "Bewerber",
+      "sequence": "subcontractor_application",
+      "step": 1,
+      "subject": "Ihre Bewerbung bei West Money Bau - Dokumente fehlen",
+      "body": "Hallo {{first_name}},\n\ndanke für Ihr Interesse an einer Partnerschaft mit West Money Bau!\n\nUm Ihre Bewerbung bearbeiten zu können, benötigen wir noch folgende Unterlagen:\n\n{{missing_documents}}\n\nDokumente hochladen: {{upload_link}}\n\nBei Fragen erreichen Sie uns unter partnerschaft@west-money-bau.de",
+      "variables": ["first_name", "missing_documents", "upload_link"]
+    },
+    {
+      "id": "application_followup_3",
+      "name": "Bewerber Follow-up Tag 3",
+      "trigger": "3 Tage nach Erinnerung ohne Antwort",
+      "recipient": "Bewerber",
+      "sequence": "subcontractor_application",
+      "step": 2,
+      "subject": "Erinnerung: Fehlende Unterlagen für Ihre Bewerbung",
+      "body": "Hallo {{first_name}},\n\nwir möchten Sie nochmals an Ihre Bewerbung erinnern.\n\nDie folgenden Dokumente fehlen noch:\n{{missing_documents}}\n\nUnsere aktuellen Projekte warten auf qualifizierte Partner wie Sie. Bitte vervollständigen Sie Ihre Unterlagen, damit wir mit der Prüfung beginnen können.\n\nDokumente hochladen: {{upload_link}}",
+      "variables": ["first_name", "missing_documents", "upload_link"]
+    },
+    {
+      "id": "quote_followup_3",
+      "name": "Angebot Follow-up Tag 3",
+      "trigger": "3 Tage nach Angebotsversand ohne Antwort",
+      "recipient": "Kunde",
+      "sequence": "quote_sent",
+      "step": 1,
+      "subject": "Fragen zu unserem Angebot?",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvor einigen Tagen haben wir Ihnen unser Angebot für {{project_type}} zugesendet.\n\nAngebotsnummer: {{quote_number}}\nGesamtsumme: {{total_amount}} EUR\nGültig bis: {{valid_until}}\n\nHaben Sie Fragen zu einzelnen Positionen oder möchten Sie Anpassungen besprechen?\n\nRufen Sie uns an: {{agent_phone}}\nOder antworten Sie direkt auf diese E-Mail.\n\nAngebot ansehen: {{quote_link}}",
+      "variables": ["customer_name", "project_type", "quote_number", "total_amount", "valid_until", "agent_phone", "quote_link"]
+    },
+    {
+      "id": "quote_followup_7",
+      "name": "Angebot Follow-up Tag 7",
+      "trigger": "7 Tage nach Angebotsversand ohne Antwort",
+      "recipient": "Kunde",
+      "sequence": "quote_sent",
+      "step": 2,
+      "subject": "Ihr Angebot läuft bald ab",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr Angebot für {{project_type}} ist noch {{days_remaining}} Tage gültig.\n\nWARUM JETZT ENTSCHEIDEN?\n========================\n- Aktuelle Materialpreise sind gesichert\n- Frühe Terminvergabe möglich\n- Festpreisgarantie\n\nAngebot direkt annehmen: {{accept_link}}\n\nFalls das Angebot nicht Ihren Vorstellungen entspricht, lassen Sie es uns wissen. Wir passen es gerne an.",
+      "variables": ["customer_name", "project_type", "days_remaining", "accept_link"]
+    },
+    {
+      "id": "quote_expired",
+      "name": "Angebot abgelaufen",
+      "trigger": "Angebot ist abgelaufen",
+      "recipient": "Kunde",
+      "sequence": "quote_sent",
+      "step": 3,
+      "subject": "Angebot abgelaufen - neues Angebot anfordern",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr Angebot für {{project_type}} ist leider abgelaufen.\n\nKein Problem! Auf Wunsch erstellen wir Ihnen gerne ein aktualisiertes Angebot.\n\nNeues Angebot anfordern: {{request_link}}\n\nOder teilen Sie uns mit, warum Sie sich gegen das Projekt entschieden haben - Ihr Feedback hilft uns, besser zu werden.",
+      "variables": ["customer_name", "project_type", "request_link"]
+    }
+  ]
+}

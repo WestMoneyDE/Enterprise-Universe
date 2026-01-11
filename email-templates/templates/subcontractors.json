@@ -1,0 +1,78 @@
+{
+  "category": "Subunternehmer Management",
+  "language": "de",
+  "templates": [
+    {
+      "id": "sub_project_match",
+      "name": "Projekt-Match gefunden",
+      "trigger": "Matching-Algorithmus findet passendes Projekt",
+      "recipient": "Subunternehmer",
+      "subject": "Neues Projekt in Ihrer Nähe: {{project_type}}",
+      "body": "Hallo {{first_name}},\n\nwir haben ein Projekt gefunden, das zu Ihrem Profil passt!\n\nPROJEKTDETAILS\n==============\nTyp: {{project_type}}\nStandort: {{location}}\nEntfernung: {{distance}} km\nGeschätzter Aufwand: {{estimated_hours}} Stunden\n\nWARUM DIESES PROJEKT?\n=====================\n{{match_reasons}}\n\nInteresse bekunden (24h Exklusivität): {{interest_link}}\n\nVerpassen Sie diese Chance nicht!",
+      "variables": ["first_name", "project_type", "location", "distance", "estimated_hours", "match_reasons", "interest_link"]
+    },
+    {
+      "id": "sub_assignment_confirmation",
+      "name": "Auftragszuweisung bestätigt",
+      "trigger": "Subunternehmer akzeptiert Auftrag",
+      "recipient": "Subunternehmer",
+      "subject": "Auftrag bestätigt: {{project_number}}",
+      "body": "Hallo {{first_name}},\n\nvielen Dank für die Bestätigung! Hier sind die vollständigen Projektdetails:\n\nPROJEKT\n=======\nNummer: {{project_number}}\nTyp: {{project_type}}\nKunde: {{customer_name}}\n\nSTANDORT\n========\n{{address}}\n{{city}}, {{postal_code}}\n\nTERMINE\n=======\nStartdatum: {{start_date}}\nGeplantes Ende: {{end_date}}\n\nKONTAKT VOR ORT\n===============\nAnsprechpartner: {{contact_name}}\nTelefon: {{contact_phone}}\n\nIHR PROJEKTLEITER\n=================\n{{pm_name}}\n{{pm_phone}}\n{{pm_email}}\n\nAlle Projektdokumente finden Sie im Portal:\n{{project_link}}",
+      "variables": ["first_name", "project_number", "project_type", "customer_name", "address", "city", "postal_code", "start_date", "end_date", "contact_name", "contact_phone", "pm_name", "pm_phone", "pm_email", "project_link"]
+    },
+    {
+      "id": "sub_project_reminder",
+      "name": "Projekterinnerung",
+      "trigger": "1 Tag vor Projektstart",
+      "recipient": "Subunternehmer",
+      "subject": "Erinnerung: Projekt {{project_number}} startet morgen",
+      "body": "Hallo {{first_name}},\n\nErinnerung: Ihr Projekt startet morgen!\n\nPROJEKT: {{project_number}}\nSTART: {{start_date}} um {{start_time}}\nADRESSE: {{address}}, {{city}}\n\nCHECKLISTE\n==========\n[ ] Werkzeug und Material vorbereitet\n[ ] Anfahrt geplant (Parkplatz vor Ort vorhanden)\n[ ] Kundenkontakt gespeichert: {{contact_phone}}\n[ ] Projektunterlagen gelesen\n\nBei Problemen erreichen Sie Ihren Projektleiter unter {{pm_phone}}.\n\nViel Erfolg!",
+      "variables": ["first_name", "project_number", "start_date", "start_time", "address", "city", "contact_phone", "pm_phone"]
+    },
+    {
+      "id": "sub_project_completion_request",
+      "name": "Projektabschluss anfordern",
+      "trigger": "Geplantes Enddatum erreicht",
+      "recipient": "Subunternehmer",
+      "subject": "Projektabschluss: {{project_number}}",
+      "body": "Hallo {{first_name}},\n\ndas geplante Enddatum für Projekt {{project_number}} ist erreicht.\n\nBitte bestätigen Sie den Projektabschluss und laden Sie folgende Dokumente hoch:\n\n[ ] Abnahmeprotokoll (vom Kunden unterschrieben)\n[ ] Fotodokumentation\n[ ] Aufmaß/Stundennachweis\n[ ] ggf. Mängelliste\n\nAbschluss melden: {{completion_link}}\n\nNach Bestätigung wird Ihre Auszahlung innerhalb von 5 Werktagen veranlasst.",
+      "variables": ["first_name", "project_number", "completion_link"]
+    },
+    {
+      "id": "sub_performance_review",
+      "name": "Leistungsbewertung",
+      "trigger": "30 Tage nach Projektabschluss",
+      "recipient": "Subunternehmer",
+      "subject": "Ihre Leistungsbewertung für {{month}}",
+      "body": "Hallo {{first_name}},\n\nhier ist Ihre monatliche Leistungsübersicht:\n\nZEITRAUM: {{month}} {{year}}\n\nABGESCHLOSSENE PROJEKTE: {{completed_projects}}\nGESAMTUMSATZ: {{total_revenue}} EUR\nDURCHSCHNITTLICHE BEWERTUNG: {{avg_rating}}/5\n\nKUNDENFEEDBACK\n==============\n{{feedback_summary}}\n\nIHR RANG: {{rank}} von {{total_subs}} aktiven Partnern\n\n{{performance_tip}}\n\nWeiter so!",
+      "variables": ["first_name", "month", "year", "completed_projects", "total_revenue", "avg_rating", "feedback_summary", "rank", "total_subs", "performance_tip"]
+    },
+    {
+      "id": "sub_availability_check",
+      "name": "Verfügbarkeitsabfrage",
+      "trigger": "Wöchentliche Abfrage",
+      "recipient": "Subunternehmer",
+      "subject": "Verfügbarkeit für KW {{week}}",
+      "body": "Hallo {{first_name}},\n\nbitte aktualisieren Sie Ihre Verfügbarkeit für die kommende Woche.\n\nAKTUELLER STATUS: {{current_status}}\n\nVerfügbarkeit aktualisieren: {{availability_link}}\n\nOptionen:\n- Verfügbar (kann Projekte annehmen)\n- Eingeschränkt (nur bestimmte Tage/Regionen)\n- Nicht verfügbar (keine neuen Projekte)\n\nEine aktuelle Verfügbarkeit erhöht Ihre Chancen auf passende Projekte!",
+      "variables": ["first_name", "week", "current_status", "availability_link"]
+    },
+    {
+      "id": "sub_certification_expiry",
+      "name": "Zertifikat läuft ab",
+      "trigger": "Zertifikat läuft in 30 Tagen ab",
+      "recipient": "Subunternehmer",
+      "subject": "Zertifikat {{cert_name}} läuft bald ab",
+      "body": "Hallo {{first_name}},\n\nIhr Zertifikat läuft bald ab:\n\nZERTIFIKAT: {{cert_name}}\nABLAUFDATUM: {{expiry_date}}\n\nBitte laden Sie Ihr erneuertes Zertifikat hoch, um weiterhin für Projekte berücksichtigt zu werden.\n\nNeues Zertifikat hochladen: {{upload_link}}\n\nHinweis: Ohne gültiges Zertifikat können wir Sie für {{cert_type}}-Projekte leider nicht mehr einsetzen.",
+      "variables": ["first_name", "cert_name", "expiry_date", "upload_link", "cert_type"]
+    },
+    {
+      "id": "sub_welcome_onboarding",
+      "name": "Willkommen - Onboarding",
+      "trigger": "Bewerbung genehmigt",
+      "recipient": "Subunternehmer",
+      "subject": "Willkommen im West Money Bau Partnernetzwerk!",
+      "body": "Hallo {{first_name}},\n\nherzlich willkommen im West Money Bau Partnernetzwerk!\n\nIHR PARTNER-ACCOUNT\n===================\nPartner-ID: {{partner_id}}\nKategorie: {{category}}\nRegion: {{region}}\n\nNÄCHSTE SCHRITTE\n================\n\n1. Portal-Zugang einrichten\n   {{portal_link}}\n   Ihr temporäres Passwort: {{temp_password}}\n\n2. Stripe Connect verbinden\n   Für schnelle Auszahlungen\n   {{stripe_connect_link}}\n\n3. Profil vervollständigen\n   - Profilbild hochladen\n   - Referenzprojekte hinzufügen\n   - Verfügbarkeit einstellen\n\n4. Erste Projektvorschläge erhalten\n   Sobald Ihr Profil vollständig ist, erhalten Sie passende Projektvorschläge.\n\nBei Fragen: partnerschaft@west-money-bau.de\n\nWir freuen uns auf die Zusammenarbeit!",
+      "variables": ["first_name", "partner_id", "category", "region", "portal_link", "temp_password", "stripe_connect_link"]
+    }
+  ]
+}

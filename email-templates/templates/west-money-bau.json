@@ -1,0 +1,97 @@
+{
+  "category": "West Money Bau",
+  "language": "de",
+  "templates": [
+    {
+      "id": "bau_application_confirmation",
+      "name": "Bewerbungsbestätigung Subunternehmer",
+      "trigger": "Neue Subunternehmer-Bewerbung eingegangen",
+      "recipient": "Bewerber",
+      "subject": "Ihre Bewerbung bei West Money Bau",
+      "body": "Hallo {{first_name}},\n\nvielen Dank für Ihre Bewerbung als Subunternehmer bei West Money Bau!\n\nWir haben Ihre Unterlagen erhalten und werden diese sorgfältig prüfen. Sie können mit einer Rückmeldung innerhalb von 48 Stunden rechnen.\n\nBei Fragen stehen wir Ihnen gerne zur Verfügung.",
+      "variables": ["first_name"]
+    },
+    {
+      "id": "bau_application_admin_notification",
+      "name": "Admin-Benachrichtigung neue Bewerbung",
+      "trigger": "Neue Subunternehmer-Bewerbung eingegangen",
+      "recipient": "Admin (info@enterprise-universe.com)",
+      "subject": "Neue Subunternehmer-Bewerbung: {{first_name}} {{last_name}}",
+      "body": "Eine neue Subunternehmer-Bewerbung ist eingegangen:\n\nBEWERBER-DETAILS\n================\nName: {{first_name}} {{last_name}}\nFirma: {{company_name}}\nE-Mail: {{email}}\nTelefon: {{phone}}\nStandort: {{city}}, {{country}}\n\nQUALIFIKATIONEN\n===============\nFachrichtungen: {{specializations}}\nBerufserfahrung: {{experience_years}} Jahre\nStundensatz: {{hourly_rate}} EUR\n\nNÄCHSTE SCHRITTE\n=================\n1. Bewerbung im Dashboard prüfen\n2. Dokumente anfordern (Gewerbeschein, Versicherung)\n3. Gegebenenfalls Interview vereinbaren",
+      "variables": ["first_name", "last_name", "company_name", "email", "phone", "city", "country", "specializations", "experience_years", "hourly_rate"],
+      "hasHtmlVersion": true
+    },
+    {
+      "id": "bau_application_approved",
+      "name": "Bewerbung genehmigt",
+      "trigger": "Admin genehmigt Bewerbung",
+      "recipient": "Bewerber",
+      "subject": "Willkommen bei West Money Bau - Ihre Bewerbung wurde genehmigt!",
+      "body": "Hallo {{first_name}},\n\nwir freuen uns, Ihnen mitteilen zu können, dass Ihre Bewerbung als Subunternehmer bei West Money Bau genehmigt wurde!\n\nNÄCHSTE SCHRITTE\n================\n1. Rahmenvertrag unterzeichnen (Link folgt)\n2. Stripe Connect Konto einrichten für Auszahlungen\n3. Profil im Partner-Portal vervollständigen\n\nIhr Partner-Portal Zugang:\nURL: https://west-money-bau.de/portal\nE-Mail: {{email}}\nPasswort: (wird separat gesendet)\n\nWir freuen uns auf die Zusammenarbeit!",
+      "variables": ["first_name", "email"]
+    },
+    {
+      "id": "bau_application_rejected",
+      "name": "Bewerbung abgelehnt",
+      "trigger": "Admin lehnt Bewerbung ab",
+      "recipient": "Bewerber",
+      "subject": "Rückmeldung zu Ihrer Bewerbung bei West Money Bau",
+      "body": "Hallo {{first_name}},\n\nvielen Dank für Ihr Interesse an einer Zusammenarbeit mit West Money Bau.\n\nNach sorgfältiger Prüfung Ihrer Bewerbung müssen wir Ihnen leider mitteilen, dass wir aktuell keine passende Position für Ihr Profil haben.\n\n{{rejection_reason}}\n\nWir behalten Ihre Unterlagen gerne in unserem Pool und melden uns, sobald sich eine passende Möglichkeit ergibt.\n\nVielen Dank für Ihr Verständnis.",
+      "variables": ["first_name", "rejection_reason"]
+    },
+    {
+      "id": "bau_project_inquiry_admin",
+      "name": "Neue Projektanfrage (Admin)",
+      "trigger": "Kunde sendet Projektanfrage",
+      "recipient": "Admin",
+      "subject": "Neue Projektanfrage: {{project_type}} - {{customer_name}}",
+      "body": "Eine neue Projektanfrage ist eingegangen:\n\nKUNDE\n=====\nName: {{customer_name}}\nE-Mail: {{customer_email}}\nTelefon: {{customer_phone}}\n\nPROJEKT\n=======\nTyp: {{project_type}}\nProjektnummer: {{project_number}}\nBeschreibung: {{description}}\n\nDashboard: https://west-money-bau.de/dashboard/",
+      "variables": ["customer_name", "customer_email", "customer_phone", "project_type", "project_number", "description"]
+    },
+    {
+      "id": "bau_project_inquiry_confirmation",
+      "name": "Projektanfrage Bestätigung (Kunde)",
+      "trigger": "Kunde sendet Projektanfrage",
+      "recipient": "Kunde",
+      "subject": "Ihre Anfrage bei West Money Bau - {{project_type}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihre Projektanfrage!\n\nPROJEKTDETAILS\n==============\nTyp: {{project_type}}\nAnfrage-Nr.: {{project_number}}\n\nUnser Team wird sich innerhalb von 24 Stunden mit Ihnen in Verbindung setzen, um die Details zu besprechen.\n\nBei dringenden Fragen erreichen Sie uns unter:\nTelefon: +49 123 456789\nE-Mail: info@west-money-bau.de",
+      "variables": ["customer_name", "project_type", "project_number"]
+    },
+    {
+      "id": "bau_quote_sent",
+      "name": "Angebot gesendet",
+      "trigger": "Angebot erstellt und versendet",
+      "recipient": "Kunde",
+      "subject": "Ihr Angebot von West Money Bau - {{project_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nanbei erhalten Sie unser Angebot für Ihr Projekt.\n\nANGEBOTSDETAILS\n===============\nAngebotsnummer: {{quote_number}}\nProjekt: {{project_type}}\nGesamtsumme: {{total_amount}} EUR (inkl. MwSt.)\nGültigkeit: {{valid_until}}\n\nDas Angebot beinhaltet:\n{{quote_items}}\n\nBei Fragen zum Angebot stehen wir Ihnen gerne zur Verfügung.\n\nAngebot direkt akzeptieren: {{accept_link}}",
+      "variables": ["customer_name", "quote_number", "project_type", "total_amount", "valid_until", "quote_items", "accept_link"]
+    },
+    {
+      "id": "bau_project_assigned",
+      "name": "Projekt zugewiesen (Subunternehmer)",
+      "trigger": "Projekt wird Subunternehmer zugewiesen",
+      "recipient": "Subunternehmer",
+      "subject": "Neuer Auftrag: {{project_type}} in {{location}}",
+      "body": "Hallo {{first_name}},\n\nwir haben einen neuen Auftrag für Sie!\n\nPROJEKTDETAILS\n==============\nProjekt: {{project_type}}\nStandort: {{location}}\nStartdatum: {{start_date}}\nGeschätzte Dauer: {{duration}}\n\nAUFTRAGSWERT\n============\nHonorar: {{payment_amount}} EUR\nZahlungsbedingungen: {{payment_terms}}\n\nBitte bestätigen Sie die Annahme des Auftrags innerhalb von 24 Stunden:\n{{accept_link}}\n\nBei Rückfragen erreichen Sie Ihren Projektleiter unter {{pm_phone}}.",
+      "variables": ["first_name", "project_type", "location", "start_date", "duration", "payment_amount", "payment_terms", "accept_link", "pm_phone"]
+    },
+    {
+      "id": "bau_project_update",
+      "name": "Projekt-Update (Kunde)",
+      "trigger": "Projektstatus ändert sich",
+      "recipient": "Kunde",
+      "subject": "Projekt-Update: {{project_number}} - {{new_status}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nwir möchten Sie über den aktuellen Stand Ihres Projekts informieren.\n\nPROJEKT: {{project_number}}\nNEUER STATUS: {{new_status}}\n\n{{status_details}}\n\nNächste Schritte:\n{{next_steps}}\n\nIhren Projektfortschritt können Sie jederzeit im Kundenportal verfolgen:\nhttps://west-money-bau.de/portal",
+      "variables": ["customer_name", "project_number", "new_status", "status_details", "next_steps"]
+    },
+    {
+      "id": "bau_project_completed",
+      "name": "Projekt abgeschlossen",
+      "trigger": "Projekt wird als abgeschlossen markiert",
+      "recipient": "Kunde",
+      "subject": "Projekt abgeschlossen - {{project_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nwir freuen uns, Ihnen mitteilen zu können, dass Ihr Projekt erfolgreich abgeschlossen wurde!\n\nPROJEKT: {{project_number}}\nABSCHLUSSDATUM: {{completion_date}}\n\nDOKUMENTE\n=========\n- Abnahmeprotokoll\n- Bedienungsanleitung\n- Gewährleistungsinformationen\n\nAlle Dokumente finden Sie in Ihrem Kundenportal.\n\nWARTUNGSVERTRAG\n===============\nFür langfristige Sicherheit empfehlen wir unseren Wartungsvertrag:\n- Jährliche Systeminspektion\n- Software-Updates\n- 24h Support-Hotline\n- Bevorzugte Terminvergabe\n\nWartungsvertrag anfragen: {{maintenance_link}}\n\nVielen Dank für Ihr Vertrauen!",
+      "variables": ["customer_name", "project_number", "completion_date", "maintenance_link"]
+    }
+  ]
+}

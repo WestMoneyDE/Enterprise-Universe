@@ -1,0 +1,92 @@
+{
+  "category": "WhatsApp Templates",
+  "language": "de",
+  "description": "Meta-genehmigte WhatsApp Business Templates",
+  "templates": [
+    {
+      "id": "wa_appointment_reminder",
+      "name": "Terminerinnerung",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nErinnerung: Ihr Termin bei West Money Bau ist morgen um {{2}} Uhr.\n\nAdresse: {{3}}\n\nBitte bestätigen Sie mit JA oder sagen Sie ab.",
+      "variables": ["customer_name", "time", "address"],
+      "buttons": [
+        {"type": "QUICK_REPLY", "text": "Bestätigen"},
+        {"type": "QUICK_REPLY", "text": "Absagen"}
+      ]
+    },
+    {
+      "id": "wa_project_update",
+      "name": "Projekt-Update",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nUpdate zu Ihrem Projekt:\n\n{{2}}\n\nBei Fragen antworten Sie einfach auf diese Nachricht.",
+      "variables": ["customer_name", "update_text"]
+    },
+    {
+      "id": "wa_invoice_reminder",
+      "name": "Zahlungserinnerung",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nfreundliche Erinnerung: Rechnung {{2}} über {{3}} EUR ist fällig.\n\nZahlen Sie jetzt online: {{4}}",
+      "variables": ["customer_name", "invoice_number", "amount", "payment_link"],
+      "buttons": [
+        {"type": "URL", "text": "Jetzt bezahlen", "url": "{{4}}"}
+      ]
+    },
+    {
+      "id": "wa_subcontractor_assignment",
+      "name": "Auftragszuweisung",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nNeuer Auftrag für Sie:\n\nProjekt: {{2}}\nOrt: {{3}}\nStart: {{4}}\n\nDetails im Portal: {{5}}",
+      "variables": ["first_name", "project_type", "location", "start_date", "portal_link"],
+      "buttons": [
+        {"type": "QUICK_REPLY", "text": "Annehmen"},
+        {"type": "QUICK_REPLY", "text": "Ablehnen"}
+      ]
+    },
+    {
+      "id": "wa_welcome",
+      "name": "Willkommensnachricht",
+      "category": "MARKETING",
+      "status": "APPROVED",
+      "template": "Willkommen bei West Money Bau! 👋\n\nVielen Dank für Ihr Interesse an Smart Home.\n\nAntworten Sie mit:\n1️⃣ Smart Home Beratung\n2️⃣ Barrierefreies Bauen\n3️⃣ Sicherheitssysteme\n\nOder schreiben Sie uns direkt.",
+      "variables": []
+    },
+    {
+      "id": "wa_quote_sent",
+      "name": "Angebot versendet",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nIhr Angebot für {{2}} ist fertig!\n\nAngebotssumme: {{3}} EUR\nGültig bis: {{4}}\n\nAngebot ansehen: {{5}}",
+      "variables": ["customer_name", "project_type", "amount", "valid_until", "quote_link"],
+      "buttons": [
+        {"type": "URL", "text": "Angebot öffnen", "url": "{{5}}"}
+      ]
+    },
+    {
+      "id": "wa_project_completed",
+      "name": "Projekt abgeschlossen",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nIhr Projekt {{2}} wurde erfolgreich abgeschlossen! ✅\n\nAlle Dokumente finden Sie in Ihrem Portal.\n\nWie zufrieden sind Sie? Bewerten Sie uns: {{3}}",
+      "variables": ["customer_name", "project_number", "review_link"],
+      "buttons": [
+        {"type": "URL", "text": "Bewertung abgeben", "url": "{{3}}"}
+      ]
+    },
+    {
+      "id": "wa_maintenance_reminder",
+      "name": "Wartungserinnerung",
+      "category": "UTILITY",
+      "status": "APPROVED",
+      "template": "Hallo {{1}},\n\nIhre jährliche LOXONE Wartung steht an.\n\nVorgeschlagener Termin: {{2}}\n\nPasst Ihnen dieser Termin?",
+      "variables": ["customer_name", "suggested_date"],
+      "buttons": [
+        {"type": "QUICK_REPLY", "text": "Termin passt"},
+        {"type": "QUICK_REPLY", "text": "Anderen Termin"}
+      ]
+    }
+  ]
+}

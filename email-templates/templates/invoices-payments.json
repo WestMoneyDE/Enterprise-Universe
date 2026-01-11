@@ -1,0 +1,78 @@
+{
+  "category": "Rechnungen & Zahlungen",
+  "language": "de",
+  "templates": [
+    {
+      "id": "invoice_created",
+      "name": "Neue Rechnung",
+      "trigger": "Rechnung wird erstellt",
+      "recipient": "Kunde",
+      "subject": "Rechnung {{invoice_number}} - West Money Bau",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nanbei erhalten Sie Ihre Rechnung.\n\nRECHNUNGSDETAILS\n================\nRechnungsnummer: {{invoice_number}}\nRechnungsdatum: {{invoice_date}}\nFälligkeitsdatum: {{due_date}}\n\nBetrag: {{amount}} EUR\nMwSt. (19%): {{vat_amount}} EUR\nGesamtbetrag: {{total_amount}} EUR\n\nZAHLUNGSINFORMATIONEN\n=====================\nBank: {{bank_name}}\nIBAN: {{iban}}\nBIC: {{bic}}\nVerwendungszweck: {{reference}}\n\nOder zahlen Sie bequem online:\n{{payment_link}}\n\nBei Fragen zur Rechnung kontaktieren Sie uns gerne.",
+      "variables": ["customer_name", "invoice_number", "invoice_date", "due_date", "amount", "vat_amount", "total_amount", "bank_name", "iban", "bic", "reference", "payment_link"]
+    },
+    {
+      "id": "invoice_reminder_1",
+      "name": "Zahlungserinnerung (1 Tag)",
+      "trigger": "Rechnung 1 Tag überfällig",
+      "recipient": "Kunde",
+      "subject": "Zahlungserinnerung: Rechnung {{invoice_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nwir möchten Sie freundlich daran erinnern, dass die folgende Rechnung zur Zahlung fällig ist:\n\nRechnungsnummer: {{invoice_number}}\nBetrag: {{amount}} EUR\nFällig seit: {{due_date}}\n\nSollte sich Ihre Zahlung mit dieser Erinnerung überschnitten haben, betrachten Sie diese E-Mail bitte als gegenstandslos.\n\nJetzt bezahlen: {{payment_link}}\n\nBei Fragen stehen wir Ihnen gerne zur Verfügung.",
+      "variables": ["customer_name", "invoice_number", "amount", "due_date", "payment_link"]
+    },
+    {
+      "id": "invoice_reminder_7",
+      "name": "Zahlungserinnerung (7 Tage)",
+      "trigger": "Rechnung 7 Tage überfällig",
+      "recipient": "Kunde",
+      "subject": "Zweite Zahlungserinnerung: Rechnung {{invoice_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\ntrotz unserer ersten Erinnerung konnten wir noch keinen Zahlungseingang für die folgende Rechnung verzeichnen:\n\nRechnungsnummer: {{invoice_number}}\nBetrag: {{amount}} EUR\nFällig seit: {{due_date}}\nÜberfällig: 7 Tage\n\nBitte überweisen Sie den ausstehenden Betrag umgehend.\n\nZahlungslink: {{payment_link}}\n\nFalls es Schwierigkeiten gibt, kontaktieren Sie uns bitte, um eine Lösung zu finden.",
+      "variables": ["customer_name", "invoice_number", "amount", "due_date", "payment_link"]
+    },
+    {
+      "id": "invoice_reminder_14",
+      "name": "Mahnung (14 Tage)",
+      "trigger": "Rechnung 14 Tage überfällig",
+      "recipient": "Kunde",
+      "subject": "MAHNUNG: Rechnung {{invoice_number}} - Dringend",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nleider ist die folgende Rechnung trotz mehrfacher Erinnerung weiterhin unbezahlt:\n\nRechnungsnummer: {{invoice_number}}\nUrsprünglicher Betrag: {{amount}} EUR\nMahngebühr: 5,00 EUR\nNeuer Gesamtbetrag: {{total_with_fee}} EUR\nFällig seit: {{due_date}}\nÜberfällig: 14 Tage\n\nWir fordern Sie hiermit auf, den Betrag innerhalb von 7 Tagen zu begleichen.\n\nZahlungslink: {{payment_link}}\n\nBei Nichtzahlung behalten wir uns weitere Schritte vor.",
+      "variables": ["customer_name", "invoice_number", "amount", "total_with_fee", "due_date", "payment_link"]
+    },
+    {
+      "id": "invoice_reminder_30",
+      "name": "Letzte Mahnung (30 Tage)",
+      "trigger": "Rechnung 30 Tage überfällig",
+      "recipient": "Kunde",
+      "subject": "LETZTE MAHNUNG vor Inkasso: Rechnung {{invoice_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nWICHTIG: Dies ist unsere letzte Mahnung vor Einleitung des Inkassoverfahrens.\n\nRechnungsnummer: {{invoice_number}}\nUrsprünglicher Betrag: {{amount}} EUR\nMahngebühren: 15,00 EUR\nVerzugszinsen: {{interest}} EUR\nGesamtbetrag: {{total_amount}} EUR\nÜberfällig: 30 Tage\n\nWir fordern Sie letztmalig auf, den Gesamtbetrag innerhalb von 5 Werktagen zu begleichen.\n\nZahlungslink: {{payment_link}}\n\nNach Ablauf dieser Frist werden wir die Forderung an ein Inkassounternehmen übergeben. Dies führt zu erheblichen Mehrkosten für Sie.\n\nKontaktieren Sie uns unter {{contact_phone}}, falls Sie Zahlungsschwierigkeiten haben.",
+      "variables": ["customer_name", "invoice_number", "amount", "interest", "total_amount", "payment_link", "contact_phone"]
+    },
+    {
+      "id": "payment_received",
+      "name": "Zahlungseingang bestätigt",
+      "trigger": "Zahlung eingegangen",
+      "recipient": "Kunde",
+      "subject": "Zahlungseingang bestätigt - {{invoice_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihre Zahlung!\n\nZAHLUNGSDETAILS\n===============\nRechnungsnummer: {{invoice_number}}\nBetrag: {{amount}} EUR\nEingegangen am: {{payment_date}}\nZahlungsart: {{payment_method}}\n\nDie Quittung ist diesem Schreiben beigefügt.\n\nVielen Dank für Ihr Vertrauen in West Money Bau!",
+      "variables": ["customer_name", "invoice_number", "amount", "payment_date", "payment_method"]
+    },
+    {
+      "id": "deposit_request",
+      "name": "Anzahlungsanforderung",
+      "trigger": "Projekt wird gestartet",
+      "recipient": "Kunde",
+      "subject": "Anzahlung für Projekt {{project_number}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihren Auftrag! Um mit dem Projekt zu beginnen, bitten wir um die vereinbarte Anzahlung.\n\nPROJEKT: {{project_number}}\nGesamtauftragswert: {{total_amount}} EUR\nAnzahlung (30%): {{deposit_amount}} EUR\n\nZahlungslink: {{payment_link}}\n\nNach Eingang der Anzahlung werden wir umgehend mit den Arbeiten beginnen.\n\nGeplanter Starttermin: {{start_date}}",
+      "variables": ["customer_name", "project_number", "total_amount", "deposit_amount", "payment_link", "start_date"]
+    },
+    {
+      "id": "subcontractor_payout",
+      "name": "Subunternehmer Auszahlung",
+      "trigger": "Projekt abgeschlossen und abgerechnet",
+      "recipient": "Subunternehmer",
+      "subject": "Auszahlung für Projekt {{project_number}}",
+      "body": "Hallo {{first_name}},\n\ndie Auszahlung für das folgende Projekt wurde veranlasst:\n\nPROJEKT: {{project_number}}\nLeistungszeitraum: {{period}}\n\nABRECHNUNG\n==========\nHonorar brutto: {{gross_amount}} EUR\nPlattformgebühr (5%): {{platform_fee}} EUR\nAuszahlungsbetrag: {{payout_amount}} EUR\n\nDie Überweisung erfolgt auf Ihr hinterlegtes Stripe Connect Konto und sollte innerhalb von 2-3 Werktagen eingehen.\n\nVielen Dank für Ihre ausgezeichnete Arbeit!",
+      "variables": ["first_name", "project_number", "period", "gross_amount", "platform_fee", "payout_amount"]
+    }
+  ]
+}

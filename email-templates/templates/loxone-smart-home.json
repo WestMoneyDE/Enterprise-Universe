@@ -1,0 +1,69 @@
+{
+  "category": "LOXONE Smart Home",
+  "language": "de",
+  "templates": [
+    {
+      "id": "loxone_consultation_booked",
+      "name": "Beratungstermin gebucht",
+      "trigger": "Kunde bucht Smart Home Beratung",
+      "recipient": "Kunde",
+      "subject": "Ihr Smart Home Beratungstermin bei West Money Bau",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nvielen Dank für Ihre Buchung! Ihr Beratungstermin ist bestätigt.\n\nTERMINDETAILS\n=============\nDatum: {{appointment_date}}\nUhrzeit: {{appointment_time}}\nDauer: ca. 60 Minuten\nOrt: {{location}}\n\nIHR BERATER\n===========\n{{consultant_name}}\nTelefon: {{consultant_phone}}\n\nVORBEREITUNG\n============\nUm das Beste aus der Beratung herauszuholen, überlegen Sie sich:\n- Welche Funktionen sind Ihnen am wichtigsten?\n- Neubau oder Bestandsgebäude?\n- Ungefähres Budget\n\nBis bald!",
+      "variables": ["customer_name", "appointment_date", "appointment_time", "location", "consultant_name", "consultant_phone"]
+    },
+    {
+      "id": "loxone_system_configured",
+      "name": "System konfiguriert",
+      "trigger": "LOXONE Konfiguration abgeschlossen",
+      "recipient": "Kunde",
+      "subject": "Ihre LOXONE Konfiguration ist fertig!",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr individuelles LOXONE Smart Home System wurde konfiguriert.\n\nSYSTEMÜBERSICHT\n===============\nMiniserver: {{miniserver_type}}\nAnzahl Komponenten: {{component_count}}\n\nINSTALLIERTE FUNKTIONEN\n=======================\n{{installed_features}}\n\nZUGANGSDATEN\n============\nLOXONE App:\nIP (lokal): {{local_ip}}\nCloud-Zugang: {{cloud_url}}\nBenutzername: {{username}}\nPasswort: (wird separat mitgeteilt)\n\nLaden Sie die LOXONE App herunter:\niOS: {{ios_link}}\nAndroid: {{android_link}}\n\nEine Einführung in Ihr System erfolgt bei der Übergabe.",
+      "variables": ["customer_name", "miniserver_type", "component_count", "installed_features", "local_ip", "cloud_url", "username", "ios_link", "android_link"]
+    },
+    {
+      "id": "loxone_maintenance_scheduled",
+      "name": "Wartungstermin",
+      "trigger": "Wartung geplant",
+      "recipient": "Kunde",
+      "subject": "LOXONE Wartungstermin - {{appointment_date}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr jährlicher LOXONE Wartungstermin steht an.\n\nTERMIN\n======\nDatum: {{appointment_date}}\nUhrzeit: {{appointment_time}}\nDauer: ca. {{duration}} Minuten\nTechniker: {{technician_name}}\n\nWARTUNGSUMFANG\n==============\n- Systemcheck und Diagnose\n- Software-Updates\n- Funktionsprüfung aller Komponenten\n- Batterieprüfung (Rauchmelder, Sensoren)\n- Optimierung auf Wunsch\n\nWICHTIG: Bitte stellen Sie sicher, dass jemand vor Ort ist.\n\nTermin verschieben: {{reschedule_link}}\n\nBei Fragen: {{support_phone}}",
+      "variables": ["customer_name", "appointment_date", "appointment_time", "duration", "technician_name", "reschedule_link", "support_phone"]
+    },
+    {
+      "id": "loxone_maintenance_report",
+      "name": "Wartungsbericht",
+      "trigger": "Nach Wartung",
+      "recipient": "Kunde",
+      "subject": "LOXONE Wartungsbericht - {{date}}",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhre LOXONE Wartung wurde erfolgreich durchgeführt.\n\nWARTUNGSBERICHT\n===============\nDatum: {{date}}\nTechniker: {{technician_name}}\nDauer: {{duration}}\n\nDURCHGEFÜHRTE ARBEITEN\n======================\n{{work_performed}}\n\nSYSTEMSTATUS\n============\n{{system_status}}\n\nEMPFEHLUNGEN\n============\n{{recommendations}}\n\nNÄCHSTE WARTUNG\n===============\nVoraussichtlich: {{next_maintenance}}\n\nDer vollständige Bericht ist in Ihrem Portal verfügbar.",
+      "variables": ["customer_name", "date", "technician_name", "duration", "work_performed", "system_status", "recommendations", "next_maintenance"]
+    },
+    {
+      "id": "loxone_firmware_update",
+      "name": "Firmware Update verfügbar",
+      "trigger": "Neue LOXONE Firmware",
+      "recipient": "Kunde",
+      "subject": "LOXONE Update verfügbar für Ihr System",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nfür Ihr LOXONE System ist ein Update verfügbar.\n\nAKTUELLE VERSION: {{current_version}}\nNEUE VERSION: {{new_version}}\n\nNEUE FUNKTIONEN\n===============\n{{new_features}}\n\nFEHLERBEHEBUNGEN\n================\n{{bug_fixes}}\n\nMit Ihrem Wartungsvertrag führen wir das Update kostenlos durch.\n\nUpdate-Termin vereinbaren: {{schedule_link}}\n\nOder wir führen das Update bei Ihrer nächsten Wartung durch.",
+      "variables": ["customer_name", "current_version", "new_version", "new_features", "bug_fixes", "schedule_link"]
+    },
+    {
+      "id": "loxone_support_ticket",
+      "name": "Support-Ticket erstellt",
+      "trigger": "Kunde meldet Problem",
+      "recipient": "Kunde",
+      "subject": "Support-Ticket #{{ticket_id}} erstellt",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr Support-Ticket wurde erfolgreich erstellt.\n\nTICKET-DETAILS\n==============\nTicket-ID: #{{ticket_id}}\nKategorie: {{category}}\nPriorität: {{priority}}\n\nIHRE ANFRAGE\n============\n{{issue_description}}\n\nNÄCHSTE SCHRITTE\n================\nUnser Team wird sich innerhalb von {{response_time}} bei Ihnen melden.\n\nBei dringenden Problemen erreichen Sie unsere Hotline:\n{{hotline_number}} ({{hotline_hours}})\n\nTicket-Status verfolgen: {{ticket_link}}",
+      "variables": ["customer_name", "ticket_id", "category", "priority", "issue_description", "response_time", "hotline_number", "hotline_hours", "ticket_link"]
+    },
+    {
+      "id": "loxone_remote_access_request",
+      "name": "Fernwartung Zugriffsanfrage",
+      "trigger": "Support benötigt Fernzugriff",
+      "recipient": "Kunde",
+      "subject": "Fernwartung: Zugriffsanfrage für Ihr LOXONE System",
+      "body": "Sehr geehrte/r {{customer_name}},\n\num Ihr Support-Ticket #{{ticket_id}} zu bearbeiten, benötigen wir Fernzugriff auf Ihr LOXONE System.\n\nTECHNIKER: {{technician_name}}\nGRUND: {{access_reason}}\nDAUER: ca. {{estimated_duration}}\n\nZugriff erlauben: {{approve_link}}\nZugriff ablehnen: {{deny_link}}\n\nWICHTIG: Der Zugriff ist auf {{access_duration}} begrenzt und wird danach automatisch beendet.\n\nWir werden Sie informieren, sobald die Arbeit abgeschlossen ist.",
+      "variables": ["customer_name", "ticket_id", "technician_name", "access_reason", "estimated_duration", "approve_link", "deny_link", "access_duration"]
+    }
+  ]
+}

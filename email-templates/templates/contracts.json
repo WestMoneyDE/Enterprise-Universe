@@ -1,0 +1,69 @@
+{
+  "category": "Verträge",
+  "language": "de",
+  "templates": [
+    {
+      "id": "contract_expiry_30",
+      "name": "Vertragserinnerung 30 Tage",
+      "trigger": "Vertrag läuft in 30 Tagen ab",
+      "recipient": "Subunternehmer",
+      "subject": "Vertragserinnerung: 30 Tage bis Ablauf",
+      "body": "Hallo {{first_name}},\n\nIhr Rahmenvertrag mit West Money Bau läuft in 30 Tagen ab.\n\nVERTRAGSDETAILS\n===============\nVertragsnummer: {{contract_number}}\nAblaufdatum: {{expiry_date}}\nVertragstyp: {{contract_type}}\n\nWir würden uns freuen, die Zusammenarbeit fortzusetzen. Bitte kontaktieren Sie uns für die Vertragsverlängerung.\n\nAntworten Sie einfach auf diese E-Mail oder rufen Sie uns an.",
+      "variables": ["first_name", "contract_number", "expiry_date", "contract_type"]
+    },
+    {
+      "id": "contract_expiry_14",
+      "name": "Vertragserinnerung 14 Tage",
+      "trigger": "Vertrag läuft in 14 Tagen ab",
+      "recipient": "Subunternehmer",
+      "subject": "WICHTIG: Vertrag läuft in 14 Tagen ab",
+      "body": "Hallo {{first_name}},\n\nIhr Rahmenvertrag mit West Money Bau läuft in 14 Tagen ab.\n\nVertragsnummer: {{contract_number}}\nAblaufdatum: {{expiry_date}}\n\nOhne Verlängerung können wir Ihnen nach dem {{expiry_date}} keine neuen Aufträge zuweisen.\n\nBitte melden Sie sich schnellstmöglich für die Verlängerung:\nE-Mail: info@west-money-bau.de\nTelefon: +49 123 456789",
+      "variables": ["first_name", "contract_number", "expiry_date"]
+    },
+    {
+      "id": "contract_expiry_7",
+      "name": "Vertragserinnerung 7 Tage",
+      "trigger": "Vertrag läuft in 7 Tagen ab",
+      "recipient": "Subunternehmer",
+      "subject": "DRINGEND: Nur noch 7 Tage bis Vertragsablauf",
+      "body": "Hallo {{first_name}},\n\nIhr Rahmenvertrag läuft in einer Woche ab!\n\nVertragsnummer: {{contract_number}}\nAblaufdatum: {{expiry_date}}\n\nUm eine Unterbrechung der Zusammenarbeit zu vermeiden, bitten wir Sie, sich umgehend mit uns in Verbindung zu setzen.\n\nLink zur Vertragsverlängerung: {{renewal_link}}",
+      "variables": ["first_name", "contract_number", "expiry_date", "renewal_link"]
+    },
+    {
+      "id": "contract_expiry_1",
+      "name": "Vertragserinnerung 1 Tag",
+      "trigger": "Vertrag läuft morgen ab",
+      "recipient": "Subunternehmer",
+      "subject": "LETZTE WARNUNG: Vertrag läuft MORGEN ab!",
+      "body": "Hallo {{first_name}},\n\nIhr Rahmenvertrag läuft MORGEN ab!\n\nVertragsnummer: {{contract_number}}\nAblaufdatum: {{expiry_date}}\n\nNach Ablauf werden Sie aus dem aktiven Subunternehmer-Pool entfernt.\n\nBitte handeln Sie heute noch:\n{{renewal_link}}\n\nOder rufen Sie uns direkt an: +49 123 456789",
+      "variables": ["first_name", "contract_number", "expiry_date", "renewal_link"]
+    },
+    {
+      "id": "contract_expiry_admin",
+      "name": "Vertragsablauf Admin-Benachrichtigung",
+      "trigger": "Vertrag läuft bald ab",
+      "recipient": "Admin",
+      "subject": "[Vertrag] {{company_name}} - Ablauf in {{days}} Tagen",
+      "body": "Vertrag läuft ab:\n\nSubunternehmer: {{first_name}} {{last_name}}\nFirma: {{company_name}}\nVertragsnummer: {{contract_number}}\nAblaufdatum: {{expiry_date}}\nTage verbleibend: {{days}}\n\nAktionen:\n- Subunternehmer kontaktieren\n- Vertragsverlängerung vorbereiten\n\nDashboard: https://west-money-bau.de/dashboard",
+      "variables": ["first_name", "last_name", "company_name", "contract_number", "expiry_date", "days"]
+    },
+    {
+      "id": "contract_renewed",
+      "name": "Vertrag verlängert",
+      "trigger": "Vertrag wird verlängert",
+      "recipient": "Subunternehmer",
+      "subject": "Vertrag verlängert - {{contract_number}}",
+      "body": "Hallo {{first_name}},\n\nwir freuen uns, Ihnen mitteilen zu können, dass Ihr Rahmenvertrag verlängert wurde!\n\nVERTRAGSDETAILS\n===============\nVertragsnummer: {{contract_number}}\nNeues Ablaufdatum: {{new_expiry_date}}\nVertragslaufzeit: {{duration}}\n\nDer aktualisierte Vertrag steht in Ihrem Portal zum Download bereit.\n\nVielen Dank für Ihre fortgesetzte Partnerschaft!",
+      "variables": ["first_name", "contract_number", "new_expiry_date", "duration"]
+    },
+    {
+      "id": "maintenance_renewal_reminder",
+      "name": "LOXONE Wartungsvertrag Erinnerung",
+      "trigger": "Wartungsvertrag steht zur Verlängerung an",
+      "recipient": "Kunde",
+      "subject": "LOXONE Wartungsvertrag - Verlängerung in {{days}} Tagen",
+      "body": "Sehr geehrte/r {{customer_name}},\n\nIhr LOXONE Wartungsvertrag steht zur Verlängerung an.\n\nVerlängerungsdatum: {{renewal_date}}\n\nIHR WARTUNGSVERTRAG BEINHALTET\n==============================\n- Jährliche Systeminspektion\n- Software-Updates für Ihren Miniserver\n- Fernwartung & Remote-Support\n- 24h Reaktionszeit bei Störungen\n- Bevorzugte Terminvergabe\n\nJAHRESGEBÜHR: {{annual_fee}} EUR\n\nMöchten Sie den Vertrag verlängern?\n{{renewal_link}}\n\nBei Fragen erreichen Sie uns unter info@west-money-bau.de",
+      "variables": ["customer_name", "renewal_date", "annual_fee", "renewal_link", "days"]
+    }
+  ]
+}
