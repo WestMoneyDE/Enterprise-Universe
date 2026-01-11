@@ -162,10 +162,14 @@ West Money Bau Team
 
         // Log activity
         if (matchesMade > 0) {
-            await db.query(`
-                INSERT INTO bau.activity_log (entity_type, entity_id, action, description)
-                VALUES ('system', NULL, 'auto_match', $1)
-            `, [`${matchesMade} Projekt-Subunternehmer Matches erstellt`]);
+            try {
+                await db.query(`
+                    INSERT INTO bau.activity_log (entity_type, action, description)
+                    VALUES ('system', 'auto_match', $1)
+                `, [`${matchesMade} Projekt-Subunternehmer Matches erstellt`]);
+            } catch (e) {
+                // Activity log is optional, don't fail if it errors
+            }
         }
 
     } catch (error) {
