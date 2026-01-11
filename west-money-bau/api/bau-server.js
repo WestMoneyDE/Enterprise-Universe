@@ -969,8 +969,19 @@ app.post('/webhooks/hubspot', async (req, res) => {
 // FALLBACK ROUTES
 // ═══════════════════════════════════════════════════════════════
 
-// Serve landing page for all other routes
+// Serve landing page for all other routes (with clean URL support)
 app.get('*', (req, res) => {
+    const requestPath = req.path;
+
+    // Check if a corresponding HTML file exists for clean URLs
+    if (!requestPath.includes('.') && requestPath !== '/') {
+        const htmlFile = path.join(__dirname, '../frontend/public', requestPath + '.html');
+        if (require('fs').existsSync(htmlFile)) {
+            return res.sendFile(htmlFile);
+        }
+    }
+
+    // Fallback to index.html for SPA-like behavior
     res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
 });
 
