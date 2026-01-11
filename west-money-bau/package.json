@@ -1,0 +1,12 @@
+{
+  "name": "west-money-bau-frontend",
+  "version": "1.0.0",
+  "description": "West Money Bau - Smart Home, Barrierefreies Bauen & Sicherheitssysteme",
+  "scripts": {
+    "build:css": "tailwindcss -i ./frontend/src/input.css -o ./frontend/public/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./frontend/src/input.css -o ./frontend/public/css/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
