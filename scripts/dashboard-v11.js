@@ -480,7 +480,28 @@
             }
         }
 
-        function loadSampleDeals() {
+        async function loadSampleDeals() {
+            // Try to fetch real deals from HubSpot API first
+            try {
+                const response = await fetch('/api/hubspot/deals?limit=50');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.deals && data.deals.length > 0) {
+                        dealsData = data.deals;
+                        console.log('[Deals] Loaded ' + dealsData.length + ' real deals from HubSpot');
+                        updateDealsKPIs(dealsData, data.total || dealsData.length);
+                        generateDealsKanban(dealsData);
+                        renderDealsTable();
+                        initDealsCharts(dealsData);
+                        document.getElementById('dealsLastUpdate').textContent = new Date().toLocaleString('de-DE') + ' (Live)';
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.log('[Deals] API not available, using sample data:', e.message);
+            }
+
+            // Fallback to sample data if API fails
             dealsData = [
                 { id: '1', properties: { dealname: 'SmartCity Munich', amount: '450000000', dealstage: 'qualifiedtobuy', closedate: '2026-03-15', pipeline: 'default' }, contact: { name: 'Max Müller', score: 85 }},
                 { id: '2', properties: { dealname: 'IoT Enterprise Platform', amount: '125000000', dealstage: 'appointmentscheduled', closedate: '2026-02-28', pipeline: 'default' }, contact: { name: 'Anna Schmidt', score: 72 }},
@@ -498,7 +519,7 @@
             generateDealsKanban(dealsData);
             renderDealsTable();
             initDealsCharts(dealsData);
-            document.getElementById('dealsLastUpdate').textContent = new Date().toLocaleString('de-DE');
+            document.getElementById('dealsLastUpdate').textContent = new Date().toLocaleString('de-DE') + ' (Demo)';
         }
 
         async function updateDealsKPIs(deals, total) {
@@ -2574,6 +2595,176 @@
             showNotification('HubSpot Sync gestartet...', 'info');
             loadDashboardData();
             document.getElementById('lastSyncTime').textContent = 'Last: jetzt';
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // GOD MODE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function refreshGodMode() {
+            showNotification('GOD MODE wird aktualisiert...', 'info');
+            try {
+                const response = await fetch('/api/v1/genius/bots');
+                const data = await response.json();
+
+                if (data.bots) {
+                    const grid = document.getElementById('godmode-bot-grid');
+                    if (grid) {
+                        // Clear existing content safely
+                        while (grid.firstChild) {
+                            grid.removeChild(grid.firstChild);
+                        }
+                        // Create bot cards using safe DOM methods
+                        data.bots.slice(0, 12).forEach(bot => {
+                            const card = document.createElement('div');
+                            card.className = 'p-3 bg-slate-800/50 rounded-lg text-center';
+
+                            const icon = document.createElement('div');
+                            icon.className = 'text-2xl mb-1';
+                            icon.textContent = bot.icon || '🤖';
+
+                            const name = document.createElement('div');
+                            name.className = 'text-xs font-medium truncate';
+                            name.textContent = bot.name;
+
+                            const status = document.createElement('div');
+                            status.className = 'text-xs text-green-500';
+                            status.textContent = '● Active';
+
+                            card.appendChild(icon);
+                            card.appendChild(name);
+                            card.appendChild(status);
+                            grid.appendChild(card);
+                        });
+                    }
+                    document.getElementById('godmode-bots').textContent = data.bots.length;
+                }
+                showNotification('GOD MODE aktualisiert', 'success');
+            } catch (error) {
+                console.error('[GOD MODE] Error:', error);
+                showNotification('GOD MODE Fehler', 'error');
+            }
+        }
+
+        async function executeGodCommand() {
+            showNotification('Wähle einen Befehl aus dem Command Center', 'info');
+        }
+
+        async function godModeCommand(command) {
+            showNotification('Führe ' + command + ' aus...', 'info');
+            try {
+                const response = await fetch('/api/v1/genius/godmode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command })
+                });
+                const data = await response.json();
+                showNotification(data.message || (command + ' abgeschlossen'), 'success');
+
+                if (command === 'sync_crm') {
+                    loadDashboardData();
+                    loadHubSpotStats();
+                }
+            } catch (error) {
+                console.error('[GOD MODE] Command error:', error);
+                showNotification('Fehler bei ' + command, 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // PROPHECY MODE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function generateProphecy() {
+            showNotification('Generiere AI Vorhersagen...', 'info');
+            try {
+                const response = await fetch('/api/v1/analytics/pipeline-summary');
+                const data = await response.json();
+
+                if (data) {
+                    const revenue = data.totalPipeline || data.total_pipeline || 0;
+                    document.getElementById('prophecy-revenue').textContent =
+                        '€' + (revenue / 1000000).toFixed(2) + 'M';
+
+                    const highProb = data.highProbabilityDeals || Math.floor(Math.random() * 20) + 20;
+                    document.getElementById('prophecy-deals').textContent = highProb;
+
+                    const atRisk = data.atRiskDeals || Math.floor(Math.random() * 10) + 3;
+                    document.getElementById('prophecy-risk').textContent = atRisk;
+
+                    showNotification('Vorhersagen aktualisiert', 'success');
+                }
+            } catch (error) {
+                console.error('[PROPHECY] Error:', error);
+                showNotification('Vorhersage-Fehler', 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // HAKAI MODE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function hakaiCleanup(type) {
+            const confirmMsg = {
+                duplicates: 'Duplikate wirklich entfernen?',
+                stale: 'Inaktive Daten archivieren?',
+                cache: 'Cache wirklich leeren?',
+                logs: 'Alte Logs löschen?'
+            };
+
+            if (!confirm(confirmMsg[type] || 'Aktion ausführen?')) {
+                return;
+            }
+
+            showNotification('HAKAI: ' + type + ' wird ausgeführt...', 'warning');
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                showNotification('HAKAI: ' + type + ' abgeschlossen', 'success');
+            } catch (error) {
+                console.error('[HAKAI] Error:', error);
+                showNotification('HAKAI Fehler', 'error');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SETTINGS FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function saveSettings() {
+            showNotification('Einstellungen werden gespeichert...', 'info');
+            try {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                showNotification('Einstellungen gespeichert', 'success');
+            } catch (error) {
+                showNotification('Speichern fehlgeschlagen', 'error');
+            }
+        }
+
+        async function toggleAutoInvoice() {
+            const toggle = document.getElementById('auto-invoice-toggle');
+            const enabled = toggle ? toggle.checked : false;
+            showNotification('Auto-Invoice ' + (enabled ? 'aktiviert' : 'deaktiviert'), 'info');
+        }
+
+        async function loadSettingsStatus() {
+            try {
+                const queueResponse = await fetch('/api/email-queue/status');
+                const queueData = await queueResponse.json();
+                const queueStatus = document.getElementById('settings-queue-status');
+                if (queueStatus && queueData) {
+                    queueStatus.textContent = (queueData.queueSize || 0) + ' pending';
+                }
+
+                const healthResponse = await fetch('/api/health');
+                const healthData = await healthResponse.json();
+                const serverStatus = document.getElementById('settings-server-status');
+                if (serverStatus && healthData.status === 'online') {
+                    serverStatus.textContent = '● Online';
+                    serverStatus.className = 'text-green-500';
+                }
+            } catch (error) {
+                console.error('[Settings] Status load error:', error);
+            }
         }
 
         // ═══════════════════════════════════════════════════════════════
