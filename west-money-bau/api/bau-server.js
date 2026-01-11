@@ -455,7 +455,7 @@ app.post('/api/subcontractors/apply', async (req, res) => {
             // Send email notification to admin (PRIMARY)
             try {
                 await emailService.notifyNewApplication(appData);
-                console.log('[Email] Admin notification sent to info@west-money-bau.de');
+                console.log('[Email] Admin notification sent to info@enterprise-universe.com');
             } catch (err) {
                 console.error('[Email] Notification error:', err.message);
             }
