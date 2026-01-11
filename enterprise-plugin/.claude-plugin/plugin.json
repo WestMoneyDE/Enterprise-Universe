@@ -1,0 +1,12 @@
+{
+  "name": "enterprise-universe",
+  "description": "Enterprise Universe - Business Management Plugin für HubSpot, Stripe & Invoicing",
+  "version": "1.0.0",
+  "author": {
+    "name": "Enterprise Universe",
+    "email": "coskun.oemer@gmail.com"
+  },
+  "keywords": ["hubspot", "stripe", "invoicing", "crm", "payments"],
+  "repository": "https://github.com/enterprise-universe/claude-plugin",
+  "license": "MIT"
+}

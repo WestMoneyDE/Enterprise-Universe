@@ -10,10 +10,50 @@
 const express = require('express');
 const crypto = require('crypto');
 const http = require('http');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const Joi = require('joi');
 const { automationEngine, leadFinder, hubspotClient } = require('./sales-automation-engine');
 const { activityManager, ACTIVITY_TYPES } = require('./activity-manager');
 
 const app = express();
+
+// Security headers
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            imgSrc: ["'self'", "data:", "https:"],
+            connectSrc: ["'self'", "wss:", "https:"]
+        }
+    },
+    crossOriginEmbedderPolicy: false
+}));
+
+// Rate limiting for API endpoints
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 1000, // max 1000 requests per 15 min per IP
+    message: { error: 'Too many requests, please try again later.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Stricter rate limiting for webhooks
+const webhookLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 100, // max 100 webhook requests per minute per IP
+    message: { error: 'Webhook rate limit exceeded.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Apply rate limiting
+app.use('/api/', apiLimiter);
+app.use('/webhook/', webhookLimiter);
 const server = http.createServer(app);
 
 // ============================================================================
@@ -108,10 +148,23 @@ const requestLogger = (req, res, next) => {
 
 app.use(requestLogger);
 
-// CORS für lokale Entwicklung
+// CORS configuration - restricted to allowed origins
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : ['https://enterprise-universe.one', 'https://app.enterprise-universe.one', 'https://west-money-bau.de'];
+
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin) || process.env.NODE_ENV === 'development') {
+        res.header('Access-Control-Allow-Origin', origin || '*');
+    }
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
     next();
 });
 
@@ -272,17 +325,38 @@ async function processInteractiveResponse(message) {
 }
 
 function verifyWhatsAppSignature(payload, signature) {
-    if (!signature || !WEBHOOK_CONFIG.whatsapp.appSecret) return true; // Skip in dev
+    // In production, require valid signature
+    if (process.env.NODE_ENV === 'production') {
+        if (!signature) {
+            console.warn('[Security] WhatsApp webhook signature missing');
+            return false;
+        }
+        if (!WEBHOOK_CONFIG.whatsapp.appSecret || WEBHOOK_CONFIG.whatsapp.appSecret === 'YOUR_APP_SECRET') {
+            console.error('[Security] WhatsApp app secret not configured in production!');
+            return false;
+        }
+    } else {
+        // In development, skip if not configured
+        if (!signature || !WEBHOOK_CONFIG.whatsapp.appSecret || WEBHOOK_CONFIG.whatsapp.appSecret === 'YOUR_APP_SECRET') {
+            console.log('[Dev] Skipping WhatsApp signature verification');
+            return true;
+        }
+    }
 
     const expectedSignature = 'sha256=' + crypto
         .createHmac('sha256', WEBHOOK_CONFIG.whatsapp.appSecret)
         .update(payload)
         .digest('hex');
 
-    return crypto.timingSafeEqual(
-        Buffer.from(signature),
-        Buffer.from(expectedSignature)
-    );
+    try {
+        return crypto.timingSafeEqual(
+            Buffer.from(signature),
+            Buffer.from(expectedSignature)
+        );
+    } catch (error) {
+        console.error('[Security] Signature verification error:', error.message);
+        return false;
+    }
 }
 
 // ============================================================================
@@ -357,8 +431,24 @@ async function notifyIncomingCall(callerId, calledDid) {
 }
 
 function verifyZadarmaSignature(body, signature) {
-    if (!signature || !WEBHOOK_CONFIG.zadarma.secretKey) return true;
-    
+    // In production, require valid signature
+    if (process.env.NODE_ENV === 'production') {
+        if (!signature) {
+            console.warn('[Security] Zadarma webhook signature missing');
+            return false;
+        }
+        if (!WEBHOOK_CONFIG.zadarma.secretKey || WEBHOOK_CONFIG.zadarma.secretKey === 'YOUR_ZADARMA_KEY') {
+            console.error('[Security] Zadarma secret key not configured in production!');
+            return false;
+        }
+    } else {
+        // In development, skip if not configured
+        if (!signature || !WEBHOOK_CONFIG.zadarma.secretKey || WEBHOOK_CONFIG.zadarma.secretKey === 'YOUR_ZADARMA_KEY') {
+            console.log('[Dev] Skipping Zadarma signature verification');
+            return true;
+        }
+    }
+
     const data = Object.keys(body).sort().map(k => body[k]).join('');
     const expectedSignature = crypto
         .createHmac('sha256', WEBHOOK_CONFIG.zadarma.secretKey)
@@ -372,25 +462,52 @@ function verifyZadarmaSignature(body, signature) {
 // WEB-FORMULAR ENDPOINT
 // ============================================================================
 
-app.post('/api/lead', async (req, res) => {
-    try {
-        const { 
-            name, 
-            email, 
-            phone, 
-            company, 
-            message, 
-            projectType,
-            gdprConsent,
-            whatsappConsent 
-        } = req.body;
+// Joi validation schema for lead capture
+const leadSchema = Joi.object({
+    name: Joi.string().max(100).optional(),
+    email: Joi.string().email().required().messages({
+        'string.email': 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+        'any.required': 'E-Mail ist erforderlich'
+    }),
+    phone: Joi.string().pattern(/^[+]?[\d\s()-]{6,20}$/).optional().messages({
+        'string.pattern.base': 'Bitte geben Sie eine gültige Telefonnummer ein'
+    }),
+    company: Joi.string().max(200).optional(),
+    message: Joi.string().max(5000).optional(),
+    projectType: Joi.string().max(100).optional(),
+    gdprConsent: Joi.boolean().truthy('true', 1, '1').required().messages({
+        'any.required': 'DSGVO-Einwilligung ist erforderlich'
+    }),
+    whatsappConsent: Joi.boolean().truthy('true', 1, '1').optional()
+});
 
-        // Validierung
-        if (!email || !gdprConsent) {
-            return res.status(400).json({ 
-                error: 'E-Mail und DSGVO-Einwilligung erforderlich' 
+// Helper function for structured error logging
+function logError(errorId, context, error, req) {
+    console.error(`[${errorId}] ${context}:`, {
+        message: error.message,
+        stack: error.stack,
+        ip: req?.ip,
+        path: req?.path,
+        timestamp: new Date().toISOString()
+    });
+}
+
+app.post('/api/lead', async (req, res) => {
+    const errorId = `ERR-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+
+    try {
+        // Validate input with Joi
+        const { error, value } = leadSchema.validate(req.body, { abortEarly: false });
+
+        if (error) {
+            const validationErrors = error.details.map(d => d.message);
+            return res.status(400).json({
+                error: 'Validierungsfehler',
+                details: validationErrors
             });
         }
+
+        const { name, email, phone, company, message, projectType, gdprConsent, whatsappConsent } = value;
 
         // Lead erfassen
         const contact = await leadFinder.captureWebFormLead({
@@ -399,8 +516,8 @@ app.post('/api/lead', async (req, res) => {
             phone,
             company,
             message: `${projectType ? `Projekt: ${projectType}\n` : ''}${message || ''}`,
-            gdprConsent: gdprConsent === true || gdprConsent === 'true',
-            whatsappConsent: whatsappConsent === true || whatsappConsent === 'true'
+            gdprConsent: gdprConsent === true,
+            whatsappConsent: whatsappConsent === true
         });
 
         // Automation starten
@@ -429,9 +546,10 @@ app.post('/api/lead', async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Lead Capture Error:', error);
-        res.status(500).json({ 
-            error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später.' 
+        logError(errorId, 'Lead Capture Error', error, req);
+        res.status(500).json({
+            error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später.',
+            errorId: errorId // For support reference
         });
     }
 });

@@ -1,0 +1,14 @@
+{
+  "name": "enterprise-universe-marketplace",
+  "description": "Enterprise Universe Plugin Marketplace",
+  "version": "1.0.0",
+  "plugins": [
+    {
+      "name": "enterprise-universe",
+      "path": ".",
+      "description": "Business Management Plugin für HubSpot, Stripe & Invoicing",
+      "version": "1.0.0",
+      "keywords": ["hubspot", "stripe", "invoicing", "crm", "payments"]
+    }
+  ]
+}

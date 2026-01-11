@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Enterprise Plugin] Datei geändert: wird automatisch formatiert...'",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Enterprise Plugin] Bash-Befehl wird ausgeführt...'",
+            "timeout": 3000
+          }
+        ]
+      }
+    ]
+  }
+}
