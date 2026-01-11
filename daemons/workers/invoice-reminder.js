@@ -146,9 +146,9 @@ async function run() {
             // Check if we already sent this reminder
             const lastReminder = await db.query(`
                 SELECT * FROM bau.notifications
-                WHERE entity_type = 'payment'
-                AND entity_id = $1
-                AND notification_type = $2
+                WHERE recipient_type = 'payment'
+                AND recipient_id = $1
+                AND template = $2
                 AND created_at > NOW() - INTERVAL '6 days'
             `, [invoice.id, templateKey]);
 
@@ -176,9 +176,9 @@ async function run() {
                 // Log the notification
                 await db.query(`
                     INSERT INTO bau.notifications
-                    (entity_type, entity_id, notification_type, channel, recipient, status)
+                    (recipient_type, recipient_id, recipient_email, template, channel, status)
                     VALUES ($1, $2, $3, $4, $5, $6)
-                `, ['payment', invoice.id, templateKey, 'email', invoice.email, 'sent']);
+                `, ['payment', invoice.id, invoice.email, templateKey, 'email', 'sent']);
             } else {
                 errors.push(`Failed to send to ${invoice.email}: ${result.error}`);
             }
