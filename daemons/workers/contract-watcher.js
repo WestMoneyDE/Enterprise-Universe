@@ -21,13 +21,13 @@ async function run() {
                 s.last_name,
                 s.email,
                 s.company_name,
-                EXTRACT(DAY FROM c.valid_until - NOW()) as days_until_expiry
+                (c.valid_until - CURRENT_DATE) as days_until_expiry
             FROM bau.contracts c
             LEFT JOIN bau.subcontractors s ON c.subcontractor_id = s.id
             WHERE c.status = 'active'
             AND c.valid_until IS NOT NULL
-            AND c.valid_until > NOW()
-            AND c.valid_until < NOW() + INTERVAL '31 days'
+            AND c.valid_until >= CURRENT_DATE
+            AND c.valid_until <= CURRENT_DATE + INTERVAL '31 days'
         `);
 
         for (const contract of expiringContracts.rows) {
@@ -40,9 +40,9 @@ async function run() {
             // Check if already reminded
             const alreadyReminded = await db.query(`
                 SELECT 1 FROM bau.notifications
-                WHERE entity_type = 'contract'
-                AND entity_id = $1
-                AND notification_type = $2
+                WHERE recipient_type = 'contract'
+                AND recipient_id = $1
+                AND template = $2
             `, [contract.id, `expiry_reminder_${daysUntil}`]);
 
             if (alreadyReminded.rows.length > 0) continue;
@@ -88,27 +88,29 @@ Dashboard: https://west-money-bau.de/dashboard
             // Record notification
             await db.query(`
                 INSERT INTO bau.notifications
-                (entity_type, entity_id, notification_type, channel, status)
-                VALUES ($1, $2, $3, $4, $5)
-            `, ['contract', contract.id, `expiry_reminder_${daysUntil}`, 'email', 'sent']);
+                (recipient_type, recipient_id, recipient_email, template, channel, status)
+                VALUES ($1, $2, $3, $4, $5, $6)
+            `, ['contract', contract.id, contract.email, `expiry_reminder_${daysUntil}`, 'email', 'sent']);
 
             remindersSent++;
         }
 
-        // Check for maintenance contract renewals
+        // Check for maintenance contract renewals (LOXONE projects)
         const maintenanceContracts = await db.query(`
             SELECT
                 lp.*,
+                p.title as project_title,
                 c.first_name,
                 c.last_name,
                 c.email,
-                EXTRACT(DAY FROM lp.maintenance_renewal_date - NOW()) as days_until_renewal
+                (lp.next_maintenance - CURRENT_DATE) as days_until_renewal
             FROM bau.loxone_projects lp
-            LEFT JOIN bau.customers c ON lp.customer_id = c.id
+            LEFT JOIN bau.projects p ON lp.project_id = p.id
+            LEFT JOIN bau.customers c ON p.customer_id = c.id
             WHERE lp.maintenance_contract = true
-            AND lp.maintenance_renewal_date IS NOT NULL
-            AND lp.maintenance_renewal_date > NOW()
-            AND lp.maintenance_renewal_date < NOW() + INTERVAL '31 days'
+            AND lp.next_maintenance IS NOT NULL
+            AND lp.next_maintenance >= CURRENT_DATE
+            AND lp.next_maintenance <= CURRENT_DATE + INTERVAL '31 days'
         `);
 
         for (const contract of maintenanceContracts.rows) {
@@ -119,13 +121,14 @@ Dashboard: https://west-money-bau.de/dashboard
             if (contract.email) {
                 await emailService.sendEmail({
                     to: contract.email,
-                    subject: `LOXONE Wartungsvertrag - Verlängerung in ${daysUntil} Tagen`,
+                    subject: `LOXONE Wartungsvertrag - Wartung in ${daysUntil} Tagen`,
                     body: `
 Sehr geehrte/r ${contract.first_name} ${contract.last_name},
 
-Ihr LOXONE Wartungsvertrag steht zur Verlängerung an.
+Ihr LOXONE Wartungsvertrag steht zur nächsten Wartung an.
 
-Verlängerungsdatum: ${new Date(contract.maintenance_renewal_date).toLocaleDateString('de-DE')}
+Projekt: ${contract.project_title || 'LOXONE Smart Home'}
+Wartungstermin: ${new Date(contract.next_maintenance).toLocaleDateString('de-DE')}
 
 Der Wartungsvertrag beinhaltet:
 - Jährliche Systeminspektion
