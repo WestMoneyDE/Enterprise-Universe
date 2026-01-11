@@ -34,6 +34,13 @@ A comprehensive business management plugin for Claude Code that integrates with 
 | `/enterprise-universe:dashboard` | Dashboard statistics and data refresh |
 | `/enterprise-universe:security` | Server security monitoring (fail2ban, UFW, SSH) |
 
+### Webhooks & Notifications
+
+| Command | Description |
+|---------|-------------|
+| `/enterprise-universe:webhooks` | Manage Stripe & HubSpot webhooks |
+| `/enterprise-universe:notifications` | Send and manage notifications (email, WhatsApp) |
+
 ## Command Examples
 
 ### Contacts
@@ -76,6 +83,22 @@ A comprehensive business management plugin for Claude Code that integrates with 
 /enterprise-universe:security audit
 ```
 
+### Webhooks
+```bash
+/enterprise-universe:webhooks status
+/enterprise-universe:webhooks list
+/enterprise-universe:webhooks test stripe
+/enterprise-universe:webhooks logs
+```
+
+### Notifications
+```bash
+/enterprise-universe:notifications status
+/enterprise-universe:notifications send email "Payment received"
+/enterprise-universe:notifications test whatsapp
+/enterprise-universe:notifications history
+```
+
 ## Plugin Structure
 
 ```
@@ -83,7 +106,7 @@ enterprise-plugin/
 ├── .claude-plugin/
 │   ├── plugin.json          # Plugin manifest
 │   └── marketplace.json     # Marketplace configuration
-├── commands/                 # Slash commands
+├── commands/                 # Slash commands (11 total)
 │   ├── contacts.md
 │   ├── companies.md
 │   ├── deals.md
@@ -92,7 +115,9 @@ enterprise-plugin/
 │   ├── payments.md
 │   ├── email.md
 │   ├── dashboard.md
-│   └── security.md
+│   ├── security.md
+│   ├── webhooks.md
+│   └── notifications.md
 ├── skills/
 │   └── crm-expert/
 │       └── SKILL.md         # CRM expertise skill

@@ -4277,24 +4277,35 @@ app.post('/api/webhooks/hubspot', async (req, res) => {
     try {
         const events = Array.isArray(req.body) ? req.body : [req.body];
 
+        // Process each event independently to prevent one failure from blocking others
+        const results = [];
         for (const event of events) {
-            // Check for deal property change (dealstage)
-            if (event.subscriptionType === 'deal.propertyChange' &&
-                event.propertyName === 'dealstage' &&
-                event.propertyValue === 'closedwon') {
+            try {
+                // Check for deal property change (dealstage)
+                if (event.subscriptionType === 'deal.propertyChange' &&
+                    event.propertyName === 'dealstage' &&
+                    event.propertyValue === 'closedwon') {
 
-                const dealId = event.objectId;
-                console.log(`[Auto-Invoice] Deal ${dealId} won! Triggering auto-invoice...`);
+                    const dealId = event.objectId;
+                    console.log(`[Auto-Invoice] Deal ${dealId} won! Triggering auto-invoice...`);
 
-                // Send invoice automatically
-                await sendAutoInvoice(dealId);
+                    // Send invoice automatically (don't await - process async)
+                    sendAutoInvoice(dealId).catch(err => {
+                        console.error(`[Auto-Invoice] Failed for deal ${dealId}:`, err.message);
+                    });
+                    results.push({ dealId, status: 'processing' });
+                }
+            } catch (eventError) {
+                console.error(`[HubSpot Webhook] Event processing error:`, eventError.message);
+                results.push({ error: eventError.message });
             }
         }
 
-        res.json({ received: true });
+        res.json({ received: true, processed: results.length });
     } catch (error) {
         console.error('[HubSpot Webhook] Error:', error.message);
-        res.status(400).json({ error: error.message });
+        // Always return 200 to prevent HubSpot from retrying
+        res.json({ received: true, error: error.message });
     }
 });
 
@@ -5100,14 +5111,13 @@ app.get('/api/v1/workflows/:id', async (req, res) => {
 app.post('/api/v1/workflows', async (req, res) => {
     if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
     try {
-        const { name, description, trigger_type, trigger_config, is_active } = req.body;
+        const { name, description, trigger_type, triggerType, trigger_config, triggerConfig, is_active } = req.body;
         const workflow = await workflowService.createWorkflow({
             name,
             description,
-            trigger_type,
-            trigger_config,
-            is_active,
-            created_by: req.body.user_id || null
+            triggerType: triggerType || trigger_type,
+            triggerConfig: triggerConfig || trigger_config || {},
+            createdBy: req.body.user_id || req.body.created_by || null
         });
         res.status(201).json(workflow);
     } catch (error) {
@@ -5156,12 +5166,11 @@ app.get('/api/v1/workflows/:id/actions', async (req, res) => {
 app.post('/api/v1/workflows/:id/actions', async (req, res) => {
     if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
     try {
-        const { action_type, action_config, step_order, name } = req.body;
+        const { action_type, actionType, action_config, actionConfig, step_order, order } = req.body;
         const action = await workflowService.addWorkflowAction(req.params.id, {
-            action_type,
-            action_config,
-            step_order,
-            name
+            actionType: actionType || action_type,
+            actionConfig: actionConfig || action_config || {},
+            order: order || step_order
         });
         res.status(201).json(action);
     } catch (error) {

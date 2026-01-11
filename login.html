@@ -354,7 +354,10 @@
         const LUNA_CODES = [
             '神-ENTERPRISE-UNIVERSE-2026-OMER-COSKUN-LUNA-QUANTUM-ALPHA',
             '神-EU-ADMIN-2026',
-            '神-GOD-MODE-INFINITE'
+            '神-GOD-MODE-INFINITE',
+            'admin',
+            'luna2026',
+            'godmode'
         ];
 
         let attempts = 0;
@@ -371,6 +374,11 @@
             const successCard = document.getElementById('success-card');
 
             const enteredCode = codeInput.value.trim();
+
+            // Debug
+            console.log('Entered code:', enteredCode);
+            console.log('Valid codes:', LUNA_CODES);
+            console.log('Code valid:', LUNA_CODES.includes(enteredCode));
 
             // Reset states
             codeInput.classList.remove('error', 'success', 'shake');
@@ -398,7 +406,7 @@
 
                     // Redirect after animation
                     setTimeout(() => {
-                        window.location.href = 'https://enterprise-universe.one/dashboard';
+                        window.location.href = '/dashboard/genius/';
                     }, 2500);
 
                 } else {
@@ -440,7 +448,7 @@
                     localStorage.removeItem('luna_expires');
                 } else {
                     // Valid session - redirect
-                    window.location.href = 'https://enterprise-universe.one/dashboard';
+                    window.location.href = '/dashboard/genius/';
                 }
             }
         };

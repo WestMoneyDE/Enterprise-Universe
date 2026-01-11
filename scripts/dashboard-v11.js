@@ -2500,9 +2500,76 @@
             }
         }
 
-        function callHotLeads() { showNotification('Hot Leads werden geladen...', 'info'); }
-        function startAIScoring() { showNotification('AI Scoring gestartet...', 'info'); }
-        function startEmailSequence() { showNotification('Email Sequence wird vorbereitet...', 'info'); }
+        // Hot Leads - Fetch and display hot leads for calling
+        async function callHotLeads() {
+            showNotification('Hot Leads werden geladen...', 'info');
+            try {
+                const response = await fetch('/api/lead-demon/status');
+                const data = await response.json();
+
+                if (data.hotLeads && data.hotLeads.length > 0) {
+                    const leadsList = data.hotLeads.slice(0, 10).map(lead =>
+                        `${lead.name || 'Unknown'} - Score: ${lead.score || 'N/A'}`
+                    ).join('\n');
+                    showNotification(`${data.hotLeads.length} Hot Leads gefunden!`, 'success');
+                    console.log('[Hot Leads]', leadsList);
+                } else {
+                    // Trigger lead discovery to find new hot leads
+                    const discoverResponse = await fetch('/api/v1/lead-discovery/run', { method: 'POST' });
+                    const discoverData = await discoverResponse.json();
+                    showNotification(`Lead Discovery gestartet - ${discoverData.leads_found || 0} neue Leads`, 'info');
+                }
+            } catch (error) {
+                console.error('[Hot Leads] Error:', error);
+                showNotification('Fehler beim Laden der Hot Leads', 'error');
+            }
+        }
+
+        // AI Scoring - Trigger the Lead Demon AI scoring system
+        async function startAIScoring() {
+            showNotification('AI Scoring wird gestartet...', 'info');
+            try {
+                const response = await fetch('/api/lead-demon/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ maxDeals: 50 })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    showNotification(`AI Scoring abgeschlossen: ${data.processed || 0} Deals bewertet`, 'success');
+                    // Refresh the deals data
+                    loadSampleDeals();
+                    loadActiveDeals();
+                } else {
+                    showNotification(data.message || 'AI Scoring fehlgeschlagen', 'warning');
+                }
+            } catch (error) {
+                console.error('[AI Scoring] Error:', error);
+                showNotification('AI Scoring Fehler: ' + error.message, 'error');
+            }
+        }
+
+        // Email Sequence - Start an automated email sequence
+        async function startEmailSequence() {
+            showNotification('Email Sequences werden geladen...', 'info');
+            try {
+                // First, get available sequences
+                const response = await fetch('/api/v1/email/sequences');
+                const data = await response.json();
+
+                if (data.sequences && data.sequences.length > 0) {
+                    showNotification(`${data.sequences.length} Email Sequences verfügbar`, 'success');
+                    console.log('[Email Sequences]', data.sequences);
+                    // Show sequence selection or start default sequence
+                } else {
+                    showNotification('Keine Email Sequences konfiguriert. Bitte im Settings-Tab erstellen.', 'warning');
+                }
+            } catch (error) {
+                console.error('[Email Sequence] Error:', error);
+                showNotification('Fehler beim Laden der Email Sequences', 'error');
+            }
+        }
         function syncHubSpot() {
             showNotification('HubSpot Sync gestartet...', 'info');
             loadDashboardData();
