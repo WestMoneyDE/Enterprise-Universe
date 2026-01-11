@@ -224,6 +224,7 @@ app.get('/god-mode-dashboard', (req, res) => res.sendFile(path.join(__dirname, '
 
 // Static files
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
+app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/api', express.static(path.join(__dirname, 'api')));
 app.use('/dashboards', express.static(path.join(__dirname, 'dashboards')));
