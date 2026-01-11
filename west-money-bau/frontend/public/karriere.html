@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karriere | Subunternehmer werden | West Money Bau</title>
+    <meta name="description" content="Werden Sie Subunternehmer bei West Money Bau. Flexible Projekte, faire Bezahlung, weltweite Moeglichkeiten.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+        }
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bau-secondary), #ffab00);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 109, 0, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #ff6d00, #ffab00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center font-black text-lg">
+                        WMB
+                    </div>
+                    <span class="text-xl font-bold">West Money Bau</span>
+                </a>
+                <a href="/" class="text-gray-300 hover:text-white transition">Zurueck zur Startseite</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-32 pb-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="px-4 py-2 rounded-full glass text-sm text-orange-400 mb-6 inline-block">
+                PARTNER WERDEN
+            </span>
+            <h1 class="text-4xl lg:text-6xl font-black mb-6">
+                <span class="gradient-text">Subunternehmer</span> gesucht!
+            </h1>
+            <p class="text-xl text-gray-400 mb-8">
+                Werden Sie Teil unseres wachsenden Netzwerks. Flexible Projekte,
+                faire Verguetung, weltweite Moeglichkeiten.
+            </p>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl mb-4">&#128176;</div>
+                    <h3 class="font-bold text-lg mb-2">Faire Bezahlung</h3>
+                    <p class="text-gray-400 text-sm">Wettbewerbsfaehige Raten und schnelle Auszahlung nach Projektabschluss.</p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl mb-4">&#127758;</div>
+                    <h3 class="font-bold text-lg mb-2">Flexible Projekte</h3>
+                    <p class="text-gray-400 text-sm">Waehlen Sie Projekte nach Ihren Faehigkeiten, Standort und Verfuegbarkeit.</p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-2xl mb-4">&#128640;</div>
+                    <h3 class="font-bold text-lg mb-2">Wachstum</h3>
+                    <p class="text-gray-400 text-sm">Profitieren Sie von unserem wachsenden Projektvolumen im DACH-Raum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="py-16">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6">Bewerbungsformular</h2>
+
+                <form id="applicationForm" class="space-y-6">
+                    <!-- Personal Info -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Vorname *</label>
+                            <input type="text" name="firstName" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Nachname *</label>
+                            <input type="text" name="lastName" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Firmenname (optional)</label>
+                        <input type="text" name="companyName" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">E-Mail *</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Telefon *</label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Land *</label>
+                            <select name="country" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                                <option value="">Bitte waehlen...</option>
+                                <option value="DE">Deutschland</option>
+                                <option value="AT">Oesterreich</option>
+                                <option value="CH">Schweiz</option>
+                                <option value="NL">Niederlande</option>
+                                <option value="BE">Belgien</option>
+                                <option value="PL">Polen</option>
+                                <option value="CZ">Tschechien</option>
+                                <option value="other">Anderes Land</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Stadt *</label>
+                            <input type="text" name="city" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <!-- Professional Info -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Fachrichtungen *</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="electrical" class="rounded">
+                                <span class="text-sm">Elektrik</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="smart_home" class="rounded">
+                                <span class="text-sm">Smart Home</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="security" class="rounded">
+                                <span class="text-sm">Sicherheit</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="hvac" class="rounded">
+                                <span class="text-sm">HVAC/Klima</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="plumbing" class="rounded">
+                                <span class="text-sm">Sanitaer</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-white/5 rounded-lg cursor-pointer hover:bg-white/10 transition">
+                                <input type="checkbox" name="specializations" value="construction" class="rounded">
+                                <span class="text-sm">Bau allgemein</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Berufserfahrung (Jahre) *</label>
+                            <input type="number" name="experienceYears" min="0" max="50" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Gewuenschter Stundensatz (EUR)</label>
+                            <input type="number" name="hourlyRateExpected" min="0" step="5" placeholder="z.B. 45" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Portfolio/Website</label>
+                            <input type="url" name="portfolioUrl" placeholder="https://..." class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">LinkedIn Profil</label>
+                            <input type="url" name="linkedinUrl" placeholder="https://linkedin.com/in/..." class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Motivation / Warum moechten Sie mit uns arbeiten?</label>
+                        <textarea name="motivation" rows="4" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition resize-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Wie haben Sie von uns erfahren?</label>
+                        <select name="howFoundUs" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-orange-500 focus:outline-none transition">
+                            <option value="">Bitte waehlen...</option>
+                            <option value="google">Google Suche</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="referral">Empfehlung</option>
+                            <option value="job_board">Jobportal</option>
+                            <option value="social_media">Social Media</option>
+                            <option value="other">Andere</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" name="privacy" id="privacy" required class="mt-1">
+                        <label for="privacy" class="text-sm text-gray-400">
+                            Ich stimme der <a href="/datenschutz" class="text-orange-400 hover:underline">Datenschutzerklaerung</a> zu und erklaere mich mit der Verarbeitung meiner Daten einverstanden. *
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full btn-primary py-4 rounded-xl font-semibold text-lg">
+                        Bewerbung absenden
+                    </button>
+                </form>
+
+                <div id="successMessage" class="hidden text-center py-12">
+                    <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">&#10003;</div>
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">Bewerbung eingereicht!</h3>
+                    <p class="text-gray-400">Vielen Dank fuer Ihr Interesse. Wir melden uns innerhalb von 48 Stunden bei Ihnen.</p>
+                    <a href="/" class="inline-block mt-6 text-orange-400 hover:underline">Zurueck zur Startseite</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                companyName: formData.get('companyName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                country: formData.get('country'),
+                city: formData.get('city'),
+                specializations: formData.getAll('specializations'),
+                experienceYears: parseInt(formData.get('experienceYears')),
+                hourlyRateExpected: parseFloat(formData.get('hourlyRateExpected')) || null,
+                portfolioUrl: formData.get('portfolioUrl'),
+                linkedinUrl: formData.get('linkedinUrl'),
+                motivation: formData.get('motivation'),
+                howFoundUs: formData.get('howFoundUs')
+            };
+
+            try {
+                const response = await fetch('/api/subcontractors/apply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    document.getElementById('applicationForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+                }
+            } catch (error) {
+                alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+            }
+        });
+    </script>
+</body>
+</html>

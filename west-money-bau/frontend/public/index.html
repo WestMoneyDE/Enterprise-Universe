@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Money Bau | Smart Home & Barrierefreies Bauen</title>
+    <meta name="description" content="West Money Bau - Ihr Partner fuer Smart Home (LOXONE Gold Partner), barrierefreies Bauen und Sicherheitssysteme in Deutschland.">
+    <meta name="keywords" content="Smart Home, LOXONE, Barrierefreies Bauen, Sicherheitssysteme, Hausautomation, KNX, Verisure">
+    <link rel="canonical" href="https://west-money-bau.de">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+            --bau-surface: #112240;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00c853, #00b0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-orange {
+            background: linear-gradient(135deg, #ff6d00, #ffab00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(0, 200, 83, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(0, 176, 255, 0.08) 0%, transparent 50%);
+        }
+
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 200, 83, 0.2);
+            border-color: rgba(0, 200, 83, 0.4);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bau-primary), #00e676);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 200, 83, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--bau-secondary), #ffab00);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 109, 0, 0.4);
+        }
+
+        .service-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .partner-logo {
+            filter: grayscale(1) brightness(0.6);
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo:hover {
+            filter: grayscale(0) brightness(1);
+        }
+
+        .pulse-green {
+            animation: pulseGreen 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 200, 83, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 200, 83, 0.6); }
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .grid-pattern {
+            background-image:
+                linear-gradient(rgba(0, 200, 83, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 200, 83, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .loxone-badge {
+            background: linear-gradient(135deg, #8dc63f, #5fa52b);
+        }
+    </style>
+</head>
+<body class="grid-pattern">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center font-black text-lg">
+                        WMB
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">West Money Bau</span>
+                        <span class="hidden md:inline text-xs text-gray-400 ml-2">LOXONE Gold Partner</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#services" class="text-gray-300 hover:text-white transition">Leistungen</a>
+                    <a href="#smart-home" class="text-gray-300 hover:text-white transition">Smart Home</a>
+                    <a href="#about" class="text-gray-300 hover:text-white transition">Ueber uns</a>
+                    <a href="#karriere" class="text-gray-300 hover:text-white transition">Karriere</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition">Kontakt</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/portal" class="text-gray-300 hover:text-white transition hidden md:block">Kundenportal</a>
+                    <a href="#contact" class="btn-primary px-6 py-2.5 rounded-xl font-semibold">
+                        Projekt anfragen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <!-- LOXONE Badge -->
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-sm mb-8">
+                        <div class="loxone-badge px-3 py-1 rounded-full text-white text-xs font-bold">LOXONE GOLD PARTNER</div>
+                        <span class="text-gray-300">Zertifizierte Smart Home Experten</span>
+                    </div>
+
+                    <h1 class="text-5xl lg:text-7xl font-black leading-tight mb-6">
+                        Ihr Zuhause.
+                        <span class="gradient-text">Intelligent.</span>
+                    </h1>
+
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        Von Smart Home Automation mit LOXONE ueber barrierefreies Bauen bis hin zu
+                        modernen Sicherheitssystemen - wir machen Ihr Zuhause zukunftssicher.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mb-12">
+                        <a href="#contact" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg flex items-center gap-2">
+                            Kostenlose Beratung
+                        </a>
+                        <a href="#services" class="px-8 py-4 rounded-xl font-semibold text-lg glass flex items-center gap-2 hover:bg-white/10 transition">
+                            Leistungen entdecken
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-8 flex-wrap">
+                        <div>
+                            <p class="text-3xl font-bold text-white">150+</p>
+                            <p class="text-gray-500 text-sm">Projekte realisiert</p>
+                        </div>
+                        <div class="w-px h-12 bg-gray-700 hidden sm:block"></div>
+                        <div>
+                            <p class="text-3xl font-bold text-white">98%</p>
+                            <p class="text-gray-500 text-sm">Kundenzufriedenheit</p>
+                        </div>
+                        <div class="w-px h-12 bg-gray-700 hidden sm:block"></div>
+                        <div>
+                            <p class="text-3xl font-bold text-white">DACH</p>
+                            <p class="text-gray-500 text-sm">Servicegebiet</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="glass rounded-3xl p-8 pulse-green">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-bold text-lg">Smart Home Control</h3>
+                            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm flex items-center gap-2">
+                                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                LIVE
+                            </span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center text-xl">&#9728;&#65039;</div>
+                                    <div>
+                                        <p class="font-semibold">Beleuchtung</p>
+                                        <p class="text-sm text-gray-400">Szene: Entspannung</p>
+                                    </div>
+                                </div>
+                                <span class="text-yellow-400">45%</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-xl">&#127777;&#65039;</div>
+                                    <div>
+                                        <p class="font-semibold">Klima</p>
+                                        <p class="text-sm text-gray-400">Automatik aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-blue-400">22.5C</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-xl">&#128274;</div>
+                                    <div>
+                                        <p class="font-semibold">Sicherheit</p>
+                                        <p class="text-sm text-gray-400">Alle Systeme aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400">SICHER</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-xl">&#127925;</div>
+                                    <div>
+                                        <p class="font-semibold">Multiroom Audio</p>
+                                        <p class="text-sm text-gray-400">4 Zonen aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-purple-400">PLAY</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-white/10">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-400">Powered by</span>
+                                <span class="text-green-400 font-semibold">LOXONE Miniserver</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-500/20 rounded-full blur-3xl float"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Logos -->
+    <section class="py-12 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-center text-gray-500 mb-8">Unsere Partner & Zertifizierungen</p>
+            <div class="flex flex-wrap justify-center items-center gap-12">
+                <div class="partner-logo text-2xl font-bold text-gray-500">LOXONE</div>
+                <div class="partner-logo text-2xl font-bold text-gray-500">Verisure</div>
+                <div class="partner-logo text-2xl font-bold text-gray-500">KNX</div>
+                <div class="partner-logo text-2xl font-bold text-gray-500">Gira</div>
+                <div class="partner-logo text-2xl font-bold text-gray-500">Sonos</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">Unsere Leistungen</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Drei Kernbereiche - eine Vision: Ihr perfektes Zuhause.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Smart Home -->
+                <div class="service-card glass rounded-2xl p-8 card-hover border-t-4 border-green-500">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-3xl mb-6">&#127968;</div>
+                    <h3 class="text-2xl font-bold mb-4">Smart Home</h3>
+                    <p class="text-gray-400 mb-6">
+                        Als LOXONE Gold Partner bieten wir Ihnen die fortschrittlichste Hausautomation.
+                        Beleuchtung, Klima, Audio und Sicherheit - alles intelligent vernetzt.
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">&#10003;</span> LOXONE Miniserver Installation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">&#10003;</span> Lichtsteuerung & Szenen
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">&#10003;</span> Multiroom Audio
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400">&#10003;</span> Klimaautomation
+                        </li>
+                    </ul>
+                    <a href="/services/smart-home" class="btn-primary px-6 py-3 rounded-xl font-semibold inline-block">
+                        Mehr erfahren
+                    </a>
+                </div>
+
+                <!-- Barrierefreies Bauen -->
+                <div class="service-card glass rounded-2xl p-8 card-hover border-t-4 border-orange-500">
+                    <div class="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center text-3xl mb-6">&#9855;</div>
+                    <h3 class="text-2xl font-bold mb-4">Barrierefreies Bauen</h3>
+                    <p class="text-gray-400 mb-6">
+                        Wir planen und realisieren barrierefreie Wohnkonzepte nach DIN 18040.
+                        Fuer ein selbstbestimmtes Leben in jedem Alter.
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center gap-2">
+                            <span class="text-orange-400">&#10003;</span> DIN 18040 konform
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-orange-400">&#10003;</span> Foerdermittelberatung
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-orange-400">&#10003;</span> Umbau & Neubau
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-orange-400">&#10003;</span> Smart Home Integration
+                        </li>
+                    </ul>
+                    <a href="/services/barrier-free" class="btn-secondary px-6 py-3 rounded-xl font-semibold inline-block">
+                        Mehr erfahren
+                    </a>
+                </div>
+
+                <!-- Sicherheitssysteme -->
+                <div class="service-card glass rounded-2xl p-8 card-hover border-t-4 border-blue-500">
+                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center text-3xl mb-6">&#128737;&#65039;</div>
+                    <h3 class="text-2xl font-bold mb-4">Sicherheitssysteme</h3>
+                    <p class="text-gray-400 mb-6">
+                        Professionelle Sicherheitstechnik von Alarmanlagen bis Videoüberwachung.
+                        Als Verisure Partner bieten wir 24/7 Alarmzentrale.
+                    </p>
+                    <ul class="space-y-2 text-gray-300 mb-6">
+                        <li class="flex items-center gap-2">
+                            <span class="text-blue-400">&#10003;</span> Alarmanlagen
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-blue-400">&#10003;</span> Videoueberwachung
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-blue-400">&#10003;</span> Zutrittskontrolle
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-blue-400">&#10003;</span> 24/7 Monitoring
+                        </li>
+                    </ul>
+                    <a href="/services/security" class="px-6 py-3 rounded-xl font-semibold inline-block glass hover:bg-white/10 transition border border-blue-500/50">
+                        Mehr erfahren
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Home Section -->
+    <section id="smart-home" class="py-24 bg-gradient-to-b from-transparent via-green-950/10 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="loxone-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-white text-sm font-semibold mb-6">
+                        LOXONE GOLD PARTNER
+                    </div>
+                    <h2 class="text-4xl font-black mb-6">
+                        Ein System. <span class="gradient-text">Alles vernetzt.</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-8">
+                        Mit dem LOXONE Miniserver als Herzstück verbinden wir alle Gewerke Ihres Hauses
+                        zu einem intelligenten Gesamtsystem. Keine Cloud, volle Kontrolle, maximale Sicherheit.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="glass rounded-xl p-4">
+                            <p class="text-2xl font-bold text-green-400">50%</p>
+                            <p class="text-gray-400 text-sm">Energieeinsparung</p>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <p class="text-2xl font-bold text-green-400">100%</p>
+                            <p class="text-gray-400 text-sm">Lokal & Sicher</p>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <p class="text-2xl font-bold text-green-400">1</p>
+                            <p class="text-gray-400 text-sm">App fuer alles</p>
+                        </div>
+                        <div class="glass rounded-xl p-4">
+                            <p class="text-2xl font-bold text-green-400">24/7</p>
+                            <p class="text-gray-400 text-sm">Automatisierung</p>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2">
+                        Kostenlose Beratung anfragen
+                    </a>
+                </div>
+
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="font-bold text-xl mb-6">LOXONE Komponenten</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center font-bold">MS</div>
+                            <div>
+                                <p class="font-semibold">Miniserver Gen. 2</p>
+                                <p class="text-sm text-gray-400">Das Gehirn Ihres Smart Homes</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl">
+                            <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center font-bold">TP</div>
+                            <div>
+                                <p class="font-semibold">Touch Pure</p>
+                                <p class="text-sm text-gray-400">Elegante Wandschalter mit Haptik</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center font-bold">RG</div>
+                            <div>
+                                <p class="font-semibold">Raumklimasensor</p>
+                                <p class="text-sm text-gray-400">Temperatur, Feuchte, CO2</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white/5 rounded-xl">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center font-bold">AU</div>
+                            <div>
+                                <p class="font-semibold">Audioserver</p>
+                                <p class="text-sm text-gray-400">Multiroom Musik in jedem Raum</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">So funktioniert's</h2>
+                <p class="text-gray-400 text-lg">In 4 Schritten zu Ihrem Smart Home</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-green-400 mx-auto mb-4">1</div>
+                    <h3 class="font-bold text-lg mb-2">Anfrage</h3>
+                    <p class="text-gray-400 text-sm">Sie beschreiben Ihr Projekt und Ihre Wuensche online oder telefonisch.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-green-400 mx-auto mb-4">2</div>
+                    <h3 class="font-bold text-lg mb-2">Beratung</h3>
+                    <p class="text-gray-400 text-sm">Vor-Ort Termin mit unseren Experten. Bedarfsanalyse und Planung.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-green-400 mx-auto mb-4">3</div>
+                    <h3 class="font-bold text-lg mb-2">Angebot</h3>
+                    <p class="text-gray-400 text-sm">Detailliertes Angebot mit transparenter Preisgestaltung.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-green-400 mx-auto mb-4">4</div>
+                    <h3 class="font-bold text-lg mb-2">Umsetzung</h3>
+                    <p class="text-gray-400 text-sm">Professionelle Installation durch zertifizierte Techniker.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Karriere / Subunternehmer Section -->
+    <section id="karriere" class="py-24 bg-gradient-to-b from-transparent via-orange-950/10 to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="px-4 py-2 rounded-full glass text-sm text-orange-400 mb-6 inline-block">
+                        PARTNER WERDEN
+                    </span>
+                    <h2 class="text-4xl font-black mb-6">
+                        <span class="gradient-text-orange">Subunternehmer</span> gesucht!
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        Wir suchen qualifizierte Fachkraefte und Unternehmen weltweit.
+                        Werden Sie Teil unseres wachsenden Netzwerks und profitieren Sie von
+                        spannenden Projekten und fairer Verguetung.
+                    </p>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <span class="text-orange-400 text-xl">&#10003;</span>
+                            <div>
+                                <p class="font-semibold">Flexible Projektzuweisung</p>
+                                <p class="text-gray-400 text-sm">Waehlen Sie Projekte nach Ihren Faehigkeiten und Verfuegbarkeit</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-orange-400 text-xl">&#10003;</span>
+                            <div>
+                                <p class="font-semibold">Schnelle Bezahlung</p>
+                                <p class="text-gray-400 text-sm">Automatisierte Auszahlung nach Projektabschluss</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-orange-400 text-xl">&#10003;</span>
+                            <div>
+                                <p class="font-semibold">Weltweite Moeglichkeiten</p>
+                                <p class="text-gray-400 text-sm">Projekte in Deutschland, Oesterreich, Schweiz und darueber hinaus</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/karriere" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center gap-2">
+                        Jetzt bewerben
+                    </a>
+                </div>
+
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="font-bold text-xl mb-6">Gesuchte Fachrichtungen</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#9889;</div>
+                            <p class="font-semibold text-sm">Elektriker</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#127968;</div>
+                            <p class="font-semibold text-sm">Smart Home</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#128274;</div>
+                            <p class="font-semibold text-sm">Sicherheit</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#127777;&#65039;</div>
+                            <p class="font-semibold text-sm">HVAC/Klima</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#128679;</div>
+                            <p class="font-semibold text-sm">Sanitaer</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-xl text-center">
+                            <div class="text-2xl mb-2">&#128736;</div>
+                            <p class="font-semibold text-sm">Tischler</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-white/10">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400">Aktive Subunternehmer</span>
+                            <span class="text-green-400 font-bold">45+</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-gray-400">Laender</span>
+                            <span class="text-green-400 font-bold">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-4xl font-black mb-6">Projekt anfragen</h2>
+                    <p class="text-gray-400 text-lg mb-8">
+                        Erzaehlen Sie uns von Ihrem Vorhaben. Wir melden uns innerhalb von 24 Stunden.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                                <span class="text-xl">&#128222;</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Telefon</p>
+                                <p class="font-semibold">+49 221 123 456 78</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                                <span class="text-xl">&#9993;&#65039;</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">E-Mail</p>
+                                <p class="font-semibold">info@west-money-bau.de</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                                <span class="text-xl">&#128205;</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Adresse</p>
+                                <p class="font-semibold">Koeln, Deutschland</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-8">
+                    <form id="projectForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Vorname *</label>
+                                <input type="text" name="firstName" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2">Nachname *</label>
+                                <input type="text" name="lastName" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">E-Mail *</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Telefon</label>
+                            <input type="tel" name="phone" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Projektart *</label>
+                            <select name="projectType" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition">
+                                <option value="">Bitte waehlen...</option>
+                                <option value="smart_home">Smart Home</option>
+                                <option value="barrier_free">Barrierefreies Bauen</option>
+                                <option value="security">Sicherheitssysteme</option>
+                                <option value="mixed">Kombination</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Ihre Nachricht *</label>
+                            <textarea name="message" rows="4" required class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-green-500 focus:outline-none transition resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" name="privacy" id="privacy" required class="mt-1">
+                            <label for="privacy" class="text-sm text-gray-400">
+                                Ich stimme der <a href="/datenschutz" class="text-green-400 hover:underline">Datenschutzerklaerung</a> zu. *
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary py-4 rounded-xl font-semibold text-lg">
+                            Anfrage absenden
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center font-black">
+                            WMB
+                        </div>
+                        <span class="text-xl font-bold">West Money Bau</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Ihr Partner fuer Smart Home, barrierefreies Bauen und Sicherheitssysteme.
+                    </p>
+                    <div class="loxone-badge inline-block px-3 py-1 rounded-full text-white text-xs font-bold">
+                        LOXONE GOLD PARTNER
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Leistungen</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/services/smart-home" class="hover:text-white transition">Smart Home</a></li>
+                        <li><a href="/services/barrier-free" class="hover:text-white transition">Barrierefreies Bauen</a></li>
+                        <li><a href="/services/security" class="hover:text-white transition">Sicherheitssysteme</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Unternehmen</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#about" class="hover:text-white transition">Ueber uns</a></li>
+                        <li><a href="/karriere" class="hover:text-white transition">Karriere</a></li>
+                        <li><a href="/portal" class="hover:text-white transition">Kundenportal</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Kontakt</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold mb-4">Rechtliches</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/impressum" class="hover:text-white transition">Impressum</a></li>
+                        <li><a href="/datenschutz" class="hover:text-white transition">Datenschutz</a></li>
+                        <li><a href="/agb" class="hover:text-white transition">AGB</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-wrap justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    Ein Unternehmen der Enterprise Universe Gruppe
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('projectForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const response = await fetch('/api/projects/inquiry', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Vielen Dank! Wir melden uns innerhalb von 24 Stunden.');
+                    this.reset();
+                } else {
+                    alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+                }
+            } catch (error) {
+                alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+            }
+        });
+    </script>
+</body>
+</html>

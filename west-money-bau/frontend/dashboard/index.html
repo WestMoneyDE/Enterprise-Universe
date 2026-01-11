@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Money Bau | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* West Money Bau Brand Colors */
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+
+            /* Dark Theme */
+            --bg-deep: #0a1628;
+            --bg-base: #0c1a2e;
+            --bg-surface: #112240;
+            --bg-elevated: #1a2f4e;
+            --bg-card: #162844;
+            --bg-hover: #1e3a5f;
+
+            /* Status Colors */
+            --success: #00c853;
+            --success-dim: rgba(0, 200, 83, 0.15);
+            --warning: #ff9800;
+            --warning-dim: rgba(255, 152, 0, 0.15);
+            --error: #f44336;
+            --error-dim: rgba(244, 67, 54, 0.15);
+            --info: #00b0ff;
+            --info-dim: rgba(0, 176, 255, 0.15);
+
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            /* Borders */
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            background: var(--bg-deep);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--bau-primary), #009624);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .nav-section {
+            padding: 16px 12px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0 12px;
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+
+        .section-title:first-child { margin-top: 0; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--success-dim), rgba(0, 150, 36, 0.15));
+            color: var(--bau-primary);
+            border: 1px solid rgba(0, 200, 83, 0.3);
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--bau-secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .header {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--error); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bau-primary), #009624);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table td {
+            padding: 14px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tr:hover {
+            background: var(--bg-hover);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-success { background: var(--success-dim); color: var(--success); }
+        .badge-warning { background: var(--warning-dim); color: var(--warning); }
+        .badge-error { background: var(--error-dim); color: var(--error); }
+        .badge-info { background: var(--info-dim); color: var(--info); }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child { border-bottom: none; }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .activity-content h4 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .activity-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .kanban {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+        }
+
+        .kanban-column {
+            min-width: 280px;
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .kanban-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .kanban-header h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .kanban-count {
+            background: var(--bg-hover);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .kanban-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .kanban-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .kanban-card h5 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .kanban-card p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .kanban-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .subcontractor-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: var(--bg-surface);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .subcontractor-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--bau-secondary), #ff9800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .subcontractor-info h4 {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .subcontractor-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .subcontractor-status {
+            margin-left: auto;
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">WMB</div>
+            <div class="logo-text">
+                <h1 style="font-size: 16px; font-weight: 700;">West Money Bau</h1>
+                <span style="font-size: 11px; color: var(--text-muted);">PropTech Dashboard</span>
+            </div>
+        </div>
+
+        <nav class="nav-section">
+            <div class="section-title">Hauptmenu</div>
+            <a href="#" class="nav-item active" data-page="dashboard">
+                <span>&#128200;</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-page="projects">
+                <span>&#128736;</span>
+                <span>Projekte</span>
+                <span class="nav-badge">3</span>
+            </a>
+            <a href="#" class="nav-item" data-page="customers">
+                <span>&#128101;</span>
+                <span>Kunden</span>
+            </a>
+
+            <div class="section-title">Subunternehmer</div>
+            <a href="#" class="nav-item" data-page="subcontractors">
+                <span>&#128119;</span>
+                <span>Verzeichnis</span>
+            </a>
+            <a href="#" class="nav-item" data-page="applications">
+                <span>&#128203;</span>
+                <span>Bewerbungen</span>
+                <span class="nav-badge" style="background: var(--error);">5</span>
+            </a>
+
+            <div class="section-title">Finanzen</div>
+            <a href="#" class="nav-item" data-page="invoices">
+                <span>&#128179;</span>
+                <span>Rechnungen</span>
+            </a>
+            <a href="#" class="nav-item" data-page="payments">
+                <span>&#128176;</span>
+                <span>Zahlungen</span>
+            </a>
+
+            <div class="section-title">Smart Home</div>
+            <a href="#" class="nav-item" data-page="loxone">
+                <span>&#127968;</span>
+                <span>LOXONE Projekte</span>
+            </a>
+
+            <div class="section-title">System</div>
+            <a href="#" class="nav-item" data-page="settings">
+                <span>&#9881;</span>
+                <span>Einstellungen</span>
+            </a>
+            <a href="/" class="nav-item">
+                <span>&#127760;</span>
+                <span>Zur Website</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">
+                <h1>Dashboard</h1>
+                <p>Willkommen zurueck! Hier ist Ihre Uebersicht.</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <button class="btn btn-secondary">
+                    <span>&#128276;</span>
+                    <span class="nav-badge" style="margin-left: 4px;">3</span>
+                </button>
+                <div style="width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--bau-primary), #009624); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;">AD</div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--success-dim); color: var(--success);">&#128736;</div>
+                    <div class="stat-value" id="stat-projects">0</div>
+                    <div class="stat-label">Aktive Projekte</div>
+                    <div class="stat-change positive">&#9650; 2 diese Woche</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--info-dim); color: var(--info);">&#128101;</div>
+                    <div class="stat-value" id="stat-customers">0</div>
+                    <div class="stat-label">Kunden</div>
+                    <div class="stat-change positive">&#9650; 5 neu</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: var(--warning-dim); color: var(--warning);">&#128119;</div>
+                    <div class="stat-value" id="stat-subcontractors">0</div>
+                    <div class="stat-label">Subunternehmer</div>
+                    <div class="stat-change positive">&#9650; 3 genehmigt</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15); color: #8b5cf6;">&#128176;</div>
+                    <div class="stat-value" id="stat-revenue">0</div>
+                    <div class="stat-label">Umsatz (Monat)</div>
+                    <div class="stat-change positive">&#9650; 12%</div>
+                </div>
+            </div>
+
+            <!-- Projects & Activity -->
+            <div class="grid-2">
+                <!-- Projects Kanban Preview -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>&#128736; Aktuelle Projekte</h3>
+                        <button class="btn btn-primary">+ Neues Projekt</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="kanban">
+                            <div class="kanban-column">
+                                <div class="kanban-header">
+                                    <h4 style="color: var(--info);">&#128312; Anfrage</h4>
+                                    <span class="kanban-count">2</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <h5>Smart Home Villa</h5>
+                                    <p>LOXONE Komplettinstallation, 350m2</p>
+                                    <div class="kanban-meta">
+                                        <span>Familie Mueller</span>
+                                        <span class="badge badge-info">Angebot</span>
+                                    </div>
+                                </div>
+                                <div class="kanban-card">
+                                    <h5>Alarmanlage Buero</h5>
+                                    <p>Verisure Sicherheitssystem</p>
+                                    <div class="kanban-meta">
+                                        <span>Tech GmbH</span>
+                                        <span class="badge badge-warning">Wartet</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kanban-column">
+                                <div class="kanban-header">
+                                    <h4 style="color: var(--warning);">&#128312; In Arbeit</h4>
+                                    <span class="kanban-count">1</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <h5>Barrierefreier Umbau</h5>
+                                    <p>Badezimmer & Eingang, 85m2</p>
+                                    <div class="kanban-meta">
+                                        <span>Herr Schmidt</span>
+                                        <span class="badge badge-success">40%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kanban-column">
+                                <div class="kanban-header">
+                                    <h4 style="color: var(--success);">&#128312; Fertig</h4>
+                                    <span class="kanban-count">4</span>
+                                </div>
+                                <div class="kanban-card">
+                                    <h5>KNX Installation</h5>
+                                    <p>Neubau Einfamilienhaus</p>
+                                    <div class="kanban-meta">
+                                        <span>Familie Weber</span>
+                                        <span class="badge badge-success">Bezahlt</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>&#128338; Aktivitaeten</h3>
+                        <button class="btn btn-secondary">Alle</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--success-dim);">&#10003;</div>
+                            <div class="activity-content">
+                                <h4>Projekt abgeschlossen</h4>
+                                <p>KNX Installation - Familie Weber</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--warning-dim);">&#128119;</div>
+                            <div class="activity-content">
+                                <h4>Neue Bewerbung</h4>
+                                <p>Marco Rossi, Elektrik, Italien</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--info-dim);">&#128179;</div>
+                            <div class="activity-content">
+                                <h4>Zahlung eingegangen</h4>
+                                <p>4.500 EUR - Projekt #1042</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: rgba(139, 92, 246, 0.15);">&#128172;</div>
+                            <div class="activity-content">
+                                <h4>WhatsApp Nachricht</h4>
+                                <p>Neue Anfrage: Smart Home Beratung</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: var(--success-dim);">&#127968;</div>
+                            <div class="activity-content">
+                                <h4>LOXONE Config erstellt</h4>
+                                <p>Miniserver Konfig fuer Villa Mueller</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subcontractor Applications -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <h3>&#128203; Neue Bewerbungen</h3>
+                    <button class="btn btn-primary" onclick="window.location.href='#applications'">Alle Bewerbungen</button>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Fachrichtung</th>
+                                <th>Land</th>
+                                <th>Erfahrung</th>
+                                <th>Stundensatz</th>
+                                <th>Status</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applications-table">
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #ff6d00, #ff9800); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;">MR</div>
+                                        <div>
+                                            <div style="font-weight: 500;">Marco Rossi</div>
+                                            <div style="font-size: 12px; color: var(--text-muted);">marco@example.it</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="badge badge-info">Elektrik</span></td>
+                                <td>&#127470;&#127481; Italien</td>
+                                <td>8 Jahre</td>
+                                <td>45 EUR</td>
+                                <td><span class="badge badge-warning">Pruefung</span></td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px;">Ansehen</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #00c853, #009624); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;">JK</div>
+                                        <div>
+                                            <div style="font-weight: 500;">Jan Kowalski</div>
+                                            <div style="font-size: 12px; color: var(--text-muted);">jan@example.pl</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="badge badge-success">Smart Home</span></td>
+                                <td>&#127477;&#127473; Polen</td>
+                                <td>5 Jahre</td>
+                                <td>38 EUR</td>
+                                <td><span class="badge badge-warning">Pruefung</span></td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px;">Ansehen</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #00b0ff, #0091ea); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px;">TM</div>
+                                        <div>
+                                            <div style="font-weight: 500;">Thomas Mueller</div>
+                                            <div style="font-size: 12px; color: var(--text-muted);">thomas@example.de</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="badge badge-warning">HVAC</span></td>
+                                <td>&#127465;&#127466; Deutschland</td>
+                                <td>12 Jahre</td>
+                                <td>55 EUR</td>
+                                <td><span class="badge badge-info">Neu</span></td>
+                                <td>
+                                    <button class="btn btn-primary" style="padding: 6px 12px;">Ansehen</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Stats Row -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>&#127968; LOXONE Projekte</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 28px; font-weight: 700; color: var(--bau-primary);">12</div>
+                                <div style="color: var(--text-muted); font-size: 14px;">Aktive Installationen</div>
+                            </div>
+                            <div style="width: 60px; height: 60px; background: var(--success-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 28px;">&#127968;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>&#128179; Offene Rechnungen</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 28px; font-weight: 700; color: var(--bau-secondary);">24.500 EUR</div>
+                                <div style="color: var(--text-muted); font-size: 14px;">7 Rechnungen ausstehend</div>
+                            </div>
+                            <div style="width: 60px; height: 60px; background: var(--warning-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 28px;">&#128179;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>&#128172; WhatsApp</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 28px; font-weight: 700; color: var(--info);">8</div>
+                                <div style="color: var(--text-muted); font-size: 14px;">Ungelesene Nachrichten</div>
+                            </div>
+                            <div style="width: 60px; height: 60px; background: var(--info-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 28px;">&#128172;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load stats from API
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                document.getElementById('stat-projects').textContent = data.projects?.active || 0;
+                document.getElementById('stat-customers').textContent = data.customers?.total || 0;
+                document.getElementById('stat-subcontractors').textContent = data.subcontractors?.approved || 0;
+                document.getElementById('stat-revenue').textContent = (data.revenue?.monthly || 0).toLocaleString('de-DE') + ' EUR';
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        // Load recent applications
+        async function loadApplications() {
+            try {
+                const response = await fetch('/api/subcontractors/applications?status=pending&limit=5');
+                if (response.ok) {
+                    const data = await response.json();
+                    // Update table with real data if available
+                }
+            } catch (error) {
+                console.error('Failed to load applications:', error);
+            }
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (this.dataset.page) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    // Page navigation would be handled here
+                }
+            });
+        });
+
+        // Initialize
+        loadStats();
+        loadApplications();
+
+        // Refresh stats every 30 seconds
+        setInterval(loadStats, 30000);
+    </script>
+</body>
+</html>
