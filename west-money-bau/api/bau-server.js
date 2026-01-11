@@ -14,7 +14,7 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 // Integrations
 const integrations = require('./integrations');
-const { hubspot, stripe, whatsapp, loxone } = integrations;
+const { hubspot, stripe, whatsapp, loxone, email: emailService } = integrations;
 
 const app = express();
 const PORT = process.env.BAU_PORT || 3016;
@@ -438,29 +438,34 @@ app.post('/api/subcontractors/apply', async (req, res) => {
 
         // Async integrations (don't block response)
         (async () => {
+            // Get full application data for email
+            const appData = {
+                first_name: firstName,
+                last_name: lastName,
+                email,
+                phone,
+                company_name: companyName,
+                country,
+                city,
+                specializations,
+                experience_years: experienceYears,
+                hourly_rate_expected: hourlyRateExpected
+            };
+
+            // Send email notification to admin (PRIMARY)
             try {
-                // Create HubSpot contact for subcontractor
-                await hubspot.createSubcontractorContact({
-                    email, firstName, lastName, companyName, phone,
-                    country, city, specializations, experienceYears
-                });
-                console.log('[HubSpot] Subcontractor contact created:', email);
+                await emailService.notifyNewApplication(appData);
+                console.log('[Email] Admin notification sent to info@west-money-bau.de');
             } catch (err) {
-                console.error('[HubSpot] Integration error:', err.message);
+                console.error('[Email] Notification error:', err.message);
             }
 
+            // Send confirmation to applicant
             try {
-                // Send WhatsApp confirmation
-                if (phone) {
-                    await whatsapp.sendTextMessage(phone,
-                        `Hallo ${firstName}, vielen Dank fuer Ihre Bewerbung bei West Money Bau! ` +
-                        `Wir pruefen Ihre Unterlagen und melden uns innerhalb von 48 Stunden bei Ihnen. ` +
-                        `Ihr West Money Bau Team`
-                    );
-                    console.log('[WhatsApp] Application confirmation sent to:', phone);
-                }
+                await emailService.sendApplicationConfirmation(appData);
+                console.log('[Email] Confirmation sent to applicant');
             } catch (err) {
-                console.error('[WhatsApp] Integration error:', err.message);
+                console.error('[Email] Confirmation error:', err.message);
             }
         })();
 
