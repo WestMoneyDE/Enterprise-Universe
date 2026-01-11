@@ -190,6 +190,17 @@ const DIVINE_POWERS = {
             // API integration
             return haiku.fuseSystems(system1, system2);
         }
+    },
+
+    autoEmail: {
+        name: 'AUTO EMAIL',
+        kanji: '電子',
+        description: 'Autonomous email campaigns with AI bots',
+        type: 'automation',
+        execute: async (haiku, options) => {
+            // Trigger background email generation
+            return haiku.backgroundEmailCampaign(options);
+        }
     }
 };
 
@@ -631,6 +642,38 @@ Erstelle eine zusammenfassende Synthese mit den besten Insights aus allen Perspe
             systems: [system1, system2],
             status: 'fused',
             newCapabilities: ['combined_data', 'unified_api', 'synced_operations']
+        };
+    }
+
+    async backgroundEmailCampaign(options) {
+        // AUTO EMAIL - Autonomous email campaigns
+        const { getBackgroundWorker } = require('./automation/background-worker');
+        const worker = getBackgroundWorker();
+
+        const { template, targets, botAssignments } = options || {};
+
+        if (!worker.isRunning) {
+            await worker.start();
+        }
+
+        const result = await worker.scheduleEmailCampaign({
+            template: template || 'west_money_services',
+            targets: targets || [],
+            botAssignments: botAssignments || null
+        });
+
+        this.log({
+            type: 'autoEmail',
+            message: `電子 AUTO EMAIL - Campaign scheduled`,
+            targets: targets?.length || 0,
+            template
+        });
+
+        return {
+            power: 'AUTO EMAIL',
+            kanji: '電子',
+            ...result,
+            message: 'Email campaign scheduled for background processing'
         };
     }
 

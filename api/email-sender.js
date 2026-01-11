@@ -16,30 +16,30 @@ const nodemailer = require('nodemailer');
 
 const CONFIG = {
   smtp: {
-    host: 'smtp.gmail.com',
+    host: 'send.one.com',
     port: 587,
     secure: false,
     auth: {
-      user: 'info@west-money-bau.de',
-      pass: 'irbavpexelkwbiae' // App-Passwort (ohne Leerzeichen)
+      user: 'info@enterprise-universe.com',
+      pass: 'Einfach0!663724'
     }
   },
   sender: {
-    email: 'info@west-money-bau.de',
-    name: 'West Money Bau'
+    email: 'info@enterprise-universe.com',
+    name: 'Enterprise Universe'
   },
   signature: `
 Mit freundlichen Grüßen
 
-Ömer Hüseyin Coşkun
-Geschäftsführer / CEO
+Ömer Hüseyin Coskun
+Founder & CEO
 
-WEST MONEY BAU
-Smart Home Systems | LOXONE Partner | Barrierefreies Bauen
-Ein Unternehmen der Enterprise Universe Gruppe
+ENTERPRISE UNIVERSE
+AI-Powered Business Automation | 42 AI Agents | €411B Pipeline
+PropTech Revolution | LOXONE Gold Partner
 
-📧 info@west-money-bau.de
-🌐 www.west-money-bau.de
+info@enterprise-universe.com
+enterprise-universe.one
   `.trim()
 };
 

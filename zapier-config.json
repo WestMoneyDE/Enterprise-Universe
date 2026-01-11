@@ -1,7 +1,45 @@
 {
   "name": "West Money Bau - Email Automations",
-  "version": "1.0.0",
-  "description": "Zapier Webhook Konfigurationen für automatischen E-Mail-Versand",
+  "version": "2.0.0",
+  "description": "Zapier Webhook Konfigurationen für automatischen E-Mail-Versand mit AI Bot Integration",
+  "ai_templates": {
+    "smart_home_presentation": {
+      "name": "Smart Home Produktpräsentation",
+      "subject": "Intelligente Gebäudeautomation mit LOXONE - West Money Bau",
+      "bots": ["loxone_master", "knx_specialist", "tesla"],
+      "sections": {
+        "intro": { "bot": "outreach", "focus": "Personalisierte Begrüßung" },
+        "problem": { "bot": "loxone_master", "focus": "Pain Points traditioneller Systeme" },
+        "solution": { "bot": "tesla", "focus": "Innovative LOXONE Lösungen" },
+        "features": { "bot": "knx_specialist", "focus": "Technische Highlights" },
+        "cta": { "bot": "deal_negotiator", "focus": "Beratungstermin vereinbaren" }
+      }
+    },
+    "west_money_services": {
+      "name": "West Money Bau Services",
+      "subject": "West Money Bau - Ihre Komplettlösung für Smart Building",
+      "bots": ["outreach", "spielberg", "deal_negotiator"],
+      "sections": {
+        "intro": { "bot": "outreach", "focus": "Professionelle Einleitung" },
+        "problem": { "bot": "einstein", "focus": "Marktanalyse und Herausforderungen" },
+        "solution": { "bot": "spielberg", "focus": "Storytelling der Lösung" },
+        "features": { "bot": "gutenberg", "focus": "Service-Übersicht" },
+        "cta": { "bot": "deal_negotiator", "focus": "Nächste Schritte" }
+      }
+    },
+    "investor_pitch": {
+      "name": "Investor Pitch",
+      "subject": "Investitionsmöglichkeit - West Money Bau",
+      "bots": ["einstein", "machiavelli", "oracle"],
+      "sections": {
+        "intro": { "bot": "machiavelli", "focus": "Strategischer Einstieg" },
+        "problem": { "bot": "einstein", "focus": "Marktpotenzial Analyse" },
+        "solution": { "bot": "oracle", "focus": "Vision und Zukunft" },
+        "features": { "bot": "nostradamus", "focus": "Wachstumsprognosen" },
+        "cta": { "bot": "deal_negotiator", "focus": "Investorengespräch" }
+      }
+    }
+  },
   "sender": {
     "email": "info@west-money-bau.de",
     "name": "West Money Bau",

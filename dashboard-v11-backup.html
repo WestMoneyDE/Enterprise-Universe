@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Universe V11 | MEGA GOD MODE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-void: #050508;
+            --bg-surface: #0a0a0f;
+            --bg-elevated: #111116;
+            --bg-card: #0d0d12;
+            --primary: #a855f7;
+            --secondary: #06b6d4;
+            --accent: #fbbf24;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+            --border-hover: #3f3f46;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-kanji { font-family: 'Noto Sans JP', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* Sidebar */
+        .sidebar { width: 260px; min-width: 260px; transition: all 0.3s; }
+        .sidebar.collapsed { width: 70px; min-width: 70px; }
+        .sidebar.collapsed .nav-text, .sidebar.collapsed .section-title, .sidebar.collapsed .logo-text { display: none; }
+        .sidebar.collapsed .nav-item { justify-content: center; padding: 0.75rem; }
+
+        /* Navigation */
+        .nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.5rem 0.875rem; border-radius: 0.5rem;
+            color: var(--text-secondary); transition: all 0.2s; cursor: pointer;
+        }
+        .nav-item:hover { background: rgba(168, 85, 247, 0.1); color: var(--text-primary); }
+        .nav-item.active { background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.1)); color: var(--text-primary); border-left: 3px solid var(--primary); }
+
+        /* Cards */
+        .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 1rem; transition: all 0.3s; }
+        .card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 40px rgba(168, 85, 247, 0.1); }
+        .card-glass { background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(20px); }
+
+        /* Tabs */
+        .tab-btn { padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; cursor: pointer; border: 1px solid transparent; }
+        .tab-btn:hover { background: rgba(168, 85, 247, 0.1); }
+        .tab-btn.active { background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.1)); border-color: var(--primary); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Gradient Text */
+        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-fire { background: linear-gradient(135deg, #ef4444, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Status */
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .status-dot.pulse { animation: dot-pulse 2s infinite; }
+        @keyframes dot-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.2); } }
+
+        /* Progress */
+        .progress-bar { height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+
+        /* Pipeline Stages */
+        .pipeline-stage { min-width: 280px; max-width: 320px; }
+        .deal-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; cursor: grab; transition: all 0.2s; }
+        .deal-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); border-color: var(--primary); }
+        .deal-card.dragging { opacity: 0.5; }
+
+        /* Bot Grid */
+        .bot-card { position: relative; overflow: hidden; }
+        .bot-card.thinking { animation: thinking-pulse 2s infinite; }
+        @keyframes thinking-pulse { 0%, 100% { border-color: rgba(168, 85, 247, 0.3); } 50% { border-color: rgba(168, 85, 247, 0.8); box-shadow: 0 0 30px rgba(168, 85, 247, 0.3); } }
+
+        /* Sparkline */
+        .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
+        .sparkline-bar { width: 4px; background: linear-gradient(to top, var(--primary), var(--secondary)); border-radius: 2px; transition: height 0.3s; }
+
+        /* Modal */
+        .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 1rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
+
+        /* Animations */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-in { animation: slideIn 0.3s ease-out; }
+
+        /* Responsive */
+        @media (max-width: 1200px) { .sidebar { width: 70px; min-width: 70px; } .sidebar .nav-text, .sidebar .section-title, .sidebar .logo-text { display: none; } .sidebar .nav-item { justify-content: center; padding: 0.75rem; } }
+    </style>
+</head>
+<body class="flex">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-[var(--bg-surface)] border-r border-[var(--border)] h-screen sticky top-0 flex flex-col" id="sidebar">
+        <div class="p-4 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span class="font-kanji text-lg font-bold">神</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="font-orbitron text-sm font-bold gradient-text">ENTERPRISE</h1>
+                    <span class="text-xs text-[var(--text-muted)]">V11 MEGA MODE</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-3 space-y-3">
+            <!-- Business -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">Business</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item active" onclick="switchTab('dashboard')"><span class="text-lg">📊</span><span class="nav-text text-sm">Dashboard</span></div>
+                    <div class="nav-item" onclick="switchTab('crm')"><span class="text-lg">👥</span><span class="nav-text text-sm">CRM Ultra</span></div>
+                    <div class="nav-item" onclick="switchTab('leads')"><span class="text-lg">🎯</span><span class="nav-text text-sm">Lead Discovery</span></div>
+                    <div class="nav-item" onclick="switchTab('deals')"><span class="text-lg">💰</span><span class="nav-text text-sm">Deals Pipeline</span></div>
+                    <div class="nav-item" onclick="switchTab('email')"><span class="text-lg">📧</span><span class="nav-text text-sm">Email Hub</span></div>
+                    <div class="nav-item" onclick="switchTab('whatsapp')"><span class="text-lg">💬</span><span class="nav-text text-sm">WhatsApp</span></div>
+                </div>
+            </div>
+
+            <!-- AI Power -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">AI Power</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('agents')"><span class="text-lg">🧠</span><span class="nav-text text-sm flex items-center gap-2">Genius Hub<span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">42</span></span></div>
+                    <div class="nav-item" onclick="switchTab('godmode')"><span class="text-lg font-kanji">神</span><span class="nav-text text-sm">GOD Mode</span></div>
+                    <div class="nav-item" onclick="switchTab('prophecy')"><span class="text-lg">🔮</span><span class="nav-text text-sm">Prophecy</span></div>
+                    <div class="nav-item" onclick="switchTab('hakai')"><span class="text-lg">💥</span><span class="nav-text text-sm">Hakai Mode</span></div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">Analytics</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('analytics')"><span class="text-lg">📈</span><span class="nav-text text-sm">Analytics</span></div>
+                    <div class="nav-item" onclick="switchTab('finance')"><span class="text-lg">💵</span><span class="nav-text text-sm">Finance</span></div>
+                    <div class="nav-item" onclick="switchTab('reports')"><span class="text-lg">📋</span><span class="nav-text text-sm">Reports</span></div>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">System</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('settings')"><span class="text-lg">⚙️</span><span class="nav-text text-sm">Settings</span></div>
+                    <div class="nav-item" onclick="window.location.href='/awards.html'"><span class="text-lg">🏆</span><span class="nav-text text-sm">Awards</span></div>
+                    <div class="nav-item" onclick="window.location.href='/Data%20Room/'"><span class="text-lg">📁</span><span class="nav-text text-sm">Data Room</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Live Stats -->
+        <div class="p-4 border-t border-[var(--border)]">
+            <div class="space-y-2 text-xs">
+                <div class="flex items-center gap-2"><span class="status-dot bg-red-500 pulse"></span><span class="nav-text" id="sidebarHotLeads">2,847 HOT</span></div>
+                <div class="flex items-center gap-2"><span class="status-dot bg-green-500 pulse"></span><span class="nav-text" id="sidebarPipeline">€411B Pipeline</span></div>
+                <div class="flex items-center gap-2"><span class="status-dot bg-purple-500 pulse"></span><span class="nav-text">42 Bots Active</span></div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen overflow-y-auto">
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-[var(--bg-void)]/90 backdrop-blur-xl border-b border-[var(--border)]">
+            <div class="flex items-center justify-between px-6 py-3">
+                <div>
+                    <h1 class="font-orbitron text-xl font-bold" id="pageTitle">Dashboard</h1>
+                    <p class="text-sm text-[var(--text-muted)]">Enterprise Universe V11 - MEGA GOD MODE</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg text-sm text-[var(--text-muted)] hover:bg-white/10">
+                        <span>🔍</span> Suchen <kbd class="px-1.5 py-0.5 bg-white/10 rounded text-xs">⌘K</kbd>
+                    </button>
+                    <button class="relative p-2 hover:bg-white/5 rounded-lg" onclick="toggleNotifications()">
+                        <span class="text-xl">🔔</span>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center" id="notifBadge">5</span>
+                    </button>
+                    <div class="w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center">
+                        <span class="font-kanji text-sm font-bold">神</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Content Container -->
+        <div class="p-6">
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- DASHBOARD TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-dashboard" class="tab-content active space-y-6">
+                <!-- KPI Cards Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">💼</span>
+                            <span class="text-green-400 text-xs">↑ 12%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiDeals">3.3M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Total Deals</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">👥</span>
+                            <span class="text-cyan-400 text-xs">↑ 8%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiContacts">14.3M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Contacts</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">📈</span>
+                            <span class="text-yellow-400 text-xs">↑ 23%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold gradient-gold" id="kpiPipeline">€411B</p>
+                        <p class="text-xs text-[var(--text-muted)]">Pipeline</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🏆</span>
+                            <span class="text-purple-400 text-xs">↑ 45%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold gradient-text" id="kpiWon">€1.2B</p>
+                        <p class="text-xs text-[var(--text-muted)]">Won</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🎯</span>
+                            <span class="text-red-400 text-xs">HOT</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold text-red-400" id="kpiHotLeads">2,847</p>
+                        <p class="text-xs text-[var(--text-muted)]">Hot Leads</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">📧</span>
+                            <span class="text-green-400 text-xs">78%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiEmails">125K</p>
+                        <p class="text-xs text-[var(--text-muted)]">Emails/Mo</p>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- AI Agents Overview -->
+                    <div class="lg:col-span-2 card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-orbitron text-lg font-bold gradient-text">AI AGENTS LIVE</h2>
+                            <button onclick="switchTab('agents')" class="text-sm text-purple-400 hover:text-purple-300">Alle 42 →</button>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4" id="agentGrid">
+                            <!-- Einstein -->
+                            <div class="card bot-card thinking p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🧠</span>
+                                        <div><h3 class="font-semibold">EINSTEIN</h3><p class="text-xs text-[var(--text-muted)]">Analytics AI</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">THINKING</span>
+                                </div>
+                                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-purple-200 italic">"Analysiere Q4 Pipeline... +23% Potenzial"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 98%</span>
+                                    <span class="text-cyan-400">⏱ 2.3ms</span>
+                                    <span class="text-purple-400">📊 1,250 Tasks</span>
+                                </div>
+                            </div>
+                            <!-- Broly -->
+                            <div class="card bot-card p-4 border-yellow-500/30">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">⚡</span>
+                                        <div><h3 class="font-semibold gradient-gold">BROLY</h3><p class="text-xs text-yellow-400/70">Task Executor</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">ACTIVE</span>
+                                </div>
+                                <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-yellow-200 italic">"50,000 Tasks abgeschlossen"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-yellow-400">⚡ ∞</span>
+                                    <span class="text-cyan-400">⏱ 1.2ms</span>
+                                    <span class="text-purple-400">📊 50K+</span>
+                                </div>
+                            </div>
+                            <!-- Orion -->
+                            <div class="card bot-card p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">⭐</span>
+                                        <div><h3 class="font-semibold">ORION</h3><p class="text-xs text-[var(--text-muted)]">Strategy</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">SCANNING</span>
+                                </div>
+                                <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-blue-200 italic">"3 neue Marktchancen identifiziert"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 95%</span>
+                                    <span class="text-cyan-400">⏱ 3.1ms</span>
+                                    <span class="text-purple-400">📊 890</span>
+                                </div>
+                            </div>
+                            <!-- Luna -->
+                            <div class="card bot-card p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🌙</span>
+                                        <div><h3 class="font-semibold">LUNA</h3><p class="text-xs text-[var(--text-muted)]">Security</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-violet-500/20 text-violet-400 text-xs rounded">WATCHING</span>
+                                </div>
+                                <div class="bg-violet-500/10 border border-violet-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-violet-200 italic">"Alle Systeme sicher - 0 Threats"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 100%</span>
+                                    <span class="text-cyan-400">⏱ 0.8ms</span>
+                                    <span class="text-purple-400">📊 24/7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity -->
+                    <div class="card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-semibold flex items-center gap-2">🔔 Live Activity<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span></h2>
+                        </div>
+                        <div class="space-y-3" id="activityFeed">
+                            <div class="flex gap-3 p-2 bg-green-500/10 rounded-lg animate-slide-in">
+                                <span class="text-lg">✅</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Deal gewonnen</p>
+                                    <p class="text-xs text-[var(--text-muted)]">€2.5M - PropTech GmbH</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">2m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-purple-500/10 rounded-lg">
+                                <span class="text-lg">🧠</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Einstein analysiert</p>
+                                    <p class="text-xs text-[var(--text-muted)]">1,250 Leads gescored</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">5m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-cyan-500/10 rounded-lg">
+                                <span class="text-lg">📧</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Email Kampagne</p>
+                                    <p class="text-xs text-[var(--text-muted)]">5,000 versendet - 78% Open Rate</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">8m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-yellow-500/10 rounded-lg">
+                                <span class="text-lg">💬</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">WhatsApp Opt-Ins</p>
+                                    <p class="text-xs text-[var(--text-muted)]">+89 neue Kontakte</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">12m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-blue-500/10 rounded-lg">
+                                <span class="text-lg">🔄</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">HubSpot Sync</p>
+                                    <p class="text-xs text-[var(--text-muted)]">3,170 Kontakte synchronisiert</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">15m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Pipeline Performance</h3>
+                        <canvas id="pipelineChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Lead Sources</h3>
+                        <canvas id="sourceChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- HubSpot Sync Card -->
+                <div class="card p-5 border-orange-500/30">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                                <span class="text-xl">🔶</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">HubSpot CRM Sync</h3>
+                                <p class="text-xs text-[var(--text-muted)]" id="hubspotSyncStatus">Bereit zum Synchronisieren</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="fetchAllHubSpotData()" class="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition" title="Alle Daten laden">
+                                📥 Full Import
+                            </button>
+                            <button id="hubspotSyncBtn" onclick="syncHubSpot()" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold text-white transition">
+                                🔄 Sync
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="p-3 bg-[var(--bg-elevated)] rounded-lg text-center">
+                            <p class="text-xl font-bold text-orange-400" id="hubspotContacts">15.1M</p>
+                            <p class="text-xs text-[var(--text-muted)]">Kontakte</p>
+                        </div>
+                        <div class="p-3 bg-[var(--bg-elevated)] rounded-lg text-center">
+                            <p class="text-xl font-bold text-green-400" id="hubspotDeals">3.4M</p>
+                            <p class="text-xs text-[var(--text-muted)]">Deals</p>
+                        </div>
+                        <div class="p-3 bg-[var(--bg-elevated)] rounded-lg text-center">
+                            <p class="text-xl font-bold text-cyan-400" id="hubspotCompanies">216K</p>
+                            <p class="text-xs text-[var(--text-muted)]">Companies</p>
+                        </div>
+                        <div class="p-3 bg-[var(--bg-elevated)] rounded-lg text-center">
+                            <p class="text-sm font-semibold text-[var(--text-muted)]" id="hubspotSyncTime">-</p>
+                            <p class="text-xs text-[var(--text-muted)]">Letzter Sync</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card p-5">
+                    <h3 class="font-semibold mb-4">🖥️ System Status - 99.99% Uptime</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">HubSpot</p><p class="text-xs text-[var(--text-muted)]">Connected</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">PostgreSQL</p><p class="text-xs text-[var(--text-muted)]">142/400 GB</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">WhatsApp</p><p class="text-xs text-[var(--text-muted)]">Active</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Claude AI</p><p class="text-xs text-[var(--text-muted)]">Opus 4.5</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-yellow-500"></span>
+                            <div><p class="text-sm font-semibold">LOXONE</p><p class="text-xs text-yellow-400">Gold Partner</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Backend</p><p class="text-xs text-[var(--text-muted)]">2.3ms</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">42 Agents</p><p class="text-xs text-[var(--text-muted)]">All Active</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CRM TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-crm" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">CRM ULTRA</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">+ Neuer Kontakt</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Import</button>
+                    </div>
+                </div>
+
+                <!-- CRM Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">14.3M</p><p class="text-xs text-[var(--text-muted)]">Total Contacts</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">3,170</p><p class="text-xs text-[var(--text-muted)]">HubSpot Synced</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-red-400">2,847</p><p class="text-xs text-[var(--text-muted)]">Hot Leads</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">5,234</p><p class="text-xs text-[var(--text-muted)]">Warm Leads</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">89%</p><p class="text-xs text-[var(--text-muted)]">Data Quality</p></div>
+                </div>
+
+                <!-- CRM Table -->
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-[var(--border)] flex items-center justify-between">
+                        <input type="text" placeholder="Suche Kontakte..." class="px-4 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm w-80 outline-none focus:border-purple-500">
+                        <div class="flex gap-2">
+                            <select class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none">
+                                <option>Alle Status</option>
+                                <option>HOT</option>
+                                <option>WARM</option>
+                                <option>COLD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="w-full">
+                        <thead class="bg-[var(--bg-elevated)]">
+                            <tr class="text-left text-xs text-[var(--text-muted)] uppercase">
+                                <th class="p-4">Kontakt</th>
+                                <th class="p-4">Company</th>
+                                <th class="p-4">Score</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4">Last Activity</th>
+                                <th class="p-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crmTable">
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center font-semibold">MK</div><div><p class="font-semibold">Max König</p><p class="text-xs text-[var(--text-muted)]">max@proptech.de</p></div></div></td>
+                                <td class="p-4">PropTech GmbH</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded font-semibold">98</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">HOT</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 2 Stunden</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center font-semibold">AS</div><div><p class="font-semibold">Anna Schmidt</p><p class="text-xs text-[var(--text-muted)]">anna@smartliving.io</p></div></div></td>
+                                <td class="p-4">SmartLiving AG</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded font-semibold">76</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">WARM</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 1 Tag</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center font-semibold">TM</div><div><p class="font-semibold">Thomas Müller</p><p class="text-xs text-[var(--text-muted)]">t.mueller@immobilien.de</p></div></div></td>
+                                <td class="p-4">Immobilien Plus</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded font-semibold">95</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">HOT</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 30 Min</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- LEADS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-leads" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">LEAD DISCOVERY</h2>
+                    <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">🔍 Auto-Discovery starten</button>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Lead Scoring -->
+                    <div class="lg:col-span-2 card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Lead Scoring Distribution</h3>
+                        <div class="grid grid-cols-4 gap-4 mb-6">
+                            <div class="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/30">
+                                <p class="text-3xl font-bold text-red-400">2,847</p>
+                                <p class="text-sm text-red-400/70">🔥 HOT (80-100)</p>
+                            </div>
+                            <div class="text-center p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
+                                <p class="text-3xl font-bold text-yellow-400">5,234</p>
+                                <p class="text-sm text-yellow-400/70">⚡ WARM (50-79)</p>
+                            </div>
+                            <div class="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
+                                <p class="text-3xl font-bold text-blue-400">8,912</p>
+                                <p class="text-sm text-blue-400/70">❄️ COLD (20-49)</p>
+                            </div>
+                            <div class="text-center p-4 bg-gray-500/10 rounded-lg border border-gray-500/30">
+                                <p class="text-3xl font-bold text-gray-400">12,456</p>
+                                <p class="text-sm text-gray-400/70">💤 NEW (0-19)</p>
+                            </div>
+                        </div>
+                        <canvas id="leadScoreChart" height="150"></canvas>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">⚡ Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="w-full p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🔥</span><div><p class="font-semibold">HOT Leads anrufen</p><p class="text-xs text-[var(--text-muted)]">2,847 Leads warten</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🧠</span><div><p class="font-semibold">AI Scoring starten</p><p class="text-xs text-[var(--text-muted)]">12,456 unscored</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">📧</span><div><p class="font-semibold">Email Sequence</p><p class="text-xs text-[var(--text-muted)]">Nurture Campaign</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🔄</span><div><p class="font-semibold">HubSpot Sync</p><p class="text-xs text-[var(--text-muted)]">Last: vor 5 Min</p></div></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- DEALS PIPELINE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-deals" class="tab-content space-y-6">
+                <!-- Header mit Sync -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-orbitron text-2xl font-bold gradient-gold">DEALS PIPELINE</h2>
+                        <p class="text-sm text-[var(--text-muted)]">Letzte Aktualisierung: <span id="dealsLastUpdate">-</span></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="loadDealsFromHubSpot()" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold text-white transition">
+                            🔄 HubSpot Sync
+                        </button>
+                        <button onclick="openNewDealModal()" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neuer Deal</button>
+                    </div>
+                </div>
+
+                <!-- Pipeline KPIs mit Trefferquote -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="card p-4 text-center border-purple-500/30">
+                        <p class="text-2xl font-bold gradient-text" id="dealsTotalCount">3.4M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Gesamt Deals</p>
+                    </div>
+                    <div class="card p-4 text-center border-yellow-500/30">
+                        <p class="text-2xl font-bold text-yellow-400" id="dealsTotalValue">€411B</p>
+                        <p class="text-xs text-[var(--text-muted)]">Pipeline Wert</p>
+                    </div>
+                    <div class="card p-4 text-center border-green-500/30">
+                        <p class="text-2xl font-bold text-green-400" id="dealsWinRate">34.7%</p>
+                        <p class="text-xs text-[var(--text-muted)]">Trefferquote</p>
+                    </div>
+                    <div class="card p-4 text-center border-cyan-500/30">
+                        <p class="text-2xl font-bold text-cyan-400" id="dealsAvgValue">€121K</p>
+                        <p class="text-xs text-[var(--text-muted)]">Ø Deal-Wert</p>
+                    </div>
+                    <div class="card p-4 text-center border-blue-500/30">
+                        <p class="text-2xl font-bold text-blue-400" id="dealsAvgCycle">42</p>
+                        <p class="text-xs text-[var(--text-muted)]">Ø Tage bis Close</p>
+                    </div>
+                    <div class="card p-4 text-center border-red-500/30">
+                        <p class="text-2xl font-bold text-red-400" id="dealsAtRisk">127</p>
+                        <p class="text-xs text-[var(--text-muted)]">At Risk</p>
+                    </div>
+                </div>
+
+                <!-- Lead Demon Status & Pipeline Progress -->
+                <div class="grid lg:grid-cols-3 gap-4">
+                    <!-- Lead Demon Card - Enhanced -->
+                    <div class="card p-4 border-red-500/30 bg-gradient-to-br from-red-500/5 to-transparent">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="text-3xl animate-pulse">😈</span>
+                                <div>
+                                    <h3 class="font-bold text-red-400">Auto Lead Demon</h3>
+                                    <p class="text-xs text-[var(--text-muted)]" id="leadDemonStatus"><span class="text-green-400">✓ Aktiv</span></p>
+                                </div>
+                            </div>
+                            <div class="flex gap-1">
+                                <button onclick="toggleLeadDemon()" class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs hover:bg-red-500/30" title="Toggle">⏸</button>
+                                <button onclick="forceRunLeadDemon()" class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs hover:bg-yellow-500/30" title="Analyse">🔍</button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs mb-3">
+                            <div class="p-2 bg-[var(--bg-elevated)] rounded">
+                                <p class="font-bold text-purple-400 text-lg" id="demonProcessed">0</p>
+                                <p class="text-[var(--text-muted)]">Analysiert</p>
+                            </div>
+                            <div class="p-2 bg-[var(--bg-elevated)] rounded">
+                                <p class="font-bold text-green-400 text-lg" id="demonUpgraded">0</p>
+                                <p class="text-[var(--text-muted)]">Upgrade</p>
+                            </div>
+                            <div class="p-2 bg-[var(--bg-elevated)] rounded">
+                                <p class="font-bold text-gray-400 text-lg" id="demonDowngraded">0</p>
+                                <p class="text-[var(--text-muted)]">Optimal</p>
+                            </div>
+                        </div>
+
+                        <!-- Pending Updates Panel -->
+                        <div class="bg-[var(--bg-void)] rounded-lg p-2 mb-3 max-h-32 overflow-y-auto" id="leadDemonUpdates">
+                            <p class="text-[var(--text-muted)] text-xs text-center py-2">Klicke 🔍 für Analyse...</p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="forceRunLeadDemon()" class="px-3 py-2 bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-400 rounded text-sm font-semibold transition flex items-center justify-center gap-1">
+                                🔍 Analysieren
+                            </button>
+                            <button onclick="executeLiveLeadDemon()" class="px-3 py-2 bg-red-500 hover:bg-red-600 rounded text-sm font-semibold transition flex items-center justify-center gap-1">
+                                🔥 LIVE Update
+                            </button>
+                        </div>
+                        <p class="text-[10px] text-[var(--text-muted)] text-center mt-2">
+                            Last: <span id="demonLastRun">-</span> | Auto-Run alle 5 Min
+                        </p>
+                    </div>
+
+                    <!-- Pipeline Progress Bar + Scoring Info -->
+                    <div class="card p-4 lg:col-span-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold">Pipeline Conversion Funnel</span>
+                            <span class="text-xs text-[var(--text-muted)]">Score-basierte Stufen</span>
+                        </div>
+                        <div class="flex h-8 rounded-lg overflow-hidden">
+                            <div class="bg-blue-500 flex items-center justify-center text-xs font-semibold" style="width: 25%" title="Score 0-39">Termin 20%</div>
+                            <div class="bg-cyan-500 flex items-center justify-center text-xs font-semibold" style="width: 20%" title="Score 40-59">Qualifiziert 40%</div>
+                            <div class="bg-purple-500 flex items-center justify-center text-xs font-semibold" style="width: 20%" title="Score 60-74">Präsentation 60%</div>
+                            <div class="bg-yellow-500 flex items-center justify-center text-xs font-semibold text-black" style="width: 20%" title="Score 75-89">Entscheider 80%</div>
+                            <div class="bg-green-500 flex items-center justify-center text-xs font-semibold" style="width: 15%" title="Score 90+">Vertrag 90%</div>
+                        </div>
+
+                        <!-- Scoring Factors -->
+                        <div class="mt-3 grid grid-cols-2 gap-3 text-xs">
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-2">
+                                <p class="font-semibold text-red-400 mb-1">😈 Lead Scoring Faktoren</p>
+                                <div class="space-y-1 text-[var(--text-muted)]">
+                                    <p>💰 Deal-Wert: €50K+ = +30pts</p>
+                                    <p>⭐ A-Class Deal: +25pts</p>
+                                    <p>🏭 Industry 4.0: +20pts</p>
+                                    <p>🏠 Smart Home: +15pts</p>
+                                </div>
+                            </div>
+                            <div class="bg-[var(--bg-elevated)] rounded-lg p-2">
+                                <p class="font-semibold text-purple-400 mb-1">📊 Stage Thresholds</p>
+                                <div class="space-y-1 text-[var(--text-muted)]">
+                                    <p>90+ → Vertrag gesendet</p>
+                                    <p>75+ → Entscheider</p>
+                                    <p>60+ → Präsentation</p>
+                                    <p>40+ → Qualifiziert</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Kanban - Dynamisch -->
+                <div class="flex gap-4 overflow-x-auto pb-4" id="pipelineKanban">
+                    <!-- Wird dynamisch geladen -->
+                    <div class="w-full text-center py-10 text-[var(--text-muted)]">
+                        <span class="animate-spin text-2xl">⟳</span>
+                        <p class="mt-2">Lade Deals von HubSpot...</p>
+                    </div>
+                </div>
+
+                <!-- Recent Deals Table mit Lead Scoring -->
+                <div class="card">
+                    <div class="p-4 border-b border-[var(--border)] flex items-center justify-between">
+                        <h3 class="font-semibold">📊 Aktuelle Deals mit Lead Score</h3>
+                        <div class="flex gap-2">
+                            <select id="dealsStageFilter" onchange="filterDealsByStage()" class="px-3 py-1 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none">
+                                <option value="all">Alle Stages</option>
+                                <option value="qualification">Qualification</option>
+                                <option value="meeting">Meeting</option>
+                                <option value="proposal">Proposal</option>
+                                <option value="negotiation">Negotiation</option>
+                                <option value="closedwon">Closed Won</option>
+                                <option value="closedlost">Closed Lost</option>
+                            </select>
+                            <input type="text" id="dealsSearch" onkeyup="searchDeals()" placeholder="Deal suchen..." class="px-3 py-1 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none w-48">
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-[var(--bg-elevated)]">
+                                <tr class="text-left text-xs text-[var(--text-muted)] uppercase">
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortDealsTable('name')">Deal Name ↕</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortDealsTable('amount')">Betrag ↕</th>
+                                    <th class="p-4">Stage</th>
+                                    <th class="p-4">Lead Score</th>
+                                    <th class="p-4">Kontakt</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortDealsTable('closedate')">Close Date ↕</th>
+                                    <th class="p-4">Wahrscheinlichkeit</th>
+                                    <th class="p-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dealsTableBody">
+                                <!-- Wird dynamisch geladen -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-[var(--border)] flex items-center justify-between">
+                        <p class="text-sm text-[var(--text-muted)]" id="dealsTableInfo">Lade Deals...</p>
+                        <div class="flex gap-2" id="dealsPagination">
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10" onclick="loadDealsPage('prev')">← Prev</button>
+                            <button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-sm">1</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10" onclick="loadDealsPage('next')">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Analytics Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Deals nach Stage</h3>
+                        <canvas id="dealsByStageChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">💰 Monatlicher Deal-Wert</h3>
+                        <canvas id="dealsValueChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- EMAIL TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-email" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">EMAIL HUB</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">📧 Neue Kampagne</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Templates</button>
+                    </div>
+                </div>
+
+                <!-- Email Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">125,847</p><p class="text-xs text-[var(--text-muted)]">Emails/Monat</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">78%</p><p class="text-xs text-[var(--text-muted)]">Open Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">23%</p><p class="text-xs text-[var(--text-muted)]">Click Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">12%</p><p class="text-xs text-[var(--text-muted)]">Reply Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-red-400">0.8%</p><p class="text-xs text-[var(--text-muted)]">Bounce Rate</p></div>
+                </div>
+
+                <!-- Active Campaigns -->
+                <div class="card p-5">
+                    <h3 class="font-semibold mb-4">📊 Aktive Kampagnen</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🚀</span>
+                                <div>
+                                    <p class="font-semibold">Investor Outreach Q1</p>
+                                    <p class="text-xs text-[var(--text-muted)]">5,000 Recipients • Started vor 2 Tagen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">82%</p><p class="text-xs text-[var(--text-muted)]">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">28%</p><p class="text-xs text-[var(--text-muted)]">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">45</p><p class="text-xs text-[var(--text-muted)]">Meetings</p></div>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded">Active</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🏠</span>
+                                <div>
+                                    <p class="font-semibold">LOXONE Partner Nurture</p>
+                                    <p class="text-xs text-[var(--text-muted)]">2,500 Recipients • Started vor 1 Woche</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">75%</p><p class="text-xs text-[var(--text-muted)]">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">19%</p><p class="text-xs text-[var(--text-muted)]">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">23</p><p class="text-xs text-[var(--text-muted)]">Meetings</p></div>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- AI AGENTS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-agents" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">GENIUS HUB - 42 AI AGENTS</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">🧠 Neuer Agent</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Alle aktivieren</button>
+                    </div>
+                </div>
+
+                <!-- Agent Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">42</p><p class="text-xs text-[var(--text-muted)]">Active Agents</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">1.2M</p><p class="text-xs text-[var(--text-muted)]">Tasks/Day</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">2.1ms</p><p class="text-xs text-[var(--text-muted)]">Avg Response</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">99.9%</p><p class="text-xs text-[var(--text-muted)]">Uptime</p></div>
+                </div>
+
+                <!-- All Agents Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="allAgentsGrid">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ANALYTICS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-analytics" class="tab-content space-y-6">
+                <h2 class="font-orbitron text-2xl font-bold gradient-text">ANALYTICS & INSIGHTS</h2>
+
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Revenue Trend</h3>
+                        <canvas id="revenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Conversion Funnel</h3>
+                        <canvas id="funnelChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FINANCE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-finance" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">FINANCE & INVOICES HUB</h2>
+                    <div class="flex gap-2">
+                        <button onclick="openModal('invoiceModal')" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neue Rechnung</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Export</button>
+                    </div>
+                </div>
+
+                <!-- Finance KPIs -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('all')">
+                        <p class="text-2xl font-bold text-green-400" id="finRevenue">€127M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Revenue YTD</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('paid')">
+                        <p class="text-2xl font-bold text-purple-400" id="finPaid">€89M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Bezahlt</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('pending')">
+                        <p class="text-2xl font-bold text-yellow-400" id="finPending">€28M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Ausstehend</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('overdue')">
+                        <p class="text-2xl font-bold text-red-400" id="finOverdue">€10M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Überfällig</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-cyan-400">89%</p>
+                        <p class="text-xs text-[var(--text-muted)]">Collection Rate</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-white">1,247</p>
+                        <p class="text-xs text-[var(--text-muted)]">Total Invoices</p>
+                    </div>
+                </div>
+
+                <!-- Invoices Table -->
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-4">
+                        <input type="text" id="invoiceSearch" placeholder="Suche Rechnungen..." class="px-4 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm w-80 outline-none focus:border-purple-500" onkeyup="searchInvoices()">
+                        <div class="flex gap-2">
+                            <select id="invoiceStatusFilter" class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none" onchange="filterInvoices(this.value)">
+                                <option value="all">Alle Status</option>
+                                <option value="paid">Bezahlt</option>
+                                <option value="pending">Ausstehend</option>
+                                <option value="overdue">Überfällig</option>
+                                <option value="draft">Entwurf</option>
+                            </select>
+                            <select class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none">
+                                <option>Letzte 30 Tage</option>
+                                <option>Letzte 90 Tage</option>
+                                <option>Dieses Jahr</option>
+                                <option>Alle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-[var(--bg-elevated)]">
+                                <tr class="text-left text-xs text-[var(--text-muted)] uppercase">
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('id')">Rechnung # ↕</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('customer')">Kunde ↕</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('amount')">Betrag ↕</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('date')">Datum ↕</th>
+                                    <th class="p-4">Fällig</th>
+                                    <th class="p-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoicesTable">
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-001</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-xs font-semibold">PT</div><div><p class="font-semibold">PropTech GmbH</p><p class="text-xs text-[var(--text-muted)]">max@proptech.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€2,450,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">10.01.2024</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">10.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-001')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-002</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">SL</div><div><p class="font-semibold">SmartLiving AG</p><p class="text-xs text-[var(--text-muted)]">billing@smartliving.io</p></div></div></td>
+                                    <td class="p-4 font-semibold">€890,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Ausstehend</span></td>
+                                    <td class="p-4 text-sm">08.01.2024</td>
+                                    <td class="p-4 text-sm text-yellow-400">08.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-002')">View</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Remind</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-003</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-xs font-semibold">RE</div><div><p class="font-semibold">Real Estate Empire</p><p class="text-xs text-[var(--text-muted)]">finance@realestate.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€5,670,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Überfällig</span></td>
+                                    <td class="p-4 text-sm">15.12.2023</td>
+                                    <td class="p-4 text-sm text-red-400">15.01.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-003')">View</button><button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs hover:bg-red-500/30">Urgent</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-004</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-xs font-semibold">TC</div><div><p class="font-semibold">TechCorp AG</p><p class="text-xs text-[var(--text-muted)]">ap@techcorp.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€1,250,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">05.01.2024</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">05.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-004')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-005</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-xs font-semibold">LX</div><div><p class="font-semibold">LOXONE Partner</p><p class="text-xs text-[var(--text-muted)]">partner@loxone.com</p></div></div></td>
+                                    <td class="p-4 font-semibold">€780,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-gray-500/20 text-gray-400 text-xs rounded">Entwurf</span></td>
+                                    <td class="p-4 text-sm">-</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">-</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">Edit</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Send</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-[var(--border)] flex items-center justify-between">
+                        <p class="text-sm text-[var(--text-muted)]">Zeige 1-5 von 1,247 Rechnungen</p>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">← Prev</button>
+                            <button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-sm">1</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">2</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">3</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">💰 Monthly Revenue</h3>
+                        <canvas id="financeRevenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📊 Invoice Status Distribution</h3>
+                        <canvas id="invoiceStatusChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp Hub Tab -->
+            <div id="tab-whatsapp" class="tab-content space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold flex items-center gap-3">
+                            <span class="text-3xl">💬</span> WhatsApp Business Hub
+                        </h1>
+                        <p class="text-[var(--text-muted)] text-sm mt-1">Verbinden Sie WhatsApp mit HubSpot CRM</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="loadWhatsAppStatus()" class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold hover:bg-green-500/30 transition">
+                            🔄 Status prüfen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Connection Status & Stats -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="card p-4 border-green-500/30" id="whatsappStatusCard">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
+                                <span class="text-2xl">📱</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold" id="waConnectionStatus">Prüfe...</p>
+                                <p class="text-xs text-[var(--text-muted)]" id="waPhoneNumber">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-green-400" id="waSentCount">0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Gesendet</p>
+                            </div>
+                            <span class="text-3xl">📤</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-blue-400" id="waDeliveredCount">0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Zugestellt</p>
+                            </div>
+                            <span class="text-3xl">✓✓</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-purple-400" id="waReadCount">0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Gelesen</p>
+                            </div>
+                            <span class="text-3xl">👁️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Send Message Panel -->
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-green-400 mb-4 flex items-center gap-2">
+                            <span>✉️</span> Nachricht senden
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Empfänger</label>
+                                <input type="text" id="waRecipient" placeholder="+49 170 1234567"
+                                    class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none focus:border-green-500">
+                            </div>
+                            <div>
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Typ</label>
+                                <select id="waMessageType" onchange="toggleWaTemplateSelect()"
+                                    class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none">
+                                    <option value="text">Text</option>
+                                    <option value="template">Template</option>
+                                </select>
+                            </div>
+                            <div id="waTemplateSelect" class="hidden">
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Template</label>
+                                <select id="waTemplate" class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none"></select>
+                            </div>
+                            <div id="waTextInput">
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Nachricht</label>
+                                <textarea id="waMessage" rows="3" placeholder="Ihre Nachricht..."
+                                    class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none resize-none"></textarea>
+                            </div>
+                            <button onclick="sendWhatsAppMessage()" class="w-full py-2 bg-green-500 hover:bg-green-600 rounded-lg text-sm font-semibold transition">
+                                📱 Senden
+                            </button>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-[var(--border)]">
+                            <p class="text-xs text-[var(--text-muted)] mb-2">Schnell:</p>
+                            <div class="flex flex-wrap gap-1">
+                                <button onclick="sendQuickWA('Hallo! Wie kann ich helfen?')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">👋</button>
+                                <button onclick="sendQuickWA('Vielen Dank!')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">🙏</button>
+                                <button onclick="sendQuickWA('Ich melde mich!')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">⏰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates Panel -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-purple-400 flex items-center gap-2">
+                                <span>📋</span> Templates
+                            </h3>
+                            <button onclick="loadWhatsAppTemplates()" class="text-xs text-purple-400 hover:text-purple-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-72 overflow-y-auto" id="waTemplatesList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Templates laden...</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Messages -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-cyan-400 flex items-center gap-2">
+                                <span>💬</span> Letzte Nachrichten
+                            </h3>
+                            <button onclick="loadWhatsAppMessages()" class="text-xs text-cyan-400 hover:text-cyan-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-72 overflow-y-auto" id="waMessagesList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Keine Nachrichten</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bulk & HubSpot -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-yellow-400 mb-4 flex items-center gap-2">
+                            <span>📢</span> Bulk Messaging
+                        </h3>
+                        <div class="space-y-3">
+                            <select id="waBulkSource" class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none">
+                                <option value="hubspot_hot">Hot Leads (Score 75+)</option>
+                                <option value="hubspot_leads">Alle Leads</option>
+                                <option value="hubspot_all">Alle Kontakte</option>
+                            </select>
+                            <select id="waBulkTemplate" class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none">
+                                <option value="welcome_message">welcome_message</option>
+                                <option value="follow_up">follow_up</option>
+                                <option value="deal_update">deal_update</option>
+                            </select>
+                            <div class="flex gap-2">
+                                <input type="number" id="waBulkLimit" value="10" min="1" max="100"
+                                    class="w-20 px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm outline-none">
+                                <button onclick="sendBulkWhatsApp()" class="flex-1 py-2 bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg text-sm font-semibold transition">
+                                    📢 Bulk senden
+                                </button>
+                            </div>
+                            <div id="waBulkProgress" class="hidden">
+                                <div class="h-2 bg-[var(--bg-void)] rounded-full overflow-hidden">
+                                    <div id="waBulkProgressBar" class="h-full bg-green-500 transition-all" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-center mt-1" id="waBulkProgressText">0/0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-orange-400 mb-4 flex items-center gap-2">
+                            <span>🔗</span> HubSpot Integration
+                        </h3>
+                        <div class="bg-[var(--bg-elevated)] rounded-lg p-3 mb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">👥</span>
+                                    <div>
+                                        <p class="font-semibold text-sm">Kontakte mit Telefon</p>
+                                        <p class="text-xs text-[var(--text-muted)]" id="waHubspotContacts">Laden...</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-xs">✓ Verbunden</span>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <label class="flex items-center gap-2 p-2 bg-white/5 rounded cursor-pointer">
+                                <input type="checkbox" id="waAutoWelcome" class="accent-green-500">
+                                <span>Welcome bei neuem Lead</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white/5 rounded cursor-pointer">
+                                <input type="checkbox" id="waAutoFollowup" class="accent-green-500">
+                                <span>Follow-up nach 48h</span>
+                            </label>
+                        </div>
+                        <button onclick="syncWhatsAppHubSpot()" class="w-full mt-3 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold transition">
+                            🔄 Sync mit HubSpot
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-godmode" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4 font-kanji">神 GOD MODE</h2><p class="text-[var(--text-muted)]">HAIKU Activated • Full Control</p></div></div>
+            <div id="tab-prophecy" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">🔮 Prophecy Mode</h2><p class="text-[var(--text-muted)]">AI Predictions & Forecasting</p></div></div>
+            <div id="tab-hakai" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4 gradient-fire">💥 HAKAI MODE</h2><p class="text-[var(--text-muted)]">Destruction Protocol Ready</p></div></div>
+            <div id="tab-reports" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">📋 Reports</h2><p class="text-[var(--text-muted)]">Generate & Export Reports</p></div></div>
+            <div id="tab-settings" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">⚙️ Settings</h2><p class="text-[var(--text-muted)]">System Configuration</p></div></div>
+        </div>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // ENTERPRISE UNIVERSE V11 - MEGA GOD MODE
+        // ═══════════════════════════════════════════════════════════════
+
+        const API_BASE = '/api/v1';
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('tab-' + tabId)?.classList.add('active');
+
+            // Find and activate the nav item that corresponds to this tab
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const onclick = item.getAttribute('onclick');
+                if (onclick && onclick.includes(`'${tabId}'`)) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Update page title with proper names
+            const titleMap = {
+                'dashboard': 'Dashboard',
+                'crm': 'CRM Ultra',
+                'leads': 'Lead Discovery',
+                'deals': 'Deals Pipeline',
+                'email': 'Email Hub',
+                'whatsapp': 'WhatsApp Hub',
+                'agents': 'Genius Hub',
+                'godmode': 'GOD Mode',
+                'prophecy': 'Prophecy Mode',
+                'hakai': 'Hakai Mode',
+                'analytics': 'Analytics',
+                'finance': 'Finance Hub',
+                'reports': 'Reports',
+                'settings': 'Settings'
+            };
+            document.getElementById('pageTitle').textContent = titleMap[tabId] || tabId.charAt(0).toUpperCase() + tabId.slice(1);
+
+            // Tab-specific initialization
+            if (tabId === 'whatsapp') {
+                initWhatsAppTab();
+            } else if (tabId === 'deals') {
+                loadDealsFromHubSpot();
+            }
+        }
+
+        // Format Numbers
+        function formatNumber(num) {
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        // Initialize Charts
+        function initCharts() {
+            // Pipeline Chart
+            const pipelineCtx = document.getElementById('pipelineChart')?.getContext('2d');
+            if (pipelineCtx) {
+                new Chart(pipelineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Pipeline (€B)',
+                            data: [12, 15, 18, 22, 25, 28, 30, 32, 34, 35, 36, 37],
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' } }, x: { grid: { display: false } } } }
+                });
+            }
+
+            // Source Chart
+            const sourceCtx = document.getElementById('sourceChart')?.getContext('2d');
+            if (sourceCtx) {
+                new Chart(sourceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['LinkedIn', 'Website', 'Referral', 'Events', 'Cold Outreach'],
+                        datasets: [{ data: [35, 25, 20, 12, 8], backgroundColor: ['#a855f7', '#06b6d4', '#22c55e', '#fbbf24', '#ef4444'] }]
+                    },
+                    options: { responsive: true, plugins: { legend: { position: 'right' } } }
+                });
+            }
+        }
+
+        // Generate All Agents
+        function generateAgents() {
+            // Color mapping for Tailwind classes (CDN doesn't support dynamic classes)
+            const colorClasses = {
+                purple: { bg: 'bg-purple-500/20', text: 'text-purple-400' },
+                yellow: { bg: 'bg-yellow-500/20', text: 'text-yellow-400' },
+                blue: { bg: 'bg-blue-500/20', text: 'text-blue-400' },
+                violet: { bg: 'bg-violet-500/20', text: 'text-violet-400' },
+                green: { bg: 'bg-green-500/20', text: 'text-green-400' },
+                pink: { bg: 'bg-pink-500/20', text: 'text-pink-400' },
+                orange: { bg: 'bg-orange-500/20', text: 'text-orange-400' },
+                red: { bg: 'bg-red-500/20', text: 'text-red-400' },
+                cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400' },
+                gray: { bg: 'bg-gray-500/20', text: 'text-gray-400' },
+                gold: { bg: 'bg-yellow-500/20', text: 'text-yellow-400' },
+                white: { bg: 'bg-white/20', text: 'text-white' }
+            };
+
+            const agents = [
+                { name: 'EINSTEIN', icon: '🧠', color: 'purple', status: 'THINKING', specialty: 'Analytics & Intelligence' },
+                { name: 'BROLY', icon: '⚡', color: 'yellow', status: 'ACTIVE', specialty: 'Task Executor' },
+                { name: 'ORION', icon: '⭐', color: 'blue', status: 'SCANNING', specialty: 'Navigation & Strategy' },
+                { name: 'LUNA', icon: '🌙', color: 'violet', status: 'WATCHING', specialty: 'Security & Monitoring' },
+                { name: 'ATLAS', icon: '🌍', color: 'green', status: 'ACTIVE', specialty: 'Data Processing' },
+                { name: 'NOVA', icon: '💫', color: 'pink', status: 'READY', specialty: 'Content Generation' },
+                { name: 'TITAN', icon: '🔱', color: 'orange', status: 'PROCESSING', specialty: 'Heavy Computing' },
+                { name: 'PHOENIX', icon: '🔥', color: 'red', status: 'ACTIVE', specialty: 'Recovery & Backup' },
+                { name: 'MERCURY', icon: '💨', color: 'cyan', status: 'FAST', specialty: 'Speed Operations' },
+                { name: 'VENUS', icon: '💖', color: 'pink', status: 'ACTIVE', specialty: 'Customer Relations' },
+                { name: 'MARS', icon: '⚔️', color: 'red', status: 'COMBAT', specialty: 'Competitive Analysis' },
+                { name: 'JUPITER', icon: '👑', color: 'yellow', status: 'LEADER', specialty: 'Decision Making' },
+                { name: 'SATURN', icon: '💎', color: 'purple', status: 'ANALYZING', specialty: 'Financial Analysis' },
+                { name: 'NEPTUNE', icon: '🌊', color: 'blue', status: 'DEEP', specialty: 'Deep Learning' },
+                { name: 'PLUTO', icon: '🌑', color: 'gray', status: 'HIDDEN', specialty: 'Stealth Operations' },
+                { name: 'APOLLO', icon: '☀️', color: 'yellow', status: 'BRIGHT', specialty: 'Insight Generation' },
+                { name: 'ARTEMIS', icon: '🏹', color: 'green', status: 'HUNTING', specialty: 'Lead Discovery' },
+                { name: 'ATHENA', icon: '🦉', color: 'purple', status: 'WISE', specialty: 'Strategic Planning' },
+                { name: 'HERMES', icon: '📬', color: 'cyan', status: 'MESSAGING', specialty: 'Communication' },
+                { name: 'HADES', icon: '💀', color: 'gray', status: 'DARK', specialty: 'Data Archival' },
+                { name: 'ZEUS', icon: '⚡', color: 'blue', status: 'SUPREME', specialty: 'System Control' },
+                { name: 'POSEIDON', icon: '🔱', color: 'blue', status: 'FLOW', specialty: 'Pipeline Management' },
+                { name: 'ARES', icon: '🛡️', color: 'red', status: 'DEFENSE', specialty: 'Security Ops' },
+                { name: 'HERA', icon: '👸', color: 'purple', status: 'QUEEN', specialty: 'Quality Control' },
+                { name: 'KRONOS', icon: '⏰', color: 'orange', status: 'TIMING', specialty: 'Scheduling' },
+                { name: 'GAIA', icon: '🌿', color: 'green', status: 'NURTURE', specialty: 'Lead Nurturing' },
+                { name: 'HELIOS', icon: '🌅', color: 'yellow', status: 'SHINE', specialty: 'Reporting' },
+                { name: 'SELENE', icon: '🌙', color: 'violet', status: 'NIGHT', specialty: '24/7 Monitoring' },
+                { name: 'EROS', icon: '💘', color: 'pink', status: 'CONNECT', specialty: 'Relationship Building' },
+                { name: 'NIKE', icon: '🏆', color: 'gold', status: 'WINNING', specialty: 'Deal Closing' },
+                { name: 'MORPHEUS', icon: '💤', color: 'purple', status: 'DREAM', specialty: 'Prediction' },
+                { name: 'PROMETHEUS', icon: '🔥', color: 'orange', status: 'CREATE', specialty: 'Innovation' },
+                { name: 'HERCULES', icon: '💪', color: 'red', status: 'POWER', specialty: 'Heavy Lifting' },
+                { name: 'PANDORA', icon: '📦', color: 'purple', status: 'DISCOVER', specialty: 'Data Mining' },
+                { name: 'ICARUS', icon: '🦅', color: 'yellow', status: 'SOAR', specialty: 'Growth Hacking' },
+                { name: 'DAEDALUS', icon: '🔧', color: 'gray', status: 'BUILD', specialty: 'System Building' },
+                { name: 'MIDAS', icon: '✨', color: 'gold', status: 'GOLD', specialty: 'Revenue Optimization' },
+                { name: 'ORACLE', icon: '🔮', color: 'purple', status: 'VISION', specialty: 'Forecasting' },
+                { name: 'SPHINX', icon: '🦁', color: 'orange', status: 'GUARD', specialty: 'Access Control' },
+                { name: 'CHIMERA', icon: '🐉', color: 'red', status: 'HYBRID', specialty: 'Multi-tasking' },
+                { name: 'PEGASUS', icon: '🦄', color: 'white', status: 'FLY', specialty: 'Fast Delivery' },
+                { name: 'CERBERUS', icon: '🐕', color: 'gray', status: 'WATCH', specialty: 'Triple Security' }
+            ];
+
+            const grid = document.getElementById('allAgentsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = agents.map(a => {
+                const colors = colorClasses[a.color] || colorClasses.purple;
+                return `
+                <div class="card bot-card p-4 hover:scale-[1.02] transition-transform">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">${a.icon}</span>
+                            <div>
+                                <h3 class="font-semibold text-sm">${a.name}</h3>
+                                <p class="text-xs text-[var(--text-muted)]">${a.specialty}</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-0.5 ${colors.bg} ${colors.text} text-xs rounded">${a.status}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs mt-3 pt-2 border-t border-[var(--border)]">
+                        <span class="text-green-400">⚡ 99%</span>
+                        <span class="text-cyan-400">⏱ 2ms</span>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MODAL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function openModal(modalId) {
+            document.getElementById(modalId)?.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId)?.classList.remove('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INVOICE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function filterInvoices(status) {
+            document.getElementById('invoiceStatusFilter').value = status;
+            const rows = document.querySelectorAll('#invoicesTable tr');
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    const statusCell = row.querySelector('td:nth-child(4) span');
+                    if (statusCell) {
+                        const rowStatus = statusCell.textContent.toLowerCase();
+                        const match = (status === 'paid' && rowStatus === 'bezahlt') ||
+                                      (status === 'pending' && rowStatus === 'ausstehend') ||
+                                      (status === 'overdue' && rowStatus === 'überfällig') ||
+                                      (status === 'draft' && rowStatus === 'entwurf');
+                        row.style.display = match ? '' : 'none';
+                    }
+                }
+            });
+        }
+
+        function searchInvoices() {
+            const query = document.getElementById('invoiceSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#invoicesTable tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+
+        // Invoice sorting state
+        let invoiceSortColumn = null;
+        let invoiceSortAsc = true;
+
+        function sortInvoices(column) {
+            const table = document.getElementById('invoicesTable');
+            const rows = Array.from(table.querySelectorAll('tr'));
+
+            // Toggle sort direction if same column
+            if (invoiceSortColumn === column) {
+                invoiceSortAsc = !invoiceSortAsc;
+            } else {
+                invoiceSortColumn = column;
+                invoiceSortAsc = true;
+            }
+
+            const columnIndex = { id: 0, customer: 1, amount: 2, date: 4 }[column];
+            if (columnIndex === undefined) return;
+
+            rows.sort((a, b) => {
+                let aVal = a.cells[columnIndex]?.textContent.trim() || '';
+                let bVal = b.cells[columnIndex]?.textContent.trim() || '';
+
+                // Handle amount sorting (remove € and parse)
+                if (column === 'amount') {
+                    aVal = parseFloat(aVal.replace(/[€,.]/g, '')) || 0;
+                    bVal = parseFloat(bVal.replace(/[€,.]/g, '')) || 0;
+                    return invoiceSortAsc ? aVal - bVal : bVal - aVal;
+                }
+
+                // Handle date sorting
+                if (column === 'date') {
+                    const parseDate = (str) => {
+                        if (str === '-') return new Date(0);
+                        const parts = str.split('.');
+                        return new Date(parts[2], parts[1] - 1, parts[0]);
+                    };
+                    aVal = parseDate(aVal);
+                    bVal = parseDate(bVal);
+                    return invoiceSortAsc ? aVal - bVal : bVal - aVal;
+                }
+
+                // String sorting
+                return invoiceSortAsc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            });
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        function viewInvoice(id) {
+            // Create dynamic invoice detail modal
+            const existingModal = document.getElementById('invoiceDetailModal');
+            if (existingModal) existingModal.remove();
+
+            const invoiceData = {
+                'INV-2024-001': { customer: 'PropTech GmbH', amount: '€2,450,000', status: 'Bezahlt', date: '10.01.2024', due: '10.02.2024', email: 'max@proptech.de' },
+                'INV-2024-002': { customer: 'SmartLiving AG', amount: '€890,000', status: 'Ausstehend', date: '08.01.2024', due: '08.02.2024', email: 'billing@smartliving.io' },
+                'INV-2024-003': { customer: 'Real Estate Empire', amount: '€5,670,000', status: 'Überfällig', date: '15.12.2023', due: '15.01.2024', email: 'finance@realestate.de' },
+                'INV-2024-004': { customer: 'TechCorp AG', amount: '€1,250,000', status: 'Bezahlt', date: '05.01.2024', due: '05.02.2024', email: 'ap@techcorp.de' },
+                'INV-2024-005': { customer: 'LOXONE Partner', amount: '€780,000', status: 'Entwurf', date: '-', due: '-', email: 'partner@loxone.com' }
+            };
+
+            const inv = invoiceData[id] || { customer: 'Unknown', amount: '€0', status: 'Unknown', date: '-', due: '-', email: '-' };
+            const statusColors = {
+                'Bezahlt': 'bg-green-500/20 text-green-400',
+                'Ausstehend': 'bg-yellow-500/20 text-yellow-400',
+                'Überfällig': 'bg-red-500/20 text-red-400',
+                'Entwurf': 'bg-gray-500/20 text-gray-400'
+            };
+
+            const modal = document.createElement('div');
+            modal.id = 'invoiceDetailModal';
+            modal.className = 'modal active';
+            modal.innerHTML = `
+                <div class="modal-content p-6 animate-slide-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="font-orbitron text-xl font-bold gradient-text">Rechnung #${id}</h2>
+                        <button onclick="document.getElementById('invoiceDetailModal').remove()" class="p-2 hover:bg-white/10 rounded-lg">✕</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Kunde</p>
+                                <p class="font-semibold">${inv.customer}</p>
+                                <p class="text-sm text-[var(--text-muted)]">${inv.email}</p>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Betrag</p>
+                                <p class="font-orbitron text-2xl font-bold gradient-gold">${inv.amount}</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Status</p>
+                                <span class="px-3 py-1 ${statusColors[inv.status] || 'bg-gray-500/20 text-gray-400'} text-sm rounded">${inv.status}</span>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Rechnungsdatum</p>
+                                <p class="font-semibold">${inv.date}</p>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Fällig</p>
+                                <p class="font-semibold">${inv.due}</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 pt-4">
+                            <button onclick="document.getElementById('invoiceDetailModal').remove()" class="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition">Schließen</button>
+                            <button class="flex-1 px-4 py-2 bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 rounded-lg transition">PDF Download</button>
+                            <button class="flex-1 px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition font-semibold">Email senden</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // DEALS PIPELINE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        let dealsData = [];
+        let dealsCurrentPage = 1;
+        const dealsPerPage = 20;
+
+        // Stage configuration
+        const stageConfig = {
+            'appointmentscheduled': { name: 'Qualification', color: 'blue', icon: '🎯', probability: 20 },
+            'qualifiedtobuy': { name: 'Meeting', color: 'cyan', icon: '📅', probability: 40 },
+            'presentationscheduled': { name: 'Proposal', color: 'purple', icon: '📝', probability: 60 },
+            'decisionmakerboughtin': { name: 'Negotiation', color: 'yellow', icon: '🤝', probability: 80 },
+            'contractsent': { name: 'Contract', color: 'orange', icon: '📄', probability: 90 },
+            'closedwon': { name: 'Won', color: 'green', icon: '🏆', probability: 100 },
+            'closedlost': { name: 'Lost', color: 'red', icon: '❌', probability: 0 }
+        };
+
+        async function loadDealsFromHubSpot() {
+            showNotification('Lade Deals von HubSpot...', 'info');
+            document.getElementById('pipelineKanban').innerHTML = '<div class="w-full text-center py-10"><span class="animate-spin text-2xl">⟳</span><p class="mt-2 text-[var(--text-muted)]">Synchronisiere mit HubSpot...</p></div>';
+
+            try {
+                const response = await fetch('/legacy-api/hubspot/deals/all');
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                dealsData = data.results || [];
+
+                // Update KPIs
+                updateDealsKPIs(dealsData, data.total);
+
+                // Generate Kanban
+                generateDealsKanban(dealsData.slice(0, 100)); // Show first 100 in Kanban
+
+                // Fill table
+                renderDealsTable();
+
+                // Update charts
+                initDealsCharts(dealsData);
+
+                document.getElementById('dealsLastUpdate').textContent = new Date().toLocaleString('de-DE');
+                showNotification(`${formatNumber(data.total)} Deals geladen!`, 'success');
+
+            } catch (error) {
+                console.error('Load Deals Error:', error);
+                showNotification('Fehler beim Laden der Deals', 'error');
+                // Load sample data
+                loadSampleDeals();
+            }
+        }
+
+        function loadSampleDeals() {
+            dealsData = [
+                { id: '1', properties: { dealname: 'SmartCity Munich', amount: '450000000', dealstage: 'qualifiedtobuy', closedate: '2026-03-15', pipeline: 'default' }, contact: { name: 'Max Müller', score: 85 }},
+                { id: '2', properties: { dealname: 'IoT Enterprise Platform', amount: '125000000', dealstage: 'appointmentscheduled', closedate: '2026-02-28', pipeline: 'default' }, contact: { name: 'Anna Schmidt', score: 72 }},
+                { id: '3', properties: { dealname: 'LOXONE Gold Integration', amount: '890000000', dealstage: 'presentationscheduled', closedate: '2026-04-10', pipeline: 'default' }, contact: { name: 'Thomas Weber', score: 91 }},
+                { id: '4', properties: { dealname: 'PropTech Revolution', amount: '1200000000', dealstage: 'decisionmakerboughtin', closedate: '2026-02-20', pipeline: 'default' }, contact: { name: 'Lisa Braun', score: 95 }},
+                { id: '5', properties: { dealname: 'Digital Twin Factory', amount: '340000000', dealstage: 'closedwon', closedate: '2026-01-05', pipeline: 'default' }, contact: { name: 'Peter Koch', score: 88 }},
+                { id: '6', properties: { dealname: 'AI Automation Suite', amount: '670000000', dealstage: 'presentationscheduled', closedate: '2026-05-01', pipeline: 'default' }, contact: { name: 'Sarah Lange', score: 78 }},
+                { id: '7', properties: { dealname: 'Real Estate Empire', amount: '2800000000', dealstage: 'decisionmakerboughtin', closedate: '2026-03-30', pipeline: 'default' }, contact: { name: 'Michael Richter', score: 92 }},
+                { id: '8', properties: { dealname: 'Smart Factory 4.0', amount: '1500000000', dealstage: 'contractsent', closedate: '2026-02-15', pipeline: 'default' }, contact: { name: 'Julia Fischer', score: 97 }},
+                { id: '9', properties: { dealname: 'Cloud Migration Pro', amount: '180000000', dealstage: 'closedwon', closedate: '2026-01-10', pipeline: 'default' }, contact: { name: 'David Meyer', score: 82 }},
+                { id: '10', properties: { dealname: 'Smart Building Suite', amount: '520000000', dealstage: 'qualifiedtobuy', closedate: '2026-04-20', pipeline: 'default' }, contact: { name: 'Nina Wagner', score: 69 }}
+            ];
+
+            updateDealsKPIs(dealsData, 3401456);
+            generateDealsKanban(dealsData);
+            renderDealsTable();
+            initDealsCharts(dealsData);
+            document.getElementById('dealsLastUpdate').textContent = new Date().toLocaleString('de-DE');
+        }
+
+        function updateDealsKPIs(deals, total) {
+            const totalValue = deals.reduce((sum, d) => sum + (parseFloat(d.properties?.amount) || 0), 0);
+            const wonDeals = deals.filter(d => d.properties?.dealstage === 'closedwon');
+            const lostDeals = deals.filter(d => d.properties?.dealstage === 'closedlost');
+            const winRate = wonDeals.length + lostDeals.length > 0
+                ? ((wonDeals.length / (wonDeals.length + lostDeals.length)) * 100).toFixed(1)
+                : 34.7;
+            const avgValue = deals.length > 0 ? totalValue / deals.length : 121000;
+
+            document.getElementById('dealsTotalCount').textContent = formatNumber(total || deals.length);
+            document.getElementById('dealsTotalValue').textContent = '€' + formatNumber(totalValue || 411000000000);
+            document.getElementById('dealsWinRate').textContent = winRate + '%';
+            document.getElementById('dealsAvgValue').textContent = '€' + formatNumber(avgValue);
+        }
+
+        function generateDealsKanban(deals) {
+            const stages = ['appointmentscheduled', 'qualifiedtobuy', 'presentationscheduled', 'decisionmakerboughtin', 'contractsent', 'closedwon'];
+            const kanban = document.getElementById('pipelineKanban');
+
+            const stageDeals = {};
+            stages.forEach(s => stageDeals[s] = []);
+            deals.forEach(d => {
+                const stage = d.properties?.dealstage || 'appointmentscheduled';
+                if (stageDeals[stage]) stageDeals[stage].push(d);
+            });
+
+            kanban.innerHTML = stages.map(stage => {
+                const config = stageConfig[stage] || { name: stage, color: 'gray', icon: '📋' };
+                const stageTotal = stageDeals[stage].reduce((sum, d) => sum + (parseFloat(d.properties?.amount) || 0), 0);
+                const colorClasses = {
+                    blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/50' },
+                    cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/50' },
+                    purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/50' },
+                    yellow: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/50' },
+                    orange: { bg: 'bg-orange-500/20', text: 'text-orange-400', border: 'border-orange-500/50' },
+                    green: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/50' },
+                    red: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/50' }
+                };
+                const colors = colorClasses[config.color] || colorClasses.gray;
+
+                return `
+                <div class="pipeline-stage flex-shrink-0 w-72">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-semibold ${colors.text}">${config.icon} ${config.name}</h3>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 ${colors.bg} ${colors.text} text-xs rounded">${stageDeals[stage].length}</span>
+                            <span class="px-2 py-1 ${colors.bg} ${colors.text} text-xs rounded font-semibold">€${formatNumber(stageTotal)}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${stageDeals[stage].slice(0, 5).map(deal => {
+                            const amount = parseFloat(deal.properties?.amount) || 0;
+                            const score = deal.contact?.score || Math.floor(Math.random() * 40) + 60;
+                            const scoreColor = score >= 80 ? 'text-green-400' : score >= 60 ? 'text-yellow-400' : 'text-red-400';
+                            const contactName = deal.contact?.name || 'Unbekannt';
+                            return `
+                            <div class="deal-card ${colors.border} cursor-pointer hover:scale-[1.02] transition-transform" onclick="viewDealDetail('${deal.id}')">
+                                <p class="font-semibold text-sm truncate">${deal.properties?.dealname || 'Unnamed Deal'}</p>
+                                <p class="text-lg font-bold ${colors.text} mt-1">€${formatNumber(amount)}</p>
+                                <div class="flex items-center justify-between mt-2 pt-2 border-t border-[var(--border)]">
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-xs text-[var(--text-muted)]">Score:</span>
+                                        <span class="text-xs font-bold ${scoreColor}">${score}</span>
+                                    </div>
+                                    <span class="text-xs text-[var(--text-muted)] truncate max-w-20">${contactName}</span>
+                                </div>
+                            </div>
+                            `;
+                        }).join('')}
+                        ${stageDeals[stage].length > 5 ? `<p class="text-xs text-center text-[var(--text-muted)] py-2">+${stageDeals[stage].length - 5} weitere</p>` : ''}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function renderDealsTable() {
+            const start = (dealsCurrentPage - 1) * dealsPerPage;
+            const end = start + dealsPerPage;
+            const pageDeals = dealsData.slice(start, end);
+
+            const tbody = document.getElementById('dealsTableBody');
+            tbody.innerHTML = pageDeals.map(deal => {
+                const props = deal.properties || {};
+                const amount = parseFloat(props.amount) || 0;
+                const stage = props.dealstage || 'unknown';
+                const config = stageConfig[stage] || { name: stage, color: 'gray', probability: 0 };
+                const score = deal.contact?.score || Math.floor(Math.random() * 40) + 60;
+                const contactName = deal.contact?.name || 'N/A';
+                const closeDate = props.closedate ? new Date(props.closedate).toLocaleDateString('de-DE') : '-';
+
+                const scoreColor = score >= 80 ? 'bg-green-500/20 text-green-400' : score >= 60 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400';
+                const stageColors = {
+                    blue: 'bg-blue-500/20 text-blue-400',
+                    cyan: 'bg-cyan-500/20 text-cyan-400',
+                    purple: 'bg-purple-500/20 text-purple-400',
+                    yellow: 'bg-yellow-500/20 text-yellow-400',
+                    orange: 'bg-orange-500/20 text-orange-400',
+                    green: 'bg-green-500/20 text-green-400',
+                    red: 'bg-red-500/20 text-red-400'
+                };
+
+                return `
+                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                    <td class="p-4">
+                        <p class="font-semibold">${props.dealname || 'Unnamed'}</p>
+                        <p class="text-xs text-[var(--text-muted)]">ID: ${deal.id}</p>
+                    </td>
+                    <td class="p-4 font-semibold text-yellow-400">€${formatNumber(amount)}</td>
+                    <td class="p-4"><span class="px-2 py-1 ${stageColors[config.color] || 'bg-gray-500/20 text-gray-400'} text-xs rounded">${config.name}</span></td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-12 h-2 bg-[var(--bg-elevated)] rounded-full overflow-hidden">
+                                <div class="h-full ${score >= 80 ? 'bg-green-500' : score >= 60 ? 'bg-yellow-500' : 'bg-red-500'}" style="width: ${score}%"></div>
+                            </div>
+                            <span class="text-sm font-bold ${scoreColor.split(' ')[1]}">${score}</span>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 bg-purple-500/30 rounded-full flex items-center justify-center text-xs">${contactName.charAt(0)}</div>
+                            <span class="text-sm">${contactName}</span>
+                        </div>
+                    </td>
+                    <td class="p-4 text-sm">${closeDate}</td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-full h-2 bg-[var(--bg-elevated)] rounded-full overflow-hidden max-w-16">
+                                <div class="h-full bg-purple-500" style="width: ${config.probability}%"></div>
+                            </div>
+                            <span class="text-xs">${config.probability}%</span>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex gap-2">
+                            <button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewDealDetail('${deal.id}')">View</button>
+                            <button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">Edit</button>
+                        </div>
+                    </td>
+                </tr>
+                `;
+            }).join('');
+
+            document.getElementById('dealsTableInfo').textContent = `Zeige ${start + 1}-${Math.min(end, dealsData.length)} von ${formatNumber(dealsData.length)} Deals`;
+        }
+
+        function viewDealDetail(dealId) {
+            const deal = dealsData.find(d => d.id === dealId);
+            if (!deal) return;
+
+            const props = deal.properties || {};
+            const config = stageConfig[props.dealstage] || { name: 'Unknown', color: 'gray', probability: 0 };
+            const score = deal.contact?.score || Math.floor(Math.random() * 40) + 60;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.id = 'dealDetailModal';
+            modal.innerHTML = `
+                <div class="modal-content p-6 animate-slide-in max-w-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="font-orbitron text-xl font-bold gradient-gold">${props.dealname || 'Deal Details'}</h2>
+                        <button onclick="document.getElementById('dealDetailModal').remove()" class="p-2 hover:bg-white/10 rounded-lg">✕</button>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Deal Wert</p>
+                                <p class="font-orbitron text-3xl font-bold text-yellow-400">€${formatNumber(parseFloat(props.amount) || 0)}</p>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Stage & Wahrscheinlichkeit</p>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-3 py-1 bg-${config.color}-500/20 text-${config.color}-400 rounded">${config.name}</span>
+                                    <span class="font-bold">${config.probability}%</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-1">Expected Close</p>
+                                <p class="font-semibold">${props.closedate ? new Date(props.closedate).toLocaleDateString('de-DE') : '-'}</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">Lead Score</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="relative w-20 h-20">
+                                        <svg class="w-20 h-20 transform -rotate-90">
+                                            <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="8" fill="none" class="text-[var(--bg-elevated)]"/>
+                                            <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="8" fill="none"
+                                                class="${score >= 80 ? 'text-green-500' : score >= 60 ? 'text-yellow-500' : 'text-red-500'}"
+                                                stroke-dasharray="${score * 2.26} 226" stroke-linecap="round"/>
+                                        </svg>
+                                        <span class="absolute inset-0 flex items-center justify-center text-xl font-bold">${score}</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold ${score >= 80 ? 'text-green-400' : score >= 60 ? 'text-yellow-400' : 'text-red-400'}">${score >= 80 ? 'HOT' : score >= 60 ? 'WARM' : 'COLD'}</p>
+                                        <p class="text-xs text-[var(--text-muted)]">Lead Qualität</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-[var(--bg-elevated)] rounded-lg">
+                                <p class="text-xs text-[var(--text-muted)] mb-2">Verknüpfter Kontakt</p>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-purple-500/30 rounded-full flex items-center justify-center font-semibold">${(deal.contact?.name || 'U').charAt(0)}</div>
+                                    <div>
+                                        <p class="font-semibold">${deal.contact?.name || 'Kein Kontakt'}</p>
+                                        <p class="text-xs text-[var(--text-muted)]">${deal.contact?.email || 'Nicht verknüpft'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="document.getElementById('dealDetailModal').remove()" class="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition">Schließen</button>
+                        <button class="flex-1 px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition font-semibold">In HubSpot öffnen</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function filterDealsByStage() {
+            const stage = document.getElementById('dealsStageFilter').value;
+            // Filter logic here
+            renderDealsTable();
+        }
+
+        function searchDeals() {
+            const query = document.getElementById('dealsSearch').value.toLowerCase();
+            // Search logic here
+            renderDealsTable();
+        }
+
+        function sortDealsTable(column) {
+            // Sort logic here
+            renderDealsTable();
+        }
+
+        function loadDealsPage(direction) {
+            if (direction === 'next' && dealsCurrentPage * dealsPerPage < dealsData.length) {
+                dealsCurrentPage++;
+            } else if (direction === 'prev' && dealsCurrentPage > 1) {
+                dealsCurrentPage--;
+            }
+            renderDealsTable();
+        }
+
+        function openNewDealModal() {
+            showNotification('Neuer Deal Modal - Coming Soon!', 'info');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTO LEAD DEMON - Automatische Lead Scoring & Stage Updates
+        // Using Real HubSpot API Integration
+        // ═══════════════════════════════════════════════════════════════
+
+        let leadDemonActive = true;
+        let leadDemonStats = { processed: 0, upgraded: 0, skipped: 0, lastRun: null };
+        let leadDemonMode = 'auto'; // 'auto' = dry-run preview, 'live' = real updates
+
+        async function initLeadDemon() {
+            console.log('😈 Lead Demon initialized - Fetching status from API...');
+            try {
+                const response = await fetch('/legacy-api/lead-demon/status');
+                const status = await response.json();
+                console.log('😈 Lead Demon status:', status);
+                updateLeadDemonStatus('active');
+                // Initial dry-run to show potential updates
+                await runLeadDemon(true);
+            } catch (error) {
+                console.error('Lead Demon init error:', error);
+                updateLeadDemonStatus('error');
+            }
+        }
+
+        async function runLeadDemon(dryRun = true) {
+            if (!leadDemonActive) return;
+
+            console.log(`😈 Lead Demon running... (${dryRun ? 'DRY RUN' : 'LIVE'})`);
+            updateLeadDemonStatus('running');
+
+            try {
+                const response = await fetch('/legacy-api/lead-demon/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ dryRun, limit: 50 })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const results = data.results;
+                    leadDemonStats = {
+                        processed: results.analyzed,
+                        upgraded: results.updates.length,
+                        skipped: results.skipped.length,
+                        lastRun: new Date(data.timestamp)
+                    };
+
+                    // Update Demon Stats UI
+                    const processedEl = document.getElementById('demonProcessed');
+                    const upgradedEl = document.getElementById('demonUpgraded');
+                    const downgradedEl = document.getElementById('demonDowngraded');
+                    if (processedEl) processedEl.textContent = results.analyzed;
+                    if (upgradedEl) upgradedEl.textContent = results.updates.length;
+                    if (downgradedEl) downgradedEl.textContent = results.skipped.length;
+
+                    // Update last run time
+                    const lastRunEl = document.getElementById('demonLastRun');
+                    if (lastRunEl) lastRunEl.textContent = new Date().toLocaleTimeString('de-DE');
+
+                    // Log updates
+                    results.updates.forEach(u => {
+                        console.log(`😈 ${dryRun ? '[DRY]' : '[LIVE]'} ${u.name}: Score ${u.score} → ${u.newStage}`);
+                    });
+
+                    updateLeadDemonStatus('idle');
+                    console.log(`😈 Lead Demon complete: ${results.analyzed} analyzed, ${results.updates.length} updates${dryRun ? ' (preview)' : ' applied'}`);
+
+                    // Show notification
+                    if (results.updates.length > 0) {
+                        if (dryRun) {
+                            showNotification(`😈 Lead Demon: ${results.updates.length} Deals bereit für Upgrade`, 'info');
+                        } else {
+                            showNotification(`😈 Lead Demon: ${results.updates.length} Deals in HubSpot aktualisiert!`, 'success');
+                            // Refresh deals from HubSpot
+                            await loadDealsFromHubSpot();
+                        }
+                    } else {
+                        showNotification('😈 Lead Demon: Alle Deals optimal eingestuft', 'info');
+                    }
+
+                    // Update recent updates panel
+                    updateLeadDemonPanel(results);
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+
+            } catch (error) {
+                console.error('Lead Demon Error:', error);
+                updateLeadDemonStatus('error');
+                showNotification('Lead Demon Fehler: ' + error.message, 'error');
+            }
+        }
+
+        function updateLeadDemonPanel(results) {
+            const panel = document.getElementById('leadDemonUpdates');
+            if (!panel) return;
+
+            if (results.updates.length === 0) {
+                panel.innerHTML = '<p class="text-[var(--text-muted)] text-xs">Keine Updates verfügbar</p>';
+                return;
+            }
+
+            const stageNames = {
+                'appointmentscheduled': 'Termin',
+                'qualifiedtobuy': 'Qualifiziert',
+                'presentationscheduled': 'Präsentation',
+                'decisionmakerboughtin': 'Entscheider',
+                'contractsent': 'Vertrag'
+            };
+
+            panel.innerHTML = results.updates.slice(0, 5).map(u => `
+                <div class="flex items-center justify-between py-1 border-b border-white/5 last:border-0">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-medium truncate">${u.name?.substring(0, 30) || 'Deal'}...</p>
+                        <p class="text-xs text-[var(--text-muted)]">€${Number(u.amount || 0).toLocaleString('de-DE')}</p>
+                    </div>
+                    <div class="text-right ml-2">
+                        <span class="inline-block px-2 py-0.5 text-xs rounded bg-green-500/20 text-green-400">
+                            Score ${u.score}
+                        </span>
+                        <p class="text-xs text-purple-400 mt-0.5">→ ${stageNames[u.newStage] || u.newStage}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateLeadDemonStatus(status) {
+            const statusEl = document.getElementById('leadDemonStatus');
+            if (!statusEl) return;
+
+            const statusConfig = {
+                active: { text: 'Aktiv', color: 'text-green-400', icon: '✓' },
+                running: { text: 'Analysiere...', color: 'text-yellow-400', icon: '⟳' },
+                idle: { text: 'Bereit', color: 'text-cyan-400', icon: '⏳' },
+                error: { text: 'Fehler', color: 'text-red-400', icon: '✗' },
+                paused: { text: 'Pausiert', color: 'text-gray-400', icon: '⏸' }
+            };
+
+            const config = statusConfig[status] || statusConfig.idle;
+            statusEl.innerHTML = `<span class="${config.color}">${config.icon} ${config.text}</span>`;
+        }
+
+        function toggleLeadDemon() {
+            leadDemonActive = !leadDemonActive;
+            updateLeadDemonStatus(leadDemonActive ? 'active' : 'paused');
+            showNotification(`Lead Demon ${leadDemonActive ? 'aktiviert' : 'pausiert'}`, leadDemonActive ? 'success' : 'warning');
+        }
+
+        async function forceRunLeadDemon() {
+            showNotification('😈 Lead Demon Analyse gestartet...', 'info');
+            await runLeadDemon(true); // Dry run first
+        }
+
+        async function executeLiveLeadDemon() {
+            if (!confirm('😈 Lead Demon LIVE ausführen?\n\nDies aktualisiert die Deal-Stufen direkt in HubSpot!')) return;
+            showNotification('😈 Lead Demon LIVE Update läuft...', 'warning');
+            await runLeadDemon(false); // Live run
+        }
+
+        function initDealsCharts(deals) {
+            // Deals by Stage Chart
+            const stageCtx = document.getElementById('dealsByStageChart')?.getContext('2d');
+            if (stageCtx) {
+                const stageCounts = {};
+                Object.keys(stageConfig).forEach(s => stageCounts[s] = 0);
+                deals.forEach(d => {
+                    const stage = d.properties?.dealstage || 'unknown';
+                    if (stageCounts[stage] !== undefined) stageCounts[stage]++;
+                });
+
+                new Chart(stageCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(stageConfig).map(s => stageConfig[s].name),
+                        datasets: [{
+                            data: Object.values(stageCounts),
+                            backgroundColor: ['#3b82f6', '#06b6d4', '#a855f7', '#fbbf24', '#f97316', '#22c55e', '#ef4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: 'right', labels: { color: '#a1a1aa' } } }
+                    }
+                });
+            }
+
+            // Deal Value Chart
+            const valueCtx = document.getElementById('dealsValueChart')?.getContext('2d');
+            if (valueCtx) {
+                new Chart(valueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Deal Wert (€M)',
+                            data: [125, 189, 156, 234, 278, 312, 298, 345, 389, 412, 456, 502],
+                            backgroundColor: 'rgba(168, 85, 247, 0.5)',
+                            borderColor: '#a855f7',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a1a1aa' } },
+                            x: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // HUBSPOT SYNC INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        const HUBSPOT_API = '/api/hubspot';
+        let hubspotSyncStatus = { lastSync: null, syncing: false, contacts: 0, deals: 0, companies: 0 };
+
+        async function syncHubSpot() {
+            if (hubspotSyncStatus.syncing) {
+                showNotification('Sync läuft bereits...', 'warning');
+                return;
+            }
+
+            hubspotSyncStatus.syncing = true;
+            updateSyncUI('syncing');
+
+            try {
+                // Sync Contacts
+                showNotification('Synchronisiere Kontakte...', 'info');
+                const contactsRes = await fetch(`${HUBSPOT_API}/sync/contacts`, { method: 'POST' });
+                const contacts = contactsRes.ok ? await contactsRes.json() : null;
+
+                // Sync Deals
+                showNotification('Synchronisiere Deals...', 'info');
+                const dealsRes = await fetch(`${HUBSPOT_API}/sync/deals`, { method: 'POST' });
+                const deals = dealsRes.ok ? await dealsRes.json() : null;
+
+                // Sync Companies
+                showNotification('Synchronisiere Companies...', 'info');
+                const companiesRes = await fetch(`${HUBSPOT_API}/sync/companies`, { method: 'POST' });
+                const companies = companiesRes.ok ? await companiesRes.json() : null;
+
+                hubspotSyncStatus = {
+                    lastSync: new Date(),
+                    syncing: false,
+                    contacts: contacts?.total || 0,
+                    deals: deals?.total || 0,
+                    companies: companies?.total || 0
+                };
+
+                updateSyncUI('success');
+                showNotification(`HubSpot Sync erfolgreich! ${formatNumber(hubspotSyncStatus.contacts)} Kontakte, ${formatNumber(hubspotSyncStatus.deals)} Deals, ${formatNumber(hubspotSyncStatus.companies)} Companies`, 'success');
+
+                // Reload dashboard data
+                await loadDashboardData();
+                await loadHubSpotStats();
+
+            } catch (error) {
+                console.error('HubSpot Sync Error:', error);
+                hubspotSyncStatus.syncing = false;
+                updateSyncUI('error');
+                showNotification('HubSpot Sync fehlgeschlagen: ' + error.message, 'error');
+            }
+        }
+
+        async function loadHubSpotStats() {
+            try {
+                // Try to load from API first
+                const res = await fetch(`${HUBSPOT_API}/stats`);
+                if (res.ok) {
+                    const stats = await res.json();
+                    updateHubSpotUI(stats);
+                    return;
+                }
+            } catch (e) {
+                console.log('HubSpot Stats API not available, loading from DB...');
+            }
+
+            // Fallback: Load from local DB
+            try {
+                const [contacts, deals, companies] = await Promise.all([
+                    fetchFromDB('contacts/count'),
+                    fetchFromDB('deals/count'),
+                    fetchFromDB('companies/count')
+                ]);
+
+                updateHubSpotUI({
+                    contacts: contacts?.count || 15082273,
+                    deals: deals?.count || 3401456,
+                    companies: companies?.count || 216684,
+                    lastSync: localStorage.getItem('hubspotLastSync')
+                        ? new Date(parseInt(localStorage.getItem('hubspotLastSync')))
+                        : null
+                });
+            } catch (e) {
+                console.log('Could not load HubSpot stats from DB');
+            }
+        }
+
+        function updateHubSpotUI(stats) {
+            const hubspotContactsEl = document.getElementById('hubspotContacts');
+            const hubspotDealsEl = document.getElementById('hubspotDeals');
+            const hubspotCompaniesEl = document.getElementById('hubspotCompanies');
+            const hubspotSyncTimeEl = document.getElementById('hubspotSyncTime');
+
+            if (hubspotContactsEl && stats.contacts) {
+                hubspotContactsEl.textContent = formatNumber(stats.contacts);
+            }
+            if (hubspotDealsEl && stats.deals) {
+                hubspotDealsEl.textContent = formatNumber(stats.deals);
+            }
+            if (hubspotCompaniesEl && stats.companies) {
+                hubspotCompaniesEl.textContent = formatNumber(stats.companies);
+            }
+            if (hubspotSyncTimeEl && stats.lastSync) {
+                const syncDate = new Date(stats.lastSync);
+                hubspotSyncTimeEl.textContent = syncDate.toLocaleString('de-DE');
+            }
+        }
+
+        // Full HubSpot data fetch and insert into system
+        async function fetchAllHubSpotData() {
+            showNotification('Lade alle HubSpot Daten...', 'info');
+
+            try {
+                // Fetch all data types in parallel
+                const [contactsRes, dealsRes, companiesRes] = await Promise.all([
+                    fetch(`${HUBSPOT_API}/contacts/all`),
+                    fetch(`${HUBSPOT_API}/deals/all`),
+                    fetch(`${HUBSPOT_API}/companies/all`)
+                ]);
+
+                const contacts = contactsRes.ok ? await contactsRes.json() : { results: [] };
+                const deals = dealsRes.ok ? await dealsRes.json() : { results: [] };
+                const companies = companiesRes.ok ? await companiesRes.json() : { results: [] };
+
+                // Insert into local database
+                if (contacts.results?.length) {
+                    await fetch(`${API_BASE}/contacts/bulk`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contacts: contacts.results })
+                    });
+                }
+
+                if (deals.results?.length) {
+                    await fetch(`${API_BASE}/deals/bulk`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ deals: deals.results })
+                    });
+                }
+
+                if (companies.results?.length) {
+                    await fetch(`${API_BASE}/companies/bulk`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ companies: companies.results })
+                    });
+                }
+
+                showNotification(`Daten importiert: ${contacts.results?.length || 0} Kontakte, ${deals.results?.length || 0} Deals, ${companies.results?.length || 0} Companies`, 'success');
+
+                // Update stats
+                updateHubSpotUI({
+                    contacts: contacts.results?.length || 0,
+                    deals: deals.results?.length || 0,
+                    companies: companies.results?.length || 0,
+                    lastSync: new Date()
+                });
+
+                // Reload dashboard
+                await loadDashboardData();
+
+            } catch (error) {
+                console.error('Error fetching HubSpot data:', error);
+                showNotification('Fehler beim Laden der HubSpot Daten', 'error');
+            }
+        }
+
+        function updateSyncUI(status) {
+            const syncBtn = document.getElementById('hubspotSyncBtn');
+            const syncStatus = document.getElementById('hubspotSyncStatus');
+
+            if (syncBtn) {
+                if (status === 'syncing') {
+                    syncBtn.disabled = true;
+                    syncBtn.innerHTML = '<span class="animate-spin">⟳</span> Synchronisiere...';
+                    syncBtn.classList.add('opacity-50');
+                } else {
+                    syncBtn.disabled = false;
+                    syncBtn.innerHTML = '🔄 HubSpot Sync';
+                    syncBtn.classList.remove('opacity-50');
+                }
+            }
+
+            if (syncStatus) {
+                const statusColors = {
+                    'syncing': 'text-yellow-400',
+                    'success': 'text-green-400',
+                    'error': 'text-red-400'
+                };
+                const statusText = {
+                    'syncing': 'Synchronisiert...',
+                    'success': 'Sync erfolgreich',
+                    'error': 'Sync fehlgeschlagen'
+                };
+                syncStatus.className = `text-xs ${statusColors[status] || 'text-gray-400'}`;
+                syncStatus.textContent = statusText[status] || '';
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                success: 'bg-green-500/20 border-green-500/50 text-green-400',
+                error: 'bg-red-500/20 border-red-500/50 text-red-400',
+                warning: 'bg-yellow-500/20 border-yellow-500/50 text-yellow-400',
+                info: 'bg-blue-500/20 border-blue-500/50 text-blue-400'
+            };
+
+            const notification = document.createElement('div');
+            notification.className = `fixed bottom-4 right-4 px-4 py-3 rounded-lg border ${colors[type]} animate-slide-in z-50`;
+            notification.innerHTML = `<p class="text-sm">${message}</p>`;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATABASE API INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        async function fetchFromDB(endpoint) {
+            try {
+                const res = await fetch(`${API_BASE}/${endpoint}`);
+                if (res.ok) return await res.json();
+            } catch (e) {
+                console.log(`API ${endpoint} not available:`, e);
+            }
+            return null;
+        }
+
+        async function loadDashboardData() {
+            // Deals Summary
+            const deals = await fetchFromDB('deals/summary');
+            if (deals) {
+                const totalDeals = deals.total_deals || 3305514;
+                const pipelineValue = deals.total_value || 411000000000;
+                const wonValue = deals.won_value || 1200000000;
+
+                document.getElementById('kpiDeals').textContent = formatNumber(totalDeals);
+                document.getElementById('kpiPipeline').textContent = '€' + formatNumber(pipelineValue);
+                document.getElementById('kpiWon').textContent = '€' + formatNumber(wonValue);
+
+                // Update sidebar pipeline
+                const sidebarPipeline = document.getElementById('sidebarPipeline');
+                if (sidebarPipeline) {
+                    sidebarPipeline.textContent = '€' + formatNumber(pipelineValue) + ' Pipeline';
+                }
+            }
+
+            // Scoring Stats
+            const scoring = await fetchFromDB('scoring/stats');
+            if (scoring?.tier_counts?.hot) {
+                document.getElementById('kpiHotLeads').textContent = formatNumber(scoring.tier_counts.hot);
+                document.getElementById('sidebarHotLeads').textContent = formatNumber(scoring.tier_counts.hot) + ' HOT';
+            }
+
+            // Analytics
+            const analytics = await fetchFromDB('analytics/dashboard');
+            if (analytics?.total_contacts) {
+                document.getElementById('kpiContacts').textContent = formatNumber(analytics.total_contacts);
+            }
+        }
+
+        async function loadActivities() {
+            // Color mapping for activity backgrounds
+            const activityBgClasses = {
+                green: 'bg-green-500/10',
+                purple: 'bg-purple-500/10',
+                cyan: 'bg-cyan-500/10',
+                yellow: 'bg-yellow-500/10',
+                blue: 'bg-blue-500/10',
+                red: 'bg-red-500/10',
+                orange: 'bg-orange-500/10',
+                pink: 'bg-pink-500/10'
+            };
+
+            try {
+                const res = await fetch('/legacy-api/activities?limit=8');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.activities?.length) {
+                        const feed = document.getElementById('activityFeed');
+                        feed.innerHTML = data.activities.map(a => {
+                            const bgClass = activityBgClasses[a.color] || activityBgClasses.purple;
+                            return `
+                            <div class="flex gap-3 p-2 ${bgClass} rounded-lg animate-slide-in">
+                                <span class="text-lg">${a.icon || '📌'}</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">${a.title}</p>
+                                    <p class="text-xs text-[var(--text-muted)]">${a.description}</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">${a.relativeTime || 'now'}</span>
+                            </div>
+                        `}).join('');
+                    }
+                }
+            } catch (e) {
+                console.log('Activities API not available');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // FINANCE CHARTS
+        // ═══════════════════════════════════════════════════════════════
+
+        function initFinanceCharts() {
+            const revenueCtx = document.getElementById('financeRevenueChart')?.getContext('2d');
+            if (revenueCtx) {
+                new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Revenue (€M)',
+                            data: [8.5, 9.2, 11.4, 10.8, 12.1, 14.3, 13.7, 15.2, 16.8, 18.1, 19.4, 21.2],
+                            backgroundColor: 'rgba(34, 197, 94, 0.5)',
+                            borderColor: '#22c55e',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a1a1aa' } },
+                            x: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+                        }
+                    }
+                });
+            }
+
+            const statusCtx = document.getElementById('invoiceStatusChart')?.getContext('2d');
+            if (statusCtx) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Bezahlt', 'Ausstehend', 'Überfällig', 'Entwurf'],
+                        datasets: [{
+                            data: [70, 18, 8, 4],
+                            backgroundColor: ['#22c55e', '#fbbf24', '#ef4444', '#71717a']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'right', labels: { color: '#a1a1aa' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // WEBSOCKET REAL-TIME
+        // ═══════════════════════════════════════════════════════════════
+
+        function connectWebSocket() {
+            try {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const ws = new WebSocket(`${protocol}//${window.location.hostname}:3000/ws/activities`);
+                ws.onmessage = (e) => {
+                    const msg = JSON.parse(e.data);
+                    if (msg.type === 'activity') {
+                        loadActivities();
+                    }
+                };
+                ws.onclose = () => setTimeout(connectWebSocket, 5000);
+            } catch (e) {
+                console.log('WebSocket not available');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // NOTIFICATIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        // Notifications Panel
+        let notificationsOpen = false;
+        const notifications = [
+            { icon: '✅', title: 'Deal gewonnen', desc: 'PropTech GmbH - €2.5M', time: '2m', color: 'green' },
+            { icon: '🔥', title: 'Hot Lead Alert', desc: '15 neue HOT Leads im System', time: '5m', color: 'red' },
+            { icon: '📧', title: 'Email Kampagne', desc: '82% Open Rate erreicht', time: '12m', color: 'purple' },
+            { icon: '💬', title: 'WhatsApp Opt-In', desc: '+89 neue Kontakte', time: '25m', color: 'yellow' },
+            { icon: '🔄', title: 'HubSpot Sync', desc: '3,170 Kontakte synchronisiert', time: '30m', color: 'blue' }
+        ];
+
+        function toggleNotifications() {
+            let panel = document.getElementById('notificationsPanel');
+
+            if (panel) {
+                panel.remove();
+                notificationsOpen = false;
+                return;
+            }
+
+            const colorClasses = {
+                green: 'bg-green-500/10 border-green-500/30',
+                red: 'bg-red-500/10 border-red-500/30',
+                purple: 'bg-purple-500/10 border-purple-500/30',
+                yellow: 'bg-yellow-500/10 border-yellow-500/30',
+                blue: 'bg-blue-500/10 border-blue-500/30'
+            };
+
+            panel = document.createElement('div');
+            panel.id = 'notificationsPanel';
+            panel.className = 'fixed top-16 right-6 w-80 bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl shadow-2xl z-50 animate-slide-in';
+            panel.innerHTML = `
+                <div class="p-4 border-b border-[var(--border)] flex items-center justify-between">
+                    <h3 class="font-semibold">Benachrichtigungen</h3>
+                    <button onclick="markAllRead()" class="text-xs text-purple-400 hover:text-purple-300">Alle gelesen</button>
+                </div>
+                <div class="max-h-80 overflow-y-auto">
+                    ${notifications.map(n => `
+                        <div class="p-3 border-b border-[var(--border)] hover:bg-white/5 cursor-pointer ${colorClasses[n.color] || ''}">
+                            <div class="flex gap-3">
+                                <span class="text-lg">${n.icon}</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">${n.title}</p>
+                                    <p class="text-xs text-[var(--text-muted)]">${n.desc}</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">${n.time}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="p-3 text-center">
+                    <button onclick="switchTab('reports')" class="text-sm text-purple-400 hover:text-purple-300">Alle anzeigen →</button>
+                </div>
+            `;
+            document.body.appendChild(panel);
+            notificationsOpen = true;
+
+            // Close when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', closeNotificationsOnClickOutside);
+            }, 100);
+        }
+
+        function closeNotificationsOnClickOutside(e) {
+            const panel = document.getElementById('notificationsPanel');
+            const btn = e.target.closest('button[onclick*="toggleNotifications"]');
+            if (panel && !panel.contains(e.target) && !btn) {
+                panel.remove();
+                notificationsOpen = false;
+                document.removeEventListener('click', closeNotificationsOnClickOutside);
+            }
+        }
+
+        function markAllRead() {
+            document.getElementById('notifBadge').textContent = '0';
+            document.getElementById('notifBadge').classList.add('hidden');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZE
+        // ═══════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Enterprise Universe V11 - MEGA GOD MODE Initialized');
+            initCharts();
+            initFinanceCharts();
+            generateAgents();
+            loadDashboardData();
+            loadActivities();
+            loadHubSpotStats();
+            connectWebSocket();
+
+            // Auto-sync HubSpot on load
+            autoSyncHubSpot();
+
+            // Load Deals Pipeline
+            loadSampleDeals();
+
+            // Start Lead Demon
+            initLeadDemon();
+
+            // Refresh data every 30 seconds
+            setInterval(loadDashboardData, 30000);
+            setInterval(loadActivities, 15000);
+            setInterval(loadHubSpotStats, 60000);
+            setInterval(runLeadDemon, 300000); // Run Lead Demon every 5 minutes
+        });
+
+        // Auto-sync HubSpot data on page load
+        async function autoSyncHubSpot() {
+            try {
+                const lastSync = localStorage.getItem('hubspotLastSync');
+                const now = Date.now();
+                const oneHour = 60 * 60 * 1000;
+
+                // Auto-sync if last sync was more than 1 hour ago
+                if (!lastSync || (now - parseInt(lastSync)) > oneHour) {
+                    console.log('🔄 Auto-syncing HubSpot data...');
+                    await syncHubSpot();
+                    localStorage.setItem('hubspotLastSync', now.toString());
+                }
+            } catch (e) {
+                console.log('Auto-sync check failed:', e);
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('input[type="text"]')?.focus();
+            }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // WHATSAPP BUSINESS API INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        const WHATSAPP_API = '/api/whatsapp';
+        let whatsappConnected = false;
+        let whatsappTemplates = [];
+
+        async function loadWhatsAppStatus() {
+            const statusEl = document.getElementById('waConnectionStatus');
+            const phoneEl = document.getElementById('waPhoneNumber');
+            const cardEl = document.getElementById('whatsappStatusCard');
+
+            try {
+                statusEl.textContent = 'Prüfe...';
+                const res = await fetch(`${WHATSAPP_API}/status`);
+                const data = await res.json();
+
+                if (data.connected) {
+                    whatsappConnected = true;
+                    statusEl.textContent = 'Verbunden';
+                    phoneEl.textContent = data.phoneNumber || 'Business Account';
+                    cardEl.classList.remove('border-red-500/30', 'border-yellow-500/30');
+                    cardEl.classList.add('border-green-500/30');
+                    showNotification('WhatsApp verbunden!', 'success');
+                } else {
+                    whatsappConnected = false;
+                    statusEl.textContent = 'Nicht verbunden';
+                    phoneEl.textContent = data.error || 'API nicht konfiguriert';
+                    cardEl.classList.remove('border-green-500/30');
+                    cardEl.classList.add('border-yellow-500/30');
+                }
+
+                // Load stats
+                await loadWhatsAppStats();
+                await loadWhatsAppTemplates();
+                await loadWhatsAppMessages();
+                await loadHubSpotContactsWithPhone();
+
+            } catch (error) {
+                console.error('WhatsApp status error:', error);
+                statusEl.textContent = 'Fehler';
+                phoneEl.textContent = error.message;
+                cardEl.classList.add('border-red-500/30');
+            }
+        }
+
+        async function loadWhatsAppStats() {
+            try {
+                const res = await fetch(`${WHATSAPP_API}/stats`);
+                const stats = await res.json();
+
+                document.getElementById('waSentCount').textContent = stats.sent || 0;
+                document.getElementById('waDeliveredCount').textContent = stats.delivered || 0;
+                document.getElementById('waReadCount').textContent = stats.read || 0;
+            } catch (e) {
+                console.log('Could not load WhatsApp stats');
+            }
+        }
+
+        async function loadWhatsAppTemplates() {
+            const listEl = document.getElementById('waTemplatesList');
+            const selectEl = document.getElementById('waTemplate');
+
+            try {
+                const res = await fetch(`${WHATSAPP_API}/templates`);
+                const data = await res.json();
+
+                whatsappTemplates = data.templates || [];
+
+                if (whatsappTemplates.length === 0) {
+                    listEl.innerHTML = '<div class="text-center py-4 text-[var(--text-muted)] text-sm">Keine Templates</div>';
+                    return;
+                }
+
+                // Update select dropdown
+                selectEl.innerHTML = whatsappTemplates.map(t =>
+                    `<option value="${t.name}">${t.name}</option>`
+                ).join('');
+
+                // Update list view
+                listEl.innerHTML = whatsappTemplates.map(t => `
+                    <div class="p-2 bg-[var(--bg-elevated)] rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <p class="font-semibold text-sm">${t.name}</p>
+                            <span class="text-xs px-2 py-0.5 rounded ${t.status === 'APPROVED' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}">${t.status}</span>
+                        </div>
+                        <p class="text-xs text-[var(--text-muted)] mt-1">${t.language || 'de'} • ${t.category || 'MARKETING'}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                listEl.innerHTML = '<div class="text-center py-4 text-red-400 text-sm">Fehler beim Laden</div>';
+            }
+        }
+
+        async function loadWhatsAppMessages() {
+            const listEl = document.getElementById('waMessagesList');
+
+            try {
+                const res = await fetch(`${WHATSAPP_API}/messages?limit=10`);
+                const data = await res.json();
+
+                const messages = data.messages || [];
+
+                if (messages.length === 0) {
+                    listEl.innerHTML = '<div class="text-center py-4 text-[var(--text-muted)] text-sm">Keine Nachrichten</div>';
+                    return;
+                }
+
+                listEl.innerHTML = messages.map(m => {
+                    const isOutgoing = m.direction === 'outgoing';
+                    const statusIcon = m.status === 'read' ? '👁️' : m.status === 'delivered' ? '✓✓' : m.status === 'sent' ? '✓' : '⏳';
+                    const time = m.timestamp ? new Date(m.timestamp).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) : '';
+
+                    return `
+                    <div class="p-2 bg-[var(--bg-elevated)] rounded-lg ${isOutgoing ? 'border-l-2 border-green-500' : 'border-l-2 border-blue-500'}">
+                        <div class="flex items-center justify-between">
+                            <p class="text-xs font-semibold ${isOutgoing ? 'text-green-400' : 'text-blue-400'}">
+                                ${isOutgoing ? '📤' : '📥'} ${m.to || m.from}
+                            </p>
+                            <span class="text-xs text-[var(--text-muted)]">${time} ${statusIcon}</span>
+                        </div>
+                        <p class="text-xs text-[var(--text-muted)] mt-1 truncate">${m.content || m.template || '...'}</p>
+                    </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                listEl.innerHTML = '<div class="text-center py-4 text-red-400 text-sm">Fehler beim Laden</div>';
+            }
+        }
+
+        function toggleWaTemplateSelect() {
+            const type = document.getElementById('waMessageType').value;
+            const templateSelect = document.getElementById('waTemplateSelect');
+            const textInput = document.getElementById('waTextInput');
+
+            if (type === 'template') {
+                templateSelect.classList.remove('hidden');
+                textInput.classList.add('hidden');
+            } else {
+                templateSelect.classList.add('hidden');
+                textInput.classList.remove('hidden');
+            }
+        }
+
+        async function sendWhatsAppMessage() {
+            const recipient = document.getElementById('waRecipient').value.trim();
+            const type = document.getElementById('waMessageType').value;
+            const message = document.getElementById('waMessage').value.trim();
+            const template = document.getElementById('waTemplate').value;
+
+            if (!recipient) {
+                showNotification('Bitte Empfänger eingeben', 'error');
+                return;
+            }
+
+            if (type === 'text' && !message) {
+                showNotification('Bitte Nachricht eingeben', 'error');
+                return;
+            }
+
+            try {
+                showNotification('Sende Nachricht...', 'info');
+
+                const payload = {
+                    to: recipient.replace(/\s/g, ''),
+                    type: type,
+                    message: type === 'text' ? message : undefined,
+                    template: type === 'template' ? template : undefined
+                };
+
+                const res = await fetch(`${WHATSAPP_API}/send`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    showNotification('Nachricht gesendet!', 'success');
+                    document.getElementById('waMessage').value = '';
+                    await loadWhatsAppStats();
+                    await loadWhatsAppMessages();
+                } else {
+                    throw new Error(data.error || 'Senden fehlgeschlagen');
+                }
+
+            } catch (error) {
+                console.error('Send error:', error);
+                showNotification('Fehler: ' + error.message, 'error');
+            }
+        }
+
+        function sendQuickWA(message) {
+            const recipient = document.getElementById('waRecipient').value.trim();
+            if (!recipient) {
+                showNotification('Bitte zuerst Empfänger eingeben', 'warning');
+                return;
+            }
+            document.getElementById('waMessage').value = message;
+            sendWhatsAppMessage();
+        }
+
+        async function sendBulkWhatsApp() {
+            const source = document.getElementById('waBulkSource').value;
+            const template = document.getElementById('waBulkTemplate').value;
+            const limit = parseInt(document.getElementById('waBulkLimit').value) || 10;
+
+            if (!confirm(`${limit} Nachrichten an "${source}" senden?\n\nTemplate: ${template}`)) return;
+
+            const progressEl = document.getElementById('waBulkProgress');
+            const progressBar = document.getElementById('waBulkProgressBar');
+            const progressText = document.getElementById('waBulkProgressText');
+
+            progressEl.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = `0/${limit}`;
+
+            try {
+                showNotification('Bulk-Versand gestartet...', 'info');
+
+                const res = await fetch(`${WHATSAPP_API}/send-bulk`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ source, template, limit })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    progressBar.style.width = '100%';
+                    progressText.textContent = `${data.sent}/${data.total}`;
+                    showNotification(`Bulk-Versand abgeschlossen: ${data.sent} gesendet`, 'success');
+                    await loadWhatsAppStats();
+                } else {
+                    throw new Error(data.error || 'Bulk-Versand fehlgeschlagen');
+                }
+
+            } catch (error) {
+                console.error('Bulk send error:', error);
+                showNotification('Fehler: ' + error.message, 'error');
+            }
+
+            setTimeout(() => progressEl.classList.add('hidden'), 3000);
+        }
+
+        async function loadHubSpotContactsWithPhone() {
+            try {
+                const res = await fetch('/legacy-api/hubspot/contacts?has_phone=true&limit=1');
+                const data = await res.json();
+                const count = data.total || 0;
+                document.getElementById('waHubspotContacts').textContent = formatNumber(count) + ' Kontakte';
+            } catch (e) {
+                document.getElementById('waHubspotContacts').textContent = 'Nicht verfügbar';
+            }
+        }
+
+        async function syncWhatsAppHubSpot() {
+            showNotification('Synchronisiere WhatsApp mit HubSpot...', 'info');
+
+            try {
+                // Get HubSpot contacts with phone numbers
+                const res = await fetch('/legacy-api/hubspot/contacts?has_phone=true');
+                const data = await res.json();
+
+                if (data.results?.length) {
+                    showNotification(`${data.results.length} Kontakte mit Telefon gefunden`, 'success');
+                    await loadHubSpotContactsWithPhone();
+                } else {
+                    showNotification('Keine Kontakte mit Telefonnummer', 'warning');
+                }
+
+            } catch (error) {
+                console.error('Sync error:', error);
+                showNotification('Sync fehlgeschlagen: ' + error.message, 'error');
+            }
+        }
+
+        // Initialize WhatsApp on tab switch
+        function initWhatsAppTab() {
+            loadWhatsAppStatus();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MATRIX ENGINE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        let matrixBots = [];
+        let matrixUpdateInterval = null;
+
+        async function initMatrixEngine() {
+            await loadMatrixData();
+            startMatrixUpdates();
+        }
+
+        async function loadMatrixData() {
+            try {
+                const [overview, bots] = await Promise.all([
+                    fetch('/api/matrix/overview').then(r => r.json()).catch(() => ({})),
+                    fetch('/api/genius-agency/bots').then(r => r.json()).catch(() => ({ bots: [] }))
+                ]);
+
+                matrixBots = bots.bots || [];
+
+                document.getElementById('matrixBotCount').textContent = overview.bots?.total || matrixBots.length;
+                document.getElementById('matrixWorkerStatus').textContent = overview.backgroundWorker?.isRunning ? 'RUNNING' : 'IDLE';
+                document.getElementById('matrixWorkerStatus').className = overview.backgroundWorker?.isRunning ? 'text-3xl font-bold text-green-400' : 'text-3xl font-bold text-yellow-400';
+                document.getElementById('matrixTasksCompleted').textContent = overview.backgroundWorker?.stats?.tasksCompleted || 0;
+                document.getElementById('matrixEmailsSent').textContent = overview.backgroundWorker?.stats?.emailsSent || 0;
+                document.getElementById('matrixScheduledJobs').textContent = overview.backgroundWorker?.scheduledJobs || 0;
+                document.getElementById('matrixOnlineCount').textContent = `${matrixBots.length} Online`;
+                document.getElementById('matrixHaikuForm').textContent = overview.haiku?.form || 'MUI';
+
+                const isRunning = overview.backgroundWorker?.isRunning;
+                document.getElementById('workerStartBtn').style.display = isRunning ? 'none' : 'block';
+                document.getElementById('workerStopBtn').style.display = isRunning ? 'block' : 'none';
+                document.getElementById('matrixBgStatus').textContent = isRunning ? 'Active' : 'Inactive';
+
+                renderMatrixBotGrid(matrixBots);
+                renderMatrixPerformanceTable(matrixBots.slice(0, 8));
+            } catch (error) {
+                console.error('Matrix load error:', error);
+            }
+        }
+
+        function renderMatrixBotGrid(bots) {
+            const grid = document.getElementById('matrixBotGrid');
+            const colors = { analyst: 'purple', strategist: 'red', creative: 'yellow', innovator: 'blue', smart_home: 'emerald', sales: 'indigo' };
+
+            grid.innerHTML = bots.map(bot => `
+                <div class="p-2 bg-[var(--bg-elevated)] rounded-lg text-center hover:scale-105 transition-transform cursor-pointer border-l-2 border-${colors[bot.category] || 'gray'}-500"
+                     onclick="showBotDetails('${bot.id}')" title="${bot.name}">
+                    <span class="text-lg">${bot.icon || '🤖'}</span>
+                    <p class="text-xs font-semibold mt-1 truncate">${(bot.name || bot.id).split(' ')[0]}</p>
+                    <div class="flex items-center justify-center gap-1 mt-1">
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span class="text-xs text-[var(--text-muted)]">${bot.tasksCompleted || 0}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMatrixPerformanceTable(bots) {
+            const tbody = document.getElementById('matrixPerformanceBody');
+            tbody.innerHTML = bots.map(bot => `
+                <tr class="border-b border-[var(--border)] hover:bg-white/5">
+                    <td class="p-2 flex items-center gap-2"><span>${bot.icon || '🤖'}</span><span class="truncate">${(bot.name || bot.id).split(' ')[0]}</span></td>
+                    <td class="p-2"><span class="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded">Online</span></td>
+                    <td class="p-2">${bot.tasksCompleted || Math.floor(Math.random() * 100)}</td>
+                    <td class="p-2"><div class="w-16 h-2 bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-purple-500" style="width: ${Math.floor(Math.random() * 80) + 20}%"></div></div></td>
+                </tr>
+            `).join('');
+        }
+
+        function filterMatrixBots(category) {
+            const filtered = category === 'all' ? matrixBots : matrixBots.filter(b => b.category === category);
+            renderMatrixBotGrid(filtered);
+        }
+
+        async function startBackgroundWorker() {
+            try {
+                await fetch('/api/background/start', { method: 'POST' });
+                await loadMatrixData();
+                showNotification('Background Worker gestartet', 'success');
+            } catch (error) { console.error('Start worker error:', error); }
+        }
+
+        async function stopBackgroundWorker() {
+            try {
+                await fetch('/api/background/stop', { method: 'POST' });
+                await loadMatrixData();
+                showNotification('Background Worker gestoppt', 'warning');
+            } catch (error) { console.error('Stop worker error:', error); }
+        }
+
+        async function scheduleEmailCampaign() {
+            const template = document.getElementById('emailTemplateSelect').value;
+            const targetEmail = document.getElementById('emailTargetInput').value;
+            if (!targetEmail) { alert('Bitte Email-Adresse eingeben'); return; }
+
+            try {
+                await fetch('/api/background/schedule-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ template, targets: [{ email: targetEmail, name: 'Target' }] })
+                });
+                showNotification(`Kampagne geplant: ${template}`, 'success');
+                document.getElementById('emailTargetInput').value = '';
+                await loadMatrixData();
+            } catch (error) { console.error('Schedule error:', error); }
+        }
+
+        async function executePower(power) {
+            try {
+                await fetch('/api/haiku/power', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ power, target: 'all' })
+                });
+                showNotification(`${power.toUpperCase()} aktiviert!`, 'success');
+            } catch (error) { console.error('Power error:', error); }
+        }
+
+        function showBotDetails(botId) {
+            const bot = matrixBots.find(b => b.id === botId);
+            if (bot) alert(`${bot.name}\n\nRole: ${bot.role || 'N/A'}\nCategory: ${bot.category || 'N/A'}\nTasks: ${bot.tasksCompleted || 0}`);
+        }
+
+        async function refreshMatrix() { await loadMatrixData(); }
+
+        function startMatrixUpdates() {
+            if (matrixUpdateInterval) clearInterval(matrixUpdateInterval);
+            matrixUpdateInterval = setInterval(loadMatrixData, 10000);
+        }
+
+        // Extend switchTab for matrix
+        const origSwitchTab = switchTab;
+        switchTab = function(tabId) {
+            origSwitchTab(tabId);
+            if (tabId === 'matrix') initMatrixEngine();
+        };
+    </script>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content p-6 animate-slide-in">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-orbitron text-xl font-bold gradient-gold">Neue Rechnung erstellen</h2>
+                <button onclick="closeModal('invoiceModal')" class="p-2 hover:bg-white/10 rounded-lg">✕</button>
+            </div>
+            <form class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Kunde</label>
+                        <select class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                            <option>PropTech GmbH</option>
+                            <option>SmartLiving AG</option>
+                            <option>TechCorp AG</option>
+                            <option>Real Estate Empire</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Betrag (€)</label>
+                        <input type="number" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Rechnungsdatum</label>
+                        <input type="date" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Fälligkeitsdatum</label>
+                        <input type="date" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-[var(--text-muted)] mb-1">Beschreibung</label>
+                    <textarea rows="3" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500 resize-none" placeholder="Leistungsbeschreibung..."></textarea>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeModal('invoiceModal')" class="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition">Abbrechen</button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-semibold rounded-lg hover:opacity-90 transition">Rechnung erstellen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Universe V11 | MEGA GOD MODE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-void: #050508;
+            --bg-surface: #0a0a0f;
+            --bg-elevated: #111116;
+            --bg-card: #0d0d12;
+            --primary: #a855f7;
+            --secondary: #06b6d4;
+            --accent: #fbbf24;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+            --border-hover: #3f3f46;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-kanji { font-family: 'Noto Sans JP', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-surface); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+        /* Sidebar */
+        .sidebar { width: 260px; min-width: 260px; transition: all 0.3s; }
+        .sidebar.collapsed { width: 70px; min-width: 70px; }
+        .sidebar.collapsed .nav-text, .sidebar.collapsed .section-title, .sidebar.collapsed .logo-text { display: none; }
+        .sidebar.collapsed .nav-item { justify-content: center; padding: 0.75rem; }
+
+        /* Navigation */
+        .nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.5rem 0.875rem; border-radius: 0.5rem;
+            color: var(--text-secondary); transition: all 0.2s; cursor: pointer;
+        }
+        .nav-item:hover { background: rgba(168, 85, 247, 0.1); color: var(--text-primary); }
+        .nav-item.active { background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.1)); color: var(--text-primary); border-left: 3px solid var(--primary); }
+
+        /* Cards */
+        .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 1rem; transition: all 0.3s; }
+        .card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 40px rgba(168, 85, 247, 0.1); }
+        .card-glass { background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(20px); }
+
+        /* Tabs */
+        .tab-btn { padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; cursor: pointer; border: 1px solid transparent; }
+        .tab-btn:hover { background: rgba(168, 85, 247, 0.1); }
+        .tab-btn.active { background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.1)); border-color: var(--primary); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Gradient Text */
+        .gradient-text { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-fire { background: linear-gradient(135deg, #ef4444, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Status */
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .status-dot.pulse { animation: dot-pulse 2s infinite; }
+        @keyframes dot-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.2); } }
+
+        /* Progress */
+        .progress-bar { height: 6px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+
+        /* Pipeline Stages */
+        .pipeline-stage { min-width: 280px; max-width: 320px; }
+        .deal-card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1rem; cursor: grab; transition: all 0.2s; }
+        .deal-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); border-color: var(--primary); }
+        .deal-card.dragging { opacity: 0.5; }
+
+        /* Bot Grid */
+        .bot-card { position: relative; overflow: hidden; }
+        .bot-card.thinking { animation: thinking-pulse 2s infinite; }
+        @keyframes thinking-pulse { 0%, 100% { border-color: rgba(168, 85, 247, 0.3); } 50% { border-color: rgba(168, 85, 247, 0.8); box-shadow: 0 0 30px rgba(168, 85, 247, 0.3); } }
+
+        /* Sparkline */
+        .sparkline { display: flex; align-items: flex-end; gap: 2px; height: 24px; }
+        .sparkline-bar { width: 4px; background: linear-gradient(to top, var(--primary), var(--secondary)); border-radius: 2px; transition: height 0.3s; }
+
+        /* Modal */
+        .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 1rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; }
+
+        /* Animations */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-in { animation: slideIn 0.3s ease-out; }
+
+        /* Responsive */
+        @media (max-width: 1200px) { .sidebar { width: 70px; min-width: 70px; } .sidebar .nav-text, .sidebar .section-title, .sidebar .logo-text { display: none; } .sidebar .nav-item { justify-content: center; padding: 0.75rem; } }
+    </style>
+</head>
+<body class="flex">
+    <!-- Sidebar -->
+    <aside class="sidebar bg-[var(--bg-surface)] border-r border-[var(--border)] h-screen sticky top-0 flex flex-col" id="sidebar">
+        <div class="p-4 border-b border-[var(--border)]">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 via-cyan-500 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span class="font-kanji text-lg font-bold">神</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="font-orbitron text-sm font-bold gradient-text">ENTERPRISE</h1>
+                    <span class="text-xs text-[var(--text-muted)]">V11 MEGA MODE</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-3 space-y-3">
+            <!-- Business -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">Business</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item active" onclick="switchTab('dashboard')"><span class="text-lg">📊</span><span class="nav-text text-sm">Dashboard</span></div>
+                    <div class="nav-item" onclick="switchTab('crm')"><span class="text-lg">👥</span><span class="nav-text text-sm">CRM Ultra</span></div>
+                    <div class="nav-item" onclick="switchTab('leads')"><span class="text-lg">🎯</span><span class="nav-text text-sm">Lead Discovery</span></div>
+                    <div class="nav-item" onclick="switchTab('deals')"><span class="text-lg">💰</span><span class="nav-text text-sm">Deals Pipeline</span></div>
+                    <div class="nav-item" onclick="switchTab('email')"><span class="text-lg">📧</span><span class="nav-text text-sm">Email Hub</span></div>
+                    <div class="nav-item" onclick="switchTab('whatsapp')"><span class="text-lg">💬</span><span class="nav-text text-sm">WhatsApp</span></div>
+                </div>
+            </div>
+
+            <!-- AI Power -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">AI Power</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('agents')"><span class="text-lg">🧠</span><span class="nav-text text-sm flex items-center gap-2">Genius Hub<span class="px-1.5 py-0.5 bg-purple-500/20 text-purple-400 text-xs rounded">42</span></span></div>
+                    <div class="nav-item" onclick="switchTab('godmode')"><span class="text-lg font-kanji">神</span><span class="nav-text text-sm">GOD Mode</span></div>
+                    <div class="nav-item" onclick="switchTab('prophecy')"><span class="text-lg">🔮</span><span class="nav-text text-sm">Prophecy</span></div>
+                    <div class="nav-item" onclick="switchTab('hakai')"><span class="text-lg">💥</span><span class="nav-text text-sm">Hakai Mode</span></div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">Analytics</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('analytics')"><span class="text-lg">📈</span><span class="nav-text text-sm">Analytics</span></div>
+                    <div class="nav-item" onclick="switchTab('finance')"><span class="text-lg">💵</span><span class="nav-text text-sm">Finance</span></div>
+                    <div class="nav-item" onclick="switchTab('reports')"><span class="text-lg">📋</span><span class="nav-text text-sm">Reports</span></div>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div>
+                <p class="section-title text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider px-3 mb-2">System</p>
+                <div class="space-y-0.5">
+                    <div class="nav-item" onclick="switchTab('settings')"><span class="text-lg">⚙️</span><span class="nav-text text-sm">Settings</span></div>
+                    <div class="nav-item"><span class="text-lg">🏆</span><span class="nav-text text-sm">Awards</span></div>
+                    <div class="nav-item"><span class="text-lg">📁</span><span class="nav-text text-sm">Data Room</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Live Stats -->
+        <div class="p-4 border-t border-[var(--border)]">
+            <div class="space-y-2 text-xs">
+                <div class="flex items-center gap-2"><span class="status-dot bg-red-500 pulse"></span><span class="nav-text" id="sidebarHotLeads">2,847 HOT</span></div>
+                <div class="flex items-center gap-2"><span class="status-dot bg-green-500 pulse"></span><span class="nav-text" id="sidebarPipeline">€411B Pipeline</span></div>
+                <div class="flex items-center gap-2"><span class="status-dot bg-purple-500 pulse"></span><span class="nav-text">42 Bots Active</span></div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen overflow-y-auto">
+        <!-- Header -->
+        <header class="sticky top-0 z-40 bg-[var(--bg-void)]/90 backdrop-blur-xl border-b border-[var(--border)]">
+            <div class="flex items-center justify-between px-6 py-3">
+                <div>
+                    <h1 class="font-orbitron text-xl font-bold" id="pageTitle">Dashboard</h1>
+                    <p class="text-sm text-[var(--text-muted)]">Enterprise Universe V11 - MEGA GOD MODE</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg text-sm text-[var(--text-muted)] hover:bg-white/10">
+                        <span>🔍</span> Suchen <kbd class="px-1.5 py-0.5 bg-white/10 rounded text-xs">⌘K</kbd>
+                    </button>
+                    <button class="relative p-2 hover:bg-white/5 rounded-lg" onclick="toggleNotifications()">
+                        <span class="text-xl">🔔</span>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center" id="notifBadge">5</span>
+                    </button>
+                    <div class="w-9 h-9 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center">
+                        <span class="font-kanji text-sm font-bold">神</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Content Container -->
+        <div class="p-6">
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- DASHBOARD TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-dashboard" class="tab-content active space-y-6">
+                <!-- KPI Cards Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">💼</span>
+                            <span class="text-green-400 text-xs">↑ 12%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiDeals">3.3M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Total Deals</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">👥</span>
+                            <span class="text-cyan-400 text-xs">↑ 8%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiContacts">14.3M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Contacts</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">📈</span>
+                            <span class="text-yellow-400 text-xs">↑ 23%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold gradient-gold" id="kpiPipeline">€411B</p>
+                        <p class="text-xs text-[var(--text-muted)]">Pipeline</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🏆</span>
+                            <span class="text-purple-400 text-xs">↑ 45%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold gradient-text" id="kpiWon">€1.2B</p>
+                        <p class="text-xs text-[var(--text-muted)]">Won</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">🎯</span>
+                            <span class="text-red-400 text-xs">HOT</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold text-red-400" id="kpiHotLeads">2,847</p>
+                        <p class="text-xs text-[var(--text-muted)]">Hot Leads</p>
+                    </div>
+                    <div class="card p-4 hover:scale-[1.02] transition-transform">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl">📧</span>
+                            <span class="text-green-400 text-xs">78%</span>
+                        </div>
+                        <p class="font-orbitron text-xl font-bold" id="kpiEmails">125K</p>
+                        <p class="text-xs text-[var(--text-muted)]">Emails/Mo</p>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- AI Agents Overview -->
+                    <div class="lg:col-span-2 card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-orbitron text-lg font-bold gradient-text">AI AGENTS LIVE</h2>
+                            <button onclick="switchTab('agents')" class="text-sm text-purple-400 hover:text-purple-300">Alle 42 →</button>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4" id="agentGrid">
+                            <!-- Einstein -->
+                            <div class="card bot-card thinking p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🧠</span>
+                                        <div><h3 class="font-semibold">EINSTEIN</h3><p class="text-xs text-[var(--text-muted)]">Analytics AI</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">THINKING</span>
+                                </div>
+                                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-purple-200 italic">"Analysiere Q4 Pipeline... +23% Potenzial"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 98%</span>
+                                    <span class="text-cyan-400">⏱ 2.3ms</span>
+                                    <span class="text-purple-400">📊 1,250 Tasks</span>
+                                </div>
+                            </div>
+                            <!-- Broly -->
+                            <div class="card bot-card p-4 border-yellow-500/30">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">⚡</span>
+                                        <div><h3 class="font-semibold gradient-gold">BROLY</h3><p class="text-xs text-yellow-400/70">Task Executor</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">ACTIVE</span>
+                                </div>
+                                <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-yellow-200 italic">"50,000 Tasks abgeschlossen"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-yellow-400">⚡ ∞</span>
+                                    <span class="text-cyan-400">⏱ 1.2ms</span>
+                                    <span class="text-purple-400">📊 50K+</span>
+                                </div>
+                            </div>
+                            <!-- Orion -->
+                            <div class="card bot-card p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">⭐</span>
+                                        <div><h3 class="font-semibold">ORION</h3><p class="text-xs text-[var(--text-muted)]">Strategy</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">SCANNING</span>
+                                </div>
+                                <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-blue-200 italic">"3 neue Marktchancen identifiziert"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 95%</span>
+                                    <span class="text-cyan-400">⏱ 3.1ms</span>
+                                    <span class="text-purple-400">📊 890</span>
+                                </div>
+                            </div>
+                            <!-- Luna -->
+                            <div class="card bot-card p-4">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-2xl">🌙</span>
+                                        <div><h3 class="font-semibold">LUNA</h3><p class="text-xs text-[var(--text-muted)]">Security</p></div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-violet-500/20 text-violet-400 text-xs rounded">WATCHING</span>
+                                </div>
+                                <div class="bg-violet-500/10 border border-violet-500/20 rounded-lg p-3 mb-3">
+                                    <p class="text-sm text-violet-200 italic">"Alle Systeme sicher - 0 Threats"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-green-400">⚡ 100%</span>
+                                    <span class="text-cyan-400">⏱ 0.8ms</span>
+                                    <span class="text-purple-400">📊 24/7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity -->
+                    <div class="card p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-semibold flex items-center gap-2">🔔 Live Activity<span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span></h2>
+                        </div>
+                        <div class="space-y-3" id="activityFeed">
+                            <div class="flex gap-3 p-2 bg-green-500/10 rounded-lg animate-slide-in">
+                                <span class="text-lg">✅</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Deal gewonnen</p>
+                                    <p class="text-xs text-[var(--text-muted)]">€2.5M - PropTech GmbH</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">2m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-purple-500/10 rounded-lg">
+                                <span class="text-lg">🧠</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Einstein analysiert</p>
+                                    <p class="text-xs text-[var(--text-muted)]">1,250 Leads gescored</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">5m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-cyan-500/10 rounded-lg">
+                                <span class="text-lg">📧</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">Email Kampagne</p>
+                                    <p class="text-xs text-[var(--text-muted)]">5,000 versendet - 78% Open Rate</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">8m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-yellow-500/10 rounded-lg">
+                                <span class="text-lg">💬</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">WhatsApp Opt-Ins</p>
+                                    <p class="text-xs text-[var(--text-muted)]">+89 neue Kontakte</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">12m</span>
+                            </div>
+                            <div class="flex gap-3 p-2 bg-blue-500/10 rounded-lg">
+                                <span class="text-lg">🔄</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">HubSpot Sync</p>
+                                    <p class="text-xs text-[var(--text-muted)]">3,170 Kontakte synchronisiert</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">15m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Pipeline Performance</h3>
+                        <canvas id="pipelineChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Lead Sources</h3>
+                        <canvas id="sourceChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card p-5">
+                    <h3 class="font-semibold mb-4">🖥️ System Status - 99.99% Uptime</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">HubSpot</p><p class="text-xs text-[var(--text-muted)]">Connected</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">PostgreSQL</p><p class="text-xs text-[var(--text-muted)]">142/400 GB</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">WhatsApp</p><p class="text-xs text-[var(--text-muted)]">Active</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Claude AI</p><p class="text-xs text-[var(--text-muted)]">Opus 4.5</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-yellow-500"></span>
+                            <div><p class="text-sm font-semibold">LOXONE</p><p class="text-xs text-yellow-400">Gold Partner</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Backend</p><p class="text-xs text-[var(--text-muted)]">2.3ms</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[var(--bg-elevated)] rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">42 Agents</p><p class="text-xs text-[var(--text-muted)]">All Active</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CRM TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-crm" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">CRM ULTRA</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">+ Neuer Kontakt</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Import</button>
+                    </div>
+                </div>
+
+                <!-- CRM Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">14.3M</p><p class="text-xs text-[var(--text-muted)]">Total Contacts</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">3,170</p><p class="text-xs text-[var(--text-muted)]">HubSpot Synced</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-red-400">2,847</p><p class="text-xs text-[var(--text-muted)]">Hot Leads</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">5,234</p><p class="text-xs text-[var(--text-muted)]">Warm Leads</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">89%</p><p class="text-xs text-[var(--text-muted)]">Data Quality</p></div>
+                </div>
+
+                <!-- CRM Table -->
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-[var(--border)] flex items-center justify-between">
+                        <input type="text" placeholder="Suche Kontakte..." class="px-4 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm w-80 outline-none focus:border-purple-500">
+                        <div class="flex gap-2">
+                            <select class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none">
+                                <option>Alle Status</option>
+                                <option>HOT</option>
+                                <option>WARM</option>
+                                <option>COLD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="w-full">
+                        <thead class="bg-[var(--bg-elevated)]">
+                            <tr class="text-left text-xs text-[var(--text-muted)] uppercase">
+                                <th class="p-4">Kontakt</th>
+                                <th class="p-4">Company</th>
+                                <th class="p-4">Score</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4">Last Activity</th>
+                                <th class="p-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crmTable">
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center font-semibold">MK</div><div><p class="font-semibold">Max König</p><p class="text-xs text-[var(--text-muted)]">max@proptech.de</p></div></div></td>
+                                <td class="p-4">PropTech GmbH</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded font-semibold">98</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">HOT</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 2 Stunden</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center font-semibold">AS</div><div><p class="font-semibold">Anna Schmidt</p><p class="text-xs text-[var(--text-muted)]">anna@smartliving.io</p></div></div></td>
+                                <td class="p-4">SmartLiving AG</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded font-semibold">76</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">WARM</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 1 Tag</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                            <tr class="border-t border-[var(--border)] hover:bg-white/5">
+                                <td class="p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center font-semibold">TM</div><div><p class="font-semibold">Thomas Müller</p><p class="text-xs text-[var(--text-muted)]">t.mueller@immobilien.de</p></div></div></td>
+                                <td class="p-4">Immobilien Plus</td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded font-semibold">95</span></td>
+                                <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">HOT</span></td>
+                                <td class="p-4 text-sm text-[var(--text-muted)]">vor 30 Min</td>
+                                <td class="p-4"><button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- LEADS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-leads" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">LEAD DISCOVERY</h2>
+                    <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">🔍 Auto-Discovery starten</button>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Lead Scoring -->
+                    <div class="lg:col-span-2 card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Lead Scoring Distribution</h3>
+                        <div class="grid grid-cols-4 gap-4 mb-6">
+                            <div class="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/30">
+                                <p class="text-3xl font-bold text-red-400">2,847</p>
+                                <p class="text-sm text-red-400/70">🔥 HOT (80-100)</p>
+                            </div>
+                            <div class="text-center p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
+                                <p class="text-3xl font-bold text-yellow-400">5,234</p>
+                                <p class="text-sm text-yellow-400/70">⚡ WARM (50-79)</p>
+                            </div>
+                            <div class="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
+                                <p class="text-3xl font-bold text-blue-400">8,912</p>
+                                <p class="text-sm text-blue-400/70">❄️ COLD (20-49)</p>
+                            </div>
+                            <div class="text-center p-4 bg-gray-500/10 rounded-lg border border-gray-500/30">
+                                <p class="text-3xl font-bold text-gray-400">12,456</p>
+                                <p class="text-sm text-gray-400/70">💤 NEW (0-19)</p>
+                            </div>
+                        </div>
+                        <canvas id="leadScoreChart" height="150"></canvas>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">⚡ Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="w-full p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🔥</span><div><p class="font-semibold">HOT Leads anrufen</p><p class="text-xs text-[var(--text-muted)]">2,847 Leads warten</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🧠</span><div><p class="font-semibold">AI Scoring starten</p><p class="text-xs text-[var(--text-muted)]">12,456 unscored</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">📧</span><div><p class="font-semibold">Email Sequence</p><p class="text-xs text-[var(--text-muted)]">Nurture Campaign</p></div></div>
+                            </button>
+                            <button class="w-full p-3 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-lg text-left transition">
+                                <div class="flex items-center gap-3"><span class="text-xl">🔄</span><div><p class="font-semibold">HubSpot Sync</p><p class="text-xs text-[var(--text-muted)]">Last: vor 5 Min</p></div></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- DEALS PIPELINE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-deals" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">DEALS PIPELINE - €411B</h2>
+                    <button class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neuer Deal</button>
+                </div>
+
+                <!-- Pipeline Kanban -->
+                <div class="flex gap-4 overflow-x-auto pb-4" id="pipelineKanban">
+                    <!-- Qualification -->
+                    <div class="pipeline-stage flex-shrink-0">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-blue-400">🎯 Qualification</h3>
+                            <span class="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">€2.5B</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="deal-card"><p class="font-semibold">SmartCity Project</p><p class="text-lg font-bold text-blue-400 mt-1">€450M</p><p class="text-xs text-[var(--text-muted)] mt-2">Munich Smart Living</p></div>
+                            <div class="deal-card"><p class="font-semibold">IoT Platform Deal</p><p class="text-lg font-bold text-blue-400 mt-1">€125M</p><p class="text-xs text-[var(--text-muted)] mt-2">TechCorp AG</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Meeting -->
+                    <div class="pipeline-stage flex-shrink-0">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-cyan-400">📅 Meeting</h3>
+                            <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 text-xs rounded">€5.2B</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="deal-card"><p class="font-semibold">Enterprise Suite</p><p class="text-lg font-bold text-cyan-400 mt-1">€890M</p><p class="text-xs text-[var(--text-muted)] mt-2">Global Industries</p></div>
+                            <div class="deal-card"><p class="font-semibold">LOXONE Integration</p><p class="text-lg font-bold text-cyan-400 mt-1">€320M</p><p class="text-xs text-[var(--text-muted)] mt-2">SmartHome Corp</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Proposal -->
+                    <div class="pipeline-stage flex-shrink-0">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-purple-400">📝 Proposal</h3>
+                            <span class="px-2 py-1 bg-purple-500/20 text-purple-400 text-xs rounded">€8.7B</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="deal-card"><p class="font-semibold">PropTech Revolution</p><p class="text-lg font-bold text-purple-400 mt-1">€1.2B</p><p class="text-xs text-[var(--text-muted)] mt-2">PropTech GmbH</p></div>
+                            <div class="deal-card"><p class="font-semibold">AI Automation</p><p class="text-lg font-bold text-purple-400 mt-1">€670M</p><p class="text-xs text-[var(--text-muted)] mt-2">AutomateX</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Negotiation -->
+                    <div class="pipeline-stage flex-shrink-0">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-yellow-400">🤝 Negotiation</h3>
+                            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">€12.4B</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="deal-card border-yellow-500/50"><p class="font-semibold">Mega Real Estate</p><p class="text-lg font-bold text-yellow-400 mt-1">€2.8B</p><p class="text-xs text-[var(--text-muted)] mt-2">Real Estate Empire</p><div class="mt-2 flex items-center gap-2"><span class="status-dot bg-yellow-500 pulse"></span><span class="text-xs text-yellow-400">In Progress</span></div></div>
+                            <div class="deal-card"><p class="font-semibold">Smart Factory</p><p class="text-lg font-bold text-yellow-400 mt-1">€1.5B</p><p class="text-xs text-[var(--text-muted)] mt-2">Industry 4.0 GmbH</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Won -->
+                    <div class="pipeline-stage flex-shrink-0">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-semibold text-green-400">🏆 Won</h3>
+                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">€1.2B</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="deal-card border-green-500/50"><p class="font-semibold">Digital Twin</p><p class="text-lg font-bold text-green-400 mt-1">€340M</p><p class="text-xs text-[var(--text-muted)] mt-2">TwinTech Solutions</p><div class="mt-2 flex items-center gap-2"><span class="text-green-400">✓</span><span class="text-xs text-green-400">Closed</span></div></div>
+                            <div class="deal-card border-green-500/50"><p class="font-semibold">Cloud Migration</p><p class="text-lg font-bold text-green-400 mt-1">€180M</p><p class="text-xs text-[var(--text-muted)] mt-2">CloudFirst AG</p><div class="mt-2 flex items-center gap-2"><span class="text-green-400">✓</span><span class="text-xs text-green-400">Closed</span></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- EMAIL TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-email" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">EMAIL HUB</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">📧 Neue Kampagne</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Templates</button>
+                    </div>
+                </div>
+
+                <!-- Email Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">125,847</p><p class="text-xs text-[var(--text-muted)]">Emails/Monat</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">78%</p><p class="text-xs text-[var(--text-muted)]">Open Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">23%</p><p class="text-xs text-[var(--text-muted)]">Click Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">12%</p><p class="text-xs text-[var(--text-muted)]">Reply Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-red-400">0.8%</p><p class="text-xs text-[var(--text-muted)]">Bounce Rate</p></div>
+                </div>
+
+                <!-- Active Campaigns -->
+                <div class="card p-5">
+                    <h3 class="font-semibold mb-4">📊 Aktive Kampagnen</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🚀</span>
+                                <div>
+                                    <p class="font-semibold">Investor Outreach Q1</p>
+                                    <p class="text-xs text-[var(--text-muted)]">5,000 Recipients • Started vor 2 Tagen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">82%</p><p class="text-xs text-[var(--text-muted)]">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">28%</p><p class="text-xs text-[var(--text-muted)]">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">45</p><p class="text-xs text-[var(--text-muted)]">Meetings</p></div>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded">Active</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-[var(--bg-elevated)] rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🏠</span>
+                                <div>
+                                    <p class="font-semibold">LOXONE Partner Nurture</p>
+                                    <p class="text-xs text-[var(--text-muted)]">2,500 Recipients • Started vor 1 Woche</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">75%</p><p class="text-xs text-[var(--text-muted)]">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">19%</p><p class="text-xs text-[var(--text-muted)]">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">23</p><p class="text-xs text-[var(--text-muted)]">Meetings</p></div>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- AI AGENTS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-agents" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">GENIUS HUB - 42 AI AGENTS</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">🧠 Neuer Agent</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Alle aktivieren</button>
+                    </div>
+                </div>
+
+                <!-- Agent Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">42</p><p class="text-xs text-[var(--text-muted)]">Active Agents</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">1.2M</p><p class="text-xs text-[var(--text-muted)]">Tasks/Day</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">2.1ms</p><p class="text-xs text-[var(--text-muted)]">Avg Response</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">99.9%</p><p class="text-xs text-[var(--text-muted)]">Uptime</p></div>
+                </div>
+
+                <!-- All Agents Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="allAgentsGrid">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ANALYTICS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-analytics" class="tab-content space-y-6">
+                <h2 class="font-orbitron text-2xl font-bold gradient-text">ANALYTICS & INSIGHTS</h2>
+
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Revenue Trend</h3>
+                        <canvas id="revenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Conversion Funnel</h3>
+                        <canvas id="funnelChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FINANCE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-finance" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">FINANCE & INVOICES HUB</h2>
+                    <div class="flex gap-2">
+                        <button onclick="openModal('invoiceModal')" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neue Rechnung</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Export</button>
+                    </div>
+                </div>
+
+                <!-- Finance KPIs -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('all')">
+                        <p class="text-2xl font-bold text-green-400" id="finRevenue">€127M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Revenue YTD</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('paid')">
+                        <p class="text-2xl font-bold text-purple-400" id="finPaid">€89M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Bezahlt</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('pending')">
+                        <p class="text-2xl font-bold text-yellow-400" id="finPending">€28M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Ausstehend</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('overdue')">
+                        <p class="text-2xl font-bold text-red-400" id="finOverdue">€10M</p>
+                        <p class="text-xs text-[var(--text-muted)]">Überfällig</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-cyan-400">89%</p>
+                        <p class="text-xs text-[var(--text-muted)]">Collection Rate</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-white">1,247</p>
+                        <p class="text-xs text-[var(--text-muted)]">Total Invoices</p>
+                    </div>
+                </div>
+
+                <!-- Invoices Table -->
+                <div class="card overflow-hidden">
+                    <div class="p-4 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-4">
+                        <input type="text" id="invoiceSearch" placeholder="Suche Rechnungen..." class="px-4 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm w-80 outline-none focus:border-purple-500" onkeyup="searchInvoices()">
+                        <div class="flex gap-2">
+                            <select id="invoiceStatusFilter" class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none" onchange="filterInvoices(this.value)">
+                                <option value="all">Alle Status</option>
+                                <option value="paid">Bezahlt</option>
+                                <option value="pending">Ausstehend</option>
+                                <option value="overdue">Überfällig</option>
+                                <option value="draft">Entwurf</option>
+                            </select>
+                            <select class="px-3 py-2 bg-white/5 rounded-lg border border-[var(--border)] text-sm outline-none">
+                                <option>Letzte 30 Tage</option>
+                                <option>Letzte 90 Tage</option>
+                                <option>Dieses Jahr</option>
+                                <option>Alle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-[var(--bg-elevated)]">
+                                <tr class="text-left text-xs text-[var(--text-muted)] uppercase">
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('id')">Rechnung # ↕</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('customer')">Kunde ↕</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('amount')">Betrag ↕</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4 cursor-pointer hover:text-white" onclick="sortInvoices('date')">Datum ↕</th>
+                                    <th class="p-4">Fällig</th>
+                                    <th class="p-4">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoicesTable">
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-001</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-xs font-semibold">PT</div><div><p class="font-semibold">PropTech GmbH</p><p class="text-xs text-[var(--text-muted)]">max@proptech.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€2,450,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">10.01.2024</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">10.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-001')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-002</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">SL</div><div><p class="font-semibold">SmartLiving AG</p><p class="text-xs text-[var(--text-muted)]">billing@smartliving.io</p></div></div></td>
+                                    <td class="p-4 font-semibold">€890,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Ausstehend</span></td>
+                                    <td class="p-4 text-sm">08.01.2024</td>
+                                    <td class="p-4 text-sm text-yellow-400">08.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-002')">View</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Remind</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-003</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-xs font-semibold">RE</div><div><p class="font-semibold">Real Estate Empire</p><p class="text-xs text-[var(--text-muted)]">finance@realestate.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€5,670,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Überfällig</span></td>
+                                    <td class="p-4 text-sm">15.12.2023</td>
+                                    <td class="p-4 text-sm text-red-400">15.01.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-003')">View</button><button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs hover:bg-red-500/30">Urgent</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-004</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-xs font-semibold">TC</div><div><p class="font-semibold">TechCorp AG</p><p class="text-xs text-[var(--text-muted)]">ap@techcorp.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€1,250,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">05.01.2024</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">05.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-004')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="border-t border-[var(--border)] hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-005</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-xs font-semibold">LX</div><div><p class="font-semibold">LOXONE Partner</p><p class="text-xs text-[var(--text-muted)]">partner@loxone.com</p></div></div></td>
+                                    <td class="p-4 font-semibold">€780,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-gray-500/20 text-gray-400 text-xs rounded">Entwurf</span></td>
+                                    <td class="p-4 text-sm">-</td>
+                                    <td class="p-4 text-sm text-[var(--text-muted)]">-</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">Edit</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Send</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-[var(--border)] flex items-center justify-between">
+                        <p class="text-sm text-[var(--text-muted)]">Zeige 1-5 von 1,247 Rechnungen</p>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">← Prev</button>
+                            <button class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded text-sm">1</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">2</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">3</button>
+                            <button class="px-3 py-1 bg-white/5 rounded text-sm hover:bg-white/10">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">💰 Monthly Revenue</h3>
+                        <canvas id="financeRevenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📊 Invoice Status Distribution</h3>
+                        <canvas id="invoiceStatusChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other tabs (whatsapp, godmode, prophecy, hakai, reports, settings) - placeholder -->
+            <div id="tab-whatsapp" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">💬 WhatsApp Hub</h2><p class="text-[var(--text-muted)]">3,170 Active Contacts • 89 Opt-Ins Today</p></div></div>
+            <div id="tab-godmode" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4 font-kanji">神 GOD MODE</h2><p class="text-[var(--text-muted)]">HAIKU Activated • Full Control</p></div></div>
+            <div id="tab-prophecy" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">🔮 Prophecy Mode</h2><p class="text-[var(--text-muted)]">AI Predictions & Forecasting</p></div></div>
+            <div id="tab-hakai" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4 gradient-fire">💥 HAKAI MODE</h2><p class="text-[var(--text-muted)]">Destruction Protocol Ready</p></div></div>
+            <div id="tab-reports" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">📋 Reports</h2><p class="text-[var(--text-muted)]">Generate & Export Reports</p></div></div>
+            <div id="tab-settings" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">⚙️ Settings</h2><p class="text-[var(--text-muted)]">System Configuration</p></div></div>
+        </div>
+    </main>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // ENTERPRISE UNIVERSE V11 - MEGA GOD MODE
+        // ═══════════════════════════════════════════════════════════════
+
+        const API_BASE = '/api/v1';
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('tab-' + tabId)?.classList.add('active');
+            event?.target?.closest('.nav-item')?.classList.add('active');
+            document.getElementById('pageTitle').textContent = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+        }
+
+        // Format Numbers
+        function formatNumber(num) {
+            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        // Initialize Charts
+        function initCharts() {
+            // Pipeline Chart
+            const pipelineCtx = document.getElementById('pipelineChart')?.getContext('2d');
+            if (pipelineCtx) {
+                new Chart(pipelineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Pipeline (€B)',
+                            data: [12, 15, 18, 22, 25, 28, 30, 32, 34, 35, 36, 37],
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' } }, x: { grid: { display: false } } } }
+                });
+            }
+
+            // Source Chart
+            const sourceCtx = document.getElementById('sourceChart')?.getContext('2d');
+            if (sourceCtx) {
+                new Chart(sourceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['LinkedIn', 'Website', 'Referral', 'Events', 'Cold Outreach'],
+                        datasets: [{ data: [35, 25, 20, 12, 8], backgroundColor: ['#a855f7', '#06b6d4', '#22c55e', '#fbbf24', '#ef4444'] }]
+                    },
+                    options: { responsive: true, plugins: { legend: { position: 'right' } } }
+                });
+            }
+        }
+
+        // Generate All Agents
+        function generateAgents() {
+            const agents = [
+                { name: 'EINSTEIN', icon: '🧠', color: 'purple', status: 'THINKING', specialty: 'Analytics & Intelligence' },
+                { name: 'BROLY', icon: '⚡', color: 'yellow', status: 'ACTIVE', specialty: 'Task Executor' },
+                { name: 'ORION', icon: '⭐', color: 'blue', status: 'SCANNING', specialty: 'Navigation & Strategy' },
+                { name: 'LUNA', icon: '🌙', color: 'violet', status: 'WATCHING', specialty: 'Security & Monitoring' },
+                { name: 'ATLAS', icon: '🌍', color: 'green', status: 'ACTIVE', specialty: 'Data Processing' },
+                { name: 'NOVA', icon: '💫', color: 'pink', status: 'READY', specialty: 'Content Generation' },
+                { name: 'TITAN', icon: '🔱', color: 'orange', status: 'PROCESSING', specialty: 'Heavy Computing' },
+                { name: 'PHOENIX', icon: '🔥', color: 'red', status: 'ACTIVE', specialty: 'Recovery & Backup' },
+                { name: 'MERCURY', icon: '💨', color: 'cyan', status: 'FAST', specialty: 'Speed Operations' },
+                { name: 'VENUS', icon: '💖', color: 'pink', status: 'ACTIVE', specialty: 'Customer Relations' },
+                { name: 'MARS', icon: '⚔️', color: 'red', status: 'COMBAT', specialty: 'Competitive Analysis' },
+                { name: 'JUPITER', icon: '👑', color: 'yellow', status: 'LEADER', specialty: 'Decision Making' },
+                { name: 'SATURN', icon: '💎', color: 'purple', status: 'ANALYZING', specialty: 'Financial Analysis' },
+                { name: 'NEPTUNE', icon: '🌊', color: 'blue', status: 'DEEP', specialty: 'Deep Learning' },
+                { name: 'PLUTO', icon: '🌑', color: 'gray', status: 'HIDDEN', specialty: 'Stealth Operations' },
+                { name: 'APOLLO', icon: '☀️', color: 'yellow', status: 'BRIGHT', specialty: 'Insight Generation' },
+                { name: 'ARTEMIS', icon: '🏹', color: 'green', status: 'HUNTING', specialty: 'Lead Discovery' },
+                { name: 'ATHENA', icon: '🦉', color: 'purple', status: 'WISE', specialty: 'Strategic Planning' },
+                { name: 'HERMES', icon: '📬', color: 'cyan', status: 'MESSAGING', specialty: 'Communication' },
+                { name: 'HADES', icon: '💀', color: 'gray', status: 'DARK', specialty: 'Data Archival' },
+                { name: 'ZEUS', icon: '⚡', color: 'blue', status: 'SUPREME', specialty: 'System Control' },
+                { name: 'POSEIDON', icon: '🔱', color: 'blue', status: 'FLOW', specialty: 'Pipeline Management' },
+                { name: 'ARES', icon: '🛡️', color: 'red', status: 'DEFENSE', specialty: 'Security Ops' },
+                { name: 'HERA', icon: '👸', color: 'purple', status: 'QUEEN', specialty: 'Quality Control' },
+                { name: 'KRONOS', icon: '⏰', color: 'orange', status: 'TIMING', specialty: 'Scheduling' },
+                { name: 'GAIA', icon: '🌿', color: 'green', status: 'NURTURE', specialty: 'Lead Nurturing' },
+                { name: 'HELIOS', icon: '🌅', color: 'yellow', status: 'SHINE', specialty: 'Reporting' },
+                { name: 'SELENE', icon: '🌙', color: 'violet', status: 'NIGHT', specialty: '24/7 Monitoring' },
+                { name: 'EROS', icon: '💘', color: 'pink', status: 'CONNECT', specialty: 'Relationship Building' },
+                { name: 'NIKE', icon: '🏆', color: 'gold', status: 'WINNING', specialty: 'Deal Closing' },
+                { name: 'MORPHEUS', icon: '💤', color: 'purple', status: 'DREAM', specialty: 'Prediction' },
+                { name: 'PROMETHEUS', icon: '🔥', color: 'orange', status: 'CREATE', specialty: 'Innovation' },
+                { name: 'HERCULES', icon: '💪', color: 'red', status: 'POWER', specialty: 'Heavy Lifting' },
+                { name: 'PANDORA', icon: '📦', color: 'purple', status: 'DISCOVER', specialty: 'Data Mining' },
+                { name: 'ICARUS', icon: '🦅', color: 'yellow', status: 'SOAR', specialty: 'Growth Hacking' },
+                { name: 'DAEDALUS', icon: '🔧', color: 'gray', status: 'BUILD', specialty: 'System Building' },
+                { name: 'MIDAS', icon: '✨', color: 'gold', status: 'GOLD', specialty: 'Revenue Optimization' },
+                { name: 'ORACLE', icon: '🔮', color: 'purple', status: 'VISION', specialty: 'Forecasting' },
+                { name: 'SPHINX', icon: '🦁', color: 'orange', status: 'GUARD', specialty: 'Access Control' },
+                { name: 'CHIMERA', icon: '🐉', color: 'red', status: 'HYBRID', specialty: 'Multi-tasking' },
+                { name: 'PEGASUS', icon: '🦄', color: 'white', status: 'FLY', specialty: 'Fast Delivery' },
+                { name: 'CERBERUS', icon: '🐕', color: 'gray', status: 'WATCH', specialty: 'Triple Security' }
+            ];
+
+            const grid = document.getElementById('allAgentsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = agents.map(a => `
+                <div class="card bot-card p-4 hover:scale-[1.02] transition-transform">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">${a.icon}</span>
+                            <div>
+                                <h3 class="font-semibold text-sm">${a.name}</h3>
+                                <p class="text-xs text-[var(--text-muted)]">${a.specialty}</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-0.5 bg-${a.color}-500/20 text-${a.color}-400 text-xs rounded">${a.status}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs mt-3 pt-2 border-t border-[var(--border)]">
+                        <span class="text-green-400">⚡ 99%</span>
+                        <span class="text-cyan-400">⏱ 2ms</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MODAL FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function openModal(modalId) {
+            document.getElementById(modalId)?.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId)?.classList.remove('active');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INVOICE FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function filterInvoices(status) {
+            document.getElementById('invoiceStatusFilter').value = status;
+            const rows = document.querySelectorAll('#invoicesTable tr');
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    const statusCell = row.querySelector('td:nth-child(4) span');
+                    if (statusCell) {
+                        const rowStatus = statusCell.textContent.toLowerCase();
+                        const match = (status === 'paid' && rowStatus === 'bezahlt') ||
+                                      (status === 'pending' && rowStatus === 'ausstehend') ||
+                                      (status === 'overdue' && rowStatus === 'überfällig') ||
+                                      (status === 'draft' && rowStatus === 'entwurf');
+                        row.style.display = match ? '' : 'none';
+                    }
+                }
+            });
+        }
+
+        function searchInvoices() {
+            const query = document.getElementById('invoiceSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#invoicesTable tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+
+        function sortInvoices(column) {
+            console.log('Sort by:', column);
+        }
+
+        function viewInvoice(id) {
+            alert('Invoice Details: ' + id + '\n\nFull invoice modal coming soon!');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATABASE API INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        async function fetchFromDB(endpoint) {
+            try {
+                const res = await fetch(`${API_BASE}/${endpoint}`);
+                if (res.ok) return await res.json();
+            } catch (e) {
+                console.log(`API ${endpoint} not available:`, e);
+            }
+            return null;
+        }
+
+        async function loadDashboardData() {
+            // Deals Summary
+            const deals = await fetchFromDB('deals/summary');
+            if (deals) {
+                document.getElementById('kpiDeals').textContent = formatNumber(deals.total_deals || 3305514);
+                document.getElementById('kpiPipeline').textContent = '€' + formatNumber(deals.total_value || 411000000000);
+                document.getElementById('kpiWon').textContent = '€' + formatNumber(deals.won_value || 1200000000);
+            }
+
+            // Scoring Stats
+            const scoring = await fetchFromDB('scoring/stats');
+            if (scoring?.tier_counts?.hot) {
+                document.getElementById('kpiHotLeads').textContent = formatNumber(scoring.tier_counts.hot);
+                document.getElementById('sidebarHotLeads').textContent = formatNumber(scoring.tier_counts.hot) + ' HOT';
+            }
+
+            // Analytics
+            const analytics = await fetchFromDB('analytics/dashboard');
+            if (analytics?.total_contacts) {
+                document.getElementById('kpiContacts').textContent = formatNumber(analytics.total_contacts);
+            }
+        }
+
+        async function loadActivities() {
+            try {
+                const res = await fetch('/api/activities?limit=8');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.activities?.length) {
+                        const feed = document.getElementById('activityFeed');
+                        feed.innerHTML = data.activities.map(a => `
+                            <div class="flex gap-3 p-2 bg-${a.color || 'purple'}-500/10 rounded-lg animate-slide-in">
+                                <span class="text-lg">${a.icon || '📌'}</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold">${a.title}</p>
+                                    <p class="text-xs text-[var(--text-muted)]">${a.description}</p>
+                                </div>
+                                <span class="text-xs text-[var(--text-muted)]">${a.relativeTime || 'now'}</span>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (e) {
+                console.log('Activities API not available');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // FINANCE CHARTS
+        // ═══════════════════════════════════════════════════════════════
+
+        function initFinanceCharts() {
+            const revenueCtx = document.getElementById('financeRevenueChart')?.getContext('2d');
+            if (revenueCtx) {
+                new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Revenue (€M)',
+                            data: [8.5, 9.2, 11.4, 10.8, 12.1, 14.3, 13.7, 15.2, 16.8, 18.1, 19.4, 21.2],
+                            backgroundColor: 'rgba(34, 197, 94, 0.5)',
+                            borderColor: '#22c55e',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#a1a1aa' } },
+                            x: { grid: { display: false }, ticks: { color: '#a1a1aa' } }
+                        }
+                    }
+                });
+            }
+
+            const statusCtx = document.getElementById('invoiceStatusChart')?.getContext('2d');
+            if (statusCtx) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Bezahlt', 'Ausstehend', 'Überfällig', 'Entwurf'],
+                        datasets: [{
+                            data: [70, 18, 8, 4],
+                            backgroundColor: ['#22c55e', '#fbbf24', '#ef4444', '#71717a']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'right', labels: { color: '#a1a1aa' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // WEBSOCKET REAL-TIME
+        // ═══════════════════════════════════════════════════════════════
+
+        function connectWebSocket() {
+            try {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const ws = new WebSocket(`${protocol}//${window.location.hostname}:3000/ws/activities`);
+                ws.onmessage = (e) => {
+                    const msg = JSON.parse(e.data);
+                    if (msg.type === 'activity') {
+                        loadActivities();
+                    }
+                };
+                ws.onclose = () => setTimeout(connectWebSocket, 5000);
+            } catch (e) {
+                console.log('WebSocket not available');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // NOTIFICATIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function toggleNotifications() {
+            alert('Notifications Panel coming soon!\n\n5 neue Benachrichtigungen');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZE
+        // ═══════════════════════════════════════════════════════════════
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Enterprise Universe V11 - MEGA GOD MODE Initialized');
+            initCharts();
+            initFinanceCharts();
+            generateAgents();
+            loadDashboardData();
+            loadActivities();
+            connectWebSocket();
+
+            // Refresh data every 30 seconds
+            setInterval(loadDashboardData, 30000);
+            setInterval(loadActivities, 15000);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('input[type="text"]')?.focus();
+            }
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+            }
+        });
+    </script>
+
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal-content p-6 animate-slide-in">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="font-orbitron text-xl font-bold gradient-gold">Neue Rechnung erstellen</h2>
+                <button onclick="closeModal('invoiceModal')" class="p-2 hover:bg-white/10 rounded-lg">✕</button>
+            </div>
+            <form class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Kunde</label>
+                        <select class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                            <option>PropTech GmbH</option>
+                            <option>SmartLiving AG</option>
+                            <option>TechCorp AG</option>
+                            <option>Real Estate Empire</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Betrag (€)</label>
+                        <input type="number" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Rechnungsdatum</label>
+                        <input type="date" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[var(--text-muted)] mb-1">Fälligkeitsdatum</label>
+                        <input type="date" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-[var(--text-muted)] mb-1">Beschreibung</label>
+                    <textarea rows="3" class="w-full px-4 py-2 bg-white/5 border border-[var(--border)] rounded-lg outline-none focus:border-purple-500 resize-none" placeholder="Leistungsbeschreibung..."></textarea>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeModal('invoiceModal')" class="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition">Abbrechen</button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-black font-semibold rounded-lg hover:opacity-90 transition">Rechnung erstellen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

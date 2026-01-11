@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>{{email_title}}</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <style type="text/css">
+        table { border-collapse: collapse; }
+        .fallback-font { font-family: Arial, sans-serif !important; }
+    </style>
+    <![endif]-->
+    <style type="text/css">
+        /* Reset */
+        body, table, td, p, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+        body { margin: 0; padding: 0; width: 100% !important; background-color: #f4f4f7; }
+
+        /* Links */
+        a { color: #8b5cf6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+            .wrapper { width: 100% !important; max-width: 100% !important; }
+            .stack-column { display: block !important; width: 100% !important; max-width: 100% !important; }
+            .stack-column-center { text-align: center !important; }
+            .center-on-narrow { text-align: center !important; display: block !important; margin-left: auto !important; margin-right: auto !important; float: none !important; }
+            table.center-on-narrow { display: inline-block !important; }
+            .hide-mobile { display: none !important; }
+            .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f7;">
+    <!-- Preheader (hidden preview text) -->
+    <div style="display: none; max-height: 0px; overflow: hidden; mso-hide: all;">
+        {{preheader_text}}
+    </div>
+    <!-- Preheader spacer -->
+    <div style="display: none; max-height: 0px; overflow: hidden; mso-hide: all;">
+        &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+    </div>
+
+    <!-- EMAIL WRAPPER -->
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f7;">
+        <tr>
+            <td align="center" style="padding: 30px 10px;">
+
+                <!-- MAIN CONTAINER -->
+                <table role="presentation" class="wrapper" cellpadding="0" cellspacing="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+
+                    {{header_content}}
+
+                    {{body_content}}
+
+                    {{footer_content}}
+
+                </table>
+                <!-- /MAIN CONTAINER -->
+
+            </td>
+        </tr>
+    </table>
+    <!-- /EMAIL WRAPPER -->
+
+    <!-- TRACKING PIXEL -->
+    {{tracking_pixel}}
+</body>
+</html>

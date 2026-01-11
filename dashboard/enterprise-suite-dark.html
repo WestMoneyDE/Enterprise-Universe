@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Universe | Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Dark Theme - Professional */
+            --bg-deep: #08080c;
+            --bg-base: #0c0c12;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a24;
+            --bg-card: #16161f;
+            --bg-hover: #1e1e2a;
+
+            /* Brand Colors */
+            --primary: #00f0ff;
+            --primary-dim: rgba(0, 240, 255, 0.15);
+            --secondary: #8b5cf6;
+            --secondary-dim: rgba(139, 92, 246, 0.15);
+            --accent: #ff006e;
+            --accent-dim: rgba(255, 0, 110, 0.15);
+
+            /* Status Colors */
+            --success: #10b981;
+            --success-dim: rgba(16, 185, 129, 0.15);
+            --warning: #f59e0b;
+            --warning-dim: rgba(245, 158, 11, 0.15);
+            --error: #ef4444;
+            --error-dim: rgba(239, 68, 68, 0.15);
+            --info: #3b82f6;
+            --info-dim: rgba(59, 130, 246, 0.15);
+
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --text-dim: #404050;
+
+            /* Borders */
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --border-active: rgba(0, 240, 255, 0.3);
+
+            /* Shadows */
+            --glow-primary: 0 0 20px rgba(0, 240, 255, 0.3);
+            --glow-secondary: 0 0 20px rgba(139, 92, 246, 0.3);
+            --glow-success: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar - Sleek */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           SIDEBAR - Professional Dark Mode
+           ═══════════════════════════════════════════════════════════════════ */
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-base) 100%);
+            border-right: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+            min-width: 80px;
+        }
+
+        .sidebar.collapsed .nav-text,
+        .sidebar.collapsed .section-title,
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .sidebar-footer-text,
+        .sidebar.collapsed .nav-badge { display: none; }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 0.875rem;
+        }
+
+        .sidebar.collapsed .logo-container {
+            justify-content: center;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            box-shadow: var(--glow-primary);
+            flex-shrink: 0;
+        }
+
+        .logo-text h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Navigation Sections */
+        .nav-section {
+            padding: 16px 12px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            margin-bottom: 2px;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-dim), var(--secondary-dim));
+            color: var(--primary);
+            border: 1px solid var(--border-active);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: var(--primary);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: 6px;
+            background: var(--primary-dim);
+            color: var(--primary);
+        }
+
+        .nav-badge.warning {
+            background: var(--warning-dim);
+            color: var(--warning);
+        }
+
+        .nav-badge.success {
+            background: var(--success-dim);
+            color: var(--success);
+        }
+
+        /* Sidebar Footer - Live Stats */
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .live-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .stat-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.9); }
+        }
+
+        .sidebar-footer-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-footer-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Toggle Button */
+        .sidebar-toggle {
+            position: absolute;
+            right: -14px;
+            top: 28px;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .sidebar-toggle:hover {
+            background: var(--bg-hover);
+            color: var(--primary);
+            border-color: var(--border-active);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           MAIN CONTENT AREA
+           ═══════════════════════════════════════════════════════════════════ */
+        .main-content {
+            flex: 1;
+            min-height: 100vh;
+            background: var(--bg-deep);
+            overflow-y: auto;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(8, 8, 12, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .header-title p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-box:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-elevated);
+        }
+
+        .search-box kbd {
+            padding: 2px 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--primary);
+            border-color: var(--border-active);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 18px;
+            height: 18px;
+            background: var(--accent);
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            box-shadow: var(--glow-primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           DASHBOARD CONTENT
+           ═══════════════════════════════════════════════════════════════════ */
+        .dashboard-content {
+            padding: 24px;
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1400px) {
+            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--card-color), transparent);
+        }
+
+        .kpi-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .kpi-card.primary { --card-color: var(--primary); }
+        .kpi-card.success { --card-color: var(--success); }
+        .kpi-card.warning { --card-color: var(--warning); }
+        .kpi-card.info { --card-color: var(--info); }
+        .kpi-card.secondary { --card-color: var(--secondary); }
+        .kpi-card.accent { --card-color: var(--accent); }
+
+        .kpi-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .kpi-card.primary .kpi-icon { background: var(--primary-dim); }
+        .kpi-card.success .kpi-icon { background: var(--success-dim); }
+        .kpi-card.warning .kpi-icon { background: var(--warning-dim); }
+        .kpi-card.info .kpi-icon { background: var(--info-dim); }
+        .kpi-card.secondary .kpi-icon { background: var(--secondary-dim); }
+        .kpi-card.accent .kpi-icon { background: var(--accent-dim); }
+
+        .kpi-trend {
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .kpi-trend.up { background: var(--success-dim); color: var(--success); }
+        .kpi-trend.down { background: var(--error-dim); color: var(--error); }
+        .kpi-trend.neutral { background: var(--bg-elevated); color: var(--text-muted); }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .kpi-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: var(--glow-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+        @media (max-width: 1200px) {
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+
+        /* Stats Table */
+        .stats-table {
+            width: 100%;
+        }
+
+        .stats-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-row:last-child {
+            border-bottom: none;
+        }
+
+        .stats-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stats-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .progress-fill.success { background: var(--success); }
+        .progress-fill.warning { background: var(--warning); }
+        .progress-fill.error { background: var(--error); }
+
+        /* Agent Cards */
+        .agent-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .agent-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-primary);
+        }
+
+        .agent-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .agent-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .agent-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .agent-status.active {
+            background: var(--success-dim);
+            color: var(--success);
+        }
+
+        .agent-status.idle {
+            background: var(--bg-elevated);
+            color: var(--text-muted);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Tab System */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                bottom: 0;
+                z-index: 50;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="flex">
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SIDEBAR - Professional Dark Mode
+         ═══════════════════════════════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-icon">神</div>
+            <div class="logo-text">
+                <h1>Enterprise Universe</h1>
+                <span>Command Center</span>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto">
+            <!-- Overview -->
+            <div class="nav-section">
+                <p class="section-title">Overview</p>
+                <div class="nav-item active" onclick="switchTab('dashboard')">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('analytics')">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Analytics</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('reports')">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Reports</span>
+                </div>
+            </div>
+
+            <!-- Sales -->
+            <div class="nav-section">
+                <p class="section-title">Sales & CRM</p>
+                <div class="nav-item" onclick="switchTab('contacts')">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Contacts</span>
+                    <span class="nav-badge">15M</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('leads')">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-text">Leads</span>
+                    <span class="nav-badge warning">2.7M</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('deals')">
+                    <span class="nav-icon">💼</span>
+                    <span class="nav-text">Deals</span>
+                    <span class="nav-badge success">3.4M</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('pipeline')">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Pipeline</span>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="nav-section">
+                <p class="section-title">Communication</p>
+                <div class="nav-item" onclick="switchTab('email')">
+                    <span class="nav-icon">📧</span>
+                    <span class="nav-text">Email Hub</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('whatsapp')">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">WhatsApp</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('campaigns')">
+                    <span class="nav-icon">📣</span>
+                    <span class="nav-text">Campaigns</span>
+                </div>
+            </div>
+
+            <!-- AI & Automation -->
+            <div class="nav-section">
+                <p class="section-title">AI & Automation</p>
+                <div class="nav-item" onclick="switchTab('agents')">
+                    <span class="nav-icon">🤖</span>
+                    <span class="nav-text">AI Agents</span>
+                    <span class="nav-badge">42</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('workflows')">
+                    <span class="nav-icon">⚡</span>
+                    <span class="nav-text">Workflows</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('godmode')">
+                    <span class="nav-icon">🔮</span>
+                    <span class="nav-text">God Mode</span>
+                </div>
+            </div>
+
+            <!-- Finance -->
+            <div class="nav-section">
+                <p class="section-title">Finance</p>
+                <div class="nav-item" onclick="switchTab('invoices')">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-text">Invoices</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('revenue')">
+                    <span class="nav-icon">💵</span>
+                    <span class="nav-text">Revenue</span>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div class="nav-section">
+                <p class="section-title">System</p>
+                <div class="nav-item" onclick="switchTab('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </div>
+                <div class="nav-item" onclick="window.open('/Data%20Room/', '_blank')">
+                    <span class="nav-icon">📁</span>
+                    <span class="nav-text">Data Room</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar Footer - Live Stats -->
+        <div class="sidebar-footer">
+            <div class="live-stat">
+                <span class="stat-indicator" style="background: var(--success)"></span>
+                <span class="sidebar-footer-text"><strong id="liveAgents">42</strong> Bots Active</span>
+            </div>
+            <div class="live-stat">
+                <span class="stat-indicator" style="background: var(--primary)"></span>
+                <span class="sidebar-footer-text"><strong id="livePipeline">€5.6T</strong> Pipeline</span>
+            </div>
+            <div class="live-stat">
+                <span class="stat-indicator" style="background: var(--warning)"></span>
+                <span class="sidebar-footer-text"><strong id="liveLeads">2.7M</strong> Hot Leads</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MAIN CONTENT
+         ═══════════════════════════════════════════════════════════════════ -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1 id="pageTitle">Command Center</h1>
+                    <p id="pageSubtitle">Real-time business intelligence & AI automation</p>
+                </div>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <span>Search...</span>
+                        <kbd>⌘K</kbd>
+                    </div>
+                    <button class="icon-btn" onclick="toggleNotifications()">
+                        <span>🔔</span>
+                        <span class="notification-badge" id="notifCount">5</span>
+                    </button>
+                    <button class="icon-btn">
+                        <span>⚙️</span>
+                    </button>
+                    <div class="avatar">ÖC</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- TAB: Dashboard -->
+            <div id="tab-dashboard" class="tab-content active">
+                <!-- KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-card primary">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">💰</div>
+                            <span class="kpi-trend up">↑ 23%</span>
+                        </div>
+                        <div class="kpi-value" id="kpiPipeline">€5.58T</div>
+                        <div class="kpi-label">Pipeline Value</div>
+                    </div>
+
+                    <div class="kpi-card success">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">✅</div>
+                            <span class="kpi-trend up">↑ 18%</span>
+                        </div>
+                        <div class="kpi-value" id="kpiWon">€1.00T</div>
+                        <div class="kpi-label">Won Deals</div>
+                    </div>
+
+                    <div class="kpi-card info">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">💼</div>
+                            <span class="kpi-trend up">↑ 12%</span>
+                        </div>
+                        <div class="kpi-value" id="kpiDeals">3.4M</div>
+                        <div class="kpi-label">Total Deals</div>
+                    </div>
+
+                    <div class="kpi-card secondary">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">👥</div>
+                            <span class="kpi-trend up">↑ 8%</span>
+                        </div>
+                        <div class="kpi-value" id="kpiContacts">15.1M</div>
+                        <div class="kpi-label">Contacts</div>
+                    </div>
+
+                    <div class="kpi-card warning">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">🔥</div>
+                            <span class="kpi-trend neutral">HOT</span>
+                        </div>
+                        <div class="kpi-value" id="kpiHotLeads">2.7M</div>
+                        <div class="kpi-label">Hot Leads</div>
+                    </div>
+
+                    <div class="kpi-card accent">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">📊</div>
+                            <span class="kpi-trend neutral">Stable</span>
+                        </div>
+                        <div class="kpi-value" id="kpiWinRate">18%</div>
+                        <div class="kpi-label">Win Rate</div>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid-2" style="margin-bottom: 24px;">
+                    <!-- AI Agents Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">AI Agents</h3>
+                                <p class="card-subtitle">42 autonomous bots working 24/7</p>
+                            </div>
+                            <button class="btn btn-secondary" onclick="switchTab('agents')">View All →</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid-2" style="gap: 12px;">
+                                <div class="agent-card">
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                        <div class="agent-avatar" style="background: var(--info-dim);">🧠</div>
+                                        <div class="agent-info">
+                                            <h4>Einstein</h4>
+                                            <span>Analytics & Insights</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="agent-status active"><span style="width:6px;height:6px;background:var(--success);border-radius:50%;"></span> Active</span>
+                                        <span style="font-size: 12px; color: var(--text-muted);">847 tasks</span>
+                                    </div>
+                                </div>
+
+                                <div class="agent-card">
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                        <div class="agent-avatar" style="background: var(--warning-dim);">⚡</div>
+                                        <div class="agent-info">
+                                            <h4>BROLY</h4>
+                                            <span>Automation Engine</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="agent-status active"><span style="width:6px;height:6px;background:var(--success);border-radius:50%;"></span> Active</span>
+                                        <span style="font-size: 12px; color: var(--text-muted);">2.4K tasks</span>
+                                    </div>
+                                </div>
+
+                                <div class="agent-card">
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                        <div class="agent-avatar" style="background: var(--secondary-dim);">🔍</div>
+                                        <div class="agent-info">
+                                            <h4>Sherlock</h4>
+                                            <span>Lead Intelligence</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="agent-status active"><span style="width:6px;height:6px;background:var(--success);border-radius:50%;"></span> Active</span>
+                                        <span style="font-size: 12px; color: var(--text-muted);">1.2K tasks</span>
+                                    </div>
+                                </div>
+
+                                <div class="agent-card">
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                        <div class="agent-avatar" style="background: var(--success-dim);">💡</div>
+                                        <div class="agent-info">
+                                            <h4>Tesla</h4>
+                                            <span>Innovation Engine</span>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="agent-status active"><span style="width:6px;height:6px;background:var(--success);border-radius:50%;"></span> Active</span>
+                                        <span style="font-size: 12px; color: var(--text-muted);">567 tasks</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="text-align: center; margin-top: 16px; font-size: 13px; color: var(--text-muted);">+ 38 more agents running</p>
+                        </div>
+                    </div>
+
+                    <!-- Pipeline Overview -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Pipeline Overview</h3>
+                                <p class="card-subtitle">Deal stages distribution</p>
+                            </div>
+                            <button class="btn btn-secondary" onclick="switchTab('pipeline')">Details →</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-table">
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:10px;height:10px;background:var(--info);border-radius:2px;"></span>
+                                        Qualified to Buy
+                                    </span>
+                                    <span class="stats-value">€2.95T</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:10px;height:10px;background:var(--secondary);border-radius:2px;"></span>
+                                        Presentation Scheduled
+                                    </span>
+                                    <span class="stats-value">€1.90T</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:10px;height:10px;background:var(--warning);border-radius:2px;"></span>
+                                        Appointment Scheduled
+                                    </span>
+                                    <span class="stats-value">€623B</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:10px;height:10px;background:var(--primary);border-radius:2px;"></span>
+                                        Decision Maker Bought In
+                                    </span>
+                                    <span class="stats-value">€105B</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:10px;height:10px;background:var(--success);border-radius:2px;"></span>
+                                        Closed Won
+                                    </span>
+                                    <span class="stats-value" style="color: var(--success);">€1.00T</span>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 12px; color: var(--text-muted);">Win Rate Progress</span>
+                                    <span style="font-size: 12px; font-weight: 600; color: var(--text-primary);">18%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill primary" style="width: 18%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Grid -->
+                <div class="grid-3">
+                    <!-- Revenue Stats -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Revenue</h3>
+                                <p class="card-subtitle">Monthly performance</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--success); margin-bottom: 16px;">€847K</div>
+                            <div class="stats-table">
+                                <div class="stats-row">
+                                    <span class="stats-label">This Month</span>
+                                    <span class="stats-value" style="color: var(--success);">+23.5%</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">YTD Revenue</span>
+                                    <span class="stats-value">€4.2M</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">Target</span>
+                                    <span class="stats-value">€10M</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 16px;">
+                                <div class="progress-bar" style="height: 6px;">
+                                    <div class="progress-fill success" style="width: 42%;"></div>
+                                </div>
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">42% of annual target</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Stats -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Email Performance</h3>
+                                <p class="card-subtitle">Campaign metrics</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-table">
+                                <div class="stats-row">
+                                    <span class="stats-label">📤 Sent</span>
+                                    <span class="stats-value">24,847</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">📬 Delivered</span>
+                                    <span class="stats-value" style="color: var(--success);">98.2%</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">👁️ Open Rate</span>
+                                    <span class="stats-value">42.7%</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">🖱️ Click Rate</span>
+                                    <span class="stats-value">8.3%</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">📅 Reply Rate</span>
+                                    <span class="stats-value" style="color: var(--primary);">3.2%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">System Status</h3>
+                                <p class="card-subtitle">Infrastructure health</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="stats-table">
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite;"></span>
+                                        API Server
+                                    </span>
+                                    <span class="stats-value" style="color: var(--success);">Online</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite;"></span>
+                                        HubSpot Sync
+                                    </span>
+                                    <span class="stats-value" style="color: var(--success);">Active</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite;"></span>
+                                        AI Agents
+                                    </span>
+                                    <span class="stats-value">42 / 42</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite;"></span>
+                                        Uptime
+                                    </span>
+                                    <span class="stats-value" style="color: var(--success);">99.9%</span>
+                                </div>
+                                <div class="stats-row">
+                                    <span class="stats-label">
+                                        <span style="width:8px;height:8px;background:var(--primary);border-radius:50%;"></span>
+                                        Last Sync
+                                    </span>
+                                    <span class="stats-value">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tab Placeholders -->
+            <div id="tab-analytics" class="tab-content">
+                <div class="card">
+                    <div class="card-body" style="text-align: center; padding: 60px;">
+                        <span style="font-size: 48px;">📈</span>
+                        <h2 style="margin-top: 16px; color: var(--text-primary);">Analytics Dashboard</h2>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Advanced analytics and reporting coming soon</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-agents" class="tab-content">
+                <div class="card">
+                    <div class="card-body" style="text-align: center; padding: 60px;">
+                        <span style="font-size: 48px;">🤖</span>
+                        <h2 style="margin-top: 16px; color: var(--text-primary);">AI Agents Control</h2>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Manage your 42 AI agents</p>
+                        <a href="/god-mode" class="btn btn-primary" style="margin-top: 24px;">Open God Mode →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+
+            // Show selected tab
+            const tab = document.getElementById('tab-' + tabId);
+            if (tab) tab.classList.add('active');
+
+            // Highlight nav item
+            event.target.closest('.nav-item')?.classList.add('active');
+
+            // Update page title
+            const titles = {
+                dashboard: 'Command Center',
+                analytics: 'Analytics',
+                contacts: 'Contacts',
+                leads: 'Lead Management',
+                deals: 'Deals Pipeline',
+                agents: 'AI Agents',
+                email: 'Email Hub'
+            };
+            document.getElementById('pageTitle').textContent = titles[tabId] || tabId;
+        }
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+
+        // Load real metrics
+        async function loadMetrics() {
+            try {
+                const res = await fetch('/api/v1/analytics/pipeline-summary');
+                const data = await res.json();
+
+                // Format numbers
+                const formatCurrency = (v) => {
+                    if (v >= 1e12) return '€' + (v/1e12).toFixed(2) + 'T';
+                    if (v >= 1e9) return '€' + (v/1e9).toFixed(0) + 'B';
+                    if (v >= 1e6) return '€' + (v/1e6).toFixed(1) + 'M';
+                    if (v >= 1e3) return '€' + (v/1e3).toFixed(0) + 'K';
+                    return '€' + v;
+                };
+
+                const formatNumber = (v) => {
+                    if (v >= 1e6) return (v/1e6).toFixed(1) + 'M';
+                    if (v >= 1e3) return (v/1e3).toFixed(1) + 'K';
+                    return v.toString();
+                };
+
+                // Update KPIs
+                document.getElementById('kpiPipeline').textContent = formatCurrency(data.pipeline_value);
+                document.getElementById('kpiWon').textContent = formatCurrency(data.won_value);
+                document.getElementById('kpiDeals').textContent = formatNumber(data.total_deals);
+                document.getElementById('kpiContacts').textContent = formatNumber(data.total_contacts);
+                document.getElementById('kpiWinRate').textContent = data.win_rate + '%';
+
+                // Update sidebar stats
+                document.getElementById('livePipeline').textContent = formatCurrency(data.pipeline_value);
+
+                // Calculate hot leads (approximately 80% of open deals)
+                const hotLeads = Math.round(data.total_deals * 0.8);
+                document.getElementById('kpiHotLeads').textContent = formatNumber(hotLeads);
+                document.getElementById('liveLeads').textContent = formatNumber(hotLeads);
+
+            } catch (e) {
+                console.log('Using default metrics');
+            }
+        }
+
+        // Initialize
+        loadMetrics();
+        setInterval(loadMetrics, 30000); // Refresh every 30s
+    </script>
+</body>
+</html>
