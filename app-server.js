@@ -943,25 +943,40 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
             }
         });
 
-        // Fetch ACTUAL won deals count and calculate real values
+        // Fetch ACTUAL total deals count and won deals count from HubSpot
+        let actualTotalDeals = data.dealsTotal || 0;
         let actualWonCount = sampleWonCount;
         let actualWonValue = sampleWonValue;
 
         try {
-            const wonDealsRes = await hubspotRequest('/crm/v3/objects/deals/search', {
-                method: 'POST',
-                body: {
-                    filterGroups: [{
-                        filters: [{
-                            propertyName: 'dealstage',
-                            operator: 'EQ',
-                            value: 'closedwon'
-                        }]
-                    }],
-                    properties: ['dealname', 'amount', 'dealstage'],
-                    limit: 100
-                }
-            });
+            // Fetch total deals and won deals in parallel
+            const [allDealsRes, wonDealsRes] = await Promise.all([
+                hubspotRequest('/crm/v3/objects/deals/search', {
+                    method: 'POST',
+                    body: {
+                        filterGroups: [],
+                        properties: ['dealname'],
+                        limit: 1
+                    }
+                }),
+                hubspotRequest('/crm/v3/objects/deals/search', {
+                    method: 'POST',
+                    body: {
+                        filterGroups: [{
+                            filters: [{
+                                propertyName: 'dealstage',
+                                operator: 'EQ',
+                                value: 'closedwon'
+                            }]
+                        }],
+                        properties: ['dealname', 'amount', 'dealstage'],
+                        limit: 100
+                    }
+                })
+            ]);
+
+            // Get actual total deals count
+            actualTotalDeals = allDealsRes.total || data.dealsTotal || sampleSize;
 
             actualWonCount = wonDealsRes.total || sampleWonCount;
             let wonSampleSum = 0;
@@ -985,13 +1000,15 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
                 avg_deal: Math.round(avgWonDealValue)
             };
 
-            console.log(`[Pipeline] Won: ${actualWonCount} deals, avg: €${Math.round(avgWonDealValue)}, total: €${actualWonValue}`);
+            console.log(`[Pipeline] Total: ${actualTotalDeals}, Won: ${actualWonCount} deals, avg: €${Math.round(avgWonDealValue)}, total: €${actualWonValue}`);
         } catch (e) {
-            console.log('[Pipeline] Could not fetch won deals:', e.message);
+            console.log('[Pipeline] Could not fetch deal counts:', e.message);
+            // Fallback to sample size if API fails
+            actualTotalDeals = actualTotalDeals || sampleSize;
         }
 
-        // Use ACTUAL HubSpot totals
-        const totalDeals = data.dealsTotal || sampleSize;
+        // Use ACTUAL HubSpot totals (now properly fetched)
+        const totalDeals = actualTotalDeals;
         const totalContacts = data.contactsTotal || 0;
 
         // Calculate average deal value from sample (excluding won deals for pipeline calculation)
@@ -999,14 +1016,14 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
         const activeSampleCount = sampleSize - sampleWonCount;
         const avgActiveDealValue = activeSampleCount > 0 ? Math.round(activeSampleValue / activeSampleCount) : 0;
 
-        // Active pipeline = total deals minus won deals
-        const activeDeals = totalDeals - actualWonCount;
+        // Active pipeline = total deals minus won deals (never negative)
+        const activeDeals = Math.max(0, totalDeals - actualWonCount);
 
         // Calculate pipeline value (extrapolate from active sample average)
         const pipelineValue = activeDeals > 0 ? Math.round(avgActiveDealValue * activeDeals) : activeSampleValue;
 
-        // Calculate win rate as percentage
-        const winRate = totalDeals > 0 ? ((actualWonCount / totalDeals) * 100).toFixed(4) : 0;
+        // Calculate win rate as percentage (capped at 100%)
+        const winRate = totalDeals > 0 ? Math.min(100, (actualWonCount / totalDeals) * 100).toFixed(2) : 0;
 
         console.log(`[Pipeline] Total: ${totalDeals}, Won: ${actualWonCount}, Active: ${activeDeals}, AvgActive: €${avgActiveDealValue}, Pipeline: €${pipelineValue}`);
 
