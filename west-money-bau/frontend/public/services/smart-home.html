@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home | West Money Bau - LOXONE Gold Partner</title>
+    <meta name="description" content="Smart Home Installation vom LOXONE Gold Partner. Hausautomation, Lichtsteuerung, Klimaautomation und Multiroom Audio - alles intelligent vernetzt.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+            --bau-surface: #112240;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00c853, #00b0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(0, 200, 83, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(0, 176, 255, 0.1) 0%, transparent 50%);
+        }
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bau-primary), #00e676);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 200, 83, 0.3);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 200, 83, 0.15);
+            border-color: rgba(0, 200, 83, 0.3);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body class="hero-gradient">
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center font-bold text-lg">WMB</div>
+                    <div>
+                        <span class="font-semibold text-white">West Money Bau</span>
+                        <span class="text-xs text-green-400 block">LOXONE Gold Partner</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-6">
+                    <a href="/#services" class="text-gray-400 hover:text-white transition text-sm">Leistungen</a>
+                    <a href="/#contact" class="text-gray-400 hover:text-white transition text-sm">Kontakt</a>
+                    <a href="/portal" class="bg-gradient-to-r from-green-500 to-blue-500 px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Kundenportal</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="flex-1">
+                    <div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 mb-6">
+                        <span class="text-green-400 text-sm font-medium">LOXONE GOLD PARTNER</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        <span class="gradient-text">Smart Home</span><br>
+                        Ihr Zuhause. Intelligent.
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        Als zertifizierter LOXONE Gold Partner realisieren wir Ihr intelligentes Zuhause.
+                        Von der Lichtsteuerung ueber Klimaautomation bis zum Multiroom Audio -
+                        alles aus einer Hand, alles perfekt vernetzt.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/#contact" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white">
+                            Kostenlose Beratung
+                        </a>
+                        <a href="#features" class="glass px-8 py-4 rounded-xl font-semibold text-white hover:bg-white/10 transition">
+                            Mehr erfahren
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold">Smart Home Control</h3>
+                            <span class="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full">LIVE</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">☀️</span>
+                                    <div>
+                                        <p class="font-medium">Beleuchtung</p>
+                                        <p class="text-sm text-gray-400">Szene: Entspannung</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 font-semibold">45%</span>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🌡️</span>
+                                    <div>
+                                        <p class="font-medium">Klima</p>
+                                        <p class="text-sm text-gray-400">Automatik aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-blue-400 font-semibold">22.5°C</span>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🎵</span>
+                                    <div>
+                                        <p class="font-medium">Multiroom Audio</p>
+                                        <p class="text-sm text-gray-400">4 Zonen aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-purple-400 font-semibold">PLAY</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-white/10 flex items-center gap-2 text-sm text-gray-400">
+                            <span>Powered by</span>
+                            <span class="text-green-400 font-semibold">LOXONE Miniserver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Unsere Smart Home Loesungen</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Entdecken Sie die Moeglichkeiten eines vollautomatisierten Zuhauses mit LOXONE</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-yellow-500/20 mb-4">💡</div>
+                    <h3 class="text-xl font-semibold mb-2">Lichtsteuerung</h3>
+                    <p class="text-gray-400 mb-4">Intelligente Beleuchtungsszenen, automatische Anwesenheitserkennung und stimmungsvolle Ambiente-Beleuchtung.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Szenensteuerung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Praesenzmelder</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Dimmer & RGB</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-blue-500/20 mb-4">❄️</div>
+                    <h3 class="text-xl font-semibold mb-2">Klimaautomation</h3>
+                    <p class="text-gray-400 mb-4">Optimale Raumtemperatur durch intelligente Heizungs- und Klimasteuerung mit Energiesparmodus.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Einzelraumregelung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Fussbodenheizung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Klimaanlagen</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-purple-500/20 mb-4">🎵</div>
+                    <h3 class="text-xl font-semibold mb-2">Multiroom Audio</h3>
+                    <p class="text-gray-400 mb-4">Musik in jedem Raum mit dem LOXONE Audioserver. Streaming-Dienste und lokale Medien.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Zonensteuerung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Spotify, TuneIn</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Tuerklingel-Integration</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-orange-500/20 mb-4">🪟</div>
+                    <h3 class="text-xl font-semibold mb-2">Beschattung</h3>
+                    <p class="text-gray-400 mb-4">Automatische Jalousien und Rolllaeden basierend auf Sonnenstand, Temperatur und Tageszeit.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Sonnenstandnachfuehrung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Windwaechter</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Zeitprogramme</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-red-500/20 mb-4">🔒</div>
+                    <h3 class="text-xl font-semibold mb-2">Sicherheit</h3>
+                    <p class="text-gray-400 mb-4">Integrierte Alarmanlage, Videoueberwachung und Zutrittskontrolle in einem System.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Einbruchmeldeanlage</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Tuersprechanlage</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Anwesenheitssimulation</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-green-500/20 mb-4">📱</div>
+                    <h3 class="text-xl font-semibold mb-2">App-Steuerung</h3>
+                    <p class="text-gray-400 mb-4">Volle Kontrolle ueber die LOXONE App - von ueberall auf der Welt, ohne Cloud-Zwang.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> iOS & Android</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Lokale Steuerung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Push-Benachrichtigungen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOXONE Components -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">LOXONE Komponenten</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Hochwertige Hardware fuer Ihr Smart Home</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">MS</div>
+                    <h3 class="font-semibold mb-1">Miniserver Gen. 2</h3>
+                    <p class="text-sm text-gray-400">Das Gehirn Ihres Smart Homes</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">TP</div>
+                    <h3 class="font-semibold mb-1">Touch Pure</h3>
+                    <p class="text-sm text-gray-400">Elegante Wandschalter</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">RG</div>
+                    <h3 class="font-semibold mb-1">Raumklimasensor</h3>
+                    <p class="text-sm text-gray-400">Temperatur, Feuchte, CO2</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">AU</div>
+                    <h3 class="font-semibold mb-1">Audioserver</h3>
+                    <p class="text-sm text-gray-400">Multiroom Musik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Warum LOXONE mit West Money Bau?</h2>
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Zertifizierte Expertise</h3>
+                                <p class="text-gray-400">Als LOXONE Gold Partner verfuegen wir ueber hoechste Qualifikation und regelmaessige Schulungen.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Lokale Verarbeitung</h3>
+                                <p class="text-gray-400">Keine Cloud erforderlich - Ihre Daten bleiben in Ihrem Haus. Maximale Privatsphaere und Sicherheit.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Bis zu 50% Energieeinsparung</h3>
+                                <p class="text-gray-400">Intelligente Automation spart Energie durch bedarfsgerechte Steuerung von Heizung, Licht und Beschattung.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-green-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Zukunftssicher</h3>
+                                <p class="text-gray-400">Offene Schnittstellen und regelmaessige Updates garantieren langfristige Nutzbarkeit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-green-400">50%</p>
+                            <p class="text-gray-400">Energieeinsparung</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-blue-400">100%</p>
+                            <p class="text-gray-400">Lokal & Sicher</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-purple-400">1</p>
+                            <p class="text-gray-400">App fuer alles</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-orange-400">24/7</p>
+                            <p class="text-gray-400">Automatisierung</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Bereit fuer Ihr Smart Home?</h2>
+            <p class="text-xl text-gray-400 mb-8">Lassen Sie sich unverbindlich beraten und erhalten Sie ein individuelles Angebot.</p>
+            <a href="/#contact" class="btn-primary inline-block px-10 py-4 rounded-xl font-semibold text-white text-lg">
+                Jetzt Projekt anfragen
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm">&copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="/impressum" class="text-gray-400 hover:text-white transition">Impressum</a>
+                    <a href="/datenschutz" class="text-gray-400 hover:text-white transition">Datenschutz</a>
+                    <a href="/agb" class="text-gray-400 hover:text-white transition">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrierefreies Bauen | West Money Bau - DIN 18040 konform</title>
+    <meta name="description" content="Barrierefreies Bauen und Wohnen nach DIN 18040. Umbau, Neubau und Foerdermittelberatung fuer ein selbstbestimmtes Leben in jedem Alter.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+            --bau-surface: #112240;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00b0ff, #00c853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(0, 176, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(0, 200, 83, 0.1) 0%, transparent 50%);
+        }
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bau-accent), var(--bau-primary));
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 176, 255, 0.3);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0, 176, 255, 0.15);
+            border-color: rgba(0, 176, 255, 0.3);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body class="hero-gradient">
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center font-bold text-lg">WMB</div>
+                    <div>
+                        <span class="font-semibold text-white">West Money Bau</span>
+                        <span class="text-xs text-green-400 block">LOXONE Gold Partner</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-6">
+                    <a href="/#services" class="text-gray-400 hover:text-white transition text-sm">Leistungen</a>
+                    <a href="/#contact" class="text-gray-400 hover:text-white transition text-sm">Kontakt</a>
+                    <a href="/portal" class="bg-gradient-to-r from-green-500 to-blue-500 px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Kundenportal</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="flex-1">
+                    <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
+                        <span class="text-blue-400 text-sm font-medium">DIN 18040 KONFORM</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        <span class="gradient-text">Barrierefreies Bauen</span><br>
+                        Selbstbestimmt leben.
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        Wir planen und realisieren barrierefreie Wohnkonzepte nach DIN 18040.
+                        Ob Umbau oder Neubau - wir schaffen Raeume, die ein selbstbestimmtes
+                        Leben in jedem Alter ermoeglichen.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/#contact" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white">
+                            Kostenlose Beratung
+                        </a>
+                        <a href="#leistungen" class="glass px-8 py-4 rounded-xl font-semibold text-white hover:bg-white/10 transition">
+                            Unsere Leistungen
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="glass rounded-2xl p-6">
+                        <h3 class="font-semibold mb-4">Barrierefreiheit im Ueberblick</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-2xl">♿</div>
+                                <div>
+                                    <p class="font-medium">Schwellenlose Zugaenge</p>
+                                    <p class="text-sm text-gray-400">Stufenfreier Zugang zu allen Bereichen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center text-2xl">🚿</div>
+                                <div>
+                                    <p class="font-medium">Barrierefreie Baeder</p>
+                                    <p class="text-sm text-gray-400">Bodengleiche Duschen & Haltegriffe</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-2xl">🚪</div>
+                                <div>
+                                    <p class="font-medium">Breite Durchgaenge</p>
+                                    <p class="text-sm text-gray-400">Mindestens 90 cm Tuerbreite</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center text-2xl">🏠</div>
+                                <div>
+                                    <p class="font-medium">Smart Home Integration</p>
+                                    <p class="text-sm text-gray-400">Sprachsteuerung & Automation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="leistungen" class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Unsere Leistungen</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Von der Planung bis zur Umsetzung - alles aus einer Hand</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-blue-500/20 mb-4">📋</div>
+                    <h3 class="text-xl font-semibold mb-2">Bedarfsanalyse</h3>
+                    <p class="text-gray-400 mb-4">Individuelle Analyse Ihrer Wohnsituation und Beduerfnisse. Wir beraten Sie umfassend zu allen Moeglichkeiten.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Vor-Ort-Begehung</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Massaufnahme</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> Bedarfsermittlung</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-green-500/20 mb-4">📐</div>
+                    <h3 class="text-xl font-semibold mb-2">Planung & Entwurf</h3>
+                    <p class="text-gray-400 mb-4">Professionelle Planung nach DIN 18040 mit 3D-Visualisierung und detaillierten Ausfuehrungsplaenen.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> DIN 18040 konform</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> 3D-Visualisierung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Kostenvoranschlag</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-yellow-500/20 mb-4">💰</div>
+                    <h3 class="text-xl font-semibold mb-2">Foerdermittelberatung</h3>
+                    <p class="text-gray-400 mb-4">Wir unterstuetzen Sie bei der Beantragung von Foerdermitteln der KfW und Pflegekasse.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> KfW-Foerderung</li>
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> Pflegekasse bis 4.000€</li>
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> Antragsunterstuetzung</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-purple-500/20 mb-4">🚿</div>
+                    <h3 class="text-xl font-semibold mb-2">Badumbau</h3>
+                    <p class="text-gray-400 mb-4">Barrierefreie Baeder mit bodengleicher Dusche, unterfahrbaren Waschtischen und Haltegriffen.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Bodengleiche Dusche</li>
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Rutschfeste Fliesen</li>
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Hoehenverstell. WC</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-orange-500/20 mb-4">🚪</div>
+                    <h3 class="text-xl font-semibold mb-2">Tueren & Zugaenge</h3>
+                    <p class="text-gray-400 mb-4">Verbreiterung von Tueren, Einbau automatischer Tueroeffner und schwellenlose Uebergaenge.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Tuerverbreiterung</li>
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Automatik-Tueren</li>
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Schwellenabbau</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-red-500/20 mb-4">🏠</div>
+                    <h3 class="text-xl font-semibold mb-2">Smart Home Integration</h3>
+                    <p class="text-gray-400 mb-4">Intelligente Haussteuerung fuer mehr Komfort und Sicherheit - bedienbar per Sprache oder App.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> Sprachsteuerung</li>
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> Notruffunktion</li>
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> Lichtautomation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIN 18040 Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="glass rounded-2xl p-8 md:p-12">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6">DIN 18040 - Der Standard</h2>
+                        <p class="text-gray-400 mb-6">
+                            Die DIN 18040 definiert die Anforderungen an barrierefreies Bauen in Deutschland.
+                            Wir planen und bauen nach diesen Standards, um maximale Zugaenglichkeit zu gewaehrleisten.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-blue-400">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">DIN 18040-1</h3>
+                                    <p class="text-gray-400 text-sm">Oeffentlich zugaengliche Gebaeude</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-green-400">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">DIN 18040-2</h3>
+                                    <p class="text-gray-400 text-sm">Wohnungen - unser Hauptfokus</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-purple-400">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">DIN 18040-3</h3>
+                                    <p class="text-gray-400 text-sm">Oeffentlicher Verkehrs- und Freiraum</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass rounded-xl p-6 text-center">
+                            <p class="text-3xl font-bold text-blue-400">≥90cm</p>
+                            <p class="text-gray-400 text-sm">Tuerbreite</p>
+                        </div>
+                        <div class="glass rounded-xl p-6 text-center">
+                            <p class="text-3xl font-bold text-green-400">≤2cm</p>
+                            <p class="text-gray-400 text-sm">Max. Schwellenhoehe</p>
+                        </div>
+                        <div class="glass rounded-xl p-6 text-center">
+                            <p class="text-3xl font-bold text-purple-400">150cm</p>
+                            <p class="text-gray-400 text-sm">Bewegungsflaeche</p>
+                        </div>
+                        <div class="glass rounded-xl p-6 text-center">
+                            <p class="text-3xl font-bold text-orange-400">85cm</p>
+                            <p class="text-gray-400 text-sm">Griffhoehe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Section -->
+    <section class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Foerdermittel & Zuschuesse</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Nutzen Sie staatliche Foerderungen fuer Ihren barrierefreien Umbau</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center mx-auto mb-4 text-2xl">🏦</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">KfW-Foerderung</h3>
+                    <p class="text-gray-400 text-center mb-4">Kredit 159 "Altersgerecht Umbauen" - bis zu 50.000€ Kredit pro Wohneinheit</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-blue-500/20 text-blue-400 px-4 py-2 rounded-full text-sm">Bis 50.000€</span>
+                    </div>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center mx-auto mb-4 text-2xl">💚</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Pflegekasse</h3>
+                    <p class="text-gray-400 text-center mb-4">Zuschuss fuer wohnumfeldverbessernde Massnahmen bei Pflegegrad</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm">Bis 4.000€</span>
+                    </div>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center mx-auto mb-4 text-2xl">🏛️</div>
+                    <h3 class="text-xl font-semibold mb-2 text-center">Landesfoerderung</h3>
+                    <p class="text-gray-400 text-center mb-4">Zusaetzliche Foerderprogramme je nach Bundesland moeglich</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-purple-500/20 text-purple-400 px-4 py-2 rounded-full text-sm">Variabel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Barrierefreies Wohnen planen?</h2>
+            <p class="text-xl text-gray-400 mb-8">Wir beraten Sie kostenlos und unverbindlich zu allen Moeglichkeiten und Foerdermitteln.</p>
+            <a href="/#contact" class="btn-primary inline-block px-10 py-4 rounded-xl font-semibold text-white text-lg">
+                Jetzt Beratung anfragen
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm">&copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="/impressum" class="text-gray-400 hover:text-white transition">Impressum</a>
+                    <a href="/datenschutz" class="text-gray-400 hover:text-white transition">Datenschutz</a>
+                    <a href="/agb" class="text-gray-400 hover:text-white transition">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

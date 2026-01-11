@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicherheitssysteme | West Money Bau - Alarmanlagen & Videoueberwachung</title>
+    <meta name="description" content="Professionelle Sicherheitssysteme von West Money Bau. Alarmanlagen, Videoueberwachung, Zutrittskontrolle und 24/7 Aufschaltung - Ihr Schutz ist unsere Prioritaet.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bau-primary: #00c853;
+            --bau-secondary: #ff6d00;
+            --bau-accent: #00b0ff;
+            --bau-dark: #0a1628;
+            --bau-surface: #112240;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bau-dark);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, rgba(239, 68, 68, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+        }
+        .glass {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.3);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="hero-gradient">
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center font-bold text-lg">WMB</div>
+                    <div>
+                        <span class="font-semibold text-white">West Money Bau</span>
+                        <span class="text-xs text-green-400 block">Sicherheitsexperten</span>
+                    </div>
+                </a>
+                <div class="flex items-center gap-6">
+                    <a href="/#services" class="text-gray-400 hover:text-white transition text-sm">Leistungen</a>
+                    <a href="/#contact" class="text-gray-400 hover:text-white transition text-sm">Kontakt</a>
+                    <a href="/portal" class="bg-gradient-to-r from-green-500 to-blue-500 px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">Kundenportal</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="flex-1">
+                    <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-6">
+                        <span class="w-2 h-2 bg-red-500 rounded-full pulse-dot"></span>
+                        <span class="text-red-400 text-sm font-medium">ZERTIFIZIERTER ERRICHTER</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        <span class="gradient-text">Sicherheitssysteme</span><br>
+                        Schutz rund um die Uhr.
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-8 leading-relaxed">
+                        Professionelle Sicherheitsloesungen fuer Ihr Zuhause und Gewerbe.
+                        Von der Alarmanlage ueber Videoueberwachung bis zur Zutrittskontrolle -
+                        wir schuetzen, was Ihnen wichtig ist.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/#contact" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white">
+                            Sicherheitsberatung
+                        </a>
+                        <a href="#features" class="glass px-8 py-4 rounded-xl font-semibold text-white hover:bg-white/10 transition">
+                            Systeme entdecken
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="glass rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold">Security Center</h3>
+                            <span class="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                                GESICHERT
+                            </span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🚨</span>
+                                    <div>
+                                        <p class="font-medium">Alarmanlage</p>
+                                        <p class="text-sm text-gray-400">Alle Zonen aktiv</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 font-semibold">SCHARF</span>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">📹</span>
+                                    <div>
+                                        <p class="font-medium">Videoueberwachung</p>
+                                        <p class="text-sm text-gray-400">8 Kameras online</p>
+                                    </div>
+                                </div>
+                                <span class="text-blue-400 font-semibold">LIVE</span>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl">🚪</span>
+                                    <div>
+                                        <p class="font-medium">Zutrittskontrolle</p>
+                                        <p class="text-sm text-gray-400">3 Zugaenge gesichert</p>
+                                    </div>
+                                </div>
+                                <span class="text-orange-400 font-semibold">AKTIV</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-white/10 flex items-center gap-2 text-sm text-gray-400">
+                            <span class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></span>
+                            <span>24/7 Notrufaufschaltung aktiv</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Unsere Sicherheitsloesungen</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Umfassende Sicherheitstechnik fuer jeden Bedarf - professionell geplant und installiert</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-red-500/20 mb-4">🚨</div>
+                    <h3 class="text-xl font-semibold mb-2">Einbruchmeldeanlagen</h3>
+                    <p class="text-gray-400 mb-4">VdS-zertifizierte Alarmanlagen mit Bewegungsmeldern, Magnetkontakten und Glasbruchsensoren.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> VdS Klasse A-C</li>
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> Funk & Draht</li>
+                        <li class="flex items-center gap-2"><span class="text-red-400">✓</span> App-Steuerung</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-blue-500/20 mb-4">📹</div>
+                    <h3 class="text-xl font-semibold mb-2">Videoueberwachung</h3>
+                    <p class="text-gray-400 mb-4">Hochauflösende IP-Kameras mit Nachtsicht, Bewegungserkennung und Cloud-Speicherung.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> 4K Aufloesung</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> KI-Erkennung</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-400">✓</span> DSGVO-konform</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-orange-500/20 mb-4">🚪</div>
+                    <h3 class="text-xl font-semibold mb-2">Zutrittskontrolle</h3>
+                    <p class="text-gray-400 mb-4">Elektronische Schliesssysteme mit Fingerprint, RFID-Karten und Smartphone-Zugang.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Biometrisch</li>
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Protokollierung</li>
+                        <li class="flex items-center gap-2"><span class="text-orange-400">✓</span> Zeitsteuerung</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-purple-500/20 mb-4">📞</div>
+                    <h3 class="text-xl font-semibold mb-2">Notrufaufschaltung</h3>
+                    <p class="text-gray-400 mb-4">24/7 Aufschaltung auf zertifizierte Notruf- und Serviceleitstellen (NSL) fuer sofortige Intervention.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> VdS-Leitstelle</li>
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Wachdienst</li>
+                        <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Polizeinotruf</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-yellow-500/20 mb-4">🔥</div>
+                    <h3 class="text-xl font-semibold mb-2">Brandmeldetechnik</h3>
+                    <p class="text-gray-400 mb-4">Rauch- und Waermemelder mit Vernetzung und automatischer Feuerwehralarmierung.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> DIN 14675</li>
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> Funkvernetzt</li>
+                        <li class="flex items-center gap-2"><span class="text-yellow-400">✓</span> Feuerwehraufschaltung</li>
+                    </ul>
+                </div>
+                <div class="glass rounded-xl p-6 card-hover">
+                    <div class="feature-icon bg-green-500/20 mb-4">🌐</div>
+                    <h3 class="text-xl font-semibold mb-2">Smart Home Integration</h3>
+                    <p class="text-gray-400 mb-4">Nahtlose Integration in Ihre LOXONE Smart Home Steuerung fuer zentrale Bedienung.</p>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> LOXONE-Integration</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Szenensteuerung</li>
+                        <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Anwesenheitssimulation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Standards -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Zertifizierte Sicherheit</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Wir arbeiten nach hoechsten Standards und sind mehrfach zertifiziert</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">VdS</div>
+                    <h3 class="font-semibold mb-1">VdS-zertifiziert</h3>
+                    <p class="text-sm text-gray-400">Anerkannter Errichterbetrieb</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">DIN</div>
+                    <h3 class="font-semibold mb-1">DIN EN 50131</h3>
+                    <p class="text-sm text-gray-400">Europaeische Alarmnorm</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">ISO</div>
+                    <h3 class="font-semibold mb-1">ISO 9001</h3>
+                    <p class="text-sm text-gray-400">Qualitaetsmanagement</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center mx-auto mb-4 text-xl font-bold">§34a</div>
+                    <h3 class="font-semibold mb-1">GewO §34a</h3>
+                    <p class="text-sm text-gray-400">Sachkundenachweis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-16 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Warum West Money Bau fuer Ihre Sicherheit?</h2>
+                    <div class="space-y-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-red-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Kostenlose Sicherheitsanalyse</h3>
+                                <p class="text-gray-400">Wir analysieren Ihr Objekt und identifizieren Schwachstellen - unverbindlich und kostenfrei.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-red-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Versicherungsrabatte</h3>
+                                <p class="text-gray-400">VdS-zertifizierte Anlagen koennen zu erheblichen Rabatten bei Ihrer Hausratversicherung fuehren.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-red-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">24/7 Notfall-Service</h3>
+                                <p class="text-gray-400">Unser technischer Notdienst ist rund um die Uhr fuer Sie erreichbar - auch an Feiertagen.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-red-400 text-xl">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold mb-1">Wartungsvertraege</h3>
+                                <p class="text-gray-400">Regelmaessige Wartung garantiert die Funktionssicherheit und erhält Ihre Gewaehrleistung.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-red-400">500+</p>
+                            <p class="text-gray-400">Installationen</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-blue-400">24/7</p>
+                            <p class="text-gray-400">Notdienst</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-orange-400">15+</p>
+                            <p class="text-gray-400">Jahre Erfahrung</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-4xl font-bold text-green-400">100%</p>
+                            <p class="text-gray-400">VdS-zertifiziert</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Brands -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Unsere Partner</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Wir arbeiten nur mit fuehrenden Herstellern der Sicherheitsbranche</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <h3 class="text-xl font-semibold mb-2 text-red-400">ABUS</h3>
+                    <p class="text-gray-400 text-sm">Mechanische und elektronische Sicherheitstechnik - Made in Germany</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <h3 class="text-xl font-semibold mb-2 text-blue-400">Dahua</h3>
+                    <p class="text-gray-400 text-sm">Weltweiter Marktfuehrer fuer Videoueberwachungstechnik</p>
+                </div>
+                <div class="glass rounded-xl p-6 text-center card-hover">
+                    <h3 class="text-xl font-semibold mb-2 text-green-400">LOXONE</h3>
+                    <p class="text-gray-400 text-sm">Integration in Ihr Smart Home System</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Schuetzen Sie, was Ihnen wichtig ist</h2>
+            <p class="text-xl text-gray-400 mb-8">Vereinbaren Sie jetzt Ihre kostenlose Sicherheitsanalyse vor Ort.</p>
+            <a href="/#contact" class="btn-primary inline-block px-10 py-4 rounded-xl font-semibold text-white text-lg">
+                Sicherheitsberatung anfragen
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="glass py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-sm">&copy; 2024-2026 West Money Bau GmbH. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-6 text-sm">
+                    <a href="/impressum" class="text-gray-400 hover:text-white transition">Impressum</a>
+                    <a href="/datenschutz" class="text-gray-400 hover:text-white transition">Datenschutz</a>
+                    <a href="/agb" class="text-gray-400 hover:text-white transition">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
