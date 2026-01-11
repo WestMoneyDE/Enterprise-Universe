@@ -950,6 +950,7 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
 
         try {
             // Fetch total deals and won deals in parallel
+            // Search for both 'closedwon' and 'won' stages to catch all variations
             const [allDealsRes, wonDealsRes] = await Promise.all([
                 hubspotRequest('/crm/v3/objects/deals/search', {
                     method: 'POST',
@@ -962,49 +963,81 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
                 hubspotRequest('/crm/v3/objects/deals/search', {
                     method: 'POST',
                     body: {
-                        filterGroups: [{
-                            filters: [{
-                                propertyName: 'dealstage',
-                                operator: 'EQ',
-                                value: 'closedwon'
-                            }]
-                        }],
+                        filterGroups: [
+                            { filters: [{ propertyName: 'dealstage', operator: 'EQ', value: 'closedwon' }] },
+                            { filters: [{ propertyName: 'dealstage', operator: 'EQ', value: 'won' }] }
+                        ],
                         properties: ['dealname', 'amount', 'dealstage'],
                         limit: 100
                     }
                 })
             ]);
 
-            // Get actual total deals count
-            actualTotalDeals = allDealsRes.total || data.dealsTotal || sampleSize;
+            // Validate responses - check for HubSpot error responses
+            const isValidAllDeals = allDealsRes && typeof allDealsRes.total === 'number' && !allDealsRes.status;
+            const isValidWonDeals = wonDealsRes && typeof wonDealsRes.total === 'number' && !wonDealsRes.status;
 
-            actualWonCount = wonDealsRes.total || sampleWonCount;
-            let wonSampleSum = 0;
-            const wonSampleSize = (wonDealsRes.results || []).length;
+            // Debug logging
+            if (!isValidWonDeals) {
+                console.log('[Pipeline] Invalid won response:', JSON.stringify({
+                    hasRes: !!wonDealsRes,
+                    total: wonDealsRes?.total,
+                    totalType: typeof wonDealsRes?.total,
+                    status: wonDealsRes?.status,
+                    message: wonDealsRes?.message
+                }));
+            }
 
-            // Sum won deal values from fetched sample
-            (wonDealsRes.results || []).forEach(deal => {
-                wonSampleSum += parseFloat(deal.properties?.amount) || 0;
-            });
+            // Get actual total deals count (only use if valid)
+            if (isValidAllDeals) {
+                actualTotalDeals = allDealsRes.total;
+            } else {
+                actualTotalDeals = data.dealsTotal || sampleSize;
+                console.log('[Pipeline] Using cached/sample total deals:', actualTotalDeals);
+            }
 
-            // Calculate average won deal value and extrapolate to all won deals
-            const avgWonDealValue = wonSampleSize > 0 ? wonSampleSum / wonSampleSize : 0;
-            actualWonValue = Math.round(avgWonDealValue * actualWonCount);
+            // Get won deals count (only use if valid and has results)
+            // API is authoritative when it returns > 0 results
+            if (isValidWonDeals && wonDealsRes.total > 0) {
+                actualWonCount = wonDealsRes.total;
+                let wonSampleSum = 0;
+                const wonSampleSize = (wonDealsRes.results || []).length;
 
-            // Update byStage with accurate won data
-            byStage['closedwon'] = {
-                count: actualWonCount,
-                value: actualWonValue,
-                sample_value: Math.round(wonSampleSum),
-                sample_size: wonSampleSize,
-                avg_deal: Math.round(avgWonDealValue)
-            };
+                // Sum won deal values from fetched sample
+                (wonDealsRes.results || []).forEach(deal => {
+                    wonSampleSum += parseFloat(deal.properties?.amount) || 0;
+                });
 
-            console.log(`[Pipeline] Total: ${actualTotalDeals}, Won: ${actualWonCount} deals, avg: €${Math.round(avgWonDealValue)}, total: €${actualWonValue}`);
+                // Calculate average won deal value and extrapolate to all won deals
+                const avgWonDealValue = wonSampleSize > 0 ? wonSampleSum / wonSampleSize : 0;
+                actualWonValue = Math.round(avgWonDealValue * actualWonCount);
+
+                // Update byStage with accurate won data
+                byStage['closedwon'] = {
+                    count: actualWonCount,
+                    value: actualWonValue,
+                    sample_value: Math.round(wonSampleSum),
+                    sample_size: wonSampleSize,
+                    avg_deal: Math.round(avgWonDealValue)
+                };
+
+                console.log(`[Pipeline] Won from API: ${actualWonCount} deals, avg: €${Math.round(avgWonDealValue)}, total: €${actualWonValue}`);
+            } else {
+                // Use sample won data but extrapolate based on ratio
+                const wonRatio = sampleSize > 0 ? sampleWonCount / sampleSize : 0;
+                actualWonCount = Math.round(actualTotalDeals * wonRatio);
+                actualWonValue = sampleWonValue > 0 ? Math.round((actualWonCount / sampleWonCount) * sampleWonValue) : 0;
+                console.log(`[Pipeline] Won from sample ratio (${(wonRatio * 100).toFixed(2)}%): ${actualWonCount} deals, €${actualWonValue}`);
+            }
+
+            console.log(`[Pipeline] Final: Total=${actualTotalDeals}, Won=${actualWonCount}`);
         } catch (e) {
             console.log('[Pipeline] Could not fetch deal counts:', e.message);
-            // Fallback to sample size if API fails
-            actualTotalDeals = actualTotalDeals || sampleSize;
+            // Fallback: extrapolate from sample ratio
+            actualTotalDeals = data.dealsTotal || sampleSize;
+            const wonRatio = sampleSize > 0 ? sampleWonCount / sampleSize : 0;
+            actualWonCount = Math.round(actualTotalDeals * wonRatio);
+            actualWonValue = sampleWonValue > 0 ? Math.round((actualWonCount / sampleWonCount) * sampleWonValue) : 0;
         }
 
         // Use ACTUAL HubSpot totals (now properly fetched)
