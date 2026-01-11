@@ -59,7 +59,8 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '100kb' }));
+app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 
 // Request logging
 app.use((req, res, next) => {
@@ -80,6 +81,60 @@ try {
 
 const allBots = [...(botsConfig.bots || []), ...(botsConfig.new_bots || [])];
 
+// Load Genius Bots AI Service
+let geniusBots = null;
+try {
+    geniusBots = require('./services/genius-bots');
+    console.log('✓ Genius Bots AI Service loaded');
+} catch (e) {
+    console.warn('⚠ Genius Bots service not available:', e.message);
+}
+
+// Load User Management Service
+let userService = null;
+try {
+    userService = require('./services/user-management');
+    // Initialize database and ensure admin exists
+    userService.initDatabase()
+        .then(() => userService.ensureAdminExists())
+        .catch(err => console.warn('⚠ User DB init warning:', err.message));
+    console.log('✓ User Management Service loaded');
+} catch (e) {
+    console.warn('⚠ User Management service not available:', e.message);
+}
+
+// Load Email Templates Service
+let emailService = null;
+try {
+    emailService = require('./services/email-templates');
+    emailService.initDatabase()
+        .then(() => emailService.createDefaultTemplates())
+        .catch(err => console.warn('⚠ Email DB init warning:', err.message));
+    console.log('✓ Email Templates Service loaded');
+} catch (e) {
+    console.warn('⚠ Email Templates service not available:', e.message);
+}
+
+// Load Workflow Engine Service
+let workflowService = null;
+try {
+    workflowService = require('./services/workflow-engine');
+    workflowService.initDatabase()
+        .catch(err => console.warn('⚠ Workflow DB init warning:', err.message));
+    console.log('✓ Workflow Engine Service loaded');
+} catch (e) {
+    console.warn('⚠ Workflow Engine service not available:', e.message);
+}
+
+// Load Email Queue Service (SMTP rate limiting protection)
+let emailQueue = null;
+try {
+    emailQueue = require('./services/email-queue');
+    console.log('✓ Email Queue Service loaded');
+} catch (e) {
+    console.warn('⚠ Email Queue service not available:', e.message);
+}
+
 console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
 ║     神  H A I K U   G O D   M O D E   S E R V E R  神       ║
@@ -96,7 +151,7 @@ console.log(`
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/landing', (req, res) => res.sendFile(path.join(__dirname, 'LANDING_PAGE.html')));
 app.get('/home', (req, res) => res.sendFile(path.join(__dirname, 'LANDING_PAGE.html')));
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'login-simple.html')));
 app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'register.html')));
 app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'register.html')));
 app.get('/demo', (req, res) => res.sendFile(path.join(__dirname, 'LANDING_PAGE.html')));
@@ -157,6 +212,16 @@ app.get('/agb', (req, res) => res.sendFile(path.join(__dirname, 'agb.html')));
 app.get('/datenschutz', (req, res) => res.sendFile(path.join(__dirname, 'datenschutz.html')));
 app.get('/impressum', (req, res) => res.sendFile(path.join(__dirname, 'impressum.html')));
 
+// Awards Page
+app.get('/awards', (req, res) => res.sendFile(path.join(__dirname, 'awards.html')));
+
+// Data Room (Investor Documents)
+app.get('/data-room', (req, res) => res.sendFile(path.join(__dirname, 'Data Room/index.html')));
+app.use('/Data%20Room', express.static(path.join(__dirname, 'Data Room')));
+
+// GOD MODE Dashboard
+app.get('/god-mode-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'GOD_MODE_DASHBOARD.html')));
+
 // Static files
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
@@ -181,6 +246,15 @@ app.get('/api/health', (req, res) => {
         botsOnline: allBots.length,
         timestamp: new Date().toISOString()
     });
+});
+
+// Email queue status
+app.get('/api/email-queue/status', (req, res) => {
+    if (emailQueue) {
+        res.json(emailQueue.getQueueStatus());
+    } else {
+        res.json({ error: 'Email queue not available', queueSize: 0 });
+    }
 });
 
 // System overview
@@ -413,8 +487,8 @@ smtpTransporter.verify((error, success) => {
     }
 });
 
-// Send email function
-async function sendEmail({ to, subject, html, text }) {
+// Send email function - Now uses queue for rate limiting
+async function sendEmail({ to, subject, html, text }, metadata = {}) {
     const mailOptions = {
         from: process.env.SMTP_FROM || 'Enterprise Universe <invoice@enterprise-universe.one>',
         to: to,
@@ -431,11 +505,43 @@ async function sendEmail({ to, subject, html, text }) {
             return { success: true, simulated: true };
         }
 
+        // Use email queue for rate limiting if available
+        if (emailQueue) {
+            const queueResult = emailQueue.queueEmail(mailOptions, metadata);
+            if (queueResult.success) {
+                console.log(`[SMTP] Email queued: ${queueResult.id} to ${to}`);
+                return { success: true, queued: true, queueId: queueResult.id };
+            } else {
+                console.warn(`[SMTP] Queue failed: ${queueResult.reason}, sending directly`);
+            }
+        }
+
+        // Fallback to direct send if queue not available or failed
         const result = await smtpTransporter.sendMail(mailOptions);
-        console.log(`[SMTP] ✅ Email sent to ${to} - Message ID: ${result.messageId}`);
+        console.log(`[SMTP] Email sent to ${to} - Message ID: ${result.messageId}`);
         return { success: true, messageId: result.messageId };
     } catch (error) {
-        console.error(`[SMTP] ❌ Failed to send email to ${to}:`, error.message);
+        console.error(`[SMTP] Failed to send email to ${to}:`, error.message);
+        return { success: false, error: error.message };
+    }
+}
+
+// Direct send function (bypasses queue - use sparingly for urgent emails)
+async function sendEmailDirect({ to, subject, html, text }) {
+    const mailOptions = {
+        from: process.env.SMTP_FROM || 'Enterprise Universe <invoice@enterprise-universe.one>',
+        to: to,
+        subject: subject,
+        html: html,
+        text: text || html.replace(/<[^>]*>/g, '')
+    };
+
+    try {
+        const result = await smtpTransporter.sendMail(mailOptions);
+        console.log(`[SMTP] Direct email sent to ${to} - Message ID: ${result.messageId}`);
+        return { success: true, messageId: result.messageId };
+    } catch (error) {
+        console.error(`[SMTP] Direct send failed to ${to}:`, error.message);
         return { success: false, error: error.message };
     }
 }
@@ -1188,6 +1294,566 @@ app.get('/api/v1/genius/bots', (req, res) => {
         online: 38,
         busy: 4
     });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// GENIUS AGENCY AI - Claude-Powered Bot Interactions
+// ═══════════════════════════════════════════════════════════════
+
+// Get all AI bots
+app.get('/api/v1/genius/ai-bots', (req, res) => {
+    if (!geniusBots) {
+        return res.status(503).json({ error: 'AI Bot Service not available' });
+    }
+    res.json({
+        bots: geniusBots.getAvailableBots(),
+        godMode: {
+            name: geniusBots.HAIKU_GOD_MODE.name,
+            role: geniusBots.HAIKU_GOD_MODE.role,
+            emoji: geniusBots.HAIKU_GOD_MODE.emoji
+        }
+    });
+});
+
+// Get specific bot info
+app.get('/api/v1/genius/ai-bots/:botId', (req, res) => {
+    if (!geniusBots) {
+        return res.status(503).json({ error: 'AI Bot Service not available' });
+    }
+    const bot = geniusBots.getBot(req.params.botId);
+    if (!bot) {
+        return res.status(404).json({ error: 'Bot not found' });
+    }
+    res.json(bot);
+});
+
+// Chat with a specific bot
+app.post('/api/v1/genius/chat/:botId', async (req, res) => {
+    if (!geniusBots) {
+        return res.status(503).json({ error: 'AI Bot Service not available' });
+    }
+
+    const { message, history } = req.body;
+    const { botId } = req.params;
+
+    if (!message) {
+        return res.status(400).json({ error: 'Message is required' });
+    }
+
+    try {
+        const response = await geniusBots.chatWithBot(botId, message, history || []);
+        res.json(response);
+    } catch (error) {
+        console.error('Bot chat error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Chat with God Mode (coordinates all bots)
+app.post('/api/v1/genius/godmode', async (req, res) => {
+    if (!geniusBots) {
+        return res.status(503).json({ error: 'AI Bot Service not available' });
+    }
+
+    const { message, history } = req.body;
+
+    if (!message) {
+        return res.status(400).json({ error: 'Message is required' });
+    }
+
+    try {
+        const response = await geniusBots.chatWithGodMode(message, history || []);
+        res.json(response);
+    } catch (error) {
+        console.error('God Mode error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Execute a task (God Mode assigns best bot)
+app.post('/api/v1/genius/execute', async (req, res) => {
+    if (!geniusBots) {
+        return res.status(503).json({ error: 'AI Bot Service not available' });
+    }
+
+    const { task, context } = req.body;
+
+    if (!task) {
+        return res.status(400).json({ error: 'Task is required' });
+    }
+
+    try {
+        const result = await geniusBots.executeTask(task, context || {});
+        res.json(result);
+    } catch (error) {
+        console.error('Task execution error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// USER MANAGEMENT - Authentication & Authorization
+// ═══════════════════════════════════════════════════════════════
+
+// Register new user
+app.post('/api/v1/auth/register', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const { email, password, firstName, lastName, company } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    try {
+        const user = await userService.createUser({
+            email,
+            password,
+            firstName,
+            lastName,
+            company,
+            role: 'user' // Default role for new users (matching DB constraint)
+        });
+        res.status(201).json({ message: 'User created successfully', user });
+    } catch (error) {
+        console.error('Registration error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Login
+app.post('/api/v1/auth/login', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    try {
+        const result = await userService.loginUser(
+            email,
+            password,
+            req.ip,
+            req.headers['user-agent']
+        );
+        res.json(result);
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(401).json({ error: error.message });
+    }
+});
+
+// Logout
+app.post('/api/v1/auth/logout', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.json({ message: 'Logged out' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (decoded) {
+        await userService.logoutUser(decoded.userId, token);
+    }
+
+    res.json({ message: 'Logged out successfully' });
+});
+
+// Get current user
+app.get('/api/v1/auth/me', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const user = await userService.getUserById(decoded.userId);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json(user);
+});
+
+// Update profile
+app.patch('/api/v1/auth/profile', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    try {
+        const updated = await userService.updateUser(decoded.userId, req.body);
+        res.json({ message: 'Profile updated', user: updated });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Change password
+app.post('/api/v1/auth/change-password', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+        await userService.changePassword(decoded.userId, currentPassword, newPassword);
+        res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Get all users (admin only)
+app.get('/api/v1/users', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const user = await userService.getUserById(decoded.userId);
+    if (!user || user.role !== 'admin') {
+        return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    const { limit = 100, offset = 0 } = req.query;
+    const result = await userService.getAllUsers(parseInt(limit), parseInt(offset));
+    res.json(result);
+});
+
+// Update user role (admin only)
+app.patch('/api/v1/users/:userId/role', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const admin = await userService.getUserById(decoded.userId);
+    if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    const { role } = req.body;
+
+    try {
+        await userService.updateUserRole(req.params.userId, role, decoded.userId);
+        res.json({ message: 'Role updated successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Deactivate user (admin only)
+app.delete('/api/v1/users/:userId', async (req, res) => {
+    if (!userService) {
+        return res.status(503).json({ error: 'User service not available' });
+    }
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = userService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const admin = await userService.getUserById(decoded.userId);
+    if (!admin || admin.role !== 'admin') {
+        return res.status(403).json({ error: 'Admin access required' });
+    }
+
+    try {
+        await userService.deactivateUser(req.params.userId, decoded.userId);
+        res.json({ message: 'User deactivated successfully' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// EMAIL TEMPLATES & SEQUENCES
+// ═══════════════════════════════════════════════════════════════
+
+// Get all email templates
+app.get('/api/v1/email/templates', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const templates = await emailService.getTemplates(req.query.activeOnly === 'true');
+        res.json(templates);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get merge tags
+app.get('/api/v1/email/merge-tags', (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    res.json(emailService.getMergeTags());
+});
+
+// Get single template
+app.get('/api/v1/email/templates/:id', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const template = await emailService.getTemplateById(req.params.id);
+        if (!template) {
+            return res.status(404).json({ error: 'Template not found' });
+        }
+        res.json(template);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Create template
+app.post('/api/v1/email/templates', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const template = await emailService.createTemplate(req.body);
+        res.status(201).json(template);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Update template
+app.patch('/api/v1/email/templates/:id', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const template = await emailService.updateTemplate(req.params.id, req.body);
+        res.json(template);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Delete template
+app.delete('/api/v1/email/templates/:id', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        await emailService.deleteTemplate(req.params.id);
+        res.json({ message: 'Template deleted' });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Send email using template
+app.post('/api/v1/email/send', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    const { templateId, recipient, data } = req.body;
+    if (!templateId || !recipient) {
+        return res.status(400).json({ error: 'templateId and recipient are required' });
+    }
+    try {
+        const result = await emailService.sendTemplateEmail(templateId, recipient, data || {});
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Send bulk emails
+app.post('/api/v1/email/send-bulk', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    const { templateId, recipients, commonData } = req.body;
+    if (!templateId || !recipients || !Array.isArray(recipients)) {
+        return res.status(400).json({ error: 'templateId and recipients array are required' });
+    }
+    try {
+        const result = await emailService.sendBulkEmails(templateId, recipients, commonData || {});
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get email statistics
+app.get('/api/v1/email/stats', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const stats = await emailService.getEmailStats(parseInt(req.query.days) || 30);
+        res.json(stats);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get recent emails
+app.get('/api/v1/email/recent', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const emails = await emailService.getRecentEmails(parseInt(req.query.limit) || 50);
+        res.json(emails);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// === Email Sequences ===
+
+// Get all sequences
+app.get('/api/v1/email/sequences', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const sequences = await emailService.getSequences();
+        res.json(sequences);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get sequence with steps
+app.get('/api/v1/email/sequences/:id', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const sequence = await emailService.getSequenceById(req.params.id);
+        if (!sequence) {
+            return res.status(404).json({ error: 'Sequence not found' });
+        }
+        res.json(sequence);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Create sequence
+app.post('/api/v1/email/sequences', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const sequence = await emailService.createSequence(req.body);
+        res.status(201).json(sequence);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Add step to sequence
+app.post('/api/v1/email/sequences/:id/steps', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    try {
+        const step = await emailService.addSequenceStep(req.params.id, req.body);
+        res.status(201).json(step);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Enroll contact in sequence
+app.post('/api/v1/email/sequences/:id/enroll', async (req, res) => {
+    if (!emailService) {
+        return res.status(503).json({ error: 'Email service not available' });
+    }
+    const { email, contactData } = req.body;
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+    try {
+        const enrollment = await emailService.enrollInSequence(req.params.id, email, contactData || {});
+        res.status(201).json(enrollment);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -2825,6 +3491,7 @@ async function findEmailForDeal(dealName, searchHubSpot = true) {
     // "Siemens Gamesa - Smart Factory Setup"
     const cleanName = dealName
         .replace(/\[.*?\]/g, '')  // Remove [A-CLASS] etc
+        .replace(/^S-Class:\s*/i, '') // Remove S-Class: prefix
         .replace(/#[A-Z0-9]+$/i, '') // Remove #ID
         .replace(/\[HS-\d+\]/gi, '') // Remove [HS-123456]
         .replace(/INDUSTRY_4_0|SMART_HOME|BUILDING_AUTOMATION|SOFTWARE/gi, '')
@@ -4387,6 +5054,198 @@ app.get('/api/v1/email/status', (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════
+// WORKFLOW ENGINE API ROUTES
+// ═══════════════════════════════════════════════════════════════
+
+// Get all workflows
+app.get('/api/v1/workflows', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const workflows = await workflowService.getAllWorkflows();
+        res.json({ workflows, total: workflows.length });
+    } catch (error) {
+        console.error('[Workflow] Get all error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get workflow trigger types
+app.get('/api/v1/workflows/triggers', (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    res.json({ triggers: workflowService.TRIGGER_TYPES });
+});
+
+// Get workflow action types
+app.get('/api/v1/workflows/actions', (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    res.json({ actions: workflowService.ACTION_TYPES });
+});
+
+// Get single workflow
+app.get('/api/v1/workflows/:id', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const workflow = await workflowService.getWorkflowById(req.params.id);
+        if (!workflow) {
+            return res.status(404).json({ error: 'Workflow not found' });
+        }
+        res.json(workflow);
+    } catch (error) {
+        console.error('[Workflow] Get by ID error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Create new workflow
+app.post('/api/v1/workflows', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const { name, description, trigger_type, trigger_config, is_active } = req.body;
+        const workflow = await workflowService.createWorkflow({
+            name,
+            description,
+            trigger_type,
+            trigger_config,
+            is_active,
+            created_by: req.body.user_id || null
+        });
+        res.status(201).json(workflow);
+    } catch (error) {
+        console.error('[Workflow] Create error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Update workflow
+app.patch('/api/v1/workflows/:id', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const workflow = await workflowService.updateWorkflow(req.params.id, req.body);
+        res.json(workflow);
+    } catch (error) {
+        console.error('[Workflow] Update error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Delete workflow
+app.delete('/api/v1/workflows/:id', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        await workflowService.deleteWorkflow(req.params.id);
+        res.json({ success: true, message: 'Workflow deleted' });
+    } catch (error) {
+        console.error('[Workflow] Delete error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Get workflow actions
+app.get('/api/v1/workflows/:id/actions', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const actions = await workflowService.getWorkflowActions(req.params.id);
+        res.json({ actions, total: actions.length });
+    } catch (error) {
+        console.error('[Workflow] Get actions error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Add action to workflow
+app.post('/api/v1/workflows/:id/actions', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const { action_type, action_config, step_order, name } = req.body;
+        const action = await workflowService.addWorkflowAction(req.params.id, {
+            action_type,
+            action_config,
+            step_order,
+            name
+        });
+        res.status(201).json(action);
+    } catch (error) {
+        console.error('[Workflow] Add action error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Update workflow action
+app.patch('/api/v1/workflows/:id/actions/:actionId', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const action = await workflowService.updateWorkflowAction(req.params.actionId, req.body);
+        res.json(action);
+    } catch (error) {
+        console.error('[Workflow] Update action error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Delete workflow action
+app.delete('/api/v1/workflows/:id/actions/:actionId', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        await workflowService.deleteWorkflowAction(req.params.actionId);
+        res.json({ success: true, message: 'Action deleted' });
+    } catch (error) {
+        console.error('[Workflow] Delete action error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Execute workflow manually
+app.post('/api/v1/workflows/:id/execute', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const { context } = req.body;
+        const result = await workflowService.executeWorkflow(req.params.id, context || {});
+        res.json(result);
+    } catch (error) {
+        console.error('[Workflow] Execute error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Trigger workflow by event
+app.post('/api/v1/workflows/trigger', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const { event_type, context } = req.body;
+        const results = await workflowService.triggerWorkflowsByEvent(event_type, context || {});
+        res.json({ triggered: results.length, results });
+    } catch (error) {
+        console.error('[Workflow] Trigger error:', error);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Get workflow executions (history)
+app.get('/api/v1/workflows/:id/executions', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const limit = parseInt(req.query.limit) || 50;
+        const executions = await workflowService.getWorkflowExecutions(req.params.id, limit);
+        res.json({ executions, total: executions.length });
+    } catch (error) {
+        console.error('[Workflow] Get executions error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get workflow stats
+app.get('/api/v1/workflows/stats/overview', async (req, res) => {
+    if (!workflowService) return res.status(500).json({ error: 'Workflow service not available' });
+    try {
+        const stats = await workflowService.getWorkflowStats();
+        res.json(stats);
+    } catch (error) {
+        console.error('[Workflow] Stats error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
 // S-CLASS DEALS - KONTAKTE ZUORDNEN
 // ═══════════════════════════════════════════════════════════════
 
@@ -5009,10 +5868,75 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Not Found' });
 });
 
-// Error handler
+// Error handler - Enhanced with detailed logging
 app.use((err, req, res, next) => {
-    console.error('Server Error:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    const errorInfo = {
+        timestamp: new Date().toISOString(),
+        path: req.path,
+        method: req.method,
+        error: err.message,
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    };
+    console.error('[Server Error]', JSON.stringify(errorInfo, null, 2));
+    res.status(err.status || 500).json({
+        error: 'Internal Server Error',
+        message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// GLOBAL ERROR HANDLERS (PM2 Crash Prevention)
+// ═══════════════════════════════════════════════════════════════
+
+// Handle uncaught exceptions - log but don't crash
+process.on('uncaughtException', (err) => {
+    console.error('[CRITICAL] Uncaught Exception:', {
+        timestamp: new Date().toISOString(),
+        error: err.message,
+        stack: err.stack
+    });
+    // Don't exit - let PM2 decide based on error frequency
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('[CRITICAL] Unhandled Rejection:', {
+        timestamp: new Date().toISOString(),
+        reason: reason?.message || reason,
+        stack: reason?.stack
+    });
+    // Don't exit - let PM2 decide
+});
+
+// Memory monitoring - log warning if memory usage is high
+const MEMORY_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const MEMORY_WARNING_MB = 400;
+
+setInterval(() => {
+    const memUsage = process.memoryUsage();
+    const heapUsedMB = Math.round(memUsage.heapUsed / 1024 / 1024);
+    const heapTotalMB = Math.round(memUsage.heapTotal / 1024 / 1024);
+    const rssMB = Math.round(memUsage.rss / 1024 / 1024);
+
+    if (heapUsedMB > MEMORY_WARNING_MB) {
+        console.warn(`[Memory Warning] Heap: ${heapUsedMB}/${heapTotalMB}MB, RSS: ${rssMB}MB`);
+        // Trigger garbage collection if available
+        if (global.gc) {
+            console.log('[Memory] Running garbage collection...');
+            global.gc();
+        }
+    }
+}, MEMORY_CHECK_INTERVAL);
+
+// Graceful shutdown handler
+process.on('SIGTERM', () => {
+    console.log('[Server] SIGTERM received, shutting down gracefully...');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('[Server] SIGINT received, shutting down gracefully...');
+    process.exit(0);
 });
 
 // ═══════════════════════════════════════════════════════════════
