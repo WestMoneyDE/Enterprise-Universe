@@ -175,6 +175,9 @@ app.get('/v11', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.h
 app.get('/v10', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v10.html')));
 app.get('/v5', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
 
+// ULTIMATE DASHBOARD - All-in-One Command Center
+app.get('/ultimate', (req, res) => res.sendFile(path.join(__dirname, 'ULTIMATE-DASHBOARD.html')));
+
 // Enterprise Suite Dark Mode - Professional Command Center
 app.get('/suite', (req, res) => res.sendFile(path.join(__dirname, 'dashboard/enterprise-suite-dark.html')));
 app.get('/command-center', (req, res) => res.sendFile(path.join(__dirname, 'dashboard/enterprise-suite-dark.html')));
