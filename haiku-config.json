@@ -7,8 +7,8 @@
       "title": "Divine Warrior Controller",
       "subtitle": "Ultra Instinct Master - Smart Home & Sales Edition",
       "version": "3.0.0",
-      "totalBots": 34,
-      "botCategories": ["analysts", "strategists", "creatives", "innovators", "explorers", "philosophers", "investigators", "prophets", "smart_home", "sales"]
+      "totalBots": 44,
+      "botCategories": ["analysts", "strategists", "creatives", "innovators", "explorers", "philosophers", "investigators", "prophets", "diplomats", "smart_home", "sales"]
     },
     "avatar": {
       "type": "divine_warrior",
@@ -292,7 +292,7 @@
     "achievements": {
       "firstBlood": "Complete your first task",
       "dealCloser": "Close 10 deals",
-      "botMaster": "Use all 34 bots",
+      "botMaster": "Use all 44 bots",
       "speedDemon": "Complete 100 tasks in one day",
       "revenueKing": "Hit 1M EUR revenue",
       "ultraInstinct": "Achieve MUI transformation",

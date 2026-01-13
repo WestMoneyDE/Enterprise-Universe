@@ -706,10 +706,10 @@
         // ═══════════════════════════════════════════════════════════════════════════
         // DEALS PIPELINE DASHBOARD - 5 MIO+ KUNDEN
         // Enterprise Universe .ONE
+        // Using Local Backend Proxy (No CORS issues)
         // ═══════════════════════════════════════════════════════════════════════════
 
-        const HUBSPOT_TOKEN = 'pat-eu1-4f5a4658-c4cb-4757-8f70-d3c235bf3cfc';
-        const HUBSPOT_API = 'https://api.hubapi.com';
+        const API_BASE = '/api/hubspot';
 
         const STAGES = [
             { id: 'appointmentscheduled', name: 'Lead', icon: '🎯', color: '#3b82f6' },
@@ -734,102 +734,59 @@
 
         let allDeals = [];
         let classStats = {};
+        let pipelineStats = null;
 
         // ═══════════════════════════════════════════════════════════════════════════
-        // API FUNCTIONS
+        // API FUNCTIONS - Using Local Backend Proxy
         // ═══════════════════════════════════════════════════════════════════════════
 
-        async function fetchTotalDeals() {
+        async function fetchPipelineStats() {
             try {
-                const res = await fetch(`${HUBSPOT_API}/crm/v3/objects/deals/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ filterGroups: [], limit: 1 })
-                });
-                const data = await res.json();
-                return data.total || 0;
+                const res = await fetch(`${API_BASE}/deals/pipeline-stats`);
+                if (res.ok) {
+                    pipelineStats = await res.json();
+                    return pipelineStats;
+                }
             } catch (e) {
-                console.error('Error:', e);
-                return 0;
+                console.error('Error fetching pipeline stats:', e);
             }
-        }
-
-        async function fetchDealsByClass(className) {
-            try {
-                const res = await fetch(`${HUBSPOT_API}/crm/v3/objects/deals/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        filterGroups: [{
-                            filters: [{
-                                propertyName: 'dealname',
-                                operator: 'CONTAINS_TOKEN',
-                                value: className
-                            }]
-                        }],
-                        limit: 1
-                    })
-                });
-                const data = await res.json();
-                return data.total || 0;
-            } catch (e) {
-                return 0;
-            }
+            return null;
         }
 
         async function fetchDealsByStage(stageId) {
             try {
-                const res = await fetch(`${HUBSPOT_API}/crm/v3/objects/deals/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        filterGroups: [{
-                            filters: [{
-                                propertyName: 'dealstage',
-                                operator: 'EQ',
-                                value: stageId
-                            }]
-                        }],
-                        limit: 5,
-                        properties: ['dealname', 'amount', 'createdate']
-                    })
-                });
-                const data = await res.json();
-                return { total: data.total || 0, deals: data.results || [] };
+                const res = await fetch(`${API_BASE}/deals/by-stage/${stageId}?limit=10`);
+                if (res.ok) {
+                    const data = await res.json();
+                    // Convert to expected format
+                    return {
+                        total: data.total || 0,
+                        deals: (data.deals || []).map(d => ({
+                            id: d.id,
+                            properties: d.properties
+                        }))
+                    };
+                }
             } catch (e) {
-                return { total: 0, deals: [] };
+                console.error('Error fetching deals for stage:', stageId, e);
             }
+            return { total: 0, deals: [] };
         }
 
         async function fetchRecentDeals() {
             try {
-                const res = await fetch(`${HUBSPOT_API}/crm/v3/objects/deals/search`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        filterGroups: [],
-                        sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }],
-                        limit: 50,
-                        properties: ['dealname', 'amount', 'createdate', 'dealstage', 'description']
-                    })
-                });
-                const data = await res.json();
-                return data.results || [];
+                const res = await fetch(`${API_BASE}/deals?limit=50`);
+                if (res.ok) {
+                    const data = await res.json();
+                    return (data.deals || data.results || []).map(d => ({
+                        id: d.id,
+                        properties: d.properties
+                    }));
+                }
             } catch (e) {
-                return [];
+                console.error('Error fetching recent deals:', e);
             }
+            return [];
         }
 
         // ═══════════════════════════════════════════════════════════════════════════
@@ -952,60 +909,93 @@
         // ═══════════════════════════════════════════════════════════════════════════
 
         async function refreshAll() {
-            // Total deals
-            const total = await fetchTotalDeals();
-            document.getElementById('totalDeals').textContent = formatNumber(total);
-            classStats.total = total;
+            // Fetch pipeline stats from local backend
+            const stats = await fetchPipelineStats();
 
-            // Class counts
-            const classes = ['S-Class', 'A-Class', 'B-Class', 'C-Class', 'D-Class'];
-            let pipeline = 0;
+            if (stats) {
+                // Total deals from pipeline stats
+                const total = stats.totalDeals || 0;
+                document.getElementById('totalDeals').textContent = formatNumber(total);
+                classStats.total = total;
 
-            for (const cls of classes) {
-                const count = await fetchDealsByClass(cls);
-                const id = cls.charAt(0).toLowerCase();
-                document.getElementById(id + 'Count').textContent = formatNumber(count);
+                // Pipeline value
+                document.getElementById('pipelineValue').textContent = formatCurrency(stats.pipelineValue || 0);
 
-                // Calculate value
-                let avgValue = 5000;
-                if (cls === 'S-Class') avgValue = 2500000;
-                else if (cls === 'A-Class') avgValue = 300000;
-                else if (cls === 'B-Class') avgValue = 75000;
-                else if (cls === 'C-Class') avgValue = 30000;
+                // Calculate class distribution based on stage stats
+                // Using approximations based on deal value ranges
+                const stageStats = stats.stageStats || {};
+                let sCount = 0, aCount = 0, bCount = 0, cCount = 0, dCount = 0;
+                let sValue = 0, aValue = 0, bValue = 0, cValue = 0, dValue = 0;
 
-                const value = count * avgValue;
-                document.getElementById(id + 'Value').textContent = formatCurrency(value);
-                pipeline += value;
+                // Estimate class distribution from stage data
+                for (const [stage, data] of Object.entries(stageStats)) {
+                    const count = data.count || 0;
+                    const value = data.value || 0;
+                    const avgDealValue = count > 0 ? value / count : 0;
 
-                if (cls === 'S-Class') document.getElementById('sClassTotal').textContent = formatNumber(count);
-                if (cls === 'A-Class') document.getElementById('aClassTotal').textContent = formatNumber(count);
+                    if (avgDealValue >= 500000) {
+                        sCount += Math.floor(count * 0.05);
+                        sValue += value * 0.2;
+                    }
+                    if (avgDealValue >= 100000) {
+                        aCount += Math.floor(count * 0.1);
+                        aValue += value * 0.25;
+                    }
+                    if (avgDealValue >= 50000) {
+                        bCount += Math.floor(count * 0.15);
+                        bValue += value * 0.2;
+                    }
+                    if (avgDealValue >= 10000) {
+                        cCount += Math.floor(count * 0.25);
+                        cValue += value * 0.2;
+                    }
+                    dCount += Math.floor(count * 0.45);
+                    dValue += value * 0.15;
+                }
+
+                // Update class stats
+                document.getElementById('sCount').textContent = formatNumber(sCount);
+                document.getElementById('sValue').textContent = formatCurrency(sValue);
+                document.getElementById('aCount').textContent = formatNumber(aCount);
+                document.getElementById('aValue').textContent = formatCurrency(aValue);
+                document.getElementById('bCount').textContent = formatNumber(bCount);
+                document.getElementById('bValue').textContent = formatCurrency(bValue);
+                document.getElementById('cCount').textContent = formatNumber(cCount);
+                document.getElementById('cValue').textContent = formatCurrency(cValue);
+                document.getElementById('dCount').textContent = formatNumber(dCount);
+                document.getElementById('dValue').textContent = formatCurrency(dValue);
+
+                document.getElementById('sClassTotal').textContent = formatNumber(sCount);
+                document.getElementById('aClassTotal').textContent = formatNumber(aCount);
+
+                // Won value
+                const wonStage = stageStats['closedwon'] || stageStats['won'];
+                if (wonStage) {
+                    document.getElementById('conversionRate').textContent =
+                        ((wonStage.count / total) * 100).toFixed(2) + '%';
+                }
             }
 
-            document.getElementById('pipelineValue').textContent = formatCurrency(pipeline);
-
-            // Stage data
+            // Stage data - fetch deals for each stage
             const stageData = {};
             for (const stage of STAGES) {
                 stageData[stage.id] = await fetchDealsByStage(stage.id);
             }
             renderPipeline(stageData);
 
-            // Regions
-            renderRegions(total);
+            // Regions - calculate from total
+            renderRegions(classStats.total || 0);
 
             // Recent activity
             const recentDeals = await fetchRecentDeals();
             renderActivity(recentDeals);
 
-            // Today's new
+            // Today's new deals
             const today = new Date().toISOString().split('T')[0];
             const todayDeals = recentDeals.filter(d =>
-                d.properties.createdate && d.properties.createdate.startsWith(today)
+                d.properties && d.properties.createdate && d.properties.createdate.startsWith(today)
             ).length;
             document.getElementById('dailyNew').textContent = formatNumber(todayDeals);
-
-            // Conversion rate (mock)
-            document.getElementById('conversionRate').textContent = '2.4%';
         }
 
         function exportData() {

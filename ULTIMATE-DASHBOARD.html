@@ -121,9 +121,32 @@
                         <span class="nav-icon">💎</span>
                         <span class="nav-label">HAIKU God Mode</span>
                     </a>
+                    <a href="#/ai/taskforce" class="nav-item" data-route="/ai/taskforce">
+                        <span class="nav-icon">⚡</span>
+                        <span class="nav-label">Broly Taskforce</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Projects</div>
+                    <a href="#/projects" class="nav-item" data-route="/projects">
+                        <span class="nav-icon">📁</span>
+                        <span class="nav-label">All Projects</span>
+                    </a>
+                    <a href="#/projects/documents" class="nav-item" data-route="/projects/documents">
+                        <span class="nav-icon">📋</span>
+                        <span class="nav-label">Documents</span>
+                    </a>
+                    <a href="#/projects/deliverables" class="nav-item" data-route="/projects/deliverables">
+                        <span class="nav-icon">📦</span>
+                        <span class="nav-label">Deliverables</span>
+                    </a>
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Finance</div>
+                    <a href="#/finance/money" class="nav-item" data-route="/finance/money">
+                        <span class="nav-icon">💵</span>
+                        <span class="nav-label">Money Management</span>
+                    </a>
                     <a href="#/finance/cashflow" class="nav-item" data-route="/finance/cashflow">
                         <span class="nav-icon">📈</span>
                         <span class="nav-label">Cashflow</span>
@@ -131,6 +154,10 @@
                     <a href="#/finance/invoices" class="nav-item" data-route="/finance/invoices">
                         <span class="nav-icon">📄</span>
                         <span class="nav-label">Invoices</span>
+                    </a>
+                    <a href="#/finance/subscriptions" class="nav-item" data-route="/finance/subscriptions">
+                        <span class="nav-icon">🔄</span>
+                        <span class="nav-label">Subscriptions</span>
                     </a>
                     <a href="#/finance/stripe" class="nav-item" data-route="/finance/stripe">
                         <span class="nav-icon">💳</span>
@@ -389,9 +416,15 @@
             '/campaigns': 'renderCampaigns',
             '/ai/bots': 'renderBots',
             '/ai/haiku': 'renderHaiku',
+            '/ai/taskforce': 'renderBrolyTaskforce',
             '/ai/prophecy': 'renderProphecy',
+            '/projects': 'renderProjects',
+            '/projects/documents': 'renderProjectDocuments',
+            '/projects/deliverables': 'renderDeliverables',
+            '/finance/money': 'renderMoneyManagement',
             '/finance/cashflow': 'renderCashflow',
             '/finance/invoices': 'renderInvoices',
+            '/finance/subscriptions': 'renderSubscriptions',
             '/finance/stripe': 'renderStripe',
             '/integrations': 'renderIntegrations',
             '/settings': 'renderSettings',
@@ -603,6 +636,35 @@
                 ])
             ]);
             thirdRow.appendChild(goalsCard);
+
+            // Auto Lead Discovery Widget
+            var leadDiscoveryCard = DOM.el('div', { className: 'card', style: 'margin-top: 1.5rem;' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '🔍 Auto Lead Discovery'),
+                    DOM.el('div', { className: 'flex gap-2 items-center' }, [
+                        DOM.el('span', { id: 'lead-discovery-status', className: 'badge badge-info', style: 'font-size: 0.7rem;' }, 'Ready'),
+                        DOM.el('button', { className: 'btn btn-primary btn-sm', onclick: function() { UltimateApp.startLeadDiscovery(); } }, '🚀 Scan Now')
+                    ])
+                ]),
+                DOM.el('div', { className: 'card-body', id: 'lead-discovery-widget' }, [
+                    DOM.el('div', { className: 'grid grid-3', style: 'gap: 1rem;' }, [
+                        DOM.el('div', { className: 'kpi-card info', style: 'padding: 1rem;' }, [
+                            DOM.el('div', { className: 'kpi-label' }, 'New Leads'),
+                            DOM.el('div', { id: 'ld-new-leads', className: 'kpi-value', style: 'font-size: 1.5rem;' }, '-')
+                        ]),
+                        DOM.el('div', { className: 'kpi-card success', style: 'padding: 1rem;' }, [
+                            DOM.el('div', { className: 'kpi-label' }, 'Hot Leads'),
+                            DOM.el('div', { id: 'ld-hot-leads', className: 'kpi-value', style: 'font-size: 1.5rem;' }, '-')
+                        ]),
+                        DOM.el('div', { className: 'kpi-card warning', style: 'padding: 1rem;' }, [
+                            DOM.el('div', { className: 'kpi-label' }, 'Last Scan'),
+                            DOM.el('div', { id: 'ld-last-scan', className: 'kpi-value', style: 'font-size: 0.9rem;' }, 'Never')
+                        ])
+                    ]),
+                    DOM.el('div', { id: 'lead-discovery-results', style: 'margin-top: 1rem; max-height: 200px; overflow-y: auto;' })
+                ])
+            ]);
+            container.appendChild(leadDiscoveryCard);
 
             // Fourth Row: Revenue Chart (Full Width)
             var revenueChartCard = DOM.el('div', { className: 'card', style: 'margin-top: 1.5rem;' }, [
@@ -1063,6 +1125,16 @@
 
         contactsPage: 0,
         contactsPerPage: 50,
+        invoicesPage: 0,
+        invoicesPerPage: 30,
+        invoicesSort: 'score',
+        invoicesOrder: 'desc',
+        stripePage: 0,
+        stripePerPage: 25,
+        stripeLastId: null,
+        stripeFirstId: null,
+        stripeHasMore: false,
+        stripeHistory: [],
 
         renderContacts: async function() {
             var container = this.container();
@@ -1196,7 +1268,7 @@
             container.appendChild(header);
 
             // Pipeline Stats Grid
-            var statsGrid = DOM.el('div', { className: 'kpi-grid', id: 'pipeline-stats', style: 'margin-bottom: 1.5rem;' }, [
+            var statsGrid = DOM.el('div', { className: 'grid grid-4', id: 'pipeline-stats', style: 'margin-bottom: 1.5rem;' }, [
                 DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
                 DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
                 DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
@@ -1234,157 +1306,162 @@
             this.loadDealsKanban();
         },
 
+        // Stage pagination state
+        stagePaging: {},
+        stageConfigs: [
+            { id: 'qualifiedtobuy', name: 'Qualified', color: 'var(--info)', weight: 0.1 },
+            { id: 'presentationscheduled', name: 'Presentation', color: 'var(--accent-primary)', weight: 0.3 },
+            { id: 'decisionmakerboughtin', name: 'Decision Maker', color: 'var(--warning)', weight: 0.6 },
+            { id: 'appointmentscheduled', name: 'Appointment', color: '#8b5cf6', weight: 0.2 },
+            { id: 'negotiation', name: 'Negotiation', color: 'var(--accent-secondary)', weight: 0.8 },
+            { id: 'closedwon', name: 'Won', color: 'var(--success)', weight: 1.0 },
+            { id: 'closedlost', name: 'Lost', color: 'var(--error)', weight: 0 }
+        ],
+
         loadDealsKanban: async function() {
             var kanban = document.getElementById('deals-kanban');
             var statsGrid = document.getElementById('pipeline-stats');
+            var self = this;
+            var stages = this.stageConfigs;
 
             // Show loading state
             if (kanban) {
                 DOM.clear(kanban);
-                var loadingEl = DOM.el('div', { style: 'text-align: center; padding: 2rem; color: var(--text-muted);' }, [
-                    DOM.el('div', { style: 'font-size: 2rem; margin-bottom: 0.5rem;' }, String.fromCodePoint(0x23F3)),
-                    DOM.el('span', {}, 'Lade alle Deals...')
-                ]);
-                kanban.appendChild(loadingEl);
+                kanban.appendChild(DOM.el('div', { style: 'text-align: center; padding: 2rem; color: var(--text-muted);' }, [
+                    DOM.el('div', { className: 'loading-spinner', style: 'width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;' }),
+                    DOM.el('span', {}, 'Lade Pipeline Stats...')
+                ]));
             }
 
-            // Fetch ALL deals using pagination endpoint
-            var data = await API.get('/api/hubspot/deals/all');
-            if (kanban) DOM.clear(kanban);
+            // FAST: Load pipeline stats first (aggregated counts only)
+            var statsData = await API.get('/api/hubspot/deals/pipeline-stats');
+            var stageStats = statsData && statsData.stageStats ? statsData.stageStats : {};
+            var totalDeals = statsData ? statsData.totalDeals : 0;
+            var pipelineValue = statsData ? statsData.pipelineValue : 0;
+            var wonValue = statsData ? statsData.wonValue : 0;
 
-            var stages = [
-                { id: 'qualifiedtobuy', name: 'Qualified', color: 'var(--info)', weight: 0.1 },
-                { id: 'presentationscheduled', name: 'Presentation', color: 'var(--accent-primary)', weight: 0.3 },
-                { id: 'decisionmakerboughtin', name: 'Decision Maker', color: 'var(--warning)', weight: 0.6 },
-                { id: 'negotiation', name: 'Negotiation', color: 'var(--accent-secondary)', weight: 0.8 },
-                { id: 'closedwon', name: 'Won', color: 'var(--success)', weight: 1.0 },
-                { id: 'closedlost', name: 'Lost', color: 'var(--error)', weight: 0 }
-            ];
+            // Update Stats Grid immediately
+            var wonCount = stageStats.closedwon ? stageStats.closedwon.count : 0;
+            var lostCount = stageStats.closedlost ? stageStats.closedlost.count : 0;
+            var closedTotal = wonCount + lostCount;
+            var winRate = closedTotal > 0 ? (wonCount / closedTotal * 100) : 0;
+            var openDeals = totalDeals - wonCount - lostCount;
 
-            // Group deals by stage
-            var dealsByStage = {};
-            stages.forEach(function(s) { dealsByStage[s.id] = []; });
-
-            var allDeals = data && (data.deals || data.results) ? (data.deals || data.results) : [];
-            allDeals.forEach(function(deal) {
-                var stage = deal.properties && deal.properties.dealstage ? deal.properties.dealstage : 'qualifiedtobuy';
-                if (dealsByStage[stage]) {
-                    dealsByStage[stage].push(deal);
-                }
-            });
-
-            // Calculate Pipeline Statistics
-            var totalPipeline = 0;
-            var weightedPipeline = 0;
-            var wonDeals = dealsByStage['closedwon'] || [];
-            var lostDeals = dealsByStage['closedlost'] || [];
-            var openDeals = 0;
-            var wonValue = 0;
-
-            stages.forEach(function(stage) {
-                var deals = dealsByStage[stage.id] || [];
-                deals.forEach(function(d) {
-                    var amount = parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0);
-                    totalPipeline += amount;
-                    weightedPipeline += amount * stage.weight;
-                    if (stage.id === 'closedwon') {
-                        wonValue += amount;
-                    }
-                    if (stage.id !== 'closedwon' && stage.id !== 'closedlost') {
-                        openDeals++;
-                    }
-                });
-            });
-
-            // Calculate Win Rate
-            var closedDeals = wonDeals.length + lostDeals.length;
-            var winRate = closedDeals > 0 ? (wonDeals.length / closedDeals * 100) : 0;
-
-            // Update Pipeline Stats
             if (statsGrid) {
                 DOM.clear(statsGrid);
                 var stats = [
-                    { label: 'Total Pipeline', value: formatCurrency(totalPipeline), change: allDeals.length + ' Deals', icon: '📊', type: 'info' },
-                    { label: 'Gewichteter Wert', value: formatCurrency(weightedPipeline), change: 'Forecast', icon: '⚖️', type: 'primary' },
-                    { label: 'Won Deals', value: formatCurrency(wonValue), change: wonDeals.length + ' Deals', icon: '🏆', type: 'success' },
-                    { label: 'Avg Deal Size', value: formatCurrency(allDeals.length > 0 ? totalPipeline / allDeals.length : 0), change: 'pro Deal', icon: '💎', type: 'warning' }
+                    { label: 'Total Pipeline', value: formatCurrency(pipelineValue), change: totalDeals + ' Deals', icon: '📊', type: 'info' },
+                    { label: 'Win Rate', value: winRate.toFixed(1) + '%', change: wonCount + ' Won / ' + lostCount + ' Lost', icon: '🏆', type: 'success' },
+                    { label: 'Won Value', value: formatCurrency(wonValue), change: wonCount + ' Deals', icon: '💰', type: 'primary' },
+                    { label: 'Open Deals', value: String(openDeals), change: 'in Pipeline', icon: '📈', type: 'warning' }
                 ];
-
                 stats.forEach(function(stat) {
-                    var card = DOM.el('div', { className: 'kpi-card ' + stat.type + ' animate-slide-up', style: 'cursor: pointer;', onclick: function() { UltimateApp.showPipelineDetail(stat.label); } }, [
+                    statsGrid.appendChild(DOM.el('div', { className: 'kpi-card ' + stat.type + ' animate-slide-up' }, [
                         DOM.el('div', { className: 'kpi-header' }, [
                             DOM.el('span', { className: 'kpi-label' }, stat.label),
                             DOM.el('span', { className: 'kpi-icon' }, stat.icon)
                         ]),
                         DOM.el('div', { className: 'kpi-value' }, stat.value),
                         DOM.el('div', { className: 'kpi-change positive' }, stat.change)
-                    ]);
-                    statsGrid.appendChild(card);
+                    ]));
                 });
             }
 
             // Update Win Rate Display
-            var winRateValue = document.getElementById('win-rate-value');
+            var winRateEl = document.getElementById('win-rate-value');
             var winRateBar = document.getElementById('win-rate-bar');
-            var wonCount = document.getElementById('won-count');
-            var lostCount = document.getElementById('lost-count');
-            var openCount = document.getElementById('open-count');
-
-            if (winRateValue) winRateValue.textContent = winRate.toFixed(1) + '%';
+            if (winRateEl) winRateEl.textContent = winRate.toFixed(1) + '%';
             if (winRateBar) setTimeout(function() { winRateBar.style.width = winRate + '%'; }, 100);
-            if (wonCount) wonCount.textContent = wonDeals.length + ' Won';
-            if (lostCount) lostCount.textContent = lostDeals.length + ' Lost';
-            if (openCount) openCount.textContent = openDeals + ' Open';
+            var wonEl = document.getElementById('won-count');
+            var lostEl = document.getElementById('lost-count');
+            var openEl = document.getElementById('open-count');
+            if (wonEl) wonEl.textContent = wonCount + ' Won';
+            if (lostEl) lostEl.textContent = lostCount + ' Lost';
+            if (openEl) openEl.textContent = openDeals + ' Open';
 
-            // Render Kanban Columns
+            // Render Kanban columns with counts (deals loaded in parallel)
             if (kanban) {
+                DOM.clear(kanban);
                 stages.forEach(function(stage) {
-                    var deals = dealsByStage[stage.id] || [];
-                    var totalValue = deals.reduce(function(sum, d) {
-                        return sum + parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0);
-                    }, 0);
-                    var weightedValue = totalValue * stage.weight;
-
+                    var count = stageStats[stage.id] ? stageStats[stage.id].count : 0;
                     var column = DOM.el('div', { className: 'kanban-column', dataset: { stage: stage.id } }, [
-                        DOM.el('div', { className: 'kanban-header', style: 'cursor: pointer;', onclick: function() { UltimateApp.showStageDetail(stage.id, stage.name); } }, [
+                        DOM.el('div', { className: 'kanban-header' }, [
                             DOM.el('div', {}, [
                                 DOM.el('span', { className: 'kanban-title', style: 'color: ' + stage.color + ';' }, stage.name),
-                                DOM.el('div', { style: 'font-size: 0.8rem; color: var(--text-muted);' }, formatCurrency(totalValue)),
-                                DOM.el('div', { style: 'font-size: 0.7rem; color: var(--accent-primary); margin-top: 2px;' }, '⚖️ ' + formatCurrency(weightedValue) + ' (' + (stage.weight * 100) + '%)')
+                                DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted);' }, 'Weight: ' + (stage.weight * 100) + '%')
                             ]),
-                            DOM.el('span', { className: 'kanban-count' }, String(deals.length))
+                            DOM.el('span', { className: 'kanban-count' }, String(count))
                         ]),
-                        DOM.el('div', { className: 'kanban-cards', id: 'stage-' + stage.id })
+                        DOM.el('div', { className: 'kanban-cards', id: 'stage-' + stage.id }, [
+                            DOM.el('div', { style: 'text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.8rem;' }, count > 0 ? 'Loading...' : 'No deals')
+                        ])
                     ]);
-
-                    var cardsContainer = column.querySelector('.kanban-cards');
-                    deals.forEach(function(deal) {
-                        var props = deal.properties || {};
-                        var dealAmount = parseFloat(props.amount || 0);
-                        var card = DOM.el('div', { className: 'kanban-card', draggable: 'true', dataset: { dealId: deal.id }, style: 'cursor: pointer;', onclick: function() { UltimateApp.showDealDetail(deal.id); } }, [
-                            DOM.el('div', { className: 'kanban-card-title' }, escapeHtml(props.dealname || 'Unnamed Deal')),
-                            DOM.el('div', { className: 'kanban-card-meta' }, [
-                                DOM.el('span', { className: 'kanban-card-value' }, formatCurrency(dealAmount)),
-                                DOM.el('span', { style: 'color: var(--accent-primary); font-size: 0.7rem;' }, '⚖️ ' + formatCurrency(dealAmount * stage.weight))
-                            ]),
-                            props.closedate ? DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;' }, '📅 ' + formatDate(props.closedate)) : null
-                        ]);
-                        cardsContainer.appendChild(card);
-                    });
-
                     kanban.appendChild(column);
                 });
+
+                // Load deals for each stage in parallel (top 30 each)
+                var stagePromises = stages.map(function(stage) {
+                    return self.loadStageDeals(stage.id, stage);
+                });
+                await Promise.all(stagePromises);
+            }
+        },
+
+        loadStageDeals: async function(stageId, stageConfig, after) {
+            var self = this;
+            var container = document.getElementById('stage-' + stageId);
+            if (!container) return;
+            if (!after) DOM.clear(container);
+
+            var url = '/api/hubspot/deals/by-stage/' + stageId + '?limit=100' + (after ? '&after=' + after : '');
+            var data = await API.get(url);
+            var deals = data && data.deals ? data.deals : [];
+            var total = data ? data.total : 0;
+            var paging = data ? data.paging : null;
+            this.stagePaging[stageId] = paging;
+
+            if (deals.length === 0 && !after) {
+                container.appendChild(DOM.el('div', { style: 'text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.8rem;' }, 'No deals'));
+                return;
+            }
+
+            var weight = stageConfig ? stageConfig.weight : 0.5;
+            deals.forEach(function(deal) {
+                var props = deal.properties || {};
+                var dealAmount = parseFloat(props.amount || 0);
+                var card = DOM.el('div', { className: 'kanban-card', draggable: 'true', dataset: { dealId: deal.id }, style: 'cursor: pointer;', onclick: function() { UltimateApp.showDealDetail(deal.id); } }, [
+                    DOM.el('div', { className: 'kanban-card-title' }, escapeHtml(props.dealname || 'Unnamed Deal')),
+                    DOM.el('div', { className: 'kanban-card-meta' }, [
+                        DOM.el('span', { className: 'kanban-card-value' }, formatCurrency(dealAmount)),
+                        DOM.el('span', { style: 'color: var(--accent-primary); font-size: 0.7rem;' }, '⚖️ ' + formatCurrency(dealAmount * weight))
+                    ]),
+                    props.closedate ? DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;' }, '📅 ' + formatDate(props.closedate)) : null
+                ]);
+                container.appendChild(card);
+            });
+
+            // Add "Load More" button if there are more deals
+            if (paging && paging.next && paging.next.after) {
+                var loadedCount = container.querySelectorAll('.kanban-card').length;
+                var loadMoreBtn = DOM.el('button', {
+                    className: 'btn btn-ghost btn-sm',
+                    style: 'width: 100%; margin-top: 0.5rem; font-size: 0.75rem;',
+                    onclick: function() {
+                        this.disabled = true;
+                        this.textContent = 'Loading...';
+                        self.loadStageDeals(stageId, stageConfig, paging.next.after);
+                    }
+                }, '+ Load More (' + loadedCount + '/' + total + ')');
+                container.appendChild(loadMoreBtn);
             }
         },
 
         showPipelineDetail: function(label) {
             console.log('Pipeline Detail:', label);
-            // TODO: Show modal with pipeline breakdown
         },
 
         showStageDetail: function(stageId, stageName) {
             console.log('Stage Detail:', stageId, stageName);
-            // TODO: Show modal with stage deals list
         },
 
         showDealDetail: function(dealId) {
@@ -1393,84 +1470,477 @@
         },
 
         // ═══════════════════════════════════════════════════════════
+        // AUTO LEAD DISCOVERY
+        // ═══════════════════════════════════════════════════════════
+
+        startLeadDiscovery: async function() {
+            var statusEl = document.getElementById('lead-discovery-status');
+            var resultsEl = document.getElementById('lead-discovery-results');
+            var newLeadsEl = document.getElementById('ld-new-leads');
+            var hotLeadsEl = document.getElementById('ld-hot-leads');
+            var lastScanEl = document.getElementById('ld-last-scan');
+
+            if (statusEl) {
+                statusEl.textContent = 'Scanning...';
+                statusEl.className = 'badge badge-warning';
+            }
+
+            try {
+                // Start the lead discovery scan
+                var result = await API.post('/api/lead-discovery/start');
+
+                // Poll for status
+                var checkStatus = async function() {
+                    var status = await API.get('/api/lead-discovery/status');
+                    if (status.running) {
+                        setTimeout(checkStatus, 1000);
+                    } else {
+                        // Scan complete
+                        if (statusEl) {
+                            statusEl.textContent = 'Complete';
+                            statusEl.className = 'badge badge-success';
+                        }
+                        if (newLeadsEl) newLeadsEl.textContent = status.leadsFound || '0';
+                        if (lastScanEl) lastScanEl.textContent = 'Just now';
+
+                        // Load discovered leads
+                        UltimateApp.loadDiscoveredLeads();
+                    }
+                };
+                checkStatus();
+
+            } catch (error) {
+                console.error('Lead Discovery error:', error);
+                if (statusEl) {
+                    statusEl.textContent = 'Error';
+                    statusEl.className = 'badge badge-error';
+                }
+            }
+        },
+
+        loadDiscoveredLeads: async function() {
+            var resultsEl = document.getElementById('lead-discovery-results');
+            var hotLeadsEl = document.getElementById('ld-hot-leads');
+            if (!resultsEl) return;
+
+            var data = await API.get('/api/lead-discovery/scan');
+            var leads = data && data.leads ? data.leads : [];
+
+            DOM.clear(resultsEl);
+
+            if (leads.length === 0) {
+                resultsEl.appendChild(DOM.el('div', { style: 'text-align: center; color: var(--text-muted); padding: 1rem;' }, 'No new leads found'));
+                return;
+            }
+
+            // Count hot leads (recently created)
+            var hotCount = leads.filter(function(l) {
+                var created = new Date(l.properties.createdate);
+                var dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                return created > dayAgo;
+            }).length;
+            if (hotLeadsEl) hotLeadsEl.textContent = String(hotCount);
+
+            leads.slice(0, 10).forEach(function(lead) {
+                var props = lead.properties || {};
+                var name = (props.firstname || '') + ' ' + (props.lastname || '');
+                if (!name.trim()) name = props.email || 'Unknown';
+
+                var item = DOM.el('div', { className: 'activity-item', style: 'display: flex; align-items: center; padding: 0.5rem; border-bottom: 1px solid var(--border);' }, [
+                    DOM.el('div', { style: 'width: 32px; height: 32px; border-radius: 50%; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; margin-right: 0.75rem; font-size: 0.8rem;' }, '👤'),
+                    DOM.el('div', { style: 'flex: 1;' }, [
+                        DOM.el('div', { style: 'font-weight: 500; font-size: 0.85rem;' }, escapeHtml(name)),
+                        DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, escapeHtml(props.company || props.email || '-'))
+                    ]),
+                    DOM.el('span', { className: 'badge badge-info', style: 'font-size: 0.65rem;' }, props.hs_lead_status || 'NEW')
+                ]);
+                resultsEl.appendChild(item);
+            });
+        },
+
+        // ═══════════════════════════════════════════════════════════
         // AI - GENIUS BOTS
         // ═══════════════════════════════════════════════════════════
+
+        botCategories: {
+            analysts: { name: '🧠 Analysts', color: '#9b59b6' },
+            strategists: { name: '⚔️ Strategists', color: '#e74c3c' },
+            creatives: { name: '🎨 Creatives', color: '#f39c12' },
+            innovators: { name: '🚀 Innovators', color: '#3498db' },
+            explorers: { name: '🔭 Explorers', color: '#1abc9c' },
+            philosophers: { name: '📜 Philosophers', color: '#8e44ad' },
+            investigators: { name: '🔍 Investigators', color: '#2c3e50' },
+            prophets: { name: '🔮 Prophets', color: '#9b59b6' },
+            diplomats: { name: '👸 Diplomats', color: '#f1c40f' },
+            smart_home: { name: '🏠 Smart Home', color: '#27ae60' },
+            sales: { name: '💼 Sales', color: '#e67e22' }
+        },
+
+        selectedBotCategory: 'all',
+
+        orchestratorRunning: false,
 
         renderBots: async function() {
             var container = this.container();
             DOM.clear(container);
+            var self = this;
 
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
-                    DOM.el('h1', { className: 'page-title' }, 'Genius Bots'),
-                    DOM.el('p', { className: 'page-subtitle' }, 'AI Agent Control Center')
+                    DOM.el('h1', { className: 'page-title' }, '神 Genius Bots'),
+                    DOM.el('p', { className: 'page-subtitle' }, 'AI Agent Control Center - 44 Legendäre Genies')
+                ]),
+                DOM.el('div', { className: 'page-actions' }, [
+                    DOM.el('button', {
+                        className: 'btn ' + (this.orchestratorRunning ? 'btn-danger' : 'btn-success'),
+                        id: 'orchestrator-toggle',
+                        onclick: function() { UltimateApp.toggleBotOrchestrator(); }
+                    }, this.orchestratorRunning ? '⏹ Stop 24/7' : '▶️ Start 24/7')
                 ])
             ]);
             container.appendChild(header);
+
+            // 24/7 Bot Activity Monitor
+            var activityCard = DOM.el('div', { className: 'card mb-4', style: 'border: 2px solid var(--primary);' }, [
+                DOM.el('div', { className: 'card-header', style: 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);' }, [
+                    DOM.el('span', { className: 'card-title', style: 'color: white;' }, '⚡ 24/7 Bot Orchestrator'),
+                    DOM.el('span', { className: 'badge', id: 'orchestrator-status', style: 'background: rgba(255,255,255,0.2); color: white;' }, 'Loading...')
+                ]),
+                DOM.el('div', { className: 'card-body' }, [
+                    DOM.el('div', { className: 'grid grid-cols-4 gap-4 mb-4' }, [
+                        DOM.el('div', { className: 'stat-card' }, [
+                            DOM.el('div', { className: 'stat-value', id: 'orch-active-bots' }, '-'),
+                            DOM.el('div', { className: 'stat-label' }, 'Aktive Bots')
+                        ]),
+                        DOM.el('div', { className: 'stat-card' }, [
+                            DOM.el('div', { className: 'stat-value', id: 'orch-tasks-today' }, '-'),
+                            DOM.el('div', { className: 'stat-label' }, 'Tasks Heute')
+                        ]),
+                        DOM.el('div', { className: 'stat-card' }, [
+                            DOM.el('div', { className: 'stat-value', id: 'orch-success-rate' }, '-'),
+                            DOM.el('div', { className: 'stat-label' }, 'Erfolgsrate')
+                        ]),
+                        DOM.el('div', { className: 'stat-card' }, [
+                            DOM.el('div', { className: 'stat-value', id: 'orch-uptime' }, '-'),
+                            DOM.el('div', { className: 'stat-label' }, 'Uptime')
+                        ])
+                    ]),
+                    DOM.el('div', { id: 'bot-activity-feed', style: 'max-height: 200px; overflow-y: auto; background: var(--bg-secondary); border-radius: 8px; padding: 0.75rem;' }, [
+                        DOM.el('div', { className: 'text-center', style: 'color: var(--text-secondary); padding: 1rem;' }, 'Lade Bot-Aktivitäten...')
+                    ])
+                ])
+            ]);
+            container.appendChild(activityCard);
 
             // Command Input
             var commandCard = DOM.el('div', { className: 'card mb-4' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'flex gap-3' }, [
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'bot-command', placeholder: '@einstein analyse die Verkaufsdaten...', style: 'flex: 1;' }),
-                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.executeBotCommand(); } }, 'Execute')
+                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.executeBotCommand(); } }, '⚡ Execute')
                     ])
                 ])
             ]);
             container.appendChild(commandCard);
 
+            // Category Filter
+            var categoryFilter = DOM.el('div', { className: 'flex gap-2 mb-4', style: 'flex-wrap: wrap;' });
+            categoryFilter.appendChild(DOM.el('button', {
+                className: 'btn ' + (this.selectedBotCategory === 'all' ? 'btn-primary' : 'btn-secondary'),
+                onclick: function() { self.filterBotsByCategory('all'); }
+            }, '🌟 Alle'));
+
+            Object.keys(this.botCategories).forEach(function(cat) {
+                categoryFilter.appendChild(DOM.el('button', {
+                    className: 'btn ' + (self.selectedBotCategory === cat ? 'btn-primary' : 'btn-secondary'),
+                    style: 'border-left: 3px solid ' + self.botCategories[cat].color,
+                    onclick: function() { self.filterBotsByCategory(cat); }
+                }, self.botCategories[cat].name));
+            });
+            container.appendChild(categoryFilter);
+
             // Bots Grid
             var botsCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#129302; Available Bots'),
+                    DOM.el('span', { className: 'card-title' }, '🤖 Available Bots'),
                     DOM.el('span', { className: 'badge badge-success', id: 'bots-online-count' }, '- Online')
                 ]),
                 DOM.el('div', { className: 'card-body' }, [
-                    DOM.el('div', { className: 'bot-grid', id: 'bots-grid' }, [
-                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' })
+                    DOM.el('div', { id: 'bots-container' }, [
+                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 200px;' })
                     ])
                 ])
             ]);
             container.appendChild(botsCard);
 
             this.loadBotsGrid();
+            this.loadOrchestratorStatus();
+        },
+
+        filterBotsByCategory: function(category) {
+            this.selectedBotCategory = category;
+            this.renderBots();
         },
 
         loadBotsGrid: async function() {
-            var grid = document.getElementById('bots-grid');
+            var containerEl = document.getElementById('bots-container');
             var countEl = document.getElementById('bots-online-count');
             var data = await API.get('/api/genius-agency/bots');
-            DOM.clear(grid);
+            DOM.clear(containerEl);
 
             var bots = data && data.bots ? data.bots : (Array.isArray(data) ? data : []);
 
             if (bots.length === 0) {
-                grid.appendChild(DOM.el('div', { className: 'empty-state' }, 'No bots available'));
+                containerEl.appendChild(DOM.el('div', { className: 'empty-state' }, 'No bots available'));
                 return;
             }
 
-            var onlineCount = bots.filter(function(b) { return b.status === 'online' || b.status === 'active'; }).length;
+            var onlineCount = bots.length;
             countEl.textContent = onlineCount + ' Online';
 
-            bots.forEach(function(bot) {
-                var isOnline = bot.status === 'online' || bot.status === 'active';
-                var card = DOM.el('div', { className: 'bot-card ' + (isOnline ? 'online' : 'offline'), onclick: function() { UltimateApp.selectBot(bot); } }, [
-                    DOM.el('div', { className: 'bot-header' }, [
-                        DOM.el('span', { className: 'bot-status' }),
-                        DOM.el('span', { className: 'bot-name' }, escapeHtml(bot.name || bot.id))
-                    ]),
-                    DOM.el('div', { className: 'bot-role' }, escapeHtml(bot.role || bot.specialty || 'Agent'))
-                ]);
-                grid.appendChild(card);
+            var self = this;
+            var categories = data.categories || {};
+
+            // Group bots by category
+            var botsByCategory = {};
+            Object.keys(categories).forEach(function(cat) {
+                botsByCategory[cat] = [];
             });
+            botsByCategory.other = [];
+
+            bots.forEach(function(bot) {
+                var foundCategory = null;
+                Object.keys(categories).forEach(function(cat) {
+                    if (categories[cat] && categories[cat].indexOf(bot.id) >= 0) {
+                        foundCategory = cat;
+                    }
+                });
+                if (foundCategory) {
+                    botsByCategory[foundCategory].push(bot);
+                } else {
+                    botsByCategory.other.push(bot);
+                }
+            });
+
+            // Render by category
+            var categoriesToShow = self.selectedBotCategory === 'all'
+                ? Object.keys(self.botCategories)
+                : [self.selectedBotCategory];
+
+            categoriesToShow.forEach(function(cat) {
+                var catBots = botsByCategory[cat] || [];
+                if (catBots.length === 0) return;
+
+                var catInfo = self.botCategories[cat] || { name: cat, color: '#666' };
+
+                var categorySection = DOM.el('div', { className: 'mb-4' });
+                categorySection.appendChild(DOM.el('h3', {
+                    style: 'color: ' + catInfo.color + '; margin-bottom: 0.75rem; font-size: 1rem;'
+                }, catInfo.name + ' (' + catBots.length + ')'));
+
+                var grid = DOM.el('div', { className: 'bot-grid' });
+
+                catBots.forEach(function(bot) {
+                    var card = DOM.el('div', {
+                        className: 'bot-card online',
+                        style: 'border-left: 3px solid ' + catInfo.color,
+                        onclick: function() { UltimateApp.selectBot(bot); }
+                    }, [
+                        DOM.el('div', { className: 'bot-header' }, [
+                            DOM.el('span', { style: 'font-size: 1.25rem;' }, bot.icon || '🤖'),
+                            DOM.el('span', { className: 'bot-name' }, escapeHtml(bot.name || bot.id))
+                        ]),
+                        DOM.el('div', { className: 'bot-role' }, escapeHtml(bot.role || bot.specialty || 'Agent')),
+                        bot.quote ? DOM.el('div', {
+                            style: 'font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem; font-style: italic; opacity: 0.7;'
+                        }, '"' + bot.quote.substring(0, 50) + (bot.quote.length > 50 ? '...' : '') + '"') : null
+                    ].filter(Boolean));
+                    grid.appendChild(card);
+                });
+
+                categorySection.appendChild(grid);
+                containerEl.appendChild(categorySection);
+            });
+
+            // Show uncategorized if showing all
+            if (self.selectedBotCategory === 'all' && botsByCategory.other.length > 0) {
+                var otherSection = DOM.el('div', { className: 'mb-4' });
+                otherSection.appendChild(DOM.el('h3', { style: 'color: #666; margin-bottom: 0.75rem; font-size: 1rem;' }, '📦 Andere (' + botsByCategory.other.length + ')'));
+                var grid = DOM.el('div', { className: 'bot-grid' });
+                botsByCategory.other.forEach(function(bot) {
+                    var card = DOM.el('div', { className: 'bot-card online', onclick: function() { UltimateApp.selectBot(bot); } }, [
+                        DOM.el('div', { className: 'bot-header' }, [
+                            DOM.el('span', { style: 'font-size: 1.25rem;' }, bot.icon || '🤖'),
+                            DOM.el('span', { className: 'bot-name' }, escapeHtml(bot.name || bot.id))
+                        ]),
+                        DOM.el('div', { className: 'bot-role' }, escapeHtml(bot.role || bot.specialty || 'Agent'))
+                    ]);
+                    grid.appendChild(card);
+                });
+                otherSection.appendChild(grid);
+                containerEl.appendChild(otherSection);
+            }
         },
 
         // ═══════════════════════════════════════════════════════════
-        // PLACEHOLDER MODULES
+        // BOT ORCHESTRATOR FUNCTIONS
         // ═══════════════════════════════════════════════════════════
+
+        orchestratorInterval: null,
+
+        toggleBotOrchestrator: async function() {
+            var btn = document.getElementById('orchestrator-toggle');
+            var statusEl = document.getElementById('orchestrator-status');
+
+            if (this.orchestratorRunning) {
+                // Stop orchestrator
+                btn.disabled = true;
+                btn.textContent = 'Stopping...';
+                var result = await API.post('/api/bot-orchestrator/stop');
+                if (result && result.success) {
+                    this.orchestratorRunning = false;
+                    btn.className = 'btn btn-success';
+                    btn.textContent = '▶️ Start 24/7';
+                    statusEl.textContent = 'Stopped';
+                    statusEl.style.background = 'rgba(255,0,0,0.3)';
+                    if (this.orchestratorInterval) {
+                        clearInterval(this.orchestratorInterval);
+                        this.orchestratorInterval = null;
+                    }
+                }
+                btn.disabled = false;
+            } else {
+                // Start orchestrator
+                btn.disabled = true;
+                btn.textContent = 'Starting...';
+                var result = await API.post('/api/bot-orchestrator/start');
+                if (result && result.success) {
+                    this.orchestratorRunning = true;
+                    btn.className = 'btn btn-danger';
+                    btn.textContent = '⏹ Stop 24/7';
+                    statusEl.textContent = 'Running';
+                    statusEl.style.background = 'rgba(0,255,0,0.3)';
+                    this.loadBotActivityFeed();
+                    // Auto-refresh every 30 seconds
+                    var self = this;
+                    this.orchestratorInterval = setInterval(function() {
+                        self.loadBotActivityFeed();
+                    }, 30000);
+                }
+                btn.disabled = false;
+            }
+        },
+
+        loadOrchestratorStatus: async function() {
+            var statusEl = document.getElementById('orchestrator-status');
+            var btn = document.getElementById('orchestrator-toggle');
+
+            try {
+                var data = await API.get('/api/bot-orchestrator/status');
+                if (data) {
+                    this.orchestratorRunning = data.running || false;
+                    if (statusEl) {
+                        statusEl.textContent = data.running ? 'Running' : 'Stopped';
+                        statusEl.style.background = data.running ? 'rgba(0,255,0,0.3)' : 'rgba(255,0,0,0.3)';
+                    }
+                    if (btn) {
+                        btn.className = 'btn ' + (this.orchestratorRunning ? 'btn-danger' : 'btn-success');
+                        btn.textContent = this.orchestratorRunning ? '⏹ Stop 24/7' : '▶️ Start 24/7';
+                    }
+
+                    // Update stats
+                    var activeBotsEl = document.getElementById('orch-active-bots');
+                    var uptimeEl = document.getElementById('orch-uptime');
+                    if (activeBotsEl) activeBotsEl.textContent = data.activeBots || 0;
+                    if (uptimeEl) uptimeEl.textContent = data.uptime || '-';
+
+                    // Start auto-refresh if running
+                    if (data.running && !this.orchestratorInterval) {
+                        var self = this;
+                        this.loadBotActivityFeed();
+                        this.orchestratorInterval = setInterval(function() {
+                            self.loadBotActivityFeed();
+                        }, 30000);
+                    }
+                }
+            } catch (e) {
+                console.warn('Orchestrator status not available:', e);
+                if (statusEl) {
+                    statusEl.textContent = 'Offline';
+                    statusEl.style.background = 'rgba(128,128,128,0.3)';
+                }
+            }
+        },
+
+        loadBotActivityFeed: async function() {
+            var feedContainer = document.getElementById('bot-activity-feed');
+            if (!feedContainer) return;
+
+            try {
+                var logsResponse = await API.get('/api/bot-orchestrator/logs?limit=10');
+                var statsResponse = await API.get('/api/bot-orchestrator/stats');
+
+                // Extract data from API responses
+                var logs = logsResponse && logsResponse.logs ? logsResponse.logs : (Array.isArray(logsResponse) ? logsResponse : []);
+                var stats = statsResponse && statsResponse.stats ? statsResponse.stats : [];
+
+                // Calculate stats from data
+                var tasksToday = logs.length;
+                var successCount = logs.filter(function(l) { return l.status === 'success'; }).length;
+                var successRate = tasksToday > 0 ? Math.round((successCount / tasksToday) * 100) : 0;
+
+                // Update stats display
+                var tasksEl = document.getElementById('orch-tasks-today');
+                var successEl = document.getElementById('orch-success-rate');
+                var activeEl = document.getElementById('orch-active-bots');
+                if (tasksEl) tasksEl.textContent = tasksToday;
+                if (successEl) successEl.textContent = successRate + '%';
+                if (activeEl) activeEl.textContent = stats.length || 44;
+
+                // Update activity feed
+                DOM.clear(feedContainer);
+
+                if (!logs || logs.length === 0) {
+                    feedContainer.appendChild(DOM.el('div', {
+                        className: 'empty-state',
+                        style: 'padding: 1rem; text-align: center; color: var(--text-muted);'
+                    }, 'No activity yet. Start the orchestrator to begin.'));
+                    return;
+                }
+
+                logs.forEach(function(log) {
+                    var timeAgo = formatTimeAgo(log.executed_at || log.createdAt);
+                    var isSuccess = log.status === 'success' || log.success === true;
+                    var statusIcon = isSuccess ? '✅' : '❌';
+                    var statusColor = isSuccess ? 'var(--color-success)' : 'var(--color-danger)';
+
+                    var item = DOM.el('div', {
+                        className: 'activity-item',
+                        style: 'padding: 0.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;'
+                    }, [
+                        DOM.el('div', {}, [
+                            DOM.el('span', { style: 'margin-right: 0.5rem;' }, statusIcon),
+                            DOM.el('strong', { style: 'color: var(--text-primary);' }, log.bot_name || log.bot_id),
+                            DOM.el('span', { style: 'color: var(--text-muted); margin-left: 0.5rem; font-size: 0.85rem;' }, log.task_name)
+                        ]),
+                        DOM.el('span', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, timeAgo)
+                    ]);
+                    feedContainer.appendChild(item);
+                });
+            } catch (e) {
+                console.warn('Failed to load bot activity:', e);
+                feedContainer.innerHTML = '<div style="padding: 1rem; color: var(--text-muted);">Activity feed unavailable</div>';
+            }
+        },
+
+        executeSingleBot: async function(botId) {
+            var result = await API.post('/api/bot-orchestrator/execute/' + botId);
+            if (result && result.success) {
+                this.loadBotActivityFeed();
+                return true;
+            }
+            return false;
+        },
 
         // ═══════════════════════════════════════════════════════════
         // CRM - COMPANIES
@@ -1698,7 +2168,7 @@
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-company', placeholder: 'Company name...' }),
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-industry', placeholder: 'Industry...' }),
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-location', placeholder: 'Location...' }),
-                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.searchLeads(); } }, '&#128269; Search')
+                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.searchLeads(); } }, '🔍 Search')
                     ])
                 ])
             ]);
@@ -1711,7 +2181,7 @@
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'lead-results' }, [
                     DOM.el('div', { className: 'empty-state' }, [
-                        DOM.el('div', { className: 'empty-state-icon' }, '&#127919;'),
+                        DOM.el('div', { className: 'empty-state-icon' }, '🎯'),
                         DOM.el('div', { className: 'empty-state-text' }, 'Enter search criteria to find leads')
                     ])
                 ])
@@ -1774,80 +2244,698 @@
         // COMMUNICATION - EMAIL HUB
         // ═══════════════════════════════════════════════════════════
 
+        // Email Hub State
+        emailHubTab: 'accounts',
+        emailAccounts: [],
+        emailTemplates: [],
+        emailStats: null,
+        recentEmails: [],
+        syncedEmails: [],
+        queueStatus: null,
+        editingTemplate: null,
+
         renderEmailHub: async function() {
+            var self = this;
             var container = this.container();
             DOM.clear(container);
 
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
-                    DOM.el('h1', { className: 'page-title' }, 'Email Hub'),
-                    DOM.el('p', { className: 'page-subtitle' }, 'Email templates and campaigns')
+                    DOM.el('h1', { className: 'page-title' }, '📧 Email Hub'),
+                    DOM.el('p', { className: 'page-subtitle' }, 'Templates, Kampagnen & Tracking')
                 ]),
                 DOM.el('div', { className: 'page-actions' }, [
-                    DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showEmailComposer(); } }, '&#128231; Compose')
+                    DOM.el('button', { className: 'btn btn-ghost', onclick: function() { self.loadEmailHubData(); } }, '🔄 Refresh'),
+                    DOM.el('button', { className: 'btn btn-primary', onclick: function() { self.showTemplateBuilder(); } }, '+ Neues Template')
                 ])
             ]);
             container.appendChild(header);
 
-            var stats = DOM.el('div', { className: 'grid grid-4 gap-4 mb-4' }, [
+            // Stats Row
+            var stats = DOM.el('div', { className: 'grid grid-5 gap-4 mb-4', id: 'email-stats-row' }, [
                 DOM.el('div', { className: 'kpi-card info' }, [
                     DOM.el('div', { className: 'kpi-label' }, 'Templates'),
                     DOM.el('div', { className: 'kpi-value', id: 'email-template-count' }, '-')
                 ]),
                 DOM.el('div', { className: 'kpi-card primary' }, [
-                    DOM.el('div', { className: 'kpi-label' }, 'Sent Today'),
-                    DOM.el('div', { className: 'kpi-value' }, '0')
+                    DOM.el('div', { className: 'kpi-label' }, 'Gesendet (30 Tage)'),
+                    DOM.el('div', { className: 'kpi-value', id: 'email-sent-count' }, '-')
                 ]),
                 DOM.el('div', { className: 'kpi-card success' }, [
                     DOM.el('div', { className: 'kpi-label' }, 'Open Rate'),
-                    DOM.el('div', { className: 'kpi-value' }, '--%')
+                    DOM.el('div', { className: 'kpi-value', id: 'email-open-rate' }, '--%')
                 ]),
                 DOM.el('div', { className: 'kpi-card warning' }, [
                     DOM.el('div', { className: 'kpi-label' }, 'Click Rate'),
-                    DOM.el('div', { className: 'kpi-value' }, '--%')
+                    DOM.el('div', { className: 'kpi-value', id: 'email-click-rate' }, '--%')
+                ]),
+                DOM.el('div', { className: 'kpi-card', id: 'queue-status-card' }, [
+                    DOM.el('div', { className: 'kpi-label' }, 'Queue'),
+                    DOM.el('div', { className: 'kpi-value', id: 'email-queue-size' }, '-')
                 ])
             ]);
             container.appendChild(stats);
 
-            var templatesCard = DOM.el('div', { className: 'card' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#128196; Email Templates'),
-                    DOM.el('button', { className: 'btn btn-ghost btn-sm' }, '+ New Template')
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'email-templates-grid' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 200px;' })
-                ])
+            // Tabs
+            var tabs = DOM.el('div', { className: 'flex gap-2 mb-4 flex-wrap' }, [
+                DOM.el('button', { className: 'btn btn-sm ' + (this.emailHubTab === 'accounts' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.emailHubTab = 'accounts'; self.renderEmailHubContent(); } }, '📧 Accounts'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.emailHubTab === 'templates' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.emailHubTab = 'templates'; self.renderEmailHubContent(); } }, '📄 Templates'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.emailHubTab === 'sent' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.emailHubTab = 'sent'; self.renderEmailHubContent(); } }, '📤 Gesendete Emails'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.emailHubTab === 'queue' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.emailHubTab = 'queue'; self.renderEmailHubContent(); } }, '⚙️ Queue & Daemons'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.emailHubTab === 'sequences' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.emailHubTab = 'sequences'; self.renderEmailHubContent(); } }, '🔄 Sequences')
             ]);
-            container.appendChild(templatesCard);
+            container.appendChild(tabs);
 
-            this.loadEmailTemplates();
+            // Content Container
+            var contentContainer = DOM.el('div', { id: 'email-hub-content' });
+            container.appendChild(contentContainer);
+
+            // Load all data
+            this.loadEmailHubData();
         },
 
-        loadEmailTemplates: async function() {
-            var grid = document.getElementById('email-templates-grid');
-            var countEl = document.getElementById('email-template-count');
-            var data = await API.get('/api/v1/email/templates');
-            DOM.clear(grid);
+        loadEmailHubData: async function() {
+            var self = this;
+            try {
+                // Load all data in parallel
+                var [templates, stats, recent, queue, accounts, sent] = await Promise.all([
+                    API.get('/api/v1/email/templates').catch(function() { return []; }),
+                    API.get('/api/v1/email/stats').catch(function() { return null; }),
+                    API.get('/api/v1/email/recent?limit=50').catch(function() { return []; }),
+                    API.get('/api/email-queue/status').catch(function() { return { queueSize: 0 }; }),
+                    API.get('/api/v1/email/accounts').catch(function() { return { accounts: [] }; }),
+                    API.get('/api/v1/email/sent?limit=50').catch(function() { return { emails: [] }; })
+                ]);
 
-            var templates = data && data.templates ? data.templates : (Array.isArray(data) ? data : []);
-            countEl.textContent = String(templates.length);
+                self.emailTemplates = Array.isArray(templates) ? templates : (templates.templates || []);
+                self.emailStats = stats;
+                self.recentEmails = Array.isArray(recent) ? recent : (recent.emails || []);
+                self.queueStatus = queue;
+                self.emailAccounts = accounts.accounts || [];
+                self.syncedEmails = sent.emails || [];
+
+                self.renderEmailStats();
+                self.renderEmailHubContent();
+            } catch (err) {
+                console.error('Email Hub data load error:', err);
+            }
+        },
+
+        renderEmailStats: function() {
+            var countEl = document.getElementById('email-template-count');
+            var sentEl = document.getElementById('email-sent-count');
+            var openEl = document.getElementById('email-open-rate');
+            var clickEl = document.getElementById('email-click-rate');
+            var queueEl = document.getElementById('email-queue-size');
+            var queueCard = document.getElementById('queue-status-card');
+
+            if (countEl) countEl.textContent = String(this.emailTemplates.length);
+            if (this.emailStats) {
+                if (sentEl) sentEl.textContent = String(this.emailStats.totalSent || 0);
+                if (openEl) openEl.textContent = (this.emailStats.openRate || 0) + '%';
+                if (clickEl) clickEl.textContent = (this.emailStats.clickRate || 0) + '%';
+            }
+            if (this.queueStatus) {
+                if (queueEl) queueEl.textContent = String(this.queueStatus.queueSize || 0);
+                if (queueCard) {
+                    queueCard.className = 'kpi-card ' + (this.queueStatus.isProcessing ? 'warning' : 'success');
+                }
+            }
+        },
+
+        renderEmailHubContent: function() {
+            var container = document.getElementById('email-hub-content');
+            if (!container) return;
+            DOM.clear(container);
+
+            switch (this.emailHubTab) {
+                case 'accounts':
+                    this.renderAccountsTab(container);
+                    break;
+                case 'templates':
+                    this.renderTemplatesTab(container);
+                    break;
+                case 'sent':
+                    this.renderSentEmailsTab(container);
+                    break;
+                case 'queue':
+                    this.renderQueueTab(container);
+                    break;
+                case 'sequences':
+                    this.renderSequencesTab(container);
+                    break;
+            }
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // ACCOUNTS TAB
+        // ═══════════════════════════════════════════════════════════
+
+        renderAccountsTab: function(container) {
+            var self = this;
+            var accounts = this.emailAccounts;
+
+            // Accounts Grid
+            var accountsCard = DOM.el('div', { className: 'card mb-4' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '📧 Email Accounts'),
+                    DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { self.syncAllEmailAccounts(); } }, '🔄 Sync All')
+                ])
+            ]);
+
+            if (accounts.length === 0) {
+                accountsCard.appendChild(DOM.el('div', { className: 'card-body text-center', style: 'padding: 2rem;' }, [
+                    DOM.el('p', { style: 'color: var(--text-muted);' }, 'Keine Email-Accounts konfiguriert'),
+                    DOM.el('p', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, 'Konfiguriere EMAIL_INFO_* und EMAIL_INVOICE_* in .env')
+                ]));
+            } else {
+                var grid = DOM.el('div', { className: 'card-body' }, [
+                    DOM.el('div', { className: 'grid grid-2 gap-4' })
+                ]);
+                var gridInner = grid.querySelector('.grid');
+
+                accounts.forEach(function(account) {
+                    var hasCredentials = account.config && account.config.hasCredentials;
+                    var card = DOM.el('div', { className: 'p-4 rounded-lg border', style: 'border-color: var(--border-color); background: var(--bg-secondary);' }, [
+                        DOM.el('div', { className: 'flex items-center justify-between mb-3' }, [
+                            DOM.el('div', { className: 'flex items-center gap-3' }, [
+                                DOM.el('div', { style: 'width: 3rem; height: 3rem; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: var(--primary)20;' },
+                                    account.id === 'info' ? '📧' : '🧾'),
+                                DOM.el('div', {}, [
+                                    DOM.el('div', { style: 'font-weight: 600; font-size: 1.1rem;' }, escapeHtml(account.name || account.id)),
+                                    DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, escapeHtml(account.email || '-'))
+                                ])
+                            ]),
+                            DOM.el('span', { className: 'badge ' + (hasCredentials ? 'badge-success' : 'badge-warning') },
+                                hasCredentials ? '● Connected' : '● Not configured')
+                        ]),
+                        DOM.el('div', { className: 'grid grid-3 gap-3 mt-3' }, [
+                            DOM.el('div', { className: 'text-center' }, [
+                                DOM.el('div', { style: 'font-size: 1.5rem; font-weight: 600; color: var(--primary);' }, String(account.totalSynced || 0)),
+                                DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, 'Total Synced')
+                            ]),
+                            DOM.el('div', { className: 'text-center' }, [
+                                DOM.el('div', { style: 'font-size: 1.5rem; font-weight: 600; color: var(--success);' },
+                                    account.lastEmailAt ? new Date(account.lastEmailAt).toLocaleDateString('de-DE') : '-'),
+                                DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, 'Last Email')
+                            ]),
+                            DOM.el('div', { className: 'text-center' }, [
+                                DOM.el('div', { style: 'font-size: 1.5rem; font-weight: 600;' },
+                                    account.lastSyncAt ? new Date(account.lastSyncAt).toLocaleDateString('de-DE') : '-'),
+                                DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, 'Last Sync')
+                            ])
+                        ]),
+                        DOM.el('div', { className: 'flex gap-2 mt-4' }, [
+                            DOM.el('button', { className: 'btn btn-ghost btn-sm flex-1', onclick: function() { self.syncEmailAccount(account.id); } }, '🔄 Sync'),
+                            DOM.el('button', { className: 'btn btn-primary btn-sm flex-1', onclick: function() { self.composeEmail(account.id); } }, '✉️ Compose')
+                        ])
+                    ]);
+                    gridInner.appendChild(card);
+                });
+
+                accountsCard.appendChild(grid);
+            }
+            container.appendChild(accountsCard);
+
+            // Synced Emails from IMAP
+            var syncedCard = DOM.el('div', { className: 'card' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '📤 Synced Sent Emails'),
+                    DOM.el('span', { className: 'badge' }, String(this.syncedEmails.length) + ' emails')
+                ])
+            ]);
+
+            if (this.syncedEmails.length === 0) {
+                syncedCard.appendChild(DOM.el('div', { className: 'card-body text-center', style: 'padding: 2rem;' }, [
+                    DOM.el('p', { style: 'color: var(--text-muted);' }, 'Keine synchronisierten Emails'),
+                    DOM.el('button', { className: 'btn btn-primary mt-2', onclick: function() { self.syncAllEmailAccounts(); } }, '🔄 Jetzt synchronisieren')
+                ]));
+            } else {
+                var table = DOM.el('table', { className: 'data-table' }, [
+                    DOM.el('thead', {}, [
+                        DOM.el('tr', {}, [
+                            DOM.el('th', {}, 'Account'),
+                            DOM.el('th', {}, 'Empfänger'),
+                            DOM.el('th', {}, 'Betreff'),
+                            DOM.el('th', {}, 'Gesendet')
+                        ])
+                    ])
+                ]);
+
+                var tbody = DOM.el('tbody');
+                this.syncedEmails.slice(0, 20).forEach(function(email) {
+                    var row = DOM.el('tr', {}, [
+                        DOM.el('td', {}, [
+                            DOM.el('span', { className: 'badge badge-info', style: 'font-size: 0.7rem;' }, email.accountName || email.accountId || '-')
+                        ]),
+                        DOM.el('td', { style: 'max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' },
+                            escapeHtml(Array.isArray(email.to) ? email.to.join(', ') : (email.to || '-'))),
+                        DOM.el('td', { style: 'max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' },
+                            escapeHtml(email.subject || '-')),
+                        DOM.el('td', {}, email.sentAt ? new Date(email.sentAt).toLocaleString('de-DE') : '-')
+                    ]);
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                syncedCard.appendChild(table);
+            }
+            container.appendChild(syncedCard);
+        },
+
+        syncEmailAccount: async function(accountId) {
+            try {
+                var result = await API.post('/api/v1/email/sync', { account: accountId });
+                alert('Sync abgeschlossen: ' + JSON.stringify(result[accountId] || result));
+                this.loadEmailHubData();
+            } catch (err) {
+                alert('Sync Fehler: ' + err.message);
+            }
+        },
+
+        syncAllEmailAccounts: async function() {
+            try {
+                var result = await API.post('/api/v1/email/sync', {});
+                alert('Alle Accounts synchronisiert!\n' + JSON.stringify(result, null, 2));
+                this.loadEmailHubData();
+            } catch (err) {
+                alert('Sync Fehler: ' + err.message);
+            }
+        },
+
+        composeEmail: function(accountId) {
+            var self = this;
+            var form = DOM.el('div', {}, [
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Von'),
+                    DOM.el('input', { type: 'text', className: 'form-input', id: 'compose-from', value: accountId, disabled: true })
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'An'),
+                    DOM.el('input', { type: 'email', className: 'form-input', id: 'compose-to', placeholder: 'empfaenger@example.com' })
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Betreff'),
+                    DOM.el('input', { type: 'text', className: 'form-input', id: 'compose-subject', placeholder: 'Betreff...' })
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Nachricht'),
+                    DOM.el('textarea', { className: 'form-input', id: 'compose-body', rows: '8', placeholder: 'Ihre Nachricht...' })
+                ])
+            ]);
+
+            this.showModal('✉️ Email senden von ' + accountId, form, async function() {
+                var to = document.getElementById('compose-to').value;
+                var subject = document.getElementById('compose-subject').value;
+                var body = document.getElementById('compose-body').value;
+
+                if (!to || !subject) {
+                    alert('Bitte Empfänger und Betreff eingeben');
+                    return;
+                }
+
+                try {
+                    await API.post('/api/v1/email/send', {
+                        account: accountId,
+                        to: to,
+                        subject: subject,
+                        text: body,
+                        html: '<p>' + body.replace(/\n/g, '</p><p>') + '</p>'
+                    });
+                    alert('✅ Email gesendet!');
+                    self.loadEmailHubData();
+                } catch (err) {
+                    alert('Fehler: ' + err.message);
+                }
+            });
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // TEMPLATES TAB
+        // ═══════════════════════════════════════════════════════════
+
+        renderTemplatesTab: function(container) {
+            var self = this;
+            var templates = this.emailTemplates;
 
             if (templates.length === 0) {
-                grid.appendChild(DOM.el('div', { className: 'empty-state' }, 'No templates available'));
+                container.appendChild(DOM.el('div', { className: 'card' }, [
+                    DOM.el('div', { className: 'card-body text-center', style: 'padding: 3rem;' }, [
+                        DOM.el('div', { style: 'font-size: 3rem; margin-bottom: 1rem;' }, '📧'),
+                        DOM.el('p', { style: 'color: var(--text-muted);' }, 'Keine Templates vorhanden'),
+                        DOM.el('button', { className: 'btn btn-primary mt-2', onclick: function() { self.showTemplateBuilder(); } }, '+ Erstes Template erstellen')
+                    ])
+                ]));
                 return;
             }
 
-            var templateGrid = DOM.el('div', { className: 'grid grid-3 gap-4' });
-            templates.slice(0, 9).forEach(function(template) {
-                var card = DOM.el('div', { className: 'card', style: 'cursor: pointer;', onclick: function() { UltimateApp.selectEmailTemplate(template); } }, [
+            var grid = DOM.el('div', { className: 'grid grid-3 gap-4' });
+            templates.forEach(function(template) {
+                var card = DOM.el('div', { className: 'card', style: 'position: relative;' }, [
                     DOM.el('div', { className: 'card-body' }, [
-                        DOM.el('div', { style: 'font-weight: 600; margin-bottom: 0.5rem;' }, escapeHtml(template.name || template.subject || 'Unnamed')),
-                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, escapeHtml((template.description || template.preview || '').slice(0, 80) + '...'))
+                        DOM.el('div', { className: 'flex justify-between items-start mb-2' }, [
+                            DOM.el('div', { style: 'font-weight: 600; font-size: 1rem;' }, escapeHtml(template.name || 'Unbenannt')),
+                            DOM.el('span', { className: 'badge ' + (template.isActive !== false ? 'badge-success' : 'badge-warning'), style: 'font-size: 0.7rem;' }, template.isActive !== false ? 'Aktiv' : 'Inaktiv')
+                        ]),
+                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;' }, '📧 ' + escapeHtml(template.subject || 'Kein Betreff')),
+                        DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;' },
+                            'Erstellt: ' + (template.createdAt ? new Date(template.createdAt).toLocaleDateString('de-DE') : '-')
+                        ),
+                        DOM.el('div', { className: 'flex gap-2' }, [
+                            DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function(e) { e.stopPropagation(); self.showTemplateBuilder(template); } }, '✏️ Bearbeiten'),
+                            DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function(e) { e.stopPropagation(); self.previewTemplate(template); } }, '👁 Vorschau'),
+                            DOM.el('button', { className: 'btn btn-ghost btn-sm', style: 'color: var(--danger);', onclick: function(e) { e.stopPropagation(); self.deleteTemplate(template.id); } }, '🗑')
+                        ])
                     ])
                 ]);
-                templateGrid.appendChild(card);
+                grid.appendChild(card);
             });
-            grid.appendChild(templateGrid);
+            container.appendChild(grid);
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // SENT EMAILS TAB
+        // ═══════════════════════════════════════════════════════════
+
+        renderSentEmailsTab: function(container) {
+            var self = this;
+            var emails = this.recentEmails;
+
+            var card = DOM.el('div', { className: 'card' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '📤 Gesendete Emails (letzte 50)')
+                ])
+            ]);
+
+            if (emails.length === 0) {
+                card.appendChild(DOM.el('div', { className: 'card-body text-center', style: 'padding: 2rem;' }, [
+                    DOM.el('p', { style: 'color: var(--text-muted);' }, 'Keine gesendeten Emails gefunden')
+                ]));
+            } else {
+                var table = DOM.el('table', { className: 'data-table' }, [
+                    DOM.el('thead', {}, [
+                        DOM.el('tr', {}, [
+                            DOM.el('th', {}, 'Empfaenger'),
+                            DOM.el('th', {}, 'Betreff'),
+                            DOM.el('th', {}, 'Template'),
+                            DOM.el('th', {}, 'Status'),
+                            DOM.el('th', {}, 'Geoeffnet'),
+                            DOM.el('th', {}, 'Gesendet')
+                        ])
+                    ])
+                ]);
+
+                var tbody = DOM.el('tbody');
+                emails.forEach(function(email) {
+                    var statusClass = email.status === 'sent' ? 'badge-success' :
+                                     (email.status === 'failed' ? 'badge-danger' : 'badge-warning');
+                    var row = DOM.el('tr', {}, [
+                        DOM.el('td', {}, escapeHtml(email.recipient || email.recipientEmail || '-')),
+                        DOM.el('td', { style: 'max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' },
+                            escapeHtml(email.subject || '-')),
+                        DOM.el('td', {}, escapeHtml(email.templateName || '-')),
+                        DOM.el('td', {}, [
+                            DOM.el('span', { className: 'badge ' + statusClass }, email.status || 'pending')
+                        ]),
+                        DOM.el('td', {}, email.openedAt ? '✅ ' + new Date(email.openedAt).toLocaleDateString('de-DE') : '❌'),
+                        DOM.el('td', {}, email.sentAt ? new Date(email.sentAt).toLocaleString('de-DE') : '-')
+                    ]);
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                card.appendChild(table);
+            }
+
+            container.appendChild(card);
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // QUEUE & DAEMONS TAB
+        // ═══════════════════════════════════════════════════════════
+
+        renderQueueTab: function(container) {
+            var self = this;
+            var queue = this.queueStatus || {};
+
+            // Queue Status Card
+            var statusCard = DOM.el('div', { className: 'card mb-4' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '⚙️ Email Queue Status'),
+                    DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { self.loadEmailHubData(); } }, '🔄')
+                ]),
+                DOM.el('div', { className: 'card-body' }, [
+                    DOM.el('div', { className: 'grid grid-4 gap-4' }, [
+                        DOM.el('div', { className: 'text-center' }, [
+                            DOM.el('div', { style: 'font-size: 2rem; font-weight: bold; color: var(--primary);' }, String(queue.queueSize || 0)),
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, 'In Warteschlange')
+                        ]),
+                        DOM.el('div', { className: 'text-center' }, [
+                            DOM.el('div', { style: 'font-size: 2rem; font-weight: bold; color: var(--success);' }, String(queue.processedCount || 0)),
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, 'Verarbeitet')
+                        ]),
+                        DOM.el('div', { className: 'text-center' }, [
+                            DOM.el('div', { style: 'font-size: 2rem; font-weight: bold; color: var(--danger);' }, String(queue.failedCount || 0)),
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, 'Fehlgeschlagen')
+                        ]),
+                        DOM.el('div', { className: 'text-center' }, [
+                            DOM.el('div', { style: 'font-size: 2rem;' }, queue.isProcessing ? '🟢' : '⚪'),
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, queue.isProcessing ? 'Verarbeitet...' : 'Idle')
+                        ])
+                    ])
+                ])
+            ]);
+            container.appendChild(statusCard);
+
+            // Queue Configuration
+            var configCard = DOM.el('div', { className: 'card mb-4' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '🔧 Konfiguration')
+                ]),
+                DOM.el('div', { className: 'card-body' }, [
+                    DOM.el('div', { className: 'grid grid-3 gap-4' }, [
+                        DOM.el('div', {}, [
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;' }, 'Max Emails/Minute'),
+                            DOM.el('div', { style: 'font-weight: 600;' }, String((queue.config && queue.config.MAX_EMAILS_PER_MINUTE) || 10))
+                        ]),
+                        DOM.el('div', {}, [
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;' }, 'Intervall (ms)'),
+                            DOM.el('div', { style: 'font-weight: 600;' }, String((queue.config && queue.config.SEND_INTERVAL_MS) || 6000))
+                        ]),
+                        DOM.el('div', {}, [
+                            DOM.el('div', { style: 'color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;' }, 'Max Retries'),
+                            DOM.el('div', { style: 'font-weight: 600;' }, String((queue.config && queue.config.MAX_RETRIES) || 3))
+                        ])
+                    ])
+                ])
+            ]);
+            container.appendChild(configCard);
+
+            // Queue Items
+            if (queue.queue && queue.queue.length > 0) {
+                var queueCard = DOM.el('div', { className: 'card' }, [
+                    DOM.el('div', { className: 'card-header' }, [
+                        DOM.el('span', { className: 'card-title' }, '📥 Warteschlange (' + queue.queue.length + ')')
+                    ])
+                ]);
+
+                var table = DOM.el('table', { className: 'data-table' }, [
+                    DOM.el('thead', {}, [
+                        DOM.el('tr', {}, [
+                            DOM.el('th', {}, 'ID'),
+                            DOM.el('th', {}, 'Empfaenger'),
+                            DOM.el('th', {}, 'Betreff'),
+                            DOM.el('th', {}, 'Status'),
+                            DOM.el('th', {}, 'Versuche'),
+                            DOM.el('th', {}, 'Geplant fuer')
+                        ])
+                    ])
+                ]);
+
+                var tbody = DOM.el('tbody');
+                queue.queue.forEach(function(item) {
+                    var statusClass = item.status === 'queued' ? 'badge-info' :
+                                     (item.status === 'processing' ? 'badge-warning' :
+                                     (item.status === 'retry' ? 'badge-warning' : 'badge-secondary'));
+                    var row = DOM.el('tr', {}, [
+                        DOM.el('td', { style: 'font-family: monospace; font-size: 0.8rem;' }, (item.id || '').slice(-8)),
+                        DOM.el('td', {}, escapeHtml(item.to || '-')),
+                        DOM.el('td', { style: 'max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' },
+                            escapeHtml(item.subject || '-')),
+                        DOM.el('td', {}, [DOM.el('span', { className: 'badge ' + statusClass }, item.status || 'unknown')]),
+                        DOM.el('td', {}, String(item.attempts || 0)),
+                        DOM.el('td', {}, item.scheduledFor ? new Date(item.scheduledFor).toLocaleString('de-DE') : '-')
+                    ]);
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                queueCard.appendChild(table);
+                container.appendChild(queueCard);
+            }
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // SEQUENCES TAB
+        // ═══════════════════════════════════════════════════════════
+
+        renderSequencesTab: function(container) {
+            var self = this;
+            container.appendChild(DOM.el('div', { className: 'card' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '🔄 Email Sequences'),
+                    DOM.el('button', { className: 'btn btn-ghost btn-sm' }, '+ Neue Sequence')
+                ]),
+                DOM.el('div', { className: 'card-body text-center', style: 'padding: 3rem;' }, [
+                    DOM.el('div', { style: 'font-size: 3rem; margin-bottom: 1rem;' }, '🔄'),
+                    DOM.el('p', { style: 'color: var(--text-muted);' }, 'Automatisierte Email-Sequences konfigurieren'),
+                    DOM.el('p', { style: 'color: var(--text-muted); font-size: 0.85rem;' }, 'Z.B. Willkommens-Serie, Follow-Up nach 3 Tagen, etc.')
+                ])
+            ]));
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // TEMPLATE BUILDER MODAL
+        // ═══════════════════════════════════════════════════════════
+
+        showTemplateBuilder: function(template) {
+            var self = this;
+            this.editingTemplate = template || null;
+            var isEdit = !!template;
+
+            var modal = DOM.el('div', { className: 'modal-overlay', id: 'template-builder-modal', onclick: function(e) { if (e.target.id === 'template-builder-modal') self.closeTemplateBuilder(); } }, [
+                DOM.el('div', { className: 'modal', style: 'max-width: 900px; max-height: 90vh; overflow-y: auto;' }, [
+                    DOM.el('div', { className: 'modal-header' }, [
+                        DOM.el('h2', { className: 'modal-title' }, isEdit ? 'Template bearbeiten' : 'Neues Template erstellen'),
+                        DOM.el('button', { className: 'btn btn-ghost', onclick: function() { self.closeTemplateBuilder(); } }, '&times;')
+                    ]),
+                    DOM.el('div', { className: 'modal-body' }, [
+                        // Template Name
+                        DOM.el('div', { className: 'form-group mb-4' }, [
+                            DOM.el('label', { className: 'form-label' }, 'Template Name *'),
+                            DOM.el('input', { type: 'text', className: 'form-input', id: 'template-name', placeholder: 'z.B. Willkommens-Email', value: (template && template.name) || '' })
+                        ]),
+                        // Subject
+                        DOM.el('div', { className: 'form-group mb-4' }, [
+                            DOM.el('label', { className: 'form-label' }, 'Betreff *'),
+                            DOM.el('input', { type: 'text', className: 'form-input', id: 'template-subject', placeholder: 'Willkommen bei Enterprise Universe, {{firstName}}!', value: (template && template.subject) || '' }),
+                            DOM.el('small', { style: 'color: var(--text-muted);' }, 'Merge-Tags: {{firstName}}, {{lastName}}, {{company}}, {{currentDate}}')
+                        ]),
+                        // HTML Body
+                        DOM.el('div', { className: 'form-group mb-4' }, [
+                            DOM.el('label', { className: 'form-label' }, 'HTML Inhalt *'),
+                            DOM.el('textarea', { className: 'form-input', id: 'template-body', style: 'min-height: 300px; font-family: monospace;', placeholder: '<html>...</html>' }, (template && template.bodyHtml) || '')
+                        ]),
+                        // Merge Tags Reference
+                        DOM.el('div', { className: 'form-group mb-4', style: 'background: var(--card-bg); padding: 1rem; border-radius: 8px;' }, [
+                            DOM.el('label', { className: 'form-label', style: 'margin-bottom: 0.5rem;' }, 'Verfuegbare Merge-Tags:'),
+                            DOM.el('div', { style: 'display: flex; flex-wrap: wrap; gap: 0.5rem;' }, [
+                                '{{firstName}}', '{{lastName}}', '{{fullName}}', '{{email}}', '{{company}}', '{{phone}}',
+                                '{{dealName}}', '{{dealValue}}', '{{currentDate}}', '{{currentYear}}'
+                            ].map(function(tag) {
+                                return DOM.el('code', { style: 'background: var(--bg-darker); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer;', onclick: function() {
+                                    var textarea = document.getElementById('template-body');
+                                    if (textarea) {
+                                        var start = textarea.selectionStart;
+                                        var end = textarea.selectionEnd;
+                                        textarea.value = textarea.value.substring(0, start) + tag + textarea.value.substring(end);
+                                        textarea.focus();
+                                        textarea.selectionStart = textarea.selectionEnd = start + tag.length;
+                                    }
+                                } }, tag);
+                            }))
+                        ])
+                    ]),
+                    DOM.el('div', { className: 'modal-footer' }, [
+                        DOM.el('button', { className: 'btn btn-ghost', onclick: function() { self.closeTemplateBuilder(); } }, 'Abbrechen'),
+                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { self.saveTemplate(); } }, isEdit ? 'Speichern' : 'Erstellen')
+                    ])
+                ])
+            ]);
+            document.body.appendChild(modal);
+        },
+
+        closeTemplateBuilder: function() {
+            var modal = document.getElementById('template-builder-modal');
+            if (modal) modal.remove();
+            this.editingTemplate = null;
+        },
+
+        saveTemplate: async function() {
+            var self = this;
+            var name = document.getElementById('template-name').value.trim();
+            var subject = document.getElementById('template-subject').value.trim();
+            var bodyHtml = document.getElementById('template-body').value.trim();
+
+            if (!name || !subject || !bodyHtml) {
+                alert('Bitte alle Pflichtfelder ausfuellen!');
+                return;
+            }
+
+            var templateData = {
+                name: name,
+                subject: subject,
+                bodyHtml: bodyHtml,
+                bodyText: bodyHtml.replace(/<[^>]*>/g, '') // Simple HTML to text
+            };
+
+            try {
+                if (this.editingTemplate) {
+                    await API.request('/api/v1/email/templates/' + this.editingTemplate.id, { method: 'PATCH', body: templateData });
+                } else {
+                    await API.request('/api/v1/email/templates', { method: 'POST', body: templateData });
+                }
+                this.closeTemplateBuilder();
+                this.loadEmailHubData();
+            } catch (err) {
+                alert('Fehler beim Speichern: ' + (err.message || 'Unbekannter Fehler'));
+            }
+        },
+
+        deleteTemplate: async function(id) {
+            if (!confirm('Template wirklich loeschen?')) return;
+            try {
+                await API.request('/api/v1/email/templates/' + id, { method: 'DELETE' });
+                this.loadEmailHubData();
+            } catch (err) {
+                alert('Fehler beim Loeschen: ' + (err.message || 'Unbekannter Fehler'));
+            }
+        },
+
+        previewTemplate: function(template) {
+            var self = this;
+            // Use sandboxed iframe for safe HTML preview
+            var modal = DOM.el('div', { className: 'modal-overlay', id: 'template-preview-modal', onclick: function(e) { if (e.target.id === 'template-preview-modal') e.target.remove(); } }, [
+                DOM.el('div', { className: 'modal', style: 'max-width: 700px; max-height: 90vh; overflow-y: auto;' }, [
+                    DOM.el('div', { className: 'modal-header' }, [
+                        DOM.el('h2', { className: 'modal-title' }, 'Vorschau: ' + escapeHtml(template.name)),
+                        DOM.el('button', { className: 'btn btn-ghost', onclick: function() { document.getElementById('template-preview-modal').remove(); } }, '&times;')
+                    ]),
+                    DOM.el('div', { className: 'modal-body' }, [
+                        DOM.el('div', { style: 'border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1rem;' }, [
+                            DOM.el('strong', {}, 'Betreff: '),
+                            DOM.el('span', {}, escapeHtml(template.subject))
+                        ]),
+                        DOM.el('iframe', {
+                            id: 'template-preview-frame',
+                            style: 'width: 100%; height: 400px; border: 1px solid var(--border); border-radius: 8px; background: #fff;',
+                            sandbox: 'allow-same-origin'
+                        })
+                    ])
+                ])
+            ]);
+            document.body.appendChild(modal);
+            // Write HTML to sandboxed iframe safely
+            setTimeout(function() {
+                var iframe = document.getElementById('template-preview-frame');
+                if (iframe && iframe.contentDocument) {
+                    iframe.contentDocument.open();
+                    iframe.contentDocument.write(template.bodyHtml || '');
+                    iframe.contentDocument.close();
+                }
+            }, 100);
+        },
+
+        loadEmailTemplates: async function() {
+            // Legacy function - redirect to new implementation
+            this.loadEmailHubData();
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -1962,76 +3050,335 @@
         // ═══════════════════════════════════════════════════════════
 
         renderHaiku: async function() {
+            var self = this;
             var container = this.container();
             DOM.clear(container);
 
-            var header = DOM.el('div', { className: 'page-header' }, [
-                DOM.el('h1', { className: 'page-title' }, '&#128142; HAIKU God Mode'),
-                DOM.el('p', { className: 'page-subtitle' }, 'Supreme AI Control Center')
+            // Header with Orchestrator Toggle
+            var header = DOM.el('div', { className: 'page-header', style: 'display: flex; justify-content: space-between; align-items: center;' }, [
+                DOM.el('div', {}, [
+                    DOM.el('h1', { className: 'page-title' }, '神 HAIKU God Mode'),
+                    DOM.el('p', { className: 'page-subtitle' }, 'Supreme AI Orchestration System')
+                ]),
+                DOM.el('div', { className: 'flex gap-2' }, [
+                    DOM.el('button', {
+                        className: 'btn btn-success',
+                        id: 'haiku-orchestrator-toggle',
+                        onclick: function() { self.toggleHaikuOrchestrator(); }
+                    }, '▶️ Start Orchestrator'),
+                    DOM.el('button', {
+                        className: 'btn btn-secondary',
+                        onclick: function() { self.loadHaikuData(); }
+                    }, '🔄 Refresh')
+                ])
             ]);
             container.appendChild(header);
 
-            var statusCard = DOM.el('div', { className: 'card mb-4', style: 'background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2)); border: 1px solid rgba(139, 92, 246, 0.5);' }, [
+            // Orchestrator Status Card
+            var orchestratorCard = DOM.el('div', { className: 'card mb-4', style: 'background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3)); border: 2px solid rgba(139, 92, 246, 0.6);' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'flex items-center justify-between' }, [
                         DOM.el('div', {}, [
-                            DOM.el('div', { style: 'font-size: 1.5rem; font-weight: 700; color: var(--accent-primary);' }, 'HAIKU ONLINE'),
-                            DOM.el('div', { style: 'color: var(--text-muted);' }, 'All systems operational')
+                            DOM.el('div', { style: 'font-size: 1.8rem; font-weight: 700; color: #a78bfa;', id: 'haiku-status-display' }, '神 HAIKU ORCHESTRATOR'),
+                            DOM.el('div', { style: 'color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;' }, [
+                                DOM.el('span', { className: 'status-dot', id: 'haiku-status-dot', style: 'width: 10px; height: 10px; border-radius: 50%; background: #ef4444;' }),
+                                DOM.el('span', { id: 'haiku-status-text' }, 'Checking status...')
+                            ])
                         ]),
-                        DOM.el('div', { className: 'flex gap-3' }, [
-                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px;' }, [
-                                DOM.el('div', { className: 'kpi-label' }, 'Power Level'),
-                                DOM.el('div', { className: 'kpi-value' }, '100%')
+                        DOM.el('div', { className: 'grid grid-4 gap-3' }, [
+                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px; background: rgba(139, 92, 246, 0.2);' }, [
+                                DOM.el('div', { className: 'kpi-label' }, '🤖 Active Bots'),
+                                DOM.el('div', { className: 'kpi-value', id: 'haiku-active-bots' }, '0')
                             ]),
-                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px;' }, [
-                                DOM.el('div', { className: 'kpi-label' }, 'Tasks Today'),
-                                DOM.el('div', { className: 'kpi-value', id: 'haiku-tasks' }, '-')
+                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px; background: rgba(34, 197, 94, 0.2);' }, [
+                                DOM.el('div', { className: 'kpi-label' }, '✅ Tasks Today'),
+                                DOM.el('div', { className: 'kpi-value', id: 'haiku-tasks-today' }, '0')
+                            ]),
+                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px; background: rgba(59, 130, 246, 0.2);' }, [
+                                DOM.el('div', { className: 'kpi-label' }, '📊 Success Rate'),
+                                DOM.el('div', { className: 'kpi-value', id: 'haiku-success-rate' }, '--%')
+                            ]),
+                            DOM.el('div', { className: 'kpi-card', style: 'min-width: 100px; background: rgba(234, 179, 8, 0.2);' }, [
+                                DOM.el('div', { className: 'kpi-label' }, '⚡ Power Level'),
+                                DOM.el('div', { className: 'kpi-value', id: 'haiku-power' }, '∞')
                             ])
                         ])
                     ])
                 ])
             ]);
-            container.appendChild(statusCard);
+            container.appendChild(orchestratorCard);
 
-            var commandCard = DOM.el('div', { className: 'card mb-4' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#9889; Divine Command')
+            // Two Column Layout: Command + Activity
+            var mainGrid = DOM.el('div', { className: 'grid grid-2 gap-4 mb-4' }, [
+                // Divine Command Card
+                DOM.el('div', { className: 'card' }, [
+                    DOM.el('div', { className: 'card-header', style: 'background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(234, 179, 8, 0.2));' }, [
+                        DOM.el('span', { className: 'card-title' }, '⚡ Divine Command Center')
+                    ]),
+                    DOM.el('div', { className: 'card-body' }, [
+                        DOM.el('textarea', {
+                            className: 'form-input',
+                            id: 'haiku-command',
+                            rows: '4',
+                            placeholder: '@einstein analyse Q4 Verkaufsdaten\n@tesla optimiere Lead Scoring\n@nostradamus prognostiziere Q1 Revenue...',
+                            style: 'resize: vertical; font-family: monospace; background: rgba(0,0,0,0.3);'
+                        }),
+                        DOM.el('div', { className: 'flex justify-between mt-3' }, [
+                            DOM.el('div', { className: 'flex gap-2' }, [
+                                DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { document.getElementById('haiku-command').value = '@einstein '; document.getElementById('haiku-command').focus(); } }, '🧠 Einstein'),
+                                DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { document.getElementById('haiku-command').value = '@tesla '; document.getElementById('haiku-command').focus(); } }, '⚡ Tesla'),
+                                DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { document.getElementById('haiku-command').value = '@nostradamus '; document.getElementById('haiku-command').focus(); } }, '🔮 Nostradamus')
+                            ]),
+                            DOM.el('button', { className: 'btn btn-primary', onclick: function() { self.executeHaikuCommand(); } }, '神 Execute')
+                        ])
+                    ])
                 ]),
-                DOM.el('div', { className: 'card-body' }, [
-                    DOM.el('textarea', { className: 'form-input', id: 'haiku-command', rows: '3', placeholder: 'Enter your divine command...', style: 'resize: vertical;' }),
-                    DOM.el('div', { className: 'flex justify-end mt-3' }, [
-                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.executeHaikuCommand(); } }, '&#128142; Execute')
+                // Live Activity Feed
+                DOM.el('div', { className: 'card' }, [
+                    DOM.el('div', { className: 'card-header', style: 'background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2));' }, [
+                        DOM.el('span', { className: 'card-title' }, '📡 Live Bot Activity'),
+                        DOM.el('span', { className: 'badge', style: 'background: rgba(34, 197, 94, 0.3);', id: 'haiku-activity-count' }, '0 events')
+                    ]),
+                    DOM.el('div', { className: 'card-body', id: 'haiku-activity-feed', style: 'max-height: 250px; overflow-y: auto;' }, [
+                        DOM.el('div', { className: 'empty-state', style: 'padding: 2rem; text-align: center; color: var(--text-muted);' }, 'Start orchestrator to see activity...')
                     ])
                 ])
             ]);
-            container.appendChild(commandCard);
+            container.appendChild(mainGrid);
 
-            var actionsGrid = DOM.el('div', { className: 'grid grid-3 gap-4' }, [
-                DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
+            // Bot Grid - Quick Actions
+            var botsCard = DOM.el('div', { className: 'card mb-4' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '🤖 Bot Fleet Control'),
+                    DOM.el('span', { className: 'badge', id: 'haiku-bot-count' }, '44 Bots')
+                ]),
+                DOM.el('div', { className: 'card-body', id: 'haiku-bot-grid' }, [
+                    DOM.el('div', { className: 'grid grid-6 gap-2', id: 'haiku-quick-bots' })
+                ])
+            ]);
+            container.appendChild(botsCard);
+
+            // Quick Action Cards
+            var actionsGrid = DOM.el('div', { className: 'grid grid-4 gap-4' }, [
+                DOM.el('div', { className: 'card', style: 'cursor: pointer; transition: transform 0.2s;', onclick: function() { self.executeQuickAction('prophecy'); } }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#128302;'),
-                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Prophecy'),
-                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Predictive Analytics')
+                        DOM.el('div', { style: 'font-size: 2.5rem;' }, '🔮'),
+                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem; color: #a78bfa;' }, 'Prophecy Mode'),
+                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'AI Predictions & Forecasts')
                     ])
                 ]),
-                DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
+                DOM.el('div', { className: 'card', style: 'cursor: pointer; transition: transform 0.2s;', onclick: function() { self.executeQuickAction('analyze'); } }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#128161;'),
-                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Transformation'),
-                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Data Alchemy')
+                        DOM.el('div', { style: 'font-size: 2.5rem;' }, '📊'),
+                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem; color: #3b82f6;' }, 'Deep Analysis'),
+                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Data Intelligence')
                     ])
                 ]),
-                DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
+                DOM.el('div', { className: 'card', style: 'cursor: pointer; transition: transform 0.2s;', onclick: function() { self.executeQuickAction('automate'); } }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#127919;'),
-                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Automation'),
-                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Workflow Engine')
+                        DOM.el('div', { style: 'font-size: 2.5rem;' }, '⚡'),
+                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem; color: #eab308;' }, 'Auto Execute'),
+                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Workflow Automation')
+                    ])
+                ]),
+                DOM.el('div', { className: 'card', style: 'cursor: pointer; transition: transform 0.2s;', onclick: function() { self.executeQuickAction('optimize'); } }, [
+                    DOM.el('div', { className: 'card-body text-center' }, [
+                        DOM.el('div', { style: 'font-size: 2.5rem;' }, '🚀'),
+                        DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem; color: #22c55e;' }, 'Optimize All'),
+                        DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Full System Optimization')
                     ])
                 ])
             ]);
             container.appendChild(actionsGrid);
 
-            this.loadHaikuStats();
+            // Load initial data
+            this.loadHaikuData();
+            this.renderHaikuBotGrid();
+        },
+
+        haikuOrchestratorRunning: false,
+        haikuOrchestratorInterval: null,
+
+        toggleHaikuOrchestrator: async function() {
+            var btn = document.getElementById('haiku-orchestrator-toggle');
+            var statusDot = document.getElementById('haiku-status-dot');
+            var statusText = document.getElementById('haiku-status-text');
+
+            if (this.haikuOrchestratorRunning) {
+                btn.disabled = true;
+                btn.textContent = '⏳ Stopping...';
+                var result = await API.post('/api/bot-orchestrator/stop');
+                if (result && result.success) {
+                    this.haikuOrchestratorRunning = false;
+                    btn.className = 'btn btn-success';
+                    btn.textContent = '▶️ Start Orchestrator';
+                    statusDot.style.background = '#ef4444';
+                    statusText.textContent = 'Orchestrator Stopped';
+                    if (this.haikuOrchestratorInterval) {
+                        clearInterval(this.haikuOrchestratorInterval);
+                        this.haikuOrchestratorInterval = null;
+                    }
+                }
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+                btn.textContent = '⏳ Starting...';
+                var result = await API.post('/api/bot-orchestrator/start');
+                if (result && result.success) {
+                    this.haikuOrchestratorRunning = true;
+                    btn.className = 'btn btn-danger';
+                    btn.textContent = '⏹ Stop Orchestrator';
+                    statusDot.style.background = '#22c55e';
+                    statusText.textContent = 'Orchestrator Running - 44 Bots Active';
+                    this.loadHaikuActivityFeed();
+                    var self = this;
+                    this.haikuOrchestratorInterval = setInterval(function() {
+                        self.loadHaikuActivityFeed();
+                    }, 15000);
+                }
+                btn.disabled = false;
+            }
+        },
+
+        loadHaikuData: async function() {
+            var statusDot = document.getElementById('haiku-status-dot');
+            var statusText = document.getElementById('haiku-status-text');
+            var btn = document.getElementById('haiku-orchestrator-toggle');
+
+            try {
+                var data = await API.get('/api/bot-orchestrator/status');
+                if (data) {
+                    this.haikuOrchestratorRunning = data.running || false;
+                    if (statusDot) statusDot.style.background = data.running ? '#22c55e' : '#ef4444';
+                    if (statusText) statusText.textContent = data.running ? 'Orchestrator Running - 44 Bots Active' : 'Orchestrator Stopped';
+                    if (btn) {
+                        btn.className = 'btn ' + (data.running ? 'btn-danger' : 'btn-success');
+                        btn.textContent = data.running ? '⏹ Stop Orchestrator' : '▶️ Start Orchestrator';
+                    }
+                    var activeEl = document.getElementById('haiku-active-bots');
+                    if (activeEl) activeEl.textContent = data.activeBots || 44;
+
+                    if (data.running && !this.haikuOrchestratorInterval) {
+                        var self = this;
+                        this.loadHaikuActivityFeed();
+                        this.haikuOrchestratorInterval = setInterval(function() {
+                            self.loadHaikuActivityFeed();
+                        }, 15000);
+                    }
+                }
+            } catch (e) {
+                if (statusDot) statusDot.style.background = '#6b7280';
+                if (statusText) statusText.textContent = 'Checking orchestrator...';
+            }
+
+            // Load stats
+            try {
+                var stats = await API.get('/api/bot-orchestrator/stats');
+                var tasksEl = document.getElementById('haiku-tasks-today');
+                var successEl = document.getElementById('haiku-success-rate');
+                if (stats) {
+                    if (tasksEl) tasksEl.textContent = stats.tasksToday || 0;
+                    if (successEl) successEl.textContent = (stats.successRate || 0) + '%';
+                }
+            } catch (e) {}
+        },
+
+        loadHaikuActivityFeed: async function() {
+            var feedContainer = document.getElementById('haiku-activity-feed');
+            var countBadge = document.getElementById('haiku-activity-count');
+            if (!feedContainer) return;
+
+            try {
+                var logsResponse = await API.get('/api/bot-orchestrator/logs?limit=15');
+                var logs = logsResponse && logsResponse.logs ? logsResponse.logs : (Array.isArray(logsResponse) ? logsResponse : []);
+
+                if (countBadge) countBadge.textContent = logs.length + ' events';
+
+                DOM.clear(feedContainer);
+
+                if (!logs || logs.length === 0) {
+                    feedContainer.appendChild(DOM.el('div', { className: 'empty-state', style: 'padding: 2rem; text-align: center; color: var(--text-muted);' },
+                        this.haikuOrchestratorRunning ? 'Waiting for bot activity...' : 'Start orchestrator to see activity...'));
+                    return;
+                }
+
+                logs.forEach(function(log) {
+                    var statusColor = log.status === 'success' ? '#22c55e' : (log.status === 'error' ? '#ef4444' : '#eab308');
+                    var item = DOM.el('div', { style: 'display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-radius: 0.5rem; background: rgba(255,255,255,0.05); margin-bottom: 0.5rem;' }, [
+                        DOM.el('div', { style: 'width: 8px; height: 8px; border-radius: 50%; background: ' + statusColor + ';' }),
+                        DOM.el('div', { style: 'flex: 1;' }, [
+                            DOM.el('div', { style: 'font-weight: 500; font-size: 0.9rem;' }, log.bot || 'System'),
+                            DOM.el('div', { style: 'font-size: 0.8rem; color: var(--text-muted);' }, log.action || log.message || 'Task executed')
+                        ]),
+                        DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, log.time || 'just now')
+                    ]);
+                    feedContainer.appendChild(item);
+                });
+
+                // Update stats
+                var successCount = logs.filter(function(l) { return l.status === 'success'; }).length;
+                var successRate = logs.length > 0 ? Math.round((successCount / logs.length) * 100) : 0;
+                var tasksEl = document.getElementById('haiku-tasks-today');
+                var successEl = document.getElementById('haiku-success-rate');
+                if (tasksEl) tasksEl.textContent = logs.length;
+                if (successEl) successEl.textContent = successRate + '%';
+            } catch (e) {
+                console.warn('Failed to load activity feed:', e);
+            }
+        },
+
+        renderHaikuBotGrid: function() {
+            var gridContainer = document.getElementById('haiku-quick-bots');
+            if (!gridContainer) return;
+
+            var self = this;
+            var quickBots = [
+                { id: 'einstein', name: 'Einstein', icon: '🧠', color: '#3b82f6' },
+                { id: 'tesla', name: 'Tesla', icon: '⚡', color: '#eab308' },
+                { id: 'nostradamus', name: 'Nostradamus', icon: '🔮', color: '#a78bfa' },
+                { id: 'davinci', name: 'Da Vinci', icon: '🎨', color: '#ec4899' },
+                { id: 'jobs', name: 'Jobs', icon: '🍎', color: '#6b7280' },
+                { id: 'musk', name: 'Musk', icon: '🚀', color: '#ef4444' },
+                { id: 'buffett', name: 'Buffett', icon: '💰', color: '#22c55e' },
+                { id: 'caesar', name: 'Caesar', icon: '🏛️', color: '#f59e0b' },
+                { id: 'aristotle', name: 'Aristotle', icon: '📜', color: '#8b5cf6' },
+                { id: 'sherlock', name: 'Sherlock', icon: '🔍', color: '#06b6d4' },
+                { id: 'loxone', name: 'Loxone', icon: '🏠', color: '#84cc16' },
+                { id: 'qualifier', name: 'Qualifier', icon: '🎯', color: '#f97316' }
+            ];
+
+            quickBots.forEach(function(bot) {
+                var botBtn = DOM.el('button', {
+                    className: 'btn btn-ghost',
+                    style: 'display: flex; flex-direction: column; align-items: center; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);',
+                    onclick: function() { self.triggerHaikuBot(bot.id); }
+                }, [
+                    DOM.el('span', { style: 'font-size: 1.5rem;' }, bot.icon),
+                    DOM.el('span', { style: 'font-size: 0.75rem; margin-top: 0.25rem; color: ' + bot.color + ';' }, bot.name)
+                ]);
+                gridContainer.appendChild(botBtn);
+            });
+        },
+
+        triggerHaikuBot: async function(botId) {
+            var result = await API.post('/api/bot-orchestrator/execute/' + botId);
+            if (result && result.success) {
+                alert('🤖 ' + botId.toUpperCase() + ' Bot triggered successfully!');
+                this.loadHaikuActivityFeed();
+            } else {
+                alert('Failed to trigger bot: ' + (result ? result.error : 'Unknown error'));
+            }
+        },
+
+        executeQuickAction: async function(action) {
+            var commands = {
+                'prophecy': '@nostradamus analyse market trends and predict Q1 2026 revenue',
+                'analyze': '@einstein deep analysis of all sales data and customer behavior',
+                'automate': '@tesla optimize all automation workflows and lead scoring',
+                'optimize': '@all full system optimization - sales, marketing, operations'
+            };
+            document.getElementById('haiku-command').value = commands[action] || '';
+            this.executeHaikuCommand();
         },
 
         loadHaikuStats: async function() {
@@ -2040,6 +3387,328 @@
                 var tasksEl = document.getElementById('haiku-tasks');
                 if (tasksEl) tasksEl.textContent = String(data.tasksToday || 0);
             }
+        },
+
+        // ═══════════════════════════════════════════════════════════
+        // AI - BROLY TASKFORCE
+        // ═══════════════════════════════════════════════════════════
+
+        brolyTaskforceState: {
+            agents: [],
+            tasks: [],
+            mode: 'standard',
+            powerLevel: 9001
+        },
+
+        renderBrolyTaskforce: async function() {
+            var self = this;
+            var container = this.container();
+            DOM.clear(container);
+
+            // Header with Broly styling
+            var header = DOM.el('div', { className: 'page-header', style: 'background: linear-gradient(135deg, #22c55e, #eab308); padding: 2rem; border-radius: 1rem; margin-bottom: 1.5rem;' }, [
+                DOM.el('div', { style: 'display: flex; justify-content: space-between; align-items: center;' }, [
+                    DOM.el('div', {}, [
+                        DOM.el('h1', { className: 'page-title', style: 'color: #000; font-size: 2rem;' }, '⚡ BROLY TASKFORCE'),
+                        DOM.el('p', { style: 'color: rgba(0,0,0,0.7);' }, 'Legendary AI Agent Orchestration System')
+                    ]),
+                    DOM.el('div', { className: 'flex gap-2' }, [
+                        DOM.el('button', { className: 'btn', style: 'background: rgba(0,0,0,0.2); color: #000;', id: 'broly-mode-btn', onclick: function() { self.toggleBrolyMode(); } }, '🔥 LEGENDARY MODE'),
+                        DOM.el('button', { className: 'btn btn-primary', style: 'background: #000; color: #22c55e;', onclick: function() { self.createBrolyTask(); } }, '+ New Task')
+                    ])
+                ])
+            ]);
+            container.appendChild(header);
+
+            // Power Level Display
+            var powerDisplay = DOM.el('div', { className: 'grid grid-4 gap-4 mb-4' }, [
+                DOM.el('div', { className: 'kpi-card', style: 'background: linear-gradient(135deg, #22c55e20, #eab30820); border: 2px solid #22c55e50;' }, [
+                    DOM.el('div', { className: 'kpi-label' }, '⚡ Power Level'),
+                    DOM.el('div', { className: 'kpi-value', style: 'color: #22c55e; font-family: monospace;', id: 'broly-power' }, 'OVER 9000!')
+                ]),
+                DOM.el('div', { className: 'kpi-card' }, [
+                    DOM.el('div', { className: 'kpi-label' }, '🤖 Active Agents'),
+                    DOM.el('div', { className: 'kpi-value', id: 'broly-agents' }, '0')
+                ]),
+                DOM.el('div', { className: 'kpi-card success' }, [
+                    DOM.el('div', { className: 'kpi-label' }, '✅ Tasks Completed'),
+                    DOM.el('div', { className: 'kpi-value', id: 'broly-completed' }, '0')
+                ]),
+                DOM.el('div', { className: 'kpi-card warning' }, [
+                    DOM.el('div', { className: 'kpi-label' }, '⏳ In Progress'),
+                    DOM.el('div', { className: 'kpi-value', id: 'broly-progress' }, '0')
+                ])
+            ]);
+            container.appendChild(powerDisplay);
+
+            // Agent Control Grid
+            var agentsCard = DOM.el('div', { className: 'card mb-4' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '🤖 Agent Fleet'),
+                    DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { self.loadBrolyAgents(); } }, '🔄 Refresh')
+                ]),
+                DOM.el('div', { className: 'card-body', id: 'broly-agent-grid' }, [
+                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 200px;' })
+                ])
+            ]);
+            container.appendChild(agentsCard);
+
+            // Task Queue
+            var tasksCard = DOM.el('div', { className: 'card' }, [
+                DOM.el('div', { className: 'card-header' }, [
+                    DOM.el('span', { className: 'card-title' }, '📋 Task Queue'),
+                    DOM.el('div', { className: 'flex gap-2' }, [
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm active', id: 'broly-filter-all', onclick: function() { self.filterBrolyTasks('all'); } }, 'All'),
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm', id: 'broly-filter-active', onclick: function() { self.filterBrolyTasks('active'); } }, 'Active'),
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm', id: 'broly-filter-done', onclick: function() { self.filterBrolyTasks('done'); } }, 'Completed')
+                    ])
+                ]),
+                DOM.el('div', { className: 'card-body', id: 'broly-task-list' }, [
+                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 300px;' })
+                ])
+            ]);
+            container.appendChild(tasksCard);
+
+            // Load data
+            this.loadBrolyData();
+        },
+
+        loadBrolyData: async function() {
+            var self = this;
+
+            // Load agents from HAIKU config
+            try {
+                var config = await API.get('/api/haiku/config');
+                var agents = config && config.agents ? Object.entries(config.agents).map(function(entry) {
+                    return { id: entry[0], ...entry[1] };
+                }) : [];
+
+                self.brolyTaskforceState.agents = agents;
+
+                var agentGrid = document.getElementById('broly-agent-grid');
+                if (agentGrid) {
+                    DOM.clear(agentGrid);
+
+                    if (agents.length === 0) {
+                        agentGrid.appendChild(DOM.el('div', { className: 'text-center py-8', style: 'color: var(--text-muted);' }, 'No agents configured'));
+                    } else {
+                        var grid = DOM.el('div', { className: 'grid grid-4 gap-3' });
+
+                        agents.slice(0, 12).forEach(function(agent) {
+                            var agentCard = DOM.el('div', {
+                                className: 'p-3 rounded-lg border cursor-pointer transition',
+                                style: 'border-color: var(--border-color); background: var(--bg-secondary);',
+                                onclick: function() { self.selectBrolyAgent(agent.id); }
+                            }, [
+                                DOM.el('div', { className: 'flex items-center gap-2 mb-2' }, [
+                                    DOM.el('div', { style: 'width: 2rem; height: 2rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 1rem; background: ' + (agent.color || '#3b82f6') + '20;' }, agent.icon || '🤖'),
+                                    DOM.el('span', { style: 'font-weight: 600; font-size: 0.85rem;' }, escapeHtml(agent.name || agent.id))
+                                ]),
+                                DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, escapeHtml(agent.specialty || 'General Purpose')),
+                                DOM.el('div', { className: 'flex justify-between mt-2', style: 'font-size: 0.7rem;' }, [
+                                    DOM.el('span', { style: 'color: var(--success);' }, '● Online'),
+                                    DOM.el('span', { style: 'color: var(--text-muted);' }, 'Tasks: ' + (agent.tasksCompleted || 0))
+                                ])
+                            ]);
+                            grid.appendChild(agentCard);
+                        });
+
+                        agentGrid.appendChild(grid);
+
+                        // Update counts
+                        var agentCount = document.getElementById('broly-agents');
+                        if (agentCount) agentCount.textContent = String(agents.length);
+                    }
+                }
+            } catch (err) {
+                console.error('Broly agents error:', err);
+            }
+
+            // Load tasks
+            try {
+                var tasks = await API.get('/api/haiku/tasks');
+                var taskList = Array.isArray(tasks) ? tasks : (tasks && tasks.tasks ? tasks.tasks : []);
+
+                self.brolyTaskforceState.tasks = taskList;
+                self.renderBrolyTasks(taskList);
+
+                // Update stats
+                var completed = taskList.filter(function(t) { return t.status === 'completed'; }).length;
+                var inProgress = taskList.filter(function(t) { return t.status === 'in_progress' || t.status === 'running'; }).length;
+
+                var completedEl = document.getElementById('broly-completed');
+                var progressEl = document.getElementById('broly-progress');
+                if (completedEl) completedEl.textContent = String(completed);
+                if (progressEl) progressEl.textContent = String(inProgress);
+            } catch (err) {
+                console.error('Broly tasks error:', err);
+            }
+        },
+
+        renderBrolyTasks: function(tasks) {
+            var self = this;
+            var container = document.getElementById('broly-task-list');
+            if (!container) return;
+
+            DOM.clear(container);
+
+            if (!tasks || tasks.length === 0) {
+                container.appendChild(DOM.el('div', { className: 'text-center py-8' }, [
+                    DOM.el('div', { style: 'font-size: 3rem; margin-bottom: 1rem;' }, '⚡'),
+                    DOM.el('p', { style: 'color: var(--text-muted);' }, 'No tasks in queue'),
+                    DOM.el('button', { className: 'btn btn-primary mt-3', onclick: function() { self.createBrolyTask(); } }, '+ Create First Task')
+                ]));
+                return;
+            }
+
+            tasks.forEach(function(task) {
+                var statusColor = task.status === 'completed' ? 'var(--success)' :
+                                 (task.status === 'failed' ? 'var(--danger)' :
+                                 (task.status === 'running' || task.status === 'in_progress' ? 'var(--warning)' : 'var(--text-muted)'));
+
+                var taskEl = DOM.el('div', { className: 'flex justify-between items-center py-3', style: 'border-bottom: 1px solid var(--border-color);' }, [
+                    DOM.el('div', { className: 'flex items-center gap-3' }, [
+                        DOM.el('div', { style: 'width: 0.5rem; height: 0.5rem; border-radius: 50%; background: ' + statusColor + ';' }),
+                        DOM.el('div', {}, [
+                            DOM.el('div', { style: 'font-weight: 500;' }, escapeHtml(task.name || task.command || 'Unnamed Task')),
+                            DOM.el('div', { style: 'font-size: 0.8rem; color: var(--text-muted);' },
+                                (task.agent || 'broly') + ' • ' + (task.createdAt ? new Date(task.createdAt).toLocaleString('de-DE') : 'Just now'))
+                        ])
+                    ]),
+                    DOM.el('div', { className: 'flex items-center gap-2' }, [
+                        DOM.el('span', { className: 'badge badge-' + (task.status === 'completed' ? 'success' : (task.status === 'failed' ? 'danger' : 'warning')) }, task.status || 'pending'),
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { self.viewBrolyTask(task); } }, '👁')
+                    ])
+                ]);
+                container.appendChild(taskEl);
+            });
+        },
+
+        toggleBrolyMode: function() {
+            var btn = document.getElementById('broly-mode-btn');
+            var powerEl = document.getElementById('broly-power');
+
+            if (this.brolyTaskforceState.mode === 'standard') {
+                this.brolyTaskforceState.mode = 'legendary';
+                this.brolyTaskforceState.powerLevel = Infinity;
+                if (btn) btn.textContent = '🔥 LEGENDARY MODE ACTIVE';
+                if (powerEl) powerEl.textContent = '∞ INFINITE';
+                alert('🔥 LEGENDARY BROLY MODE ACTIVATED!\n\nAll agents operating at maximum power!');
+            } else {
+                this.brolyTaskforceState.mode = 'standard';
+                this.brolyTaskforceState.powerLevel = 9001;
+                if (btn) btn.textContent = '🔥 LEGENDARY MODE';
+                if (powerEl) powerEl.textContent = 'OVER 9000!';
+            }
+        },
+
+        createBrolyTask: function() {
+            var self = this;
+            var form = DOM.el('div', {}, [
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Task Name'),
+                    DOM.el('input', { type: 'text', className: 'form-input', id: 'broly-task-name', placeholder: 'Enter task name...' })
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Command'),
+                    DOM.el('textarea', { className: 'form-input', id: 'broly-task-command', rows: '3', placeholder: 'Enter command or instruction...' })
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Assign to Agent'),
+                    DOM.el('select', { className: 'form-input', id: 'broly-task-agent' },
+                        [DOM.el('option', { value: 'broly' }, 'BROLY (Auto-assign)')].concat(
+                            self.brolyTaskforceState.agents.map(function(a) {
+                                return DOM.el('option', { value: a.id }, a.name || a.id);
+                            })
+                        )
+                    )
+                ]),
+                DOM.el('div', { className: 'form-group' }, [
+                    DOM.el('label', { className: 'form-label' }, 'Priority'),
+                    DOM.el('select', { className: 'form-input', id: 'broly-task-priority' }, [
+                        DOM.el('option', { value: 'normal' }, 'Normal'),
+                        DOM.el('option', { value: 'high' }, 'High'),
+                        DOM.el('option', { value: 'urgent' }, 'Urgent - LEGENDARY')
+                    ])
+                ])
+            ]);
+
+            this.showModal('⚡ Create Broly Task', form, async function() {
+                var name = document.getElementById('broly-task-name').value;
+                var command = document.getElementById('broly-task-command').value;
+                var agent = document.getElementById('broly-task-agent').value;
+                var priority = document.getElementById('broly-task-priority').value;
+
+                if (!command) {
+                    alert('Please enter a command');
+                    return;
+                }
+
+                try {
+                    await API.post('/api/haiku/command', {
+                        name: name || 'Broly Task',
+                        command: command,
+                        agent: agent,
+                        priority: priority
+                    });
+                    self.loadBrolyData();
+                    alert('⚡ Task dispatched to ' + (agent || 'BROLY') + '!');
+                } catch (err) {
+                    alert('Error: ' + err.message);
+                }
+            });
+        },
+
+        filterBrolyTasks: function(filter) {
+            document.querySelectorAll('[id^="broly-filter-"]').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            document.getElementById('broly-filter-' + filter).classList.add('active');
+
+            var tasks = this.brolyTaskforceState.tasks;
+            if (filter === 'active') {
+                tasks = tasks.filter(function(t) { return t.status !== 'completed'; });
+            } else if (filter === 'done') {
+                tasks = tasks.filter(function(t) { return t.status === 'completed'; });
+            }
+            this.renderBrolyTasks(tasks);
+        },
+
+        selectBrolyAgent: function(agentId) {
+            alert('Agent selected: ' + agentId + '\n\nReady to dispatch tasks!');
+        },
+
+        viewBrolyTask: function(task) {
+            var content = DOM.el('div', {}, [
+                DOM.el('div', { className: 'mb-3' }, [
+                    DOM.el('strong', {}, 'Task: '),
+                    DOM.el('span', {}, escapeHtml(task.name || 'Unnamed'))
+                ]),
+                DOM.el('div', { className: 'mb-3' }, [
+                    DOM.el('strong', {}, 'Command: '),
+                    DOM.el('pre', { style: 'background: var(--bg-secondary); padding: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; white-space: pre-wrap;' },
+                        escapeHtml(task.command || '-'))
+                ]),
+                DOM.el('div', { className: 'mb-3' }, [
+                    DOM.el('strong', {}, 'Status: '),
+                    DOM.el('span', { className: 'badge badge-' + (task.status === 'completed' ? 'success' : 'warning') }, task.status || 'pending')
+                ]),
+                DOM.el('div', { className: 'mb-3' }, [
+                    DOM.el('strong', {}, 'Agent: '),
+                    DOM.el('span', {}, task.agent || 'BROLY')
+                ]),
+                task.result ? DOM.el('div', { className: 'mb-3' }, [
+                    DOM.el('strong', {}, 'Result: '),
+                    DOM.el('pre', { style: 'background: var(--bg-secondary); padding: 0.5rem; border-radius: 0.25rem; margin-top: 0.5rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto;' },
+                        escapeHtml(typeof task.result === 'string' ? task.result : JSON.stringify(task.result, null, 2)))
+                ]) : null
+            ].filter(Boolean));
+
+            this.showModal('⚡ Task Details', content);
+        },
+
+        loadBrolyAgents: function() {
+            this.loadBrolyData();
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -2153,62 +3822,116 @@
         // ═══════════════════════════════════════════════════════════
 
         renderInvoices: async function() {
+            var self = this;
             var container = this.container();
             DOM.clear(container);
+            this.invoicesPage = 0;
 
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
                     DOM.el('h1', { className: 'page-title' }, 'Invoices'),
-                    DOM.el('p', { className: 'page-subtitle' }, 'Invoice management')
+                    DOM.el('p', { className: 'page-subtitle' }, 'Invoice management with priority scoring')
                 ]),
                 DOM.el('div', { className: 'page-actions' }, [
+                    DOM.el('button', { className: 'btn btn-ghost', onclick: function() { self.loadInvoicesTable(0); } }, '🔄 Refresh'),
                     DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showNewInvoiceModal(); } }, '+ New Invoice')
                 ])
             ]);
             container.appendChild(header);
 
-            var stats = DOM.el('div', { className: 'grid grid-4 gap-4 mb-4' }, [
-                DOM.el('div', { className: 'kpi-card' }, [
-                    DOM.el('div', { className: 'kpi-label' }, 'Total'),
-                    DOM.el('div', { className: 'kpi-value', id: 'invoice-total' }, '-')
-                ]),
-                DOM.el('div', { className: 'kpi-card success' }, [
-                    DOM.el('div', { className: 'kpi-label' }, 'Paid'),
-                    DOM.el('div', { className: 'kpi-value', id: 'invoice-paid' }, '-')
-                ]),
-                DOM.el('div', { className: 'kpi-card warning' }, [
-                    DOM.el('div', { className: 'kpi-label' }, 'Pending'),
-                    DOM.el('div', { className: 'kpi-value', id: 'invoice-pending' }, '-')
-                ]),
-                DOM.el('div', { className: 'kpi-card error' }, [
-                    DOM.el('div', { className: 'kpi-label' }, 'Overdue'),
-                    DOM.el('div', { className: 'kpi-value', id: 'invoice-overdue' }, '-')
-                ])
+            var stats = DOM.el('div', { className: 'grid grid-4 gap-4 mb-4', id: 'invoices-stats' }, [
+                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
+                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
+                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
+                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' })
             ]);
             container.appendChild(stats);
+
+            // Sorting controls
+            var sortControls = DOM.el('div', { className: 'flex gap-2 mb-4 flex-wrap', id: 'invoices-sort' }, [
+                DOM.el('span', { style: 'color: var(--text-muted); display: flex; align-items: center; margin-right: 0.5rem;' }, 'Sortieren:'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'score' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('score'); } }, '⭐ Score'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'email' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('email'); } }, '📧 Email'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'status' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('status'); } }, '📊 Status'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'sent' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('sent'); } }, '📤 Gesendet'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'amount' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('amount'); } }, '💰 Betrag'),
+                DOM.el('button', { className: 'btn btn-sm ' + (this.invoicesSort === 'date' ? 'btn-primary' : 'btn-ghost'), onclick: function() { self.sortInvoices('date'); } }, '📅 Datum')
+            ]);
+            container.appendChild(sortControls);
 
             var card = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'table-container', id: 'invoices-table' }, [
                         DOM.el('div', { className: 'loading-skeleton', style: 'height: 300px;' })
-                    ])
+                    ]),
+                    DOM.el('div', { className: 'flex justify-between items-center mt-4', id: 'invoices-pagination' })
                 ])
             ]);
             container.appendChild(card);
 
-            this.loadInvoicesTable();
+            // Load stats first (fast), then table
+            this.loadInvoicesStats();
+            this.loadInvoicesTable(0);
         },
 
-        loadInvoicesTable: async function() {
+        sortInvoices: function(field) {
+            // Toggle order if same field, otherwise set to desc
+            if (this.invoicesSort === field) {
+                this.invoicesOrder = this.invoicesOrder === 'desc' ? 'asc' : 'desc';
+            } else {
+                this.invoicesSort = field;
+                this.invoicesOrder = 'desc';
+            }
+            this.invoicesPage = 0;
+            this.renderInvoices();
+        },
+
+        loadInvoicesStats: async function() {
+            var statsContainer = document.getElementById('invoices-stats');
+            var data = await API.get('/api/v1/invoices/stats');
+            if (!statsContainer) return;
+            DOM.clear(statsContainer);
+
+            // Handle both nested (counts/amounts) and flat API formats
+            var counts = data && data.counts ? data.counts : data;
+            var amounts = data && data.amounts ? data.amounts : data;
+
+            var stats = [
+                { label: 'Total', value: formatCurrency(amounts.total || amounts.totalAmount || 0), sub: formatNumber(counts.total || 0) + ' Invoices', icon: '📄', type: 'info' },
+                { label: 'Paid', value: formatCurrency(amounts.paid || amounts.paidAmount || 0), sub: formatNumber(counts.paid || 0) + ' Paid', icon: '✅', type: 'success' },
+                { label: 'Pending', value: formatCurrency(amounts.pending || amounts.pendingAmount || 0), sub: formatNumber(counts.pending || 0) + ' Pending', icon: '⏳', type: 'warning' },
+                { label: 'Overdue', value: formatCurrency(amounts.overdue || amounts.overdueAmount || 0), sub: formatNumber(counts.overdue || 0) + ' Overdue', icon: '🚨', type: 'error' }
+            ];
+            stats.forEach(function(stat) {
+                statsContainer.appendChild(DOM.el('div', { className: 'kpi-card ' + stat.type + ' animate-slide-up' }, [
+                    DOM.el('div', { className: 'kpi-header' }, [
+                        DOM.el('span', { className: 'kpi-label' }, stat.label),
+                        DOM.el('span', { className: 'kpi-icon' }, stat.icon)
+                    ]),
+                    DOM.el('div', { className: 'kpi-value' }, stat.value),
+                    DOM.el('div', { className: 'kpi-change positive' }, stat.sub)
+                ]));
+            });
+        },
+
+        loadInvoicesTable: async function(page) {
+            var self = this;
+            if (page === undefined) page = this.invoicesPage;
+            this.invoicesPage = page;
             var tableContainer = document.getElementById('invoices-table');
-            var data = await API.get('/api/v1/invoices');
+            var paginationContainer = document.getElementById('invoices-pagination');
+            var offset = page * this.invoicesPerPage;
+
+            var data = await API.get('/api/v1/invoices?limit=' + this.invoicesPerPage + '&offset=' + offset + '&enrich=false');
             DOM.clear(tableContainer);
 
             var invoices = data && data.invoices ? data.invoices : (Array.isArray(data) ? data : []);
+            var total = data && data.total_count ? data.total_count : invoices.length;
+            var totalPages = Math.ceil(total / this.invoicesPerPage);
 
-            if (invoices.length === 0) {
+            if (invoices.length === 0 && page === 0) {
                 tableContainer.appendChild(DOM.el('div', { className: 'empty-state' }, [
-                    DOM.el('div', { className: 'empty-state-icon' }, '&#128196;'),
+                    DOM.el('div', { className: 'empty-state-icon' }, '📄'),
                     DOM.el('div', { className: 'empty-state-title' }, 'No invoices yet'),
                     DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showNewInvoiceModal(); } }, '+ Create First Invoice')
                 ]));
@@ -2232,22 +3955,42 @@
             invoices.forEach(function(invoice) {
                 var statusClass = invoice.status === 'paid' ? 'badge-success' : (invoice.status === 'overdue' ? 'badge-error' : 'badge-warning');
                 var row = DOM.el('tr', {}, [
-                    DOM.el('td', { style: 'font-weight: 500;' }, escapeHtml(invoice.number || invoice.id)),
-                    DOM.el('td', {}, escapeHtml(invoice.client || invoice.customer || '-')),
+                    DOM.el('td', { style: 'font-weight: 500;' }, escapeHtml(invoice.invoice_number || invoice.number || invoice.id)),
+                    DOM.el('td', {}, escapeHtml(invoice.customer_name || invoice.client || '-')),
                     DOM.el('td', {}, formatCurrency(invoice.amount || invoice.total || 0)),
                     DOM.el('td', {}, [
                         DOM.el('span', { className: 'badge ' + statusClass }, invoice.status || 'pending')
                     ]),
-                    DOM.el('td', {}, formatDate(invoice.dueDate || invoice.due_date)),
+                    DOM.el('td', {}, formatDate(invoice.due_date || invoice.dueDate)),
                     DOM.el('td', {}, [
-                        DOM.el('button', { className: 'btn btn-ghost btn-sm' }, 'View'),
-                        DOM.el('button', { className: 'btn btn-ghost btn-sm' }, 'Send')
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { UltimateApp.viewInvoice(invoice.id); } }, 'View'),
+                        DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { UltimateApp.sendInvoice(invoice.id); } }, 'Send')
                     ])
                 ]);
                 tbody.appendChild(row);
             });
             table.appendChild(tbody);
             tableContainer.appendChild(table);
+
+            // Pagination Controls
+            if (paginationContainer && totalPages > 1) {
+                DOM.clear(paginationContainer);
+                var prevBtn = DOM.el('button', {
+                    className: 'btn btn-secondary',
+                    onclick: function() { if (page > 0) self.loadInvoicesTable(page - 1); },
+                    disabled: page === 0
+                }, '← Zurück');
+                var pageInfo = DOM.el('span', { style: 'display: flex; align-items: center; color: var(--text-muted);' },
+                    'Seite ' + (page + 1) + ' von ' + totalPages + ' (' + formatNumber(total) + ' Rechnungen)');
+                var nextBtn = DOM.el('button', {
+                    className: 'btn btn-secondary',
+                    onclick: function() { if (page < totalPages - 1) self.loadInvoicesTable(page + 1); },
+                    disabled: page >= totalPages - 1
+                }, 'Weiter →');
+                paginationContainer.appendChild(prevBtn);
+                paginationContainer.appendChild(pageInfo);
+                paginationContainer.appendChild(nextBtn);
+            }
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -2255,12 +3998,19 @@
         // ═══════════════════════════════════════════════════════════
 
         renderStripe: async function() {
+            var self = this;
             var container = this.container();
             DOM.clear(container);
+            this.stripePage = 0;
 
             var header = DOM.el('div', { className: 'page-header' }, [
-                DOM.el('h1', { className: 'page-title' }, '&#128179; Stripe'),
-                DOM.el('p', { className: 'page-subtitle' }, 'Payment processing dashboard')
+                DOM.el('div', {}, [
+                    DOM.el('h1', { className: 'page-title' }, '💳 Stripe'),
+                    DOM.el('p', { className: 'page-subtitle' }, 'Payment processing dashboard')
+                ]),
+                DOM.el('div', { className: 'page-actions' }, [
+                    DOM.el('button', { className: 'btn btn-ghost', onclick: function() { self.loadStripePayments(0); } }, '🔄 Refresh')
+                ])
             ]);
             container.appendChild(header);
 
@@ -2274,47 +4024,134 @@
 
             var paymentsCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, 'Recent Payments')
+                    DOM.el('span', { className: 'card-title' }, 'Payments')
                 ]),
-                DOM.el('div', { className: 'card-body', id: 'stripe-payments' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 200px;' })
+                DOM.el('div', { className: 'card-body' }, [
+                    DOM.el('div', { className: 'table-container', id: 'stripe-payments' }, [
+                        DOM.el('div', { className: 'loading-skeleton', style: 'height: 300px;' })
+                    ]),
+                    DOM.el('div', { className: 'flex justify-between items-center mt-4', id: 'stripe-pagination' })
                 ])
             ]);
             container.appendChild(paymentsCard);
 
-            this.loadStripeData();
+            // Load stats first, then payments
+            this.loadStripeStats();
+            this.loadStripePayments(0);
         },
 
-        loadStripeData: async function() {
+        loadStripeStats: async function() {
             var statsContainer = document.getElementById('stripe-stats');
-            var paymentsContainer = document.getElementById('stripe-payments');
             var data = await API.get('/api/stripe/stats');
+            if (!statsContainer) return;
             DOM.clear(statsContainer);
 
             var stats = [
-                { label: 'Total Revenue', value: formatCurrency(data && data.revenue ? data.revenue : 0), type: 'success' },
-                { label: 'Active Subscriptions', value: String(data && data.subscriptions ? data.subscriptions : 0), type: 'info' },
-                { label: 'Payments Today', value: String(data && data.paymentsToday ? data.paymentsToday : 0), type: 'primary' },
-                { label: 'Refunds', value: formatCurrency(data && data.refunds ? data.refunds : 0), type: 'error' }
+                { label: 'Total Revenue', value: formatCurrency(data && data.revenue ? data.revenue : 0), icon: '💰', type: 'success' },
+                { label: 'Subscriptions', value: String(data && data.subscriptions ? data.subscriptions : 0), icon: '🔄', type: 'info' },
+                { label: 'Payments Today', value: String(data && data.paymentsToday ? data.paymentsToday : 0), icon: '📊', type: 'primary' },
+                { label: 'Refunds', value: formatCurrency(data && data.refunds ? data.refunds : 0), icon: '↩️', type: 'error' }
             ];
 
             stats.forEach(function(stat) {
-                statsContainer.appendChild(DOM.el('div', { className: 'kpi-card ' + stat.type }, [
-                    DOM.el('div', { className: 'kpi-label' }, stat.label),
+                statsContainer.appendChild(DOM.el('div', { className: 'kpi-card ' + stat.type + ' animate-slide-up' }, [
+                    DOM.el('div', { className: 'kpi-header' }, [
+                        DOM.el('span', { className: 'kpi-label' }, stat.label),
+                        DOM.el('span', { className: 'kpi-icon' }, stat.icon)
+                    ]),
                     DOM.el('div', { className: 'kpi-value' }, stat.value)
                 ]));
             });
+        },
 
-            DOM.clear(paymentsContainer);
-            if (data && data.recentPayments && data.recentPayments.length > 0) {
-                data.recentPayments.forEach(function(payment) {
-                    paymentsContainer.appendChild(DOM.el('div', { className: 'flex justify-between py-2', style: 'border-bottom: 1px solid var(--border-color);' }, [
-                        DOM.el('span', {}, escapeHtml(payment.customer || payment.email || 'Anonymous')),
-                        DOM.el('span', { className: 'text-success font-medium' }, formatCurrency(payment.amount / 100))
-                    ]));
-                });
+        loadStripePayments: async function(direction) {
+            var self = this;
+            var paymentsContainer = document.getElementById('stripe-payments');
+            var paginationContainer = document.getElementById('stripe-pagination');
+
+            // Build URL with cursor pagination
+            var url = '/api/stripe/payments?limit=' + this.stripePerPage;
+            if (direction === 'next' && this.stripeLastId) {
+                url += '&starting_after=' + this.stripeLastId;
+                this.stripeHistory.push(this.stripeFirstId);
+                this.stripePage++;
+            } else if (direction === 'prev' && this.stripeHistory.length > 0) {
+                var prevFirst = this.stripeHistory.pop();
+                url += '&ending_before=' + prevFirst;
+                this.stripePage--;
             } else {
-                paymentsContainer.appendChild(DOM.el('div', { className: 'empty-state' }, 'No recent payments'));
+                // First page - reset
+                this.stripePage = 0;
+                this.stripeHistory = [];
+            }
+
+            var data = await API.get(url);
+            if (!paymentsContainer) return;
+            DOM.clear(paymentsContainer);
+
+            var payments = data && data.payments ? data.payments : [];
+            this.stripeHasMore = data && data.has_more;
+            this.stripeLastId = data && data.last_id;
+            this.stripeFirstId = data && data.first_id;
+
+            if (payments.length === 0 && this.stripePage === 0) {
+                paymentsContainer.appendChild(DOM.el('div', { className: 'empty-state' }, [
+                    DOM.el('div', { className: 'empty-state-icon' }, '💳'),
+                    DOM.el('div', { className: 'empty-state-title' }, 'No payments yet')
+                ]));
+                return;
+            }
+
+            var table = DOM.el('table', { className: 'table' });
+            var thead = DOM.el('thead', {}, [
+                DOM.el('tr', {}, [
+                    DOM.el('th', {}, 'ID'),
+                    DOM.el('th', {}, 'Customer'),
+                    DOM.el('th', {}, 'Amount'),
+                    DOM.el('th', {}, 'Status'),
+                    DOM.el('th', {}, 'Date')
+                ])
+            ]);
+            table.appendChild(thead);
+
+            var tbody = DOM.el('tbody');
+            payments.forEach(function(payment) {
+                var statusClass = payment.status === 'succeeded' ? 'badge-success' : (payment.status === 'failed' ? 'badge-error' : 'badge-warning');
+                var row = DOM.el('tr', {}, [
+                    DOM.el('td', { style: 'font-family: monospace; font-size: 0.8rem;' }, escapeHtml((payment.id || '').slice(-8))),
+                    DOM.el('td', {}, escapeHtml(payment.customer || payment.email || payment.customer_email || 'Anonymous')),
+                    DOM.el('td', { className: 'text-success font-medium' }, formatCurrency((payment.amount || 0) / 100)),
+                    DOM.el('td', {}, [
+                        DOM.el('span', { className: 'badge ' + statusClass }, payment.status || 'pending')
+                    ]),
+                    DOM.el('td', {}, formatDate(payment.created ? new Date(payment.created * 1000) : null))
+                ]);
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            paymentsContainer.appendChild(table);
+
+            // Pagination Controls (cursor-based)
+            if (paginationContainer) {
+                DOM.clear(paginationContainer);
+                var canPrev = this.stripePage > 0;
+                var canNext = this.stripeHasMore;
+
+                var prevBtn = DOM.el('button', {
+                    className: 'btn btn-secondary',
+                    onclick: function() { self.loadStripePayments('prev'); },
+                    disabled: !canPrev
+                }, '← Zurück');
+                var pageInfo = DOM.el('span', { style: 'display: flex; align-items: center; color: var(--text-muted);' },
+                    'Seite ' + (this.stripePage + 1) + ' (' + payments.length + ' Payments)');
+                var nextBtn = DOM.el('button', {
+                    className: 'btn btn-secondary',
+                    onclick: function() { self.loadStripePayments('next'); },
+                    disabled: !canNext
+                }, 'Weiter →');
+                paginationContainer.appendChild(prevBtn);
+                paginationContainer.appendChild(pageInfo);
+                paginationContainer.appendChild(nextBtn);
             }
         },
 
@@ -2984,5 +4821,8 @@
         }
     });
     </script>
+
+    <!-- Projects & Money Management Module -->
+    <script src="/js/projects-module.js"></script>
 </body>
 </html>
