@@ -46,7 +46,7 @@ const CONFIG = {
     // Anthropic Claude Haiku 4.5 für AI-Funktionen
     anthropic: {
         apiKey: process.env.ANTHROPIC_API_KEY || 'YOUR_ANTHROPIC_KEY',
-        model: 'claude-haiku-4-5-20241022'
+        model: 'claude-3-haiku-20240307'
     },
 
     // Unternehmensdaten

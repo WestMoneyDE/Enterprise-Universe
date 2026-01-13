@@ -19,7 +19,7 @@ const HAIKU_CONFIG = {
     version: '2.0.0',
     defaultTransformation: 'mui',
     maxConcurrentBots: 25,
-    model: 'claude-haiku-4-5-20241022'
+    model: 'claude-3-haiku-20240307'
 };
 
 // ═══════════════════════════════════════════════════════════════

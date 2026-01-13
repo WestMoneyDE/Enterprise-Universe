@@ -10,7 +10,7 @@
     <title>ULTIMATE DASHBOARD | Enterprise Universe</title>
 
     <!-- Auth Guard -->
-    <script src="/js/auth-guard.js"></script>
+    <!-- Auth disabled for demo: <script src="/js/auth-guard.js"></script> -->
 
     <!-- External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +35,165 @@
             </div>
         </a>
 
+        <!-- Mega Menu Navigation -->
+        <nav class="mega-menu" id="mega-menu">
+            <!-- Dashboard -->
+            <div class="menu-item">
+                <a href="#/" class="menu-trigger" data-route="/">
+                    <span class="icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <!-- CRM -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">👤</span>
+                    <span>CRM</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/crm/contacts" class="dropdown-item">
+                        <span class="icon">👥</span>
+                        <span>Contacts</span>
+                    </a>
+                    <a href="#/crm/companies" class="dropdown-item">
+                        <span class="icon">🏢</span>
+                        <span>Companies</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/crm/scoring" class="dropdown-item">
+                        <span class="icon">⭐</span>
+                        <span>Lead Scoring</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sales -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">💰</span>
+                    <span>Sales</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/sales/deals" class="dropdown-item">
+                        <span class="icon">📊</span>
+                        <span>Deals Pipeline</span>
+                    </a>
+                    <a href="#/sales/leads" class="dropdown-item">
+                        <span class="icon">🎯</span>
+                        <span>Lead Discovery</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/sales/proposals" class="dropdown-item">
+                        <span class="icon">📄</span>
+                        <span>Proposals</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">📧</span>
+                    <span>Communication</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/email" class="dropdown-item">
+                        <span class="icon">📧</span>
+                        <span>Email Hub</span>
+                    </a>
+                    <a href="#/whatsapp" class="dropdown-item">
+                        <span class="icon">📱</span>
+                        <span>WhatsApp</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/campaigns" class="dropdown-item">
+                        <span class="icon">🚀</span>
+                        <span>Campaigns</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">🤖</span>
+                    <span>AI</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/ai/bots" class="dropdown-item">
+                        <span class="icon">🤖</span>
+                        <span>Genius Bots</span>
+                    </a>
+                    <a href="#/ai/haiku" class="dropdown-item">
+                        <span class="icon">💎</span>
+                        <span>HAIKU God Mode</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/ai/prophecy" class="dropdown-item">
+                        <span class="icon">🔮</span>
+                        <span>Prophecy</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Finance -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">💳</span>
+                    <span>Finance</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/finance/cashflow" class="dropdown-item">
+                        <span class="icon">📈</span>
+                        <span>Cashflow</span>
+                    </a>
+                    <a href="#/finance/invoices" class="dropdown-item">
+                        <span class="icon">📄</span>
+                        <span>Invoices</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/finance/stripe" class="dropdown-item">
+                        <span class="icon">💳</span>
+                        <span>Stripe</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div class="menu-item">
+                <button class="menu-trigger">
+                    <span class="icon">⚙️</span>
+                    <span>System</span>
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="menu-dropdown">
+                    <a href="#/integrations" class="dropdown-item">
+                        <span class="icon">🔗</span>
+                        <span>Integrations</span>
+                    </a>
+                    <a href="#/settings" class="dropdown-item">
+                        <span class="icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#/docs" class="dropdown-item">
+                        <span class="icon">📚</span>
+                        <span>Documentation</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
         <!-- Header Actions -->
         <div class="header-actions">
             <div class="header-search" id="search-trigger">
-                <span>&#128269;</span>
+                <span>🔍</span>
                 <span>Search...</span>
                 <kbd>Ctrl+K</kbd>
             </div>
@@ -53,112 +208,14 @@
     </header>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         LAYOUT CONTAINER WITH SIDEBAR
+         MAIN CONTENT AREA (SPA Router Target)
          ═══════════════════════════════════════════════════════════════ -->
-    <div class="app-layout">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <span class="sidebar-title">Navigation</span>
-                <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M11 19l-7-7 7-7M18 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-            </div>
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Main</div>
-                    <a href="#/" class="nav-item" data-route="/">
-                        <span class="nav-icon">🏠</span>
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">CRM</div>
-                    <a href="#/crm/contacts" class="nav-item" data-route="/crm/contacts">
-                        <span class="nav-icon">👥</span>
-                        <span class="nav-label">Contacts</span>
-                    </a>
-                    <a href="#/crm/companies" class="nav-item" data-route="/crm/companies">
-                        <span class="nav-icon">🏢</span>
-                        <span class="nav-label">Companies</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">Sales</div>
-                    <a href="#/sales/deals" class="nav-item" data-route="/sales/deals">
-                        <span class="nav-icon">💰</span>
-                        <span class="nav-label">Deals Pipeline</span>
-                    </a>
-                    <a href="#/sales/leads" class="nav-item" data-route="/sales/leads">
-                        <span class="nav-icon">🎯</span>
-                        <span class="nav-label">Lead Discovery</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">Communication</div>
-                    <a href="#/email" class="nav-item" data-route="/email">
-                        <span class="nav-icon">📧</span>
-                        <span class="nav-label">Email Hub</span>
-                    </a>
-                    <a href="#/whatsapp" class="nav-item" data-route="/whatsapp">
-                        <span class="nav-icon">📱</span>
-                        <span class="nav-label">WhatsApp</span>
-                    </a>
-                    <a href="#/campaigns" class="nav-item" data-route="/campaigns">
-                        <span class="nav-icon">🚀</span>
-                        <span class="nav-label">Campaigns</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">AI</div>
-                    <a href="#/ai/bots" class="nav-item" data-route="/ai/bots">
-                        <span class="nav-icon">🤖</span>
-                        <span class="nav-label">Genius Bots</span>
-                    </a>
-                    <a href="#/ai/haiku" class="nav-item" data-route="/ai/haiku">
-                        <span class="nav-icon">💎</span>
-                        <span class="nav-label">HAIKU God Mode</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">Finance</div>
-                    <a href="#/finance/cashflow" class="nav-item" data-route="/finance/cashflow">
-                        <span class="nav-icon">📈</span>
-                        <span class="nav-label">Cashflow</span>
-                    </a>
-                    <a href="#/finance/invoices" class="nav-item" data-route="/finance/invoices">
-                        <span class="nav-icon">📄</span>
-                        <span class="nav-label">Invoices</span>
-                    </a>
-                    <a href="#/finance/stripe" class="nav-item" data-route="/finance/stripe">
-                        <span class="nav-icon">💳</span>
-                        <span class="nav-label">Stripe</span>
-                    </a>
-                </div>
-                <div class="nav-section">
-                    <div class="nav-section-title">System</div>
-                    <a href="#/integrations" class="nav-item" data-route="/integrations">
-                        <span class="nav-icon">🔌</span>
-                        <span class="nav-label">Integrations</span>
-                    </a>
-                    <a href="#/settings" class="nav-item" data-route="/settings">
-                        <span class="nav-icon">⚙️</span>
-                        <span class="nav-label">Settings</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="main-content with-sidebar">
-            <div class="content-wrapper" id="app-content">
-                <!-- Content loaded dynamically by router -->
-                <div class="loading-skeleton" style="height: 200px;"></div>
-            </div>
-        </main>
-    </div>
+    <main class="main-content">
+        <div class="content-wrapper" id="app-content">
+            <!-- Content loaded dynamically by router -->
+            <div class="loading-skeleton" style="height: 200px;"></div>
+        </div>
+    </main>
 
     <!-- ═══════════════════════════════════════════════════════════════
          STATUS BAR
@@ -233,10 +290,6 @@
 
     function formatNumber(value) {
         if (value === null || value === undefined) return '-';
-        // Already formatted string (contains dots or letters)
-        if (typeof value === 'string' && (value.includes('.') || /[a-zA-Z]/.test(value))) {
-            return value;
-        }
         return new Intl.NumberFormat('de-DE').format(value);
     }
 
@@ -248,22 +301,6 @@
     function formatDateTime(dateStr) {
         if (!dateStr) return '-';
         return new Date(dateStr).toLocaleString('de-DE');
-    }
-
-    function formatTimeAgo(date) {
-        if (!date) return '';
-        var now = new Date();
-        var diff = now - date;
-        var seconds = Math.floor(diff / 1000);
-        var minutes = Math.floor(seconds / 60);
-        var hours = Math.floor(minutes / 60);
-        var days = Math.floor(hours / 24);
-
-        if (days > 7) return formatDate(date);
-        if (days > 0) return days + 'd ago';
-        if (hours > 0) return hours + 'h ago';
-        if (minutes > 0) return minutes + 'm ago';
-        return 'just now';
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -350,14 +387,14 @@
                     }
                 });
             }
-            if (children !== null && children !== undefined) {
-                if (typeof children === 'string' || typeof children === 'number') {
-                    element.textContent = String(children);
+            if (children) {
+                if (typeof children === 'string') {
+                    element.textContent = children;
                 } else if (Array.isArray(children)) {
                     children.forEach(function(child) {
                         if (child) element.appendChild(child);
                     });
-                } else if (children instanceof Node) {
+                } else {
                     element.appendChild(children);
                 }
             }
@@ -426,13 +463,8 @@
         },
 
         updateActiveMenu: function(path) {
-            // Remove all active states from mega menu
+            // Remove all active states
             document.querySelectorAll('.menu-trigger, .dropdown-item').forEach(function(el) {
-                el.classList.remove('active');
-            });
-
-            // Remove all active states from sidebar
-            document.querySelectorAll('.nav-item').forEach(function(el) {
                 el.classList.remove('active');
             });
 
@@ -441,18 +473,12 @@
             var activeEl = document.querySelector(selector);
             if (activeEl) {
                 activeEl.classList.add('active');
-                // Also highlight parent menu trigger (mega menu)
+                // Also highlight parent menu trigger
                 var menuItem = activeEl.closest('.menu-item');
                 if (menuItem) {
                     var trigger = menuItem.querySelector('.menu-trigger');
                     if (trigger) trigger.classList.add('active');
                 }
-            }
-
-            // Also activate sidebar nav item
-            var sidebarItem = document.querySelector('.sidebar .nav-item[href="#' + path + '"]');
-            if (sidebarItem) {
-                sidebarItem.classList.add('active');
             }
         }
     };
@@ -543,89 +569,6 @@
                 ])
             ]);
             container.appendChild(quickActions);
-
-            // ═══════════════════════════════════════════════════════════
-            // NEUE INTERAKTIVE WIDGETS
-            // ═══════════════════════════════════════════════════════════
-
-            // Second Row: Top Deals + Conversion Funnel
-            var secondRow = DOM.el('div', { className: 'grid grid-2', style: 'margin-top: 1.5rem; gap: 1.5rem;' });
-            container.appendChild(secondRow);
-
-            // Top Deals Widget
-            var topDealsCard = DOM.el('div', { className: 'card' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '🏆 Top Deals'),
-                    DOM.el('a', { href: '#/sales/deals', className: 'btn btn-ghost btn-sm' }, 'View All')
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'top-deals-widget' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 250px;' })
-                ])
-            ]);
-            secondRow.appendChild(topDealsCard);
-
-            // Conversion Funnel Widget
-            var funnelCard = DOM.el('div', { className: 'card' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '📊 Conversion Funnel'),
-                    DOM.el('span', { className: 'badge badge-info', style: 'font-size: 0.7rem;' }, 'Live')
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'conversion-funnel-widget' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 250px;' })
-                ])
-            ]);
-            secondRow.appendChild(funnelCard);
-
-            // Third Row: Activity Feed + Goals Progress
-            var thirdRow = DOM.el('div', { className: 'grid grid-2', style: 'margin-top: 1.5rem; gap: 1.5rem;' });
-            container.appendChild(thirdRow);
-
-            // Activity Feed Widget
-            var activityCard = DOM.el('div', { className: 'card' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '🔔 Recent Activity'),
-                    DOM.el('button', { className: 'btn btn-ghost btn-sm', onclick: function() { Modules.loadActivityFeed(); } }, '🔄 Refresh')
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'activity-feed-widget', style: 'max-height: 300px; overflow-y: auto;' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 250px;' })
-                ])
-            ]);
-            thirdRow.appendChild(activityCard);
-
-            // Goals Progress Widget
-            var goalsCard = DOM.el('div', { className: 'card' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '🎯 Sales Goals'),
-                    DOM.el('span', { className: 'badge badge-success', style: 'font-size: 0.7rem;' }, 'Q1 2026')
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'goals-progress-widget' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 250px;' })
-                ])
-            ]);
-            thirdRow.appendChild(goalsCard);
-
-            // Fourth Row: Revenue Chart (Full Width)
-            var revenueChartCard = DOM.el('div', { className: 'card', style: 'margin-top: 1.5rem;' }, [
-                DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '📈 Monthly Revenue Trend'),
-                    DOM.el('div', { className: 'flex gap-2' }, [
-                        DOM.el('button', { className: 'btn btn-ghost btn-sm active', id: 'chart-6m', onclick: function() { Modules.loadRevenueChart(6); } }, '6M'),
-                        DOM.el('button', { className: 'btn btn-ghost btn-sm', id: 'chart-12m', onclick: function() { Modules.loadRevenueChart(12); } }, '12M'),
-                        DOM.el('button', { className: 'btn btn-ghost btn-sm', id: 'chart-ytd', onclick: function() { Modules.loadRevenueChart('ytd'); } }, 'YTD')
-                    ])
-                ]),
-                DOM.el('div', { className: 'card-body', id: 'revenue-chart-widget', style: 'height: 200px;' }, [
-                    DOM.el('div', { className: 'loading-skeleton', style: 'height: 180px;' })
-                ])
-            ]);
-            container.appendChild(revenueChartCard);
-
-            // Load all new widgets
-            this.loadTopDeals();
-            this.loadConversionFunnel();
-            this.loadActivityFeed();
-            this.loadGoalsProgress();
-            this.loadRevenueChart(6);
         },
 
         loadDashboardKPIs: async function(grid) {
@@ -659,8 +602,7 @@
             var data = await API.get('/api/hubspot/contacts?limit=5');
             DOM.clear(container);
 
-            var contacts = data && (data.results || data.contacts) || [];
-            if (contacts.length === 0) {
+            if (!data || !data.results || data.results.length === 0) {
                 container.appendChild(DOM.el('div', { className: 'empty-state' }, [
                     DOM.el('div', { className: 'empty-state-icon' }, '👤'),
                     DOM.el('div', { className: 'empty-state-title' }, 'No contacts yet'),
@@ -670,7 +612,7 @@
             }
 
             var list = DOM.el('div', { className: 'flex flex-col gap-2' });
-            contacts.forEach(function(contact) {
+            data.results.forEach(function(contact) {
                 var props = contact.properties || {};
                 var name = [props.firstname, props.lastname].filter(Boolean).join(' ') || 'Unknown';
                 var initials = name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
@@ -690,11 +632,10 @@
 
         loadPipelineOverview: async function() {
             var container = document.getElementById('pipeline-overview');
-            var data = await API.get('/api/hubspot/deals?limit=100');
+            var data = await API.get('/api/hubspot/deals');
             DOM.clear(container);
 
-            var deals = data && (data.results || data.deals) || [];
-            if (deals.length === 0) {
+            if (!data || !data.results) {
                 container.textContent = 'Could not load pipeline data';
                 return;
             }
@@ -710,7 +651,7 @@
                 'closedlost': 'Lost'
             };
 
-            deals.forEach(function(deal) {
+            data.results.forEach(function(deal) {
                 var stage = deal.properties && deal.properties.dealstage ? deal.properties.dealstage : 'unknown';
                 if (!stages[stage]) stages[stage] = { count: 0, value: 0 };
                 stages[stage].count++;
@@ -736,338 +677,12 @@
         },
 
         // ═══════════════════════════════════════════════════════════
-        // INTERACTIVE DASHBOARD WIDGETS
-        // ═══════════════════════════════════════════════════════════
-
-        loadTopDeals: async function() {
-            var container = document.getElementById('top-deals-widget');
-            if (!container) return;
-
-            var data = await API.get('/api/hubspot/deals?limit=100');
-            DOM.clear(container);
-
-            var deals = data && (data.deals || data.results) || [];
-            if (deals.length === 0) {
-                container.appendChild(DOM.el('div', { className: 'empty-state' }, 'No deals found'));
-                return;
-            }
-
-            // Sort by amount and take top 5
-            deals.sort(function(a, b) {
-                var amountA = parseFloat(a.properties && a.properties.amount ? a.properties.amount : 0);
-                var amountB = parseFloat(b.properties && b.properties.amount ? b.properties.amount : 0);
-                return amountB - amountA;
-            });
-
-            var topDeals = deals.slice(0, 5);
-            var maxAmount = parseFloat(topDeals[0].properties && topDeals[0].properties.amount ? topDeals[0].properties.amount : 1);
-
-            var list = DOM.el('div', { className: 'flex flex-col gap-3' });
-            topDeals.forEach(function(deal, index) {
-                var props = deal.properties || {};
-                var amount = parseFloat(props.amount || 0);
-                var percentage = (amount / maxAmount * 100).toFixed(0);
-                var stageColors = {
-                    'qualifiedtobuy': 'var(--info)',
-                    'presentationscheduled': 'var(--accent-primary)',
-                    'decisionmakerboughtin': 'var(--warning)',
-                    'negotiation': 'var(--accent-secondary)',
-                    'closedwon': 'var(--success)',
-                    'closedlost': 'var(--error)'
-                };
-                var color = stageColors[props.dealstage] || 'var(--info)';
-
-                var row = DOM.el('div', { style: 'background: var(--bg-elevated); border-radius: 10px; padding: 0.75rem; cursor: pointer;', onclick: function() { UltimateApp.showDealDetail(deal.id); } }, [
-                    DOM.el('div', { className: 'flex justify-between items-center mb-2' }, [
-                        DOM.el('div', { className: 'flex items-center gap-2' }, [
-                            DOM.el('span', { style: 'font-size: 1.2rem; font-weight: 700; color: var(--text-muted);' }, '#' + (index + 1)),
-                            DOM.el('span', { style: 'font-weight: 500; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;' }, escapeHtml(props.dealname || 'Unnamed'))
-                        ]),
-                        DOM.el('span', { style: 'font-weight: 700; color: ' + color + ';' }, formatCurrency(amount))
-                    ]),
-                    DOM.el('div', { style: 'height: 6px; background: var(--bg-base); border-radius: 3px; overflow: hidden;' }, [
-                        DOM.el('div', { style: 'height: 100%; width: ' + percentage + '%; background: ' + color + '; border-radius: 3px; transition: width 0.5s ease;' })
-                    ])
-                ]);
-                list.appendChild(row);
-            });
-
-            container.appendChild(list);
-        },
-
-        loadConversionFunnel: async function() {
-            var container = document.getElementById('conversion-funnel-widget');
-            if (!container) return;
-
-            var data = await API.get('/api/hubspot/deals/all');
-            DOM.clear(container);
-
-            var deals = data && data.deals || [];
-
-            // Count by stage
-            var stageCounts = {
-                'qualifiedtobuy': 0,
-                'presentationscheduled': 0,
-                'decisionmakerboughtin': 0,
-                'negotiation': 0,
-                'closedwon': 0,
-                'closedlost': 0
-            };
-
-            deals.forEach(function(deal) {
-                var stage = deal.properties && deal.properties.dealstage ? deal.properties.dealstage : 'unknown';
-                if (stageCounts[stage] !== undefined) {
-                    stageCounts[stage]++;
-                }
-            });
-
-            var stages = [
-                { id: 'qualifiedtobuy', name: 'Qualified', color: 'var(--info)' },
-                { id: 'presentationscheduled', name: 'Presentation', color: 'var(--accent-primary)' },
-                { id: 'decisionmakerboughtin', name: 'Decision Maker', color: 'var(--warning)' },
-                { id: 'negotiation', name: 'Negotiation', color: 'var(--accent-secondary)' },
-                { id: 'closedwon', name: 'Won', color: 'var(--success)' }
-            ];
-
-            var maxCount = Math.max.apply(null, stages.map(function(s) { return stageCounts[s.id]; })) || 1;
-
-            var funnel = DOM.el('div', { className: 'flex flex-col gap-2' });
-
-            stages.forEach(function(stage, index) {
-                var count = stageCounts[stage.id];
-                var width = Math.max(30, (count / maxCount * 100));
-                var nextCount = stages[index + 1] ? stageCounts[stages[index + 1].id] : null;
-                var convRate = nextCount !== null && count > 0 ? ((nextCount / count) * 100).toFixed(0) : null;
-
-                var row = DOM.el('div', { style: 'display: flex; align-items: center; gap: 1rem;' }, [
-                    DOM.el('div', { style: 'width: 100px; font-size: 0.8rem; text-align: right; color: var(--text-muted);' }, stage.name),
-                    DOM.el('div', { style: 'flex: 1; position: relative;' }, [
-                        DOM.el('div', { style: 'height: 32px; width: ' + width + '%; background: ' + stage.color + '; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: width 0.5s ease; cursor: pointer;', onclick: function() { UltimateApp.showStageDetail(stage.id, stage.name); } }, [
-                            DOM.el('span', { style: 'color: white; font-weight: 600; font-size: 0.9rem;' }, String(count))
-                        ])
-                    ]),
-                    convRate !== null ? DOM.el('div', { style: 'width: 50px; font-size: 0.75rem; color: var(--text-muted);' }, convRate + '%') : DOM.el('div', { style: 'width: 50px;' })
-                ]);
-                funnel.appendChild(row);
-            });
-
-            // Add Lost count separately
-            var lostRow = DOM.el('div', { style: 'display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border);' }, [
-                DOM.el('div', { style: 'width: 100px; font-size: 0.8rem; text-align: right; color: var(--error);' }, 'Lost'),
-                DOM.el('div', { style: 'flex: 1;' }, [
-                    DOM.el('span', { style: 'color: var(--error); font-weight: 600;' }, String(stageCounts['closedlost']))
-                ]),
-                DOM.el('div', { style: 'width: 50px;' })
-            ]);
-            funnel.appendChild(lostRow);
-
-            container.appendChild(funnel);
-        },
-
-        loadActivityFeed: async function() {
-            var container = document.getElementById('activity-feed-widget');
-            if (!container) return;
-
-            // Fetch recent contacts and deals for activity simulation
-            var contactsData = await API.get('/api/hubspot/contacts?limit=10');
-            var dealsData = await API.get('/api/hubspot/deals?limit=10');
-            DOM.clear(container);
-
-            var activities = [];
-
-            // Create activity entries from contacts
-            var contacts = contactsData && (contactsData.contacts || contactsData.results) || [];
-            contacts.forEach(function(contact) {
-                var props = contact.properties || {};
-                var created = props.createdate ? new Date(props.createdate) : new Date();
-                activities.push({
-                    type: 'contact',
-                    icon: String.fromCodePoint(0x1F464),
-                    title: 'New Contact: ' + [props.firstname, props.lastname].filter(Boolean).join(' '),
-                    subtitle: props.email || '',
-                    time: created,
-                    color: 'var(--info)'
-                });
-            });
-
-            // Create activity entries from deals
-            var deals = dealsData && (dealsData.deals || dealsData.results) || [];
-            deals.forEach(function(deal) {
-                var props = deal.properties || {};
-                var created = props.createdate ? new Date(props.createdate) : new Date();
-                var stageNames = {
-                    'closedwon': 'Won',
-                    'closedlost': 'Lost',
-                    'negotiation': 'In Negotiation',
-                    'decisionmakerboughtin': 'Decision Maker',
-                    'presentationscheduled': 'Presentation',
-                    'qualifiedtobuy': 'Qualified'
-                };
-                var stageName = stageNames[props.dealstage] || props.dealstage;
-                var icon = props.dealstage === 'closedwon' ? String.fromCodePoint(0x1F3C6) : String.fromCodePoint(0x1F4B0);
-                var color = props.dealstage === 'closedwon' ? 'var(--success)' : (props.dealstage === 'closedlost' ? 'var(--error)' : 'var(--accent-primary)');
-
-                activities.push({
-                    type: 'deal',
-                    icon: icon,
-                    title: 'Deal: ' + (props.dealname || 'Unnamed'),
-                    subtitle: formatCurrency(parseFloat(props.amount || 0)) + ' - ' + stageName,
-                    time: created,
-                    color: color
-                });
-            });
-
-            // Sort by time (newest first)
-            activities.sort(function(a, b) { return b.time - a.time; });
-
-            // Display top 8 activities
-            var list = DOM.el('div', { className: 'flex flex-col gap-2' });
-            activities.slice(0, 8).forEach(function(activity) {
-                var timeAgo = formatTimeAgo(activity.time);
-
-                var row = DOM.el('div', { style: 'display: flex; gap: 0.75rem; padding: 0.5rem; border-radius: 8px; cursor: pointer;', onmouseover: function() { this.style.background = 'var(--bg-elevated)'; }, onmouseout: function() { this.style.background = 'transparent'; } }, [
-                    DOM.el('div', { style: 'width: 32px; height: 32px; border-radius: 50%; background: var(--bg-elevated); display: flex; align-items: center; justify-content: center; font-size: 1rem;' }, activity.icon),
-                    DOM.el('div', { style: 'flex: 1; min-width: 0;' }, [
-                        DOM.el('div', { style: 'font-size: 0.85rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;' }, escapeHtml(activity.title)),
-                        DOM.el('div', { style: 'font-size: 0.75rem; color: var(--text-muted);' }, escapeHtml(activity.subtitle))
-                    ]),
-                    DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted); white-space: nowrap;' }, timeAgo)
-                ]);
-                list.appendChild(row);
-            });
-
-            container.appendChild(list);
-        },
-
-        loadGoalsProgress: async function() {
-            var container = document.getElementById('goals-progress-widget');
-            if (!container) return;
-
-            // Fetch deals data for revenue calculations
-            var dealsData = await API.get('/api/hubspot/deals/all');
-            DOM.clear(container);
-
-            var deals = dealsData && dealsData.deals || [];
-
-            // Calculate metrics
-            var wonDeals = deals.filter(function(d) { return d.properties && d.properties.dealstage === 'closedwon'; });
-            var wonRevenue = wonDeals.reduce(function(sum, d) { return sum + parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0); }, 0);
-
-            var pipelineDeals = deals.filter(function(d) {
-                var stage = d.properties && d.properties.dealstage;
-                return stage && stage !== 'closedwon' && stage !== 'closedlost';
-            });
-            var pipelineValue = pipelineDeals.reduce(function(sum, d) { return sum + parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0); }, 0);
-
-            // Define goals (these could be dynamic in future)
-            var goals = [
-                { label: 'Revenue Goal', current: wonRevenue, target: 5000000, icon: String.fromCodePoint(0x1F4B0), color: 'var(--success)' },
-                { label: 'Pipeline Goal', current: pipelineValue, target: 100000000, icon: String.fromCodePoint(0x1F4C8), color: 'var(--accent-primary)' },
-                { label: 'Deals Closed', current: wonDeals.length, target: 50, icon: String.fromCodePoint(0x1F3C6), color: 'var(--warning)', isCount: true },
-                { label: 'Active Deals', current: pipelineDeals.length, target: 500, icon: String.fromCodePoint(0x1F4BC), color: 'var(--info)', isCount: true }
-            ];
-
-            var list = DOM.el('div', { className: 'flex flex-col gap-4' });
-
-            goals.forEach(function(goal) {
-                var percentage = Math.min(100, (goal.current / goal.target * 100));
-                var displayCurrent = goal.isCount ? String(goal.current) : formatCurrency(goal.current);
-                var displayTarget = goal.isCount ? String(goal.target) : formatCurrency(goal.target);
-
-                var row = DOM.el('div', {}, [
-                    DOM.el('div', { className: 'flex justify-between items-center mb-1' }, [
-                        DOM.el('div', { className: 'flex items-center gap-2' }, [
-                            DOM.el('span', {}, goal.icon),
-                            DOM.el('span', { style: 'font-size: 0.85rem; font-weight: 500;' }, goal.label)
-                        ]),
-                        DOM.el('span', { style: 'font-size: 0.8rem; color: var(--text-muted);' }, displayCurrent + ' / ' + displayTarget)
-                    ]),
-                    DOM.el('div', { style: 'height: 8px; background: var(--bg-elevated); border-radius: 4px; overflow: hidden;' }, [
-                        DOM.el('div', { style: 'height: 100%; width: ' + percentage + '%; background: ' + goal.color + '; border-radius: 4px; transition: width 0.5s ease;' })
-                    ]),
-                    DOM.el('div', { style: 'font-size: 0.75rem; color: ' + goal.color + '; margin-top: 2px; text-align: right;' }, percentage.toFixed(1) + '%')
-                ]);
-                list.appendChild(row);
-            });
-
-            container.appendChild(list);
-        },
-
-        loadRevenueChart: async function(period) {
-            var container = document.getElementById('revenue-chart-widget');
-            if (!container) return;
-
-            // Update button states
-            ['6m', '12m', 'ytd'].forEach(function(p) {
-                var btn = document.getElementById('chart-' + p);
-                if (btn) btn.classList.toggle('active', p === String(period) || p === period);
-            });
-
-            var dealsData = await API.get('/api/hubspot/deals/all');
-            DOM.clear(container);
-
-            var deals = dealsData && dealsData.deals || [];
-
-            // Get won deals with close dates
-            var wonDeals = deals.filter(function(d) {
-                return d.properties && d.properties.dealstage === 'closedwon' && d.properties.closedate;
-            });
-
-            // Group by month
-            var monthlyRevenue = {};
-            var now = new Date();
-            var monthsToShow = period === 'ytd' ? now.getMonth() + 1 : parseInt(period) || 6;
-
-            // Initialize months
-            for (var i = monthsToShow - 1; i >= 0; i--) {
-                var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-                var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-                monthlyRevenue[key] = 0;
-            }
-
-            // Sum revenue by month
-            wonDeals.forEach(function(deal) {
-                var closeDate = new Date(deal.properties.closedate);
-                var key = closeDate.getFullYear() + '-' + String(closeDate.getMonth() + 1).padStart(2, '0');
-                if (monthlyRevenue[key] !== undefined) {
-                    monthlyRevenue[key] += parseFloat(deal.properties.amount || 0);
-                }
-            });
-
-            var months = Object.keys(monthlyRevenue).sort();
-            var values = months.map(function(m) { return monthlyRevenue[m]; });
-            var maxValue = Math.max.apply(null, values) || 1;
-
-            // Create bar chart
-            var chart = DOM.el('div', { style: 'display: flex; align-items: flex-end; justify-content: space-around; height: 150px; padding: 1rem 0;' });
-
-            months.forEach(function(month, index) {
-                var value = values[index];
-                var height = Math.max(5, (value / maxValue * 120));
-                var monthName = new Date(month + '-01').toLocaleDateString('de-DE', { month: 'short' });
-
-                var bar = DOM.el('div', { style: 'display: flex; flex-direction: column; align-items: center; gap: 0.25rem;' }, [
-                    DOM.el('div', { style: 'font-size: 0.65rem; color: var(--text-muted); transform: rotate(-45deg); white-space: nowrap;' }, formatCurrency(value, true)),
-                    DOM.el('div', { style: 'width: 30px; height: ' + height + 'px; background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary)); border-radius: 4px 4px 0 0; transition: height 0.5s ease; cursor: pointer;', title: month + ': ' + formatCurrency(value) }),
-                    DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted);' }, monthName)
-                ]);
-                chart.appendChild(bar);
-            });
-
-            container.appendChild(chart);
-        },
-
-        // ═══════════════════════════════════════════════════════════
         // CRM - CONTACTS
         // ═══════════════════════════════════════════════════════════
-
-        contactsPage: 0,
-        contactsPerPage: 50,
 
         renderContacts: async function() {
             var container = this.container();
             DOM.clear(container);
-            this.contactsPage = 0;
 
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
@@ -1085,30 +700,20 @@
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'table-container', id: 'contacts-table' }, [
                         DOM.el('div', { className: 'loading-skeleton', style: 'height: 300px;' })
-                    ]),
-                    DOM.el('div', { className: 'pagination', id: 'contacts-pagination', style: 'display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;' })
+                    ])
                 ])
             ]);
             container.appendChild(card);
 
-            this.loadContactsTable(0);
+            this.loadContactsTable();
         },
 
-        loadContactsTable: async function(page) {
-            var self = this;
-            if (page === undefined) page = this.contactsPage;
-            this.contactsPage = page;
+        loadContactsTable: async function() {
             var tableContainer = document.getElementById('contacts-table');
-            var paginationContainer = document.getElementById('contacts-pagination');
-            var offset = page * this.contactsPerPage;
-            var data = await API.get('/api/hubspot/contacts?limit=' + this.contactsPerPage + '&offset=' + offset);
+            var data = await API.get('/api/hubspot/contacts?limit=50');
             DOM.clear(tableContainer);
 
-            var contacts = data && (data.results || data.contacts) || [];
-            var total = data && data.total || 0;
-            var totalPages = Math.ceil(total / this.contactsPerPage);
-
-            if (contacts.length === 0 && page === 0) {
+            if (!data || !data.results || data.results.length === 0) {
                 tableContainer.appendChild(DOM.el('div', { className: 'empty-state' }, [
                     DOM.el('div', { className: 'empty-state-icon' }, '👤'),
                     DOM.el('div', { className: 'empty-state-title' }, 'No contacts yet'),
@@ -1134,7 +739,7 @@
 
             // Body
             var tbody = DOM.el('tbody');
-            contacts.forEach(function(contact) {
+            data.results.forEach(function(contact) {
                 var props = contact.properties || {};
                 var name = [props.firstname, props.lastname].filter(Boolean).join(' ') || 'Unknown';
 
@@ -1153,26 +758,6 @@
             });
             table.appendChild(tbody);
             tableContainer.appendChild(table);
-
-            // Pagination Controls
-            if (paginationContainer && totalPages > 1) {
-                DOM.clear(paginationContainer);
-                var prevBtn = DOM.el('button', {
-                    className: 'btn btn-secondary',
-                    onclick: function() { if (page > 0) self.loadContactsTable(page - 1); },
-                    disabled: page === 0
-                }, '← Zurück');
-                var pageInfo = DOM.el('span', { style: 'display: flex; align-items: center; color: var(--text-muted);' },
-                    'Seite ' + (page + 1) + ' von ' + totalPages + ' (' + formatNumber(total) + ' Kontakte)');
-                var nextBtn = DOM.el('button', {
-                    className: 'btn btn-secondary',
-                    onclick: function() { if (page < totalPages - 1) self.loadContactsTable(page + 1); },
-                    disabled: page >= totalPages - 1
-                }, 'Weiter →');
-                paginationContainer.appendChild(prevBtn);
-                paginationContainer.appendChild(pageInfo);
-                paginationContainer.appendChild(nextBtn);
-            }
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -1186,210 +771,82 @@
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
                     DOM.el('h1', { className: 'page-title' }, 'Deals Pipeline'),
-                    DOM.el('p', { className: 'page-subtitle' }, 'Interaktive Sales Pipeline mit Statistiken')
+                    DOM.el('p', { className: 'page-subtitle' }, 'Manage your sales pipeline')
                 ]),
                 DOM.el('div', { className: 'page-actions' }, [
-                    DOM.el('button', { className: 'btn btn-ghost', onclick: function() { Modules.loadDealsKanban(); } }, '🔄 Refresh'),
                     DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showNewDealModal(); } }, '+ New Deal')
                 ])
             ]);
             container.appendChild(header);
 
-            // Pipeline Stats Grid
-            var statsGrid = DOM.el('div', { className: 'kpi-grid', id: 'pipeline-stats', style: 'margin-bottom: 1.5rem;' }, [
-                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' }),
-                DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' })
-            ]);
-            container.appendChild(statsGrid);
-
-            // Win Rate Progress Bar
-            var winRateCard = DOM.el('div', { className: 'card mb-4', id: 'win-rate-card' }, [
-                DOM.el('div', { className: 'card-body', style: 'padding: 1rem 1.5rem;' }, [
-                    DOM.el('div', { className: 'flex justify-between items-center mb-2' }, [
-                        DOM.el('span', { style: 'font-weight: 600; color: var(--text-primary);' }, '🏆 Win Rate'),
-                        DOM.el('span', { id: 'win-rate-value', style: 'font-size: 1.5rem; font-weight: 700; color: var(--success);' }, '-%')
-                    ]),
-                    DOM.el('div', { style: 'background: var(--bg-secondary); border-radius: 8px; height: 12px; overflow: hidden;' }, [
-                        DOM.el('div', { id: 'win-rate-bar', style: 'height: 100%; background: linear-gradient(90deg, var(--success), var(--accent-primary)); width: 0%; transition: width 1s ease;' })
-                    ]),
-                    DOM.el('div', { className: 'flex justify-between mt-2', style: 'font-size: 0.75rem; color: var(--text-muted);' }, [
-                        DOM.el('span', { id: 'won-count' }, '- Won'),
-                        DOM.el('span', { id: 'lost-count' }, '- Lost'),
-                        DOM.el('span', { id: 'open-count' }, '- Open')
-                    ])
-                ])
-            ]);
-            container.appendChild(winRateCard);
-
-            // Kanban Board with scroll wrapper
-            var kanbanWrapper = DOM.el('div', { className: 'kanban-wrapper', style: 'overflow-x: auto; margin: 0 -1.5rem; padding: 0 1.5rem;' });
+            // Kanban Board
             var kanban = DOM.el('div', { className: 'kanban-board', id: 'deals-kanban' }, [
                 DOM.el('div', { className: 'loading-skeleton', style: 'height: 400px; width: 100%;' })
             ]);
-            kanbanWrapper.appendChild(kanban);
-            container.appendChild(kanbanWrapper);
+            container.appendChild(kanban);
 
             this.loadDealsKanban();
         },
 
         loadDealsKanban: async function() {
             var kanban = document.getElementById('deals-kanban');
-            var statsGrid = document.getElementById('pipeline-stats');
-
-            // Show loading state
-            if (kanban) {
-                DOM.clear(kanban);
-                var loadingEl = DOM.el('div', { style: 'text-align: center; padding: 2rem; color: var(--text-muted);' }, [
-                    DOM.el('div', { style: 'font-size: 2rem; margin-bottom: 0.5rem;' }, String.fromCodePoint(0x23F3)),
-                    DOM.el('span', {}, 'Lade alle Deals...')
-                ]);
-                kanban.appendChild(loadingEl);
-            }
-
-            // Fetch ALL deals using pagination endpoint
-            var data = await API.get('/api/hubspot/deals/all');
-            if (kanban) DOM.clear(kanban);
+            var data = await API.get('/api/hubspot/deals');
+            DOM.clear(kanban);
 
             var stages = [
-                { id: 'qualifiedtobuy', name: 'Qualified', color: 'var(--info)', weight: 0.1 },
-                { id: 'presentationscheduled', name: 'Presentation', color: 'var(--accent-primary)', weight: 0.3 },
-                { id: 'decisionmakerboughtin', name: 'Decision Maker', color: 'var(--warning)', weight: 0.6 },
-                { id: 'negotiation', name: 'Negotiation', color: 'var(--accent-secondary)', weight: 0.8 },
-                { id: 'closedwon', name: 'Won', color: 'var(--success)', weight: 1.0 },
-                { id: 'closedlost', name: 'Lost', color: 'var(--error)', weight: 0 }
+                { id: 'qualifiedtobuy', name: 'Qualified', color: 'var(--info)' },
+                { id: 'presentationscheduled', name: 'Presentation', color: 'var(--accent-primary)' },
+                { id: 'decisionmakerboughtin', name: 'Decision Maker', color: 'var(--warning)' },
+                { id: 'negotiation', name: 'Negotiation', color: 'var(--accent-secondary)' },
+                { id: 'closedwon', name: 'Won', color: 'var(--success)' },
+                { id: 'closedlost', name: 'Lost', color: 'var(--error)' }
             ];
 
             // Group deals by stage
             var dealsByStage = {};
             stages.forEach(function(s) { dealsByStage[s.id] = []; });
 
-            var allDeals = data && (data.deals || data.results) ? (data.deals || data.results) : [];
-            allDeals.forEach(function(deal) {
-                var stage = deal.properties && deal.properties.dealstage ? deal.properties.dealstage : 'qualifiedtobuy';
-                if (dealsByStage[stage]) {
-                    dealsByStage[stage].push(deal);
-                }
-            });
-
-            // Calculate Pipeline Statistics
-            var totalPipeline = 0;
-            var weightedPipeline = 0;
-            var wonDeals = dealsByStage['closedwon'] || [];
-            var lostDeals = dealsByStage['closedlost'] || [];
-            var openDeals = 0;
-            var wonValue = 0;
+            if (data && data.results) {
+                data.results.forEach(function(deal) {
+                    var stage = deal.properties && deal.properties.dealstage ? deal.properties.dealstage : 'qualifiedtobuy';
+                    if (dealsByStage[stage]) {
+                        dealsByStage[stage].push(deal);
+                    }
+                });
+            }
 
             stages.forEach(function(stage) {
                 var deals = dealsByStage[stage.id] || [];
-                deals.forEach(function(d) {
-                    var amount = parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0);
-                    totalPipeline += amount;
-                    weightedPipeline += amount * stage.weight;
-                    if (stage.id === 'closedwon') {
-                        wonValue += amount;
-                    }
-                    if (stage.id !== 'closedwon' && stage.id !== 'closedlost') {
-                        openDeals++;
-                    }
+                var totalValue = deals.reduce(function(sum, d) {
+                    return sum + parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0);
+                }, 0);
+
+                var column = DOM.el('div', { className: 'kanban-column', dataset: { stage: stage.id } }, [
+                    DOM.el('div', { className: 'kanban-header' }, [
+                        DOM.el('div', {}, [
+                            DOM.el('span', { className: 'kanban-title', style: 'color: ' + stage.color + ';' }, stage.name),
+                            DOM.el('div', { style: 'font-size: 0.8rem; color: var(--text-muted);' }, formatCurrency(totalValue))
+                        ]),
+                        DOM.el('span', { className: 'kanban-count' }, String(deals.length))
+                    ]),
+                    DOM.el('div', { className: 'kanban-cards', id: 'stage-' + stage.id })
+                ]);
+
+                var cardsContainer = column.querySelector('.kanban-cards');
+                deals.forEach(function(deal) {
+                    var props = deal.properties || {};
+                    var card = DOM.el('div', { className: 'kanban-card', draggable: 'true', dataset: { dealId: deal.id } }, [
+                        DOM.el('div', { className: 'kanban-card-title' }, escapeHtml(props.dealname || 'Unnamed Deal')),
+                        DOM.el('div', { className: 'kanban-card-meta' }, [
+                            DOM.el('span', { className: 'kanban-card-value' }, formatCurrency(props.amount || 0)),
+                            DOM.el('span', {}, escapeHtml(props.closedate ? formatDate(props.closedate) : ''))
+                        ])
+                    ]);
+                    cardsContainer.appendChild(card);
                 });
+
+                kanban.appendChild(column);
             });
-
-            // Calculate Win Rate
-            var closedDeals = wonDeals.length + lostDeals.length;
-            var winRate = closedDeals > 0 ? (wonDeals.length / closedDeals * 100) : 0;
-
-            // Update Pipeline Stats
-            if (statsGrid) {
-                DOM.clear(statsGrid);
-                var stats = [
-                    { label: 'Total Pipeline', value: formatCurrency(totalPipeline), change: allDeals.length + ' Deals', icon: '📊', type: 'info' },
-                    { label: 'Gewichteter Wert', value: formatCurrency(weightedPipeline), change: 'Forecast', icon: '⚖️', type: 'primary' },
-                    { label: 'Won Deals', value: formatCurrency(wonValue), change: wonDeals.length + ' Deals', icon: '🏆', type: 'success' },
-                    { label: 'Avg Deal Size', value: formatCurrency(allDeals.length > 0 ? totalPipeline / allDeals.length : 0), change: 'pro Deal', icon: '💎', type: 'warning' }
-                ];
-
-                stats.forEach(function(stat) {
-                    var card = DOM.el('div', { className: 'kpi-card ' + stat.type + ' animate-slide-up', style: 'cursor: pointer;', onclick: function() { UltimateApp.showPipelineDetail(stat.label); } }, [
-                        DOM.el('div', { className: 'kpi-header' }, [
-                            DOM.el('span', { className: 'kpi-label' }, stat.label),
-                            DOM.el('span', { className: 'kpi-icon' }, stat.icon)
-                        ]),
-                        DOM.el('div', { className: 'kpi-value' }, stat.value),
-                        DOM.el('div', { className: 'kpi-change positive' }, stat.change)
-                    ]);
-                    statsGrid.appendChild(card);
-                });
-            }
-
-            // Update Win Rate Display
-            var winRateValue = document.getElementById('win-rate-value');
-            var winRateBar = document.getElementById('win-rate-bar');
-            var wonCount = document.getElementById('won-count');
-            var lostCount = document.getElementById('lost-count');
-            var openCount = document.getElementById('open-count');
-
-            if (winRateValue) winRateValue.textContent = winRate.toFixed(1) + '%';
-            if (winRateBar) setTimeout(function() { winRateBar.style.width = winRate + '%'; }, 100);
-            if (wonCount) wonCount.textContent = wonDeals.length + ' Won';
-            if (lostCount) lostCount.textContent = lostDeals.length + ' Lost';
-            if (openCount) openCount.textContent = openDeals + ' Open';
-
-            // Render Kanban Columns
-            if (kanban) {
-                stages.forEach(function(stage) {
-                    var deals = dealsByStage[stage.id] || [];
-                    var totalValue = deals.reduce(function(sum, d) {
-                        return sum + parseFloat(d.properties && d.properties.amount ? d.properties.amount : 0);
-                    }, 0);
-                    var weightedValue = totalValue * stage.weight;
-
-                    var column = DOM.el('div', { className: 'kanban-column', dataset: { stage: stage.id } }, [
-                        DOM.el('div', { className: 'kanban-header', style: 'cursor: pointer;', onclick: function() { UltimateApp.showStageDetail(stage.id, stage.name); } }, [
-                            DOM.el('div', {}, [
-                                DOM.el('span', { className: 'kanban-title', style: 'color: ' + stage.color + ';' }, stage.name),
-                                DOM.el('div', { style: 'font-size: 0.8rem; color: var(--text-muted);' }, formatCurrency(totalValue)),
-                                DOM.el('div', { style: 'font-size: 0.7rem; color: var(--accent-primary); margin-top: 2px;' }, '⚖️ ' + formatCurrency(weightedValue) + ' (' + (stage.weight * 100) + '%)')
-                            ]),
-                            DOM.el('span', { className: 'kanban-count' }, String(deals.length))
-                        ]),
-                        DOM.el('div', { className: 'kanban-cards', id: 'stage-' + stage.id })
-                    ]);
-
-                    var cardsContainer = column.querySelector('.kanban-cards');
-                    deals.forEach(function(deal) {
-                        var props = deal.properties || {};
-                        var dealAmount = parseFloat(props.amount || 0);
-                        var card = DOM.el('div', { className: 'kanban-card', draggable: 'true', dataset: { dealId: deal.id }, style: 'cursor: pointer;', onclick: function() { UltimateApp.showDealDetail(deal.id); } }, [
-                            DOM.el('div', { className: 'kanban-card-title' }, escapeHtml(props.dealname || 'Unnamed Deal')),
-                            DOM.el('div', { className: 'kanban-card-meta' }, [
-                                DOM.el('span', { className: 'kanban-card-value' }, formatCurrency(dealAmount)),
-                                DOM.el('span', { style: 'color: var(--accent-primary); font-size: 0.7rem;' }, '⚖️ ' + formatCurrency(dealAmount * stage.weight))
-                            ]),
-                            props.closedate ? DOM.el('div', { style: 'font-size: 0.7rem; color: var(--text-muted); margin-top: 4px;' }, '📅 ' + formatDate(props.closedate)) : null
-                        ]);
-                        cardsContainer.appendChild(card);
-                    });
-
-                    kanban.appendChild(column);
-                });
-            }
-        },
-
-        showPipelineDetail: function(label) {
-            console.log('Pipeline Detail:', label);
-            // TODO: Show modal with pipeline breakdown
-        },
-
-        showStageDetail: function(stageId, stageName) {
-            console.log('Stage Detail:', stageId, stageName);
-            // TODO: Show modal with stage deals list
-        },
-
-        showDealDetail: function(dealId) {
-            console.log('Deal Detail:', dealId);
-            window.open('https://app-eu1.hubspot.com/contacts/147479000/record/0-3/' + dealId, '_blank');
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -1422,7 +879,7 @@
             // Bots Grid
             var botsCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#129302; Available Bots'),
+                    DOM.el('span', { className: 'card-title' }, '🤖 Available Bots'),
                     DOM.el('span', { className: 'badge badge-success', id: 'bots-online-count' }, '- Online')
                 ]),
                 DOM.el('div', { className: 'card-body' }, [
@@ -1476,13 +933,9 @@
         // CRM - COMPANIES
         // ═══════════════════════════════════════════════════════════
 
-        companiesPage: 0,
-        companiesPerPage: 50,
-
         renderCompanies: async function() {
             var container = this.container();
             DOM.clear(container);
-            this.companiesPage = 0;
 
             var header = DOM.el('div', { className: 'page-header' }, [
                 DOM.el('div', {}, [
@@ -1499,30 +952,20 @@
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'table-container', id: 'companies-table' }, [
                         DOM.el('div', { className: 'loading-skeleton', style: 'height: 300px;' })
-                    ]),
-                    DOM.el('div', { className: 'pagination', id: 'companies-pagination', style: 'display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;' })
+                    ])
                 ])
             ]);
             container.appendChild(card);
 
-            this.loadCompaniesTable(0);
+            this.loadCompaniesTable();
         },
 
-        loadCompaniesTable: async function(page) {
-            var self = this;
-            if (page === undefined) page = this.companiesPage;
-            this.companiesPage = page;
+        loadCompaniesTable: async function() {
             var tableContainer = document.getElementById('companies-table');
-            var paginationContainer = document.getElementById('companies-pagination');
-            var offset = page * this.companiesPerPage;
-            var data = await API.get('/api/hubspot/companies?limit=' + this.companiesPerPage + '&offset=' + offset);
+            var data = await API.get('/api/hubspot/companies?limit=50');
             DOM.clear(tableContainer);
 
-            var companies = data && (data.results || data.companies) || [];
-            var total = data && data.total || 0;
-            var totalPages = Math.ceil(total / this.companiesPerPage);
-
-            if (companies.length === 0 && page === 0) {
+            if (!data || !data.results || data.results.length === 0) {
                 tableContainer.appendChild(DOM.el('div', { className: 'empty-state' }, [
                     DOM.el('div', { className: 'empty-state-icon' }, '🏢'),
                     DOM.el('div', { className: 'empty-state-title' }, 'No companies yet'),
@@ -1545,7 +988,7 @@
             table.appendChild(thead);
 
             var tbody = DOM.el('tbody');
-            companies.forEach(function(company) {
+            data.results.forEach(function(company) {
                 var props = company.properties || {};
                 var row = DOM.el('tr', {}, [
                     DOM.el('td', { style: 'font-weight: 500;' }, escapeHtml(props.name || 'Unnamed')),
@@ -1561,26 +1004,6 @@
             });
             table.appendChild(tbody);
             tableContainer.appendChild(table);
-
-            // Pagination Controls
-            if (paginationContainer && totalPages > 1) {
-                DOM.clear(paginationContainer);
-                var prevBtn = DOM.el('button', {
-                    className: 'btn btn-secondary',
-                    onclick: function() { if (page > 0) self.loadCompaniesTable(page - 1); },
-                    disabled: page === 0
-                }, '← Zurück');
-                var pageInfo = DOM.el('span', { style: 'display: flex; align-items: center; color: var(--text-muted);' },
-                    'Seite ' + (page + 1) + ' von ' + totalPages + ' (' + formatNumber(total) + ' Firmen)');
-                var nextBtn = DOM.el('button', {
-                    className: 'btn btn-secondary',
-                    onclick: function() { if (page < totalPages - 1) self.loadCompaniesTable(page + 1); },
-                    disabled: page >= totalPages - 1
-                }, 'Weiter →');
-                paginationContainer.appendChild(prevBtn);
-                paginationContainer.appendChild(pageInfo);
-                paginationContainer.appendChild(nextBtn);
-            }
         },
 
         // ═══════════════════════════════════════════════════════════
@@ -1609,7 +1032,7 @@
 
             var hotLeads = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title text-success' }, '&#128293; Hot Leads'),
+                    DOM.el('span', { className: 'card-title text-success' }, '🔥 Hot Leads'),
                     DOM.el('span', { className: 'badge badge-success' }, '0')
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'hot-leads-list' })
@@ -1617,7 +1040,7 @@
 
             var warmLeads = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title text-warning' }, '&#127777; Warm Leads'),
+                    DOM.el('span', { className: 'card-title text-warning' }, '🌡️ Warm Leads'),
                     DOM.el('span', { className: 'badge badge-warning' }, '0')
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'warm-leads-list' })
@@ -1625,7 +1048,7 @@
 
             var coldLeads = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title text-info' }, '&#10052; Cold Leads'),
+                    DOM.el('span', { className: 'card-title text-info' }, '❄️ Cold Leads'),
                     DOM.el('span', { className: 'badge badge-info' }, '0')
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'cold-leads-list' })
@@ -1698,7 +1121,7 @@
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-company', placeholder: 'Company name...' }),
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-industry', placeholder: 'Industry...' }),
                         DOM.el('input', { type: 'text', className: 'form-input', id: 'lead-search-location', placeholder: 'Location...' }),
-                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.searchLeads(); } }, '&#128269; Search')
+                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.searchLeads(); } }, '🔍 Search')
                     ])
                 ])
             ]);
@@ -1711,7 +1134,7 @@
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'lead-results' }, [
                     DOM.el('div', { className: 'empty-state' }, [
-                        DOM.el('div', { className: 'empty-state-icon' }, '&#127919;'),
+                        DOM.el('div', { className: 'empty-state-icon' }, '🎯'),
                         DOM.el('div', { className: 'empty-state-text' }, 'Enter search criteria to find leads')
                     ])
                 ])
@@ -1761,7 +1184,7 @@
             var card = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'empty-state' }, [
-                        DOM.el('div', { className: 'empty-state-icon' }, '&#128196;'),
+                        DOM.el('div', { className: 'empty-state-icon' }, '📄'),
                         DOM.el('div', { className: 'empty-state-title' }, 'No proposals yet'),
                         DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showNewProposalModal(); } }, '+ Create First Proposal')
                     ])
@@ -1784,7 +1207,7 @@
                     DOM.el('p', { className: 'page-subtitle' }, 'Email templates and campaigns')
                 ]),
                 DOM.el('div', { className: 'page-actions' }, [
-                    DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showEmailComposer(); } }, '&#128231; Compose')
+                    DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showEmailComposer(); } }, '📧 Compose')
                 ])
             ]);
             container.appendChild(header);
@@ -1811,7 +1234,7 @@
 
             var templatesCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#128196; Email Templates'),
+                    DOM.el('span', { className: 'card-title' }, '📄 Email Templates'),
                     DOM.el('button', { className: 'btn btn-ghost btn-sm' }, '+ New Template')
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'email-templates-grid' }, [
@@ -1867,7 +1290,7 @@
             var stats = DOM.el('div', { className: 'grid grid-3 gap-4 mb-4' }, [
                 DOM.el('div', { className: 'kpi-card success' }, [
                     DOM.el('div', { className: 'kpi-label' }, 'Connected'),
-                    DOM.el('div', { className: 'kpi-value' }, '&#9989;')
+                    DOM.el('div', { className: 'kpi-value' }, '✅')
                 ]),
                 DOM.el('div', { className: 'kpi-card info' }, [
                     DOM.el('div', { className: 'kpi-label' }, 'Messages Today'),
@@ -1882,12 +1305,12 @@
 
             var actionsCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#128241; Quick Actions')
+                    DOM.el('span', { className: 'card-title' }, '📱 Quick Actions')
                 ]),
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'grid grid-2 gap-4' }, [
-                        DOM.el('button', { className: 'btn btn-secondary', style: 'padding: 1rem;', onclick: function() { UltimateApp.showWABroadcast(); } }, '&#128227; Broadcast Message'),
-                        DOM.el('button', { className: 'btn btn-secondary', style: 'padding: 1rem;' }, '&#128196; Message Templates')
+                        DOM.el('button', { className: 'btn btn-secondary', style: 'padding: 1rem;', onclick: function() { UltimateApp.showWABroadcast(); } }, '📣 Broadcast Message'),
+                        DOM.el('button', { className: 'btn btn-secondary', style: 'padding: 1rem;' }, '📄 Message Templates')
                     ])
                 ])
             ]);
@@ -1948,7 +1371,7 @@
             var card = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'empty-state' }, [
-                        DOM.el('div', { className: 'empty-state-icon' }, '&#128640;'),
+                        DOM.el('div', { className: 'empty-state-icon' }, '🚀'),
                         DOM.el('div', { className: 'empty-state-title' }, 'No campaigns yet'),
                         DOM.el('button', { className: 'btn btn-primary' }, '+ Create First Campaign')
                     ])
@@ -1966,7 +1389,7 @@
             DOM.clear(container);
 
             var header = DOM.el('div', { className: 'page-header' }, [
-                DOM.el('h1', { className: 'page-title' }, '&#128142; HAIKU God Mode'),
+                DOM.el('h1', { className: 'page-title' }, '💎 HAIKU God Mode'),
                 DOM.el('p', { className: 'page-subtitle' }, 'Supreme AI Control Center')
             ]);
             container.appendChild(header);
@@ -1995,12 +1418,12 @@
 
             var commandCard = DOM.el('div', { className: 'card mb-4' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#9889; Divine Command')
+                    DOM.el('span', { className: 'card-title' }, '⚡ Divine Command')
                 ]),
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('textarea', { className: 'form-input', id: 'haiku-command', rows: '3', placeholder: 'Enter your divine command...', style: 'resize: vertical;' }),
                     DOM.el('div', { className: 'flex justify-end mt-3' }, [
-                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.executeHaikuCommand(); } }, '&#128142; Execute')
+                        DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.executeHaikuCommand(); } }, '💎 Execute')
                     ])
                 ])
             ]);
@@ -2009,21 +1432,21 @@
             var actionsGrid = DOM.el('div', { className: 'grid grid-3 gap-4' }, [
                 DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#128302;'),
+                        DOM.el('div', { style: 'font-size: 2rem;' }, '🔮'),
                         DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Prophecy'),
                         DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Predictive Analytics')
                     ])
                 ]),
                 DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#128161;'),
+                        DOM.el('div', { style: 'font-size: 2rem;' }, '💡'),
                         DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Transformation'),
                         DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Data Alchemy')
                     ])
                 ]),
                 DOM.el('div', { className: 'card', style: 'cursor: pointer;' }, [
                     DOM.el('div', { className: 'card-body text-center' }, [
-                        DOM.el('div', { style: 'font-size: 2rem;' }, '&#127919;'),
+                        DOM.el('div', { style: 'font-size: 2rem;' }, '🎯'),
                         DOM.el('div', { style: 'font-weight: 600; margin-top: 0.5rem;' }, 'Automation'),
                         DOM.el('div', { style: 'font-size: 0.85rem; color: var(--text-muted);' }, 'Workflow Engine')
                     ])
@@ -2051,7 +1474,7 @@
             DOM.clear(container);
 
             var header = DOM.el('div', { className: 'page-header' }, [
-                DOM.el('h1', { className: 'page-title' }, '&#128302; Prophecy'),
+                DOM.el('h1', { className: 'page-title' }, '🔮 Prophecy'),
                 DOM.el('p', { className: 'page-subtitle' }, 'AI-Powered Predictive Analytics')
             ]);
             container.appendChild(header);
@@ -2059,7 +1482,7 @@
             var grid = DOM.el('div', { className: 'grid grid-2 gap-4' }, [
                 DOM.el('div', { className: 'card' }, [
                     DOM.el('div', { className: 'card-header' }, [
-                        DOM.el('span', { className: 'card-title' }, '&#128200; Revenue Forecast')
+                        DOM.el('span', { className: 'card-title' }, '📈 Revenue Forecast')
                     ]),
                     DOM.el('div', { className: 'card-body', style: 'height: 250px;' }, [
                         DOM.el('div', { id: 'forecast-chart', style: 'height: 100%;' }, [
@@ -2069,7 +1492,7 @@
                 ]),
                 DOM.el('div', { className: 'card' }, [
                     DOM.el('div', { className: 'card-header' }, [
-                        DOM.el('span', { className: 'card-title' }, '&#127919; Deal Predictions')
+                        DOM.el('span', { className: 'card-title' }, '🎯 Deal Predictions')
                     ]),
                     DOM.el('div', { className: 'card-body' }, [
                         DOM.el('div', { id: 'deal-predictions' }, [
@@ -2082,7 +1505,7 @@
 
             var insightsCard = DOM.el('div', { className: 'card mt-4' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#128161; AI Insights')
+                    DOM.el('span', { className: 'card-title' }, '💡 AI Insights')
                 ]),
                 DOM.el('div', { className: 'card-body', id: 'ai-insights' }, [
                     DOM.el('div', { className: 'loading-skeleton', style: 'height: 100px;' })
@@ -2127,7 +1550,7 @@
 
             var chartCard = DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-header' }, [
-                    DOM.el('span', { className: 'card-title' }, '&#128200; Cashflow Chart')
+                    DOM.el('span', { className: 'card-title' }, '📈 Cashflow Chart')
                 ]),
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('canvas', { id: 'cashflow-chart', style: 'height: 300px;' })
@@ -2208,7 +1631,7 @@
 
             if (invoices.length === 0) {
                 tableContainer.appendChild(DOM.el('div', { className: 'empty-state' }, [
-                    DOM.el('div', { className: 'empty-state-icon' }, '&#128196;'),
+                    DOM.el('div', { className: 'empty-state-icon' }, '📄'),
                     DOM.el('div', { className: 'empty-state-title' }, 'No invoices yet'),
                     DOM.el('button', { className: 'btn btn-primary', onclick: function() { UltimateApp.showNewInvoiceModal(); } }, '+ Create First Invoice')
                 ]));
@@ -2259,7 +1682,7 @@
             DOM.clear(container);
 
             var header = DOM.el('div', { className: 'page-header' }, [
-                DOM.el('h1', { className: 'page-title' }, '&#128179; Stripe'),
+                DOM.el('h1', { className: 'page-title' }, '💳 Stripe'),
                 DOM.el('p', { className: 'page-subtitle' }, 'Payment processing dashboard')
             ]);
             container.appendChild(header);
@@ -2333,12 +1756,12 @@
             container.appendChild(header);
 
             var integrations = [
-                { name: 'HubSpot CRM', icon: '&#128100;', status: 'connected', description: 'Contact and deal management' },
-                { name: 'WhatsApp Business', icon: '&#128241;', status: 'connected', description: 'Messaging integration' },
-                { name: 'Stripe', icon: '&#128179;', status: 'connected', description: 'Payment processing' },
-                { name: 'Google Workspace', icon: '&#128231;', status: 'connected', description: 'Email and calendar' },
-                { name: 'Slack', icon: '&#128172;', status: 'disconnected', description: 'Team communication' },
-                { name: 'Zapier', icon: '&#9889;', status: 'disconnected', description: 'Workflow automation' }
+                { name: 'HubSpot CRM', icon: '👤', status: 'connected', description: 'Contact and deal management' },
+                { name: 'WhatsApp Business', icon: '📱', status: 'connected', description: 'Messaging integration' },
+                { name: 'Stripe', icon: '💳', status: 'connected', description: 'Payment processing' },
+                { name: 'Google Workspace', icon: '📧', status: 'connected', description: 'Email and calendar' },
+                { name: 'Slack', icon: '💬', status: 'disconnected', description: 'Team communication' },
+                { name: 'Zapier', icon: '⚡', status: 'disconnected', description: 'Workflow automation' }
             ];
 
             var grid = DOM.el('div', { className: 'grid grid-2 gap-4' });
@@ -2463,13 +1886,13 @@
             container.appendChild(header);
 
             var sections = [
-                { title: 'Getting Started', icon: '&#128640;', items: ['Quick Start Guide', 'Dashboard Overview', 'Navigation'] },
-                { title: 'CRM', icon: '&#128100;', items: ['Managing Contacts', 'Company Profiles', 'Lead Scoring'] },
-                { title: 'Sales', icon: '&#128176;', items: ['Deal Pipeline', 'Creating Deals', 'Proposals'] },
-                { title: 'Communication', icon: '&#128231;', items: ['Email Templates', 'Campaigns', 'WhatsApp'] },
-                { title: 'AI & Automation', icon: '&#129302;', items: ['Genius Bots', 'HAIKU Commands', 'Automation Rules'] },
-                { title: 'Finance', icon: '&#128179;', items: ['Invoicing', 'Stripe Integration', 'Reports'] },
-                { title: 'API Reference', icon: '&#128279;', items: ['Authentication', 'Endpoints', 'Webhooks'] }
+                { title: 'Getting Started', icon: '🚀', items: ['Quick Start Guide', 'Dashboard Overview', 'Navigation'] },
+                { title: 'CRM', icon: '👤', items: ['Managing Contacts', 'Company Profiles', 'Lead Scoring'] },
+                { title: 'Sales', icon: '💰', items: ['Deal Pipeline', 'Creating Deals', 'Proposals'] },
+                { title: 'Communication', icon: '📧', items: ['Email Templates', 'Campaigns', 'WhatsApp'] },
+                { title: 'AI & Automation', icon: '🤖', items: ['Genius Bots', 'HAIKU Commands', 'Automation Rules'] },
+                { title: 'Finance', icon: '💳', items: ['Invoicing', 'Stripe Integration', 'Reports'] },
+                { title: 'API Reference', icon: '🔗', items: ['Authentication', 'Endpoints', 'Webhooks'] }
             ];
 
             var grid = DOM.el('div', { className: 'grid grid-3 gap-4' });
@@ -2481,7 +1904,7 @@
                             DOM.el('span', { style: 'font-weight: 600;' }, section.title)
                         ]),
                         DOM.el('ul', { style: 'list-style: none; padding: 0; margin: 0;' }, section.items.map(function(item) {
-                            return DOM.el('li', { style: 'padding: 0.25rem 0; color: var(--text-muted); font-size: 0.9rem;' }, '&#8250; ' + item);
+                            return DOM.el('li', { style: 'padding: 0.25rem 0; color: var(--text-muted); font-size: 0.9rem;' }, '› ' + item);
                         }))
                     ])
                 ]);
@@ -2501,7 +1924,7 @@
             container.appendChild(DOM.el('div', { className: 'card' }, [
                 DOM.el('div', { className: 'card-body' }, [
                     DOM.el('div', { className: 'empty-state' }, [
-                        DOM.el('div', { className: 'empty-state-icon' }, '&#128679;'),
+                        DOM.el('div', { className: 'empty-state-icon' }, '🚧'),
                         DOM.el('div', { className: 'empty-state-title' }, 'Coming Soon'),
                         DOM.el('div', { className: 'empty-state-text' }, message)
                     ])
@@ -2514,7 +1937,7 @@
             DOM.clear(container);
 
             container.appendChild(DOM.el('div', { className: 'empty-state', style: 'padding-top: 100px;' }, [
-                DOM.el('div', { className: 'empty-state-icon' }, '&#128533;'),
+                DOM.el('div', { className: 'empty-state-icon' }, '😕'),
                 DOM.el('div', { className: 'empty-state-title' }, '404 - Page Not Found'),
                 DOM.el('div', { className: 'empty-state-text' }, 'The page you are looking for does not exist.'),
                 DOM.el('a', { href: '#/', className: 'btn btn-primary' }, 'Go to Dashboard')

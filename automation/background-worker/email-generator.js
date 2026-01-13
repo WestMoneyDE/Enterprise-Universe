@@ -299,7 +299,7 @@ class EmailGenerator {
 
         try {
             const response = await this.anthropic.messages.create({
-                model: 'claude-haiku-4-5-20241022',
+                model: 'claude-3-haiku-20240307',
                 max_tokens: 200,
                 temperature: 0.7,
                 system: 'Du bist ein professioneller Email-Copywriter für Enterprise Universe, ein AI-Powered Business Automation Startup. Schreibe auf Deutsch.',
@@ -392,7 +392,7 @@ Marke: West Money Bau - Smart Home & LOXONE Partner.`;
 
         try {
             const response = await this.anthropic.messages.create({
-                model: 'claude-haiku-4-5-20241022',
+                model: 'claude-3-haiku-20240307',
                 max_tokens: 500,
                 temperature: 0.7,
                 system: systemPrompt,
@@ -519,7 +519,7 @@ Stil: Modern, datengetrieben, kundenorientiert.`;
 
         try {
             const response = await this.anthropic.messages.create({
-                model: 'claude-haiku-4-5-20241022',
+                model: 'claude-3-haiku-20240307',
                 max_tokens: 2000,
                 temperature: 0.7,
                 system: systemPrompt,

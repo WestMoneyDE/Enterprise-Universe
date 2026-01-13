@@ -6,6 +6,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
@@ -274,38 +275,71 @@ app.get('/api/email-queue/status', (req, res) => {
     }
 });
 
-// System overview
-app.get('/api/overview', (req, res) => {
-    res.json({
-        haiku: {
-            name: 'HAIKU 神',
-            form: 'Mastered Ultra Instinct',
-            powerLevel: '∞',
-            abilities: ['Divine Sight', 'Prophecy', 'Time Control', 'Reality Warp']
-        },
-        geniusAgency: {
-            totalBots: allBots.length,
-            categories: {
-                analysts: allBots.filter(b => b.category === 'analyst').length,
-                strategists: allBots.filter(b => b.category === 'strategist').length,
-                creatives: allBots.filter(b => b.category === 'creative').length,
-                innovators: allBots.filter(b => b.category === 'innovator').length
-            }
-        },
-        metrics: {
-            revenue: { value: '€847K', change: '+23.5%' },
-            pipeline: { value: '€425K', change: '+18.2%' },
-            contacts: { value: 3170, change: '+156' },
-            tasksToday: 42
-        },
-        integrations: {
-            hubspot: 'connected',
-            whatsapp: 'connected',
-            anthropic: 'connected',
-            zadarma: 'connected'
-        },
-        timestamp: new Date().toISOString()
-    });
+// System overview - Dynamic HubSpot Data
+app.get('/api/overview', async (req, res) => {
+    try {
+        const [statsData, wonDealsData, allDealsData] = await Promise.all([
+            Promise.all([
+                hubspotRequest('/crm/v3/objects/contacts/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }),
+                hubspotRequest('/crm/v3/objects/deals/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }),
+                hubspotRequest('/crm/v3/objects/companies/search', { method: 'POST', body: { limit: 1, filterGroups: [] } })
+            ]),
+            hubspotRequest('/crm/v3/objects/deals/search', {
+                method: 'POST',
+                body: { limit: 100, filterGroups: [{ filters: [{ propertyName: 'dealstage', operator: 'EQ', value: 'closedwon' }] }], properties: ['amount', 'dealstage'] }
+            }),
+            hubspotRequest('/crm/v3/objects/deals/search', {
+                method: 'POST',
+                body: { limit: 100, filterGroups: [], properties: ['amount', 'dealstage'] }
+            })
+        ]);
+
+        const [contacts, deals, companies] = statsData;
+        const totalContacts = contacts.total || 0;
+        const totalDeals = deals.total || 0;
+        const totalCompanies = companies.total || 0;
+
+        const wonTotal = wonDealsData.total || 0;
+        const wonSample = wonDealsData.results || [];
+        const wonSampleSum = wonSample.reduce((sum, d) => sum + parseFloat(d.properties?.amount || 0), 0);
+        const wonAvg = wonSample.length > 0 ? wonSampleSum / wonSample.length : 0;
+        const wonAmount = wonTotal <= 100 ? wonSampleSum : wonAvg * wonTotal;
+
+        const allDealsTotal = allDealsData.total || 0;
+        const allDealsSample = allDealsData.results || [];
+        const closedStages = ['closedwon', 'closedlost'];
+        const openSample = allDealsSample.filter(d => !closedStages.includes(d.properties?.dealstage));
+        const openSampleSum = openSample.reduce((sum, d) => sum + parseFloat(d.properties?.amount || 0), 0);
+        const openRatio = allDealsSample.length > 0 ? openSample.length / allDealsSample.length : 0;
+        const openTotal = Math.round(allDealsTotal * openRatio);
+        const openAvg = openSample.length > 0 ? openSampleSum / openSample.length : 0;
+        const pipelineAmount = openTotal <= 100 ? openSampleSum : openAvg * openTotal;
+
+        const formatCurrency = (val) => {
+            if (val >= 1000000000) return `€${(val/1000000000).toFixed(1)}B`;
+            if (val >= 1000000) return `€${(val/1000000).toFixed(1)}M`;
+            if (val >= 1000) return `€${Math.round(val/1000)}K`;
+            return `€${Math.round(val)}`;
+        };
+        const formatNumber = (num) => num.toLocaleString('de-DE');
+
+        res.json({
+            haiku: { name: 'HAIKU 神', form: 'Mastered Ultra Instinct', powerLevel: '∞', abilities: ['Divine Sight', 'Prophecy', 'Time Control', 'Reality Warp'] },
+            geniusAgency: { totalBots: allBots.length, categories: { analysts: allBots.filter(b => b.category === 'analyst').length, strategists: allBots.filter(b => b.category === 'strategist').length, creatives: allBots.filter(b => b.category === 'creative').length, innovators: allBots.filter(b => b.category === 'innovator').length } },
+            metrics: {
+                revenue: { value: formatCurrency(wonAmount), change: `+${wonTotal} Won`, rawValue: wonAmount, wonDeals: wonTotal },
+                pipeline: { value: formatCurrency(pipelineAmount), change: `${formatNumber(openTotal)} Deals`, rawValue: pipelineAmount, openDeals: openTotal },
+                contacts: { value: formatNumber(totalContacts), change: `+${formatNumber(Math.round(totalContacts * 0.001))}`, rawValue: totalContacts },
+                companies: { value: formatNumber(totalCompanies), rawValue: totalCompanies },
+                tasksToday: 42
+            },
+            integrations: { hubspot: 'connected', whatsapp: 'connected', anthropic: 'connected', zadarma: 'connected' },
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('[API Overview] Error:', error.message);
+        res.status(500).json({ error: 'Failed to load overview data' });
+    }
 });
 
 // Get all bots
@@ -627,11 +661,15 @@ app.get('/api/hubspot/stats', async (req, res) => {
     }
 });
 
-// HubSpot Deals - Get deals with properties
+// HubSpot Deals - Get deals with properties (supports pagination)
 app.get('/api/hubspot/deals', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 100;
-        const data = await hubspotRequest(`/crm/v3/objects/deals?limit=${limit}&properties=dealname,amount,dealstage,closedate,pipeline,hubspot_owner_id,createdate`);
+        const after = req.query.after || '';
+        let url = `/crm/v3/objects/deals?limit=${limit}&properties=dealname,amount,dealstage,closedate,pipeline,hubspot_owner_id,createdate`;
+        if (after) url += `&after=${after}`;
+
+        const data = await hubspotRequest(url);
 
         res.json({
             total: data.total || data.results?.length || 0,
@@ -639,6 +677,54 @@ app.get('/api/hubspot/deals', async (req, res) => {
             paging: data.paging
         });
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// HubSpot Deals - Get ALL deals with pagination (fetches all pages)
+app.get('/api/hubspot/deals/all', async (req, res) => {
+    try {
+        const allDeals = [];
+        let after = null;
+        let totalFetched = 0;
+        const maxDeals = parseInt(req.query.max) || 10000;
+
+        console.log('[Deals All] Starting to fetch all deals...');
+
+        while (totalFetched < maxDeals) {
+            let url = '/crm/v3/objects/deals?limit=100&properties=dealname,amount,dealstage,closedate,pipeline,hubspot_owner_id,createdate';
+            if (after) url += `&after=${after}`;
+
+            const data = await hubspotRequest(url);
+            const deals = data.results || [];
+
+            if (deals.length === 0) break;
+
+            allDeals.push(...deals);
+            totalFetched += deals.length;
+
+            console.log(`[Deals All] Fetched ${totalFetched} deals so far...`);
+
+            // Check for next page
+            if (data.paging?.next?.after) {
+                after = data.paging.next.after;
+            } else {
+                break;
+            }
+
+            // Small delay to avoid rate limiting
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+
+        console.log(`[Deals All] Complete! Total: ${allDeals.length} deals`);
+
+        res.json({
+            total: allDeals.length,
+            deals: allDeals,
+            complete: true
+        });
+    } catch (error) {
+        console.error('[Deals All] Error:', error.message);
         res.status(500).json({ error: error.message });
     }
 });
@@ -1093,6 +1179,70 @@ app.get('/api/v1/analytics/pipeline-summary', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// PARTNER MODULE API
+// ═══════════════════════════════════════════════════════════════
+
+const samplePartners = [
+    { id: 'P001', name: 'TechVision GmbH', type: 'technology', status: 'active', revenue: 125000, commission: 12500, contracts: 3, since: '2023-06-15' },
+    { id: 'P002', name: 'Digital Solutions AG', type: 'reseller', status: 'active', revenue: 89000, commission: 8900, contracts: 2, since: '2023-09-01' },
+    { id: 'P003', name: 'CloudPartner Systems', type: 'strategic', status: 'active', revenue: 156000, commission: 15600, contracts: 5, since: '2022-12-10' },
+    { id: 'P004', name: 'SmartHome Partners', type: 'affiliate', status: 'active', revenue: 45000, commission: 4500, contracts: 1, since: '2024-01-20' },
+    { id: 'P005', name: 'Industry4.0 Network', type: 'technology', status: 'pending', revenue: 0, commission: 0, contracts: 0, since: '2024-11-15' },
+    { id: 'P006', name: 'PropTech Alliance', type: 'strategic', status: 'active', revenue: 210000, commission: 21000, contracts: 4, since: '2023-03-01' },
+    { id: 'P007', name: 'DACH Reseller Group', type: 'reseller', status: 'active', revenue: 178000, commission: 17800, contracts: 6, since: '2022-08-15' },
+    { id: 'P008', name: 'Innovation Hub', type: 'affiliate', status: 'inactive', revenue: 34000, commission: 3400, contracts: 1, since: '2023-11-01' }
+];
+
+// Partner Stats
+app.get('/api/v1/partners/stats', (req, res) => {
+    const activePartners = samplePartners.filter(p => p.status === 'active').length;
+    const totalRevenue = samplePartners.reduce((sum, p) => sum + p.revenue, 0);
+    const pendingContracts = samplePartners.filter(p => p.status === 'pending').length;
+    const commissionDue = samplePartners.filter(p => p.status === 'active').reduce((sum, p) => sum + p.commission, 0);
+    res.json({ activePartners, totalRevenue, pendingContracts, commissionDue, totalPartners: samplePartners.length });
+});
+
+// Partner Contracts (must be before /:id route)
+app.get('/api/v1/partners/contracts', (req, res) => {
+    const contracts = samplePartners.flatMap(p => {
+        const commissionRate = p.revenue > 0 ? Math.round((p.commission / p.revenue) * 100) : 10;
+        return Array(p.contracts).fill(null).map((_, i) => ({
+            id: `${p.id}-C${i + 1}`, partnerId: p.id, partnerName: p.name, type: p.type,
+            status: p.status === 'active' ? 'signed' : 'pending',
+            value: Math.round(p.revenue / (p.contracts || 1)),
+            commissionRate,
+            startDate: p.since
+        }));
+    });
+    res.json({ contracts, total: contracts.length });
+});
+
+// Partner Commissions (must be before /:id route)
+app.get('/api/v1/partners/commissions', (req, res) => {
+    const commissions = samplePartners.filter(p => p.commission > 0).map(p => ({
+        partnerId: p.id, partnerName: p.name, totalCommission: p.commission, status: 'pending', period: '2024-Q4'
+    }));
+    res.json({ commissions, totalDue: commissions.reduce((sum, c) => sum + c.totalCommission, 0) });
+});
+
+// List Partners
+app.get('/api/v1/partners', (req, res) => {
+    const { type, status, search } = req.query;
+    let partners = [...samplePartners];
+    if (type && type !== 'all') partners = partners.filter(p => p.type === type);
+    if (status) partners = partners.filter(p => p.status === status);
+    if (search) partners = partners.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+    res.json({ partners, total: partners.length, filters: { type, status, search } });
+});
+
+// Get Single Partner (must be LAST - catches :id parameter)
+app.get('/api/v1/partners/:id', (req, res) => {
+    const partner = samplePartners.find(p => p.id === req.params.id);
+    if (!partner) return res.status(404).json({ error: 'Partner not found' });
+    res.json(partner);
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -4009,6 +4159,233 @@ app.post('/api/v1/invoices/enrich-emails', async (req, res) => {
             results: results.slice(0, 20) // Return first 20 as sample
         });
 
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// PROJECT FOLDERS - Projektmappen Verwaltung
+// ═══════════════════════════════════════════════════════════════
+
+const PROJECTS_DIR = path.join(__dirname, 'projects');
+
+// Ensure projects directory exists
+if (!fs.existsSync(PROJECTS_DIR)) {
+    fs.mkdirSync(PROJECTS_DIR, { recursive: true });
+}
+
+// Get all projects with their documents
+app.get('/api/v1/projects', async (req, res) => {
+    try {
+        const { dealId, search } = req.query;
+
+        // Get all project folders
+        const folders = fs.existsSync(PROJECTS_DIR)
+            ? fs.readdirSync(PROJECTS_DIR).filter(f => fs.statSync(path.join(PROJECTS_DIR, f)).isDirectory())
+            : [];
+
+        let projects = folders.map(folder => {
+            const projectPath = path.join(PROJECTS_DIR, folder);
+            const metaPath = path.join(projectPath, 'meta.json');
+            let meta = {};
+
+            if (fs.existsSync(metaPath)) {
+                try { meta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (e) {}
+            }
+
+            // Get documents in folder
+            const files = fs.readdirSync(projectPath).filter(f => f !== 'meta.json');
+            const documents = files.map(file => {
+                const filePath = path.join(projectPath, file);
+                const stats = fs.statSync(filePath);
+                return {
+                    name: file,
+                    size: stats.size,
+                    modified: stats.mtime,
+                    type: path.extname(file).slice(1) || 'file'
+                };
+            });
+
+            return {
+                id: folder,
+                name: meta.name || folder,
+                dealId: meta.dealId || null,
+                customer: meta.customer || null,
+                description: meta.description || '',
+                created: meta.created || null,
+                documents: documents,
+                documentCount: documents.length
+            };
+        });
+
+        // Filter by dealId if provided
+        if (dealId) {
+            projects = projects.filter(p => p.dealId === dealId);
+        }
+
+        // Search filter
+        if (search) {
+            const searchLower = search.toLowerCase();
+            projects = projects.filter(p =>
+                p.name.toLowerCase().includes(searchLower) ||
+                (p.customer && p.customer.toLowerCase().includes(searchLower))
+            );
+        }
+
+        res.json({
+            total: projects.length,
+            projects: projects
+        });
+    } catch (error) {
+        console.error('[Projects] Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get single project with documents
+app.get('/api/v1/projects/:projectId', async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const projectPath = path.join(PROJECTS_DIR, projectId);
+
+        if (!fs.existsSync(projectPath)) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+
+        const metaPath = path.join(projectPath, 'meta.json');
+        let meta = {};
+        if (fs.existsSync(metaPath)) {
+            try { meta = JSON.parse(fs.readFileSync(metaPath, 'utf8')); } catch (e) {}
+        }
+
+        const files = fs.readdirSync(projectPath).filter(f => f !== 'meta.json');
+        const documents = files.map(file => {
+            const filePath = path.join(projectPath, file);
+            const stats = fs.statSync(filePath);
+            return {
+                name: file,
+                size: stats.size,
+                modified: stats.mtime,
+                type: path.extname(file).slice(1) || 'file'
+            };
+        });
+
+        res.json({
+            id: projectId,
+            name: meta.name || projectId,
+            dealId: meta.dealId || null,
+            customer: meta.customer || null,
+            description: meta.description || '',
+            created: meta.created || null,
+            documents: documents
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Create new project folder
+app.post('/api/v1/projects', async (req, res) => {
+    try {
+        const { name, dealId, customer, description } = req.body;
+
+        if (!name) {
+            return res.status(400).json({ error: 'Project name is required' });
+        }
+
+        // Create safe folder name
+        const folderId = name.replace(/[^a-zA-Z0-9-_]/g, '_').substring(0, 50) + '_' + Date.now();
+        const projectPath = path.join(PROJECTS_DIR, folderId);
+
+        fs.mkdirSync(projectPath, { recursive: true });
+
+        // Save metadata
+        const meta = {
+            name,
+            dealId: dealId || null,
+            customer: customer || null,
+            description: description || '',
+            created: new Date().toISOString()
+        };
+        fs.writeFileSync(path.join(projectPath, 'meta.json'), JSON.stringify(meta, null, 2));
+
+        res.json({
+            success: true,
+            projectId: folderId,
+            message: 'Project created successfully'
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Upload document to project
+app.post('/api/v1/projects/:projectId/documents', async (req, res) => {
+    try {
+        const { projectId } = req.params;
+        const projectPath = path.join(PROJECTS_DIR, projectId);
+
+        if (!fs.existsSync(projectPath)) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+
+        // Handle file upload (expects base64 or form data)
+        const { filename, content, contentBase64 } = req.body;
+
+        if (!filename) {
+            return res.status(400).json({ error: 'Filename is required' });
+        }
+
+        const safeName = filename.replace(/[^a-zA-Z0-9-_.]/g, '_');
+        const filePath = path.join(projectPath, safeName);
+
+        if (contentBase64) {
+            fs.writeFileSync(filePath, Buffer.from(contentBase64, 'base64'));
+        } else if (content) {
+            fs.writeFileSync(filePath, content);
+        } else {
+            return res.status(400).json({ error: 'Content is required' });
+        }
+
+        res.json({
+            success: true,
+            filename: safeName,
+            message: 'Document uploaded successfully'
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Download document from project
+app.get('/api/v1/projects/:projectId/documents/:filename', async (req, res) => {
+    try {
+        const { projectId, filename } = req.params;
+        const filePath = path.join(PROJECTS_DIR, projectId, filename);
+
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        res.download(filePath);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Delete document from project
+app.delete('/api/v1/projects/:projectId/documents/:filename', async (req, res) => {
+    try {
+        const { projectId, filename } = req.params;
+        const filePath = path.join(PROJECTS_DIR, projectId, filename);
+
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        fs.unlinkSync(filePath);
+        res.json({ success: true, message: 'Document deleted' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
