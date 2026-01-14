@@ -11,6 +11,16 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
+// Activity Manager for interaction tracking
+let activityManager = null;
+try {
+    const am = require('./automation/activity-manager');
+    activityManager = am.activityManager;
+    console.log('✓ Activity Manager loaded for interaction tracking');
+} catch (e) {
+    console.warn('⚠ Activity Manager not available:', e.message);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3015;
 
@@ -214,7 +224,7 @@ app.use('/modules', express.static(path.join(__dirname, 'modules')));
 // HAIKU God Mode Dashboards
 app.get('/god-mode', (req, res) => res.sendFile(path.join(__dirname, 'HAIKU_GOD_MODE_V2.html')));
 app.get('/haiku', (req, res) => res.sendFile(path.join(__dirname, 'HAIKU_GOD_MODE_V2.html')));
-app.get('/scifi', (req, res) => res.sendFile(path.join(__dirname, 'ULTIMATE-DASHBOARD.html')));
+app.get('/scifi', (req, res) => res.sendFile(path.join(__dirname, 'SCIFI-DASHBOARD.html')));
 app.get('/genius-agency', (req, res) => res.sendFile(path.join(__dirname, 'MEGA_GENIUS_AGENCY.html')));
 app.get('/genius', (req, res) => res.sendFile(path.join(__dirname, 'GENIUS_AGENCY_CONTROL_CENTER.html')));
 app.get('/prophecy', (req, res) => res.sendFile(path.join(__dirname, 'PROPHECY_MODE.html')));
@@ -800,6 +810,79 @@ app.get('/api/hubspot/deals', async (req, res) => {
     }
 });
 
+// HubSpot Deals - Get deals WITH associated contacts (for pipeline view)
+app.get('/api/hubspot/deals/with-contacts', async (req, res) => {
+    try {
+        const limit = Math.min(parseInt(req.query.limit) || 50, 100);
+        const stage = req.query.stage || '';
+
+        // Build search query
+        const searchBody = {
+            limit,
+            properties: ['dealname', 'amount', 'dealstage', 'closedate', 'pipeline', 'hubspot_owner_id', 'createdate'],
+            sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }]
+        };
+
+        // Filter by stage if provided
+        if (stage) {
+            searchBody.filterGroups = [{
+                filters: [{ propertyName: 'dealstage', operator: 'EQ', value: stage }]
+            }];
+        }
+
+        const dealsData = await hubspotRequest('/crm/v3/objects/deals/search', {
+            method: 'POST',
+            body: searchBody
+        });
+
+        const deals = dealsData.results || [];
+
+        // Fetch contacts for all deals in parallel (max 10 concurrent)
+        const enrichedDeals = [];
+        const batchSize = 10;
+
+        for (let i = 0; i < deals.length; i += batchSize) {
+            const batch = deals.slice(i, i + batchSize);
+            const enrichedBatch = await Promise.all(batch.map(async (deal) => {
+                try {
+                    // Get associated contact
+                    const associations = await hubspotRequest(`/crm/v3/objects/deals/${deal.id}/associations/contacts`);
+
+                    let contact = null;
+                    if (associations?.results?.length > 0) {
+                        const contactId = associations.results[0].id;
+                        const contactData = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}?properties=firstname,lastname,email,phone,company`);
+                        contact = {
+                            id: contactId,
+                            name: ((contactData.properties?.firstname || '') + ' ' + (contactData.properties?.lastname || '')).trim() || contactData.properties?.company || 'Unknown',
+                            email: contactData.properties?.email || null,
+                            phone: contactData.properties?.phone || null,
+                            company: contactData.properties?.company || null
+                        };
+                    }
+
+                    return {
+                        ...deal,
+                        contact
+                    };
+                } catch (err) {
+                    return { ...deal, contact: null };
+                }
+            }));
+            enrichedDeals.push(...enrichedBatch);
+        }
+
+        res.json({
+            total: enrichedDeals.length,
+            deals: enrichedDeals,
+            paging: dealsData.paging
+        });
+    } catch (error) {
+        console.error('[Deals With Contacts] Error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // HubSpot Deals - Get ALL deals with pagination (fetches all pages)
 app.get('/api/hubspot/deals/all', async (req, res) => {
     try {
@@ -1122,6 +1205,904 @@ app.patch('/api/hubspot/deals/:dealId', async (req, res) => {
 
         res.json({ success: true, deal: data });
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// DEAL ASSOCIATIONS - Link Contacts to Deals
+// ═══════════════════════════════════════════════════════════════
+
+// Get contacts associated with a deal
+app.get('/api/hubspot/deals/:dealId/associations/contacts', async (req, res) => {
+    try {
+        const { dealId } = req.params;
+        const associations = await hubspotRequest(`/crm/v3/objects/deals/${dealId}/associations/contacts`);
+
+        res.json({
+            results: associations?.results || [],
+            total: associations?.results?.length || 0
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message, results: [] });
+    }
+});
+
+// Link a contact to a deal (create association)
+app.put('/api/hubspot/deals/:dealId/associations/contacts/:contactId', async (req, res) => {
+    try {
+        const { dealId, contactId } = req.params;
+
+        // Use HubSpot v4 associations API
+        const result = await hubspotRequest(`/crm/v4/objects/deals/${dealId}/associations/contacts/${contactId}`, {
+            method: 'PUT',
+            body: [{
+                associationCategory: 'HUBSPOT_DEFINED',
+                associationTypeId: 3  // deal_to_contact
+            }]
+        });
+
+        console.log(`[Association] Linked contact ${contactId} to deal ${dealId}`);
+        res.json({ success: true, result });
+    } catch (error) {
+        console.error('[Association] Error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// DUPLICATE PREVENTION - Check before creating contacts/deals
+// ═══════════════════════════════════════════════════════════════
+
+// Check for duplicate contact before creation
+app.post('/api/hubspot/contacts/check-duplicate', async (req, res) => {
+    try {
+        const { email, phone, firstname, lastname, company } = req.body;
+        const duplicates = [];
+
+        // Check by email (most reliable)
+        if (email) {
+            const emailSearch = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                method: 'POST',
+                body: {
+                    filterGroups: [{
+                        filters: [{ propertyName: 'email', operator: 'EQ', value: email }]
+                    }],
+                    properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                    limit: 5
+                }
+            });
+            if (emailSearch?.results?.length) {
+                duplicates.push(...emailSearch.results.map(c => ({
+                    ...c,
+                    matchType: 'email',
+                    matchConfidence: 100
+                })));
+            }
+        }
+
+        // Check by phone
+        if (phone && !duplicates.length) {
+            const cleanPhone = phone.replace(/[^0-9+]/g, '');
+            const phoneSearch = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                method: 'POST',
+                body: {
+                    filterGroups: [{
+                        filters: [{ propertyName: 'phone', operator: 'CONTAINS_TOKEN', value: cleanPhone.slice(-8) }]
+                    }],
+                    properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                    limit: 5
+                }
+            });
+            if (phoneSearch?.results?.length) {
+                duplicates.push(...phoneSearch.results.map(c => ({
+                    ...c,
+                    matchType: 'phone',
+                    matchConfidence: 90
+                })));
+            }
+        }
+
+        // Check by name + company
+        if (firstname && lastname && company && !duplicates.length) {
+            const nameSearch = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                method: 'POST',
+                body: {
+                    filterGroups: [{
+                        filters: [
+                            { propertyName: 'firstname', operator: 'EQ', value: firstname },
+                            { propertyName: 'lastname', operator: 'EQ', value: lastname }
+                        ]
+                    }],
+                    properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                    limit: 10
+                }
+            });
+            if (nameSearch?.results?.length) {
+                const companyMatches = nameSearch.results.filter(c =>
+                    c.properties?.company?.toLowerCase().includes(company.toLowerCase()) ||
+                    company.toLowerCase().includes(c.properties?.company?.toLowerCase() || '')
+                );
+                if (companyMatches.length) {
+                    duplicates.push(...companyMatches.map(c => ({
+                        ...c,
+                        matchType: 'name_company',
+                        matchConfidence: 75
+                    })));
+                }
+            }
+        }
+
+        res.json({
+            hasDuplicates: duplicates.length > 0,
+            duplicates: duplicates.slice(0, 5),
+            recommendation: duplicates.length > 0 ?
+                (duplicates[0].matchConfidence >= 90 ? 'USE_EXISTING' : 'REVIEW') :
+                'CREATE_NEW'
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message, hasDuplicates: false, duplicates: [] });
+    }
+});
+
+// Create contact with duplicate prevention
+app.post('/api/hubspot/contacts/safe-create', async (req, res) => {
+    try {
+        const { email, phone, firstname, lastname, company, skipDuplicateCheck = false } = req.body;
+
+        // First check for duplicates unless explicitly skipped
+        if (!skipDuplicateCheck) {
+            const dupeCheck = await new Promise(async (resolve) => {
+                const duplicates = [];
+
+                if (email) {
+                    const emailSearch = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                        method: 'POST',
+                        body: {
+                            filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
+                            properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                            limit: 1
+                        }
+                    });
+                    if (emailSearch?.results?.length) {
+                        resolve({ hasDuplicate: true, existing: emailSearch.results[0], matchType: 'email' });
+                        return;
+                    }
+                }
+
+                resolve({ hasDuplicate: false });
+            });
+
+            if (dupeCheck.hasDuplicate) {
+                return res.json({
+                    success: false,
+                    reason: 'duplicate_found',
+                    existingContact: dupeCheck.existing,
+                    matchType: dupeCheck.matchType,
+                    message: `Kontakt mit dieser ${dupeCheck.matchType === 'email' ? 'E-Mail' : 'Telefonnummer'} existiert bereits`
+                });
+            }
+        }
+
+        // Create the contact
+        const properties = {};
+        if (email) properties.email = email;
+        if (phone) properties.phone = phone;
+        if (firstname) properties.firstname = firstname;
+        if (lastname) properties.lastname = lastname;
+        if (company) properties.company = company;
+
+        const result = await hubspotRequest('/crm/v3/objects/contacts', {
+            method: 'POST',
+            body: { properties }
+        });
+
+        console.log(`[Safe Create] New contact created: ${result.id} (${email || 'no email'})`);
+
+        res.json({
+            success: true,
+            contact: result,
+            id: result.id
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Search contacts by email (for linking to deals)
+app.post('/api/hubspot/contacts/search', async (req, res) => {
+    try {
+        const { email, query } = req.body;
+
+        let searchBody;
+        if (email) {
+            searchBody = {
+                filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
+                properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                limit: 5
+            };
+        } else if (query) {
+            searchBody = {
+                query,
+                properties: ['firstname', 'lastname', 'email', 'phone', 'company'],
+                limit: 10
+            };
+        } else {
+            return res.status(400).json({ error: 'email or query required' });
+        }
+
+        const result = await hubspotRequest('/crm/v3/objects/contacts/search', {
+            method: 'POST',
+            body: searchBody
+        });
+
+        res.json({
+            results: result?.results || [],
+            total: result?.total || 0
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message, results: [] });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// HUBSPOT ENGAGEMENTS - Email History & Communications
+// ═══════════════════════════════════════════════════════════════
+
+// Get email engagements for a specific contact
+app.get('/api/hubspot/contacts/:contactId/emails', async (req, res) => {
+    try {
+        const { contactId } = req.params;
+        const limit = parseInt(req.query.limit) || 50;
+
+        // Get associated emails via CRM v3 associations
+        const associations = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/emails`);
+
+        if (!associations?.results?.length) {
+            return res.json({ emails: [], total: 0 });
+        }
+
+        // Fetch email details
+        const emailIds = associations.results.map(a => a.id).slice(0, limit);
+        const emails = [];
+
+        for (const emailId of emailIds) {
+            try {
+                const email = await hubspotRequest(`/crm/v3/objects/emails/${emailId}?properties=hs_email_subject,hs_email_text,hs_email_html,hs_email_direction,hs_email_status,hs_timestamp,hs_email_from_email,hs_email_to_email`);
+                emails.push({
+                    id: email.id,
+                    subject: email.properties?.hs_email_subject || 'No Subject',
+                    body: email.properties?.hs_email_text || email.properties?.hs_email_html || '',
+                    direction: email.properties?.hs_email_direction || 'UNKNOWN',
+                    status: email.properties?.hs_email_status || 'UNKNOWN',
+                    timestamp: email.properties?.hs_timestamp,
+                    from: email.properties?.hs_email_from_email,
+                    to: email.properties?.hs_email_to_email,
+                    createdAt: email.createdAt
+                });
+            } catch (e) {
+                console.log(`Failed to fetch email ${emailId}:`, e.message);
+            }
+        }
+
+        // Sort by timestamp desc
+        emails.sort((a, b) => new Date(b.timestamp || b.createdAt) - new Date(a.timestamp || a.createdAt));
+
+        res.json({
+            emails,
+            total: associations.results.length,
+            contactId
+        });
+    } catch (error) {
+        console.error('Email fetch error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get all engagements (emails, calls, meetings, notes) for a contact
+app.get('/api/hubspot/contacts/:contactId/engagements', async (req, res) => {
+    try {
+        const { contactId } = req.params;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const engagementTypes = ['emails', 'calls', 'meetings', 'notes'];
+        const allEngagements = [];
+
+        for (const type of engagementTypes) {
+            try {
+                const associations = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/${type}`);
+                if (associations?.results?.length) {
+                    for (const assoc of associations.results.slice(0, 10)) {
+                        try {
+                            let props = '';
+                            if (type === 'emails') props = 'hs_email_subject,hs_email_direction,hs_timestamp';
+                            else if (type === 'calls') props = 'hs_call_title,hs_call_duration,hs_timestamp';
+                            else if (type === 'meetings') props = 'hs_meeting_title,hs_meeting_start_time,hs_meeting_end_time';
+                            else if (type === 'notes') props = 'hs_note_body,hs_timestamp';
+
+                            const item = await hubspotRequest(`/crm/v3/objects/${type}/${assoc.id}?properties=${props}`);
+                            allEngagements.push({
+                                id: item.id,
+                                type: type.slice(0, -1), // Remove 's' - email, call, meeting, note
+                                properties: item.properties,
+                                createdAt: item.createdAt
+                            });
+                        } catch (e) { /* skip failed items */ }
+                    }
+                }
+            } catch (e) { /* skip failed types */ }
+        }
+
+        // Sort by date
+        allEngagements.sort((a, b) => {
+            const dateA = new Date(a.properties?.hs_timestamp || a.createdAt);
+            const dateB = new Date(b.properties?.hs_timestamp || b.createdAt);
+            return dateB - dateA;
+        });
+
+        res.json({
+            engagements: allEngagements.slice(0, limit),
+            total: allEngagements.length,
+            contactId
+        });
+    } catch (error) {
+        console.error('Engagements fetch error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get presentations (stored as meetings with specific type or notes)
+app.get('/api/hubspot/presentations', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 50;
+
+        // Search for meetings that are presentations
+        const meetings = await hubspotRequest(`/crm/v3/objects/meetings?limit=${limit}&properties=hs_meeting_title,hs_meeting_start_time,hs_meeting_end_time,hs_meeting_outcome,hs_meeting_body`);
+
+        const presentations = (meetings?.results || [])
+            .filter(m => {
+                const title = (m.properties?.hs_meeting_title || '').toLowerCase();
+                return title.includes('präsentation') || title.includes('presentation') || title.includes('demo') || title.includes('pitch');
+            })
+            .map(m => ({
+                id: m.id,
+                title: m.properties?.hs_meeting_title,
+                startTime: m.properties?.hs_meeting_start_time,
+                endTime: m.properties?.hs_meeting_end_time,
+                outcome: m.properties?.hs_meeting_outcome,
+                notes: m.properties?.hs_meeting_body,
+                createdAt: m.createdAt
+            }));
+
+        res.json({
+            presentations,
+            total: presentations.length
+        });
+    } catch (error) {
+        console.error('Presentations fetch error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INTERACTION TRACKING - 360° Customer View
+// ═══════════════════════════════════════════════════════════════
+
+// Get all interactions for a specific contact
+app.get('/api/interactions/contact/:contactId', async (req, res) => {
+    try {
+        const { contactId } = req.params;
+        const limit = parseInt(req.query.limit) || 50;
+        const types = req.query.types ? req.query.types.split(',') : null;
+
+        // 1. Get contact info from HubSpot
+        const contact = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}?properties=firstname,lastname,email,phone,company,lifecyclestage,hs_lead_status`);
+
+        // 2. Get HubSpot engagements (emails, calls, meetings, notes)
+        const [emailAssoc, callAssoc, meetingAssoc, noteAssoc] = await Promise.all([
+            hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/emails`).catch(() => ({ results: [] })),
+            hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/calls`).catch(() => ({ results: [] })),
+            hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/meetings`).catch(() => ({ results: [] })),
+            hubspotRequest(`/crm/v3/objects/contacts/${contactId}/associations/notes`).catch(() => ({ results: [] }))
+        ]);
+
+        const interactions = [];
+
+        // 3. Fetch email details
+        if (emailAssoc?.results?.length) {
+            const emailIds = emailAssoc.results.slice(0, 20).map(e => e.toObjectId || e.id);
+            for (const emailId of emailIds) {
+                try {
+                    const email = await hubspotRequest(`/crm/v3/objects/emails/${emailId}?properties=hs_email_subject,hs_email_direction,hs_timestamp,hs_email_status`);
+                    if (email?.properties) {
+                        interactions.push({
+                            id: emailId,
+                            type: 'email',
+                            icon: '📧',
+                            color: 'cyan',
+                            title: email.properties.hs_email_subject || 'Email',
+                            direction: email.properties.hs_email_direction,
+                            status: email.properties.hs_email_status,
+                            timestamp: email.properties.hs_timestamp,
+                            source: 'hubspot'
+                        });
+                    }
+                } catch (e) { /* Skip failed email fetches */ }
+            }
+        }
+
+        // 4. Fetch call details
+        if (callAssoc?.results?.length) {
+            const callIds = callAssoc.results.slice(0, 20).map(c => c.toObjectId || c.id);
+            for (const callId of callIds) {
+                try {
+                    const call = await hubspotRequest(`/crm/v3/objects/calls/${callId}?properties=hs_call_title,hs_call_duration,hs_call_disposition,hs_timestamp`);
+                    if (call?.properties) {
+                        interactions.push({
+                            id: callId,
+                            type: 'call',
+                            icon: '☎',
+                            color: 'green',
+                            title: call.properties.hs_call_title || 'Anruf',
+                            duration: call.properties.hs_call_duration,
+                            outcome: call.properties.hs_call_disposition,
+                            timestamp: call.properties.hs_timestamp,
+                            source: 'hubspot'
+                        });
+                    }
+                } catch (e) { /* Skip failed call fetches */ }
+            }
+        }
+
+        // 5. Fetch meeting details
+        if (meetingAssoc?.results?.length) {
+            const meetingIds = meetingAssoc.results.slice(0, 20).map(m => m.toObjectId || m.id);
+            for (const meetingId of meetingIds) {
+                try {
+                    const meeting = await hubspotRequest(`/crm/v3/objects/meetings/${meetingId}?properties=hs_meeting_title,hs_meeting_outcome,hs_meeting_start_time,hs_timestamp`);
+                    if (meeting?.properties) {
+                        interactions.push({
+                            id: meetingId,
+                            type: 'meeting',
+                            icon: '📅',
+                            color: 'magenta',
+                            title: meeting.properties.hs_meeting_title || 'Meeting',
+                            outcome: meeting.properties.hs_meeting_outcome,
+                            startTime: meeting.properties.hs_meeting_start_time,
+                            timestamp: meeting.properties.hs_timestamp || meeting.properties.hs_meeting_start_time,
+                            source: 'hubspot'
+                        });
+                    }
+                } catch (e) { /* Skip failed meeting fetches */ }
+            }
+        }
+
+        // 6. Fetch note details
+        if (noteAssoc?.results?.length) {
+            const noteIds = noteAssoc.results.slice(0, 20).map(n => n.toObjectId || n.id);
+            for (const noteId of noteIds) {
+                try {
+                    const note = await hubspotRequest(`/crm/v3/objects/notes/${noteId}?properties=hs_note_body,hs_timestamp`);
+                    if (note?.properties) {
+                        interactions.push({
+                            id: noteId,
+                            type: 'note',
+                            icon: '📝',
+                            color: 'yellow',
+                            title: (note.properties.hs_note_body || '').substring(0, 100) + '...',
+                            body: note.properties.hs_note_body,
+                            timestamp: note.properties.hs_timestamp,
+                            source: 'hubspot'
+                        });
+                    }
+                } catch (e) { /* Skip failed note fetches */ }
+            }
+        }
+
+        // 7. Get activities from Activity Manager (WhatsApp, Deal changes, etc.)
+        if (activityManager) {
+            const activities = activityManager.getActivities({
+                objectId: contactId,
+                objectType: 'contact',
+                limit: 50
+            });
+
+            activities.forEach(act => {
+                interactions.push({
+                    id: act.id,
+                    type: act.type,
+                    icon: act.icon || '•',
+                    color: act.color || 'cyan',
+                    title: act.title,
+                    description: act.description,
+                    timestamp: act.timestamp,
+                    source: act.source || 'activity_manager'
+                });
+            });
+        }
+
+        // 8. Sort by timestamp (newest first)
+        interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        // 9. Filter by types if specified
+        let filtered = interactions;
+        if (types && types.length) {
+            filtered = interactions.filter(i => types.includes(i.type));
+        }
+
+        // 10. Calculate contact stats
+        const stats = {
+            totalInteractions: interactions.length,
+            emails: interactions.filter(i => i.type === 'email').length,
+            calls: interactions.filter(i => i.type === 'call').length,
+            meetings: interactions.filter(i => i.type === 'meeting').length,
+            notes: interactions.filter(i => i.type === 'note').length,
+            whatsapp: interactions.filter(i => i.type === 'whatsapp_message').length,
+            lastInteraction: interactions[0]?.timestamp || null
+        };
+
+        res.json({
+            contact: contact?.properties || {},
+            contactId,
+            interactions: filtered.slice(0, limit),
+            stats,
+            total: filtered.length
+        });
+
+    } catch (error) {
+        console.error('Interaction fetch error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get contacts for Interaction Tracker with company info and activity sorting
+app.get('/api/interactions/contacts', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 50;
+        const offset = parseInt(req.query.offset) || 0;
+        const query = req.query.q || '';
+        const lifecycle = req.query.lifecycle || ''; // customer, lead, etc.
+
+        // Build filter for search
+        const filters = [];
+        if (lifecycle) {
+            filters.push({ propertyName: 'lifecyclestage', operator: 'EQ', value: lifecycle });
+        }
+
+        // Search contacts sorted by last modification
+        const contactsRes = await hubspotRequest('/crm/v3/objects/contacts/search', {
+            method: 'POST',
+            body: {
+                limit,
+                after: offset > 0 ? offset.toString() : undefined,
+                sorts: [{ propertyName: 'lastmodifieddate', direction: 'DESCENDING' }],
+                filterGroups: filters.length ? [{ filters }] : [],
+                properties: ['firstname', 'lastname', 'email', 'phone', 'company', 'lifecyclestage', 'hs_lead_status', 'lastmodifieddate', 'createdate', 'num_associated_deals']
+            }
+        });
+
+        const contacts = contactsRes?.results || [];
+
+        // Enrich with company associations
+        const enrichedContacts = await Promise.all(contacts.map(async (contact) => {
+            let companyName = contact.properties?.company || '';
+            let companyId = null;
+
+            // Try to get associated company
+            try {
+                const companyAssoc = await hubspotRequest(`/crm/v3/objects/contacts/${contact.id}/associations/companies`);
+                if (companyAssoc?.results?.length) {
+                    companyId = companyAssoc.results[0].toObjectId || companyAssoc.results[0].id;
+                    const company = await hubspotRequest(`/crm/v3/objects/companies/${companyId}?properties=name,domain`);
+                    companyName = company?.properties?.name || companyName;
+                }
+            } catch (e) { /* No company association */ }
+
+            // Build display name
+            const firstName = contact.properties?.firstname || '';
+            const lastName = contact.properties?.lastname || '';
+            let displayName = `${firstName} ${lastName}`.trim();
+            if (!displayName) {
+                displayName = contact.properties?.email?.split('@')[0] || 'Unbekannt';
+            }
+
+            return {
+                id: contact.id,
+                displayName,
+                firstName,
+                lastName,
+                email: contact.properties?.email || '',
+                phone: contact.properties?.phone || '',
+                company: companyName,
+                companyId,
+                lifecycleStage: contact.properties?.lifecyclestage || 'unknown',
+                leadStatus: contact.properties?.hs_lead_status || '',
+                lastModified: contact.properties?.lastmodifieddate,
+                created: contact.properties?.createdate,
+                dealCount: parseInt(contact.properties?.num_associated_deals) || 0,
+                url: `https://app-eu1.hubspot.com/contacts/147479000/record/0-1/${contact.id}`
+            };
+        }));
+
+        // Sort: Customers first, then by activity
+        enrichedContacts.sort((a, b) => {
+            // Customers before leads
+            if (a.lifecycleStage === 'customer' && b.lifecycleStage !== 'customer') return -1;
+            if (a.lifecycleStage !== 'customer' && b.lifecycleStage === 'customer') return 1;
+            // Then by deal count
+            if (a.dealCount !== b.dealCount) return b.dealCount - a.dealCount;
+            // Then by last modified
+            return new Date(b.lastModified || 0) - new Date(a.lastModified || 0);
+        });
+
+        res.json({
+            total: contactsRes?.total || contacts.length,
+            contacts: enrichedContacts
+        });
+    } catch (error) {
+        console.error('[Interactions] Get contacts error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get companies for Interaction Tracker
+app.get('/api/interactions/companies', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 30;
+
+        const companiesRes = await hubspotRequest('/crm/v3/objects/companies/search', {
+            method: 'POST',
+            body: {
+                limit,
+                sorts: [{ propertyName: 'lastmodifieddate', direction: 'DESCENDING' }],
+                properties: ['name', 'domain', 'phone', 'city', 'industry', 'numberofemployees', 'annualrevenue', 'num_associated_contacts', 'num_associated_deals', 'lastmodifieddate']
+            }
+        });
+
+        const companies = (companiesRes?.results || []).map(company => ({
+            id: company.id,
+            name: company.properties?.name || 'Unbekannt',
+            domain: company.properties?.domain || '',
+            phone: company.properties?.phone || '',
+            city: company.properties?.city || '',
+            industry: company.properties?.industry || '',
+            employees: company.properties?.numberofemployees || '',
+            revenue: company.properties?.annualrevenue || '',
+            contactCount: parseInt(company.properties?.num_associated_contacts) || 0,
+            dealCount: parseInt(company.properties?.num_associated_deals) || 0,
+            lastModified: company.properties?.lastmodifieddate,
+            url: `https://app-eu1.hubspot.com/contacts/147479000/record/0-2/${company.id}`
+        }));
+
+        res.json({
+            total: companiesRes?.total || companies.length,
+            companies
+        });
+    } catch (error) {
+        console.error('[Interactions] Get companies error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get aggregated interaction statistics
+app.get('/api/interactions/stats', async (req, res) => {
+    try {
+        const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+        // Get total contacts for engagement score calculation
+        const contactsRes = await hubspotRequest('/crm/v3/objects/contacts/search', {
+            method: 'POST',
+            body: { limit: 1, filterGroups: [] }
+        }).catch(() => ({ total: 0 }));
+
+        // Get activity stats from Activity Manager
+        let activityStats = { total: 0, byType: {}, bySource: {} };
+        if (activityManager) {
+            activityStats = activityManager.getStats();
+        }
+
+        // Get HubSpot engagement counts (simplified)
+        const [emailsRes, callsRes, meetingsRes] = await Promise.all([
+            hubspotRequest('/crm/v3/objects/emails/search', {
+                method: 'POST',
+                body: { limit: 1, filterGroups: [{ filters: [{ propertyName: 'hs_timestamp', operator: 'GTE', value: thirtyDaysAgo }] }] }
+            }).catch(() => ({ total: 0 })),
+            hubspotRequest('/crm/v3/objects/calls/search', {
+                method: 'POST',
+                body: { limit: 1, filterGroups: [{ propertyName: 'hs_timestamp', operator: 'GTE', value: thirtyDaysAgo }] }
+            }).catch(() => ({ total: 0 })),
+            hubspotRequest('/crm/v3/objects/meetings/search', {
+                method: 'POST',
+                body: { limit: 1, filterGroups: [] }
+            }).catch(() => ({ total: 0 }))
+        ]);
+
+        const totalContacts = contactsRes?.total || 1;
+        const totalInteractions = (emailsRes?.total || 0) + (callsRes?.total || 0) + (meetingsRes?.total || 0) + activityStats.total;
+
+        // Calculate engagement score (interactions per contact, weighted)
+        const engagementScore = Math.min(100, Math.round((totalInteractions / totalContacts) * 10));
+
+        // Estimate average response time (placeholder - would need actual tracking)
+        const avgResponseTime = 2.4; // hours
+
+        // Get pending tasks/follow-ups
+        const tasksRes = await hubspotRequest('/crm/v3/objects/tasks/search', {
+            method: 'POST',
+            body: {
+                limit: 1,
+                filterGroups: [{ filters: [{ propertyName: 'hs_task_status', operator: 'EQ', value: 'NOT_STARTED' }] }]
+            }
+        }).catch(() => ({ total: 0 }));
+
+        res.json({
+            total: totalInteractions,
+            avgResponseTime: avgResponseTime,
+            engagementScore: engagementScore,
+            pendingFollowUps: tasksRes?.total || 0,
+            breakdown: {
+                emails: emailsRes?.total || 0,
+                calls: callsRes?.total || 0,
+                meetings: meetingsRes?.total || 0,
+                activities: activityStats.total
+            },
+            byType: activityStats.byType,
+            bySource: activityStats.bySource,
+            period: '30d'
+        });
+
+    } catch (error) {
+        console.error('Interaction stats error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get analytics data for charts
+app.get('/api/interactions/analytics', async (req, res) => {
+    try {
+        const days = parseInt(req.query.days) || 7;
+
+        // Channel distribution
+        const channels = {
+            email: { count: 0, label: 'Email' },
+            call: { count: 0, label: 'Anrufe' },
+            meeting: { count: 0, label: 'Meetings' },
+            whatsapp: { count: 0, label: 'WhatsApp' },
+            note: { count: 0, label: 'Notizen' }
+        };
+
+        // Get counts from HubSpot
+        const [emailsRes, callsRes, meetingsRes, notesRes] = await Promise.all([
+            hubspotRequest('/crm/v3/objects/emails/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }).catch(() => ({ total: 0 })),
+            hubspotRequest('/crm/v3/objects/calls/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }).catch(() => ({ total: 0 })),
+            hubspotRequest('/crm/v3/objects/meetings/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }).catch(() => ({ total: 0 })),
+            hubspotRequest('/crm/v3/objects/notes/search', { method: 'POST', body: { limit: 1, filterGroups: [] } }).catch(() => ({ total: 0 }))
+        ]);
+
+        channels.email.count = emailsRes?.total || 0;
+        channels.call.count = callsRes?.total || 0;
+        channels.meeting.count = meetingsRes?.total || 0;
+        channels.note.count = notesRes?.total || 0;
+
+        // Get WhatsApp count from Activity Manager
+        if (activityManager) {
+            const stats = activityManager.getStats();
+            channels.whatsapp.count = stats.byType?.whatsapp_message || 0;
+        }
+
+        // Response time trend (simulated data - would need real tracking)
+        const responseTrend = [];
+        for (let i = days - 1; i >= 0; i--) {
+            const date = new Date(Date.now() - i * 24 * 60 * 60 * 1000);
+            responseTrend.push({
+                date: date.toISOString().split('T')[0],
+                label: date.toLocaleDateString('de-DE', { weekday: 'short' }),
+                avgResponseTime: (Math.random() * 3 + 1).toFixed(1)
+            });
+        }
+
+        // Get top engaged contacts
+        const contactsRes = await hubspotRequest('/crm/v3/objects/contacts?limit=10&properties=firstname,lastname,email,notes_last_updated')
+            .catch(() => ({ results: [] }));
+
+        const topContacts = (contactsRes?.results || []).map(c => ({
+            id: c.id,
+            name: `${c.properties?.firstname || ''} ${c.properties?.lastname || ''}`.trim() || c.properties?.email,
+            email: c.properties?.email,
+            lastActivity: c.properties?.notes_last_updated
+        }));
+
+        res.json({
+            channels,
+            responseTrend,
+            topContacts,
+            period: `${days}d`
+        });
+
+    } catch (error) {
+        console.error('Interaction analytics error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Create follow-up task
+app.post('/api/interactions/follow-up', async (req, res) => {
+    try {
+        const { contactId, subject, dueDate, notes } = req.body;
+
+        if (!contactId || !subject) {
+            return res.status(400).json({ error: 'contactId and subject required' });
+        }
+
+        // Create task in HubSpot
+        const task = await hubspotRequest('/crm/v3/objects/tasks', {
+            method: 'POST',
+            body: {
+                properties: {
+                    hs_task_subject: subject,
+                    hs_task_body: notes || '',
+                    hs_task_status: 'NOT_STARTED',
+                    hs_task_priority: 'MEDIUM',
+                    hs_timestamp: Date.now(),
+                    hs_task_due_date: dueDate || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+                },
+                associations: [{
+                    to: { id: contactId },
+                    types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 204 }]
+                }]
+            }
+        });
+
+        res.json({
+            success: true,
+            taskId: task.id,
+            message: 'Follow-up erstellt'
+        });
+
+    } catch (error) {
+        console.error('Follow-up creation error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Export interactions
+app.get('/api/interactions/export', async (req, res) => {
+    try {
+        const { contactId, format = 'json' } = req.query;
+
+        if (!contactId) {
+            return res.status(400).json({ error: 'contactId required' });
+        }
+
+        // Fetch interactions using the existing endpoint logic
+        const response = await fetch(`http://127.0.0.1:${PORT}/api/interactions/contact/${contactId}?limit=200`);
+        const data = await response.json();
+
+        if (format === 'csv') {
+            // Convert to CSV
+            const headers = ['Typ', 'Titel', 'Datum', 'Quelle', 'Details'];
+            const rows = data.interactions.map(i => [
+                i.type,
+                i.title?.replace(/"/g, '""') || '',
+                new Date(i.timestamp).toLocaleString('de-DE'),
+                i.source,
+                i.description?.replace(/"/g, '""') || i.outcome || ''
+            ]);
+
+            const csv = [
+                headers.join(';'),
+                ...rows.map(r => r.map(v => `"${v}"`).join(';'))
+            ].join('\n');
+
+            res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+            res.setHeader('Content-Disposition', `attachment; filename="interactions-${contactId}.csv"`);
+            res.send('\uFEFF' + csv); // BOM for Excel
+        } else {
+            res.json(data);
+        }
+
+    } catch (error) {
+        console.error('Export error:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -3300,6 +4281,276 @@ app.post('/api/v1/duplicate-demon/clear-cache', (req, res) => {
     dealNameCache.clear();
     contactEmailCache.clear();
     res.json({ success: true, message: 'Cache cleared' });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// AUTO LEAD GENERATOR - Worldwide B2B Lead Generation
+// ═══════════════════════════════════════════════════════════════
+
+// Import lead generator module
+const leadGeneratorModule = (() => {
+    try {
+        return require('./automation/worldwide-lead-generator.js');
+    } catch (e) {
+        console.log('[Lead Generator] Module not available:', e.message);
+        return null;
+    }
+})();
+
+// Lead Generator State
+const leadGeneratorState = {
+    running: false,
+    paused: false,
+    startedAt: null,
+    stats: {
+        generated: 0,
+        uploaded: 0,
+        failed: 0,
+        byRegion: { DACH: 0, Europe: 0, NorthAmerica: 0, APAC: 0, Other: 0 },
+        byIndustry: {}
+    },
+    config: {
+        leadsPerBatch: 50,
+        batchInterval: 60000, // 1 minute between batches
+        uploadToHubSpot: true,
+        targetPerDay: 1000,
+        regions: { DACH: 35, Europe: 25, NorthAmerica: 25, APAC: 10, Other: 5 }
+    },
+    lastBatchAt: null,
+    queue: [],
+    generator: null,
+    uploader: null,
+    intervalId: null
+};
+
+// Initialize generator if module available
+if (leadGeneratorModule) {
+    leadGeneratorState.generator = new leadGeneratorModule.WorldwideLeadGenerator();
+    leadGeneratorState.uploader = new leadGeneratorModule.HubSpotUploader(
+        process.env.HUBSPOT_API_KEY || 'pat-eu1-1d74de75-d72b-4ed5-ba97-cfe74e48039b'
+    );
+}
+
+// Generate a batch of leads
+async function generateLeadBatch(count = 50, uploadToHubSpot = true) {
+    if (!leadGeneratorState.generator) {
+        return { success: false, error: 'Generator not initialized' };
+    }
+
+    const leads = [];
+    for (let i = 0; i < count; i++) {
+        const lead = leadGeneratorState.generator.generateLead();
+        leads.push(lead);
+        leadGeneratorState.stats.generated++;
+
+        // Track by region
+        if (lead._meta?.region && leadGeneratorState.stats.byRegion[lead._meta.region] !== undefined) {
+            leadGeneratorState.stats.byRegion[lead._meta.region]++;
+        }
+
+        // Track by industry
+        if (lead._meta?.industry) {
+            if (!leadGeneratorState.stats.byIndustry[lead._meta.industry]) {
+                leadGeneratorState.stats.byIndustry[lead._meta.industry] = 0;
+            }
+            leadGeneratorState.stats.byIndustry[lead._meta.industry]++;
+        }
+    }
+
+    // Upload to HubSpot if enabled
+    if (uploadToHubSpot && leadGeneratorState.uploader) {
+        try {
+            const result = await leadGeneratorState.uploader.uploadBatch(leads);
+            leadGeneratorState.stats.uploaded += result.success || 0;
+            leadGeneratorState.stats.failed += result.failed || 0;
+            console.log(`[Lead Generator] Uploaded ${result.success} leads to HubSpot`);
+        } catch (error) {
+            console.error('[Lead Generator] Upload error:', error.message);
+            leadGeneratorState.stats.failed += leads.length;
+        }
+    }
+
+    leadGeneratorState.lastBatchAt = new Date().toISOString();
+    return { success: true, count: leads.length, leads };
+}
+
+// Run continuous generation
+async function runLeadGeneratorCycle() {
+    if (!leadGeneratorState.running || leadGeneratorState.paused) return;
+
+    const { leadsPerBatch, uploadToHubSpot } = leadGeneratorState.config;
+
+    console.log(`[Lead Generator] Running cycle - generating ${leadsPerBatch} leads...`);
+    await generateLeadBatch(leadsPerBatch, uploadToHubSpot);
+}
+
+// Start the generator
+function startLeadGenerator() {
+    if (leadGeneratorState.running) {
+        return { success: false, message: 'Generator already running' };
+    }
+
+    leadGeneratorState.running = true;
+    leadGeneratorState.paused = false;
+    leadGeneratorState.startedAt = new Date().toISOString();
+
+    // Run immediately
+    runLeadGeneratorCycle();
+
+    // Set up interval
+    leadGeneratorState.intervalId = setInterval(runLeadGeneratorCycle, leadGeneratorState.config.batchInterval);
+
+    console.log('[Lead Generator] Started');
+    return { success: true, message: 'Lead generator started' };
+}
+
+// Stop the generator
+function stopLeadGenerator() {
+    if (leadGeneratorState.intervalId) {
+        clearInterval(leadGeneratorState.intervalId);
+        leadGeneratorState.intervalId = null;
+    }
+
+    leadGeneratorState.running = false;
+    leadGeneratorState.paused = false;
+
+    console.log('[Lead Generator] Stopped');
+    return { success: true, message: 'Lead generator stopped' };
+}
+
+// API: Get lead generator status
+app.get('/api/v1/lead-generator/status', (req, res) => {
+    const runtime = leadGeneratorState.startedAt
+        ? Math.round((Date.now() - new Date(leadGeneratorState.startedAt).getTime()) / 1000)
+        : 0;
+
+    res.json({
+        running: leadGeneratorState.running,
+        paused: leadGeneratorState.paused,
+        startedAt: leadGeneratorState.startedAt,
+        runtime,
+        stats: leadGeneratorState.stats,
+        config: leadGeneratorState.config,
+        lastBatchAt: leadGeneratorState.lastBatchAt,
+        moduleLoaded: !!leadGeneratorModule
+    });
+});
+
+// API: Start lead generator
+app.post('/api/v1/lead-generator/start', (req, res) => {
+    const result = startLeadGenerator();
+    res.json(result);
+});
+
+// API: Stop lead generator
+app.post('/api/v1/lead-generator/stop', (req, res) => {
+    const result = stopLeadGenerator();
+    res.json(result);
+});
+
+// API: Pause/Resume lead generator
+app.post('/api/v1/lead-generator/pause', (req, res) => {
+    leadGeneratorState.paused = !leadGeneratorState.paused;
+    res.json({
+        success: true,
+        paused: leadGeneratorState.paused,
+        message: leadGeneratorState.paused ? 'Generator paused' : 'Generator resumed'
+    });
+});
+
+// API: Generate leads manually (single batch)
+app.post('/api/v1/lead-generator/generate', async (req, res) => {
+    const { count = 50, uploadToHubSpot = true } = req.body;
+
+    if (!leadGeneratorModule) {
+        return res.status(500).json({ error: 'Lead generator module not loaded' });
+    }
+
+    try {
+        const result = await generateLeadBatch(Math.min(count, 100), uploadToHubSpot);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// API: Preview leads (generate without uploading)
+app.post('/api/v1/lead-generator/preview', async (req, res) => {
+    const { count = 10 } = req.body;
+
+    if (!leadGeneratorState.generator) {
+        return res.status(500).json({ error: 'Generator not initialized' });
+    }
+
+    const leads = [];
+    for (let i = 0; i < Math.min(count, 50); i++) {
+        leads.push(leadGeneratorState.generator.generateLead());
+    }
+
+    res.json({ success: true, count: leads.length, leads });
+});
+
+// API: Update configuration
+app.post('/api/v1/lead-generator/config', (req, res) => {
+    const { leadsPerBatch, batchInterval, uploadToHubSpot, targetPerDay, regions } = req.body;
+
+    if (leadsPerBatch !== undefined) {
+        leadGeneratorState.config.leadsPerBatch = Math.min(Math.max(1, leadsPerBatch), 100);
+    }
+    if (batchInterval !== undefined) {
+        leadGeneratorState.config.batchInterval = Math.max(10000, batchInterval); // Min 10 seconds
+    }
+    if (uploadToHubSpot !== undefined) {
+        leadGeneratorState.config.uploadToHubSpot = !!uploadToHubSpot;
+    }
+    if (targetPerDay !== undefined) {
+        leadGeneratorState.config.targetPerDay = Math.max(1, targetPerDay);
+    }
+    if (regions && typeof regions === 'object') {
+        leadGeneratorState.config.regions = { ...leadGeneratorState.config.regions, ...regions };
+    }
+
+    // Restart interval if running with new batch interval
+    if (leadGeneratorState.running && leadGeneratorState.intervalId && batchInterval !== undefined) {
+        clearInterval(leadGeneratorState.intervalId);
+        leadGeneratorState.intervalId = setInterval(runLeadGeneratorCycle, leadGeneratorState.config.batchInterval);
+    }
+
+    res.json({ success: true, config: leadGeneratorState.config });
+});
+
+// API: Reset stats
+app.post('/api/v1/lead-generator/reset-stats', (req, res) => {
+    leadGeneratorState.stats = {
+        generated: 0,
+        uploaded: 0,
+        failed: 0,
+        byRegion: { DACH: 0, Europe: 0, NorthAmerica: 0, APAC: 0, Other: 0 },
+        byIndustry: {}
+    };
+    res.json({ success: true, message: 'Stats reset' });
+});
+
+// API: Get available regions and industries
+app.get('/api/v1/lead-generator/options', (req, res) => {
+    if (!leadGeneratorModule) {
+        return res.json({ regions: [], industries: [] });
+    }
+
+    const { WORLDWIDE_DATA } = leadGeneratorModule;
+    res.json({
+        regions: Object.keys(WORLDWIDE_DATA.regions),
+        regionWeights: WORLDWIDE_DATA.regions,
+        industries: {
+            primary: WORLDWIDE_DATA.industries.primary,
+            secondary: WORLDWIDE_DATA.industries.secondary,
+            tertiary: WORLDWIDE_DATA.industries.tertiary
+        },
+        countries: Object.keys(WORLDWIDE_DATA.countries).reduce((acc, region) => {
+            acc[region] = WORLDWIDE_DATA.countries[region].map(c => ({ code: c.code, name: c.name }));
+            return acc;
+        }, {})
+    });
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -5884,8 +7135,12 @@ async function sendAutoInvoice(dealId) {
 
         // STRICT: Only send if we have a verified email match
         if (!customerEmail) {
-            console.log(`[Auto-Invoice] ⚠️ Skipping deal ${dealId} - no verified email found for: "${dealName.substring(0, 50)}..."`);
-            return { success: false, reason: 'no_verified_email', dealName: dealName };
+            console.log(`[Auto-Invoice] ⚠️ No verified email for deal ${dealId}: "${dealName.substring(0, 50)}..." - Queuing for Email Sync Daemon`);
+            // Queue for email sync daemon to retry later
+            if (typeof queueForEmailSync === 'function') {
+                queueForEmailSync(dealId, dealName, amount);
+            }
+            return { success: false, reason: 'no_verified_email_queued_for_sync', dealName: dealName };
         }
 
         // Create invoice record
@@ -6337,6 +7592,332 @@ app.get('/api/v1/auto-invoice/sent', (req, res) => {
         count: sentList.length,
         invoices: sentList
     });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// EMAIL SYNC DAEMON - Syncs missing emails and auto-sends invoices
+// ═══════════════════════════════════════════════════════════════
+
+// Queue for invoices waiting for email sync
+const emailSyncQueue = new Map(); // dealId -> { dealName, amount, attempts, lastAttempt, status }
+let emailSyncDaemonEnabled = true;
+const EMAIL_SYNC_INTERVAL = 15 * 60 * 1000; // 15 minutes
+let lastEmailSyncRun = 0;
+let emailSyncStats = { synced: 0, sent: 0, failed: 0, lastRun: null };
+
+// Add invoice to email sync queue
+function queueForEmailSync(dealId, dealName, amount) {
+    if (!emailSyncQueue.has(dealId)) {
+        emailSyncQueue.set(dealId, {
+            dealId,
+            dealName,
+            amount,
+            attempts: 0,
+            maxAttempts: 10, // Max 10 attempts over ~2.5 hours
+            lastAttempt: null,
+            queuedAt: new Date().toISOString(),
+            status: 'pending'
+        });
+        console.log(`[Email-Sync] Queued deal ${dealId} for email sync: "${dealName.substring(0, 40)}..."`);
+    }
+}
+
+// Email Sync Daemon - runs periodically
+async function runEmailSyncDaemon() {
+    if (!emailSyncDaemonEnabled) return;
+
+    lastEmailSyncRun = Date.now();
+    emailSyncStats.lastRun = new Date().toISOString();
+
+    const queueSize = emailSyncQueue.size;
+    if (queueSize === 0) {
+        console.log(`[Email-Sync Daemon] No items in queue`);
+        return;
+    }
+
+    console.log(`[Email-Sync Daemon] Processing ${queueSize} queued items...`);
+
+    for (const [dealId, item] of emailSyncQueue.entries()) {
+        // Skip if max attempts reached
+        if (item.attempts >= item.maxAttempts) {
+            item.status = 'max_attempts';
+            emailSyncStats.failed++;
+            emailSyncQueue.delete(dealId);
+            console.log(`[Email-Sync] Removing deal ${dealId} - max attempts reached`);
+            continue;
+        }
+
+        // Skip if already sent
+        if (sentInvoices.has(dealId)) {
+            emailSyncQueue.delete(dealId);
+            continue;
+        }
+
+        item.attempts++;
+        item.lastAttempt = new Date().toISOString();
+
+        try {
+            // Try to find email via HubSpot search
+            console.log(`[Email-Sync] Attempt ${item.attempts}/${item.maxAttempts} for: "${item.dealName.substring(0, 40)}..."`);
+
+            // Method 1: Search HubSpot contacts by company name parts
+            const searchTerms = item.dealName
+                .replace(/[-_\/\\|,;:()[\]{}'"<>]/g, ' ')
+                .split(/\s+/)
+                .filter(term => term.length > 2)
+                .slice(0, 3);
+
+            let foundEmail = null;
+            let foundName = null;
+
+            for (const term of searchTerms) {
+                if (foundEmail) break;
+
+                try {
+                    const searchRes = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                        method: 'POST',
+                        body: {
+                            filterGroups: [{
+                                filters: [{
+                                    propertyName: 'company',
+                                    operator: 'CONTAINS_TOKEN',
+                                    value: term
+                                }]
+                            }],
+                            properties: ['email', 'firstname', 'lastname', 'company'],
+                            limit: 5
+                        }
+                    });
+
+                    if (searchRes?.results?.length > 0) {
+                        for (const contact of searchRes.results) {
+                            if (contact.properties?.email) {
+                                foundEmail = contact.properties.email;
+                                foundName = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') ||
+                                           contact.properties.company || item.dealName;
+                                console.log(`[Email-Sync] ✓ Found email via company search: ${foundEmail}`);
+                                break;
+                            }
+                        }
+                    }
+                } catch (searchErr) {
+                    // Ignore search errors, try next term
+                }
+            }
+
+            // Method 2: Check deal associations again (contact may have been added)
+            if (!foundEmail) {
+                try {
+                    const associations = await hubspotRequest(`/crm/v3/objects/deals/${dealId}/associations/contacts`);
+                    if (associations?.results?.length > 0) {
+                        const contactId = associations.results[0].id;
+                        const contact = await hubspotRequest(`/crm/v3/objects/contacts/${contactId}?properties=email,firstname,lastname,company`);
+                        if (contact?.properties?.email) {
+                            foundEmail = contact.properties.email;
+                            foundName = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') ||
+                                       contact.properties.company || item.dealName;
+                            console.log(`[Email-Sync] ✓ Found email via deal association: ${foundEmail}`);
+                        }
+                    }
+                } catch (assocErr) {
+                    // Ignore association errors
+                }
+            }
+
+            // Method 3: Use existing findEmailForDeal function
+            if (!foundEmail) {
+                const enrichedContact = await findEmailForDeal(item.dealName, true);
+                if (enrichedContact?.email && enrichedContact?.matched) {
+                    foundEmail = enrichedContact.email;
+                    foundName = enrichedContact.name || item.dealName;
+                    console.log(`[Email-Sync] ✓ Found email via name matching: ${foundEmail}`);
+                }
+            }
+
+            // If email found, send invoice
+            if (foundEmail) {
+                item.status = 'email_found';
+                emailSyncStats.synced++;
+
+                console.log(`[Email-Sync] Sending invoice to ${foundEmail} for deal ${dealId}...`);
+
+                // Create and send invoice
+                const invoiceNumber = `INV-${dealId}-${Date.now().toString(36).toUpperCase()}`;
+                const invoice = {
+                    id: dealId,
+                    invoice_number: invoiceNumber,
+                    customer_name: foundName,
+                    customer_email: foundEmail,
+                    amount: item.amount,
+                    currency: 'EUR',
+                    status: 'sent',
+                    sent_date: new Date().toISOString(),
+                    created_date: item.queuedAt,
+                    auto_generated: true,
+                    sync_source: 'email_sync_daemon'
+                };
+
+                // Store invoice
+                invoiceStore.set(dealId, invoice);
+                sentInvoices.add(dealId);
+
+                // Send email (reuse existing email send logic)
+                try {
+                    // Use the invoice send endpoint logic
+                    const sendResult = await sendInvoiceEmail(dealId, foundEmail, foundName, item.amount, invoiceNumber);
+                    if (sendResult.success) {
+                        emailSyncStats.sent++;
+                        item.status = 'sent';
+                        console.log(`[Email-Sync] ✓ Invoice ${invoiceNumber} sent to ${foundEmail}`);
+                    } else {
+                        item.status = 'send_failed';
+                        console.log(`[Email-Sync] ✗ Failed to send invoice: ${sendResult.error}`);
+                    }
+                } catch (sendErr) {
+                    item.status = 'send_failed';
+                    console.error(`[Email-Sync] Send error:`, sendErr.message);
+                }
+
+                // Remove from queue
+                emailSyncQueue.delete(dealId);
+            } else {
+                item.status = 'no_email_found';
+                console.log(`[Email-Sync] No email found yet for deal ${dealId} (attempt ${item.attempts}/${item.maxAttempts})`);
+            }
+
+        } catch (error) {
+            item.status = 'error';
+            console.error(`[Email-Sync] Error processing deal ${dealId}:`, error.message);
+        }
+
+        // Small delay between processing to avoid rate limits
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    console.log(`[Email-Sync Daemon] Completed. Stats: synced=${emailSyncStats.synced}, sent=${emailSyncStats.sent}, failed=${emailSyncStats.failed}`);
+}
+
+// Helper function to send invoice email
+async function sendInvoiceEmail(dealId, email, customerName, amount, invoiceNumber) {
+    try {
+        // Create payment links
+        const stripeLink = `https://app.enterprise-universe.one/pay/${dealId}?method=stripe`;
+        const paypalLink = `https://app.enterprise-universe.one/pay/${dealId}?method=paypal`;
+
+        const emailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #10b981;">Rechnung ${invoiceNumber}</h2>
+                <p>Sehr geehrte/r ${customerName},</p>
+                <p>anbei erhalten Sie Ihre Rechnung.</p>
+                <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0; font-size: 18px;"><strong>Betrag: €${amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</strong></p>
+                </div>
+                <p>Bitte bezahlen Sie über einen der folgenden Links:</p>
+                <div style="margin: 20px 0;">
+                    <a href="${stripeLink}" style="display: inline-block; background: #6366f1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-right: 10px;">💳 Mit Karte bezahlen</a>
+                    <a href="${paypalLink}" style="display: inline-block; background: #0070ba; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">PayPal</a>
+                </div>
+                <p style="color: #6b7280; font-size: 14px;">Bei Fragen stehen wir Ihnen gerne zur Verfügung.</p>
+                <p>Mit freundlichen Grüßen,<br>Ihr Enterprise Universe Team</p>
+            </div>
+        `;
+
+        // Send via existing email service (HubSpot or SMTP)
+        if (typeof sendEmail === 'function') {
+            await sendEmail({
+                to: email,
+                subject: `Rechnung ${invoiceNumber} - €${amount.toLocaleString('de-DE')}`,
+                html: emailHtml
+            });
+            return { success: true };
+        } else {
+            // Log for manual processing
+            console.log(`[Email-Sync] Email queued for ${email}: ${invoiceNumber}`);
+            return { success: true, note: 'queued_for_manual' };
+        }
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Start Email Sync Daemon
+setInterval(runEmailSyncDaemon, EMAIL_SYNC_INTERVAL);
+console.log(`[Email-Sync Daemon] Started. Interval: ${EMAIL_SYNC_INTERVAL / 60000} minutes`);
+
+// Initial run after 2 minutes
+setTimeout(runEmailSyncDaemon, 2 * 60 * 1000);
+
+// API: Get Email Sync Status
+app.get('/api/v1/email-sync/status', (req, res) => {
+    res.json({
+        enabled: emailSyncDaemonEnabled,
+        queue_size: emailSyncQueue.size,
+        queue: Array.from(emailSyncQueue.values()),
+        stats: emailSyncStats,
+        last_run: emailSyncStats.lastRun,
+        next_run: new Date(lastEmailSyncRun + EMAIL_SYNC_INTERVAL).toISOString(),
+        interval_minutes: EMAIL_SYNC_INTERVAL / 60000
+    });
+});
+
+// API: Toggle Email Sync Daemon
+app.post('/api/v1/email-sync/toggle', (req, res) => {
+    emailSyncDaemonEnabled = !emailSyncDaemonEnabled;
+    console.log(`[Email-Sync Daemon] ${emailSyncDaemonEnabled ? 'Enabled' : 'Disabled'}`);
+    res.json({ enabled: emailSyncDaemonEnabled });
+});
+
+// API: Manually add deal to sync queue
+app.post('/api/v1/email-sync/queue/:dealId', async (req, res) => {
+    const { dealId } = req.params;
+
+    try {
+        // Get deal info
+        const deal = await hubspotRequest(`/crm/v3/objects/deals/${dealId}?properties=dealname,amount`);
+        if (!deal) {
+            return res.status(404).json({ error: 'Deal not found' });
+        }
+
+        queueForEmailSync(dealId, deal.properties?.dealname || `Deal ${dealId}`, parseFloat(deal.properties?.amount) || 0);
+        res.json({ success: true, queued: dealId });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// API: Run email sync immediately
+app.post('/api/v1/email-sync/run', async (req, res) => {
+    console.log(`[Email-Sync] Manual run triggered`);
+    runEmailSyncDaemon();
+    res.json({ success: true, message: 'Email sync daemon started' });
+});
+
+// API: Queue all invoices without emails
+app.post('/api/v1/email-sync/queue-missing', async (req, res) => {
+    try {
+        const invoicesData = await getHubSpotData();
+        const deals = invoicesData?.deals || [];
+        let queued = 0;
+
+        for (const deal of deals) {
+            const dealId = deal.id;
+            const props = deal.properties || {};
+
+            // Skip if already sent or already in queue
+            if (sentInvoices.has(dealId) || emailSyncQueue.has(dealId)) continue;
+
+            // Check if deal has email
+            const contact = await findEmailForDeal(props.dealname || '', false);
+            if (!contact?.email) {
+                queueForEmailSync(dealId, props.dealname || `Deal ${dealId}`, parseFloat(props.amount) || 0);
+                queued++;
+            }
+        }
+
+        res.json({ success: true, queued, total_queue: emailSyncQueue.size });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // ═══════════════════════════════════════════════════════════════

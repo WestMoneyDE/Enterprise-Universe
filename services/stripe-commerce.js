@@ -741,7 +741,49 @@ async function handleMarketplaceWebhook(payload, signature, webhookSecret) {
 
         'payment_intent.succeeded': async (paymentIntent) => {
             console.log('Payment succeeded:', paymentIntent.id);
-            return { type: 'payment_succeeded', id: paymentIntent.id };
+
+            // Extract deal info from metadata
+            const hubspotDealId = paymentIntent.metadata?.hubspot_deal_id;
+            const invoiceId = paymentIntent.metadata?.invoice_id;
+            const paymentType = paymentIntent.metadata?.payment_type || 'full'; // 'deposit' or 'full'
+
+            // Update payment record in database
+            if (invoiceId) {
+                await pool.query(`
+                    UPDATE bau.payments
+                    SET status = 'paid',
+                        stripe_payment_intent_id = $1,
+                        paid_at = CURRENT_TIMESTAMP,
+                        updated_at = CURRENT_TIMESTAMP
+                    WHERE invoice_number = $2 OR id = $2
+                `, [paymentIntent.id, invoiceId]);
+
+                console.log(`Payment record updated for invoice ${invoiceId}`);
+            }
+
+            // Sync payment status to HubSpot
+            if (hubspotDealId) {
+                try {
+                    await updateHubSpotDealPaymentStatus(hubspotDealId, {
+                        status: paymentType === 'deposit' ? 'deposit_paid' : 'paid',
+                        paymentDate: new Date().toISOString(),
+                        paymentMethod: paymentIntent.payment_method_types?.[0] || 'card',
+                        amountPaid: paymentIntent.amount_received / 100,
+                        stripePaymentId: paymentIntent.id
+                    });
+                    console.log(`HubSpot deal ${hubspotDealId} updated with payment status`);
+                } catch (hubspotError) {
+                    console.error('Error updating HubSpot deal:', hubspotError);
+                }
+            }
+
+            return {
+                type: 'payment_succeeded',
+                id: paymentIntent.id,
+                hubspotDealId,
+                invoiceId,
+                paymentType
+            };
         },
 
         'transfer.created': async (transfer) => {
@@ -821,6 +863,92 @@ async function getPaymentAnalytics(dateRange = {}) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// HUBSPOT PAYMENT STATUS SYNC
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Update HubSpot deal with payment status
+ * Called when Stripe payment succeeds
+ */
+async function updateHubSpotDealPaymentStatus(dealId, paymentData) {
+    const axios = require('axios');
+
+    const hubspotToken = process.env.HUBSPOT_ACCESS_TOKEN;
+    if (!hubspotToken) {
+        console.warn('HubSpot token not configured, skipping deal update');
+        return null;
+    }
+
+    const {
+        status, // 'paid', 'deposit_paid', 'partial'
+        paymentDate,
+        paymentMethod,
+        amountPaid,
+        stripePaymentId
+    } = paymentData;
+
+    // Map payment status to HubSpot properties
+    const properties = {
+        // Standard HubSpot properties
+        notes_last_updated: new Date().getTime(),
+
+        // Custom properties (must exist in HubSpot)
+        payment_status: status,
+        payment_date: paymentDate ? new Date(paymentDate).getTime() : null,
+        payment_method: paymentMethod,
+        amount_paid: amountPaid,
+        stripe_payment_id: stripePaymentId
+    };
+
+    // Update deal stage if fully paid
+    if (status === 'paid') {
+        // Don't change stage, but mark as closed
+        properties.hs_is_closed_won = true;
+    }
+
+    try {
+        const response = await axios.patch(
+            `https://api.hubapi.com/crm/v3/objects/deals/${dealId}`,
+            { properties },
+            {
+                headers: {
+                    'Authorization': `Bearer ${hubspotToken}`,
+                    'Content-Type': 'application/json'
+                },
+                timeout: 30000
+            }
+        );
+
+        console.log(`HubSpot deal ${dealId} payment status updated to: ${status}`);
+
+        // Also log to internal database for audit
+        await pool.query(`
+            INSERT INTO hubspot_payment_sync_log (
+                deal_id, payment_status, payment_data, synced_at
+            ) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+            ON CONFLICT (deal_id) DO UPDATE SET
+                payment_status = $2,
+                payment_data = $3,
+                synced_at = CURRENT_TIMESTAMP
+        `, [dealId, status, JSON.stringify(paymentData)]);
+
+        return response.data;
+
+    } catch (error) {
+        console.error(`Error updating HubSpot deal ${dealId}:`, error.response?.data || error.message);
+
+        // Store failed sync for retry
+        await pool.query(`
+            INSERT INTO hubspot_payment_sync_failures (
+                deal_id, payment_data, error_message, created_at
+            ) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+        `, [dealId, JSON.stringify(paymentData), error.message]);
+
+        throw error;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // EXPORTS
 // ═══════════════════════════════════════════════════════════════
 
@@ -844,6 +972,9 @@ module.exports = {
 
     // Webhooks
     handleMarketplaceWebhook,
+
+    // HubSpot Sync
+    updateHubSpotDealPaymentStatus,
 
     // Analytics
     getPaymentAnalytics,
