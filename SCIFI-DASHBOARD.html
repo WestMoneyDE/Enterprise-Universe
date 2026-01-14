@@ -976,16 +976,16 @@ const Modules = {
             DOM.clear(kpiGrid);
             const m = data.metrics || {};
             const kpis = [
-                { label: 'TOTAL CONTACTS', value: formatNumber(m.contacts?.rawValue || 0), class: '' },
-                { label: 'ACTIVE DEALS', value: formatNumber(m.pipeline?.openDeals || 0), class: 'magenta' },
-                { label: 'PIPELINE VALUE', value: formatCurrency(m.pipeline?.rawValue || 0), class: 'cyan' },
-                { label: 'REVENUE WON', value: formatCurrency(m.revenue?.rawValue || 0), class: 'green' }
+                { label: 'COMPANIES', value: formatNumber(m.companies?.rawValue || 0), change: 'HubSpot', class: 'cyan' },
+                { label: 'ACTIVE DEALS', value: formatNumber(m.pipeline?.openDeals || 0), change: m.pipeline?.change || '', class: 'magenta' },
+                { label: 'PIPELINE VALUE', value: formatCurrency(m.pipeline?.rawValue || 0), change: 'Open Deals', class: '' },
+                { label: 'REVENUE WON', value: formatCurrency(m.revenue?.rawValue || 0), change: m.revenue?.change || '', class: 'green' }
             ];
             kpis.forEach(kpi => {
                 kpiGrid.appendChild(DOM.el('div', { className: 'kpi-card ' + kpi.class }, [
                     DOM.el('div', { className: 'kpi-label' }, [kpi.label]),
                     DOM.el('div', { className: 'kpi-value' }, [kpi.value]),
-                    DOM.el('div', { className: 'kpi-change' }, ['+12.5% ↑'])
+                    DOM.el('div', { className: 'kpi-change' }, [kpi.change])
                 ]));
             });
         }

@@ -7,6 +7,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
+const { WebSocketServer } = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
@@ -191,6 +193,10 @@ app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'register.h
 app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, 'register.html')));
 app.get('/demo', (req, res) => res.sendFile(path.join(__dirname, 'LANDING_PAGE.html')));
 
+// Presentation Routes (for HubSpot deal presentations)
+app.get('/presentation/:token', (req, res) => res.sendFile(path.join(__dirname, 'presentation.html')));
+app.get('/presentation', (req, res) => res.sendFile(path.join(__dirname, 'presentation.html')));
+
 // Enterprise Universe v11.0 Dashboard (MEGA GOD MODE - NEW MAIN DASHBOARD)
 app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.html')));
 app.get('/v11', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.html')));
@@ -298,8 +304,54 @@ app.get('/api/health', (req, res) => {
         form: 'Mastered Ultra Instinct',
         powerLevel: '∞',
         botsOnline: allBots.length,
+        wsClients: global.wsClients?.size || 0,
         timestamp: new Date().toISOString()
     });
+});
+
+// WebSocket status endpoint
+app.get('/api/ws/status', (req, res) => {
+    const clients = [];
+    if (global.wsClients) {
+        global.wsClients.forEach((meta) => {
+            clients.push({
+                id: meta.id,
+                connectedAt: meta.connectedAt,
+                channels: meta.channels,
+                uptime: Date.now() - meta.connectedAt
+            });
+        });
+    }
+    res.json({
+        connected: clients.length,
+        clients,
+        serverUptime: process.uptime()
+    });
+});
+
+// Send notification to all connected clients
+app.post('/api/notify', (req, res) => {
+    const { type, title, message, duration } = req.body;
+
+    if (!title) {
+        return res.status(400).json({ error: 'Title is required' });
+    }
+
+    if (global.wsBroadcast) {
+        global.wsBroadcast('notification', {
+            type: type || 'info',
+            title,
+            message: message || '',
+            duration: duration || 5000
+        });
+        res.json({
+            success: true,
+            message: 'Notification sent',
+            recipients: global.wsClients?.size || 0
+        });
+    } else {
+        res.status(503).json({ error: 'WebSocket not available' });
+    }
 });
 
 // Email queue status
@@ -1154,13 +1206,39 @@ app.post('/api/lead-discovery/start', async (req, res) => {
 app.get('/api/hubspot/contacts', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 100;
-        const data = await hubspotRequest(`/crm/v3/objects/contacts?limit=${limit}&properties=firstname,lastname,email,phone,company,lifecyclestage,hs_lead_status`);
+        const businessOnly = req.query.business !== 'false'; // Default: nur Business-Kontakte
 
-        res.json({
-            total: data.total || data.results?.length || 0,
-            contacts: data.results || [],
-            paging: data.paging
-        });
+        if (businessOnly) {
+            // Nur Business-Kontakte (Leads, MQLs, SQLs, Opportunities, Customers)
+            const data = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                method: 'POST',
+                body: {
+                    limit,
+                    filterGroups: [{
+                        filters: [{
+                            propertyName: 'lifecyclestage',
+                            operator: 'IN',
+                            values: ['lead', 'marketingqualifiedlead', 'salesqualifiedlead', 'opportunity', 'customer']
+                        }]
+                    }],
+                    properties: ['firstname', 'lastname', 'email', 'phone', 'company', 'lifecyclestage', 'hs_lead_status'],
+                    sorts: [{ propertyName: 'createdate', direction: 'DESCENDING' }]
+                }
+            });
+            res.json({
+                total: data.total || data.results?.length || 0,
+                contacts: data.results || [],
+                paging: data.paging
+            });
+        } else {
+            // Alle Kontakte (inkl. private)
+            const data = await hubspotRequest(`/crm/v3/objects/contacts?limit=${limit}&properties=firstname,lastname,email,phone,company,lifecyclestage,hs_lead_status`);
+            res.json({
+                total: data.total || data.results?.length || 0,
+                contacts: data.results || [],
+                paging: data.paging
+            });
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -5436,6 +5514,10 @@ app.post('/api/bot-orchestrator/start', async (req, res) => {
     }
     try {
         await botOrchestrator.startOrchestrator();
+        // Broadcast bot status update via WebSocket
+        if (global.wsBroadcast) {
+            global.wsBroadcast('bot-update', { running: true, activeBots: 44, event: 'started' });
+        }
         res.json({ success: true, message: '44 Bots gestartet - 24/7 Modus aktiv' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -5448,6 +5530,10 @@ app.post('/api/bot-orchestrator/stop', (req, res) => {
         return res.status(503).json({ error: 'Bot Orchestrator not available' });
     }
     botOrchestrator.stopOrchestrator();
+    // Broadcast bot status update via WebSocket
+    if (global.wsBroadcast) {
+        global.wsBroadcast('bot-update', { running: false, activeBots: 0, event: 'stopped' });
+    }
     res.json({ success: true, message: 'Alle Bots gestoppt' });
 });
 
@@ -5494,6 +5580,15 @@ app.post('/api/bot-orchestrator/execute/:botId', async (req, res) => {
     try {
         const result = await botOrchestrator.executeBotTask(req.params.botId);
         if (result) {
+            // Broadcast task execution via WebSocket
+            if (global.wsBroadcast) {
+                global.wsBroadcast('task-update', {
+                    botId: req.params.botId,
+                    event: 'executed',
+                    result: result.success ? 'success' : 'failed',
+                    timestamp: Date.now()
+                });
+            }
             res.json({ success: true, result });
         } else {
             res.status(404).json({ error: 'Bot not found or task failed' });
@@ -9059,28 +9154,190 @@ setInterval(() => {
     }
 }, MEMORY_CHECK_INTERVAL);
 
-// Graceful shutdown handler
-process.on('SIGTERM', () => {
-    console.log('[Server] SIGTERM received, shutting down gracefully...');
-    process.exit(0);
+// ═══════════════════════════════════════════════════════════════
+// WEBSOCKET SERVER SETUP
+// ═══════════════════════════════════════════════════════════════
+
+const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
+
+// Track connected clients with metadata
+const wsClients = new Map();
+
+// Broadcast to all connected clients
+function broadcast(eventType, data) {
+    const message = JSON.stringify({ type: eventType, data, timestamp: Date.now() });
+    wsClients.forEach((meta, client) => {
+        if (client.readyState === 1) { // WebSocket.OPEN
+            try {
+                client.send(message);
+            } catch (err) {
+                console.error('[WS] Broadcast error:', err.message);
+            }
+        }
+    });
+}
+
+// Broadcast to specific channels/subscriptions
+function broadcastToChannel(channel, eventType, data) {
+    const message = JSON.stringify({ type: eventType, channel, data, timestamp: Date.now() });
+    wsClients.forEach((meta, client) => {
+        if (client.readyState === 1 && meta.channels?.includes(channel)) {
+            try {
+                client.send(message);
+            } catch (err) {
+                console.error('[WS] Channel broadcast error:', err.message);
+            }
+        }
+    });
+}
+
+// Make broadcast and clients available globally for other modules
+global.wsBroadcast = broadcast;
+global.wsBroadcastToChannel = broadcastToChannel;
+global.wsClients = wsClients;
+
+// WebSocket connection handler
+wss.on('connection', (ws, req) => {
+    const clientId = `client_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    // Store client with metadata
+    wsClients.set(ws, {
+        id: clientId,
+        ip: clientIp,
+        connectedAt: Date.now(),
+        channels: ['global'] // Default channel
+    });
+
+    console.log(`[WS] Client connected: ${clientId} (${wsClients.size} total)`);
+
+    // Send welcome message with initial state
+    ws.send(JSON.stringify({
+        type: 'connected',
+        data: {
+            clientId,
+            serverTime: Date.now(),
+            version: '2.0.0'
+        }
+    }));
+
+    // Handle incoming messages
+    ws.on('message', (message) => {
+        try {
+            const msg = JSON.parse(message.toString());
+            const meta = wsClients.get(ws);
+
+            switch (msg.type) {
+                case 'subscribe':
+                    // Subscribe to channels
+                    if (msg.channels && Array.isArray(msg.channels)) {
+                        meta.channels = [...new Set([...meta.channels, ...msg.channels])];
+                        ws.send(JSON.stringify({ type: 'subscribed', channels: meta.channels }));
+                    }
+                    break;
+
+                case 'unsubscribe':
+                    // Unsubscribe from channels
+                    if (msg.channels && Array.isArray(msg.channels)) {
+                        meta.channels = meta.channels.filter(c => !msg.channels.includes(c));
+                        ws.send(JSON.stringify({ type: 'unsubscribed', channels: meta.channels }));
+                    }
+                    break;
+
+                case 'ping':
+                    ws.send(JSON.stringify({ type: 'pong', timestamp: Date.now() }));
+                    break;
+
+                case 'request':
+                    // Handle data requests (for initial state after reconnect)
+                    handleDataRequest(ws, msg.resource);
+                    break;
+
+                default:
+                    console.log(`[WS] Unknown message type: ${msg.type}`);
+            }
+        } catch (err) {
+            console.error('[WS] Message parse error:', err.message);
+        }
+    });
+
+    // Handle client disconnect
+    ws.on('close', () => {
+        const meta = wsClients.get(ws);
+        console.log(`[WS] Client disconnected: ${meta?.id} (${wsClients.size - 1} remaining)`);
+        wsClients.delete(ws);
+    });
+
+    // Handle errors
+    ws.on('error', (err) => {
+        console.error('[WS] Client error:', err.message);
+        wsClients.delete(ws);
+    });
 });
 
-process.on('SIGINT', () => {
-    console.log('[Server] SIGINT received, shutting down gracefully...');
-    process.exit(0);
-});
+// Handle data requests for specific resources
+async function handleDataRequest(ws, resource) {
+    try {
+        let data = null;
+
+        switch (resource) {
+            case 'bot-status':
+                // Get current bot orchestrator status
+                data = { running: false, activeBots: 0, tasks: [] };
+                break;
+
+            case 'dashboard-stats':
+                // Get dashboard stats
+                data = { contacts: 0, deals: 0, pipeline: 0, revenue: 0 };
+                break;
+
+            case 'lead-generator':
+                // Get lead generator status
+                data = { active: false, leadsFound: 0, regions: [] };
+                break;
+
+            default:
+                data = { error: 'Unknown resource' };
+        }
+
+        ws.send(JSON.stringify({
+            type: 'data',
+            resource,
+            data,
+            timestamp: Date.now()
+        }));
+    } catch (err) {
+        ws.send(JSON.stringify({
+            type: 'error',
+            resource,
+            error: err.message
+        }));
+    }
+}
+
+// Periodic heartbeat to keep connections alive
+setInterval(() => {
+    const stats = {
+        clients: wsClients.size,
+        uptime: process.uptime(),
+        memory: Math.round(process.memoryUsage().heapUsed / 1024 / 1024)
+    };
+    broadcast('heartbeat', stats);
+}, 30000);
 
 // ═══════════════════════════════════════════════════════════════
 // START SERVER
 // ═══════════════════════════════════════════════════════════════
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`
 ═══════════════════════════════════════════════════════════════
   神 HAIKU GOD MODE SERVER RUNNING
 ═══════════════════════════════════════════════════════════════
 
   Server:          http://localhost:${PORT}
+  WebSocket:       ws://localhost:${PORT}
 
   Dashboards:
      GOD MODE:       http://localhost:${PORT}/god-mode
@@ -9096,11 +9353,35 @@ app.listen(PORT, () => {
      Transform:      POST /api/haiku/transform
      Power:          POST /api/haiku/power
 
+  WebSocket Events:
+     → connected, heartbeat, bot-update, deal-update
+     → lead-update, task-update, notification
+
   Bots Online: ${allBots.length}
+  WS Clients: 0
   Power Level: ∞
 
 ═══════════════════════════════════════════════════════════════
     `);
 });
 
-module.exports = app;
+// Update graceful shutdown to include WebSocket
+process.on('SIGTERM', () => {
+    console.log('[Server] SIGTERM received, closing WebSocket connections...');
+    wss.clients.forEach(client => client.close());
+    server.close(() => {
+        console.log('[Server] HTTP server closed');
+        process.exit(0);
+    });
+});
+
+process.on('SIGINT', () => {
+    console.log('[Server] SIGINT received, closing WebSocket connections...');
+    wss.clients.forEach(client => client.close());
+    server.close(() => {
+        console.log('[Server] HTTP server closed');
+        process.exit(0);
+    });
+});
+
+module.exports = { app, server, wss, broadcast, broadcastToChannel };
