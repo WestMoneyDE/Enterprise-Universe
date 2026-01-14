@@ -213,6 +213,33 @@ body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: v
 @media (max-width: 1400px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 1024px) { .nexus-sidebar { width: 70px; } .nexus-sidebar .nav-label, .nexus-sidebar .nav-section-title { display: none; } .nexus-main { margin-left: 70px; } .status-bar { left: 70px; } }
 @media (max-width: 768px) { .nexus-sidebar { transform: translateX(-100%); } .nexus-main { margin-left: 0; } .status-bar { left: 0; } .kpi-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; } .header-status { display: none; } }
+
+/* Toast Notifications */
+.toast-container { position: fixed; top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 380px; }
+.toast { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: rgba(15, 15, 20, 0.95); border: 1px solid var(--border-dim); border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); animation: toastSlideIn 0.3s ease-out; font-family: 'Rajdhani', sans-serif; }
+.toast.hiding { animation: toastSlideOut 0.3s ease-in forwards; }
+@keyframes toastSlideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes toastSlideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+.toast-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+.toast-content { flex: 1; min-width: 0; }
+.toast-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 2px; }
+.toast-message { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+.toast-close { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; margin: -4px -4px -4px 8px; opacity: 0.6; transition: opacity 0.2s; }
+.toast-close:hover { opacity: 1; }
+.toast-progress { position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 0 8px 8px; animation: toastProgress linear forwards; }
+@keyframes toastProgress { from { width: 100%; } to { width: 0%; } }
+.toast.success { border-left: 3px solid var(--neon-green); }
+.toast.success .toast-icon { color: var(--neon-green); }
+.toast.success .toast-progress { background: var(--neon-green); }
+.toast.error { border-left: 3px solid var(--neon-red); }
+.toast.error .toast-icon { color: var(--neon-red); }
+.toast.error .toast-progress { background: var(--neon-red); }
+.toast.warning { border-left: 3px solid var(--neon-yellow); }
+.toast.warning .toast-icon { color: var(--neon-yellow); }
+.toast.warning .toast-progress { background: var(--neon-yellow); }
+.toast.info { border-left: 3px solid var(--neon-cyan); }
+.toast.info .toast-icon { color: var(--neon-cyan); }
+.toast.info .toast-progress { background: var(--neon-cyan); }
     </style>
 </head>
 <body>
@@ -220,6 +247,7 @@ body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: v
     <div class="cyber-grid"></div>
     <div class="scan-lines"></div>
     <div class="vignette"></div>
+    <div class="toast-container" id="toast-container"></div>
 
     <header class="nexus-header">
         <div class="nexus-logo">
@@ -303,6 +331,7 @@ body { font-family: 'Rajdhani', sans-serif; background: var(--bg-void); color: v
             <div class="status-bar-item"><span class="dot"></span><span>WHATSAPP: READY</span></div>
         </div>
         <div class="status-bar-right">
+            <div class="status-bar-item"><span class="dot" id="ws-status" style="background: var(--neon-magenta);"></span><span id="ws-status-text">WS: CONNECTING</span></div>
             <div class="status-bar-item"><span id="current-time">--:--:--</span></div>
             <div class="status-bar-item"><span>NEXUS v2.0.0</span></div>
         </div>
@@ -384,6 +413,289 @@ const DOM = {
     clear(c) { while (c.firstChild) c.removeChild(c.firstChild); }
 };
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// NEXUS WEBSOCKET - Real-time Connection Manager
+// ═══════════════════════════════════════════════════════════════════════════════
+const NexusWS = {
+    ws: null,
+    clientId: null,
+    connected: false,
+    reconnectAttempts: 0,
+    maxReconnectAttempts: 10,
+    reconnectDelay: 1000,
+    handlers: new Map(),
+    channels: ['global'],
+
+    // Initialize WebSocket connection
+    connect() {
+        if (this.ws?.readyState === WebSocket.OPEN) return;
+
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws`;
+
+        try {
+            this.ws = new WebSocket(wsUrl);
+
+            this.ws.onopen = () => {
+                console.log('[NexusWS] Connected');
+                this.connected = true;
+                this.reconnectAttempts = 0;
+                this.reconnectDelay = 1000;
+                this.updateConnectionStatus(true);
+
+                // Subscribe to channels
+                if (this.channels.length > 0) {
+                    this.send({ type: 'subscribe', channels: this.channels });
+                }
+
+                // Emit connected event
+                this.emit('connected', { timestamp: Date.now() });
+            };
+
+            this.ws.onmessage = (event) => {
+                try {
+                    const msg = JSON.parse(event.data);
+                    this.handleMessage(msg);
+                } catch (e) {
+                    console.error('[NexusWS] Parse error:', e);
+                }
+            };
+
+            this.ws.onclose = (event) => {
+                console.log('[NexusWS] Disconnected:', event.code);
+                this.connected = false;
+                this.updateConnectionStatus(false);
+                this.emit('disconnected', { code: event.code });
+                this.scheduleReconnect();
+            };
+
+            this.ws.onerror = (error) => {
+                console.error('[NexusWS] Error:', error);
+                this.emit('error', { error });
+            };
+
+        } catch (e) {
+            console.error('[NexusWS] Connection failed:', e);
+            this.scheduleReconnect();
+        }
+    },
+
+    // Schedule reconnection with exponential backoff
+    scheduleReconnect() {
+        if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+            console.log('[NexusWS] Max reconnect attempts reached, falling back to polling');
+            this.emit('fallback-polling', {});
+            return;
+        }
+
+        this.reconnectAttempts++;
+        const delay = Math.min(this.reconnectDelay * Math.pow(1.5, this.reconnectAttempts - 1), 30000);
+
+        console.log(`[NexusWS] Reconnecting in ${Math.round(delay/1000)}s (attempt ${this.reconnectAttempts})`);
+
+        setTimeout(() => this.connect(), delay);
+    },
+
+    // Handle incoming messages
+    handleMessage(msg) {
+        switch (msg.type) {
+            case 'connected':
+                this.clientId = msg.data?.clientId;
+                console.log('[NexusWS] Client ID:', this.clientId);
+                break;
+
+            case 'subscribed':
+                console.log('[NexusWS] Subscribed to:', msg.channels);
+                break;
+
+            case 'pong':
+                // Heartbeat response
+                break;
+
+            case 'heartbeat':
+                this.emit('heartbeat', msg.data);
+                break;
+
+            case 'data':
+                this.emit(`data:${msg.resource}`, msg.data);
+                break;
+
+            default:
+                // Emit as custom event
+                this.emit(msg.type, msg.data);
+                if (msg.channel) {
+                    this.emit(`${msg.channel}:${msg.type}`, msg.data);
+                }
+        }
+    },
+
+    // Send message to server
+    send(data) {
+        if (this.ws?.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify(data));
+            return true;
+        }
+        return false;
+    },
+
+    // Subscribe to channels
+    subscribe(channels) {
+        const newChannels = Array.isArray(channels) ? channels : [channels];
+        this.channels = [...new Set([...this.channels, ...newChannels])];
+        this.send({ type: 'subscribe', channels: newChannels });
+    },
+
+    // Request data from server
+    request(resource) {
+        this.send({ type: 'request', resource });
+    },
+
+    // Event handling
+    on(event, callback) {
+        if (!this.handlers.has(event)) {
+            this.handlers.set(event, []);
+        }
+        this.handlers.get(event).push(callback);
+    },
+
+    off(event, callback) {
+        if (this.handlers.has(event)) {
+            const handlers = this.handlers.get(event);
+            const idx = handlers.indexOf(callback);
+            if (idx > -1) handlers.splice(idx, 1);
+        }
+    },
+
+    emit(event, data) {
+        if (this.handlers.has(event)) {
+            this.handlers.get(event).forEach(cb => {
+                try { cb(data); } catch (e) { console.error('[NexusWS] Handler error:', e); }
+            });
+        }
+    },
+
+    // Update UI connection status indicator
+    updateConnectionStatus(connected) {
+        const indicator = document.getElementById('ws-status');
+        const text = document.getElementById('ws-status-text');
+        if (indicator) {
+            indicator.style.background = connected ? 'var(--neon-green)' : 'var(--neon-magenta)';
+            indicator.style.boxShadow = connected ? '0 0 8px var(--neon-green)' : '0 0 8px var(--neon-magenta)';
+            indicator.title = connected ? 'WebSocket: Verbunden' : 'WebSocket: Getrennt';
+        }
+        if (text) {
+            text.textContent = connected ? 'WS: LIVE' : 'WS: OFFLINE';
+        }
+    },
+
+    // Check if connected
+    isConnected() {
+        return this.ws?.readyState === WebSocket.OPEN;
+    },
+
+    // Disconnect
+    disconnect() {
+        if (this.ws) {
+            this.ws.close();
+            this.ws = null;
+        }
+    }
+};
+
+// Auto-connect on page load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => NexusWS.connect(), 500);
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TOAST NOTIFICATIONS - Cyberpunk Style (XSS-Safe)
+// ═══════════════════════════════════════════════════════════════════════════════
+const Toast = {
+    container: null,
+    icons: { success: '✓', error: '✕', warning: '⚠', info: '○' },
+
+    init() { this.container = document.getElementById('toast-container'); },
+
+    show(type, title, message, duration = 5000) {
+        if (!this.container) this.init();
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+
+        // Build DOM safely without innerHTML
+        const icon = document.createElement('div');
+        icon.className = 'toast-icon';
+        icon.textContent = this.icons[type] || '○';
+
+        const content = document.createElement('div');
+        content.className = 'toast-content';
+        const titleEl = document.createElement('div');
+        titleEl.className = 'toast-title';
+        titleEl.textContent = title;
+        content.appendChild(titleEl);
+        if (message) {
+            const msgEl = document.createElement('div');
+            msgEl.className = 'toast-message';
+            msgEl.textContent = message;
+            content.appendChild(msgEl);
+        }
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast-close';
+        closeBtn.textContent = '✕';
+        closeBtn.onclick = () => toast.remove();
+
+        const progress = document.createElement('div');
+        progress.className = 'toast-progress';
+        progress.style.animationDuration = `${duration}ms`;
+
+        toast.append(icon, content, closeBtn, progress);
+        this.container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('hiding');
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+
+        return toast;
+    },
+
+    success(title, message, duration) { return this.show('success', title, message, duration); },
+    error(title, message, duration) { return this.show('error', title, message, duration); },
+    warning(title, message, duration) { return this.show('warning', title, message, duration); },
+    info(title, message, duration) { return this.show('info', title, message, duration); }
+};
+
+// Register WebSocket handlers for notifications
+NexusWS.on('notification', (data) => {
+    Toast.show(data.type || 'info', data.title, data.message, data.duration);
+});
+
+NexusWS.on('connected', () => {
+    Toast.success('Verbunden', 'Echtzeit-Verbindung hergestellt', 3000);
+});
+
+NexusWS.on('disconnected', (data) => {
+    if (data.code !== 1000) {
+        Toast.warning('Verbindung getrennt', 'Versuche erneut zu verbinden...', 4000);
+    }
+});
+
+NexusWS.on('bot-update', (data) => {
+    if (data.event === 'started') {
+        Toast.success('Bots gestartet', `${data.activeBots} Bots sind jetzt aktiv`, 4000);
+    } else if (data.event === 'stopped') {
+        Toast.info('Bots gestoppt', 'Alle Bots wurden deaktiviert', 4000);
+    }
+});
+
+NexusWS.on('task-update', (data) => {
+    if (data.event === 'executed') {
+        const status = data.result === 'success' ? 'success' : 'error';
+        Toast.show(status, 'Task ausgeführt', `Bot ${data.botId} - ${data.result}`, 3000);
+    }
+});
+
 function escapeHtml(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 function formatCurrency(v, c = 'EUR') {
     const num = v || 0;
@@ -403,22 +715,77 @@ function formatNumber(v) {
 function generateHexData() { let h = ''; for (let i = 0; i < 32; i++) h += Math.floor(Math.random() * 16).toString(16).toUpperCase(); return h; }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// TASKS PANEL - Real-time Bot Tasks
+// TASKS PANEL - Real-time Bot Tasks (WebSocket + Polling Fallback)
 // ═══════════════════════════════════════════════════════════════════════════════
 let tasksData = { tasks: [], running: false, activeBots: 0 };
 let tasksInterval = null;
+let tasksPanelOpen = false;
+let usePollingFallback = false;
+
+// Register WebSocket handlers for real-time task updates
+NexusWS.on('task-update', (data) => {
+    if (data.tasks) tasksData.tasks = data.tasks;
+    if (data.running !== undefined) tasksData.running = data.running;
+    if (data.activeBots !== undefined) tasksData.activeBots = data.activeBots;
+    if (tasksPanelOpen) {
+        renderTasksList();
+        updateTasksCount();
+    }
+});
+
+NexusWS.on('bot-update', (data) => {
+    if (data.activeBots !== undefined) tasksData.activeBots = data.activeBots;
+    if (data.running !== undefined) tasksData.running = data.running;
+    updateTasksCount();
+});
+
+// Fallback to polling if WebSocket fails
+NexusWS.on('fallback-polling', () => {
+    console.log('[Tasks] Falling back to polling mode');
+    usePollingFallback = true;
+    if (tasksPanelOpen && !tasksInterval) {
+        tasksInterval = setInterval(refreshTasks, 5000);
+    }
+});
+
+// When WebSocket reconnects, stop polling
+NexusWS.on('connected', () => {
+    if (usePollingFallback) {
+        console.log('[Tasks] WebSocket reconnected, stopping polling');
+        usePollingFallback = false;
+        if (tasksInterval) {
+            clearInterval(tasksInterval);
+            tasksInterval = null;
+        }
+        // Subscribe to task channel
+        NexusWS.subscribe(['tasks', 'bots']);
+        // Request initial data
+        NexusWS.request('bot-status');
+    }
+});
 
 function toggleTasksPanel() {
     const panel = document.getElementById('tasks-panel');
     const isVisible = panel.classList.contains('show');
     if (isVisible) {
         panel.classList.remove('show');
-        clearInterval(tasksInterval);
-        tasksInterval = null;
+        tasksPanelOpen = false;
+        if (tasksInterval) {
+            clearInterval(tasksInterval);
+            tasksInterval = null;
+        }
     } else {
         panel.classList.add('show');
-        refreshTasks();
-        tasksInterval = setInterval(refreshTasks, 5000); // Auto-refresh every 5s
+        tasksPanelOpen = true;
+        refreshTasks(); // Initial load
+
+        // Only use polling if WebSocket is not available
+        if (!NexusWS.isConnected() || usePollingFallback) {
+            tasksInterval = setInterval(refreshTasks, 5000);
+        } else {
+            // Subscribe to real-time updates
+            NexusWS.subscribe(['tasks', 'bots']);
+        }
     }
 }
 
