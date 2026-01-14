@@ -521,7 +521,7 @@
                 const savedRedirect = sessionStorage.getItem('auth_redirect');
                 sessionStorage.removeItem('auth_redirect');
 
-                const defaultUrl = data.user.role === 'admin' ? '/haiku' : '/genius';
+                const defaultUrl = '/scifi';
                 const redirectUrl = savedRedirect || defaultUrl;
 
                 window.location.href = redirectUrl;
@@ -663,7 +663,7 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.valid) {
-                        window.location.href = '/genius';
+                        window.location.href = '/scifi';
                     } else {
                         localStorage.removeItem('eu_token');
                         localStorage.removeItem('eu_user');
