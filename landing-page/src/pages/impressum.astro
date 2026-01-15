@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Impressum | Enterprise Universe">
+  <!-- Scan Line Overlay -->
+  <div class="scan-line-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-cyan)]/20">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-cyan)] group-hover:shadow-[0_0_25px_var(--scifi-cyan)] transition-shadow">
+            <span class="text-[var(--scifi-cyan)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-xl font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/#services" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SERVICES</a>
+          <a href="/ueber-uns" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">ÜBER UNS</a>
+          <a href="/smart-home" class="text-[var(--scifi-orange)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART HOME</a>
+          <a href="/smart-factory" class="text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART FACTORY</a>
+          <a href="/#contact" class="hud-frame px-6 py-3 bg-[var(--scifi-cyan)]/10 text-[var(--scifi-cyan)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-cyan)]/20 transition-all">
+            KONTAKT
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="pt-32 pb-24 bg-[var(--scifi-void)] min-h-screen">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Header -->
+      <div class="mb-12">
+        <div class="hud-frame inline-block px-6 py-2 mb-6">
+          <span class="text-[var(--scifi-cyan)] font-mono text-sm tracking-[0.2em]">// LEGAL //</span>
+        </div>
+        <h1 class="text-4xl lg:text-5xl font-bold text-[var(--scifi-text-primary)] mb-4">
+          Impressum
+        </h1>
+        <p class="text-[var(--scifi-text-secondary)] font-mono">
+          Angaben gemäß § 5 TMG
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="space-y-12">
+        <!-- Anbieter -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">ANBIETER</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-2">
+            <p class="text-[var(--scifi-text-primary)] font-semibold">Enterprise Universe GmbH</p>
+            <p>Musterstraße 123</p>
+            <p>12345 Musterstadt</p>
+            <p>Deutschland</p>
+          </div>
+        </div>
+
+        <!-- Kontakt -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">KONTAKT</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-2">
+            <p><span class="text-[var(--scifi-text-primary)]">Telefon:</span> +49 (0) 123 456 789</p>
+            <p><span class="text-[var(--scifi-text-primary)]">E-Mail:</span> info@enterprise-universe.one</p>
+            <p><span class="text-[var(--scifi-text-primary)]">Web:</span> www.enterprise-universe.one</p>
+          </div>
+        </div>
+
+        <!-- Vertretung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">VERTRETUNGSBERECHTIGTER GESCHÄFTSFÜHRER</h2>
+          <div class="text-[var(--scifi-text-secondary)]">
+            <p>Maximilian Weber</p>
+          </div>
+        </div>
+
+        <!-- Registereintrag -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">REGISTEREINTRAG</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-2">
+            <p><span class="text-[var(--scifi-text-primary)]">Registergericht:</span> Amtsgericht Musterstadt</p>
+            <p><span class="text-[var(--scifi-text-primary)]">Registernummer:</span> HRB 12345</p>
+          </div>
+        </div>
+
+        <!-- USt-ID -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">UMSATZSTEUER-ID</h2>
+          <div class="text-[var(--scifi-text-secondary)]">
+            <p><span class="text-[var(--scifi-text-primary)]">USt-IdNr.:</span> DE123456789</p>
+            <p class="text-sm mt-2">Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz</p>
+          </div>
+        </div>
+
+        <!-- Berufsbezeichnung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">BERUFSRECHTLICHE REGELUNGEN</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-2">
+            <p><span class="text-[var(--scifi-text-primary)]">Berufsbezeichnung:</span> IT-Dienstleister / Systemintegrator</p>
+            <p><span class="text-[var(--scifi-text-primary)]">Zuständige Kammer:</span> IHK Musterstadt</p>
+            <p><span class="text-[var(--scifi-text-primary)]">Verliehen in:</span> Deutschland</p>
+          </div>
+        </div>
+
+        <!-- Streitschlichtung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">STREITSCHLICHTUNG</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-4">
+            <p>
+              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+              <a href="https://ec.europa.eu/consumers/odr/" target="_blank" class="text-[var(--scifi-cyan)] hover:underline">https://ec.europa.eu/consumers/odr/</a>
+            </p>
+            <p>Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+            <p>
+              Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+              Verbraucherschlichtungsstelle teilzunehmen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Haftung für Inhalte -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">HAFTUNG FÜR INHALTE</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-4">
+            <p>
+              Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
+              allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
+              verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
+              zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+            </p>
+            <p>
+              Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
+              Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt
+              der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden
+              Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Haftung für Links -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">HAFTUNG FÜR LINKS</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-4">
+            <p>
+              Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
+              Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
+              verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+            </p>
+            <p>
+              Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
+              Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente
+              inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
+              Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige
+              Links umgehend entfernen.
+            </p>
+          </div>
+        </div>
+
+        <!-- Urheberrecht -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">URHEBERRECHT</h2>
+          <div class="text-[var(--scifi-text-secondary)] space-y-4">
+            <p>
+              Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
+              deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
+              außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen
+              Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht
+              kommerziellen Gebrauch gestattet.
+            </p>
+            <p>
+              Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
+              Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie
+              trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden
+              Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Link -->
+      <div class="mt-12">
+        <a href="/" class="hud-frame inline-flex items-center gap-2 px-6 py-3 text-[var(--scifi-cyan)] font-mono text-sm hover:bg-[var(--scifi-cyan)]/10 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          ZURÜCK ZUR STARTSEITE
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-[var(--scifi-surface)] border-t border-[var(--scifi-cyan)]/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="/" class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)] flex items-center justify-center">
+            <span class="text-[var(--scifi-cyan)] font-bold">E</span>
+          </div>
+          <span class="font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="flex gap-6 text-sm">
+          <a href="/impressum" class="text-[var(--scifi-cyan)] font-mono">Impressum</a>
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">Datenschutz</a>
+          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">AGB</a>
+        </div>
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          © 2026 ENTERPRISE_UNIVERSE
+        </p>
+      </div>
+    </div>
+  </footer>
+</Layout>

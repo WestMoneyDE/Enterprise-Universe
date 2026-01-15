@@ -299,7 +299,7 @@ app.use('/_astro', express.static(path.join(__dirname, '_astro'), {
 
 // Serve favicon.svg for Astro landing page
 app.get('/favicon.svg', (req, res) => res.sendFile(path.join(__dirname, 'landing-page/dist/favicon.svg')));
-app.use('/api', express.static(path.join(__dirname, 'api')));
+// Note: /api folder contains JS modules, not static files - don't serve as static
 app.use('/dashboards', express.static(path.join(__dirname, 'dashboards')));
 app.use('/data', express.static(path.join(__dirname, 'data')));
 app.use('/automation', express.static(path.join(__dirname, 'automation')));
