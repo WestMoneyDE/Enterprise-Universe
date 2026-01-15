@@ -20,6 +20,12 @@ import Layout from '../layouts/Layout.astro';
           <a href="#services" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SERVICES</a>
           <a href="#about" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">ÜBER UNS</a>
           <a href="#testimonials" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">REFERENZEN</a>
+          <a href="/smart-home" class="text-[var(--scifi-orange)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            SMART HOME
+          </a>
           <a href="/smart-factory" class="text-[var(--scifi-cyan)] hover:text-[var(--scifi-matrix)] transition-colors font-mono text-sm tracking-wider flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
@@ -228,13 +234,13 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Smart Home -->
-        <div class="neon-card group">
-          <div class="w-14 h-14 rounded-lg bg-[var(--scifi-cyan)]/10 border border-[var(--scifi-cyan)]/50 flex items-center justify-center mb-6 group-hover:shadow-[0_0_20px_var(--scifi-cyan)] transition-shadow">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="/smart-home" class="neon-card group block">
+          <div class="w-14 h-14 rounded-lg bg-[var(--scifi-orange)]/10 border border-[var(--scifi-orange)]/50 flex items-center justify-center mb-6 group-hover:shadow-[0_0_20px_var(--scifi-orange)] transition-shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[var(--scifi-orange)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono">SMART HOME</h3>
+          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-orange)] transition-colors">SMART HOME</h3>
           <p class="text-[var(--scifi-text-secondary)] mb-6 text-sm">Intelligente Gebäudeautomation für Komfort und Effizienz.</p>
           <ul class="space-y-2 text-sm text-[var(--scifi-text-secondary)]">
             <li class="flex items-center gap-2">
@@ -247,7 +253,10 @@ import Layout from '../layouts/Layout.astro';
               <span class="text-[var(--scifi-matrix)]">+</span> Energiemanagement
             </li>
           </ul>
-        </div>
+          <div class="mt-4 text-[var(--scifi-orange)] text-sm font-mono flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            MEHR ERFAHREN →
+          </div>
+        </a>
 
         <!-- Smart Factory -->
         <a href="/smart-factory" class="neon-card group block">
@@ -738,9 +747,16 @@ import Layout from '../layouts/Layout.astro';
         <div>
           <h4 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono">SERVICES</h4>
           <ul class="space-y-3 text-[var(--scifi-text-secondary)] text-sm">
-            <li><a href="#services" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Smart Home</a></li>
             <li>
-              <a href="/smart-factory" class="hover:text-[var(--scifi-purple)] text-[var(--scifi-purple)] transition-colors font-mono flex items-center gap-2">
+              <a href="/smart-home" class="hover:text-[var(--scifi-orange)] text-[var(--scifi-orange)] transition-colors font-mono flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
+                Smart Home
+              </a>
+            </li>
+            <li>
+              <a href="/smart-factory" class="hover:text-[var(--scifi-cyan)] text-[var(--scifi-cyan)] transition-colors font-mono flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
                 </svg>
