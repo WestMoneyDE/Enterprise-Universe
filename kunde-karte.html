@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kundenkarte | West Money Bau CRM</title>
+    <script src="/js/auth-guard.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+        }
+
+        .tab-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #e2e8f0;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .upload-zone {
+            border: 2px dashed rgba(148, 163, 184, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .file-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s;
+        }
+
+        .file-item:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .wish-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .wish-item.completed {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .config-module {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .config-module:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .config-module.selected {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-green { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-purple { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+
+        .input-field {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #e2e8f0;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(148, 163, 184, 0.1);
+            color: #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(148, 163, 184, 0.2);
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+
+        .timeline-line {
+            width: 2px;
+            background: rgba(59, 130, 246, 0.3);
+            margin-left: 5px;
+        }
+
+        .sketch-preview {
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            aspect-ratio: 16/10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sketch-preview:hover {
+            border-color: #3b82f6;
+            transform: scale(1.02);
+        }
+
+        .note-bubble {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            border-radius: 0 12px 12px 0;
+            padding: 16px;
+        }
+
+        /* Canvas for drawing */
+        .drawing-canvas {
+            background: white;
+            border-radius: 12px;
+            cursor: crosshair;
+        }
+
+        .tool-btn {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(148, 163, 184, 0.1);
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-btn:hover, .tool-btn.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen p-6">
+        <!-- Header -->
+        <header class="glass-card p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <a href="/dashboard" class="text-slate-400 hover:text-white transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                    </a>
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-2xl font-bold">
+                            MK
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold">Max Kunde</h1>
+                            <p class="text-slate-400">Projekt: Smart Home Villa Musterstadt</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span class="badge badge-blue">Premium Kunde</span>
+                    <span class="badge badge-green">Projekt Aktiv</span>
+                    <button class="btn-secondary">
+                        <span class="mr-2">&#128279;</span> Teilen
+                    </button>
+                    <button class="btn-primary">
+                        <span class="mr-2">&#128190;</span> Speichern
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex gap-6">
+            <!-- Sidebar - Quick Info -->
+            <aside class="w-80 space-y-6">
+                <!-- Contact Info -->
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span>&#128100;</span> Kontaktdaten
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Telefon</span>
+                            <a href="tel:+491234567890" class="text-blue-400 hover:underline">+49 123 456 7890</a>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">E-Mail</span>
+                            <a href="mailto:max@kunde.de" class="text-blue-400 hover:underline">max@kunde.de</a>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Adresse</span>
+                            <span class="text-right">Musterstr. 123<br>12345 Musterstadt</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-700 flex gap-2">
+                        <button class="flex-1 btn-secondary text-sm py-2">
+                            <span class="mr-1">&#128222;</span> Anrufen
+                        </button>
+                        <button class="flex-1 btn-secondary text-sm py-2">
+                            <span class="mr-1">&#128172;</span> WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Project Stats -->
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span>&#128200;</span> Projektstatus
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-400">Fortschritt</span>
+                                <span class="font-semibold text-blue-400">75%</span>
+                            </div>
+                            <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-2xl font-bold text-green-400">8</p>
+                                <p class="text-xs text-slate-400">Erledigt</p>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-xl">
+                                <p class="text-2xl font-bold text-amber-400">3</p>
+                                <p class="text-xs text-slate-400">Offen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span>&#9889;</span> Schnellaktionen
+                    </h3>
+                    <div class="space-y-2">
+                        <button class="w-full text-left p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition flex items-center gap-3">
+                            <span class="text-xl">&#128197;</span>
+                            <span>Termin planen</span>
+                        </button>
+                        <button class="w-full text-left p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition flex items-center gap-3">
+                            <span class="text-xl">&#128230;</span>
+                            <span>Angebot erstellen</span>
+                        </button>
+                        <button class="w-full text-left p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition flex items-center gap-3">
+                            <span class="text-xl">&#128176;</span>
+                            <span>Rechnung erstellen</span>
+                        </button>
+                        <button class="w-full text-left p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition flex items-center gap-3">
+                            <span class="text-xl">&#128231;</span>
+                            <span>E-Mail senden</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Internal Notes -->
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <span>&#128221;</span> Interne Notizen
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="note-bubble text-sm">
+                            <p class="text-amber-200">Kunde bevorzugt Termine nachmittags.</p>
+                            <p class="text-xs text-slate-500 mt-1">- Team, 10.12.2024</p>
+                        </div>
+                        <textarea class="input-field text-sm" rows="2" placeholder="Neue Notiz hinzufugen..."></textarea>
+                        <button class="w-full btn-secondary text-sm py-2">+ Notiz hinzufugen</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1">
+                <!-- Tabs -->
+                <div class="glass-card p-2 mb-6">
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="tab-btn active" data-tab="overview">
+                            <span class="mr-2">&#127968;</span> Ubersicht
+                        </button>
+                        <button class="tab-btn" data-tab="sketches">
+                            <span class="mr-2">&#128393;</span> Skizzen & Plane
+                        </button>
+                        <button class="tab-btn" data-tab="documents">
+                            <span class="mr-2">&#128196;</span> Dokumente
+                        </button>
+                        <button class="tab-btn" data-tab="wishes">
+                            <span class="mr-2">&#10024;</span> Kundenwunsche
+                        </button>
+                        <button class="tab-btn" data-tab="system">
+                            <span class="mr-2">&#9881;</span> Systemkonfig
+                        </button>
+                        <button class="tab-btn" data-tab="timeline">
+                            <span class="mr-2">&#128197;</span> Verlauf
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab: Overview -->
+                <div class="tab-content active" id="tab-overview">
+                    <div class="grid grid-cols-2 gap-6">
+                        <!-- Project Summary -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4">Projektubersicht</h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between py-2 border-b border-slate-700">
+                                    <span class="text-slate-400">Projekt-Nr.</span>
+                                    <span class="font-mono">#2024-0042</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-700">
+                                    <span class="text-slate-400">Projekttyp</span>
+                                    <span>LOXONE Vollinstallation</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-700">
+                                    <span class="text-slate-400">Gebaude</span>
+                                    <span>Einfamilienhaus, 280m<sup>2</sup></span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-700">
+                                    <span class="text-slate-400">Startdatum</span>
+                                    <span>15.11.2024</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-700">
+                                    <span class="text-slate-400">Geplantes Ende</span>
+                                    <span>15.01.2025</span>
+                                </div>
+                                <div class="flex justify-between py-2">
+                                    <span class="text-slate-400">Budgetrahmen</span>
+                                    <span class="text-green-400 font-semibold">EUR 45.000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4">Letzte Aktivitaten</h3>
+                            <div class="space-y-4">
+                                <div class="flex gap-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-line flex-1"></div>
+                                    </div>
+                                    <div class="pb-4">
+                                        <p class="font-medium">Elektroplan hochgeladen</p>
+                                        <p class="text-sm text-slate-400">Heute, 14:30</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="timeline-dot" style="background: #22c55e;"></div>
+                                        <div class="timeline-line flex-1"></div>
+                                    </div>
+                                    <div class="pb-4">
+                                        <p class="font-medium">Verkabelung Phase 2 abgeschlossen</p>
+                                        <p class="text-sm text-slate-400">Gestern, 16:00</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="timeline-dot" style="background: #f59e0b;"></div>
+                                        <div class="timeline-line flex-1"></div>
+                                    </div>
+                                    <div class="pb-4">
+                                        <p class="font-medium">Kundenwunsch: Jalousiensteuerung hinzugefugt</p>
+                                        <p class="text-sm text-slate-400">20.12.2024</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3">
+                                    <div class="flex flex-col items-center">
+                                        <div class="timeline-dot" style="background: #8b5cf6;"></div>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Termin: Installation Lichtsteuerung</p>
+                                        <p class="text-sm text-slate-400">28.12.2024, 10:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Preview -->
+                        <div class="glass-card p-6 col-span-2">
+                            <h3 class="text-lg font-semibold mb-4">Geplantes System</h3>
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="text-center p-4 bg-blue-500/10 rounded-xl border border-blue-500/30">
+                                    <span class="text-3xl mb-2 block">&#128161;</span>
+                                    <p class="font-medium">Licht</p>
+                                    <p class="text-sm text-slate-400">42 Raume</p>
+                                </div>
+                                <div class="text-center p-4 bg-green-500/10 rounded-xl border border-green-500/30">
+                                    <span class="text-3xl mb-2 block">&#127777;</span>
+                                    <p class="font-medium">Klima</p>
+                                    <p class="text-sm text-slate-400">8 Zonen</p>
+                                </div>
+                                <div class="text-center p-4 bg-amber-500/10 rounded-xl border border-amber-500/30">
+                                    <span class="text-3xl mb-2 block">&#127774;</span>
+                                    <p class="font-medium">Jalousien</p>
+                                    <p class="text-sm text-slate-400">24 Fenster</p>
+                                </div>
+                                <div class="text-center p-4 bg-purple-500/10 rounded-xl border border-purple-500/30">
+                                    <span class="text-3xl mb-2 block">&#128274;</span>
+                                    <p class="font-medium">Sicherheit</p>
+                                    <p class="text-sm text-slate-400">12 Sensoren</p>
+                                </div>
+                                <div class="text-center p-4 bg-cyan-500/10 rounded-xl border border-cyan-500/30">
+                                    <span class="text-3xl mb-2 block">&#127925;</span>
+                                    <p class="font-medium">Multiroom</p>
+                                    <p class="text-sm text-slate-400">6 Zonen</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Sketches -->
+                <div class="tab-content" id="tab-sketches">
+                    <div class="grid grid-cols-3 gap-6">
+                        <!-- Upload Zone -->
+                        <div class="col-span-3">
+                            <div class="upload-zone" id="sketchUploadZone">
+                                <input type="file" id="sketchInput" class="hidden" accept="image/*,.pdf,.dwg" multiple>
+                                <div class="text-6xl mb-4">&#128393;</div>
+                                <p class="text-lg font-medium mb-2">Skizzen & Plane hochladen</p>
+                                <p class="text-slate-400 text-sm mb-4">Ziehen Sie Dateien hierher oder klicken Sie zum Auswahlen</p>
+                                <p class="text-xs text-slate-500">Unterstutzt: JPG, PNG, PDF, DWG (max. 50MB)</p>
+                            </div>
+                        </div>
+
+                        <!-- Drawing Tools -->
+                        <div class="col-span-3 glass-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-2">
+                                    <button class="tool-btn active" title="Stift">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="tool-btn" title="Rechteck">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                        </svg>
+                                    </button>
+                                    <button class="tool-btn" title="Text">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="tool-btn" title="Markierung">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </button>
+                                    <div class="w-px h-8 bg-slate-600 mx-2"></div>
+                                    <input type="color" value="#3b82f6" class="w-8 h-8 rounded cursor-pointer">
+                                    <select class="input-field py-1 px-2 w-20 text-sm">
+                                        <option>2px</option>
+                                        <option>4px</option>
+                                        <option>6px</option>
+                                    </select>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="btn-secondary text-sm py-2">Ruckgangig</button>
+                                    <button class="btn-primary text-sm py-2">Speichern</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sketch Grid -->
+                        <div class="sketch-preview">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect fill='%231e293b' width='400' height='250'/%3E%3Ctext x='200' y='125' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EGrundriss EG%3C/text%3E%3C/svg%3E" alt="Grundriss EG" class="w-full h-full object-cover">
+                        </div>
+                        <div class="sketch-preview">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect fill='%231e293b' width='400' height='250'/%3E%3Ctext x='200' y='125' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EGrundriss OG%3C/text%3E%3C/svg%3E" alt="Grundriss OG" class="w-full h-full object-cover">
+                        </div>
+                        <div class="sketch-preview">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect fill='%231e293b' width='400' height='250'/%3E%3Ctext x='200' y='125' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='14'%3EElektroplan%3C/text%3E%3C/svg%3E" alt="Elektroplan" class="w-full h-full object-cover">
+                        </div>
+
+                        <!-- Annotations Legend -->
+                        <div class="col-span-3 glass-card p-4">
+                            <h4 class="font-semibold mb-3">Legende der Markierungen</h4>
+                            <div class="flex gap-6 text-sm">
+                                <span class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-blue-500"></span> Lichtauslass
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-green-500"></span> Steckdose
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-amber-500"></span> Schalter
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-purple-500"></span> Sensor
+                                </span>
+                                <span class="flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-red-500"></span> Achtung
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Documents -->
+                <div class="tab-content" id="tab-documents">
+                    <div class="space-y-6">
+                        <!-- Upload Zone -->
+                        <div class="upload-zone" id="docUploadZone">
+                            <input type="file" id="docInput" class="hidden" accept=".pdf,.doc,.docx,.xls,.xlsx" multiple>
+                            <div class="text-6xl mb-4">&#128196;</div>
+                            <p class="text-lg font-medium mb-2">Dokumente hochladen</p>
+                            <p class="text-slate-400 text-sm">Angebote, Vertrage, Plane, etc.</p>
+                        </div>
+
+                        <!-- Document Categories -->
+                        <div class="grid grid-cols-4 gap-4">
+                            <button class="glass-card p-4 text-center hover:border-blue-500/50 transition">
+                                <span class="text-2xl mb-2 block">&#128203;</span>
+                                <span class="text-sm">Angebote</span>
+                                <span class="badge badge-blue ml-2">2</span>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:border-blue-500/50 transition">
+                                <span class="text-2xl mb-2 block">&#128220;</span>
+                                <span class="text-sm">Vertrage</span>
+                                <span class="badge badge-green ml-2">1</span>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:border-blue-500/50 transition">
+                                <span class="text-2xl mb-2 block">&#128208;</span>
+                                <span class="text-sm">Plane</span>
+                                <span class="badge badge-purple ml-2">4</span>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:border-blue-500/50 transition">
+                                <span class="text-2xl mb-2 block">&#128176;</span>
+                                <span class="text-sm">Rechnungen</span>
+                                <span class="badge badge-amber ml-2">1</span>
+                            </button>
+                        </div>
+
+                        <!-- Document List -->
+                        <div class="glass-card p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold">Alle Dokumente</h3>
+                                <input type="search" class="input-field w-64" placeholder="Dokumente suchen...">
+                            </div>
+                            <div class="space-y-3">
+                                <div class="file-item">
+                                    <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-xl">&#128213;</div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">Angebot_2024-0042.pdf</p>
+                                        <p class="text-sm text-slate-400">Angebot - 2.4 MB - 15.11.2024</p>
+                                    </div>
+                                    <span class="badge badge-green">Fur Kunde sichtbar</span>
+                                    <div class="flex gap-2">
+                                        <button class="tool-btn" title="Vorschau">&#128065;</button>
+                                        <button class="tool-btn" title="Download">&#128229;</button>
+                                        <button class="tool-btn" title="Teilen">&#128279;</button>
+                                    </div>
+                                </div>
+                                <div class="file-item">
+                                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-xl">&#128208;</div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">Elektroplanung_v3.pdf</p>
+                                        <p class="text-sm text-slate-400">Plan - 8.1 MB - 20.11.2024</p>
+                                    </div>
+                                    <span class="badge badge-green">Fur Kunde sichtbar</span>
+                                    <div class="flex gap-2">
+                                        <button class="tool-btn" title="Vorschau">&#128065;</button>
+                                        <button class="tool-btn" title="Download">&#128229;</button>
+                                        <button class="tool-btn" title="Teilen">&#128279;</button>
+                                    </div>
+                                </div>
+                                <div class="file-item">
+                                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-xl">&#128209;</div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">LOXONE_Config.loxcc</p>
+                                        <p class="text-sm text-slate-400">Konfiguration - 1.2 MB - 10.12.2024</p>
+                                    </div>
+                                    <span class="badge badge-amber">Nur intern</span>
+                                    <div class="flex gap-2">
+                                        <button class="tool-btn" title="Vorschau">&#128065;</button>
+                                        <button class="tool-btn" title="Download">&#128229;</button>
+                                        <button class="tool-btn" title="Teilen">&#128279;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Customer Wishes -->
+                <div class="tab-content" id="tab-wishes">
+                    <div class="space-y-6">
+                        <!-- Add New Wish -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4">Neuen Kundenwunsch erfassen</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <input type="text" class="input-field col-span-2" placeholder="Beschreibung des Wunsches...">
+                                <select class="input-field">
+                                    <option>Prioritat wahlen</option>
+                                    <option value="high">Hoch - Muss umgesetzt werden</option>
+                                    <option value="medium">Mittel - Wunschenswert</option>
+                                    <option value="low">Niedrig - Nice-to-have</option>
+                                </select>
+                            </div>
+                            <div class="mt-4 flex gap-4">
+                                <select class="input-field flex-1">
+                                    <option>Kategorie</option>
+                                    <option>Licht</option>
+                                    <option>Klima</option>
+                                    <option>Sicherheit</option>
+                                    <option>Multimedia</option>
+                                    <option>Sonstiges</option>
+                                </select>
+                                <input type="text" class="input-field flex-1" placeholder="Geschatzte Kosten (optional)">
+                                <button class="btn-primary">+ Hinzufugen</button>
+                            </div>
+                        </div>
+
+                        <!-- Wish List -->
+                        <div class="glass-card p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold">Kundenwunsche (11)</h3>
+                                <div class="flex gap-2">
+                                    <button class="btn-secondary text-sm">Alle</button>
+                                    <button class="btn-secondary text-sm">Offen</button>
+                                    <button class="btn-secondary text-sm">Erledigt</button>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <!-- Completed wish -->
+                                <div class="wish-item completed">
+                                    <div class="flex items-start gap-4">
+                                        <input type="checkbox" checked class="mt-1 w-5 h-5 rounded accent-green-500">
+                                        <div class="flex-1">
+                                            <p class="font-medium line-through text-slate-400">Dimmbares Licht in allen Wohnraumen</p>
+                                            <div class="flex gap-2 mt-2">
+                                                <span class="badge badge-blue">Licht</span>
+                                                <span class="badge badge-green">Erledigt</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-slate-500">EUR 1.200</span>
+                                    </div>
+                                </div>
+
+                                <!-- Open wish - High priority -->
+                                <div class="wish-item">
+                                    <div class="flex items-start gap-4">
+                                        <input type="checkbox" class="mt-1 w-5 h-5 rounded">
+                                        <div class="flex-1">
+                                            <p class="font-medium">Automatische Jalousiensteuerung nach Sonnenstand</p>
+                                            <p class="text-sm text-slate-400 mt-1">Kunde mochte, dass Jalousien automatisch auf Sonneneinstrahlung reagieren</p>
+                                            <div class="flex gap-2 mt-2">
+                                                <span class="badge badge-amber">Jalousien</span>
+                                                <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">Hohe Prioritat</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-green-400">EUR 800</span>
+                                    </div>
+                                </div>
+
+                                <!-- Open wish -->
+                                <div class="wish-item">
+                                    <div class="flex items-start gap-4">
+                                        <input type="checkbox" class="mt-1 w-5 h-5 rounded">
+                                        <div class="flex-1">
+                                            <p class="font-medium">Multiroom-Audio mit Sonos Integration</p>
+                                            <div class="flex gap-2 mt-2">
+                                                <span class="badge badge-purple">Multimedia</span>
+                                                <span class="badge badge-amber">Mittlere Prioritat</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-green-400">EUR 2.400</span>
+                                    </div>
+                                </div>
+
+                                <!-- Open wish -->
+                                <div class="wish-item">
+                                    <div class="flex items-start gap-4">
+                                        <input type="checkbox" class="mt-1 w-5 h-5 rounded">
+                                        <div class="flex-1">
+                                            <p class="font-medium">Prasenzmelder fur Flure und Treppenhause</p>
+                                            <div class="flex gap-2 mt-2">
+                                                <span class="badge badge-blue">Licht</span>
+                                                <span class="badge badge-blue">Niedrige Prioritat</span>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-green-400">EUR 450</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost Summary -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4">Kostenubersicht Wunsche</h3>
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="text-center p-4 bg-green-500/10 rounded-xl">
+                                    <p class="text-2xl font-bold text-green-400">EUR 8.200</p>
+                                    <p class="text-sm text-slate-400">Bereits umgesetzt</p>
+                                </div>
+                                <div class="text-center p-4 bg-amber-500/10 rounded-xl">
+                                    <p class="text-2xl font-bold text-amber-400">EUR 3.650</p>
+                                    <p class="text-sm text-slate-400">Offen geplant</p>
+                                </div>
+                                <div class="text-center p-4 bg-blue-500/10 rounded-xl">
+                                    <p class="text-2xl font-bold text-blue-400">EUR 11.850</p>
+                                    <p class="text-sm text-slate-400">Gesamt</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: System Config -->
+                <div class="tab-content" id="tab-system">
+                    <div class="space-y-6">
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4">Masgeschneiderte Systemkonfiguration</h3>
+                            <p class="text-slate-400 mb-6">Wahlen Sie die Module fur das Smart Home System des Kunden.</p>
+
+                            <div class="grid grid-cols-3 gap-4">
+                                <!-- Module Cards -->
+                                <div class="config-module selected">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#128161;</span>
+                                        <input type="checkbox" checked class="w-5 h-5 rounded accent-purple-500">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Lichtsteuerung</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Dimmbar, Szenen, Zeitsteuerung</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">42 Raume</span>
+                                        <span class="text-green-400">EUR 4.200</span>
+                                    </div>
+                                </div>
+
+                                <div class="config-module selected">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#127777;</span>
+                                        <input type="checkbox" checked class="w-5 h-5 rounded accent-purple-500">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Klimasteuerung</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Heizung, Kuhlung, Luftung</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">8 Zonen</span>
+                                        <span class="text-green-400">EUR 3.800</span>
+                                    </div>
+                                </div>
+
+                                <div class="config-module selected">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#127774;</span>
+                                        <input type="checkbox" checked class="w-5 h-5 rounded accent-purple-500">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Jalousiensteuerung</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Automatik, Sonnenstand, Szenen</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">24 Fenster</span>
+                                        <span class="text-green-400">EUR 2.400</span>
+                                    </div>
+                                </div>
+
+                                <div class="config-module selected">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#128274;</span>
+                                        <input type="checkbox" checked class="w-5 h-5 rounded accent-purple-500">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Sicherheitssystem</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Alarm, Kameras, Zutrittskontrolle</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">12 Sensoren</span>
+                                        <span class="text-green-400">EUR 3.200</span>
+                                    </div>
+                                </div>
+
+                                <div class="config-module selected">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#127925;</span>
+                                        <input type="checkbox" checked class="w-5 h-5 rounded accent-purple-500">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Multiroom Audio</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Sonos, Streaming, Intercom</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">6 Zonen</span>
+                                        <span class="text-green-400">EUR 2.400</span>
+                                    </div>
+                                </div>
+
+                                <div class="config-module">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="text-3xl">&#127793;</span>
+                                        <input type="checkbox" class="w-5 h-5 rounded">
+                                    </div>
+                                    <h4 class="font-semibold mb-1">Gartenbewasserung</h4>
+                                    <p class="text-sm text-slate-400 mb-3">Automatik, Wetter, Zonen</p>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-400">Optional</span>
+                                        <span class="text-slate-400">EUR 1.800</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Total -->
+                        <div class="glass-card p-6">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-lg font-semibold">Systemkonfiguration Gesamt</h3>
+                                    <p class="text-slate-400">5 Module ausgewahlt</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-3xl font-bold text-green-400">EUR 16.000</p>
+                                    <p class="text-sm text-slate-400">zzgl. Installation</p>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex gap-4">
+                                <button class="btn-secondary flex-1">PDF exportieren</button>
+                                <button class="btn-secondary flex-1">An Kunde senden</button>
+                                <button class="btn-primary flex-1">Angebot erstellen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Timeline -->
+                <div class="tab-content" id="tab-timeline">
+                    <div class="glass-card p-6">
+                        <h3 class="text-lg font-semibold mb-6">Projektverlauf</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">&#10003;</div>
+                                    <div class="w-0.5 flex-1 bg-slate-700 my-2"></div>
+                                </div>
+                                <div class="flex-1 pb-6">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold">Projekt angelegt</p>
+                                            <p class="text-sm text-slate-400">Erstkontakt und Anforderungsaufnahme</p>
+                                        </div>
+                                        <span class="text-sm text-slate-500">15.11.2024</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">&#10003;</div>
+                                    <div class="w-0.5 flex-1 bg-slate-700 my-2"></div>
+                                </div>
+                                <div class="flex-1 pb-6">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold">Angebot erstellt & angenommen</p>
+                                            <p class="text-sm text-slate-400">Angebot uber EUR 45.000 akzeptiert</p>
+                                        </div>
+                                        <span class="text-sm text-slate-500">20.11.2024</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">&#10003;</div>
+                                    <div class="w-0.5 flex-1 bg-slate-700 my-2"></div>
+                                </div>
+                                <div class="flex-1 pb-6">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold">Planungsphase abgeschlossen</p>
+                                            <p class="text-sm text-slate-400">Alle Plane und Konfigurationen finalisiert</p>
+                                        </div>
+                                        <span class="text-sm text-slate-500">01.12.2024</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">&#9881;</div>
+                                    <div class="w-0.5 flex-1 bg-slate-700 my-2"></div>
+                                </div>
+                                <div class="flex-1 pb-6">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold">Installation laufend</p>
+                                            <p class="text-sm text-slate-400">Verkabelung 100% - Gerate 60%</p>
+                                        </div>
+                                        <span class="text-sm text-blue-400">Aktuell</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400">&#9711;</div>
+                                    <div class="w-0.5 flex-1 bg-slate-700 my-2"></div>
+                                </div>
+                                <div class="flex-1 pb-6">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold text-slate-400">Programmierung</p>
+                                            <p class="text-sm text-slate-500">LOXONE Config und Szenen</p>
+                                        </div>
+                                        <span class="text-sm text-slate-500">Geplant: 05.01.2025</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400">&#9711;</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-semibold text-slate-400">Abnahme & Einweisung</p>
+                                            <p class="text-sm text-slate-500">Ubergabe an Kunde</p>
+                                        </div>
+                                        <span class="text-sm text-slate-500">Geplant: 15.01.2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked tab
+                btn.classList.add('active');
+                const tabId = 'tab-' + btn.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // File upload zones
+        ['sketchUploadZone', 'docUploadZone'].forEach(zoneId => {
+            const zone = document.getElementById(zoneId);
+            if (!zone) return;
+
+            const input = zone.querySelector('input[type="file"]');
+
+            zone.addEventListener('click', () => input.click());
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                handleFiles(files, zoneId);
+            });
+
+            input.addEventListener('change', (e) => {
+                handleFiles(e.target.files, zoneId);
+            });
+        });
+
+        function handleFiles(files, zoneType) {
+            console.log('Uploading files:', files, 'to', zoneType);
+            // TODO: Implement actual file upload via API
+            alert(`${files.length} Datei(en) werden hochgeladen...`);
+        }
+
+        // Config module selection
+        document.querySelectorAll('.config-module').forEach(module => {
+            module.addEventListener('click', () => {
+                const checkbox = module.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                module.classList.toggle('selected', checkbox.checked);
+            });
+        });
+    </script>
+</body>
+</html>

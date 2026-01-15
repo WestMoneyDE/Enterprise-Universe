@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Interest | Enterprise Universe GmbH</title>
+    <meta name="description" content="Express your interest in investing in Enterprise Universe - AI-powered business automation for SMEs">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+        }
+
+        .gradient-border {
+            position: relative;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .form-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #e2e8f0;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: #64748b;
+        }
+
+        .form-select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #e2e8f0;
+            width: 100%;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .stat-pill {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .success-message {
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .form-container.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Header -->
+            <header class="text-center mb-12 animate-in">
+                <div class="inline-flex items-center gap-4 mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-3xl font-black">
+                        EU
+                    </div>
+                    <div class="text-left">
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                            Enterprise Universe
+                        </h1>
+                        <p class="text-slate-400">Seed Round | Now Open</p>
+                    </div>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Invest in the Future of <br>
+                    <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        SME Automation
+                    </span>
+                </h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                    AI-powered business automation platform transforming how German SMEs operate.
+                    Join our seed round and be part of the DACH market revolution.
+                </p>
+            </header>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+
+                <!-- Left Column - Key Stats -->
+                <div class="lg:col-span-2 space-y-6 animate-in" style="animation-delay: 0.1s">
+
+                    <!-- Funding Status -->
+                    <div class="glass-card p-6">
+                        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                            <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+                            Seed Round Open
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">Target</span>
+                                <span class="text-2xl font-bold text-blue-400">EUR 1.5M</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">Committed</span>
+                                <span class="text-2xl font-bold text-green-400">EUR 425K</span>
+                            </div>
+                            <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" style="width: 28%"></div>
+                            </div>
+                            <p class="text-sm text-slate-400 text-center">28% funded</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="glass-card p-6">
+                        <h3 class="text-lg font-semibold mb-4">Key Metrics</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">2024 Revenue</span>
+                                <span class="font-semibold text-green-400">EUR 847K</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">YoY Growth</span>
+                                <span class="font-semibold text-green-400">+23.5%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">2025 Pipeline</span>
+                                <span class="font-semibold text-blue-400">EUR 1.25M</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Active Projects</span>
+                                <span class="font-semibold">12</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Total Contacts</span>
+                                <span class="font-semibold">3,170</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- What You Get -->
+                    <div class="highlight-card">
+                        <h3 class="text-lg font-semibold mb-3">After Registration</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-400">&#10003;</span>
+                                Full access to Data Room
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-400">&#10003;</span>
+                                Pitch Deck & Financial Model
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-400">&#10003;</span>
+                                Direct line to founding team
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-green-400">&#10003;</span>
+                                Live product demo
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="flex flex-wrap gap-2">
+                        <span class="stat-pill">LOXONE Gold Partner</span>
+                        <span class="stat-pill">DACH Focus</span>
+                        <span class="stat-pill">B2B SaaS</span>
+                    </div>
+                </div>
+
+                <!-- Right Column - Form -->
+                <div class="lg:col-span-3 animate-in" style="animation-delay: 0.2s">
+                    <div class="glass-card gradient-border p-8">
+
+                        <!-- Form -->
+                        <div class="form-container" id="formContainer">
+                            <h3 class="text-2xl font-bold mb-2">Express Your Interest</h3>
+                            <p class="text-slate-400 mb-8">Fill out the form below and we'll send you access to our investor materials.</p>
+
+                            <form id="investorForm" class="space-y-5">
+                                <!-- Name Row -->
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">First Name *</label>
+                                        <input type="text" name="firstName" class="form-input" placeholder="John" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">Last Name *</label>
+                                        <input type="text" name="lastName" class="form-input" placeholder="Smith" required>
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
+                                <div>
+                                    <label class="block text-sm text-slate-400 mb-2">Email Address *</label>
+                                    <input type="email" name="email" class="form-input" placeholder="john@venturefirm.com" required>
+                                </div>
+
+                                <!-- Company & Title Row -->
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">Firm / Company *</label>
+                                        <input type="text" name="company" class="form-input" placeholder="Venture Capital GmbH" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">Title / Role</label>
+                                        <input type="text" name="title" class="form-input" placeholder="Partner">
+                                    </div>
+                                </div>
+
+                                <!-- Investment Details Row -->
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">Typical Check Size</label>
+                                        <select name="checkSize" class="form-select">
+                                            <option value="">Select range</option>
+                                            <option value="<50k">Under EUR 50K</option>
+                                            <option value="50k-100k">EUR 50K - 100K</option>
+                                            <option value="100k-250k">EUR 100K - 250K</option>
+                                            <option value="250k-500k">EUR 250K - 500K</option>
+                                            <option value="500k+">EUR 500K+</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-slate-400 mb-2">Investment Focus</label>
+                                        <select name="investmentFocus" class="form-select">
+                                            <option value="">Select stage</option>
+                                            <option value="pre-seed">Pre-Seed</option>
+                                            <option value="seed">Seed</option>
+                                            <option value="series-a">Series A</option>
+                                            <option value="growth">Growth</option>
+                                            <option value="multi-stage">Multi-Stage</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Investor Type -->
+                                <div>
+                                    <label class="block text-sm text-slate-400 mb-2">Investor Type</label>
+                                    <select name="investorType" class="form-select">
+                                        <option value="">Select type</option>
+                                        <option value="vc">Venture Capital</option>
+                                        <option value="angel">Angel Investor</option>
+                                        <option value="family-office">Family Office</option>
+                                        <option value="corporate-vc">Corporate VC</option>
+                                        <option value="syndicate">Syndicate / SPV</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <!-- How did you hear about us -->
+                                <div>
+                                    <label class="block text-sm text-slate-400 mb-2">How did you hear about us?</label>
+                                    <select name="source" class="form-select">
+                                        <option value="">Select source</option>
+                                        <option value="linkedin">LinkedIn</option>
+                                        <option value="referral">Referral</option>
+                                        <option value="event">Event / Conference</option>
+                                        <option value="email">Email Outreach</option>
+                                        <option value="website">Website / Search</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <!-- Message -->
+                                <div>
+                                    <label class="block text-sm text-slate-400 mb-2">Message (Optional)</label>
+                                    <textarea name="message" class="form-input" rows="3" placeholder="Tell us about your interest or any questions you have..."></textarea>
+                                </div>
+
+                                <!-- GDPR Consent -->
+                                <div class="flex items-start gap-3">
+                                    <input type="checkbox" id="gdprConsent" name="gdprConsent" class="mt-1" required>
+                                    <label for="gdprConsent" class="text-sm text-slate-400">
+                                        I agree to the processing of my personal data in accordance with the
+                                        <a href="/datenschutz" class="text-blue-400 hover:underline">Privacy Policy</a>.
+                                        I understand I can withdraw my consent at any time.
+                                    </label>
+                                </div>
+
+                                <!-- Submit -->
+                                <button type="submit" class="submit-btn" id="submitBtn">
+                                    <span id="btnText">Request Data Room Access</span>
+                                    <span id="btnLoading" class="hidden">Submitting...</span>
+                                </button>
+
+                                <p class="text-center text-sm text-slate-500">
+                                    By submitting, you'll receive access to our investor materials within 24 hours.
+                                </p>
+                            </form>
+                        </div>
+
+                        <!-- Success Message -->
+                        <div class="success-message text-center py-12" id="successMessage">
+                            <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-3">Thank You for Your Interest!</h3>
+                            <p class="text-slate-400 mb-6 max-w-md mx-auto">
+                                We've received your request. Our team will review your profile and send you
+                                access to the Data Room within 24 hours.
+                            </p>
+                            <div class="highlight-card inline-block text-left">
+                                <p class="text-sm font-semibold mb-2">What happens next:</p>
+                                <ul class="text-sm text-slate-400 space-y-1">
+                                    <li>1. We'll verify your investor profile</li>
+                                    <li>2. You'll receive Data Room credentials via email</li>
+                                    <li>3. Schedule a call with our CEO</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="mt-6 text-center text-slate-400 text-sm">
+                        Questions? Contact us at
+                        <a href="mailto:invest@enterprise-universe.one" class="text-blue-400 hover:underline">
+                            invest@enterprise-universe.one
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-16 text-center text-slate-500 text-sm">
+                <p>&copy; 2025 Enterprise Universe GmbH | Confidential</p>
+                <p class="mt-2">This page contains forward-looking statements. Past performance is not indicative of future results.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('investorForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const formContainer = document.getElementById('formContainer');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+
+            const formData = new FormData(form);
+            const data = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                title: formData.get('title'),
+                checkSize: formData.get('checkSize'),
+                investmentFocus: formData.get('investmentFocus'),
+                investorType: formData.get('investorType'),
+                source: formData.get('source'),
+                message: formData.get('message'),
+                gdprConsent: formData.get('gdprConsent') === 'on',
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch('/api/investor-signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success message
+                    formContainer.classList.add('hidden');
+                    successMessage.classList.add('show');
+                } else {
+                    throw new Error(result.error || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your request. Please try again or contact invest@enterprise-universe.one');
+
+                // Re-enable button
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

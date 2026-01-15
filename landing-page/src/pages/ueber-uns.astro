@@ -1,0 +1,467 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Über uns | Enterprise Universe - Ihr Partner für digitale Transformation">
+  <!-- Scan Line Overlay -->
+  <div class="scan-line-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-cyan)]/20">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-cyan)] group-hover:shadow-[0_0_25px_var(--scifi-cyan)] transition-shadow">
+            <span class="text-[var(--scifi-cyan)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-xl font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/#services" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SERVICES</a>
+          <a href="/ueber-uns" class="text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">ÜBER UNS</a>
+          <a href="/smart-home" class="text-[var(--scifi-orange)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART HOME</a>
+          <a href="/smart-factory" class="text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART FACTORY</a>
+          <a href="/investoren" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">INVESTOREN</a>
+          <a href="/#contact" class="hud-frame px-6 py-3 bg-[var(--scifi-cyan)]/10 text-[var(--scifi-cyan)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-cyan)]/20 transition-all">
+            KONTAKT
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[70vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <!-- Background Grid -->
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-cyan)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-cyan)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <!-- Radial Glow -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-purple)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-7xl mx-auto px-6 py-20 relative z-10 text-center">
+      <!-- Status Badge -->
+      <div class="hud-frame inline-flex items-center gap-3 px-4 py-2 mb-8">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-cyan)] animate-pulse shadow-[0_0_10px_var(--scifi-cyan)]"></div>
+        <span class="text-sm text-[var(--scifi-cyan)] font-mono tracking-wider">SYSTEM_INFO // COMPANY PROFILE</span>
+      </div>
+
+      <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8">
+        <span class="text-[var(--scifi-text-primary)]">Wir sind</span>
+        <br/>
+        <span class="text-[var(--scifi-cyan)] drop-shadow-[0_0_20px_var(--scifi-cyan)]">ENTERPRISE</span>
+        <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_20px_var(--scifi-purple)]">_UNIVERSE</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-3xl mx-auto font-mono mb-12">
+        Seit über einem Jahrzehnt gestalten wir die digitale Zukunft. Mit Leidenschaft, Expertise und dem Blick nach vorn entwickeln wir Lösungen, die Unternehmen transformieren.
+      </p>
+
+      <!-- Quick Stats -->
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="hud-frame px-8 py-4">
+          <div class="text-3xl font-bold text-[var(--scifi-cyan)] font-mono">2014</div>
+          <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">GEGRÜNDET</div>
+        </div>
+        <div class="hud-frame px-8 py-4">
+          <div class="text-3xl font-bold text-[var(--scifi-purple)] font-mono">25+</div>
+          <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">MITARBEITER</div>
+        </div>
+        <div class="hud-frame px-8 py-4">
+          <div class="text-3xl font-bold text-[var(--scifi-matrix)] font-mono">50+</div>
+          <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">PROJEKTE</div>
+        </div>
+        <div class="hud-frame px-8 py-4">
+          <div class="text-3xl font-bold text-[var(--scifi-orange)] font-mono">DACH</div>
+          <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">REGION</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision Section -->
+  <section class="py-24 bg-[var(--scifi-surface)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Mission -->
+        <div class="hud-frame p-10 bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-cyan)] transition-colors">
+          <div class="w-14 h-14 rounded-lg bg-[var(--scifi-cyan)]/10 border border-[var(--scifi-cyan)]/50 flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-4">UNSERE MISSION</h2>
+          <p class="text-[var(--scifi-text-secondary)] leading-relaxed">
+            Wir demokratisieren den Zugang zu fortschrittlicher Technologie. Unser Ziel ist es, mittelständischen Unternehmen die gleichen digitalen Werkzeuge zur Verfügung zu stellen, die bisher nur Großkonzernen vorbehalten waren – Smart Home, Industrie 4.0 und maßgeschneiderte Softwarelösungen.
+          </p>
+        </div>
+
+        <!-- Vision -->
+        <div class="hud-frame p-10 bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-purple)] transition-colors">
+          <div class="w-14 h-14 rounded-lg bg-[var(--scifi-purple)]/10 border border-[var(--scifi-purple)]/50 flex items-center justify-center mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-4">UNSERE VISION</h2>
+          <p class="text-[var(--scifi-text-secondary)] leading-relaxed">
+            Wir sehen eine Zukunft, in der intelligente Gebäude und vernetzte Fabriken der Standard sind. Eine Welt, in der Technologie nahtlos im Hintergrund arbeitet, um Menschen und Unternehmen zu unterstützen – effizient, nachhaltig und sicher.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="py-24 bg-[var(--scifi-void)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="hud-frame inline-block px-6 py-2 mb-6">
+          <span class="text-[var(--scifi-cyan)] font-mono text-sm tracking-[0.2em]">// CORE VALUES //</span>
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-[var(--scifi-text-primary)]">
+          Was uns <span class="text-[var(--scifi-cyan)] drop-shadow-[0_0_10px_var(--scifi-cyan)]">antreibt</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Innovation -->
+        <div class="neon-card group text-center">
+          <div class="w-16 h-16 rounded-lg bg-[var(--scifi-cyan)]/10 border border-[var(--scifi-cyan)]/50 flex items-center justify-center mb-6 mx-auto group-hover:shadow-[0_0_20px_var(--scifi-cyan)] transition-shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono">INNOVATION</h3>
+          <p class="text-[var(--scifi-text-secondary)] text-sm">Wir sind immer einen Schritt voraus und setzen auf zukunftsweisende Technologien.</p>
+        </div>
+
+        <!-- Qualität -->
+        <div class="neon-card group text-center">
+          <div class="w-16 h-16 rounded-lg bg-[var(--scifi-purple)]/10 border border-[var(--scifi-purple)]/50 flex items-center justify-center mb-6 mx-auto group-hover:shadow-[0_0_20px_var(--scifi-purple)] transition-shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono">QUALITÄT</h3>
+          <p class="text-[var(--scifi-text-secondary)] text-sm">Deutsche Ingenieurskunst trifft auf modernste Standards und Zertifizierungen.</p>
+        </div>
+
+        <!-- Partnerschaft -->
+        <div class="neon-card group text-center">
+          <div class="w-16 h-16 rounded-lg bg-[var(--scifi-matrix)]/10 border border-[var(--scifi-matrix)]/50 flex items-center justify-center mb-6 mx-auto group-hover:shadow-[0_0_20px_var(--scifi-matrix)] transition-shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-matrix)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono">PARTNERSCHAFT</h3>
+          <p class="text-[var(--scifi-text-secondary)] text-sm">Wir arbeiten eng mit unseren Kunden zusammen und begleiten sie langfristig.</p>
+        </div>
+
+        <!-- Nachhaltigkeit -->
+        <div class="neon-card group text-center">
+          <div class="w-16 h-16 rounded-lg bg-[var(--scifi-orange)]/10 border border-[var(--scifi-orange)]/50 flex items-center justify-center mb-6 mx-auto group-hover:shadow-[0_0_20px_var(--scifi-orange)] transition-shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-orange)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--scifi-text-primary)] font-mono">NACHHALTIGKEIT</h3>
+          <p class="text-[var(--scifi-text-secondary)] text-sm">Unsere Lösungen optimieren Energieverbrauch und schonen Ressourcen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="py-24 bg-[var(--scifi-surface)] relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,var(--scifi-purple)/0.1_0%,transparent_60%)]"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative">
+      <div class="text-center mb-16">
+        <div class="hud-frame inline-block px-6 py-2 mb-6">
+          <span class="text-[var(--scifi-purple)] font-mono text-sm tracking-[0.2em]">// TIMELINE //</span>
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-[var(--scifi-text-primary)]">
+          Unsere <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_10px_var(--scifi-purple)]">Geschichte</span>
+        </h2>
+      </div>
+
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--scifi-cyan)] via-[var(--scifi-purple)] to-[var(--scifi-matrix)] hidden md:block"></div>
+
+        <!-- Timeline Items -->
+        <div class="space-y-12">
+          <!-- 2014 -->
+          <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            <div class="md:w-1/2 md:text-right">
+              <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 inline-block">
+                <div class="text-2xl font-bold text-[var(--scifi-cyan)] font-mono mb-2">2014</div>
+                <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-2">GRÜNDUNG</h3>
+                <p class="text-[var(--scifi-text-secondary)] text-sm">Gründung als IT-Beratung mit Fokus auf Smart Building und Automation.</p>
+              </div>
+            </div>
+            <div class="w-4 h-4 rounded-full bg-[var(--scifi-cyan)] shadow-[0_0_15px_var(--scifi-cyan)] border-2 border-[var(--scifi-void)] hidden md:block"></div>
+            <div class="md:w-1/2"></div>
+          </div>
+
+          <!-- 2017 -->
+          <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            <div class="md:w-1/2"></div>
+            <div class="w-4 h-4 rounded-full bg-[var(--scifi-purple)] shadow-[0_0_15px_var(--scifi-purple)] border-2 border-[var(--scifi-void)] hidden md:block"></div>
+            <div class="md:w-1/2">
+              <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 inline-block">
+                <div class="text-2xl font-bold text-[var(--scifi-purple)] font-mono mb-2">2017</div>
+                <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-2">LOXONE GOLD PARTNER</h3>
+                <p class="text-[var(--scifi-text-secondary)] text-sm">Auszeichnung als Loxone Gold Partner und Ausbau des Smart Home Bereichs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2020 -->
+          <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            <div class="md:w-1/2 md:text-right">
+              <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 inline-block">
+                <div class="text-2xl font-bold text-[var(--scifi-orange)] font-mono mb-2">2020</div>
+                <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-2">INDUSTRIE 4.0 DIVISION</h3>
+                <p class="text-[var(--scifi-text-secondary)] text-sm">Eröffnung der Smart Factory Division mit Fokus auf MES und IoT-Integration.</p>
+              </div>
+            </div>
+            <div class="w-4 h-4 rounded-full bg-[var(--scifi-orange)] shadow-[0_0_15px_var(--scifi-orange)] border-2 border-[var(--scifi-void)] hidden md:block"></div>
+            <div class="md:w-1/2"></div>
+          </div>
+
+          <!-- 2023 -->
+          <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            <div class="md:w-1/2"></div>
+            <div class="w-4 h-4 rounded-full bg-[var(--scifi-matrix)] shadow-[0_0_15px_var(--scifi-matrix)] border-2 border-[var(--scifi-void)] hidden md:block"></div>
+            <div class="md:w-1/2">
+              <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 inline-block">
+                <div class="text-2xl font-bold text-[var(--scifi-matrix)] font-mono mb-2">2023</div>
+                <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-2">SAAS PLATFORM LAUNCH</h3>
+                <p class="text-[var(--scifi-text-secondary)] text-sm">Launch unserer KI-gestützten SaaS-Plattform mit AI Agents und ERP-Integration.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2026 -->
+          <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
+            <div class="md:w-1/2 md:text-right">
+              <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 inline-block border-[var(--scifi-cyan)]">
+                <div class="text-2xl font-bold text-[var(--scifi-cyan)] font-mono mb-2">2026</div>
+                <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-2">HEUTE & MORGEN</h3>
+                <p class="text-[var(--scifi-text-secondary)] text-sm">Expansion im DACH-Raum und kontinuierliche Innovation in allen Geschäftsbereichen.</p>
+              </div>
+            </div>
+            <div class="w-4 h-4 rounded-full bg-[var(--scifi-cyan)] shadow-[0_0_15px_var(--scifi-cyan)] border-2 border-[var(--scifi-void)] hidden md:block animate-pulse"></div>
+            <div class="md:w-1/2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="py-24 bg-[var(--scifi-void)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="hud-frame inline-block px-6 py-2 mb-6">
+          <span class="text-[var(--scifi-matrix)] font-mono text-sm tracking-[0.2em]">// LEADERSHIP //</span>
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-[var(--scifi-text-primary)]">
+          Das <span class="text-[var(--scifi-matrix)] drop-shadow-[0_0_10px_var(--scifi-matrix)]">Team</span>
+        </h2>
+        <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+          Experten aus verschiedenen Bereichen mit einer gemeinsamen Vision.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-cyan)] transition-colors">
+          <div class="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--scifi-cyan)]/30 to-[var(--scifi-purple)]/30 border border-[var(--scifi-cyan)]/50 flex items-center justify-center mb-6 mx-auto text-3xl font-bold text-[var(--scifi-cyan)] font-mono">
+            MW
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-[var(--scifi-text-primary)] font-mono mb-1">Maximilian Weber</h3>
+            <p class="text-[var(--scifi-cyan)] font-mono text-sm mb-4">CEO & Gründer</p>
+            <p class="text-[var(--scifi-text-secondary)] text-sm">15+ Jahre Erfahrung in IT und Automation. Visionär für die digitale Transformation im Mittelstand.</p>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-purple)] transition-colors">
+          <div class="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--scifi-purple)]/30 to-[var(--scifi-orange)]/30 border border-[var(--scifi-purple)]/50 flex items-center justify-center mb-6 mx-auto text-3xl font-bold text-[var(--scifi-purple)] font-mono">
+            SK
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-[var(--scifi-text-primary)] font-mono mb-1">Sarah Klein</h3>
+            <p class="text-[var(--scifi-purple)] font-mono text-sm mb-4">CTO</p>
+            <p class="text-[var(--scifi-text-secondary)] text-sm">Expertin für IoT-Architekturen und Cloud-Infrastruktur. Leitet unsere Technologie-Strategie.</p>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-matrix)] transition-colors">
+          <div class="w-24 h-24 rounded-lg bg-gradient-to-br from-[var(--scifi-matrix)]/30 to-[var(--scifi-cyan)]/30 border border-[var(--scifi-matrix)]/50 flex items-center justify-center mb-6 mx-auto text-3xl font-bold text-[var(--scifi-matrix)] font-mono">
+            TH
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold text-[var(--scifi-text-primary)] font-mono mb-1">Thomas Hartmann</h3>
+            <p class="text-[var(--scifi-matrix)] font-mono text-sm mb-4">Head of Smart Factory</p>
+            <p class="text-[var(--scifi-text-secondary)] text-sm">Industrie-Ingenieur mit Fokus auf MES-Integration und Predictive Maintenance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section class="py-24 bg-[var(--scifi-surface)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="hud-frame inline-block px-6 py-2 mb-6">
+          <span class="text-[var(--scifi-orange)] font-mono text-sm tracking-[0.2em]">// ZERTIFIZIERUNGEN //</span>
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-[var(--scifi-text-primary)]">
+          Geprüfte <span class="text-[var(--scifi-orange)] drop-shadow-[0_0_10px_var(--scifi-orange)]">Qualität</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <!-- LOXONE Gold -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-orange)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-orange)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">LOXONE GOLD</span>
+        </div>
+
+        <!-- ISO 27001 -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-cyan)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-cyan)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">ISO 27001</span>
+        </div>
+
+        <!-- KNX -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-matrix)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-matrix)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">KNX PARTNER</span>
+        </div>
+
+        <!-- Microsoft -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-cyan)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-cyan)] mx-auto mb-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/>
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">MICROSOFT</span>
+        </div>
+
+        <!-- AWS -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-orange)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-orange)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">AWS PARTNER</span>
+        </div>
+
+        <!-- Matter -->
+        <div class="hud-frame p-6 bg-[var(--scifi-void)]/50 text-center hover:border-[var(--scifi-purple)] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[var(--scifi-purple)] mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+          <span class="text-xs text-[var(--scifi-text-secondary)] font-mono">MATTER READY</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-cyan)/0.1_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative">
+      <div class="hud-frame inline-block px-6 py-2 mb-8">
+        <span class="text-[var(--scifi-cyan)] font-mono text-sm tracking-[0.2em]">// NÄCHSTER SCHRITT //</span>
+      </div>
+
+      <h2 class="text-4xl lg:text-5xl font-bold mb-6 text-[var(--scifi-text-primary)]">
+        Bereit für die <span class="text-[var(--scifi-cyan)] drop-shadow-[0_0_10px_var(--scifi-cyan)]">Zukunft</span>?
+      </h2>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono mb-10">
+        Lassen Sie uns gemeinsam Ihr nächstes Projekt planen. Wir freuen uns auf den Austausch mit Ihnen.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/#contact" class="hud-frame px-10 py-5 bg-[var(--scifi-cyan)]/20 text-[var(--scifi-cyan)] font-mono tracking-wider text-lg hover:bg-[var(--scifi-cyan)]/30 hover:shadow-[0_0_30px_var(--scifi-cyan)] transition-all inline-flex items-center gap-3 group justify-center">
+          <span>KOSTENLOSE BERATUNG</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <a href="/investoren" class="hud-frame px-10 py-5 bg-[var(--scifi-purple)]/10 text-[var(--scifi-purple)] font-mono tracking-wider text-lg hover:bg-[var(--scifi-purple)]/20 transition-all inline-flex items-center gap-3 justify-center">
+          <span>FÜR INVESTOREN</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 bg-[var(--scifi-surface)] border-t border-[var(--scifi-cyan)]/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <a href="/" class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-cyan)]">
+              <span class="text-[var(--scifi-cyan)] font-bold text-xl">E</span>
+            </div>
+            <span class="text-xl font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+          </a>
+          <p class="text-[var(--scifi-text-secondary)] mb-6 max-w-md font-mono text-sm">
+            Ihr Partner für Smart Home, Smart Factory, Industrie 4.0 und maßgeschneiderte Softwareentwicklung im DACH-Raum.
+          </p>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h4 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono">SERVICES</h4>
+          <ul class="space-y-3 text-[var(--scifi-text-secondary)] text-sm">
+            <li><a href="/smart-home" class="hover:text-[var(--scifi-orange)] transition-colors font-mono">Smart Home</a></li>
+            <li><a href="/smart-factory" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Smart Factory</a></li>
+            <li><a href="/#services" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Industrie 4.0</a></li>
+            <li><a href="/#services" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Software Dev</a></li>
+          </ul>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono">LINKS</h4>
+          <ul class="space-y-3 text-[var(--scifi-text-secondary)] text-sm">
+            <li><a href="/ueber-uns" class="text-[var(--scifi-cyan)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">Über uns</a></li>
+            <li><a href="/investoren" class="hover:text-[var(--scifi-purple)] transition-colors font-mono">Für Investoren</a></li>
+            <li><a href="/impressum" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Impressum</a></li>
+            <li><a href="/datenschutz" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Datenschutz</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- HUD Divider -->
+      <div class="hud-divider mb-8"></div>
+
+      <!-- Copyright -->
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          © 2026 ENTERPRISE_UNIVERSE // ALLE RECHTE VORBEHALTEN
+        </p>
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          MADE WITH <span class="text-[var(--scifi-red)]">❤</span> IN GERMANY
+        </p>
+      </div>
+    </div>
+  </footer>
+</Layout>

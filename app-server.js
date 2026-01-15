@@ -9701,6 +9701,127 @@ setInterval(() => {
 }, 30000);
 
 // ═══════════════════════════════════════════════════════════════
+// INVESTOR SIGNUP API
+// ═══════════════════════════════════════════════════════════════
+
+const { setupInvestorSignupRoutes } = require('./api/investor-signup');
+setupInvestorSignupRoutes(app);
+
+// ═══════════════════════════════════════════════════════════════
+// CUSTOMER FILES & REQUIREMENTS API
+// ═══════════════════════════════════════════════════════════════
+
+const { setupCustomerFilesRoutes, generateAccessToken } = require('./api/customer-files');
+setupCustomerFilesRoutes(app);
+
+// Send customer requirements form to deal contact
+app.post('/api/deals/:dealId/send-requirements-form', async (req, res) => {
+    try {
+        const { dealId } = req.params;
+        const { contactEmail, contactName } = req.body;
+
+        if (!contactEmail) {
+            return res.status(400).json({ error: 'Contact email required' });
+        }
+
+        const token = generateAccessToken(dealId, dealId);
+        const formUrl = `https://enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
+
+        // Send email with form link
+        const nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.SMTP_USER || 'noreply@enterprise-universe.one',
+                pass: process.env.SMTP_PASS
+            }
+        });
+
+        await transporter.sendMail({
+            from: '"Enterprise Universe" <noreply@enterprise-universe.one>',
+            to: contactEmail,
+            subject: 'Ihre Projektanforderungen - Enterprise Universe',
+            html: `
+                <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; padding: 40px;">
+                    <div style="background: linear-gradient(135deg, #1e3a8a, #7c3aed); color: white; padding: 30px; border-radius: 16px 16px 0 0; text-align: center;">
+                        <h1 style="margin: 0; font-size: 24px;">Enterprise Universe</h1>
+                        <p style="margin: 10px 0 0; opacity: 0.9;">Projektanforderungen erfassen</p>
+                    </div>
+                    <div style="background: white; padding: 30px; border-radius: 0 0 16px 16px;">
+                        <p style="margin: 0 0 20px;">Hallo ${contactName || 'Kunde'},</p>
+                        <p style="margin: 0 0 20px;">vielen Dank fur Ihr Vertrauen in Enterprise Universe. Um Ihr Projekt optimal zu planen, bitten wir Sie, Ihre Anforderungen uber unser Online-Formular zu erfassen.</p>
+                        <div style="text-align: center; margin: 30px 0;">
+                            <a href="${formUrl}" style="display: inline-block; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600;">Anforderungen erfassen</a>
+                        </div>
+                        <p style="color: #64748b; font-size: 14px;">Sie konnen dort:</p>
+                        <ul style="color: #64748b; font-size: 14px;">
+                            <li>Ihre gewunschten Module auswahlen</li>
+                            <li>Plane und Skizzen hochladen</li>
+                            <li>Besondere Wunsche beschreiben</li>
+                        </ul>
+                        <p style="margin-top: 30px;">Mit freundlichen Grussen,<br><strong>Ihr Enterprise Universe Team</strong></p>
+                    </div>
+                </div>
+            `
+        });
+
+        res.json({ success: true, message: 'Form sent to ' + contactEmail });
+
+    } catch (error) {
+        console.error('[SEND-REQUIREMENTS] Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Bulk send to all won deals
+app.post('/api/deals/send-requirements-forms-bulk', async (req, res) => {
+    try {
+        const { dealIds } = req.body;
+
+        if (!dealIds || !Array.isArray(dealIds)) {
+            return res.status(400).json({ error: 'dealIds array required' });
+        }
+
+        const results = [];
+        for (const dealId of dealIds) {
+            try {
+                // Get deal details from HubSpot
+                const dealUrl = `/crm/v3/objects/deals/${dealId}?associations=contacts`;
+                const deal = await hubspotRequest(dealUrl);
+
+                // Get associated contacts
+                const contactIds = deal.associations?.contacts?.results?.map(c => c.id) || [];
+                if (contactIds.length > 0) {
+                    const contactUrl = `/crm/v3/objects/contacts/${contactIds[0]}?properties=email,firstname,lastname`;
+                    const contact = await hubspotRequest(contactUrl);
+
+                    if (contact.properties?.email) {
+                        const token = generateAccessToken(dealId, dealId);
+                        results.push({
+                            dealId,
+                            email: contact.properties.email,
+                            name: [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' '),
+                            formUrl: `https://enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`,
+                            status: 'ready'
+                        });
+                    }
+                }
+            } catch (e) {
+                results.push({ dealId, status: 'error', error: e.message });
+            }
+        }
+
+        res.json({ success: true, results });
+
+    } catch (error) {
+        console.error('[BULK-REQUIREMENTS] Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════
 // START SERVER
 // ═══════════════════════════════════════════════════════════════
 
@@ -9726,6 +9847,7 @@ server.listen(PORT, () => {
      Bots:           GET  /api/bots
      Transform:      POST /api/haiku/transform
      Power:          POST /api/haiku/power
+     Investor Signup: POST /api/investor-signup
 
   WebSocket Events:
      → connected, heartbeat, bot-update, deal-update

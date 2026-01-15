@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ihre Projektwunsche | Enterprise Universe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .input-field { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 14px 16px; width: 100%; transition: all 0.2s; font-family: inherit; }
+        .input-field:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .upload-zone { border: 2px dashed #cbd5e1; border-radius: 16px; padding: 40px; text-align: center; transition: all 0.3s; cursor: pointer; background: #f8fafc; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: #3b82f6; background: #eff6ff; }
+        .btn-primary { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 14px 28px; border-radius: 12px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
+        .btn-secondary { background: white; color: #475569; padding: 14px 28px; border-radius: 12px; font-weight: 500; border: 2px solid #e2e8f0; cursor: pointer; transition: all 0.2s; }
+        .btn-secondary:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .module-card { background: white; border: 2px solid #e2e8f0; border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.2s; }
+        .module-card:hover { border-color: #a5b4fc; transform: translateY(-2px); }
+        .module-card.selected { border-color: #3b82f6; background: #eff6ff; }
+        .wish-tag { display: inline-flex; align-items: center; gap: 8px; background: #eff6ff; color: #3b82f6; padding: 8px 16px; border-radius: 999px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+        .wish-tag:hover { background: #dbeafe; }
+        .wish-tag.selected { background: #3b82f6; color: white; }
+        .step-indicator { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
+        .step-dot { width: 12px; height: 12px; border-radius: 50%; background: #e2e8f0; transition: all 0.3s; }
+        .step-dot.active { background: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); }
+        .step-dot.completed { background: #22c55e; }
+        .file-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f8fafc; border-radius: 12px; margin-top: 12px; }
+        .fade-in { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .step-section { display: none; }
+        .step-section.active { display: block; }
+        .category-header { background: linear-gradient(135deg, #1e3a8a, #7c3aed); color: white; padding: 16px 24px; border-radius: 12px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-5xl mx-auto">
+            <header class="text-center mb-8">
+                <div class="inline-flex items-center gap-3 mb-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold">EU</div>
+                    <div class="text-left">
+                        <h1 class="text-xl font-bold text-gray-800">Enterprise Universe</h1>
+                        <p class="text-sm text-gray-500">Smart Systems & Industrie 4.0</p>
+                    </div>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Ihre Projektanforderungen</h2>
+                <p class="text-gray-500">Helfen Sie uns, Ihr massgeschneidertes System zu planen</p>
+            </header>
+
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-dot active" data-step="1"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-dot" data-step="3"></div>
+                <div class="step-dot" data-step="4"></div>
+                <div class="step-dot" data-step="5"></div>
+            </div>
+
+            <div class="card p-8">
+                <!-- Step 1: Sector Selection -->
+                <div class="step-section active fade-in" id="step1">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6"><span class="text-blue-500 mr-2">1.</span> Projektbereich</h3>
+
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <label class="module-card text-center cursor-pointer">
+                            <input type="radio" name="sector" value="residential" class="hidden">
+                            <span class="text-4xl block mb-3">&#127968;</span>
+                            <span class="font-bold block">Wohngebaude</span>
+                            <p class="text-sm text-gray-500 mt-2">Smart Home, Villa, Wohnung</p>
+                        </label>
+                        <label class="module-card text-center cursor-pointer">
+                            <input type="radio" name="sector" value="commercial" class="hidden">
+                            <span class="text-4xl block mb-3">&#127970;</span>
+                            <span class="font-bold block">Gewerbe</span>
+                            <p class="text-sm text-gray-500 mt-2">Buro, Retail, Hotel</p>
+                        </label>
+                        <label class="module-card text-center cursor-pointer">
+                            <input type="radio" name="sector" value="industrial" class="hidden">
+                            <span class="text-4xl block mb-3">&#127981;</span>
+                            <span class="font-bold block">Industrie 4.0</span>
+                            <p class="text-sm text-gray-500 mt-2">Produktion, Logistik, Lager</p>
+                        </label>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Flache (m<sup>2</sup>)</label>
+                            <input type="number" class="input-field" name="area" placeholder="z.B. 500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Standort</label>
+                            <input type="text" class="input-field" name="location" placeholder="Stadt, Region">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button class="btn-primary" onclick="nextStep()">Weiter &#8594;</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: System Modules -->
+                <div class="step-section fade-in" id="step2">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6"><span class="text-blue-500 mr-2">2.</span> Systemmodule</h3>
+
+                    <!-- Smart Building Section -->
+                    <div class="category-header">&#127968; Smart Building & Gebaude</div>
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="lighting" class="hidden">
+                            <span class="text-2xl">&#128161;</span>
+                            <div><span class="font-semibold">Lichtsteuerung</span><p class="text-sm text-gray-500">DALI, KNX, LOXONE</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="hvac" class="hidden">
+                            <span class="text-2xl">&#127777;</span>
+                            <div><span class="font-semibold">Klima & Luftung</span><p class="text-sm text-gray-500">HVAC, Zonen</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="blinds" class="hidden">
+                            <span class="text-2xl">&#127774;</span>
+                            <div><span class="font-semibold">Beschattung</span><p class="text-sm text-gray-500">Jalousien, Markisen</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="security" class="hidden">
+                            <span class="text-2xl">&#128274;</span>
+                            <div><span class="font-semibold">Sicherheit</span><p class="text-sm text-gray-500">Alarm, Zutritt, Video</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="audio" class="hidden">
+                            <span class="text-2xl">&#127925;</span>
+                            <div><span class="font-semibold">Multimedia</span><p class="text-sm text-gray-500">Audio, Video, Konferenz</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="energy" class="hidden">
+                            <span class="text-2xl">&#9889;</span>
+                            <div><span class="font-semibold">Energie</span><p class="text-sm text-gray-500">PV, Speicher, Wallbox</p></div>
+                        </label>
+                    </div>
+
+                    <!-- Industrie 4.0 Section -->
+                    <div class="category-header">&#127981; Industrie 4.0 & Automation</div>
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="mes" class="hidden">
+                            <span class="text-2xl">&#128200;</span>
+                            <div><span class="font-semibold">MES System</span><p class="text-sm text-gray-500">Produktionssteuerung</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="scada" class="hidden">
+                            <span class="text-2xl">&#128421;</span>
+                            <div><span class="font-semibold">SCADA</span><p class="text-sm text-gray-500">Prozessleittechnik</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="iot" class="hidden">
+                            <span class="text-2xl">&#128225;</span>
+                            <div><span class="font-semibold">IoT Sensoren</span><p class="text-sm text-gray-500">Monitoring, Predictive</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="robotics" class="hidden">
+                            <span class="text-2xl">&#129302;</span>
+                            <div><span class="font-semibold">Robotik</span><p class="text-sm text-gray-500">Cobots, AGV</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="logistics" class="hidden">
+                            <span class="text-2xl">&#128230;</span>
+                            <div><span class="font-semibold">Logistik</span><p class="text-sm text-gray-500">WMS, Tracking</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="quality" class="hidden">
+                            <span class="text-2xl">&#128269;</span>
+                            <div><span class="font-semibold">Qualitat</span><p class="text-sm text-gray-500">Vision, Prufung</p></div>
+                        </label>
+                    </div>
+
+                    <!-- Digital Solutions -->
+                    <div class="category-header">&#128187; Digital & Software</div>
+                    <div class="grid md:grid-cols-3 gap-4 mb-8">
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="erp" class="hidden">
+                            <span class="text-2xl">&#128202;</span>
+                            <div><span class="font-semibold">ERP Integration</span><p class="text-sm text-gray-500">SAP, Odoo, etc.</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="ai" class="hidden">
+                            <span class="text-2xl">&#129504;</span>
+                            <div><span class="font-semibold">KI & Analytics</span><p class="text-sm text-gray-500">Predictive, ML</p></div>
+                        </label>
+                        <label class="module-card flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="modules" value="cloud" class="hidden">
+                            <span class="text-2xl">&#9729;</span>
+                            <div><span class="font-semibold">Cloud & Edge</span><p class="text-sm text-gray-500">AWS, Azure, lokal</p></div>
+                        </label>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button class="btn-secondary" onclick="prevStep()">&#8592; Zuruck</button>
+                        <button class="btn-primary" onclick="nextStep()">Weiter &#8594;</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Upload -->
+                <div class="step-section fade-in" id="step3">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6"><span class="text-blue-500 mr-2">3.</span> Unterlagen hochladen</h3>
+
+                    <div class="upload-zone mb-6" id="uploadZone">
+                        <input type="file" id="fileInput" class="hidden" accept="image/*,.pdf,.dwg,.xlsx,.doc,.docx" multiple>
+                        <div class="text-5xl mb-4">&#128196;</div>
+                        <p class="text-lg font-medium text-gray-700 mb-2">Dateien hierher ziehen</p>
+                        <p class="text-gray-500 mb-4">Plane, Skizzen, Spezifikationen</p>
+                        <p class="text-sm text-gray-400">PDF, DWG, Excel, Bilder (max. 50MB)</p>
+                    </div>
+
+                    <div id="fileList" class="mb-6"></div>
+
+                    <div class="flex justify-between">
+                        <button class="btn-secondary" onclick="prevStep()">&#8592; Zuruck</button>
+                        <button class="btn-primary" onclick="nextStep()">Weiter &#8594;</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Requirements -->
+                <div class="step-section fade-in" id="step4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6"><span class="text-blue-500 mr-2">4.</span> Anforderungen</h3>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Wichtige Funktionen</label>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="wish-tag" data-wish="remote">&#127758; Fernzugriff</span>
+                            <span class="wish-tag" data-wish="dashboard">&#128202; Dashboard</span>
+                            <span class="wish-tag" data-wish="mobile">&#128241; Mobile App</span>
+                            <span class="wish-tag" data-wish="integration">&#128279; API Integration</span>
+                            <span class="wish-tag" data-wish="reporting">&#128200; Reporting</span>
+                            <span class="wish-tag" data-wish="alerts">&#128276; Alarme</span>
+                            <span class="wish-tag" data-wish="redundancy">&#128737; Redundanz</span>
+                            <span class="wish-tag" data-wish="scalable">&#128200; Skalierbar</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Detaillierte Beschreibung</label>
+                        <textarea class="input-field" rows="5" name="description" placeholder="Beschreiben Sie Ihre Anforderungen..."></textarea>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Budget</label>
+                            <select class="input-field" name="budget">
+                                <option value="">Bitte wahlen</option>
+                                <option value="<25000">Bis EUR 25.000</option>
+                                <option value="25000-100000">EUR 25.000 - 100.000</option>
+                                <option value="100000-500000">EUR 100.000 - 500.000</option>
+                                <option value=">500000">Uber EUR 500.000</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Zeitrahmen</label>
+                            <select class="input-field" name="timeline">
+                                <option value="">Bitte wahlen</option>
+                                <option value="asap">Schnellstmoglich</option>
+                                <option value="3months">Innerhalb 3 Monate</option>
+                                <option value="6months">Innerhalb 6 Monate</option>
+                                <option value="12months">Innerhalb 12 Monate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button class="btn-secondary" onclick="prevStep()">&#8592; Zuruck</button>
+                        <button class="btn-primary" onclick="nextStep()">Weiter &#8594;</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Summary -->
+                <div class="step-section fade-in" id="step5">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6"><span class="text-blue-500 mr-2">5.</span> Zusammenfassung</h3>
+
+                    <div id="summaryContent" class="bg-gray-50 rounded-xl p-6 mb-6"></div>
+
+                    <div class="flex justify-between">
+                        <button class="btn-secondary" onclick="prevStep()">&#8592; Zuruck</button>
+                        <button class="btn-primary" onclick="submitForm()">&#10003; Absenden</button>
+                    </div>
+                </div>
+
+                <!-- Success -->
+                <div class="step-section fade-in text-center py-12" id="success">
+                    <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-5xl text-green-500">&#10003;</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Vielen Dank!</h3>
+                    <p class="text-gray-500 max-w-md mx-auto">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        const uploadedFiles = [];
+        const selectedWishes = new Set();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('id') || 'demo';
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                if (currentStep === 5) updateSummary();
+                updateStepDisplay();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepDisplay();
+            }
+        }
+
+        function updateStepDisplay() {
+            document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+            const stepEl = document.getElementById('step' + currentStep);
+            if (stepEl) stepEl.classList.add('active');
+
+            document.querySelectorAll('.step-dot').forEach((dot, i) => {
+                dot.classList.remove('active', 'completed');
+                if (i + 1 < currentStep) dot.classList.add('completed');
+                else if (i + 1 === currentStep) dot.classList.add('active');
+            });
+        }
+
+        // Module selection
+        document.querySelectorAll('.module-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const input = card.querySelector('input');
+                if (input.type === 'checkbox') {
+                    input.checked = !input.checked;
+                    card.classList.toggle('selected', input.checked);
+                } else {
+                    document.querySelectorAll('input[name="' + input.name + '"]').forEach(r => {
+                        r.closest('.module-card').classList.remove('selected');
+                    });
+                    input.checked = true;
+                    card.classList.add('selected');
+                }
+            });
+        });
+
+        // Wish tags
+        document.querySelectorAll('.wish-tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('selected');
+                const wish = tag.dataset.wish;
+                if (selectedWishes.has(wish)) selectedWishes.delete(wish);
+                else selectedWishes.add(wish);
+            });
+        });
+
+        // File upload
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        uploadZone.addEventListener('click', () => fileInput.click());
+        uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+        uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+        fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.size > 50 * 1024 * 1024) { alert('Datei zu gross'); return; }
+                uploadedFiles.push(file);
+                renderFileList();
+            });
+        }
+
+        function renderFileList() {
+            fileList.innerHTML = '';
+            uploadedFiles.forEach((file, i) => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+
+                const icon = document.createElement('span');
+                icon.className = 'text-2xl';
+                icon.textContent = file.type.includes('pdf') ? '\u{1F4D5}' : '\u{1F4C4}';
+
+                const info = document.createElement('div');
+                info.className = 'flex-1';
+                const name = document.createElement('p');
+                name.className = 'font-medium text-gray-800';
+                name.textContent = file.name;
+                const size = document.createElement('p');
+                size.className = 'text-sm text-gray-500';
+                size.textContent = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+                info.appendChild(name);
+                info.appendChild(size);
+
+                const btn = document.createElement('button');
+                btn.className = 'text-red-500';
+                btn.textContent = '\u2715';
+                btn.onclick = () => { uploadedFiles.splice(i, 1); renderFileList(); };
+
+                div.appendChild(icon);
+                div.appendChild(info);
+                div.appendChild(btn);
+                fileList.appendChild(div);
+            });
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summaryContent');
+            summary.innerHTML = '';
+
+            const sector = document.querySelector('input[name="sector"]:checked');
+            const modules = Array.from(document.querySelectorAll('input[name="modules"]:checked'));
+
+            const items = [
+                { label: 'Bereich', value: sector ? sector.closest('.module-card').querySelector('.font-bold').textContent : '-' },
+                { label: 'Flache', value: (document.querySelector('[name="area"]').value || '-') + ' m2' },
+                { label: 'Module', value: modules.map(m => m.closest('.module-card').querySelector('.font-semibold').textContent).join(', ') || '-' },
+                { label: 'Dateien', value: uploadedFiles.length + ' hochgeladen' },
+                { label: 'Funktionen', value: Array.from(selectedWishes).join(', ') || '-' }
+            ];
+
+            items.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'flex justify-between py-2 border-b border-gray-200';
+                const label = document.createElement('span');
+                label.className = 'text-gray-500';
+                label.textContent = item.label;
+                const value = document.createElement('span');
+                value.className = 'font-medium';
+                value.textContent = item.value;
+                row.appendChild(label);
+                row.appendChild(value);
+                summary.appendChild(row);
+            });
+        }
+
+        async function submitForm() {
+            const data = {
+                sector: document.querySelector('input[name="sector"]:checked')?.value,
+                area: document.querySelector('[name="area"]').value,
+                location: document.querySelector('[name="location"]').value,
+                modules: Array.from(document.querySelectorAll('input[name="modules"]:checked')).map(el => el.value),
+                features: Array.from(selectedWishes),
+                description: document.querySelector('[name="description"]').value,
+                budget: document.querySelector('[name="budget"]').value,
+                timeline: document.querySelector('[name="timeline"]').value,
+                filesCount: uploadedFiles.length,
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                await fetch('/api/customer/' + customerId + '/wishes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ wishes: [data] })
+                });
+
+                document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('success').classList.add('active');
+                document.querySelectorAll('.step-dot').forEach(d => { d.classList.add('completed'); d.classList.remove('active'); });
+            } catch (e) {
+                alert('Fehler beim Senden');
+            }
+        }
+    </script>
+</body>
+</html>
