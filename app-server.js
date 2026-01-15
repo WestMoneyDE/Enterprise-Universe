@@ -262,6 +262,14 @@ app.get('/investoren', (req, res) => res.sendFile(path.join(__dirname, 'dashboar
 app.get('/investor-portal', (req, res) => res.sendFile(path.join(__dirname, 'INVESTOR_PORTAL.html')));
 app.get('/customer-portal', (req, res) => res.sendFile(path.join(__dirname, 'CUSTOMER_PORTAL.html')));
 
+// Customer Requirements & Internal Tools
+app.get('/projekt-anforderungen', (req, res) => res.sendFile(path.join(__dirname, 'projekt-anforderungen.html')));
+app.get('/projekt-anforderungen.html', (req, res) => res.sendFile(path.join(__dirname, 'projekt-anforderungen.html')));
+app.get('/kunde-karte', (req, res) => res.sendFile(path.join(__dirname, 'kunde-karte.html')));
+app.get('/kunde-karte.html', (req, res) => res.sendFile(path.join(__dirname, 'kunde-karte.html')));
+app.get('/investor-signup', (req, res) => res.sendFile(path.join(__dirname, 'investor-signup.html')));
+app.get('/investor-signup.html', (req, res) => res.sendFile(path.join(__dirname, 'investor-signup.html')));
+
 // WhatsApp & Communication
 app.get('/whatsapp', (req, res) => res.sendFile(path.join(__dirname, 'WHATSAPP_AUTH_DASHBOARD.html')));
 
@@ -9697,14 +9705,14 @@ app.post('/api/deals/:dealId/send-requirements-form', async (req, res) => {
         }
 
         const token = generateAccessToken(dealId, dealId);
-        const formUrl = `https://enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
+        const formUrl = `https://app.enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
 
         // Send email with form link
         const nodemailer = require('nodemailer');
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-            port: 465,
-            secure: true,
+            host: process.env.SMTP_HOST || 'send.one.com',
+            port: parseInt(process.env.SMTP_PORT) || 587,
+            secure: process.env.SMTP_SECURE === 'true',
             auth: {
                 user: process.env.SMTP_USER || 'invoice@enterprise-universe.com',
                 pass: process.env.SMTP_PASS
@@ -9758,9 +9766,9 @@ app.post('/api/deals/send-requirements-forms-bulk', async (req, res) => {
 
         const nodemailer = require('nodemailer');
         const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-            port: 465,
-            secure: true,
+            host: process.env.SMTP_HOST || 'send.one.com',
+            port: parseInt(process.env.SMTP_PORT) || 587,
+            secure: process.env.SMTP_SECURE === 'true',
             auth: {
                 user: process.env.SMTP_USER || 'invoice@enterprise-universe.com',
                 pass: process.env.SMTP_PASS
@@ -9784,7 +9792,7 @@ app.post('/api/deals/send-requirements-forms-bulk', async (req, res) => {
                         const token = generateAccessToken(dealId, dealId);
                         const contactEmail = contact.properties.email;
                         const contactName = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ');
-                        const formUrl = `https://enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
+                        const formUrl = `https://app.enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
 
                         // Send email if requested
                         if (sendEmails) {
