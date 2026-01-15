@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 - Seite nicht gefunden | Enterprise Universe">
+  <div class="min-h-screen bg-[var(--scifi-void)] flex items-center justify-center relative overflow-hidden">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-red)/0.1_0%,transparent_70%)]"></div>
+
+    <!-- Glitch Lines Animation -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute w-full h-[2px] bg-[var(--scifi-red)]/30 top-[20%] animate-pulse"></div>
+      <div class="absolute w-full h-[1px] bg-[var(--scifi-cyan)]/20 top-[40%]"></div>
+      <div class="absolute w-full h-[2px] bg-[var(--scifi-purple)]/30 top-[60%] animate-pulse"></div>
+      <div class="absolute w-full h-[1px] bg-[var(--scifi-cyan)]/20 top-[80%]"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 max-w-2xl">
+      <!-- Error Code -->
+      <div class="relative mb-8">
+        <h1 class="text-[150px] md:text-[200px] font-bold font-mono leading-none text-transparent bg-clip-text bg-gradient-to-b from-[var(--scifi-red)] to-[var(--scifi-red)]/30 select-none glitch-text" data-text="404">
+          404
+        </h1>
+        <!-- Glitch overlay -->
+        <div class="absolute inset-0 text-[150px] md:text-[200px] font-bold font-mono leading-none text-[var(--scifi-red)]/20 animate-pulse select-none" aria-hidden="true">
+          404
+        </div>
+      </div>
+
+      <!-- HUD Frame -->
+      <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 mb-8 border-[var(--scifi-red)]/50">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-3 h-3 rounded-full bg-[var(--scifi-red)] animate-pulse shadow-[0_0_10px_var(--scifi-red)]"></div>
+          <span class="text-[var(--scifi-red)] font-mono text-sm tracking-[0.3em] uppercase">// System Error //</span>
+          <div class="w-3 h-3 rounded-full bg-[var(--scifi-red)] animate-pulse shadow-[0_0_10px_var(--scifi-red)]"></div>
+        </div>
+
+        <h2 class="text-2xl md:text-3xl font-bold text-[var(--scifi-text-primary)] font-mono mb-4">
+          SEITE NICHT GEFUNDEN
+        </h2>
+
+        <p class="text-[var(--scifi-text-secondary)] font-mono mb-6">
+          Die angeforderte Ressource existiert nicht oder wurde verschoben.
+        </p>
+
+        <!-- Terminal-style output -->
+        <div class="bg-[var(--scifi-void)] rounded-lg p-4 text-left font-mono text-sm mb-6 border border-[var(--scifi-border)]">
+          <p class="text-[var(--scifi-text-muted)]">$ locate requested_page</p>
+          <p class="text-[var(--scifi-red)] mt-1">ERROR: Resource not found in system database</p>
+          <p class="text-[var(--scifi-text-muted)] mt-2">$ suggest --alternatives</p>
+          <p class="text-[var(--scifi-cyan)] mt-1">> Returning to home base...</p>
+        </div>
+
+        <a href="/" class="inline-flex items-center gap-3 hud-frame px-8 py-4 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono tracking-wider hover:bg-[var(--scifi-purple)]/30 hover:shadow-[0_0_30px_var(--scifi-purple)] transition-all group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="h-5 w-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>ZURÜCK ZUR STARTSEITE</span>
+        </a>
+      </div>
+
+      <!-- Additional Links -->
+      <div class="flex flex-wrap justify-center gap-4 text-sm font-mono">
+        <a href="/smart-home" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors">Smart Home</a>
+        <span class="text-[var(--scifi-border)]">|</span>
+        <a href="/smart-factory" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors">Smart Factory</a>
+        <span class="text-[var(--scifi-border)]">|</span>
+        <a href="/ueber-uns" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors">Über Uns</a>
+        <span class="text-[var(--scifi-border)]">|</span>
+        <a href="/investoren" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors">Investoren</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .glitch-text {
+      animation: glitch-skew 4s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-skew {
+      0% { transform: skew(0deg); }
+      20% { transform: skew(0deg); }
+      21% { transform: skew(2deg); }
+      22% { transform: skew(0deg); }
+      80% { transform: skew(0deg); }
+      81% { transform: skew(-1deg); }
+      82% { transform: skew(0deg); }
+      100% { transform: skew(0deg); }
+    }
+  </style>
+</Layout>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title: string;
@@ -10,7 +11,7 @@ interface Props {
 const {
   title,
   description = "Enterprise Universe - Ihr Partner für Smart Home, Smart Factory, Industrie 4.0 und maßgeschneiderte Softwareentwicklung. Wir digitalisieren Ihr Unternehmen.",
-  image = "/og-image.jpg"
+  image = "https://enterprise-universe.one/og-image.svg"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -52,10 +53,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="author" content="Enterprise Universe" />
     <meta name="keywords" content="Smart Home, Smart Factory, Industrie 4.0, Softwareentwicklung, IoT, Automatisierung, Deutschland, DACH, KMU, Digitalisierung" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Local Fonts (DSGVO compliant - no external connections) -->
+    <link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-bold.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -64,8 +64,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "@type": "Organization",
         "name": "Enterprise Universe",
         "description": "Smart Home, Smart Factory, Industrie 4.0 & Software Development",
-        "url": "https://enterprise-universe.de",
-        "logo": "https://enterprise-universe.de/logo.svg",
+        "url": "https://enterprise-universe.one",
+        "logo": "https://enterprise-universe.one/logo.svg",
         "sameAs": [
           "https://linkedin.com/company/enterprise-universe",
           "https://github.com/enterprise-universe"
@@ -79,6 +79,63 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="min-h-screen">
+    <!-- Skip Links for Accessibility -->
+    <a href="#main-content" class="skip-link">
+      Zum Hauptinhalt springen
+    </a>
+
     <slot />
+
+    <!-- Cookie Consent Banner (DSGVO) -->
+    <CookieBanner />
+
+    <!-- Accessibility Styles -->
+    <style is:global>
+      /* Skip Link */
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 1rem 2rem;
+        background: var(--scifi-purple);
+        color: white;
+        font-family: monospace;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0 0 0.5rem 0.5rem;
+        z-index: 9999;
+        transition: top 0.3s ease;
+      }
+
+      .skip-link:focus {
+        top: 0;
+        outline: 2px solid var(--scifi-cyan);
+        outline-offset: 2px;
+      }
+
+      /* Enhanced Focus States */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 2px solid var(--scifi-cyan);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* Remove default outline for mouse users */
+      a:focus:not(:focus-visible),
+      button:focus:not(:focus-visible) {
+        outline: none;
+      }
+
+      /* Focus within for containers */
+      .hud-frame:focus-within {
+        box-shadow: 0 0 0 2px var(--scifi-cyan), 0 0 20px var(--scifi-cyan-dim);
+      }
+    </style>
   </body>
 </html>

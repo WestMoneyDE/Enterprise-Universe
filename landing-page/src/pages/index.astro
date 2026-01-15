@@ -821,11 +821,6 @@ import Layout from '../layouts/Layout.astro';
   </div>
 
   <script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
-      alert('Mobile Menu - implement slideout menu');
-    });
-
     // Close modal
     document.getElementById('close-modal-btn')?.addEventListener('click', () => {
       const modal = document.getElementById('success-modal');
@@ -835,7 +830,7 @@ import Layout from '../layouts/Layout.astro';
       }
     });
 
-    // Form submission
+    // Form submission with multiple fallbacks
     document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target as HTMLFormElement;
@@ -843,38 +838,90 @@ import Layout from '../layouts/Layout.astro';
       const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
       const submitText = document.getElementById('submit-text');
 
+      // Get form values
+      const data = {
+        name: formData.get('name') as string,
+        company: formData.get('company') as string || '',
+        email: formData.get('email') as string,
+        interest: formData.get('interest') as string,
+        message: formData.get('message') as string || '',
+      };
+
       if (submitBtn && submitText) {
         submitBtn.disabled = true;
         submitText.textContent = 'WIRD GESENDET...';
       }
 
+      let success = false;
+
+      // Method 1: Try backend API first
       try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch('https://app.enterprise-universe.one/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(Object.fromEntries(formData))
+          body: JSON.stringify(data)
         });
 
-        const result = await response.json();
+        if (response.ok) {
+          const result = await response.json();
+          success = result.success !== false;
+        }
+      } catch (backendError) {
+        console.log('Backend not available, using fallback...');
+      }
 
-        if (result.success) {
-          const modal = document.getElementById('success-modal');
-          if (modal) {
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+      // Method 2: Fallback to FormSubmit.co (free, DSGVO-friendly)
+      if (!success) {
+        try {
+          const formSubmitData = new FormData();
+          formSubmitData.append('name', data.name);
+          formSubmitData.append('email', data.email);
+          formSubmitData.append('_subject', `Kontaktanfrage: ${data.interest}`);
+          formSubmitData.append('company', data.company);
+          formSubmitData.append('interest', data.interest);
+          formSubmitData.append('message', data.message);
+          formSubmitData.append('_captcha', 'false');
+          formSubmitData.append('_template', 'table');
+
+          const response = await fetch('https://formsubmit.co/ajax/kontakt@enterprise-universe.one', {
+            method: 'POST',
+            body: formSubmitData
+          });
+
+          if (response.ok) {
+            success = true;
           }
-          form.reset();
-        } else {
-          alert(result.error || 'Ein Fehler ist aufgetreten.');
+        } catch (formSubmitError) {
+          console.log('FormSubmit fallback failed...');
         }
-      } catch (error) {
-        console.error('Form submission error:', error);
-        alert('Verbindungsfehler. Bitte versuchen Sie es später erneut.');
-      } finally {
-        if (submitBtn && submitText) {
-          submitBtn.disabled = false;
-          submitText.textContent = 'ANFRAGE SENDEN';
+      }
+
+      // Method 3: Final fallback - open email client
+      if (!success) {
+        const subject = encodeURIComponent(`Kontaktanfrage: ${data.interest}`);
+        const body = encodeURIComponent(
+          `Name: ${data.name}\n` +
+          `Unternehmen: ${data.company}\n` +
+          `E-Mail: ${data.email}\n` +
+          `Interesse: ${data.interest}\n\n` +
+          `Nachricht:\n${data.message}`
+        );
+        window.location.href = `mailto:kontakt@enterprise-universe.one?subject=${subject}&body=${body}`;
+        success = true; // Assume user will send the email
+      }
+
+      if (success) {
+        const modal = document.getElementById('success-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
         }
+        form.reset();
+      }
+
+      if (submitBtn && submitText) {
+        submitBtn.disabled = false;
+        submitText.textContent = 'ANFRAGE SENDEN';
       }
     });
 

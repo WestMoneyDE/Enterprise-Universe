@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <!-- Neon Purple Gradient -->
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <!-- Cyan Accent -->
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#22d3ee"/>
+    </linearGradient>
+    <!-- Glow Filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Inner Shadow -->
+    <filter id="innerGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Dark Background -->
+  <rect width="100" height="100" rx="18" fill="#0c0a1a"/>
+
+  <!-- Border with glow -->
+  <rect x="3" y="3" width="94" height="94" rx="16" fill="none" stroke="url(#purpleGrad)" stroke-width="2" filter="url(#glow)"/>
+
+  <!-- Corner Decorations -->
+  <path d="M3 20 L3 3 L20 3" fill="none" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M80 97 L97 97 L97 80" fill="none" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Scan line effect -->
+  <line x1="10" y1="30" x2="90" y2="30" stroke="#06b6d4" stroke-width="1" opacity="0.3"/>
+  <line x1="10" y1="70" x2="90" y2="70" stroke="#06b6d4" stroke-width="1" opacity="0.3"/>
+
+  <!-- E Letter with glow -->
+  <text x="50" y="68" font-family="'Courier New', monospace" font-size="55" font-weight="700" fill="url(#purpleGrad)" text-anchor="middle" filter="url(#glow)">E</text>
+
+  <!-- Small tech details -->
+  <circle cx="15" cy="15" r="2" fill="#06b6d4" opacity="0.8"/>
+  <circle cx="85" cy="85" r="2" fill="#06b6d4" opacity="0.8"/>
+</svg>

@@ -1,0 +1,140 @@
+---
+interface Props {
+  variant?: 'default' | 'investor' | 'legal';
+}
+
+const { variant = 'default' } = Astro.props;
+
+const navItems = {
+  default: [
+    { href: '/smart-home', label: 'SMART HOME' },
+    { href: '/smart-factory', label: 'SMART FACTORY' },
+    { href: '/ueber-uns', label: 'ÜBER UNS' },
+    { href: '/investoren', label: 'INVESTOREN' },
+  ],
+  investor: [
+    { href: '/', label: '← ZURÜCK' },
+    { href: '#portfolio', label: 'PORTFOLIO' },
+    { href: '#metrics', label: 'METRIKEN' },
+  ],
+  legal: [
+    { href: '/', label: '← ZURÜCK' },
+    { href: '/impressum', label: 'IMPRESSUM' },
+    { href: '/datenschutz', label: 'DATENSCHUTZ' },
+    { href: '/agb', label: 'AGB' },
+  ],
+};
+
+const currentItems = navItems[variant];
+const logoText = variant === 'investor' ? 'INVESTOR_PORTAL' : 'ENTERPRISE_UNIVERSE';
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
+  <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+          <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+        </div>
+        <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono hidden sm:block">{logoText}</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        {currentItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider"
+          >
+            {item.label}
+          </a>
+        ))}
+        {variant === 'default' && (
+          <a
+            href="/#kontakt"
+            class="hud-frame px-6 py-3 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-purple)]/30 transition-all"
+          >
+            KONTAKT
+          </a>
+        )}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 text-[var(--scifi-purple)] hover:bg-[var(--scifi-purple)]/20 rounded-lg transition-colors"
+        aria-label="Menu öffnen"
+        aria-expanded="false"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="h-6 w-6 menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="h-6 w-6 close-icon hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden border-t border-[var(--scifi-purple)]/30 bg-[var(--scifi-void)]/95 backdrop-blur-xl">
+    <div class="px-6 py-4 space-y-1">
+      {currentItems.map((item) => (
+        <a
+          href={item.href}
+          class="block px-4 py-3 text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] hover:bg-[var(--scifi-purple)]/10 rounded-lg transition-colors font-mono text-sm tracking-wider"
+        >
+          {item.label}
+        </a>
+      ))}
+      {variant === 'default' && (
+        <>
+          <div class="border-t border-[var(--scifi-border)] my-2"></div>
+          <a
+            href="/#kontakt"
+            class="block px-4 py-3 text-[var(--scifi-purple)] hover:bg-[var(--scifi-purple)]/10 rounded-lg transition-colors font-mono text-sm tracking-wider"
+          >
+            KONTAKT
+          </a>
+        </>
+      )}
+
+      <!-- Legal Links in Mobile -->
+      <div class="border-t border-[var(--scifi-border)] mt-4 pt-4">
+        <div class="flex gap-4 px-4 text-xs font-mono text-[var(--scifi-text-muted)]">
+          <a href="/impressum" class="hover:text-[var(--scifi-cyan)]">Impressum</a>
+          <a href="/datenschutz" class="hover:text-[var(--scifi-cyan)]">Datenschutz</a>
+          <a href="/agb" class="hover:text-[var(--scifi-cyan)]">AGB</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const menuIcon = btn?.querySelector('.menu-icon');
+    const closeIcon = btn?.querySelector('.close-icon');
+
+    btn?.addEventListener('click', () => {
+      const isOpen = menu?.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.setAttribute('aria-label', isOpen ? 'Menu schließen' : 'Menu öffnen');
+      menuIcon?.classList.toggle('hidden', isOpen);
+      closeIcon?.classList.toggle('hidden', !isOpen);
+    });
+
+    // Close menu on link click
+    menu?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        btn?.setAttribute('aria-expanded', 'false');
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      });
+    });
+  });
+</script>

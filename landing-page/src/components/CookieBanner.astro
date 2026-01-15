@@ -1,0 +1,279 @@
+---
+// DSGVO-konformer Cookie Banner
+// Speichert Präferenzen in localStorage (kein Cookie für Cookie-Consent)
+---
+
+<div
+  id="cookie-banner"
+  class="fixed bottom-0 left-0 right-0 z-[9999] transform translate-y-full transition-transform duration-500 ease-out"
+  role="dialog"
+  aria-labelledby="cookie-title"
+  aria-describedby="cookie-description"
+>
+  <div class="bg-[var(--scifi-void)]/98 backdrop-blur-xl border-t border-[var(--scifi-purple)]/50 shadow-[0_-10px_40px_rgba(139,92,246,0.15)]">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+      <!-- Main Content -->
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div class="flex-1">
+          <h3 id="cookie-title" class="text-lg font-bold text-[var(--scifi-purple)] font-mono mb-2 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            DATENSCHUTZ_EINSTELLUNGEN
+          </h3>
+          <p id="cookie-description" class="text-sm text-[var(--scifi-text-secondary)] leading-relaxed max-w-2xl">
+            Wir nutzen Cookies und ähnliche Technologien, um Ihre Erfahrung zu verbessern.
+            Essentielle Cookies sind für die Funktion der Website notwendig.
+            Weitere Informationen finden Sie in unserer
+            <a href="/datenschutz" class="text-[var(--scifi-cyan)] hover:underline">Datenschutzerklärung</a>.
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 lg:flex-shrink-0">
+          <button
+            id="cookie-settings-btn"
+            class="px-5 py-3 text-sm font-mono tracking-wider text-[var(--scifi-text-secondary)] border border-[var(--scifi-border)] hover:border-[var(--scifi-purple)] hover:text-[var(--scifi-purple)] rounded-lg transition-all"
+          >
+            EINSTELLUNGEN
+          </button>
+          <button
+            id="cookie-reject-btn"
+            class="px-5 py-3 text-sm font-mono tracking-wider text-[var(--scifi-text)] border border-[var(--scifi-border)] hover:border-[var(--scifi-cyan)] hover:text-[var(--scifi-cyan)] rounded-lg transition-all"
+          >
+            NUR ESSENTIELLE
+          </button>
+          <button
+            id="cookie-accept-btn"
+            class="px-5 py-3 text-sm font-mono tracking-wider bg-[var(--scifi-purple)] text-white hover:bg-[var(--scifi-purple-bright)] rounded-lg transition-all shadow-[0_0_15px_var(--scifi-purple-dim)]"
+          >
+            ALLE AKZEPTIEREN
+          </button>
+        </div>
+      </div>
+
+      <!-- Settings Panel (hidden by default) -->
+      <div id="cookie-settings-panel" class="hidden mt-6 pt-6 border-t border-[var(--scifi-border)]">
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Essential Cookies -->
+          <div class="p-4 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-border)]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm text-[var(--scifi-text)] font-semibold">ESSENTIELLE</span>
+              <span class="text-xs font-mono text-[var(--scifi-cyan)] bg-[var(--scifi-cyan)]/10 px-2 py-1 rounded">IMMER AKTIV</span>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)]">
+              Notwendig für Grundfunktionen wie Navigation und Sicherheit.
+            </p>
+          </div>
+
+          <!-- Analytics Cookies -->
+          <div class="p-4 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-border)]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm text-[var(--scifi-text)] font-semibold">ANALYSE</span>
+              <label class="cookie-toggle">
+                <input type="checkbox" id="cookie-analytics" name="analytics">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)]">
+              Helfen uns zu verstehen, wie Besucher die Website nutzen.
+            </p>
+          </div>
+
+          <!-- Marketing Cookies -->
+          <div class="p-4 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-border)]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm text-[var(--scifi-text)] font-semibold">MARKETING</span>
+              <label class="cookie-toggle">
+                <input type="checkbox" id="cookie-marketing" name="marketing">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)]">
+              Ermöglichen personalisierte Werbung und Retargeting.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex justify-end">
+          <button
+            id="cookie-save-btn"
+            class="px-6 py-3 text-sm font-mono tracking-wider bg-[var(--scifi-cyan)] text-[var(--scifi-void)] hover:bg-[var(--scifi-cyan-bright)] rounded-lg transition-all"
+          >
+            EINSTELLUNGEN SPEICHERN
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cookie Settings Trigger (shows after consent given) -->
+<button
+  id="cookie-settings-trigger"
+  class="fixed bottom-4 left-4 z-[9998] hidden p-3 rounded-full bg-[var(--scifi-surface)] border border-[var(--scifi-border)] hover:border-[var(--scifi-purple)] text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-all shadow-lg"
+  aria-label="Cookie-Einstellungen öffnen"
+  title="Cookie-Einstellungen"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+</button>
+
+<style>
+  /* Toggle Switch Styles */
+  .cookie-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+  }
+
+  .cookie-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--scifi-border);
+    transition: 0.3s;
+    border-radius: 24px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--scifi-text-muted);
+    transition: 0.3s;
+    border-radius: 50%;
+  }
+
+  .cookie-toggle input:checked + .toggle-slider {
+    background-color: var(--scifi-purple);
+    box-shadow: 0 0 10px var(--scifi-purple-dim);
+  }
+
+  .cookie-toggle input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+    background-color: white;
+  }
+
+  .cookie-toggle input:focus-visible + .toggle-slider {
+    outline: 2px solid var(--scifi-cyan);
+    outline-offset: 2px;
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const CONSENT_KEY = 'eu_cookie_consent';
+
+    const banner = document.getElementById('cookie-banner');
+    const settingsPanel = document.getElementById('cookie-settings-panel');
+    const settingsTrigger = document.getElementById('cookie-settings-trigger');
+    const analyticsCheckbox = document.getElementById('cookie-analytics');
+    const marketingCheckbox = document.getElementById('cookie-marketing');
+
+    // Check for existing consent
+    function getConsent() {
+      try {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        return consent ? JSON.parse(consent) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    // Save consent
+    function saveConsent(consent) {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify({
+        ...consent,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      }));
+
+      // Dispatch event for other scripts to listen to
+      window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: consent }));
+    }
+
+    // Show banner with animation
+    function showBanner() {
+      banner.classList.remove('translate-y-full');
+      banner.classList.add('translate-y-0');
+    }
+
+    // Hide banner with animation
+    function hideBanner() {
+      banner.classList.remove('translate-y-0');
+      banner.classList.add('translate-y-full');
+      settingsTrigger?.classList.remove('hidden');
+    }
+
+    // Initialize
+    function init() {
+      const consent = getConsent();
+
+      if (!consent) {
+        // Show banner after short delay for better UX
+        setTimeout(showBanner, 1000);
+      } else {
+        // Show settings trigger if consent already given
+        settingsTrigger?.classList.remove('hidden');
+
+        // Apply saved preferences to checkboxes
+        if (analyticsCheckbox) analyticsCheckbox.checked = consent.analytics || false;
+        if (marketingCheckbox) marketingCheckbox.checked = consent.marketing || false;
+      }
+    }
+
+    // Event Listeners
+    document.getElementById('cookie-accept-btn')?.addEventListener('click', () => {
+      saveConsent({ essential: true, analytics: true, marketing: true });
+      hideBanner();
+    });
+
+    document.getElementById('cookie-reject-btn')?.addEventListener('click', () => {
+      saveConsent({ essential: true, analytics: false, marketing: false });
+      hideBanner();
+    });
+
+    document.getElementById('cookie-settings-btn')?.addEventListener('click', () => {
+      settingsPanel?.classList.toggle('hidden');
+    });
+
+    document.getElementById('cookie-save-btn')?.addEventListener('click', () => {
+      saveConsent({
+        essential: true,
+        analytics: analyticsCheckbox?.checked || false,
+        marketing: marketingCheckbox?.checked || false
+      });
+      hideBanner();
+    });
+
+    // Settings trigger reopens banner
+    settingsTrigger?.addEventListener('click', () => {
+      settingsTrigger.classList.add('hidden');
+      settingsPanel?.classList.remove('hidden');
+      showBanner();
+    });
+
+    // Initialize on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

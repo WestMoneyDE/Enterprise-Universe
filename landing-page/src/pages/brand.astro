@@ -1,0 +1,281 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Brand Assets | Enterprise Universe" description="Laden Sie offizielle Enterprise Universe Logos und Brand Assets herunter.">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">← ZURÜCK</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[40vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-purple)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 py-20 relative z-10 text-center">
+      <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-8 border-[var(--scifi-purple)]/50">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+        <span class="text-sm text-[var(--scifi-purple)] font-mono tracking-[0.3em] uppercase">// Brand //</span>
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+      </div>
+
+      <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+        <span class="text-[var(--scifi-text-primary)]">Brand </span>
+        <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_20px_var(--scifi-purple)]">Assets</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+        Offizielle Logos und Markenrichtlinien
+      </p>
+    </div>
+  </section>
+
+  <!-- Logo Downloads -->
+  <section class="py-20 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.02_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.02_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <div class="max-w-6xl mx-auto px-6 relative z-10">
+      <!-- Primary Logo -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-8 flex items-center gap-3">
+          <span class="text-[var(--scifi-purple)]">//</span> Primary Logo
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Dark Background -->
+          <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+            <div class="bg-[var(--scifi-void)] rounded-lg p-8 mb-6 flex items-center justify-center min-h-[150px]">
+              <img src="/logo.svg" alt="Enterprise Universe Logo" class="max-w-full h-auto max-h-[80px]" id="logo-main"/>
+            </div>
+            <div class="flex gap-3">
+              <a href="/logo.svg" download="enterprise-universe-logo.svg" class="flex-1 hud-frame px-4 py-3 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-sm text-center hover:bg-[var(--scifi-purple)]/30 transition-all">
+                SVG
+              </a>
+              <button onclick="downloadAsPng('logo-main', 'enterprise-universe-logo', 800, 160)" class="flex-1 hud-frame px-4 py-3 bg-[var(--scifi-cyan)]/20 text-[var(--scifi-cyan)] font-mono text-sm text-center hover:bg-[var(--scifi-cyan)]/30 transition-all cursor-pointer">
+                PNG
+              </button>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)] font-mono mt-4">Für dunkle Hintergründe</p>
+          </div>
+
+          <!-- Light Background -->
+          <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+            <div class="bg-white rounded-lg p-8 mb-6 flex items-center justify-center min-h-[150px]">
+              <img src="/logo.svg" alt="Enterprise Universe Logo" class="max-w-full h-auto max-h-[80px]" id="logo-light"/>
+            </div>
+            <div class="flex gap-3">
+              <a href="/logo.svg" download="enterprise-universe-logo-color.svg" class="flex-1 hud-frame px-4 py-3 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-sm text-center hover:bg-[var(--scifi-purple)]/30 transition-all">
+                SVG
+              </a>
+              <button onclick="downloadAsPng('logo-light', 'enterprise-universe-logo-light', 800, 160)" class="flex-1 hud-frame px-4 py-3 bg-[var(--scifi-cyan)]/20 text-[var(--scifi-cyan)] font-mono text-sm text-center hover:bg-[var(--scifi-cyan)]/30 transition-all cursor-pointer">
+                PNG
+              </button>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)] font-mono mt-4">Für helle Hintergründe</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo Icon -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-8 flex items-center gap-3">
+          <span class="text-[var(--scifi-cyan)]">//</span> Logo Icon
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Primary Icon -->
+          <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30">
+            <div class="bg-[var(--scifi-void)] rounded-lg p-6 mb-4 flex items-center justify-center">
+              <img src="/logo-icon.svg" alt="Enterprise Universe Icon" class="w-24 h-24" id="icon-primary"/>
+            </div>
+            <div class="flex gap-2">
+              <a href="/logo-icon.svg" download="eu-icon.svg" class="flex-1 hud-frame px-3 py-2 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-xs text-center hover:bg-[var(--scifi-purple)]/30 transition-all">
+                SVG
+              </a>
+              <button onclick="downloadAsPng('icon-primary', 'eu-icon', 512, 512)" class="flex-1 hud-frame px-3 py-2 bg-[var(--scifi-cyan)]/20 text-[var(--scifi-cyan)] font-mono text-xs text-center hover:bg-[var(--scifi-cyan)]/30 transition-all cursor-pointer">
+                PNG
+              </button>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)] font-mono mt-3 text-center">512x512</p>
+          </div>
+
+          <!-- Favicon -->
+          <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30">
+            <div class="bg-[var(--scifi-void)] rounded-lg p-6 mb-4 flex items-center justify-center">
+              <img src="/favicon.svg" alt="Favicon" class="w-24 h-24" id="icon-favicon"/>
+            </div>
+            <div class="flex gap-2">
+              <a href="/favicon.svg" download="eu-favicon.svg" class="flex-1 hud-frame px-3 py-2 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-xs text-center hover:bg-[var(--scifi-purple)]/30 transition-all">
+                SVG
+              </a>
+              <button onclick="downloadAsPng('icon-favicon', 'eu-favicon', 192, 192)" class="flex-1 hud-frame px-3 py-2 bg-[var(--scifi-cyan)]/20 text-[var(--scifi-cyan)] font-mono text-xs text-center hover:bg-[var(--scifi-cyan)]/30 transition-all cursor-pointer">
+                PNG
+              </button>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)] font-mono mt-3 text-center">Favicon</p>
+          </div>
+
+          <!-- White Version -->
+          <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30">
+            <div class="bg-gradient-to-br from-[var(--scifi-purple)] to-[var(--scifi-cyan)] rounded-lg p-6 mb-4 flex items-center justify-center">
+              <img src="/logo-white.svg" alt="White Logo" class="w-24 h-auto" id="logo-white-preview" style="filter: brightness(10);"/>
+            </div>
+            <div class="flex gap-2">
+              <a href="/logo-white.svg" download="eu-logo-white.svg" class="flex-1 hud-frame px-3 py-2 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-xs text-center hover:bg-[var(--scifi-purple)]/30 transition-all">
+                SVG
+              </a>
+            </div>
+            <p class="text-xs text-[var(--scifi-text-muted)] font-mono mt-3 text-center">White Version</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand Colors -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-8 flex items-center gap-3">
+          <span class="text-[var(--scifi-matrix)]">//</span> Brand Colors
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="hud-frame p-4 bg-[var(--scifi-surface)]/30">
+            <div class="w-full h-20 rounded-lg mb-3" style="background: #a855f7;"></div>
+            <p class="text-sm font-mono text-[var(--scifi-text-primary)]">Purple</p>
+            <p class="text-xs font-mono text-[var(--scifi-text-muted)]">#A855F7</p>
+          </div>
+          <div class="hud-frame p-4 bg-[var(--scifi-surface)]/30">
+            <div class="w-full h-20 rounded-lg mb-3" style="background: #06b6d4;"></div>
+            <p class="text-sm font-mono text-[var(--scifi-text-primary)]">Cyan</p>
+            <p class="text-xs font-mono text-[var(--scifi-text-muted)]">#06B6D4</p>
+          </div>
+          <div class="hud-frame p-4 bg-[var(--scifi-surface)]/30">
+            <div class="w-full h-20 rounded-lg mb-3" style="background: #22c55e;"></div>
+            <p class="text-sm font-mono text-[var(--scifi-text-primary)]">Matrix</p>
+            <p class="text-xs font-mono text-[var(--scifi-text-muted)]">#22C55E</p>
+          </div>
+          <div class="hud-frame p-4 bg-[var(--scifi-surface)]/30">
+            <div class="w-full h-20 rounded-lg mb-3" style="background: #0c0a1a;"></div>
+            <p class="text-sm font-mono text-[var(--scifi-text-primary)]">Void</p>
+            <p class="text-xs font-mono text-[var(--scifi-text-muted)]">#0C0A1A</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage Guidelines -->
+      <div>
+        <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono mb-8 flex items-center gap-3">
+          <span class="text-[var(--scifi-orange)]">//</span> Verwendungsrichtlinien
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 border-[var(--scifi-matrix)]/50">
+            <h3 class="text-lg font-bold text-[var(--scifi-matrix)] font-mono mb-4">DO</h3>
+            <ul class="space-y-2 text-sm text-[var(--scifi-text-secondary)] font-mono">
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-matrix)]">+</span>
+                <span>Logo auf dunklem Hintergrund verwenden</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-matrix)]">+</span>
+                <span>Ausreichend Freiraum um das Logo lassen</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-matrix)]">+</span>
+                <span>SVG für Web, PNG für Print verwenden</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-matrix)]">+</span>
+                <span>Proportionen beibehalten</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 border-[var(--scifi-red)]/50">
+            <h3 class="text-lg font-bold text-[var(--scifi-red)] font-mono mb-4">DON'T</h3>
+            <ul class="space-y-2 text-sm text-[var(--scifi-text-secondary)] font-mono">
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-red)]">-</span>
+                <span>Logo verzerren oder rotieren</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-red)]">-</span>
+                <span>Farben verändern</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-red)]">-</span>
+                <span>Effekte oder Schatten hinzufügen</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-[var(--scifi-red)]">-</span>
+                <span>Auf unruhigem Hintergrund platzieren</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[var(--scifi-void)] border-t border-[var(--scifi-purple)]/20 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="/" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-lg font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="flex items-center gap-6 text-sm font-mono">
+          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Impressum</a>
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Datenschutz</a>
+        </div>
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          © 2026 ENTERPRISE_UNIVERSE
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script is:inline>
+    function downloadAsPng(imgId, filename, width, height) {
+      const img = document.getElementById(imgId);
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      // Create a new image to ensure it's loaded
+      const newImg = new Image();
+      newImg.crossOrigin = 'anonymous';
+      newImg.onload = function() {
+        // Fill with transparent background
+        ctx.clearRect(0, 0, width, height);
+
+        // Calculate scaling to fit
+        const scale = Math.min(width / newImg.width, height / newImg.height);
+        const x = (width - newImg.width * scale) / 2;
+        const y = (height - newImg.height * scale) / 2;
+
+        ctx.drawImage(newImg, x, y, newImg.width * scale, newImg.height * scale);
+
+        // Download
+        const link = document.createElement('a');
+        link.download = filename + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      newImg.src = img.src;
+    }
+  </script>
+</Layout>

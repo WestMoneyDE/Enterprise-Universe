@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a"/>
+      <stop offset="50%" style="stop-color:#1a1730"/>
+      <stop offset="100%" style="stop-color:#0c0a1a"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#22d3ee"/>
+    </linearGradient>
+    <!-- Glow Filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Grid Pattern -->
+  <g opacity="0.1">
+    <line x1="0" y1="0" x2="1200" y2="630" stroke="#a855f7" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="0" y2="630" stroke="#a855f7" stroke-width="1"/>
+    <!-- Horizontal lines -->
+    <line x1="0" y1="157" x2="1200" y2="157" stroke="#06b6d4" stroke-width="0.5"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#06b6d4" stroke-width="0.5"/>
+    <line x1="0" y1="473" x2="1200" y2="473" stroke="#06b6d4" stroke-width="0.5"/>
+    <!-- Vertical lines -->
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#06b6d4" stroke-width="0.5"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#06b6d4" stroke-width="0.5"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#06b6d4" stroke-width="0.5"/>
+  </g>
+
+  <!-- Radial glow effect -->
+  <ellipse cx="600" cy="315" rx="500" ry="300" fill="url(#purpleGrad)" opacity="0.1"/>
+
+  <!-- Corner decorations -->
+  <path d="M30 80 L30 30 L80 30" fill="none" stroke="#a855f7" stroke-width="3" filter="url(#softGlow)"/>
+  <path d="M1120 550 L1170 550 L1170 600" fill="none" stroke="#a855f7" stroke-width="3" filter="url(#softGlow)"/>
+  <path d="M1120 80 L1170 80 L1170 30" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+  <path d="M30 550 L30 600 L80 600" fill="none" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+
+  <!-- Logo Icon -->
+  <g transform="translate(100, 230)">
+    <rect width="170" height="170" rx="30" fill="#0c0a1a" stroke="url(#purpleGrad)" stroke-width="4"/>
+    <path d="M0 40 L0 0 L40 0" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round"/>
+    <path d="M130 170 L170 170 L170 130" fill="none" stroke="#a855f7" stroke-width="5" stroke-linecap="round"/>
+    <text x="85" y="115" font-family="monospace" font-size="90" font-weight="700" fill="url(#purpleGrad)" text-anchor="middle" filter="url(#glow)">E</text>
+  </g>
+
+  <!-- Main Text -->
+  <text x="320" y="290" font-family="monospace" font-size="72" font-weight="700" fill="url(#purpleGrad)" letter-spacing="8" filter="url(#glow)">ENTERPRISE</text>
+  <text x="320" y="380" font-family="monospace" font-size="72" font-weight="400" fill="url(#cyanGrad)" letter-spacing="8" filter="url(#softGlow)">UNIVERSE</text>
+
+  <!-- Tagline -->
+  <text x="320" y="450" font-family="monospace" font-size="24" fill="#94a3b8" letter-spacing="2">Smart Home · Smart Factory · Software Development</text>
+
+  <!-- Decorative line -->
+  <line x1="320" y1="410" x2="900" y2="410" stroke="url(#cyanGrad)" stroke-width="2" opacity="0.5"/>
+
+  <!-- Tech dots -->
+  <circle cx="50" cy="315" r="4" fill="#a855f7" filter="url(#softGlow)"/>
+  <circle cx="1150" cy="315" r="4" fill="#06b6d4" filter="url(#softGlow)"/>
+
+  <!-- URL -->
+  <text x="600" y="590" font-family="monospace" font-size="20" fill="#64748b" text-anchor="middle" letter-spacing="3">enterprise-universe.one</text>
+</svg>
