@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="AGB | Enterprise Universe">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">← ZURÜCK</a>
+          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">IMPRESSUM</a>
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">DATENSCHUTZ</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[40vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-matrix)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 py-20 relative z-10 text-center">
+      <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-8 border-[var(--scifi-matrix)]/50">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-matrix)] animate-pulse shadow-[0_0_10px_var(--scifi-matrix)]"></div>
+        <span class="text-sm text-[var(--scifi-matrix)] font-mono tracking-[0.3em] uppercase">// Terms //</span>
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-matrix)] animate-pulse shadow-[0_0_10px_var(--scifi-matrix)]"></div>
+      </div>
+
+      <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+        <span class="text-[var(--scifi-text-primary)]">Allgemeine </span>
+        <span class="text-[var(--scifi-matrix)] drop-shadow-[0_0_20px_var(--scifi-matrix)]">Geschäftsbedingungen</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+        Stand: Januar 2026
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="py-20 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-matrix)/0.02_1px,transparent_1px),linear-gradient(90deg,var(--scifi-matrix)/0.02_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="space-y-8">
+        <!-- §1 Geltungsbereich -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 flex items-center justify-center font-mono text-[var(--scifi-matrix)] font-bold">
+              §1
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Geltungsbereich</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Verträge zwischen der Enterprise Universe GmbH und ihren Kunden.</p>
+            <p>Abweichende Bedingungen des Kunden werden nicht anerkannt, es sei denn, wir stimmen ihrer Geltung ausdrücklich schriftlich zu.</p>
+          </div>
+        </div>
+
+        <!-- §2 Vertragsschluss -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center font-mono text-[var(--scifi-purple)] font-bold">
+              §2
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Vertragsschluss</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Unsere Angebote sind freibleibend und unverbindlich. Ein Vertrag kommt erst durch unsere schriftliche Auftragsbestätigung oder durch Erbringung der Leistung zustande.</p>
+            <div class="mt-4 p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+              <p class="text-[var(--scifi-purple)] font-semibold mb-2">Vertragsbestandteile:</p>
+              <ul class="space-y-1 text-xs">
+                <li>+ Auftragsbestätigung</li>
+                <li>+ Leistungsbeschreibung</li>
+                <li>+ Diese AGB</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- §3 Leistungen -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center font-mono text-[var(--scifi-cyan)] font-bold">
+              §3
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Leistungen</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Der Umfang unserer Leistungen ergibt sich aus der jeweiligen Leistungsbeschreibung und der Auftragsbestätigung.</p>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-cyan)] font-semibold mb-2">Smart Home</p>
+                <p class="text-xs">Planung, Installation und Wartung von Gebäudeautomationssystemen</p>
+              </div>
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-cyan)] font-semibold mb-2">Smart Factory</p>
+                <p class="text-xs">Industrie 4.0 Lösungen und IoT-Integration</p>
+              </div>
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-cyan)] font-semibold mb-2">Softwareentwicklung</p>
+                <p class="text-xs">Individuelle Software- und App-Entwicklung</p>
+              </div>
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-cyan)] font-semibold mb-2">SaaS Platform</p>
+                <p class="text-xs">Cloud-basierte Business-Lösungen</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- §4 Preise und Zahlung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-orange)]/20 border border-[var(--scifi-orange)]/50 flex items-center justify-center font-mono text-[var(--scifi-orange)] font-bold">
+              §4
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Preise und Zahlung</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Alle Preise verstehen sich in Euro zuzüglich der gesetzlichen Mehrwertsteuer.</p>
+            <p>Rechnungen sind innerhalb von 14 Tagen nach Rechnungsstellung ohne Abzug zahlbar.</p>
+            <div class="mt-4 p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-orange)]/30">
+              <p class="text-[var(--scifi-orange)] font-semibold mb-2">Zahlungsbedingungen:</p>
+              <ul class="space-y-1 text-xs">
+                <li>+ Überweisung</li>
+                <li>+ SEPA-Lastschrift</li>
+                <li>+ Kreditkarte (bei SaaS)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- §5 Gewährleistung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 flex items-center justify-center font-mono text-[var(--scifi-matrix)] font-bold">
+              §5
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Gewährleistung</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Für unsere Leistungen gewähren wir die gesetzliche Gewährleistung. Mängel sind unverzüglich nach Entdeckung schriftlich anzuzeigen.</p>
+            <p>Bei berechtigten Mängelrügen erfolgt nach unserer Wahl Nachbesserung oder Ersatzlieferung.</p>
+          </div>
+        </div>
+
+        <!-- §6 Haftung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center font-mono text-[var(--scifi-purple)] font-bold">
+              §6
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Haftung</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Wir haften unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie für Schäden aus der Verletzung von Leben, Körper oder Gesundheit.</p>
+            <p>Bei leichter Fahrlässigkeit haften wir nur bei Verletzung wesentlicher Vertragspflichten, begrenzt auf den vorhersehbaren, typischerweise eintretenden Schaden.</p>
+          </div>
+        </div>
+
+        <!-- §7 Geheimhaltung -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center font-mono text-[var(--scifi-cyan)] font-bold">
+              §7
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Geheimhaltung</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Beide Parteien verpflichten sich, alle im Rahmen der Zusammenarbeit erlangten vertraulichen Informationen geheim zu halten und nicht an Dritte weiterzugeben.</p>
+          </div>
+        </div>
+
+        <!-- §8 Schlussbestimmungen -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-orange)]/20 border border-[var(--scifi-orange)]/50 flex items-center justify-center font-mono text-[var(--scifi-orange)] font-bold">
+              §8
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Schlussbestimmungen</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3 text-sm leading-relaxed">
+            <p>Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts.</p>
+            <p>Gerichtsstand ist Köln, sofern der Kunde Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen ist.</p>
+            <p>Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[var(--scifi-void)] border-t border-[var(--scifi-purple)]/20 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="/" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-lg font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <div class="flex items-center gap-6 text-sm font-mono">
+          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Impressum</a>
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Datenschutz</a>
+        </div>
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          © 2026 ENTERPRISE_UNIVERSE
+        </p>
+      </div>
+    </div>
+  </footer>
+</Layout>

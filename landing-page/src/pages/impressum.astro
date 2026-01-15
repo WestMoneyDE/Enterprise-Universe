@@ -3,208 +3,178 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Impressum | Enterprise Universe">
-  <!-- Scan Line Overlay -->
-  <div class="scan-line-overlay"></div>
-
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-cyan)]/20">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <a href="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-cyan)] group-hover:shadow-[0_0_25px_var(--scifi-cyan)] transition-shadow">
-            <span class="text-[var(--scifi-cyan)] font-bold text-xl">E</span>
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
           </div>
-          <span class="text-xl font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+          <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
-          <a href="/#services" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SERVICES</a>
-          <a href="/ueber-uns" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">ÜBER UNS</a>
-          <a href="/smart-home" class="text-[var(--scifi-orange)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART HOME</a>
-          <a href="/smart-factory" class="text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART FACTORY</a>
-          <a href="/#contact" class="hud-frame px-6 py-3 bg-[var(--scifi-cyan)]/10 text-[var(--scifi-cyan)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-cyan)]/20 transition-all">
-            KONTAKT
-          </a>
+          <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">← ZURÜCK</a>
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">DATENSCHUTZ</a>
+          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">AGB</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <section class="pt-32 pb-24 bg-[var(--scifi-void)] min-h-screen">
-    <div class="max-w-4xl mx-auto px-6">
-      <!-- Header -->
-      <div class="mb-12">
-        <div class="hud-frame inline-block px-6 py-2 mb-6">
-          <span class="text-[var(--scifi-cyan)] font-mono text-sm tracking-[0.2em]">// LEGAL //</span>
-        </div>
-        <h1 class="text-4xl lg:text-5xl font-bold text-[var(--scifi-text-primary)] mb-4">
-          Impressum
-        </h1>
-        <p class="text-[var(--scifi-text-secondary)] font-mono">
-          Angaben gemäß § 5 TMG
-        </p>
+  <!-- Hero Section -->
+  <section class="relative min-h-[40vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-purple)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 py-20 relative z-10 text-center">
+      <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-8 border-[var(--scifi-purple)]/50">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+        <span class="text-sm text-[var(--scifi-purple)] font-mono tracking-[0.3em] uppercase">// Legal //</span>
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
       </div>
 
-      <!-- Content -->
-      <div class="space-y-12">
+      <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+        <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_20px_var(--scifi-purple)]">Impressum</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+        Angaben gemäß § 5 TMG
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="py-20 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.02_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.02_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="space-y-8">
         <!-- Anbieter -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">ANBIETER</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-2">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Anbieter</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-2">
             <p class="text-[var(--scifi-text-primary)] font-semibold">Enterprise Universe GmbH</p>
-            <p>Musterstraße 123</p>
-            <p>12345 Musterstadt</p>
+            <p>Leienbergstr. 1</p>
+            <p>53783 Eitorf</p>
             <p>Deutschland</p>
           </div>
         </div>
 
         <!-- Kontakt -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">KONTAKT</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-2">
-            <p><span class="text-[var(--scifi-text-primary)]">Telefon:</span> +49 (0) 123 456 789</p>
-            <p><span class="text-[var(--scifi-text-primary)]">E-Mail:</span> info@enterprise-universe.one</p>
-            <p><span class="text-[var(--scifi-text-primary)]">Web:</span> www.enterprise-universe.one</p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Kontakt</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-3">
+            <p><span class="text-[var(--scifi-cyan)]">Telefon:</span> +49 221 123 456 78</p>
+            <p><span class="text-[var(--scifi-cyan)]">E-Mail:</span> <a href="mailto:info@enterprise-universe.one" class="hover:text-[var(--scifi-cyan)] transition-colors">info@enterprise-universe.one</a></p>
+            <p><span class="text-[var(--scifi-cyan)]">Web:</span> <a href="https://enterprise-universe.one" class="hover:text-[var(--scifi-cyan)] transition-colors">enterprise-universe.one</a></p>
           </div>
         </div>
 
         <!-- Vertretung -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">VERTRETUNGSBERECHTIGTER GESCHÄFTSFÜHRER</h2>
-          <div class="text-[var(--scifi-text-secondary)]">
-            <p>Maximilian Weber</p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-matrix)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Vertretungsberechtigt</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono">
+            <p>Geschäftsführer: Maximilian Weber</p>
           </div>
         </div>
 
         <!-- Registereintrag -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">REGISTEREINTRAG</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-2">
-            <p><span class="text-[var(--scifi-text-primary)]">Registergericht:</span> Amtsgericht Musterstadt</p>
-            <p><span class="text-[var(--scifi-text-primary)]">Registernummer:</span> HRB 12345</p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-orange)]/20 border border-[var(--scifi-orange)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-orange)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Registereintrag</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-2">
+            <p><span class="text-[var(--scifi-orange)]">Registergericht:</span> Amtsgericht Siegburg</p>
+            <p><span class="text-[var(--scifi-orange)]">Registernummer:</span> HRB 12345</p>
+            <p><span class="text-[var(--scifi-orange)]">USt-IdNr.:</span> DE123456789</p>
           </div>
         </div>
 
-        <!-- USt-ID -->
+        <!-- Haftungsausschluss -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">UMSATZSTEUER-ID</h2>
-          <div class="text-[var(--scifi-text-secondary)]">
-            <p><span class="text-[var(--scifi-text-primary)]">USt-IdNr.:</span> DE123456789</p>
-            <p class="text-sm mt-2">Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz</p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Haftungsausschluss</h2>
           </div>
-        </div>
-
-        <!-- Berufsbezeichnung -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">BERUFSRECHTLICHE REGELUNGEN</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-2">
-            <p><span class="text-[var(--scifi-text-primary)]">Berufsbezeichnung:</span> IT-Dienstleister / Systemintegrator</p>
-            <p><span class="text-[var(--scifi-text-primary)]">Zuständige Kammer:</span> IHK Musterstadt</p>
-            <p><span class="text-[var(--scifi-text-primary)]">Verliehen in:</span> Deutschland</p>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-4 text-sm leading-relaxed">
+            <div>
+              <h3 class="text-[var(--scifi-purple)] font-semibold mb-2">Haftung für Inhalte</h3>
+              <p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p>
+            </div>
+            <div>
+              <h3 class="text-[var(--scifi-purple)] font-semibold mb-2">Haftung für Links</h3>
+              <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+            </div>
+            <div>
+              <h3 class="text-[var(--scifi-purple)] font-semibold mb-2">Urheberrecht</h3>
+              <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
+            </div>
           </div>
         </div>
 
         <!-- Streitschlichtung -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">STREITSCHLICHTUNG</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
-              <a href="https://ec.europa.eu/consumers/odr/" target="_blank" class="text-[var(--scifi-cyan)] hover:underline">https://ec.europa.eu/consumers/odr/</a>
-            </p>
-            <p>Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
-            <p>
-              Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
-              Verbraucherschlichtungsstelle teilzunehmen.
-            </p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Streitschlichtung</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono text-sm leading-relaxed">
+            <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" class="text-[var(--scifi-cyan)] hover:underline">https://ec.europa.eu/consumers/odr</a></p>
+            <p class="mt-4">Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
           </div>
         </div>
-
-        <!-- Haftung für Inhalte -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">HAFTUNG FÜR INHALTE</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
-              allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
-              verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
-              zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-            </p>
-            <p>
-              Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
-              Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt
-              der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden
-              Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
-            </p>
-          </div>
-        </div>
-
-        <!-- Haftung für Links -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">HAFTUNG FÜR LINKS</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
-              Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
-              verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-            </p>
-            <p>
-              Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
-              Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente
-              inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
-              Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige
-              Links umgehend entfernen.
-            </p>
-          </div>
-        </div>
-
-        <!-- Urheberrecht -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-cyan)] font-mono mb-6">URHEBERRECHT</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
-              deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
-              außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen
-              Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht
-              kommerziellen Gebrauch gestattet.
-            </p>
-            <p>
-              Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
-              Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie
-              trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden
-              Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Back Link -->
-      <div class="mt-12">
-        <a href="/" class="hud-frame inline-flex items-center gap-2 px-6 py-3 text-[var(--scifi-cyan)] font-mono text-sm hover:bg-[var(--scifi-cyan)]/10 transition-all">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-          </svg>
-          ZURÜCK ZUR STARTSEITE
-        </a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 bg-[var(--scifi-surface)] border-t border-[var(--scifi-cyan)]/20">
+  <footer class="bg-[var(--scifi-void)] border-t border-[var(--scifi-purple)]/20 py-12">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <a href="/" class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)] flex items-center justify-center">
-            <span class="text-[var(--scifi-cyan)] font-bold">E</span>
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
           </div>
-          <span class="font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+          <span class="text-lg font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
         </a>
-        <div class="flex gap-6 text-sm">
-          <a href="/impressum" class="text-[var(--scifi-cyan)] font-mono">Impressum</a>
-          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">Datenschutz</a>
-          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">AGB</a>
+        <div class="flex items-center gap-6 text-sm font-mono">
+          <a href="/datenschutz" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Datenschutz</a>
+          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">AGB</a>
         </div>
         <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
           © 2026 ENTERPRISE_UNIVERSE

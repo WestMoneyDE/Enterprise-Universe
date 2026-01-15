@@ -2,369 +2,215 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Datenschutzerklärung | Enterprise Universe">
-  <!-- Scan Line Overlay -->
-  <div class="scan-line-overlay"></div>
-
+<Layout title="Datenschutz | Enterprise Universe">
   <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-cyan)]/20">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <a href="/" class="flex items-center gap-3 group">
-          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-cyan)] group-hover:shadow-[0_0_25px_var(--scifi-cyan)] transition-shadow">
-            <span class="text-[var(--scifi-cyan)] font-bold text-xl">E</span>
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
           </div>
-          <span class="text-xl font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+          <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
-          <a href="/#services" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SERVICES</a>
-          <a href="/ueber-uns" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">ÜBER UNS</a>
-          <a href="/smart-home" class="text-[var(--scifi-orange)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART HOME</a>
-          <a href="/smart-factory" class="text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">SMART FACTORY</a>
-          <a href="/#contact" class="hud-frame px-6 py-3 bg-[var(--scifi-cyan)]/10 text-[var(--scifi-cyan)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-cyan)]/20 transition-all">
-            KONTAKT
-          </a>
+          <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">← ZURÜCK</a>
+          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">IMPRESSUM</a>
+          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">AGB</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Main Content -->
-  <section class="pt-32 pb-24 bg-[var(--scifi-void)] min-h-screen">
-    <div class="max-w-4xl mx-auto px-6">
-      <!-- Header -->
-      <div class="mb-12">
-        <div class="hud-frame inline-block px-6 py-2 mb-6">
-          <span class="text-[var(--scifi-purple)] font-mono text-sm tracking-[0.2em]">// PRIVACY //</span>
-        </div>
-        <h1 class="text-4xl lg:text-5xl font-bold text-[var(--scifi-text-primary)] mb-4">
-          Datenschutzerklärung
-        </h1>
-        <p class="text-[var(--scifi-text-secondary)] font-mono">
-          Stand: Januar 2026
-        </p>
+  <!-- Hero Section -->
+  <section class="relative min-h-[40vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-cyan)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 py-20 relative z-10 text-center">
+      <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-8 border-[var(--scifi-cyan)]/50">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-cyan)] animate-pulse shadow-[0_0_10px_var(--scifi-cyan)]"></div>
+        <span class="text-sm text-[var(--scifi-cyan)] font-mono tracking-[0.3em] uppercase">// Privacy //</span>
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-cyan)] animate-pulse shadow-[0_0_10px_var(--scifi-cyan)]"></div>
       </div>
 
-      <!-- Content -->
-      <div class="space-y-12">
-        <!-- Übersicht -->
+      <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+        <span class="text-[var(--scifi-cyan)] drop-shadow-[0_0_20px_var(--scifi-cyan)]">Datenschutz</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+        Datenschutzerklärung gemäß DSGVO
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="py-20 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-cyan)/0.02_1px,transparent_1px),linear-gradient(90deg,var(--scifi-cyan)/0.02_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="space-y-8">
+        <!-- Verantwortlicher -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">1. DATENSCHUTZ AUF EINEN BLICK</h2>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4">Allgemeine Hinweise</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen
-              Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen
-              Sie persönlich identifiziert werden können.
-            </p>
-          </div>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4 mt-8">Datenerfassung auf dieser Website</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Wer ist verantwortlich für die Datenerfassung auf dieser Website?</span><br/>
-              Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten
-              können Sie dem Abschnitt „Hinweis zur verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Wie erfassen wir Ihre Daten?</span><br/>
-              Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich
-              z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben. Andere Daten werden automatisch
-              oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Wofür nutzen wir Ihre Daten?</span><br/>
-              Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten.
-              Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Welche Rechte haben Sie bezüglich Ihrer Daten?</span><br/>
-              Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer
-              gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung
-              oder Löschung dieser Daten zu verlangen.
-            </p>
-          </div>
-        </div>
-
-        <!-- Verantwortliche Stelle -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">2. VERANTWORTLICHE STELLE</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
-            <div class="hud-frame p-4 bg-[var(--scifi-void)]/50">
-              <p class="text-[var(--scifi-text-primary)] font-semibold">Enterprise Universe GmbH</p>
-              <p>Musterstraße 123</p>
-              <p>12345 Musterstadt</p>
-              <p class="mt-2">Telefon: +49 (0) 123 456 789</p>
-              <p>E-Mail: datenschutz@enterprise-universe.one</p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
             </div>
-            <p>
-              Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit
-              anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.
-            </p>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">1. Verantwortlicher</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-2 text-sm">
+            <p class="text-[var(--scifi-text-primary)] font-semibold">Enterprise Universe GmbH</p>
+            <p>Leienbergstr. 1, 53783 Eitorf</p>
+            <p>E-Mail: datenschutz@enterprise-universe.one</p>
           </div>
         </div>
 
-        <!-- Speicherdauer -->
+        <!-- Datenerhebung -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">3. SPEICHERDAUER</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde,
-              verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt.
-              Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung
-              widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für
-              die Speicherung Ihrer personenbezogenen Daten haben.
-            </p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">2. Datenerhebung</h2>
           </div>
-        </div>
-
-        <!-- Rechtsgrundlagen -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">4. RECHTSGRUNDLAGEN</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Art. 6 Abs. 1 lit. a DSGVO</span> –
-              Einwilligung: Die betroffene Person hat ihre Einwilligung zu der Verarbeitung gegeben.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Art. 6 Abs. 1 lit. b DSGVO</span> –
-              Vertrag: Die Verarbeitung ist für die Erfüllung eines Vertrags erforderlich.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Art. 6 Abs. 1 lit. c DSGVO</span> –
-              Rechtliche Verpflichtung: Die Verarbeitung ist zur Erfüllung einer rechtlichen Verpflichtung erforderlich.
-            </p>
-            <p>
-              <span class="text-[var(--scifi-text-primary)] font-semibold">Art. 6 Abs. 1 lit. f DSGVO</span> –
-              Berechtigte Interessen: Die Verarbeitung ist zur Wahrung berechtigter Interessen erforderlich.
-            </p>
-          </div>
-        </div>
-
-        <!-- Ihre Rechte -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">5. IHRE RECHTE</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>Sie haben gegenüber uns folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:</p>
-            <ul class="list-none space-y-2 ml-4">
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Auskunft</strong> (Art. 15 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Berichtigung</strong> (Art. 16 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Löschung</strong> (Art. 17 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Datenübertragbarkeit</strong> (Art. 20 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Widerspruchsrecht</strong> (Art. 21 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Recht auf Widerruf der Einwilligung</strong> (Art. 7 Abs. 3 DSGVO)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span><strong class="text-[var(--scifi-text-primary)]">Beschwerderecht bei der Aufsichtsbehörde</strong> (Art. 77 DSGVO)</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Widerspruch -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 border-[var(--scifi-orange)]/50">
-          <h2 class="text-xl font-bold text-[var(--scifi-orange)] font-mono mb-6">6. WIDERSPRUCH GEGEN WERBE-MAILS</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von
-              nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen.
-              Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten
-              Zusendung von Werbeinformationen, etwa durch Spam-E-Mails, vor.
-            </p>
-          </div>
-        </div>
-
-        <!-- Datenerfassung -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">7. DATENERFASSUNG AUF DIESER WEBSITE</h2>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4">Server-Log-Dateien</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien,
-              die Ihr Browser automatisch an uns übermittelt. Dies sind:
-            </p>
-            <ul class="list-none space-y-2 ml-4">
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>Browsertyp und Browserversion</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>Verwendetes Betriebssystem</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>Referrer URL</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>Hostname des zugreifenden Rechners</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>Uhrzeit der Serveranfrage</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="text-[var(--scifi-cyan)]">+</span>
-                <span>IP-Adresse</span>
-              </li>
-            </ul>
-            <p>
-              Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung
-              dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
-            </p>
-          </div>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4 mt-8">Kontaktformular</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
-              Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der
-              Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht
-              ohne Ihre Einwilligung weiter.
-            </p>
-            <p>
-              Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre
-              Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher
-              Maßnahmen erforderlich ist.
-            </p>
-          </div>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4 mt-8">Anfrage per E-Mail</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Wenn Sie uns per E-Mail kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden
-              personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns
-              gespeichert und verarbeitet.
-            </p>
-          </div>
-        </div>
-
-        <!-- Hosting -->
-        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">8. HOSTING</h2>
-
-          <h3 class="text-lg font-bold text-[var(--scifi-text-primary)] font-mono mb-4">GitHub Pages</h3>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Wir hosten unsere Website bei GitHub Pages. Anbieter ist die GitHub Inc., 88 Colin P Kelly Jr St,
-              San Francisco, CA 94107, USA.
-            </p>
-            <p>
-              GitHub kann beim Aufruf dieser Webseiten technische Informationen inklusive Ihrer IP-Adresse
-              aufzeichnen. Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der
-              Datenschutzerklärung von GitHub unter:
-              <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" class="text-[var(--scifi-cyan)] hover:underline">
-                https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement
-              </a>
-            </p>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-4 text-sm leading-relaxed">
+            <p>Wir erheben personenbezogene Daten nur, wenn Sie uns diese freiwillig mitteilen, z.B. über unser Kontaktformular.</p>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-purple)] font-semibold mb-2">Erhobene Daten:</p>
+                <ul class="space-y-1 text-xs">
+                  <li>+ Name</li>
+                  <li>+ E-Mail-Adresse</li>
+                  <li>+ Unternehmen</li>
+                  <li>+ Nachrichteninhalt</li>
+                </ul>
+              </div>
+              <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <p class="text-[var(--scifi-purple)] font-semibold mb-2">Rechtsgrundlage:</p>
+                <ul class="space-y-1 text-xs">
+                  <li>+ Art. 6 Abs. 1 lit. a DSGVO</li>
+                  <li>+ Art. 6 Abs. 1 lit. b DSGVO</li>
+                  <li>+ Art. 6 Abs. 1 lit. f DSGVO</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Cookies -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">9. COOKIES</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Unsere Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf Ihrem Rechner
-              keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher,
-              effektiver und sicherer zu machen.
-            </p>
-            <p>
-              Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies". Sie werden nach
-              Ende Ihres Besuchs automatisch gelöscht. Andere Cookies bleiben auf Ihrem Endgerät gespeichert
-              bis Sie diese löschen.
-            </p>
-            <p>
-              Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden
-              und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell
-              ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren.
-            </p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-matrix)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">3. Cookies</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono space-y-4 text-sm leading-relaxed">
+            <p>Unsere Website verwendet Cookies. Dabei handelt es sich um kleine Textdateien, die auf Ihrem Endgerät gespeichert werden.</p>
+            <div class="p-4 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-matrix)]/30">
+              <p class="text-[var(--scifi-matrix)] font-semibold mb-2">Cookie-Typen:</p>
+              <ul class="space-y-2 text-xs">
+                <li><span class="text-[var(--scifi-cyan)]">Technisch notwendig:</span> Für die Grundfunktionen der Website</li>
+                <li><span class="text-[var(--scifi-cyan)]">Analyse:</span> Zur Verbesserung unseres Angebots (nur mit Einwilligung)</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <!-- SSL -->
+        <!-- Ihre Rechte -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">10. SSL- BZW. TLS-VERSCHLÜSSELUNG</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte,
-              wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber senden, eine
-              SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die
-              Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in
-              Ihrer Browserzeile.
-            </p>
-            <p>
-              Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns
-              übermitteln, nicht von Dritten mitgelesen werden.
-            </p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-orange)]/20 border border-[var(--scifi-orange)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-orange)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">4. Ihre Rechte</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono text-sm">
+            <p class="mb-4">Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
+            <div class="grid md:grid-cols-2 gap-3">
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Recht auf Auskunft</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Recht auf Berichtigung</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Recht auf Löschung</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Recht auf Einschränkung</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Recht auf Datenübertragbarkeit</span>
+              </div>
+              <div class="flex items-center gap-2 p-3 bg-[var(--scifi-void)]/50 rounded-lg border border-[var(--scifi-border)]">
+                <span class="text-[var(--scifi-orange)]">+</span>
+                <span>Widerspruchsrecht</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Änderungen -->
+        <!-- Hosting -->
         <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30">
-          <h2 class="text-xl font-bold text-[var(--scifi-purple)] font-mono mb-6">11. ÄNDERUNGEN</h2>
-          <div class="text-[var(--scifi-text-secondary)] space-y-4">
-            <p>
-              Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen
-              rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der
-              Datenschutzerklärung umzusetzen. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.
-            </p>
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">5. Hosting</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono text-sm leading-relaxed">
+            <p>Diese Website wird bei GitHub Pages gehostet. Beim Besuch der Website werden automatisch Informationen in Server-Log-Dateien gespeichert, die Ihr Browser übermittelt.</p>
           </div>
         </div>
-      </div>
 
-      <!-- Back Link -->
-      <div class="mt-12">
-        <a href="/" class="hud-frame inline-flex items-center gap-2 px-6 py-3 text-[var(--scifi-cyan)] font-mono text-sm hover:bg-[var(--scifi-cyan)]/10 transition-all">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-          </svg>
-          ZURÜCK ZUR STARTSEITE
-        </a>
+        <!-- Kontakt -->
+        <div class="hud-frame p-8 bg-[var(--scifi-surface)]/30 border-[var(--scifi-cyan)]/50">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-lg bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--scifi-text-primary)] font-mono">Fragen?</h2>
+          </div>
+          <div class="text-[var(--scifi-text-secondary)] font-mono text-sm">
+            <p>Bei Fragen zum Datenschutz wenden Sie sich bitte an:</p>
+            <p class="mt-2 text-[var(--scifi-cyan)]">datenschutz@enterprise-universe.one</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 bg-[var(--scifi-surface)] border-t border-[var(--scifi-cyan)]/20">
+  <footer class="bg-[var(--scifi-void)] border-t border-[var(--scifi-purple)]/20 py-12">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <a href="/" class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)] flex items-center justify-center">
-            <span class="text-[var(--scifi-cyan)] font-bold">E</span>
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
           </div>
-          <span class="font-bold text-[var(--scifi-cyan)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+          <span class="text-lg font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
         </a>
-        <div class="flex gap-6 text-sm">
-          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">Impressum</a>
-          <a href="/datenschutz" class="text-[var(--scifi-purple)] font-mono">Datenschutz</a>
-          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">AGB</a>
+        <div class="flex items-center gap-6 text-sm font-mono">
+          <a href="/impressum" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">Impressum</a>
+          <a href="/agb" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors">AGB</a>
         </div>
         <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
           © 2026 ENTERPRISE_UNIVERSE
