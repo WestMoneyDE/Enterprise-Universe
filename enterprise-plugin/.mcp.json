@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "enterprise-api": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/api-server.js"],
+      "env": {
+        "API_BASE_URL": "https://app.enterprise-universe.one",
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
