@@ -20,6 +20,8 @@ const PaymentProcessor = require('./workers/payment-processor');
 const ContractWatcher = require('./workers/contract-watcher');
 const CleanupWorker = require('./workers/cleanup-worker');
 const AnalyticsCollector = require('./workers/analytics-collector');
+const OwnerAssignment = require('./workers/owner-assignment');
+const PresentationSender = require('./workers/presentation-sender');
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DAEMON REGISTRY
@@ -93,6 +95,20 @@ const DAEMONS = {
         name: 'Analytics Collector',
         worker: AnalyticsCollector,
         schedule: '0 * * * *',  // Every hour
+        enabled: true,
+        critical: false
+    },
+    ownerAssignment: {
+        name: 'Owner Assignment',
+        worker: OwnerAssignment,
+        schedule: '*/15 * * * *',  // Every 15 minutes
+        enabled: true,
+        critical: true
+    },
+    presentationSender: {
+        name: 'Presentation Sender',
+        worker: PresentationSender,
+        schedule: '*/30 * * * *',  // Every 30 minutes
         enabled: true,
         critical: false
     }

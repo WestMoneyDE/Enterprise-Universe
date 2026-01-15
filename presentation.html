@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ihre persönliche Präsentation | NEXUS Enterprise</title>
+    <meta name="description" content="Entdecken Sie Ihre maßgeschneiderte Smart Home & Building Lösung">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void: #0a0a0f;
+            --panel: rgba(20, 20, 30, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --cyan: oklch(85% 0.15 195);
+            --magenta: oklch(70% 0.25 320);
+            --gold: oklch(80% 0.15 85);
+            --text: #e4e4e7;
+            --muted: #71717a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--void);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, rgba(0,240,255,0.1) 0%, transparent 70%);
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 1.5rem;
+        }
+
+        .header-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.125rem;
+            color: var(--void);
+        }
+
+        .logo-text {
+            font-size: 1.125rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-sub {
+            font-size: 0.625rem;
+            color: var(--cyan);
+            letter-spacing: 0.3em;
+        }
+
+        .session-id {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 1.5rem;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(0,240,255,0.3);
+            border-radius: 9999px;
+            background: rgba(0,240,255,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .badge-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: var(--cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .badge-text {
+            font-size: 0.75rem;
+            font-family: monospace;
+            letter-spacing: 0.15em;
+            color: var(--cyan);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 40rem;
+            margin: 0 auto 3rem;
+        }
+
+        /* Stats Grid */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 36rem;
+            margin: 0 auto 4rem;
+        }
+
+        .stat {
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-value.cyan { color: var(--cyan); }
+        .stat-value.magenta { color: var(--magenta); }
+        .stat-value.gold { color: var(--gold); }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* Features Section */
+        .features {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 1.5rem;
+            background: linear-gradient(180deg, transparent, rgba(0,240,255,0.02), transparent);
+        }
+
+        .features-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--muted);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature {
+            padding: 2rem;
+            border-radius: 1rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+
+        .feature:hover {
+            border-color: rgba(0,240,255,0.3);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-icon.cyan { background: rgba(0,240,255,0.1); color: var(--cyan); }
+        .feature-icon.magenta { background: rgba(139,92,246,0.1); color: var(--magenta); }
+        .feature-icon.gold { background: rgba(234,179,8,0.1); color: var(--gold); }
+
+        .feature h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            position: relative;
+            z-index: 10;
+            padding: 6rem 1.5rem;
+        }
+
+        .cta-card {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(139,92,246,0.1));
+            border: 1px solid rgba(0,240,255,0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-glow-1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8rem;
+            height: 8rem;
+            background: rgba(0,240,255,0.2);
+            border-radius: 50%;
+            filter: blur(3rem);
+        }
+
+        .cta-glow-2 {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10rem;
+            height: 10rem;
+            background: rgba(139,92,246,0.2);
+            border-radius: 50%;
+            filter: blur(3rem);
+        }
+
+        .cta-content {
+            position: relative;
+        }
+
+        .cta h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            color: var(--void);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(0,240,255,0.5);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-logo-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+            color: var(--void);
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+
+        .footer-partners {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--muted);
+        }
+
+        .footer-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #52525b;
+        }
+
+        .footer-meta {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+
+        .footer-meta p {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #3f3f46;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-partners {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">N</div>
+                <div>
+                    <div class="logo-text">NEXUS</div>
+                    <div class="logo-sub">ENTERPRISE</div>
+                </div>
+            </div>
+            <div class="session-id" id="sessionId">SESSION: ...</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text">PERSÖNLICHE PRÄSENTATION</span>
+        </div>
+
+        <h1>
+            Ihre <span class="gradient-text">Smart Building</span> Zukunft
+        </h1>
+
+        <p class="hero-desc">
+            Maßgeschneiderte Lösungen für intelligente Gebäudeautomation,
+            Energieeffizienz und nahtlose Integration.
+        </p>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value cyan">30%</div>
+                <div class="stat-label">Energieeinsparung</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value magenta">24/7</div>
+                <div class="stat-label">Monitoring</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value gold">100%</div>
+                <div class="stat-label">Integration</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-inner">
+            <div class="section-title">
+                <h2>Ihre Lösung im Detail</h2>
+                <p>Komponenten Ihres Smart Building Systems</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature">
+                    <div class="feature-icon cyan">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3>LOXONE Automation</h3>
+                    <p>Zentrale Steuerung aller Gebäudefunktionen über das preisgekrönte LOXONE System. Als Gold Partner bieten wir höchste Qualität.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon magenta">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3>Energie-Management</h3>
+                    <p>Intelligente Steuerung von Heizung, Klima und Beleuchtung. Automatische Optimierung für maximale Effizienz.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon gold">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <h3>Verisure Security</h3>
+                    <p>Professionelle Sicherheitslösungen mit 24/7 Alarmzentrale. Videoüberwachung und Zutrittskontrolle.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon cyan">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <h3>Mobile Steuerung</h3>
+                    <p>Volle Kontrolle über Ihr Smartphone oder Tablet. Von überall auf der Welt Ihr Gebäude steuern.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon magenta">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Detaillierte Auswertungen und Berichte. Erkennen Sie Optimierungspotenziale sofort.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon gold">
+                        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3>Dedicated Support</h3>
+                    <p>Persönlicher Ansprechpartner und schneller Support. 2 Jahre Garantie auf alle Komponenten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-card">
+            <div class="cta-glow-1"></div>
+            <div class="cta-glow-2"></div>
+            <div class="cta-content">
+                <h2>Bereit für den nächsten Schritt?</h2>
+                <p>Vereinbaren Sie jetzt Ihren persönlichen Beratungstermin. Wir erstellen Ihnen ein individuelles Angebot.</p>
+                <div class="cta-buttons">
+                    <a href="mailto:info@enterprise-universe.com?subject=Beratungstermin%20anfragen" class="btn btn-primary">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Termin vereinbaren
+                    </a>
+                    <a href="tel:+4930123456789" class="btn btn-secondary">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Direkt anrufen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-row">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">N</div>
+                    <span class="footer-copyright">© 2026 Enterprise Universe. All rights reserved.</span>
+                </div>
+                <div class="footer-partners">
+                    <span>LOXONE Gold Partner</span>
+                    <span class="footer-dot"></span>
+                    <span>ComfortClick</span>
+                    <span class="footer-dot"></span>
+                    <span>Verisure</span>
+                </div>
+            </div>
+            <div class="footer-meta">
+                <p id="metaInfo">Präsentation erstellt am <span id="date"></span> | Token: <span id="token"></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Extract token from URL
+        const pathParts = window.location.pathname.split('/');
+        const token = pathParts[pathParts.length - 1] || 'NEXUS';
+
+        // Update session ID
+        document.getElementById('sessionId').textContent = 'SESSION: ' + token.substring(0, 8).toUpperCase();
+
+        // Update footer meta
+        document.getElementById('date').textContent = new Date().toLocaleDateString('de-DE');
+        document.getElementById('token').textContent = token;
+
+        // Fetch deal-specific data and personalize presentation
+        async function loadDealData() {
+            try {
+                const response = await fetch('/api/presentation/' + encodeURIComponent(token));
+                const data = await response.json();
+
+                if (data.found && data.deal) {
+                    // Update hero title - use DOM methods for safety
+                    const heroTitle = document.querySelector('h1');
+                    if (data.deal.name && heroTitle) {
+                        const projectName = data.deal.name.split(' - ')[0].substring(0, 50);
+                        heroTitle.textContent = '';
+                        heroTitle.appendChild(document.createTextNode('Ihr '));
+                        const span = document.createElement('span');
+                        span.className = 'gradient-text';
+                        span.textContent = projectName;
+                        heroTitle.appendChild(span);
+                        heroTitle.appendChild(document.createTextNode(' Projekt'));
+                    }
+
+                    // Update description if available
+                    if (data.deal.description) {
+                        const desc = document.querySelector('.hero-desc');
+                        if (desc) desc.textContent = data.deal.description.substring(0, 200);
+                    }
+
+                    // Update value stat if available
+                    if (data.deal.value) {
+                        const valueFormatted = new Intl.NumberFormat('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR',
+                            maximumFractionDigits: 0
+                        }).format(data.deal.value);
+
+                        const firstStat = document.querySelector('.stat:first-child');
+                        if (firstStat) {
+                            const valueEl = firstStat.querySelector('.stat-value');
+                            const labelEl = firstStat.querySelector('.stat-label');
+                            if (valueEl) valueEl.textContent = valueFormatted;
+                            if (labelEl) labelEl.textContent = 'Projektwert';
+                        }
+                    }
+
+                    // Personalize badge if contact data available
+                    if (data.contact && data.contact.company) {
+                        const badge = document.querySelector('.badge-text');
+                        if (badge) badge.textContent = 'PRÄSENTATION FÜR ' + data.contact.company.toUpperCase().substring(0, 30);
+                    }
+
+                    // Update features based on deal type
+                    if (data.deal.features && data.deal.features.length > 0) {
+                        updateFeatures(data.deal.features);
+                    }
+                }
+            } catch (error) {
+                console.log('Using default presentation content');
+            }
+        }
+
+        function updateFeatures(features) {
+            const featureCards = document.querySelectorAll('.feature');
+            const featureData = {
+                'LOXONE Automation': { title: 'LOXONE Automation', desc: 'Zentrale Steuerung aller Gebäudefunktionen über das preisgekrönte LOXONE System. Als Gold Partner bieten wir höchste Qualität.' },
+                'Energie-Management': { title: 'Energie-Management', desc: 'Intelligente Steuerung von Heizung, Klima und Beleuchtung. Automatische Optimierung für maximale Effizienz.' },
+                'Verisure Security': { title: 'Verisure Security', desc: 'Professionelle Sicherheitslösungen mit 24/7 Alarmzentrale. Videoüberwachung und Zutrittskontrolle.' },
+                'Mobile Steuerung': { title: 'Mobile Steuerung', desc: 'Volle Kontrolle über Ihr Smartphone oder Tablet. Von überall auf der Welt Ihr Gebäude steuern.' },
+                'IoT Integration': { title: 'IoT Integration', desc: 'Nahtlose Verbindung aller Geräte und Sensoren. Echtzeit-Daten für optimale Entscheidungen.' },
+                'Industrie 4.0': { title: 'Industrie 4.0', desc: 'Digitale Transformation Ihrer Produktion. Smart Factory Lösungen für maximale Effizienz.' },
+                'Predictive Maintenance': { title: 'Predictive Maintenance', desc: 'Vorausschauende Wartung durch KI-gestützte Analyse. Minimieren Sie Ausfallzeiten.' },
+                'Custom Software': { title: 'Custom Software', desc: 'Maßgeschneiderte Softwarelösungen für Ihre spezifischen Anforderungen.' },
+                'API Integration': { title: 'API Integration', desc: 'Nahtlose Integration in Ihre bestehende IT-Infrastruktur und Drittsysteme.' },
+                'Cloud Services': { title: 'Cloud Services', desc: 'Skalierbare Cloud-Lösungen für maximale Flexibilität und Verfügbarkeit.' },
+                '24/7 Alarmzentrale': { title: '24/7 Alarmzentrale', desc: 'Rund-um-die-Uhr Überwachung durch professionelle Sicherheitskräfte.' },
+                'Videoüberwachung': { title: 'Videoüberwachung', desc: 'Hochauflösende Kameras mit KI-gestützter Bewegungserkennung.' }
+            };
+
+            features.slice(0, 6).forEach((feature, index) => {
+                if (featureCards[index] && featureData[feature]) {
+                    const card = featureCards[index];
+                    const info = featureData[feature];
+                    const titleEl = card.querySelector('h3');
+                    const descEl = card.querySelector('p');
+                    if (titleEl) titleEl.textContent = info.title;
+                    if (descEl) descEl.textContent = info.desc;
+                }
+            });
+        }
+
+        // Load deal data on page load
+        loadDealData();
+    </script>
+</body>
+</html>

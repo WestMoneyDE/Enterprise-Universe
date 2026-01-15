@@ -11,6 +11,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const HUBSPOT_TOKEN = process.env.HUBSPOT_API_KEY || process.env.HUBSPOT_ACCESS_TOKEN;
 const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '50');
 const DRY_RUN = process.argv.includes('--dry-run');
+const HIGH_SPEED = process.argv.includes('--high-speed');
+const REQUEST_DELAY = HIGH_SPEED ? 30 : 100;  // ms between requests
+const BATCH_DELAY = HIGH_SPEED ? 100 : 500;   // ms between batches
 
 // Memory optimization: Use streaming approach
 let processedCount = 0;
@@ -128,8 +131,8 @@ async function processBatch(deals) {
             if (global.gc) global.gc();
         }
 
-        // Rate limiting: 100ms delay between requests
-        await new Promise(r => setTimeout(r, 100));
+        // Rate limiting delay between requests
+        await new Promise(r => setTimeout(r, REQUEST_DELAY));
     }
 
     return results;
@@ -139,8 +142,8 @@ async function main() {
     console.log('═══════════════════════════════════════════════════════════');
     console.log('神 HUBSPOT DEAL OWNER ASSIGNMENT');
     console.log('═══════════════════════════════════════════════════════════');
-    console.log(`Mode: ${DRY_RUN ? 'DRY RUN (no changes)' : 'LIVE'}`);
-    console.log(`Batch Size: ${BATCH_SIZE}`);
+    console.log(`Mode: ${DRY_RUN ? 'DRY RUN (no changes)' : 'LIVE'}${HIGH_SPEED ? ' ⚡ HIGH SPEED' : ''}`);
+    console.log(`Batch Size: ${BATCH_SIZE} | Delays: ${REQUEST_DELAY}ms/${BATCH_DELAY}ms`);
     console.log('');
 
     if (!HUBSPOT_TOKEN) {
@@ -198,7 +201,7 @@ async function main() {
         response.results = null;
 
         // Delay between batches
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, BATCH_DELAY));
     }
 
     console.log('\n═══════════════════════════════════════════════════════════');

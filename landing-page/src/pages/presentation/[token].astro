@@ -1,0 +1,257 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  // For static generation, we return an empty array
+  // The page will be generated at build time for known tokens
+  // or use SSR/dynamic rendering in production
+  return [];
+}
+
+// Enable prerendering for static build
+// Note: For dynamic tokens, use SSR adapter in production
+export const prerender = true;
+
+const { token } = Astro.params;
+---
+
+<Layout
+  title="Ihre persönliche Präsentation | NEXUS Enterprise"
+  description="Entdecken Sie Ihre maßgeschneiderte Smart Home & Building Lösung"
+>
+  <main class="min-h-screen bg-[var(--scifi-void)] relative overflow-hidden">
+    <!-- Animated Background Grid -->
+    <div class="fixed inset-0 pointer-events-none">
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [animation:gridMove_20s_linear_infinite]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.1)_0%,transparent_70%)]"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 py-8 px-6">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--scifi-cyan)] to-[var(--scifi-magenta)] flex items-center justify-center">
+            <span class="text-[var(--scifi-void)] font-bold text-lg">N</span>
+          </div>
+          <div>
+            <div class="text-lg font-bold text-white tracking-wider">NEXUS</div>
+            <div class="text-[10px] text-[var(--scifi-cyan)] tracking-[0.3em]">ENTERPRISE</div>
+          </div>
+        </div>
+        <div class="text-xs text-zinc-500 font-mono">
+          SESSION: {token?.substring(0, 8).toUpperCase()}
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 py-20 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 border border-[var(--scifi-cyan)]/30 rounded-full bg-[var(--scifi-cyan)]/5">
+          <span class="w-2 h-2 rounded-full bg-[var(--scifi-cyan)] animate-pulse"></span>
+          <span class="text-xs text-[var(--scifi-cyan)] font-mono tracking-wider">PERSÖNLICHE PRÄSENTATION</span>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          Ihre <span class="bg-gradient-to-r from-[var(--scifi-cyan)] to-[var(--scifi-magenta)] bg-clip-text text-transparent">Smart Building</span> Zukunft
+        </h1>
+
+        <p class="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+          Maßgeschneiderte Lösungen für intelligente Gebäudeautomation,
+          Energieeffizienz und nahtlose Integration.
+        </p>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-3 gap-6 max-w-2xl mx-auto mb-16">
+          <div class="p-6 rounded-xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)]">
+            <div class="text-3xl font-bold text-[var(--scifi-cyan)] mb-1">30%</div>
+            <div class="text-xs text-zinc-500">Energieeinsparung</div>
+          </div>
+          <div class="p-6 rounded-xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)]">
+            <div class="text-3xl font-bold text-[var(--scifi-magenta)] mb-1">24/7</div>
+            <div class="text-xs text-zinc-500">Monitoring</div>
+          </div>
+          <div class="p-6 rounded-xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)]">
+            <div class="text-3xl font-bold text-[var(--scifi-gold)] mb-1">100%</div>
+            <div class="text-xs text-zinc-500">Integration</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="relative z-10 py-20 px-6 bg-gradient-to-b from-transparent via-[var(--scifi-cyan)]/5 to-transparent">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-white mb-4">Ihre Lösung im Detail</h2>
+          <p class="text-zinc-400">Komponenten Ihres Smart Building Systems</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Feature 1 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-cyan)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-cyan)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">LOXONE Automation</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Zentrale Steuerung aller Gebäudefunktionen über das preisgekrönte LOXONE System.
+              Als Gold Partner bieten wir höchste Qualität.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-magenta)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-magenta)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-magenta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Energie-Management</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Intelligente Steuerung von Heizung, Klima und Beleuchtung.
+              Automatische Optimierung für maximale Effizienz.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-gold)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-gold)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-gold)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Verisure Security</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Professionelle Sicherheitslösungen mit 24/7 Alarmzentrale.
+              Videoüberwachung und Zutrittskontrolle.
+            </p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-cyan)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-cyan)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Mobile Steuerung</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Volle Kontrolle über Ihr Smartphone oder Tablet.
+              Von überall auf der Welt Ihr Gebäude steuern.
+            </p>
+          </div>
+
+          <!-- Feature 5 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-magenta)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-magenta)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-magenta)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Analytics & Reports</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Detaillierte Auswertungen und Berichte.
+              Erkennen Sie Optimierungspotenziale sofort.
+            </p>
+          </div>
+
+          <!-- Feature 6 -->
+          <div class="group p-8 rounded-2xl bg-[var(--scifi-panel)] border border-[var(--scifi-border)] hover:border-[var(--scifi-gold)]/50 transition-all duration-500">
+            <div class="w-14 h-14 rounded-xl bg-[var(--scifi-gold)]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <svg class="w-7 h-7 text-[var(--scifi-gold)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Dedicated Support</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">
+              Persönlicher Ansprechpartner und schneller Support.
+              2 Jahre Garantie auf alle Komponenten.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative z-10 py-24 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="p-12 rounded-3xl bg-gradient-to-br from-[var(--scifi-cyan)]/10 to-[var(--scifi-magenta)]/10 border border-[var(--scifi-cyan)]/30 relative overflow-hidden">
+          <!-- Decorative Elements -->
+          <div class="absolute top-0 left-0 w-32 h-32 bg-[var(--scifi-cyan)]/20 rounded-full blur-3xl"></div>
+          <div class="absolute bottom-0 right-0 w-40 h-40 bg-[var(--scifi-magenta)]/20 rounded-full blur-3xl"></div>
+
+          <div class="relative">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+              Bereit für den nächsten Schritt?
+            </h2>
+            <p class="text-zinc-400 mb-8 max-w-xl mx-auto">
+              Vereinbaren Sie jetzt Ihren persönlichen Beratungstermin.
+              Wir erstellen Ihnen ein individuelles Angebot.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="mailto:info@enterprise-universe.com?subject=Beratungstermin%20anfragen"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[var(--scifi-cyan)] to-[var(--scifi-magenta)] text-[var(--scifi-void)] font-semibold rounded-xl hover:opacity-90 transition-opacity"
+              >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Termin vereinbaren
+              </a>
+              <a
+                href="tel:+4930123456789"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[var(--scifi-panel)] border border-[var(--scifi-border)] text-white font-semibold rounded-xl hover:border-[var(--scifi-cyan)]/50 transition-colors"
+              >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                Direkt anrufen
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative z-10 py-12 px-6 border-t border-[var(--scifi-border)]">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--scifi-cyan)] to-[var(--scifi-magenta)] flex items-center justify-center">
+              <span class="text-[var(--scifi-void)] font-bold text-sm">N</span>
+            </div>
+            <div class="text-sm text-zinc-400">
+              © 2026 Enterprise Universe. All rights reserved.
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6 text-sm text-zinc-500">
+            <span>LOXONE Gold Partner</span>
+            <span class="w-1 h-1 rounded-full bg-zinc-600"></span>
+            <span>ComfortClick</span>
+            <span class="w-1 h-1 rounded-full bg-zinc-600"></span>
+            <span>Verisure</span>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-[var(--scifi-border)]/50 text-center">
+          <p class="text-xs text-zinc-600 font-mono">
+            Präsentation erstellt am {new Date().toLocaleDateString('de-DE')} | Token: {token}
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+</style>

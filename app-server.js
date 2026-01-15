@@ -11,7 +11,18 @@ const http = require('http');
 const { WebSocketServer } = require('ws');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const crypto = require('crypto');
 require('dotenv').config();
+
+// Helper function to generate presentation token (must match presentation-sender.js)
+function generatePresentationToken(dealId) {
+    const secret = process.env.PRESENTATION_SECRET || 'nexus-enterprise-2026';
+    return crypto
+        .createHash('sha256')
+        .update(`${dealId}-${secret}`)
+        .digest('hex')
+        .substring(0, 16);
+}
 
 // Activity Manager for interaction tracking
 let activityManager = null;
@@ -272,6 +283,9 @@ app.use('/Data%20Room', express.static(path.join(__dirname, 'Data Room')));
 // GOD MODE Dashboard
 app.get('/god-mode-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'GOD_MODE_DASHBOARD.html')));
 
+// Customer Intake Form
+app.get('/intake/:token', (req, res) => res.sendFile(path.join(__dirname, 'customer-intake.html')));
+
 // Static files
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
@@ -294,6 +308,366 @@ app.use('/docs', express.static(path.join(__dirname, 'docs')));
 // ═══════════════════════════════════════════════════════════════
 // API ROUTES
 // ═══════════════════════════════════════════════════════════════
+
+// Presentation API - Get deal data for personalized presentation
+app.get('/api/presentation/:token', async (req, res) => {
+    const { token } = req.params;
+    const HUBSPOT_TOKEN = process.env.HUBSPOT_API_KEY;
+
+    if (!HUBSPOT_TOKEN) {
+        return res.status(500).json({ error: 'HubSpot not configured' });
+    }
+
+    try {
+        // Search for deal with this presentation token
+        const searchResponse = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filterGroups: [{
+                    filters: [{
+                        propertyName: 'presentation_url',
+                        operator: 'CONTAINS_TOKEN',
+                        value: token
+                    }]
+                }],
+                properties: [
+                    'dealname', 'amount', 'dealstage', 'pipeline',
+                    'description', 'project_type', 'hubspot_owner_id',
+                    'presentation_sent', 'presentation_url',
+                    'customer_intake_completed', 'customer_project_types',
+                    'customer_priorities', 'customer_project_phase',
+                    'customer_area_size', 'customer_room_count',
+                    'customer_timeline', 'customer_integrations', 'customer_notes'
+                ],
+                limit: 1
+            })
+        });
+
+        const searchData = await searchResponse.json();
+        let deal = null;
+
+        if (searchData.results && searchData.results.length > 0) {
+            deal = searchData.results[0];
+        } else {
+            // Fallback: Search deals in presentationscheduled stage and match token
+            const stageSearchResponse = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filterGroups: [{
+                        filters: [{
+                            propertyName: 'dealstage',
+                            operator: 'EQ',
+                            value: 'presentationscheduled'
+                        }]
+                    }],
+                    properties: [
+                        'dealname', 'amount', 'dealstage', 'pipeline',
+                        'description', 'project_type', 'hubspot_owner_id',
+                        'customer_intake_completed', 'customer_project_types',
+                        'customer_priorities', 'customer_project_phase',
+                        'customer_area_size', 'customer_room_count',
+                        'customer_timeline', 'customer_integrations', 'customer_notes'
+                    ],
+                    limit: 100
+                })
+            });
+            const stageData = await stageSearchResponse.json();
+
+            if (stageData.results) {
+                for (const d of stageData.results) {
+                    if (generatePresentationToken(d.id) === token) {
+                        deal = d;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!deal) {
+            // No matching deal found - return generic presentation data
+            return res.json({
+                found: false,
+                deal: {
+                    name: 'Smart Building Projekt',
+                    type: 'Smart Home',
+                    value: null,
+                    description: 'Maßgeschneiderte Smart Building Lösung',
+                    features: ['LOXONE Automation', 'Energie-Management', 'Security', 'Mobile Steuerung']
+                }
+            });
+        }
+
+        // Get associated contact
+        let contact = null;
+        try {
+            const assocResponse = await fetch(
+                `https://api.hubapi.com/crm/v3/objects/deals/${deal.id}/associations/contacts`,
+                {
+                    headers: { 'Authorization': `Bearer ${HUBSPOT_TOKEN}` }
+                }
+            );
+            const assocData = await assocResponse.json();
+
+            if (assocData.results && assocData.results.length > 0) {
+                const contactResponse = await fetch(
+                    `https://api.hubapi.com/crm/v3/objects/contacts/${assocData.results[0].id}?properties=email,firstname,lastname,company`,
+                    {
+                        headers: { 'Authorization': `Bearer ${HUBSPOT_TOKEN}` }
+                    }
+                );
+                contact = await contactResponse.json();
+            }
+        } catch (e) {
+            console.error('[Presentation API] Contact fetch error:', e.message);
+        }
+
+        // Determine features based on deal type/stage
+        const dealName = deal.properties.dealname || '';
+        const features = [];
+
+        if (dealName.toLowerCase().includes('smart home') || dealName.toLowerCase().includes('automation')) {
+            features.push('LOXONE Automation', 'Energie-Management', 'Mobile Steuerung');
+        }
+        if (dealName.toLowerCase().includes('security') || dealName.toLowerCase().includes('verisure')) {
+            features.push('Verisure Security', '24/7 Alarmzentrale', 'Videoüberwachung');
+        }
+        if (dealName.toLowerCase().includes('iot') || dealName.toLowerCase().includes('industry')) {
+            features.push('IoT Integration', 'Industrie 4.0', 'Predictive Maintenance');
+        }
+        if (dealName.toLowerCase().includes('software')) {
+            features.push('Custom Software', 'API Integration', 'Cloud Services');
+        }
+
+        // Default features if none matched
+        if (features.length === 0) {
+            features.push('LOXONE Automation', 'Energie-Management', 'Verisure Security', 'Mobile Steuerung');
+        }
+
+        // Check if customer has completed intake form
+        const intakeCompleted = deal.properties.customer_intake_completed === 'true';
+
+        // Build customer requirements object if intake was completed
+        const customerRequirements = intakeCompleted ? {
+            projectTypes: deal.properties.customer_project_types?.split(', ').filter(Boolean) || [],
+            priorities: deal.properties.customer_priorities?.split(', ').filter(Boolean) || [],
+            projectPhase: deal.properties.customer_project_phase || null,
+            areaSize: deal.properties.customer_area_size || null,
+            roomCount: deal.properties.customer_room_count || null,
+            timeline: deal.properties.customer_timeline || null,
+            integrations: deal.properties.customer_integrations?.split(', ').filter(Boolean) || [],
+            notes: deal.properties.customer_notes || null
+        } : null;
+
+        // If customer requirements exist, use them for features
+        if (intakeCompleted && customerRequirements) {
+            features.length = 0; // Clear default features
+
+            // Map integrations to display features
+            const integrationMap = {
+                'lighting': 'Intelligente Beleuchtung',
+                'shading': 'Automatische Beschattung',
+                'heating': 'Smarte Heizungssteuerung',
+                'cooling': 'Klimaanlagen-Integration',
+                'multiroom': 'Multiroom Audio System',
+                'access': 'Zutrittskontrolle',
+                'intercom': 'Video-Gegensprechanlage',
+                'irrigation': 'Bewässerungssteuerung',
+                'pool': 'Pool & Wellness'
+            };
+
+            customerRequirements.integrations.forEach(int => {
+                if (integrationMap[int]) features.push(integrationMap[int]);
+            });
+
+            // Add priority-based features
+            if (customerRequirements.priorities.includes('security')) {
+                features.push('Verisure Security System');
+            }
+            if (customerRequirements.priorities.includes('energy_saving')) {
+                features.push('Energie-Optimierung');
+            }
+
+            // Ensure we have at least some features
+            if (features.length === 0) {
+                features.push('LOXONE Automation', 'Energie-Management', 'Mobile Steuerung');
+            }
+        }
+
+        res.json({
+            found: true,
+            deal: {
+                id: deal.id,
+                name: deal.properties.dealname,
+                type: deal.properties.project_type || 'Smart Building',
+                value: deal.properties.amount ? parseFloat(deal.properties.amount) : null,
+                description: deal.properties.description || 'Maßgeschneiderte Smart Building Lösung',
+                stage: deal.properties.dealstage,
+                features: features
+            },
+            contact: contact ? {
+                firstName: contact.properties?.firstname,
+                lastName: contact.properties?.lastname,
+                company: contact.properties?.company,
+                email: contact.properties?.email
+            } : null,
+            intakeCompleted: intakeCompleted,
+            customerRequirements: customerRequirements
+        });
+
+    } catch (error) {
+        console.error('[Presentation API] Error:', error.message);
+        res.status(500).json({ error: 'Failed to fetch deal data' });
+    }
+});
+
+// Customer Intake API - Save customer requirements to HubSpot
+app.post('/api/customer-intake', async (req, res) => {
+    const HUBSPOT_TOKEN = process.env.HUBSPOT_API_KEY;
+    const intakeData = req.body;
+
+    if (!HUBSPOT_TOKEN) {
+        return res.status(500).json({ error: 'HubSpot not configured' });
+    }
+
+    if (!intakeData.token) {
+        return res.status(400).json({ error: 'Token required' });
+    }
+
+    try {
+        // Find the deal by token
+        let dealId = null;
+
+        // Search in presentationscheduled stage
+        const stageSearchResponse = await fetch('https://api.hubapi.com/crm/v3/objects/deals/search', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filterGroups: [{
+                    filters: [{
+                        propertyName: 'dealstage',
+                        operator: 'EQ',
+                        value: 'presentationscheduled'
+                    }]
+                }],
+                properties: ['dealname'],
+                limit: 100
+            })
+        });
+        const stageData = await stageSearchResponse.json();
+
+        if (stageData.results) {
+            for (const deal of stageData.results) {
+                if (generatePresentationToken(deal.id) === intakeData.token) {
+                    dealId = deal.id;
+                    break;
+                }
+            }
+        }
+
+        if (!dealId) {
+            return res.status(404).json({ error: 'Deal not found' });
+        }
+
+        // Prepare properties for HubSpot update
+        const properties = {
+            customer_intake_completed: 'true',
+            customer_intake_date: new Date().toISOString().split('T')[0],
+            customer_project_types: intakeData.project_types?.join(', ') || '',
+            customer_priorities: intakeData.priorities?.join(', ') || '',
+            customer_project_phase: intakeData.project_phase || '',
+            customer_area_size: intakeData.area_size || '',
+            customer_room_count: intakeData.room_count || '',
+            customer_timeline: intakeData.timeline || '',
+            customer_integrations: intakeData.integrations?.join(', ') || '',
+            customer_notes: intakeData.additional_notes || '',
+            customer_contact_preference: intakeData.contact_preference || ''
+        };
+
+        // Try to update deal with intake data
+        try {
+            await fetch(`https://api.hubapi.com/crm/v3/objects/deals/${dealId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ properties })
+            });
+        } catch (propError) {
+            // Properties might not exist, continue anyway
+            console.log('[CustomerIntake] Some properties may not exist:', propError.message);
+        }
+
+        // Create a note on the deal with all intake details
+        const noteContent = `📋 KUNDENANFORDERUNGEN EINGEGANGEN
+
+🏠 Projekttypen: ${intakeData.project_types?.join(', ') || 'Nicht angegeben'}
+⭐ Prioritäten: ${intakeData.priorities?.join(', ') || 'Nicht angegeben'}
+📍 Projektphase: ${intakeData.project_phase || 'Nicht angegeben'}
+📐 Fläche: ${intakeData.area_size || '?'} m²
+🚪 Räume: ${intakeData.room_count || '?'}
+⏰ Zeitrahmen: ${intakeData.timeline || 'Nicht angegeben'}
+🔧 Gewünschte Integrationen: ${intakeData.integrations?.join(', ') || 'Keine angegeben'}
+📞 Kontaktpräferenz: ${intakeData.contact_preference || 'Nicht angegeben'}
+
+📝 Zusätzliche Wünsche:
+${intakeData.additional_notes || 'Keine weiteren Angaben'}
+
+─────────────────────────────
+Erfasst am: ${new Date().toLocaleString('de-DE')}`;
+
+        // Create the note
+        const noteResponse = await fetch('https://api.hubapi.com/crm/v3/objects/notes', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                properties: {
+                    hs_note_body: noteContent,
+                    hs_timestamp: new Date().toISOString()
+                }
+            })
+        });
+
+        if (noteResponse.ok) {
+            const note = await noteResponse.json();
+
+            // Associate note with deal
+            await fetch(
+                `https://api.hubapi.com/crm/v3/objects/notes/${note.id}/associations/deals/${dealId}/note_to_deal`,
+                {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${HUBSPOT_TOKEN}` }
+                }
+            );
+        }
+
+        console.log(`[CustomerIntake] Saved intake data for deal ${dealId}`);
+
+        res.json({
+            success: true,
+            message: 'Intake data saved successfully',
+            dealId: dealId
+        });
+
+    } catch (error) {
+        console.error('[CustomerIntake] Error:', error.message);
+        res.status(500).json({ error: 'Failed to save intake data' });
+    }
+});
 
 // Health check
 app.get('/api/health', (req, res) => {

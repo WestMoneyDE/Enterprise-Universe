@@ -1,0 +1,398 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Investoren | Enterprise Universe - NEXUS Ventures Portfolio">
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[var(--scifi-void)]/90 backdrop-blur-xl border-b border-[var(--scifi-purple)]/30">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center shadow-[0_0_15px_var(--scifi-purple)] group-hover:shadow-[0_0_25px_var(--scifi-purple)] transition-shadow">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-xl font-bold text-[var(--scifi-purple)] tracking-wider font-mono">INVESTOR_PORTAL</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm tracking-wider">← ZURÜCK</a>
+          <a href="#portfolio" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">PORTFOLIO</a>
+          <a href="#metrics" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-purple)] transition-colors font-mono text-sm tracking-wider">METRIKEN</a>
+          <a href="https://app.enterprise-universe.one/data-room" class="hud-frame px-6 py-3 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono text-sm tracking-wider hover:bg-[var(--scifi-purple)]/30 transition-all flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+            </svg>
+            DATA ROOM
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[60vh] flex items-center justify-center pt-20 bg-[var(--scifi-void)]">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.03_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.03_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--scifi-purple)/0.15_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 py-20 relative z-10 text-center">
+      <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-8 border-[var(--scifi-purple)]/50">
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+        <span class="text-sm text-[var(--scifi-purple)] font-mono tracking-[0.3em] uppercase">// NEXUS VENTURES //</span>
+        <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+      </div>
+
+      <h1 class="text-5xl lg:text-6xl font-bold mb-6">
+        <span class="text-[var(--scifi-text-primary)]">Investieren in die </span>
+        <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_20px_var(--scifi-purple)]">Zukunft</span>
+      </h1>
+
+      <p class="text-xl text-[var(--scifi-text-secondary)] max-w-2xl mx-auto mb-10 font-mono">
+        Unser Portfolio innovativer Ventures im DACH-Raum — von Smart Building bis Industrial AI.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://app.enterprise-universe.one/data-room" class="hud-frame px-8 py-4 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono tracking-wider hover:bg-[var(--scifi-purple)]/30 hover:shadow-[0_0_30px_var(--scifi-purple)] transition-all inline-flex items-center gap-3 group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+          </svg>
+          <span>DATA ROOM ÖFFNEN</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <a href="#contact" class="hud-frame px-8 py-4 text-[var(--scifi-text-secondary)] font-mono tracking-wider hover:text-[var(--scifi-purple)] hover:border-[var(--scifi-purple)] transition-all">
+          KONTAKT AUFNEHMEN
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Stats -->
+  <section id="metrics" class="py-16 bg-[var(--scifi-surface)] border-y border-[var(--scifi-purple)]/20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-cyan)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-cyan)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-cyan)]">12+</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">VENTURES</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-purple)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-purple)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-purple)]">€5M+</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">INVESTIERT</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-matrix)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-matrix)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-matrix)]">85%</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">ERFOLGSRATE</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-void)]/50 group hover:border-[var(--scifi-orange)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-orange)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-orange)]">DACH</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">REGION</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-32 bg-[var(--scifi-void)] relative overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.02_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.02_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+          <span class="text-[var(--scifi-text-primary)]">Unser </span>
+          <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_10px_var(--scifi-purple)]">Portfolio</span>
+        </h2>
+        <p class="text-xl text-[var(--scifi-text-secondary)] max-w-3xl mx-auto font-mono">
+          Innovative Startups und Ventures im Enterprise Universe Ökosystem — von der Idee bis zum Markterfolg.
+        </p>
+      </div>
+
+      <!-- Venture Cards Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <!-- Venture Card 1 - GTz Ecosystem -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-cyan)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-cyan)]/5 via-transparent to-[var(--scifi-purple)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-cyan)] to-[var(--scifi-purple)] flex items-center justify-center text-2xl font-bold text-[var(--scifi-void)] font-mono shadow-[0_0_30px_var(--scifi-cyan)/50]">
+                GTz
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 text-[var(--scifi-matrix)] rounded">ACTIVE</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-cyan)] transition-colors">GTz ECOSYSTEM</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">All-in-One SaaS Platform für Unternehmen. CRM, ERP, AI Agents und Automation in einem System.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">SaaS</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">AI/ML</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">B2B</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2024</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-cyan)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-cyan)] animate-pulse"></span>
+                OPERATIONAL
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venture Card 2 - Smart Building Solutions -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-orange)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-orange)]/5 via-transparent to-[var(--scifi-matrix)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-orange)] to-[var(--scifi-matrix)] flex items-center justify-center shadow-[0_0_30px_var(--scifi-orange)/50]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-void)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 text-[var(--scifi-matrix)] rounded">ACTIVE</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-orange)] transition-colors">SMART BUILDING SOLUTIONS</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">IoT-basierte Gebäudeautomation mit KNX, LOXONE und proprietären AI-Steuerungssystemen.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">IoT</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">PropTech</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Hardware</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2020</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-matrix)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-matrix)] animate-pulse"></span>
+                SCALING
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venture Card 3 - Industrial AI -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-purple)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-purple)]/5 via-transparent to-[var(--scifi-magenta)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-purple)] to-[var(--scifi-magenta)] flex items-center justify-center shadow-[0_0_30px_var(--scifi-purple)/50]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-void)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-cyan)]/20 border border-[var(--scifi-cyan)]/50 text-[var(--scifi-cyan)] rounded">GROWTH</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-purple)] transition-colors">INDUSTRIAL AI LABS</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">Predictive Maintenance, OEE-Optimierung und digitale Zwillinge für die Fertigungsindustrie.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Industry 4.0</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Deep Tech</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">B2B</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2023</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-cyan)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-cyan)] animate-pulse"></span>
+                RAISING
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venture Card 4 - Data Security -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-matrix)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-matrix)]/5 via-transparent to-[var(--scifi-cyan)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-matrix)] to-[var(--scifi-cyan)] flex items-center justify-center shadow-[0_0_30px_var(--scifi-matrix)/50]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-void)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-matrix)]/20 border border-[var(--scifi-matrix)]/50 text-[var(--scifi-matrix)] rounded">ACTIVE</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-matrix)] transition-colors">CYBERVAULT SECURITY</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">ISO 27001 konforme Cybersecurity-Lösungen für KMUs. Penetration Testing und Compliance.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Security</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Compliance</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">B2B</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2022</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-matrix)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-matrix)] animate-pulse"></span>
+                PROFITABLE
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venture Card 5 - Energy Tech -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-orange)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-orange)]/5 via-transparent to-[var(--scifi-red)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-orange)] to-[#ef4444] flex items-center justify-center shadow-[0_0_30px_var(--scifi-orange)/50]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-void)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-orange)]/20 border border-[var(--scifi-orange)]/50 text-[var(--scifi-orange)] rounded">SEED</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-orange)] transition-colors">ENERGY NEXUS</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">Smart Grid Management und dezentrale Energiesteuerung für nachhaltige Gebäudeinfrastruktur.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">CleanTech</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Energy</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">IoT</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2024</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-orange)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-orange)] animate-pulse"></span>
+                INCUBATION
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Venture Card 6 - Logistics AI -->
+        <div class="hud-frame p-6 bg-[var(--scifi-surface)]/30 group hover:border-[var(--scifi-cyan)] transition-all relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-[var(--scifi-cyan)]/5 via-transparent to-[var(--scifi-matrix)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative z-10">
+            <div class="flex items-start justify-between mb-6">
+              <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-[var(--scifi-cyan)] to-[var(--scifi-matrix)] flex items-center justify-center shadow-[0_0_30px_var(--scifi-cyan)/50]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--scifi-void)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                </svg>
+              </div>
+              <span class="px-3 py-1 text-xs font-mono bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)]/50 text-[var(--scifi-purple)] rounded">SERIES A</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-[var(--scifi-text-primary)] font-mono group-hover:text-[var(--scifi-cyan)] transition-colors">LOGIQ SYSTEMS</h3>
+            <p class="text-sm text-[var(--scifi-text-secondary)] mb-6">AI-gesteuerte Logistikoptimierung für Lager, Flotten und Supply Chain Management.</p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Logistics</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">AI</span>
+              <span class="px-2 py-1 text-xs font-mono bg-[var(--scifi-surface)] border border-[var(--scifi-border)] text-[var(--scifi-text-secondary)] rounded">Enterprise</span>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--scifi-border)]">
+              <div class="text-xs text-[var(--scifi-text-muted)] font-mono">FOUNDED 2021</div>
+              <div class="flex items-center gap-1 text-xs text-[var(--scifi-purple)] font-mono">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--scifi-purple)] animate-pulse"></span>
+                EXPANDING
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Room CTA -->
+  <section class="py-20 bg-[var(--scifi-surface)]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="hud-frame p-8 lg:p-12 bg-gradient-to-r from-[var(--scifi-void)]/80 to-[var(--scifi-panel)]/80 backdrop-blur-lg text-center border-[var(--scifi-purple)]/50">
+        <div class="w-20 h-20 rounded-full bg-[var(--scifi-purple)]/20 border border-[var(--scifi-purple)] flex items-center justify-center mx-auto mb-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[var(--scifi-purple)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-[var(--scifi-text-primary)] font-mono">
+          <span class="text-[var(--scifi-purple)]">[</span> SECURE DATA ROOM <span class="text-[var(--scifi-purple)]">]</span>
+        </h3>
+        <p class="text-[var(--scifi-text-secondary)] mb-8 font-mono max-w-2xl mx-auto">
+          Exklusiver Zugang zu Pitch Decks, Finanzmodellen, Due Diligence Dokumenten und Portfolio-Performance Reports.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="https://app.enterprise-universe.one/data-room" class="hud-frame px-10 py-5 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono tracking-wider text-lg hover:bg-[var(--scifi-purple)]/30 hover:shadow-[0_0_30px_var(--scifi-purple)] transition-all inline-flex items-center gap-3 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+            </svg>
+            <span>DATA ROOM ÖFFNEN</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-32 bg-[var(--scifi-void)] relative">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,var(--scifi-purple)/0.1_0%,transparent_70%)]"></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+          <span class="text-[var(--scifi-text-primary)]">Investor </span>
+          <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_10px_var(--scifi-purple)]">Relations</span>
+        </h2>
+        <p class="text-xl text-[var(--scifi-text-secondary)] font-mono">
+          Interesse an unserem Portfolio? Kontaktieren Sie uns direkt.
+        </p>
+      </div>
+
+      <div class="hud-frame p-8 lg:p-12 bg-[var(--scifi-surface)]/30">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4 text-[var(--scifi-text-primary)] font-mono">Kontakt</h3>
+            <div class="space-y-4 text-[var(--scifi-text-secondary)] font-mono">
+              <p class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--scifi-purple)]" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+                investors@enterprise-universe.one
+              </p>
+              <p class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--scifi-purple)]" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                </svg>
+                DACH Region
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-4 text-[var(--scifi-text-primary)] font-mono">Dokumente</h3>
+            <div class="space-y-3">
+              <a href="https://app.enterprise-universe.one/data-room" class="flex items-center gap-3 text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                </svg>
+                Pitch Deck 2025
+              </a>
+              <a href="https://app.enterprise-universe.one/data-room" class="flex items-center gap-3 text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                </svg>
+                Financial Model
+              </a>
+              <a href="https://app.enterprise-universe.one/data-room" class="flex items-center gap-3 text-[var(--scifi-purple)] hover:text-[var(--scifi-cyan)] transition-colors font-mono">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                </svg>
+                Due Diligence Docs
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[var(--scifi-void)] border-t border-[var(--scifi-purple)]/20 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="/" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-[var(--scifi-surface)] border border-[var(--scifi-purple)] flex items-center justify-center">
+            <span class="text-[var(--scifi-purple)] font-bold text-xl">E</span>
+          </div>
+          <span class="text-lg font-bold text-[var(--scifi-purple)] tracking-wider font-mono">ENTERPRISE_UNIVERSE</span>
+        </a>
+        <p class="text-[var(--scifi-text-secondary)] text-sm font-mono">
+          © 2026 ENTERPRISE_UNIVERSE // INVESTOR PORTAL
+        </p>
+        <a href="/" class="text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] transition-colors font-mono text-sm">
+          ← Zurück zur Hauptseite
+        </a>
+      </div>
+    </div>
+  </footer>
+</Layout>

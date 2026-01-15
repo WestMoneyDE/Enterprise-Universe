@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ihre Anforderungen | NEXUS Enterprise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --neon-cyan: oklch(85% 0.15 195);
+            --neon-purple: oklch(70% 0.2 300);
+            --dark-bg: oklch(10% 0.02 280);
+            --card-bg: oklch(15% 0.02 280);
+        }
+
+        body {
+            background: var(--dark-bg);
+            background-image:
+                radial-gradient(ellipse at top, oklch(20% 0.05 280) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, oklch(15% 0.08 195) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .neon-text {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px oklch(85% 0.15 195 / 0.5);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, oklch(18% 0.03 280 / 0.9), oklch(12% 0.02 280 / 0.8));
+            border: 1px solid oklch(50% 0.1 195 / 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .neon-input {
+            background: oklch(12% 0.02 280);
+            border: 1px solid oklch(40% 0.1 195 / 0.3);
+            color: oklch(90% 0.02 280);
+            transition: all 0.3s ease;
+        }
+
+        .neon-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px oklch(85% 0.15 195 / 0.3);
+            outline: none;
+        }
+
+        .neon-input::placeholder {
+            color: oklch(50% 0.02 280);
+        }
+
+        .option-card {
+            background: oklch(15% 0.02 280);
+            border: 2px solid oklch(30% 0.05 280);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: oklch(50% 0.1 195 / 0.5);
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: var(--neon-cyan);
+            background: oklch(20% 0.05 195 / 0.3);
+            box-shadow: 0 0 20px oklch(85% 0.15 195 / 0.2);
+        }
+
+        .option-card input[type="checkbox"],
+        .option-card input[type="radio"] {
+            display: none;
+        }
+
+        .neon-button {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            color: oklch(10% 0.02 280);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .neon-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px oklch(85% 0.15 195 / 0.3);
+        }
+
+        .neon-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: oklch(30% 0.02 280);
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .step-dot.completed {
+            background: oklch(70% 0.15 150);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: oklch(25% 0.02 280);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .priority-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            background: oklch(25% 0.05 195 / 0.5);
+            color: var(--neon-cyan);
+        }
+    </style>
+</head>
+<body class="text-white font-sans">
+    <!-- Header -->
+    <header class="py-6 border-b border-white/10">
+        <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold text-lg">N</div>
+                <div>
+                    <div class="font-bold tracking-wider neon-text">NEXUS</div>
+                    <div class="text-xs text-zinc-500 tracking-widest">ENTERPRISE</div>
+                </div>
+            </div>
+            <div class="text-sm text-zinc-500" id="session-id"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Welcome Section -->
+        <div id="welcome-section" class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                Willkommen, <span class="neon-text" id="customer-name">Interessent</span>
+            </h1>
+            <p class="text-zinc-400 text-lg max-w-2xl mx-auto">
+                Damit wir Ihre persönliche Präsentation optimal auf Ihre Bedürfnisse abstimmen können,
+                bitten wir Sie um einige Angaben zu Ihrem Projekt.
+            </p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="step-indicator" id="step-indicator">
+            <div class="step-dot active" data-step="1"></div>
+            <div class="step-dot" data-step="2"></div>
+            <div class="step-dot" data-step="3"></div>
+            <div class="step-dot" data-step="4"></div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="glass-card rounded-2xl p-8 md:p-12">
+            <form id="intake-form">
+                <!-- Step 1: Projekttyp -->
+                <div class="form-step fade-in" data-step="1">
+                    <h2 class="text-2xl font-bold mb-2">Welche Art von Projekt planen Sie?</h2>
+                    <p class="text-zinc-400 mb-8">Wählen Sie alle zutreffenden Optionen</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-8">
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="smart_home">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">🏠</div>
+                                <div>
+                                    <div class="font-bold text-lg">Smart Home</div>
+                                    <div class="text-sm text-zinc-400">Wohnhaus, Villa, Apartment</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="smart_building">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">🏢</div>
+                                <div>
+                                    <div class="font-bold text-lg">Smart Building</div>
+                                    <div class="text-sm text-zinc-400">Bürogebäude, Gewerbeimmobilie</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="security">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">🔒</div>
+                                <div>
+                                    <div class="font-bold text-lg">Security System</div>
+                                    <div class="text-sm text-zinc-400">Alarmanlage, Videoüberwachung</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="energy">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">⚡</div>
+                                <div>
+                                    <div class="font-bold text-lg">Energie-Management</div>
+                                    <div class="text-sm text-zinc-400">PV, Speicher, Wallbox</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="accessibility">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">♿</div>
+                                <div>
+                                    <div class="font-bold text-lg">Barrierefreies Wohnen</div>
+                                    <div class="text-sm text-zinc-400">Assistenzsysteme, AAL</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="option-card rounded-xl p-6">
+                            <input type="checkbox" name="project_type" value="industry">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl">🏭</div>
+                                <div>
+                                    <div class="font-bold text-lg">Industrie / IoT</div>
+                                    <div class="text-sm text-zinc-400">Produktion, Logistik</div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 2: Anforderungen -->
+                <div class="form-step fade-in hidden" data-step="2">
+                    <h2 class="text-2xl font-bold mb-2">Was ist Ihnen besonders wichtig?</h2>
+                    <p class="text-zinc-400 mb-8">Priorisieren Sie Ihre Anforderungen (Mehrfachauswahl möglich)</p>
+
+                    <div class="space-y-4 mb-8">
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="comfort">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">🛋️</div>
+                                <div>
+                                    <div class="font-bold">Komfort & Bequemlichkeit</div>
+                                    <div class="text-sm text-zinc-400">Automatische Szenen, Sprachsteuerung</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="security">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">🛡️</div>
+                                <div>
+                                    <div class="font-bold">Sicherheit</div>
+                                    <div class="text-sm text-zinc-400">Einbruchschutz, Überwachung, Alarme</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="energy_saving">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">💰</div>
+                                <div>
+                                    <div class="font-bold">Energieeinsparung</div>
+                                    <div class="text-sm text-zinc-400">Kosten reduzieren, Effizienz steigern</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="sustainability">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">🌱</div>
+                                <div>
+                                    <div class="font-bold">Nachhaltigkeit</div>
+                                    <div class="text-sm text-zinc-400">CO2-Reduktion, erneuerbare Energien</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="future_proof">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">🚀</div>
+                                <div>
+                                    <div class="font-bold">Zukunftssicherheit</div>
+                                    <div class="text-sm text-zinc-400">Erweiterbarkeit, Updates, Kompatibilität</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+
+                        <label class="option-card rounded-xl p-5 flex items-center justify-between">
+                            <input type="checkbox" name="priority" value="simplicity">
+                            <div class="flex items-center gap-4 flex-1">
+                                <div class="text-2xl">✨</div>
+                                <div>
+                                    <div class="font-bold">Einfache Bedienung</div>
+                                    <div class="text-sm text-zinc-400">Intuitive Steuerung für alle Bewohner</div>
+                                </div>
+                            </div>
+                            <span class="priority-badge hidden">Priorität</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 3: Details -->
+                <div class="form-step fade-in hidden" data-step="3">
+                    <h2 class="text-2xl font-bold mb-2">Erzählen Sie uns mehr über Ihr Projekt</h2>
+                    <p class="text-zinc-400 mb-8">Diese Informationen helfen uns, ein passendes Angebot zu erstellen</p>
+
+                    <div class="space-y-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Projektphase</label>
+                            <div class="grid md:grid-cols-3 gap-3">
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="project_phase" value="planning">
+                                    <div class="font-medium">Planungsphase</div>
+                                    <div class="text-xs text-zinc-400">Noch in der Konzeption</div>
+                                </label>
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="project_phase" value="construction">
+                                    <div class="font-medium">Bauphase</div>
+                                    <div class="text-xs text-zinc-400">Bau läuft bereits</div>
+                                </label>
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="project_phase" value="renovation">
+                                    <div class="font-medium">Nachrüstung</div>
+                                    <div class="text-xs text-zinc-400">Bestehendes Gebäude</div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Geschätzte Wohnfläche / Nutzfläche</label>
+                            <div class="flex items-center gap-4">
+                                <input type="range" class="range-slider flex-1" name="area_size" min="50" max="1000" step="50" value="150" id="area-slider">
+                                <div class="neon-text font-bold text-xl w-24 text-right"><span id="area-value">150</span> m²</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Anzahl Räume / Zonen</label>
+                            <div class="flex items-center gap-4">
+                                <input type="range" class="range-slider flex-1" name="room_count" min="1" max="50" step="1" value="8" id="room-slider">
+                                <div class="neon-text font-bold text-xl w-24 text-right"><span id="room-value">8</span> Räume</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Gewünschter Projektstart</label>
+                            <div class="grid md:grid-cols-4 gap-3">
+                                <label class="option-card rounded-lg p-3 text-center">
+                                    <input type="radio" name="timeline" value="asap">
+                                    <div class="font-medium">Sofort</div>
+                                </label>
+                                <label class="option-card rounded-lg p-3 text-center">
+                                    <input type="radio" name="timeline" value="1-3months">
+                                    <div class="font-medium">1-3 Monate</div>
+                                </label>
+                                <label class="option-card rounded-lg p-3 text-center">
+                                    <input type="radio" name="timeline" value="3-6months">
+                                    <div class="font-medium">3-6 Monate</div>
+                                </label>
+                                <label class="option-card rounded-lg p-3 text-center">
+                                    <input type="radio" name="timeline" value="6+months">
+                                    <div class="font-medium">6+ Monate</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Spezifische Wünsche -->
+                <div class="form-step fade-in hidden" data-step="4">
+                    <h2 class="text-2xl font-bold mb-2">Haben Sie spezifische Wünsche?</h2>
+                    <p class="text-zinc-400 mb-8">Teilen Sie uns Ihre besonderen Anforderungen mit</p>
+
+                    <div class="space-y-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Welche Gewerke sollen integriert werden?</label>
+                            <div class="grid md:grid-cols-3 gap-3">
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="lighting">
+                                    <div class="flex items-center gap-2">
+                                        <span>💡</span>
+                                        <span>Beleuchtung</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="shading">
+                                    <div class="flex items-center gap-2">
+                                        <span>🪟</span>
+                                        <span>Beschattung</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="heating">
+                                    <div class="flex items-center gap-2">
+                                        <span>🌡️</span>
+                                        <span>Heizung</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="cooling">
+                                    <div class="flex items-center gap-2">
+                                        <span>❄️</span>
+                                        <span>Klimaanlage</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="multiroom">
+                                    <div class="flex items-center gap-2">
+                                        <span>🔊</span>
+                                        <span>Multiroom Audio</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="access">
+                                    <div class="flex items-center gap-2">
+                                        <span>🚪</span>
+                                        <span>Zutritt</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="intercom">
+                                    <div class="flex items-center gap-2">
+                                        <span>📞</span>
+                                        <span>Gegensprechanlage</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="irrigation">
+                                    <div class="flex items-center gap-2">
+                                        <span>🌿</span>
+                                        <span>Bewässerung</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4">
+                                    <input type="checkbox" name="integration" value="pool">
+                                    <div class="flex items-center gap-2">
+                                        <span>🏊</span>
+                                        <span>Pool/Sauna</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Zusätzliche Wünsche oder Anmerkungen</label>
+                            <textarea
+                                name="additional_notes"
+                                class="neon-input w-full rounded-xl p-4 h-32 resize-none"
+                                placeholder="Beschreiben Sie hier weitere Anforderungen, besondere Wünsche oder Fragen..."
+                            ></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Bevorzugte Kontaktmethode für Rückfragen</label>
+                            <div class="grid md:grid-cols-3 gap-3">
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="contact_preference" value="email">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span>📧</span>
+                                        <span>E-Mail</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="contact_preference" value="phone">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span>📱</span>
+                                        <span>Telefon</span>
+                                    </div>
+                                </label>
+                                <label class="option-card rounded-lg p-4 text-center">
+                                    <input type="radio" name="contact_preference" value="video">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span>🎥</span>
+                                        <span>Videocall</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
+                    <button type="button" id="prev-btn" class="px-6 py-3 rounded-xl border border-white/20 text-zinc-400 hover:text-white hover:border-white/40 transition hidden">
+                        ← Zurück
+                    </button>
+                    <div class="flex-1"></div>
+                    <button type="button" id="next-btn" class="neon-button px-8 py-3 rounded-xl">
+                        Weiter →
+                    </button>
+                    <button type="submit" id="submit-btn" class="neon-button px-8 py-3 rounded-xl hidden">
+                        Absenden ✓
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success Message -->
+            <div id="success-message" class="hidden text-center py-12">
+                <div class="text-6xl mb-6">✅</div>
+                <h2 class="text-2xl font-bold mb-4 neon-text">Vielen Dank!</h2>
+                <p class="text-zinc-400 mb-8">
+                    Ihre Anforderungen wurden erfolgreich übermittelt.<br>
+                    Wir passen Ihre persönliche Präsentation entsprechend an.
+                </p>
+                <a id="presentation-link" href="#" class="neon-button inline-block px-8 py-3 rounded-xl">
+                    Zur Präsentation →
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 mt-12 border-t border-white/10">
+        <div class="max-w-4xl mx-auto px-4 text-center text-zinc-500 text-sm">
+            <p>© 2026 Enterprise Universe. LOXONE Gold Partner | ComfortClick | Verisure</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = window.location.pathname.split('/').pop() || urlParams.get('token');
+
+        let currentStep = 1;
+        const totalSteps = 4;
+        let customerData = null;
+
+        // DOM Elements
+        const form = document.getElementById('intake-form');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const stepIndicator = document.getElementById('step-indicator');
+        const successMessage = document.getElementById('success-message');
+
+        // Load customer data if token present
+        async function loadCustomerData() {
+            if (!token || token === 'intake') return;
+
+            try {
+                const response = await fetch(`/api/presentation/${token}`);
+                const data = await response.json();
+
+                if (data.found && data.deal) {
+                    customerData = data;
+                    document.getElementById('customer-name').textContent =
+                        data.contact?.properties?.firstname ||
+                        data.deal.name.split(':').pop().split('#')[0].trim() ||
+                        'Interessent';
+                    document.getElementById('session-id').textContent =
+                        `TOKEN: ${token.substring(0, 8).toUpperCase()}`;
+                }
+            } catch (e) {
+                console.error('Error loading customer data:', e);
+            }
+        }
+
+        // Initialize sliders
+        document.getElementById('area-slider').addEventListener('input', function() {
+            document.getElementById('area-value').textContent = this.value;
+        });
+
+        document.getElementById('room-slider').addEventListener('input', function() {
+            document.getElementById('room-value').textContent = this.value;
+        });
+
+        // Option card selection handling
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const input = this.querySelector('input');
+                if (input.type === 'checkbox') {
+                    this.classList.toggle('selected', input.checked);
+                    const badge = this.querySelector('.priority-badge');
+                    if (badge) badge.classList.toggle('hidden', !input.checked);
+                } else if (input.type === 'radio') {
+                    const name = input.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                        radio.closest('.option-card').classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                }
+            });
+
+            // Set initial state
+            const input = card.querySelector('input');
+            if (input && input.checked) {
+                card.classList.add('selected');
+            }
+        });
+
+        // Navigation
+        function showStep(step) {
+            document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+            document.querySelector(`.form-step[data-step="${step}"]`).classList.remove('hidden');
+
+            // Update step indicators
+            document.querySelectorAll('.step-dot').forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index + 1 < step) dot.classList.add('completed');
+                if (index + 1 === step) dot.classList.add('active');
+            });
+
+            // Update buttons
+            prevBtn.classList.toggle('hidden', step === 1);
+            nextBtn.classList.toggle('hidden', step === totalSteps);
+            submitBtn.classList.toggle('hidden', step !== totalSteps);
+
+            currentStep = step;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) showStep(currentStep - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) showStep(currentStep + 1);
+        });
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = {
+                token: token,
+                project_types: formData.getAll('project_type'),
+                priorities: formData.getAll('priority'),
+                project_phase: formData.get('project_phase'),
+                area_size: formData.get('area_size'),
+                room_count: formData.get('room_count'),
+                timeline: formData.get('timeline'),
+                integrations: formData.getAll('integration'),
+                additional_notes: formData.get('additional_notes'),
+                contact_preference: formData.get('contact_preference'),
+                submitted_at: new Date().toISOString()
+            };
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Wird gesendet...';
+
+                const response = await fetch('/api/customer-intake', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    form.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    document.getElementById('presentation-link').href = `/presentation/${token}`;
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Es gab einen Fehler beim Senden. Bitte versuchen Sie es erneut.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Absenden ✓';
+            }
+        });
+
+        // Initialize
+        loadCustomerData();
+        showStep(1);
+    </script>
+</body>
+</html>
