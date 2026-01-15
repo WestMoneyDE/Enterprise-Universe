@@ -267,6 +267,7 @@ app.get('/projekt-anforderungen', (req, res) => res.sendFile(path.join(__dirname
 app.get('/projekt-anforderungen.html', (req, res) => res.sendFile(path.join(__dirname, 'projekt-anforderungen.html')));
 app.get('/kunde-karte', (req, res) => res.sendFile(path.join(__dirname, 'kunde-karte.html')));
 app.get('/kunde-karte.html', (req, res) => res.sendFile(path.join(__dirname, 'kunde-karte.html')));
+app.get('/kunde-karte-test.html', (req, res) => res.sendFile(path.join(__dirname, 'kunde-karte-test.html')));
 app.get('/investor-signup', (req, res) => res.sendFile(path.join(__dirname, 'investor-signup.html')));
 app.get('/investor-signup.html', (req, res) => res.sendFile(path.join(__dirname, 'investor-signup.html')));
 
