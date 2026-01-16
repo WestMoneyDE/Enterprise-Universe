@@ -3,416 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Data Room | Enterprise Universe GmbH</title>
-    <meta name="description" content="Enterprise Universe - Seed Financing Round 2026 - Investor Data Room with all due diligence materials">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Investor Data Room | Enterprise Universe</title>
+    <meta name="description" content="Enterprise Universe - Seed Round 2026 - €3+ Billion Pipeline - Investor Data Room">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #0f3460;
-            --gold: #c9a227;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --text: #e4e4e7;
-            --text-muted: #a1a1aa;
-            --card-bg: rgba(22, 33, 62, 0.8);
-            --border: rgba(201, 162, 39, 0.2);
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a24;
+            --accent-gold: #d4a853;
+            --accent-gold-light: #e8c77b;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: rgba(212, 168, 83, 0.15);
+            --gradient-gold: linear-gradient(135deg, #d4a853 0%, #f0d78c 50%, #d4a853 100%);
+            --gradient-dark: linear-gradient(180deg, #0a0a0f 0%, #12121a 100%);
+            --shadow-glow: 0 0 60px rgba(212, 168, 83, 0.15);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            min-height: 100vh;
-            color: var(--text);
+            background: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(212, 168, 83, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                var(--bg-dark);
+            z-index: -1;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 24px;
         }
 
-        /* Header */
-        header {
-            text-align: center;
-            padding: 60px 20px;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 0;
         }
 
-        .logo {
-            font-size: 14px;
-            letter-spacing: 4px;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 20px;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold) 0%, #d4af37 100%);
-            color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 20px;
-        }
-
-        /* Investment Highlights */
-        .highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .highlight-card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .highlight-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-        }
-
-        .highlight-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 5px;
-        }
-
-        .highlight-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Documents Section */
-        .section-title {
-            font-size: 28px;
-            font-weight: 600;
-            margin: 50px 0 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title::before {
-            content: '';
-            display: block;
-            width: 4px;
-            height: 30px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-
-        .documents-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-
-        .doc-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .doc-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--gold);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .doc-header {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            padding: 20px;
+        .nav-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .doc-number {
-            background: var(--gold);
-            color: var(--primary);
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
             width: 40px;
             height: 40px;
+            background: var(--gradient-gold);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--bg-dark);
+        }
+
+        .nav-title {
+            font-weight: 600;
             font-size: 16px;
         }
 
-        .doc-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .nav-subtitle {
             font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
-
-        .doc-status.pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-        }
-
-        .doc-body {
-            padding: 20px;
-        }
-
-        .doc-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .doc-description {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .doc-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .doc-link {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .doc-link.primary {
-            background: linear-gradient(135deg, var(--gold) 0%, #d4af37 100%);
-            color: var(--primary);
-        }
-
-        .doc-link.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .doc-link:hover {
-            transform: scale(1.02);
-            opacity: 0.9;
-        }
-
-        /* Quick Access */
-        .quick-access {
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .quick-access h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--gold);
-        }
-
-        .quick-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .quick-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .quick-link:hover {
-            background: var(--gold);
-            color: var(--primary);
-            border-color: var(--gold);
-        }
-
-        /* Investor Table */
-        .investor-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        .investor-table th,
-        .investor-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .investor-table th {
-            color: var(--gold);
-            font-weight: 600;
-            font-size: 13px;
+            color: var(--accent-gold);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
-        .investor-table td {
-            font-size: 15px;
-        }
-
-        .investor-table tr:hover {
-            background: rgba(201, 162, 39, 0.05);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            border-radius: 20px;
-            padding: 50px;
-            text-align: center;
-            margin: 50px 0;
-            border: 1px solid var(--border);
-        }
-
-        .contact-section h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .contact-section p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, var(--gold) 0%, #d4af37 100%);
-            color: var(--primary);
-            padding: 15px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .contact-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(201, 162, 39, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .footer-legal {
-            max-width: 800px;
-            margin: 0 auto 20px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            font-size: 11px;
-            line-height: 1.8;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 32px;
-            }
-
-            .documents-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .doc-links {
-                flex-direction: column;
-            }
-
-            .contact-section {
-                padding: 30px 20px;
-            }
-        }
-
-        /* Language Toggle */
-        .lang-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        .nav-actions {
             display: flex;
-            gap: 5px;
-            background: var(--card-bg);
-            padding: 5px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            z-index: 1000;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .lang-switch {
+            display: flex;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            padding: 4px;
         }
 
         .lang-btn {
-            padding: 8px 15px;
+            padding: 8px 16px;
             border: none;
             background: transparent;
             color: var(--text-muted);
@@ -420,103 +127,797 @@
             border-radius: 6px;
             font-size: 13px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.2s;
         }
 
         .lang-btn.active {
-            background: var(--gold);
-            color: var(--primary);
+            background: var(--accent-gold);
+            color: var(--bg-dark);
         }
 
-        .lang-btn:hover:not(.active) {
-            color: var(--text);
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--accent-gold);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Live Stats */
+        .live-stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1024px) {
+            .live-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .live-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            color: var(--accent-green);
+            margin-top: 8px;
+            padding: 4px 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 20px;
+        }
+
+        /* Quick Access */
+        .quick-access {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .quick-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .quick-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quick-title::before {
+            content: '⚡';
+        }
+
+        .reading-order {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .order-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-num {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .order-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .order-link:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .order-arrow {
+            color: var(--text-muted);
+            font-size: 20px;
+        }
+
+        /* Documents Grid */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 32px;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .doc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .doc-header {
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .doc-num {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--bg-dark);
+        }
+
+        .doc-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-weight: 500;
+        }
+
+        .doc-status.ready {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .doc-status.new {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .doc-body {
+            padding: 24px;
+        }
+
+        .doc-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .doc-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .doc-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .doc-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .doc-btn.primary {
+            background: var(--gradient-gold);
+            color: var(--bg-dark);
+        }
+
+        .doc-btn.primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(212, 168, 83, 0.3);
+        }
+
+        .doc-btn.secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .doc-btn.secondary:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* Data Exports Section */
+        .exports-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .exports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .exports-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent-purple);
+        }
+
+        .exports-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .exports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .export-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .export-item:hover {
+            background: var(--bg-elevated);
+            transform: translateX(4px);
+        }
+
+        .export-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-elevated);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .export-info {
+            flex: 1;
+        }
+
+        .export-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .export-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Investment Calculator */
+        .calculator-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+        }
+
+        .calc-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .calc-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .calc-subtitle {
+            color: var(--text-secondary);
+        }
+
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calc-table th,
+        .calc-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .calc-table th {
+            color: var(--accent-gold);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .calc-table tr:hover {
+            background: rgba(212, 168, 83, 0.05);
+        }
+
+        .calc-table .amount {
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 18px;
+        }
+
+        .calc-table .return {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .board-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .board-badge.observer {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .board-badge.seat {
+            background: rgba(212, 168, 83, 0.15);
+            color: var(--accent-gold);
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 168, 83, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact-desc {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 32px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient-gold);
+            color: var(--bg-dark);
+            padding: 18px 40px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(212, 168, 83, 0.4);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-disclaimer {
+            max-width: 800px;
+            margin: 0 auto 24px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { padding: 120px 0 60px; }
+            .nav-subtitle { display: none; }
+            .quick-access { padding: 24px; }
+            .reading-order { flex-direction: column; align-items: flex-start; }
+            .order-arrow { display: none; }
+            .docs-grid { grid-template-columns: 1fr; }
+            .contact-cta { padding: 40px 24px; }
+            .contact-info { flex-direction: column; gap: 16px; }
         }
     </style>
 </head>
 <body>
-    <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn" onclick="setLang('de')">DE</button>
-    </div>
+    <div class="bg-pattern"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <div class="nav-brand">
+                <div class="nav-logo">EU</div>
+                <div>
+                    <div class="nav-title">Enterprise Universe</div>
+                    <div class="nav-subtitle">Investor Data Room</div>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="lang-switch">
+                    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                    <button class="lang-btn" onclick="setLang('de')">DE</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <header>
-            <div class="logo">Enterprise Universe GmbH</div>
-            <h1>Investor Data Room</h1>
-            <p class="subtitle">Seed Financing Round 2026</p>
-            <span class="badge">Confidential - Accredited Investors Only</span>
-        </header>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span>Live Data Room</span>
+            </div>
+            <h1>Seed Round 2026</h1>
+            <p class="hero-subtitle">€1.5M Raise · €15M Pre-Money Valuation · €3+ Billion Pipeline</p>
+        </section>
 
-        <!-- Investment Highlights -->
-        <section class="highlights">
-            <div class="highlight-card">
-                <div class="highlight-value">€1.5M</div>
-                <div class="highlight-label">Seed Round</div>
+        <!-- Live Stats -->
+        <section class="live-stats">
+            <div class="stat-card">
+                <div class="stat-value">€3.1B</div>
+                <div class="stat-label">Won Pipeline</div>
+                <div class="stat-change">↑ Verified HubSpot</div>
             </div>
-            <div class="highlight-card">
-                <div class="highlight-value">€15M</div>
-                <div class="highlight-label">Pre-Money Valuation</div>
+            <div class="stat-card">
+                <div class="stat-value">3,029</div>
+                <div class="stat-label">Closed Deals</div>
+                <div class="stat-change">↑ ClosedWon Stage</div>
             </div>
-            <div class="highlight-card">
-                <div class="highlight-value">€411B</div>
-                <div class="highlight-label">Pipeline (Weighted)</div>
+            <div class="stat-card">
+                <div class="stat-value">€847K</div>
+                <div class="stat-label">Revenue 2024</div>
+                <div class="stat-change">↑ YoY Growth</div>
             </div>
-            <div class="highlight-card">
-                <div class="highlight-value">€1B+</div>
-                <div class="highlight-label">Won Deals</div>
+            <div class="stat-card">
+                <div class="stat-value">12:1</div>
+                <div class="stat-label">LTV:CAC</div>
+                <div class="stat-change">↑ Unit Economics</div>
             </div>
-            <div class="highlight-card">
-                <div class="highlight-value">12:1</div>
-                <div class="highlight-label">LTV:CAC Ratio</div>
+            <div class="stat-card">
+                <div class="stat-value">€15M</div>
+                <div class="stat-label">Valuation</div>
+                <div class="stat-change">Pre-Money</div>
             </div>
         </section>
 
         <!-- Quick Access -->
-        <div class="quick-access">
-            <h3>Quick Access - Priority 1 Documents (Read First)</h3>
-            <div class="quick-links">
-                <a href="00_WELCOME_LETTER.md" class="quick-link" style="background: linear-gradient(135deg, var(--gold) 0%, #d4af37 100%); color: var(--primary);">Welcome Letter</a>
-                <a href="01_Executive_Summary/EXECUTIVE_SUMMARY_EN.md" class="quick-link">Executive Summary</a>
-                <a href="03_Pitch_Deck/PITCH_DECK_EN.md" class="quick-link">Pitch Deck</a>
-                <a href="06_Financials/FINANCIAL_MODEL_EN.md" class="quick-link">Financial Model</a>
-                <a href="02_Legal_Corporate/CAP_TABLE_TEMPLATE_EN.md" class="quick-link">Cap Table</a>
-                <a href="02_Legal_Corporate/TERM_SHEET_TEMPLATE_EN.md" class="quick-link">Term Sheet</a>
-                <a href="09_Investor_Materials/FAQ_Investors.md" class="quick-link">FAQ</a>
+        <section class="quick-access">
+            <div class="quick-header">
+                <div class="quick-title">Recommended Reading Order</div>
             </div>
+            <div class="reading-order">
+                <div class="order-step">
+                    <span class="order-num">1</span>
+                    <a href="00_WELCOME_LETTER.md" class="order-link">Welcome Letter</a>
+                </div>
+                <span class="order-arrow">→</span>
+                <div class="order-step">
+                    <span class="order-num">2</span>
+                    <a href="01_Executive_Summary/EXECUTIVE_SUMMARY_EN.md" class="order-link">Executive Summary</a>
+                </div>
+                <span class="order-arrow">→</span>
+                <div class="order-step">
+                    <span class="order-num">3</span>
+                    <a href="03_Pitch_Deck/PITCH_DECK_EN.md" class="order-link">Pitch Deck</a>
+                </div>
+                <span class="order-arrow">→</span>
+                <div class="order-step">
+                    <span class="order-num">4</span>
+                    <a href="06_Financials/FINANCIAL_MODEL_EN.md" class="order-link">Financials</a>
+                </div>
+                <span class="order-arrow">→</span>
+                <div class="order-step">
+                    <span class="order-num">5</span>
+                    <a href="12_Investor_Materials/FAQ_Investors.md" class="order-link">FAQ</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Data Exports -->
+        <section class="exports-section">
+            <div class="exports-header">
+                <div class="exports-title">📊 Live Data Exports</div>
+                <div class="exports-badge">January 2026</div>
+            </div>
+            <div class="exports-grid">
+                <a href="05_Won_Deals/won_deals_export_1768489352171.json" class="export-item">
+                    <div class="export-icon">📄</div>
+                    <div class="export-info">
+                        <div class="export-name">Won Deals (JSON)</div>
+                        <div class="export-meta">3,029 deals · 1.1 MB</div>
+                    </div>
+                </a>
+                <a href="05_Won_Deals/won_deals_export_1768489352180.csv" class="export-item">
+                    <div class="export-icon">📊</div>
+                    <div class="export-info">
+                        <div class="export-name">Won Deals (CSV)</div>
+                        <div class="export-meta">Excel compatible · 367 KB</div>
+                    </div>
+                </a>
+                <a href="05_Won_Deals/deal_contacts_1768489865800.json" class="export-item">
+                    <div class="export-icon">👥</div>
+                    <div class="export-info">
+                        <div class="export-name">Deal Contacts</div>
+                        <div class="export-meta">Contact associations · 81 KB</div>
+                    </div>
+                </a>
+                <a href="05_Won_Deals/Kundenkarten/" class="export-item">
+                    <div class="export-icon">🗂️</div>
+                    <div class="export-info">
+                        <div class="export-name">Customer Cards</div>
+                        <div class="export-meta">3,029 generated cards</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Document Library -->
+        <div class="section-header">
+            <h2 class="section-title">Document Library</h2>
         </div>
 
-        <!-- Investor Tip Box -->
-        <div style="background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 1px solid var(--gold); border-radius: 16px; padding: 25px; margin: 30px 0;">
-            <h4 style="color: var(--gold); margin-bottom: 15px;">Recommended Reading Order</h4>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
-                <span style="background: var(--gold); color: var(--primary); padding: 8px 16px; border-radius: 20px; font-weight: 600;">1. Welcome Letter</span>
-                <span style="color: var(--gold);">&#8594;</span>
-                <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px;">2. Executive Summary</span>
-                <span style="color: var(--gold);">&#8594;</span>
-                <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px;">3. Pitch Deck</span>
-                <span style="color: var(--gold);">&#8594;</span>
-                <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px;">4. Financial Model</span>
-                <span style="color: var(--gold);">&#8594;</span>
-                <span style="background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px;">5. FAQ</span>
-            </div>
-        </div>
-
-        <!-- Document Categories -->
-        <h2 class="section-title">Document Library</h2>
-
-        <div class="documents-grid">
+        <div class="docs-grid">
             <!-- NDA -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">00</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">00</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Non-Disclosure Agreement</h3>
-                    <p class="doc-description">Mutual NDA for confidential information exchange. Required before accessing sensitive materials.</p>
-                    <div class="doc-links">
-                        <a href="00_NDA/NDA_TEMPLATE_EN.md" class="doc-link primary">English</a>
-                        <a href="00_NDA/NDA_TEMPLATE.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">Mutual NDA for confidential information exchange. Required before accessing sensitive materials.</p>
+                    <div class="doc-actions">
+                        <a href="00_NDA/NDA_TEMPLATE_EN.md" class="doc-btn primary">English</a>
+                        <a href="00_NDA/NDA_TEMPLATE.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
@@ -524,31 +925,31 @@
             <!-- Executive Summary -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">01</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">01</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Executive Summary</h3>
-                    <p class="doc-description">Comprehensive company overview, market opportunity, business model, traction and investment terms.</p>
-                    <div class="doc-links">
-                        <a href="01_Executive_Summary/EXECUTIVE_SUMMARY_EN.md" class="doc-link primary">English</a>
-                        <a href="01_Executive_Summary/EXECUTIVE_SUMMARY.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">Complete company overview: market opportunity, business model, traction metrics, and investment terms.</p>
+                    <div class="doc-actions">
+                        <a href="01_Executive_Summary/EXECUTIVE_SUMMARY_EN.md" class="doc-btn primary">English</a>
+                        <a href="01_Executive_Summary/EXECUTIVE_SUMMARY.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Legal & Corporate -->
+            <!-- Legal -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">02</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">02</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Legal & Corporate</h3>
-                    <p class="doc-description">Cap Table with ownership scenarios, Term Sheet template with investment terms and conditions.</p>
-                    <div class="doc-links">
-                        <a href="02_Legal_Corporate/CAP_TABLE_TEMPLATE_EN.md" class="doc-link primary">Cap Table</a>
-                        <a href="02_Legal_Corporate/TERM_SHEET_TEMPLATE_EN.md" class="doc-link secondary">Term Sheet</a>
+                    <p class="doc-desc">Cap Table with ownership scenarios, Term Sheet template, founding status and corporate documents.</p>
+                    <div class="doc-actions">
+                        <a href="02_Legal_Corporate/CAP_TABLE_TEMPLATE_EN.md" class="doc-btn primary">Cap Table</a>
+                        <a href="02_Legal_Corporate/TERM_SHEET_TEMPLATE_EN.md" class="doc-btn secondary">Term Sheet</a>
                     </div>
                 </div>
             </div>
@@ -556,31 +957,15 @@
             <!-- Pitch Deck -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">03</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">03</div>
+                    <div class="doc-status new">★ Core Document</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Pitch Deck</h3>
-                    <p class="doc-description">17-slide investor presentation covering problem, solution, market, team, financials and ask.</p>
-                    <div class="doc-links">
-                        <a href="03_Pitch_Deck/PITCH_DECK_EN.md" class="doc-link primary">English</a>
-                        <a href="03_Pitch_Deck/PITCH_DECK.md" class="doc-link secondary">Deutsch</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Outreach -->
-            <div class="doc-card">
-                <div class="doc-header">
-                    <div class="doc-number">04</div>
-                    <div class="doc-status">Available</div>
-                </div>
-                <div class="doc-body">
-                    <h3 class="doc-title">Investor Outreach</h3>
-                    <p class="doc-description">Email templates for outreach, 48+ curated investors database with contacts and application links.</p>
-                    <div class="doc-links">
-                        <a href="04_Outreach/investor-database.html" class="doc-link primary">Database</a>
-                        <a href="04_Outreach/INVESTOR_EMAIL_TEMPLATES_EN.md" class="doc-link secondary">Templates</a>
+                    <p class="doc-desc">17-slide investor presentation: problem, solution, market, team, financials, and the ask.</p>
+                    <div class="doc-actions">
+                        <a href="03_Pitch_Deck/PITCH_DECK_EN.md" class="doc-btn primary">English</a>
+                        <a href="03_Pitch_Deck/PITCH_DECK.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
@@ -588,15 +973,15 @@
             <!-- Due Diligence -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">05</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">05</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Due Diligence Checklist</h3>
-                    <p class="doc-description">Comprehensive 105+ item checklist covering corporate, financials, IP, contracts, compliance and more.</p>
-                    <div class="doc-links">
-                        <a href="05_Due_Diligence/DD_CHECKLIST_EN.md" class="doc-link primary">English</a>
-                        <a href="05_Due_Diligence/DD_CHECKLIST.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">105+ item comprehensive checklist covering corporate, financials, IP, contracts and compliance.</p>
+                    <div class="doc-actions">
+                        <a href="11_Due_Diligence/DD_CHECKLIST_EN.md" class="doc-btn primary">English</a>
+                        <a href="11_Due_Diligence/DD_CHECKLIST.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
@@ -604,15 +989,15 @@
             <!-- Financials -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">06</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">06</div>
+                    <div class="doc-status new">★ Core Document</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Financial Model</h3>
-                    <p class="doc-description">5-year P&L, cash flow, unit economics, use of funds, scenario analysis and investor returns.</p>
-                    <div class="doc-links">
-                        <a href="06_Financials/FINANCIAL_MODEL_EN.md" class="doc-link primary">English</a>
-                        <a href="06_Financials/FINANCIAL_MODEL.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">5-year P&L projection, cash flow, unit economics, use of funds and investor return scenarios.</p>
+                    <div class="doc-actions">
+                        <a href="06_Financials/FINANCIAL_MODEL_EN.md" class="doc-btn primary">English</a>
+                        <a href="06_Financials/FINANCIAL_MODEL.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
@@ -620,15 +1005,15 @@
             <!-- Product -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">07</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">07</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Product Overview</h3>
-                    <p class="doc-description">Platform features, technology stack, architecture, roadmap 2025-2027 and competitive advantages.</p>
-                    <div class="doc-links">
-                        <a href="07_Product/PRODUCT_OVERVIEW_EN.md" class="doc-link primary">English</a>
-                        <a href="07_Product/PRODUCT_OVERVIEW.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">Platform features, tech stack, architecture, 2025-2027 roadmap and competitive advantages.</p>
+                    <div class="doc-actions">
+                        <a href="07_Product/PRODUCT_OVERVIEW_EN.md" class="doc-btn primary">English</a>
+                        <a href="07_Product/PRODUCT_OVERVIEW.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
@@ -636,102 +1021,141 @@
             <!-- Market -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">08</div>
-                    <div class="doc-status">Available</div>
+                    <div class="doc-num">08</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Market Analysis</h3>
-                    <p class="doc-description">TAM/SAM/SOM, market trends, competitive landscape, buyer personas and growth opportunities.</p>
-                    <div class="doc-links">
-                        <a href="08_Market/MARKET_ANALYSIS_EN.md" class="doc-link primary">English</a>
-                        <a href="08_Market/MARKET_ANALYSIS.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">TAM/SAM/SOM analysis, market trends, competitive landscape and growth opportunities.</p>
+                    <div class="doc-actions">
+                        <a href="08_Market/MARKET_ANALYSIS_EN.md" class="doc-btn primary">English</a>
+                        <a href="08_Market/MARKET_ANALYSIS.md" class="doc-btn secondary">Deutsch</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Team (Coming Soon) -->
+            <!-- Team -->
             <div class="doc-card">
                 <div class="doc-header">
-                    <div class="doc-number">09</div>
-                    <div class="doc-status pending">On Request</div>
+                    <div class="doc-num">09</div>
+                    <div class="doc-status ready">✓ Ready</div>
                 </div>
                 <div class="doc-body">
                     <h3 class="doc-title">Team & Organization</h3>
-                    <p class="doc-description">Founder profiles, organizational structure, key hires and advisory board.</p>
-                    <div class="doc-links">
-                        <a href="09_Team/TEAM_OVERVIEW_EN.md" class="doc-link primary">English</a>
-                        <a href="09_Team/TEAM_OVERVIEW.md" class="doc-link secondary">Deutsch</a>
+                    <p class="doc-desc">Founder profiles, organizational structure, hiring plan and advisory board.</p>
+                    <div class="doc-actions">
+                        <a href="09_Team/TEAM_OVERVIEW_EN.md" class="doc-btn primary">English</a>
+                        <a href="09_Team/TEAM_OVERVIEW.md" class="doc-btn secondary">Deutsch</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="doc-card">
+                <div class="doc-header">
+                    <div class="doc-num">10</div>
+                    <div class="doc-status new">★ Core Document</div>
+                </div>
+                <div class="doc-body">
+                    <h3 class="doc-title">Investor FAQ</h3>
+                    <p class="doc-desc">Comprehensive answers to common investor questions about the business, market and investment.</p>
+                    <div class="doc-actions">
+                        <a href="12_Investor_Materials/FAQ_Investors.md" class="doc-btn primary">View FAQ</a>
+                        <a href="12_Investor_Materials/EXECUTIVE_SUMMARY_ONE_PAGER.md" class="doc-btn secondary">One-Pager</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Investor Scenarios -->
-        <h2 class="section-title">Investment Scenarios</h2>
-        <div class="quick-access">
-            <table class="investor-table">
+        <!-- Investment Calculator -->
+        <section class="calculator-section">
+            <div class="calc-header">
+                <h2 class="calc-title">Investment Scenarios</h2>
+                <p class="calc-subtitle">Based on €15M pre-money valuation · €50M conservative exit</p>
+            </div>
+            <table class="calc-table">
                 <thead>
                     <tr>
                         <th>Investment</th>
                         <th>Shares</th>
                         <th>Ownership</th>
-                        <th>Board Right</th>
-                        <th>Expected Return (Exit 50M)</th>
+                        <th>Board Rights</th>
+                        <th>Return @ €50M Exit</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>100,000</strong></td>
+                        <td class="amount">€100,000</td>
                         <td>167</td>
                         <td>0.61%</td>
-                        <td>-</td>
-                        <td>394,000 (3.9x)</td>
+                        <td>—</td>
+                        <td class="return">€394,000 (3.9x)</td>
                     </tr>
                     <tr>
-                        <td><strong>250,000</strong></td>
+                        <td class="amount">€250,000</td>
                         <td>417</td>
                         <td>1.52%</td>
-                        <td>-</td>
-                        <td>985,000 (3.9x)</td>
+                        <td>—</td>
+                        <td class="return">€985,000 (3.9x)</td>
                     </tr>
                     <tr>
-                        <td><strong>500,000</strong></td>
+                        <td class="amount">€500,000</td>
                         <td>833</td>
                         <td>3.03%</td>
-                        <td>Observer</td>
-                        <td>1,970,000 (3.9x)</td>
+                        <td><span class="board-badge observer">Observer</span></td>
+                        <td class="return">€1,970,000 (3.9x)</td>
                     </tr>
                     <tr>
-                        <td><strong>1,000,000</strong></td>
+                        <td class="amount">€1,000,000</td>
                         <td>1,667</td>
                         <td>6.06%</td>
-                        <td>Board Seat</td>
-                        <td>3,940,000 (3.9x)</td>
+                        <td><span class="board-badge seat">Board Seat</span></td>
+                        <td class="return">€3,940,000 (3.9x)</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </section>
 
-        <!-- Contact -->
-        <section class="contact-section">
-            <h2>Ready to Invest?</h2>
-            <p>Schedule a call with our founder to discuss the opportunity and next steps. We're happy to answer any questions and provide additional materials upon request.</p>
-            <a href="mailto:invest@enterprise-universe.one?subject=Data%20Room%20Inquiry%20-%20Investment%20Interest" class="contact-btn">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                Contact: invest@enterprise-universe.one
-            </a>
+        <!-- Contact CTA -->
+        <section class="contact-cta">
+            <div class="contact-content">
+                <h2 class="contact-title">Ready to Invest?</h2>
+                <p class="contact-desc">Schedule a call with our founder to discuss the opportunity. We'll answer all questions and provide additional materials.</p>
+                <a href="mailto:invest@enterprise-universe.one?subject=Data%20Room%20Inquiry%20-%20Investment%20Interest" class="contact-btn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    invest@enterprise-universe.one
+                </a>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    +49 177 4547727
+                </div>
+                    <div class="contact-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    enterprise-universe.one
+                </div>
+                    <div class="contact-item">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Berlin, Germany
+                </div>
+                </div>
+            </div>
         </section>
 
         <!-- Footer -->
         <footer>
-            <div class="footer-legal">
+            <div class="footer-disclaimer">
                 <strong>CONFIDENTIALITY NOTICE:</strong> This Data Room contains confidential and proprietary information of Enterprise Universe GmbH.
-                By accessing this Data Room, you agree to maintain strict confidentiality and use the information solely for evaluating a potential investment.
-                Distribution to third parties without prior written consent is prohibited. This does not constitute investment advice.
-                Potential investors should consult their own legal and financial advisors.
+                By accessing these materials, you agree to maintain strict confidentiality and use the information solely for evaluating a potential investment.
+                Distribution to third parties without prior written consent is strictly prohibited. This does not constitute investment advice.
+                Potential investors should consult their own legal and financial advisors before making any investment decision.
             </div>
-            <p>Enterprise Universe GmbH | Seed Financing Round 2026</p>
-            <p style="margin-top: 10px;">www.enterprise-universe.one | invest@enterprise-universe.one</p>
+            <div class="footer-links">
+                <a href="https://enterprise-universe.one" class="footer-link">Website</a>
+                <a href="mailto:invest@enterprise-universe.one" class="footer-link">Contact</a>
+                <a href="00_NDA/NDA_TEMPLATE_EN.md" class="footer-link">NDA</a>
+            </div>
+            <p class="footer-copy">© 2026 Enterprise Universe GmbH · Seed Financing Round</p>
         </footer>
     </div>
 
@@ -739,19 +1163,6 @@
         function setLang(lang) {
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-
-            // Update quick access links
-            const quickLinks = document.querySelectorAll('.quick-link');
-            quickLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (lang === 'de') {
-                    link.href = href.replace('_EN.md', '.md').replace('_EN.', '.');
-                } else {
-                    if (!href.includes('_EN')) {
-                        link.href = href.replace('.md', '_EN.md');
-                    }
-                }
-            });
         }
     </script>
 </body>

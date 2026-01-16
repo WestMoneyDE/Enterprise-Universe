@@ -22,6 +22,8 @@ const CleanupWorker = require('./workers/cleanup-worker');
 const AnalyticsCollector = require('./workers/analytics-collector');
 const OwnerAssignment = require('./workers/owner-assignment');
 const PresentationSender = require('./workers/presentation-sender');
+const WonCustomerInvoicing = require('./workers/won-customer-invoicing');
+const BounceHandler = require('./workers/bounce-handler');
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DAEMON REGISTRY
@@ -109,6 +111,20 @@ const DAEMONS = {
         name: 'Presentation Sender',
         worker: PresentationSender,
         schedule: '*/30 * * * *',  // Every 30 minutes
+        enabled: true,
+        critical: false
+    },
+    wonCustomerInvoicing: {
+        name: 'Won Customer Invoicing',
+        worker: WonCustomerInvoicing,
+        schedule: '*/10 * * * *',  // Every 10 minutes (sends 5 emails per run)
+        enabled: true,
+        critical: true
+    },
+    bounceHandler: {
+        name: 'Bounce Handler',
+        worker: BounceHandler,
+        schedule: '*/15 * * * *',  // Every 15 minutes - check for bounces
         enabled: true,
         critical: false
     }

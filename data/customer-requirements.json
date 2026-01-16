@@ -1,0 +1,675 @@
+{
+  "test-ai-123": {
+    "files": {
+      "sketches": [],
+      "documents": [],
+      "photos": []
+    },
+    "wishes": [
+      {
+        "category": "Beleuchtung",
+        "description": "Automatische Lichtsteuerung in allen Raeumen",
+        "priority": "high"
+      },
+      {
+        "category": "Heizung",
+        "description": "Fussbodenheizung mit Raumregelung",
+        "priority": "medium"
+      },
+      {
+        "category": "Sicherheit",
+        "description": "Alarmanlage mit Bewegungsmelder",
+        "priority": "high"
+      }
+    ],
+    "systemConfig": {
+      "sector": "Wohngebaude",
+      "buildingType": "Einfamilienhaus",
+      "size": "250",
+      "modules": [
+        "Licht",
+        "Klima",
+        "Sicherheit",
+        "Jalousie"
+      ],
+      "budget": "40000-60000"
+    },
+    "createdAt": "2026-01-15T10:38:31.557Z",
+    "updatedAt": "2026-01-15T11:52:41.118Z",
+    "aiAnalysis": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "summary": "Der Kunde wünscht eine umfassende Gebäudeautomation für sein Einfamilienhaus mit Fokus auf Beleuchtung, Heizung und Sicherheit. Die Anforderungen sind klar definiert und technisch gut umsetzbar. Es sind einige Herausforderungen zu erwarten, wie die Abstimmung der verschiedenen Gewerke und die Integration der Systeme, aber insgesamt ist das Projekt als machbar einzustufen.",
+      "feasibility": "high",
+      "challenges": [
+        "Koordination der verschiedenen Gewerke (Elektro, HVAC, Sicherheit, IT, etc.)",
+        "Integration der Einzelsysteme zu einem ganzheitlichen Smart-Home-Konzept",
+        "Einhaltung des Budgets bei umfangreichem Funktionsumfang"
+      ],
+      "recommendations": [
+        "Frühzeitige Einbindung aller Subunternehmer zur Abstimmung der Schnittstellen",
+        "Einsatz einer zentralen Gebäudeleittechnik (z.B. Loxone) zur Integration der Einzelsysteme",
+        "Regelmäßige Statusupdates und Kostenkontrolle während der Projektlaufzeit"
+      ]
+    },
+    "status": "fully_planned",
+    "pipelineStartedAt": "2026-01-15T11:52:23.331Z",
+    "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"max_tokens: 6000 > 4096, which is the maximum allowed number of output tokens for claude-3-haiku-20240307\"},\"request_id\":\"req_011CX93VZW1fZ9pxWA16Gbaz\"}",
+    "projectPlan": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "name": "Smarthome Einfamilienhaus",
+      "milestones": [
+        {
+          "phase": "Planung",
+          "tasks": [
+            "Anforderungsanalyse",
+            "Konzepterstellung",
+            "Detailplanung",
+            "Erstellung Kostenvoranschlag"
+          ],
+          "deliverables": [
+            "Projektplan",
+            "Systemkonfiguration",
+            "Kostenvoranschlag"
+          ]
+        },
+        {
+          "phase": "Installation",
+          "tasks": [
+            "Elektroinstallation",
+            "HVAC-Installation",
+            "Sicherheitstechnik",
+            "Netzwerktechnik",
+            "Programmierung und Inbetriebnahme"
+          ],
+          "deliverables": [
+            "Funktionstests",
+            "Dokumentation"
+          ]
+        },
+        {
+          "phase": "Abnahme",
+          "tasks": [
+            "Endabnahme mit Kunde",
+            "Übergabe Dokumentation",
+            "Einweisung Betrieb"
+          ],
+          "deliverables": [
+            "Abnahmeprotokoll",
+            "Betriebsanleitung"
+          ]
+        }
+      ],
+      "keyDeliverables": [
+        "Funktionsfähiges Smart-Home-System",
+        "Dokumentation",
+        "Einweisung Betrieb"
+      ]
+    },
+    "costEstimate": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "components": [
+        {
+          "name": "Loxone Miniserver",
+          "quantity": 1,
+          "unitCost": 799,
+          "total": 799
+        },
+        {
+          "name": "Loxone Lichtsteuerung",
+          "quantity": 12,
+          "unitCost": 89,
+          "total": 1068
+        },
+        {
+          "name": "Loxone Raumthermostate",
+          "quantity": 8,
+          "unitCost": 129,
+          "total": 1032
+        },
+        {
+          "name": "Loxone Bewegungsmelder",
+          "quantity": 6,
+          "unitCost": 59,
+          "total": 354
+        },
+        {
+          "name": "Verkabelung und Installationsmaterial",
+          "quantity": 1,
+          "unitCost": 2500,
+          "total": 2500
+        },
+        {
+          "name": "Fußbodenheizung inkl. Regelung",
+          "quantity": 1,
+          "unitCost": 12000,
+          "total": 12000
+        },
+        {
+          "name": "Alarmanlage inkl. Komponenten",
+          "quantity": 1,
+          "unitCost": 3500,
+          "total": 3500
+        },
+        {
+          "name": "Netzwerktechnik (Router, Switch, Access Points)",
+          "quantity": 1,
+          "unitCost": 1500,
+          "total": 1500
+        }
+      ],
+      "laborCost": 8000,
+      "totalEstimate": 30753,
+      "currency": "EUR"
+    },
+    "suggestedConfig": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "recommendedSystem": "LOXONE",
+      "modules": [
+        "Lichtsteuerung",
+        "Raumtemperaturregelung",
+        "Alarmanlage",
+        "Netzwerktechnik"
+      ],
+      "integrations": [
+        "Fußbodenheizung",
+        "Jalousien/Rollläden"
+      ]
+    },
+    "subcontractorPlan": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "requiredTrades": [
+        {
+          "trade": "Elektroinstallation",
+          "tasks": [
+            "Verkabelung",
+            "Installation Lichtsteuerung",
+            "Installation Raumthermostate"
+          ],
+          "recommendedSubcontractor": "Elektro Schmidt GmbH",
+          "phase": "Installation",
+          "sequence": 1,
+          "estimatedDays": 10,
+          "contactTiming": "4 Wochen vor Start"
+        },
+        {
+          "trade": "HVAC",
+          "tasks": [
+            "Installation Fußbodenheizung",
+            "Anbindung an Loxone-System"
+          ],
+          "recommendedSubcontractor": "Klima & Heizung Mueller",
+          "phase": "Installation",
+          "sequence": 2,
+          "estimatedDays": 7,
+          "contactTiming": "4 Wochen vor Start"
+        },
+        {
+          "trade": "Sicherheitstechnik",
+          "tasks": [
+            "Installation Alarmanlage",
+            "Anbindung an Loxone-System"
+          ],
+          "recommendedSubcontractor": "SecureTech Bayern",
+          "phase": "Installation",
+          "sequence": 3,
+          "estimatedDays": 5,
+          "contactTiming": "4 Wochen vor Start"
+        },
+        {
+          "trade": "Netzwerktechnik",
+          "tasks": [
+            "Verkabelung Netzwerk",
+            "Konfiguration Router, Switch, Access Points"
+          ],
+          "recommendedSubcontractor": "NetWorks IT Solutions",
+          "phase": "Installation",
+          "sequence": 4,
+          "estimatedDays": 3,
+          "contactTiming": "4 Wochen vor Start"
+        },
+        {
+          "trade": "Programmierung",
+          "tasks": [
+            "Programmierung Loxone-System",
+            "Inbetriebnahme und Funktionstest"
+          ],
+          "recommendedSubcontractor": "Industrie Automation Bayern",
+          "phase": "Installation",
+          "sequence": 5,
+          "estimatedDays": 5,
+          "contactTiming": "4 Wochen vor Start"
+        }
+      ],
+      "criticalPath": [
+        "Elektroinstallation",
+        "HVAC-Installation",
+        "Programmierung"
+      ],
+      "coordinationNotes": [
+        "Regelmäßige Abstimmungstermine zwischen allen Gewerken",
+        "Frühzeitige Klärung von Schnittstellen und Verantwortlichkeiten"
+      ]
+    },
+    "communicationSchedule": {
+      "generatedAt": "2026-01-15T11:52:41.118Z",
+      "botId": "kundenkarten_planner",
+      "customerContacts": [
+        {
+          "type": "Kickoff",
+          "purpose": "Projektstart",
+          "timing": "Tag 1",
+          "method": "Vor-Ort-Termin",
+          "agenda": [
+            "Vorstellung Projektteam",
+            "Erläuterung Projektplan und Zeitrahmen",
+            "Abstimmung Kundenwünsche",
+            "Festlegung Kommunikationskanäle"
+          ]
+        },
+        {
+          "type": "Statusupdate",
+          "purpose": "Fortschrittskontrolle",
+          "timing": "Wöchentlich",
+          "method": "Telefonat",
+          "agenda": [
+            "Aktueller Projektstand",
+            "Offene Punkte und Herausforderungen",
+            "Nächste Schritte"
+          ]
+        },
+        {
+          "type": "Abnahme",
+          "purpose": "Endabnahme",
+          "timing": "Projektende",
+          "method": "Vor-Ort-Termin",
+          "agenda": [
+            "Funktionstest Gesamtsystem",
+            "Übergabe Dokumentation",
+            "Einweisung Betrieb"
+          ]
+        }
+      ],
+      "subcontractorContacts": [
+        {
+          "trade": "Elektroinstallation",
+          "type": "Beauftragung",
+          "timing": "4 Wochen vor Start",
+          "method": "Telefonat + E-Mail"
+        },
+        {
+          "trade": "HVAC",
+          "type": "Beauftragung",
+          "timing": "4 Wochen vor Start",
+          "method": "Telefonat + E-Mail"
+        },
+        {
+          "trade": "Sicherheitstechnik",
+          "type": "Beauftragung",
+          "timing": "4 Wochen vor Start",
+          "method": "Telefonat + E-Mail"
+        },
+        {
+          "trade": "Netzwerktechnik",
+          "type": "Beauftragung",
+          "timing": "4 Wochen vor Start",
+          "method": "Telefonat + E-Mail"
+        },
+        {
+          "trade": "Programmierung",
+          "type": "Beauftragung",
+          "timing": "4 Wochen vor Start",
+          "method": "Telefonat + E-Mail"
+        }
+      ],
+      "statusUpdates": "Wöchentlich per E-Mail",
+      "escalationPath": [
+        "Bei Verzögerungen oder Budgetüberschreitungen: Eskalation an Projektleitung",
+        "Bei technischen Problemen oder Mängeln: Eskalation an Qualitätsmanagement"
+      ]
+    },
+    "pipelineCompletedAt": "2026-01-15T11:52:41.118Z"
+  },
+  "test-ai-456": {
+    "files": {
+      "sketches": [],
+      "documents": [],
+      "photos": []
+    },
+    "wishes": [
+      {
+        "category": "Industrie",
+        "description": "MES Integration mit SCADA",
+        "priority": "high"
+      }
+    ],
+    "systemConfig": {
+      "sector": "Industrie",
+      "buildingType": "Produktionshalle",
+      "size": "5000",
+      "modules": [
+        "MES",
+        "SCADA",
+        "IoT",
+        "Robotik"
+      ],
+      "budget": "200000-500000"
+    },
+    "createdAt": "2026-01-15T10:43:23.913Z",
+    "updatedAt": "2026-01-15T10:43:47.030Z",
+    "status": "planned",
+    "pipelineStartedAt": "2026-01-15T10:43:38.303Z",
+    "aiAnalysis": {
+      "generatedAt": "2026-01-15T10:43:47.030Z",
+      "botId": "kundenkarten_planner",
+      "summary": "Der Kunde wünscht eine Integration des Produktions-Managementsystems (MES) mit einem SCADA-System (Supervisory Control and Data Acquisition) für seine Produktionshalle. Dies erfordert eine nahtlose Verbindung zwischen den beiden Systemen, um Produktionsdaten, Prozesssteuerung und Echtzeitüberwachung zu ermöglichen.",
+      "feasibility": "high",
+      "challenges": [
+        "Sicherstellung der Kompatibilität und Interoperabilität zwischen MES und SCADA-Systemen",
+        "Konfiguration und Integration der IoT-Komponenten zur Datenerfassung und -übertragung",
+        "Optimierung der Robotik-Steuerung und -Anbindung an das Gesamtsystem"
+      ],
+      "recommendations": [
+        "Eingehende Analyse der bestehenden MES- und SCADA-Systeme, um die Integrationsmöglichkeiten zu bewerten",
+        "Prüfung und Auswahl geeigneter IoT-Plattformen und Sensoren zur Datenerfassung",
+        "Einbindung von Robotik-Komponenten zur Prozessautomatisierung und -optimierung"
+      ]
+    },
+    "projectPlan": {
+      "generatedAt": "2026-01-15T10:43:47.030Z",
+      "botId": "kundenkarten_planner",
+      "name": "MES-SCADA Integration für Produktionshalle",
+      "milestones": [
+        {
+          "phase": "Konzeption",
+          "tasks": [
+            "Analyse der Kundenanforderungen",
+            "Bewertung der bestehenden MES- und SCADA-Systeme",
+            "Erstellung des Systemdesigns"
+          ],
+          "deliverables": [
+            "Anforderungsspezifikation",
+            "Systemarchitektur"
+          ]
+        },
+        {
+          "phase": "Implementierung",
+          "tasks": [
+            "Beschaffung und Konfiguration der IoT-Komponenten",
+            "Integration der MES- und SCADA-Systeme",
+            "Anbindung der Robotik-Steuerung",
+            "Test und Inbetriebnahme des Gesamtsystems"
+          ],
+          "deliverables": [
+            "Installierte und konfigurierte Systemkomponenten",
+            "Testprotokolle"
+          ]
+        },
+        {
+          "phase": "Abnahme und Übergabe",
+          "tasks": [
+            "Durchführung von Abnahmetests",
+            "Erstellung der Dokumentation",
+            "Schulung des Betriebspersonals"
+          ],
+          "deliverables": [
+            "Abnahmeprotokoll",
+            "Betriebsanleitung",
+            "Schulungsunterlagen"
+          ]
+        }
+      ],
+      "keyDeliverables": [
+        "Integriertes MES-SCADA-System",
+        "Anbindung der Robotik-Steuerung",
+        "Dokumentation und Schulung"
+      ]
+    },
+    "costEstimate": {
+      "generatedAt": "2026-01-15T10:43:47.030Z",
+      "botId": "kundenkarten_planner",
+      "components": [
+        {
+          "name": "MES-Softwarelizenzen",
+          "quantity": 1,
+          "unitCost": 50000,
+          "total": 50000
+        },
+        {
+          "name": "SCADA-Softwarelizenzen",
+          "quantity": 1,
+          "unitCost": 30000,
+          "total": 30000
+        },
+        {
+          "name": "IoT-Komponenten (Sensoren, Gateways)",
+          "quantity": 20,
+          "unitCost": 500,
+          "total": 10000
+        },
+        {
+          "name": "Robotik-Steuerung",
+          "quantity": 1,
+          "unitCost": 20000,
+          "total": 20000
+        }
+      ],
+      "laborCost": 90000,
+      "totalEstimate": 200000,
+      "currency": "EUR"
+    },
+    "suggestedConfig": {
+      "generatedAt": "2026-01-15T10:43:47.030Z",
+      "botId": "kundenkarten_planner",
+      "recommendedSystem": "LOXONE",
+      "modules": [
+        "MES-Modul",
+        "SCADA-Modul",
+        "IoT-Modul",
+        "Robotik-Modul"
+      ],
+      "components": [
+        "Loxone Miniserver",
+        "Loxone Smart Home Komponenten",
+        "Loxone IoT-Gateways",
+        "Loxone Robotik-Steuerung"
+      ],
+      "integrations": [
+        "MES-Anbindung",
+        "SCADA-Anbindung",
+        "IoT-Datenerfassung",
+        "Robotik-Steuerung"
+      ]
+    },
+    "pipelineCompletedAt": "2026-01-15T10:43:47.030Z"
+  },
+  "flexvisions-424131077343": {
+    "customerInfo": {
+      "name": "Tino Kugler",
+      "email": "tino.kugler@loxone.com",
+      "company": "FlexVisions Brüssel Deutschland",
+      "dealId": "424131077343",
+      "dealAmount": 41562
+    },
+    "files": {
+      "sketches": [],
+      "documents": [],
+      "photos": []
+    },
+    "wishes": [
+      {
+        "category": "Gebäudeautomation",
+        "description": "Vollständige Building Automation Lösung",
+        "priority": "high"
+      },
+      {
+        "category": "Integration",
+        "description": "Loxone-basierte Systemintegration",
+        "priority": "high"
+      },
+      {
+        "category": "Energiemanagement",
+        "description": "Intelligentes Energiemanagement",
+        "priority": "medium"
+      }
+    ],
+    "systemConfig": {
+      "sector": "Gewerbe",
+      "buildingType": "Bürogebäude",
+      "size": "1500",
+      "modules": [
+        "Gebäudeautomation",
+        "Licht",
+        "Klima",
+        "Sicherheit",
+        "Energiemanagement"
+      ],
+      "budget": "40000-50000"
+    },
+    "createdAt": "2026-01-15T14:40:40.756Z",
+    "updatedAt": "2026-01-15T14:40:40.756Z",
+    "status": "won",
+    "aiAnalysis": {
+      "generatedAt": "2026-01-15T14:40:40.756Z",
+      "summary": "FlexVisions Brüssel Deutschland benötigt eine umfassende Gebäudeautomation für ihr Bürogebäude. Das Projekt umfasst Loxone-basierte Steuerung für Beleuchtung, Klimatisierung, Sicherheit und Energiemanagement.",
+      "feasibility": "high",
+      "challenges": [
+        "Integration bestehender Systeme",
+        "Koordination der Gewerke",
+        "Schulung des Personals"
+      ],
+      "recommendations": [
+        "Einsatz von Loxone Miniserver als zentrale Steuerungseinheit",
+        "Phasenweise Implementierung für minimale Betriebsunterbrechungen",
+        "Umfassende Dokumentation und Schulung"
+      ]
+    },
+    "projectPlan": {
+      "generatedAt": "2026-01-15T14:40:40.756Z",
+      "name": "Building Automation FlexVisions",
+      "milestones": [
+        {
+          "phase": "Planung & Design",
+          "duration": "2 Wochen",
+          "tasks": [
+            "Anforderungsanalyse",
+            "Systemdesign",
+            "Komponentenauswahl"
+          ],
+          "deliverables": [
+            "Technische Spezifikation",
+            "Systemarchitektur"
+          ]
+        },
+        {
+          "phase": "Installation",
+          "duration": "4 Wochen",
+          "tasks": [
+            "Elektroinstallation",
+            "Netzwerk-Setup",
+            "Komponenten-Montage"
+          ],
+          "deliverables": [
+            "Installierte Hardware",
+            "Netzwerk-Dokumentation"
+          ]
+        },
+        {
+          "phase": "Programmierung",
+          "duration": "2 Wochen",
+          "tasks": [
+            "Loxone-Programmierung",
+            "Integrationstest",
+            "Optimierung"
+          ],
+          "deliverables": [
+            "Funktionierende Automatisierung",
+            "Testprotokolle"
+          ]
+        },
+        {
+          "phase": "Abnahme",
+          "duration": "1 Woche",
+          "tasks": [
+            "Endabnahme",
+            "Schulung",
+            "Dokumentationsübergabe"
+          ],
+          "deliverables": [
+            "Abnahmeprotokoll",
+            "Betriebsanleitung"
+          ]
+        }
+      ],
+      "totalDuration": "9 Wochen"
+    },
+    "costEstimate": {
+      "generatedAt": "2026-01-15T14:40:40.756Z",
+      "components": [
+        {
+          "name": "Loxone Miniserver Go Gen.2",
+          "quantity": 2,
+          "unitCost": 899,
+          "total": 1798
+        },
+        {
+          "name": "Loxone Extension",
+          "quantity": 4,
+          "unitCost": 499,
+          "total": 1996
+        },
+        {
+          "name": "Loxone Dimmer Extension",
+          "quantity": 3,
+          "unitCost": 399,
+          "total": 1197
+        },
+        {
+          "name": "Loxone Touch Pure",
+          "quantity": 12,
+          "unitCost": 299,
+          "total": 3588
+        },
+        {
+          "name": "Loxone Raumklimasensoren",
+          "quantity": 8,
+          "unitCost": 149,
+          "total": 1192
+        },
+        {
+          "name": "Loxone Präsenzmelder",
+          "quantity": 15,
+          "unitCost": 199,
+          "total": 2985
+        },
+        {
+          "name": "Verkabelung & Installation",
+          "quantity": 1,
+          "unitCost": 8500,
+          "total": 8500
+        },
+        {
+          "name": "Programmierung & Inbetriebnahme",
+          "quantity": 1,
+          "unitCost": 12000,
+          "total": 12000
+        }
+      ],
+      "subtotal": 33256,
+      "tax": 6318.64,
+      "totalEstimate": 39574.64,
+      "currency": "EUR"
+    },
+    "invoice": {
+      "number": "INV-424131077343",
+      "amount": 41562,
+      "status": "paid",
+      "paidDate": "2026-01-11"
+    },
+    "pipelineCompletedAt": "2026-01-15T14:40:40.756Z"
+  }
+}

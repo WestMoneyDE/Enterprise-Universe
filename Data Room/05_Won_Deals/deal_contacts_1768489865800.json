@@ -1,0 +1,2778 @@
+{
+  "generatedAt": "2026-01-15T15:11:05.800Z",
+  "totalContacts": 462,
+  "contacts": [
+    {
+      "dealId": "428043506927",
+      "dealName": "Clariant AG - Predictive Maintenance",
+      "email": "lorenz.kerstin@clariant.com",
+      "contactName": "Kerstin Lorenz"
+    },
+    {
+      "dealId": "428543089899",
+      "dealName": "Hapag-Lloyd AG - Industry 4.0 Implementation",
+      "email": "bohm.katja@hapag-lloyd.com",
+      "contactName": "Katja Böhm"
+    },
+    {
+      "dealId": "428061192431",
+      "dealName": "Fuchs Petrolub - Smart Building Automation",
+      "email": "susanne.gunther@fuchs.com",
+      "contactName": "Susanne Günther"
+    },
+    {
+      "dealId": "428500458690",
+      "dealName": "Bauer AG - IoT Integration",
+      "email": "markusm@bauer.de",
+      "contactName": "Markus Martin"
+    },
+    {
+      "dealId": "428043507919",
+      "dealName": "Phoenix Contact - Predictive Maintenance",
+      "email": "marinab@phoenixcontact.com",
+      "contactName": "Marina Brandt"
+    },
+    {
+      "dealId": "428543089869",
+      "dealName": "ElringKlinger AG - Process Automation",
+      "email": "l.huber@elringklinger.com",
+      "contactName": "Lisa Huber"
+    },
+    {
+      "dealId": "428043506930",
+      "dealName": "ElringKlinger AG - Predictive Maintenance",
+      "email": "l.huber@elringklinger.com",
+      "contactName": "Lisa Huber"
+    },
+    {
+      "dealId": "428469552347",
+      "dealName": "Hornbach Baumarkt - Smart Building Automation",
+      "email": "schwarz.christian@hornbach.de",
+      "contactName": "Christian Schwarz"
+    },
+    {
+      "dealId": "428032500984",
+      "dealName": "Schuler AG - Predictive Maintenance",
+      "email": "carolinl@schulergroup.com",
+      "contactName": "Carolin Lange"
+    },
+    {
+      "dealId": "428543090903",
+      "dealName": "Schuler AG - Predictive Maintenance",
+      "email": "carolinl@schulergroup.com",
+      "contactName": "Carolin Lange"
+    },
+    {
+      "dealId": "428704977106",
+      "dealName": "Schuler AG - Predictive Maintenance",
+      "email": "carolinl@schulergroup.com",
+      "contactName": "Carolin Lange"
+    },
+    {
+      "dealId": "427526891709",
+      "dealName": "Schuler AG - Predictive Maintenance",
+      "email": "braun.elena@schulergroup.com",
+      "contactName": "Elena Braun"
+    },
+    {
+      "dealId": "428543089896",
+      "dealName": "Covestro AG - IoT Integration",
+      "email": "moritzs@covestro.com",
+      "contactName": "Moritz Schröder"
+    },
+    {
+      "dealId": "428543089910",
+      "dealName": "Nordex SE - Process Automation",
+      "email": "hartmann.julia@nordex-online.com",
+      "contactName": "Julia Hartmann"
+    },
+    {
+      "dealId": "427363409125",
+      "dealName": "BayernLB - Energy Management",
+      "email": "georgs@bayernlb.de",
+      "contactName": "Georg Stein"
+    },
+    {
+      "dealId": "428469552344",
+      "dealName": "BayernLB - Energy Management",
+      "email": "georgs@bayernlb.de",
+      "contactName": "Georg Stein"
+    },
+    {
+      "dealId": "428495124675",
+      "dealName": "BayernLB - Energy Management",
+      "email": "georgs@bayernlb.de",
+      "contactName": "Georg Stein"
+    },
+    {
+      "dealId": "427753646308",
+      "dealName": "Union Investment - Cloud Migration",
+      "email": "marco.maier@union-investment.de",
+      "contactName": "Marco Maier"
+    },
+    {
+      "dealId": "427363409134",
+      "dealName": "Rhenus Logistics - Energy Management",
+      "email": "wagner.birgit@rhenus.com",
+      "contactName": "Birgit Wagner"
+    },
+    {
+      "dealId": "428469552342",
+      "dealName": "Rhenus Logistics - Energy Management",
+      "email": "wagner.birgit@rhenus.com",
+      "contactName": "Birgit Wagner"
+    },
+    {
+      "dealId": "428495125693",
+      "dealName": "Rhenus Logistics - Energy Management",
+      "email": "wagner.birgit@rhenus.com",
+      "contactName": "Birgit Wagner"
+    },
+    {
+      "dealId": "428469552316",
+      "dealName": "dm-drogerie markt - Smart Building Automation",
+      "email": "stefanieb@dm.de",
+      "contactName": "Stefanie Berger"
+    },
+    {
+      "dealId": "428088172754",
+      "dealName": "Dräxlmaier Group - Predictive Maintenance",
+      "email": "schwarz.christian@draexlmaier.com",
+      "contactName": "Christian Schwarz"
+    },
+    {
+      "dealId": "427526891737",
+      "dealName": "Dräxlmaier Group - Predictive Maintenance",
+      "email": "f.schuster@draexlmaier.com",
+      "contactName": "Fabian Schuster"
+    },
+    {
+      "dealId": "428543095001",
+      "dealName": "Nagarro SE - IoT Integration",
+      "email": "muller.alexandra@nagarro.com",
+      "contactName": "Alexandra Müller"
+    },
+    {
+      "dealId": "428456970463",
+      "dealName": "Wüstenrot & Württembergische - Industry 4.0",
+      "email": "melanie.klein@ww-ag.com",
+      "contactName": "Melanie Klein"
+    },
+    {
+      "dealId": "428469551333",
+      "dealName": "EnBW Energie - Digital Transformation",
+      "email": "jager.patrick@enbw.com",
+      "contactName": "Patrick Jäger"
+    },
+    {
+      "dealId": "428439037128",
+      "dealName": "Aroundtown SA - Predictive Maintenance",
+      "email": "sabines@aroundtown.de",
+      "contactName": "Sabine Schröder"
+    },
+    {
+      "dealId": "428537700541",
+      "dealName": "Merck KGaA - Cloud Migration",
+      "email": "l.schmitz@merckgroup.com",
+      "contactName": "Laura Schmitz"
+    },
+    {
+      "dealId": "428070362327",
+      "dealName": "PSI Software - IoT Integration",
+      "email": "fabian.schneider@psi.de",
+      "contactName": "Fabian Schneider"
+    },
+    {
+      "dealId": "428439037114",
+      "dealName": "DATEV eG - IoT Integration",
+      "email": "sebastian.martin@datev.de",
+      "contactName": "Sebastian Martin"
+    },
+    {
+      "dealId": "428439037131",
+      "dealName": "Implenia Deutschland - Industry 4.0",
+      "email": "tobias.konig@implenia.com",
+      "contactName": "Tobias König"
+    },
+    {
+      "dealId": "428439037166",
+      "dealName": "Goldbeck GmbH - Industry 4.0 Implementation",
+      "email": "w.martin@goldbeck.de",
+      "contactName": "Wolfgang Martin"
+    },
+    {
+      "dealId": "428070361287",
+      "dealName": "Altana AG - Predictive Maintenance",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "428439038149",
+      "dealName": "Ed. Züblin AG - Smart Building Automation",
+      "email": "christina.jager@zueblin.de",
+      "contactName": "Christina Jäger"
+    },
+    {
+      "dealId": "428439037157",
+      "dealName": "Lanxess AG - Predictive Maintenance",
+      "email": "a.meier@lanxess.com",
+      "contactName": "Anna Meier"
+    },
+    {
+      "dealId": "428070361300",
+      "dealName": "Deichmann SE - Predictive Maintenance",
+      "email": "j.hartmann@deichmann.com",
+      "contactName": "Jonas Hartmann"
+    },
+    {
+      "dealId": "428070361333",
+      "dealName": "Endress+Hauser - Smart Building Automation",
+      "email": "nicolew@endress.com",
+      "contactName": "Nicole Winkler"
+    },
+    {
+      "dealId": "428070361335",
+      "dealName": "Fiege Logistik - IoT Integration",
+      "email": "t.koch@fiege.com",
+      "contactName": "Thomas Koch"
+    },
+    {
+      "dealId": "428061193450",
+      "dealName": "BayernLB - Process Automation",
+      "email": "georgs@bayernlb.de",
+      "contactName": "Georg Stein"
+    },
+    {
+      "dealId": "428070362344",
+      "dealName": "Endress+Hauser - IoT Integration",
+      "email": "nicolew@endress.com",
+      "contactName": "Nicole Winkler"
+    },
+    {
+      "dealId": "428070361330",
+      "dealName": "Otto Group - Energy Management System",
+      "email": "schuster.lisa@ottogroup.com",
+      "contactName": "Lisa Schuster"
+    },
+    {
+      "dealId": "428070361306",
+      "dealName": "STRABAG SE - Predictive Maintenance",
+      "email": "marcob@strabag.com",
+      "contactName": "Marco Baumann"
+    },
+    {
+      "dealId": "428491486455",
+      "dealName": "ThyssenKrupp AG - Process Automation",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "contactName": "Christian Schäfer"
+    },
+    {
+      "dealId": "428102717629",
+      "dealName": "Lanxess AG - Smart Building Automation",
+      "email": "a.meier@lanxess.com",
+      "contactName": "Anna Meier"
+    },
+    {
+      "dealId": "428088170740",
+      "dealName": "DMG MORI - Industry 4.0",
+      "email": "christina.schroder@dmgmori.com",
+      "contactName": "Christina Schröder"
+    },
+    {
+      "dealId": "428495077590",
+      "dealName": "ThyssenKrupp AG - IoT Integration",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "contactName": "Christian Schäfer"
+    },
+    {
+      "dealId": "428639282406",
+      "dealName": "Siemens Gamesa - Predictive Maintenance",
+      "email": "benjaminb@siemensgamesa.com",
+      "contactName": "Benjamin Bauer"
+    },
+    {
+      "dealId": "428088171761",
+      "dealName": "Merck KGaA - Predictive Maintenance",
+      "email": "l.schmitz@merckgroup.com",
+      "contactName": "Laura Schmitz"
+    },
+    {
+      "dealId": "428495076566",
+      "dealName": "Festo SE & Co. KG - Digital Transformation",
+      "email": "sommer.vanessa@festo.com",
+      "contactName": "Vanessa Sommer"
+    },
+    {
+      "dealId": "428495076599",
+      "dealName": "Altana AG - Digital Transformation",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "428105522387",
+      "dealName": "Hapag-Lloyd AG - Energy Management",
+      "email": "bohm.katja@hapag-lloyd.com",
+      "contactName": "Katja Böhm"
+    },
+    {
+      "dealId": "428491486451",
+      "dealName": "Leonhard Weiss - Energy Management System",
+      "email": "janav@leonhard-weiss.de",
+      "contactName": "Jana Vogt"
+    },
+    {
+      "dealId": "428491487442",
+      "dealName": "MediaMarktSaturn - Energy Management",
+      "email": "simon.ursula@mediamarktsaturn.com",
+      "contactName": "Ursula Simon"
+    },
+    {
+      "dealId": "428070369520",
+      "dealName": "Altana AG - IoT Integration",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "427540839614",
+      "dealName": "Adesso SE - Cloud Migration",
+      "email": "max.lehmann@adesso.de",
+      "contactName": "Max Lehmann"
+    },
+    {
+      "dealId": "428070370491",
+      "dealName": "All for One Group - Energy Management",
+      "email": "s.winter@all-for-one.com",
+      "contactName": "Steffen Winter"
+    },
+    {
+      "dealId": "428543103168",
+      "dealName": "B. Braun Melsungen - Predictive Maintenance",
+      "email": "franziskas@bbraun.com",
+      "contactName": "Franziska Scholz"
+    },
+    {
+      "dealId": "428088172745",
+      "dealName": "DZ Bank AG - Process Automation",
+      "email": "bauer.klaus@dzbank.de",
+      "contactName": "Klaus Bauer"
+    },
+    {
+      "dealId": "428500472041",
+      "dealName": "Douglas GmbH - Digital Transformation",
+      "email": "lea.kruger@douglas.de",
+      "contactName": "Lea Krüger"
+    },
+    {
+      "dealId": "428639282421",
+      "dealName": "ThyssenKrupp AG - Smart Building Automation",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "contactName": "Christian Schäfer"
+    },
+    {
+      "dealId": "428070369529",
+      "dealName": "Mainova AG - Energy Management System",
+      "email": "info@mainova.de",
+      "contactName": "Dr. Michael Maxelon"
+    },
+    {
+      "dealId": "428250488011",
+      "dealName": "Pilz GmbH & Co. KG - Predictive Maintenance",
+      "email": "markusn@pilz.com",
+      "contactName": "Markus Neumann"
+    },
+    {
+      "dealId": "428639283397",
+      "dealName": "Leonhard Weiss - Digital Transformation",
+      "email": "janav@leonhard-weiss.de",
+      "contactName": "Jana Vogt"
+    },
+    {
+      "dealId": "428250486995",
+      "dealName": "Drägerwerk AG - IoT Integration",
+      "email": "s.schafer@draeger.com",
+      "contactName": "Stefan Schäfer"
+    },
+    {
+      "dealId": "428500473031",
+      "dealName": "Drägerwerk AG - Industry 4.0 Implementation",
+      "email": "s.schafer@draeger.com",
+      "contactName": "Stefan Schäfer"
+    },
+    {
+      "dealId": "428639283436",
+      "dealName": "ATOSS Software - Smart Building Automation",
+      "email": "fuchs.martin@atoss.com",
+      "contactName": "Martin Fuchs"
+    },
+    {
+      "dealId": "426918232303",
+      "dealName": "Hornbach Baumarkt - Energy Management System",
+      "email": "schwarz.christian@hornbach.de",
+      "contactName": "Christian Schwarz"
+    },
+    {
+      "dealId": "428504072441",
+      "dealName": "Paul Hartmann AG - IoT Integration",
+      "email": "julia.richter@hartmann.info",
+      "contactName": "Julia Richter"
+    },
+    {
+      "dealId": "428250487008",
+      "dealName": "Wolff & Müller - Predictive Maintenance",
+      "email": "claudiav@wolff-mueller.de",
+      "contactName": "Claudia Vogel"
+    },
+    {
+      "dealId": "428458788082",
+      "dealName": "ATOSS Software - Cloud Migration",
+      "email": "fuchs.martin@atoss.com",
+      "contactName": "Martin Fuchs"
+    },
+    {
+      "dealId": "428458787061",
+      "dealName": "Krones AG - Predictive Maintenance",
+      "email": "andrea.schwarz@krones.com",
+      "contactName": "Andrea Schwarz"
+    },
+    {
+      "dealId": "427417496802",
+      "dealName": "Krones AG - Predictive Maintenance",
+      "email": "msommer@krones.com",
+      "contactName": "Maximilian Sommer"
+    },
+    {
+      "dealId": "426918232263",
+      "dealName": "Altana AG - Cloud Migration",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "428637488324",
+      "dealName": "dm-drogerie markt - Energy Management",
+      "email": "stefanieb@dm.de",
+      "contactName": "Stefanie Berger"
+    },
+    {
+      "dealId": "428458788039",
+      "dealName": "Voith GmbH - IoT Integration",
+      "email": "a.albrecht@voith.com",
+      "contactName": "Angela Albrecht"
+    },
+    {
+      "dealId": "428458788069",
+      "dealName": "N-ERGIE AG - Smart Building Automation",
+      "email": "simon.barbara@n-ergie.de",
+      "contactName": "Barbara Simon"
+    },
+    {
+      "dealId": "428250486998",
+      "dealName": "Enercon GmbH - IoT Integration",
+      "email": "simone.wagner@enercon.de",
+      "contactName": "Simone Wagner"
+    },
+    {
+      "dealId": "428458788081",
+      "dealName": "Leonhard Weiss - Process Automation",
+      "email": "janav@leonhard-weiss.de",
+      "contactName": "Jana Vogt"
+    },
+    {
+      "dealId": "428630296783",
+      "dealName": "Ed. Züblin AG - Process Automation",
+      "email": "christina.jager@zueblin.de",
+      "contactName": "Christina Jäger"
+    },
+    {
+      "dealId": "428458787039",
+      "dealName": "Metro AG - Smart Building Automation",
+      "email": "katharinas@metroag.de",
+      "contactName": "Katharina Sommer"
+    },
+    {
+      "dealId": "428630296767",
+      "dealName": "Deichmann SE - Process Automation",
+      "email": "j.hartmann@deichmann.com",
+      "contactName": "Jonas Hartmann"
+    },
+    {
+      "dealId": "427840773363",
+      "dealName": "DB Schenker - Digital Transformation",
+      "email": "elisabethk@dbschenker.com",
+      "contactName": "Elisabeth Krüger"
+    },
+    {
+      "dealId": "427426155728",
+      "dealName": "EnBW Energie - Predictive Maintenance",
+      "email": "jager.patrick@enbw.com",
+      "contactName": "Patrick Jäger"
+    },
+    {
+      "dealId": "428495123685",
+      "dealName": "TAG Immobilien AG - IoT Integration",
+      "email": "schmitz.felix@tag-ag.com",
+      "contactName": "Felix Schmitz"
+    },
+    {
+      "dealId": "427426156739",
+      "dealName": "Vattenfall GmbH - Energy Management",
+      "email": "f.zimmermann@vattenfall.de",
+      "contactName": "Felix Zimmermann"
+    },
+    {
+      "dealId": "428495125690",
+      "dealName": "Globus SB-Warenhaus - Predictive Maintenance",
+      "email": "i.mayer@globus.de",
+      "contactName": "Ines Mayer"
+    },
+    {
+      "dealId": "428495124729",
+      "dealName": "Beckhoff Automation - IoT Integration",
+      "email": "ulrike.schuster@beckhoff.com",
+      "contactName": "Ulrike Schuster"
+    },
+    {
+      "dealId": "428102762683",
+      "dealName": "Rhenus Logistics - Process Automation",
+      "email": "wagner.birgit@rhenus.com",
+      "contactName": "Birgit Wagner"
+    },
+    {
+      "dealId": "427172329691",
+      "dealName": "Fresenius SE - Process Automation",
+      "email": "katja.stein@fresenius.com",
+      "contactName": "Katja Stein"
+    },
+    {
+      "dealId": "428535968979",
+      "dealName": "PSI Software - Energy Management System",
+      "email": "fabian.schneider@psi.de",
+      "contactName": "Fabian Schneider"
+    },
+    {
+      "dealId": "428102762695",
+      "dealName": "Röhm GmbH - IoT Integration",
+      "email": "peters.michael@roehm.com",
+      "contactName": "Michael Peters"
+    },
+    {
+      "dealId": "428102762732",
+      "dealName": "SICK AG - Energy Management",
+      "email": "friedrich.matthias@sick.com",
+      "contactName": "Matthias Friedrich"
+    },
+    {
+      "dealId": "428102761718",
+      "dealName": "Drägerwerk AG - Predictive Maintenance",
+      "email": "s.schafer@draeger.com",
+      "contactName": "Stefan Schäfer"
+    },
+    {
+      "dealId": "428043303161",
+      "dealName": "Deutsche Post DHL - Cybersecurity Audit",
+      "email": "h.martin@dhl.com",
+      "contactName": "Heike Martin"
+    },
+    {
+      "dealId": "428102762711",
+      "dealName": "All for One Group - Predictive Maintenance",
+      "email": "s.winter@all-for-one.com",
+      "contactName": "Steffen Winter"
+    },
+    {
+      "dealId": "428535969004",
+      "dealName": "DMG MORI - IoT Integration",
+      "email": "christina.schroder@dmgmori.com",
+      "contactName": "Christina Schröder"
+    },
+    {
+      "dealId": "426918040766",
+      "dealName": "Landesbank Baden-Württemberg - Cloud Migration",
+      "email": "c.seidel@lbbw.de",
+      "contactName": "Charlotte Seidel"
+    },
+    {
+      "dealId": "427540839630",
+      "dealName": "K+S AG - Cybersecurity",
+      "email": "leak@k-plus-s.com",
+      "contactName": "Lea König"
+    },
+    {
+      "dealId": "426725852363",
+      "dealName": "Patrizia SE - Predictive Maintenance",
+      "email": "max.muller@patrizia.ag",
+      "contactName": "Max Müller"
+    },
+    {
+      "dealId": "428535967983",
+      "dealName": "Union Investment - Predictive Maintenance",
+      "email": "marco.maier@union-investment.de",
+      "contactName": "Marco Maier"
+    },
+    {
+      "dealId": "427540838645",
+      "dealName": "Altana AG - Energy Management",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "428712146164",
+      "dealName": "Union Investment - IoT Integration",
+      "email": "marco.maier@union-investment.de",
+      "contactName": "Marco Maier"
+    },
+    {
+      "dealId": "427540839635",
+      "dealName": "Software AG - Energy Management",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427526843633",
+      "dealName": "Software AG - Energy Management",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428535969013",
+      "dealName": "Pilz GmbH & Co. KG - Cybersecurity",
+      "email": "markusn@pilz.com",
+      "contactName": "Markus Neumann"
+    },
+    {
+      "dealId": "428535969006",
+      "dealName": "STRABAG SE - Cybersecurity",
+      "email": "marcob@strabag.com",
+      "contactName": "Marco Baumann"
+    },
+    {
+      "dealId": "428535968992",
+      "dealName": "LEG Immobilien SE - IoT Integration",
+      "email": "klausf@leg-wohnen.de",
+      "contactName": "Klaus Frank"
+    },
+    {
+      "dealId": "428535967967",
+      "dealName": "Röhm GmbH - Process Automation",
+      "email": "peters.michael@roehm.com",
+      "contactName": "Michael Peters"
+    },
+    {
+      "dealId": "427753658615",
+      "dealName": "Beckhoff Automation - Cloud Migration",
+      "email": "ulrike.schuster@beckhoff.com",
+      "contactName": "Ulrike Schuster"
+    },
+    {
+      "dealId": "428712146110",
+      "dealName": "Wacker Chemie AG - IoT Integration",
+      "email": "franke.simone@wacker.com",
+      "contactName": "Simone Franke"
+    },
+    {
+      "dealId": "428635749613",
+      "dealName": "Otto Group - Cybersecurity",
+      "email": "schuster.lisa@ottogroup.com",
+      "contactName": "Lisa Schuster"
+    },
+    {
+      "dealId": "427753658584",
+      "dealName": "SICK AG - Predictive Maintenance",
+      "email": "friedrich.matthias@sick.com",
+      "contactName": "Matthias Friedrich"
+    },
+    {
+      "dealId": "426725851382",
+      "dealName": "Heidelberger Druckmaschinen - Predictive Maintenance",
+      "email": "f.peters@heidelberg.com",
+      "contactName": "Fabian Peters"
+    },
+    {
+      "dealId": "427753659621",
+      "dealName": "Leonhard Weiss - Cloud Migration",
+      "email": "janav@leonhard-weiss.de",
+      "contactName": "Jana Vogt"
+    },
+    {
+      "dealId": "427753658612",
+      "dealName": "ZF Friedrichshafen AG - Smart Building Automation",
+      "email": "j.schmidt@zf.com",
+      "contactName": "Jana Schmidt"
+    },
+    {
+      "dealId": "426725851375",
+      "dealName": "Patrizia SE - Smart Building Automation",
+      "email": "max.muller@patrizia.ag",
+      "contactName": "Max Müller"
+    },
+    {
+      "dealId": "428157806803",
+      "dealName": "Wüstenrot & Württembergische - Predictive Maintenance",
+      "email": "melanie.klein@ww-ag.com",
+      "contactName": "Melanie Klein"
+    },
+    {
+      "dealId": "427526891727",
+      "dealName": "Wüstenrot & Württembergische - Predictive Maintenance",
+      "email": "tanja.schafer@ww-ag.com",
+      "contactName": "Tanja Schäfer"
+    },
+    {
+      "dealId": "428635749595",
+      "dealName": "B. Braun Melsungen - IoT Integration",
+      "email": "franziskas@bbraun.com",
+      "contactName": "Franziska Scholz"
+    },
+    {
+      "dealId": "428635750586",
+      "dealName": "Douglas GmbH - Cybersecurity Audit",
+      "email": "lea.kruger@douglas.de",
+      "contactName": "Lea Krüger"
+    },
+    {
+      "dealId": "427753659596",
+      "dealName": "Fresenius SE - Cloud Migration",
+      "email": "katja.stein@fresenius.com",
+      "contactName": "Katja Stein"
+    },
+    {
+      "dealId": "428491562221",
+      "dealName": "Vattenfall GmbH - Process Automation",
+      "email": "f.zimmermann@vattenfall.de",
+      "contactName": "Felix Zimmermann"
+    },
+    {
+      "dealId": "427172329698",
+      "dealName": "RWE AG - Cybersecurity",
+      "email": "lars.baumann@rwe.com",
+      "contactName": "Lars Baumann"
+    },
+    {
+      "dealId": "428179270882",
+      "dealName": "Hapag-Lloyd AG - Energy Management System",
+      "email": "bohm.katja@hapag-lloyd.com",
+      "contactName": "Katja Böhm"
+    },
+    {
+      "dealId": "428179271920",
+      "dealName": "Targobank AG - Predictive Maintenance",
+      "email": "gross.wolfgang@targobank.de",
+      "contactName": "Wolfgang Groß"
+    },
+    {
+      "dealId": "427172329712",
+      "dealName": "Dräxlmaier Group - Energy Management System",
+      "email": "schwarz.christian@draexlmaier.com",
+      "contactName": "Christian Schwarz"
+    },
+    {
+      "dealId": "426725633238",
+      "dealName": "Rossmann - Cloud Migration",
+      "email": "d.jager@rossmann.de",
+      "contactName": "Daniel Jäger"
+    },
+    {
+      "dealId": "428179271905",
+      "dealName": "Merck KGaA - IoT Integration",
+      "email": "l.schmitz@merckgroup.com",
+      "contactName": "Laura Schmitz"
+    },
+    {
+      "dealId": "428701411577",
+      "dealName": "Hornbach Baumarkt - Predictive Maintenance",
+      "email": "schwarz.christian@hornbach.de",
+      "contactName": "Christian Schwarz"
+    },
+    {
+      "dealId": "428043303145",
+      "dealName": "Fuchs Petrolub - Energy Management System",
+      "email": "susanne.gunther@fuchs.com",
+      "contactName": "Susanne Günther"
+    },
+    {
+      "dealId": "428179271897",
+      "dealName": "Röhm GmbH - Predictive Maintenance",
+      "email": "peters.michael@roehm.com",
+      "contactName": "Michael Peters"
+    },
+    {
+      "dealId": "426725632240",
+      "dealName": "Implenia Deutschland - Energy Management",
+      "email": "tobias.konig@implenia.com",
+      "contactName": "Tobias König"
+    },
+    {
+      "dealId": "428491563205",
+      "dealName": "Wago Kontakttechnik - Cybersecurity",
+      "email": "g.wolf@wago.com",
+      "contactName": "Georg Wolf"
+    },
+    {
+      "dealId": "427172329703",
+      "dealName": "Deutsche Post DHL - Process Automation",
+      "email": "h.martin@dhl.com",
+      "contactName": "Heike Martin"
+    },
+    {
+      "dealId": "428431931619",
+      "dealName": "Kühne + Nagel - Cloud Migration",
+      "email": "christianw@kuehne-nagel.com",
+      "contactName": "Christian Weber"
+    },
+    {
+      "dealId": "426918040768",
+      "dealName": "Merck KGaA - Smart Building Automation",
+      "email": "l.schmitz@merckgroup.com",
+      "contactName": "Laura Schmitz"
+    },
+    {
+      "dealId": "428431931617",
+      "dealName": "KUKA AG - Predictive Maintenance",
+      "email": "b.martin@kuka.com",
+      "contactName": "Birgit Martin"
+    },
+    {
+      "dealId": "428703213772",
+      "dealName": "Continental AG - Cybersecurity Audit",
+      "email": "stein.katharina@continental.com",
+      "contactName": "Katharina Stein"
+    },
+    {
+      "dealId": "428431932626",
+      "dealName": "Instone Real Estate - Cybersecurity",
+      "email": "winkler.julian@instone.de",
+      "contactName": "Julian Winkler"
+    },
+    {
+      "dealId": "428431932623",
+      "dealName": "Jenoptik AG - Cybersecurity Audit",
+      "email": "roth.christina@jenoptik.com",
+      "contactName": "Christina Roth"
+    },
+    {
+      "dealId": "428431931639",
+      "dealName": "Max Bögl - IoT Integration",
+      "email": "meier.jonas@max-boegl.de",
+      "contactName": "Jonas Meier"
+    },
+    {
+      "dealId": "426725634254",
+      "dealName": "Drägerwerk AG - Cybersecurity",
+      "email": "s.schafer@draeger.com",
+      "contactName": "Stefan Schäfer"
+    },
+    {
+      "dealId": "428703213756",
+      "dealName": "Altana AG - Smart Building Automation",
+      "email": "ines.jager@altana.com",
+      "contactName": "Ines Jäger"
+    },
+    {
+      "dealId": "428701412564",
+      "dealName": "Carl Zeiss AG - Smart Building Automation",
+      "email": "schmitt.michael@zeiss.com",
+      "contactName": "Michael Schmitt"
+    },
+    {
+      "dealId": "428703212769",
+      "dealName": "DB Schenker - IoT Integration",
+      "email": "elisabethk@dbschenker.com",
+      "contactName": "Elisabeth Krüger"
+    },
+    {
+      "dealId": "428703212780",
+      "dealName": "ThyssenKrupp AG - Cybersecurity Audit",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "contactName": "Christian Schäfer"
+    },
+    {
+      "dealId": "426725633268",
+      "dealName": "ElringKlinger AG - Cloud Migration",
+      "email": "l.huber@elringklinger.com",
+      "contactName": "Lisa Huber"
+    },
+    {
+      "dealId": "428703213754",
+      "dealName": "Hellmann Worldwide - Energy Management System",
+      "email": "d.friedrich@hellmann.com",
+      "contactName": "Dominik Friedrich"
+    },
+    {
+      "dealId": "426725633232",
+      "dealName": "ZF Friedrichshafen AG - Predictive Maintenance",
+      "email": "j.schmidt@zf.com",
+      "contactName": "Jana Schmidt"
+    },
+    {
+      "dealId": "426918040764",
+      "dealName": "DIC Asset AG - Cybersecurity Audit",
+      "email": "albrecht.nicole@dic-asset.de",
+      "contactName": "Nicole Albrecht"
+    },
+    {
+      "dealId": "427840820420",
+      "dealName": "ZF Friedrichshafen AG - IoT Integration",
+      "email": "lvogt@zf.com",
+      "contactName": "Leon Vogt"
+    },
+    {
+      "dealId": "427840819416",
+      "dealName": "Implenia Deutschland - Cloud Migration",
+      "email": "tobias.konig@implenia.com",
+      "contactName": "Tobias König"
+    },
+    {
+      "dealId": "426918040825",
+      "dealName": "SMA Solar Technology - Smart Building Automation",
+      "email": "sarahs@sma.de",
+      "contactName": "Sarah Schulz"
+    },
+    {
+      "dealId": "428027138245",
+      "dealName": "Noratis AG - Process Automation",
+      "email": "s.hoffmann@noratis.de",
+      "contactName": "Sandra Hoffmann"
+    },
+    {
+      "dealId": "428027138236",
+      "dealName": "Noratis AG - Cloud Migration",
+      "email": "s.hoffmann@noratis.de",
+      "contactName": "Sandra Hoffmann"
+    },
+    {
+      "dealId": "428043304147",
+      "dealName": "Schuler AG - Cybersecurity Audit",
+      "email": "carolinl@schulergroup.com",
+      "contactName": "Carolin Lange"
+    },
+    {
+      "dealId": "428179305701",
+      "dealName": "ThyssenKrupp AG - Predictive Maintenance",
+      "email": "lehmann.marco@thyssenkrupp.com",
+      "contactName": "Marco Lehmann"
+    },
+    {
+      "dealId": "428102831310",
+      "dealName": "Wago Kontakttechnik - Predictive Maintenance",
+      "email": "g.wolf@wago.com",
+      "contactName": "Georg Wolf"
+    },
+    {
+      "dealId": "428179305673",
+      "dealName": "Schuler AG - Cloud Migration",
+      "email": "braun.elena@schulergroup.com",
+      "contactName": "Elena Braun"
+    },
+    {
+      "dealId": "427753929963",
+      "dealName": "GEA Group - IoT Integration",
+      "email": "yvonne.koenig@gea.com",
+      "contactName": "Yvonne König"
+    },
+    {
+      "dealId": "428179304683",
+      "dealName": "Helaba - IoT Integration",
+      "email": "scholz.klaus@helaba.de",
+      "contactName": "Klaus Scholz"
+    },
+    {
+      "dealId": "427810415849",
+      "dealName": "Schaeffler AG - Predictive Maintenance",
+      "email": "tobias.wolf@schaeffler.com",
+      "contactName": "Tobias Wolf"
+    },
+    {
+      "dealId": "427810416852",
+      "dealName": "Bauer AG - Predictive Maintenance",
+      "email": "markusm@bauer.de",
+      "contactName": "Markus Martin"
+    },
+    {
+      "dealId": "427753930987",
+      "dealName": "Max Bögl - Predictive Maintenance",
+      "email": "sebastians@max-boegl.de",
+      "contactName": "Sebastian Schmitz"
+    },
+    {
+      "dealId": "428027138237",
+      "dealName": "KUKA AG - IoT Integration",
+      "email": "b.martin@kuka.com",
+      "contactName": "Birgit Martin"
+    },
+    {
+      "dealId": "428072309981",
+      "dealName": "TAG Immobilien AG - Cybersecurity Audit",
+      "email": "schmitz.felix@tag-ag.com",
+      "contactName": "Felix Schmitz"
+    },
+    {
+      "dealId": "427753929951",
+      "dealName": "Helaba - Cybersecurity",
+      "email": "scholz.klaus@helaba.de",
+      "contactName": "Klaus Scholz"
+    },
+    {
+      "dealId": "427810416855",
+      "dealName": "dm-drogerie markt - Predictive Maintenance",
+      "email": "s.schmitz@dm.de",
+      "contactName": "Stefanie Schmitz"
+    },
+    {
+      "dealId": "427810416851",
+      "dealName": "IOT - CloudCore Solutions",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428027137258",
+      "dealName": "Metro AG - Cybersecurity Audit",
+      "email": "katharinas@metroag.de",
+      "contactName": "Katharina Sommer"
+    },
+    {
+      "dealId": "428102831301",
+      "dealName": "MAHLE GmbH - IoT Integration",
+      "email": "jmoeller@mahle.com",
+      "contactName": "Jonathan Möller"
+    },
+    {
+      "dealId": "427417327838",
+      "dealName": "IOT - PrimeLabs Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428193317064",
+      "dealName": "SMART HOME - HubVision SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427417326839",
+      "dealName": "MANUFACTURING - CoreWare GmbH",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427417327817",
+      "dealName": "SMART HOME - SmartLabs Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428205442288",
+      "dealName": "SOFTWARE - AlphaWorks Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427526810860",
+      "dealName": "SOFTWARE - NexusSystems LLC",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427840924901",
+      "dealName": "SMART HOME - SynthTechnologies AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840924921",
+      "dealName": "IOT - PrimeGroup Inc",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427539347674",
+      "dealName": "MANUFACTURING - NexusSystems SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427840925906",
+      "dealName": "SMART HOME - CyberDynamics SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427363452141",
+      "dealName": "SOFTWARE - AlphaConnect BV",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427363452109",
+      "dealName": "SOFTWARE - DataLabs SRL",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427526810851",
+      "dealName": "MANUFACTURING - OmegaWare GmbH",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427526809820",
+      "dealName": "IOT - AlphaSolutions GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526810838",
+      "dealName": "MANUFACTURING - NetWare SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428178924730",
+      "dealName": "SMART HOME - SmartSolutions SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428178923748",
+      "dealName": "MANUFACTURING - DataSystems AG",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428178923713",
+      "dealName": "IOT - NetWare LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "426918416582",
+      "dealName": "SOFTWARE - CoreDynamics AG",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426918416608",
+      "dealName": "MANUFACTURING - CyberSolutions SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "426918416595",
+      "dealName": "SOFTWARE - PrimeConnect Ltd",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426918416579",
+      "dealName": "SOFTWARE - CloudVision SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426918433003",
+      "dealName": "IOT - SynthConnect Inc",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427541228739",
+      "dealName": "IOT - CoreWare AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428072444132",
+      "dealName": "MANUFACTURING - LogicVision Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428072444119",
+      "dealName": "SOFTWARE - NetVision Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428072444131",
+      "dealName": "SMART HOME - BetaGroup SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428072444147",
+      "dealName": "MANUFACTURING - OmegaLabs Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "426918432992",
+      "dealName": "SOFTWARE - OmegaVision Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427539382504",
+      "dealName": "SOFTWARE - PrimeVision GmbH",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426918432996",
+      "dealName": "SOFTWARE - DataVision Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427539382474",
+      "dealName": "SOFTWARE - BetaLabs SRL",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427541246169",
+      "dealName": "DATEV eG - Predictive Maintenance",
+      "email": "hansschreiber@datev.de",
+      "contactName": "Hans Schreiber"
+    },
+    {
+      "dealId": "427840486603",
+      "dealName": "MANUFACTURING - SynthVision SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427541247164",
+      "dealName": "MANUFACTURING - SynthVision SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427526891715",
+      "dealName": "MANUFACTURING - SynthVision SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539382472",
+      "dealName": "SMART HOME - DigitalVision AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840486616",
+      "dealName": "IOT - TechWorks Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427541247207",
+      "dealName": "IOT - TechWorks Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526891738",
+      "dealName": "IOT - TechWorks Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428070605036",
+      "dealName": "Dachser SE - Cybersecurity",
+      "email": "bohm.georg@dachser.com",
+      "contactName": "Georg Böhm"
+    },
+    {
+      "dealId": "427840485590",
+      "dealName": "SMART HOME - FlowWare Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526891753",
+      "dealName": "SMART HOME - FlowWare Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428070604016",
+      "dealName": "IOT - LogicWorks AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427840485594",
+      "dealName": "SMART HOME - CoreConnect BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526890730",
+      "dealName": "SMART HOME - CoreConnect BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428070605023",
+      "dealName": "SMART HOME - CyberLabs Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840485612",
+      "dealName": "MANUFACTURING - QuantumSolutions SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427541246166",
+      "dealName": "MANUFACTURING - QuantumSolutions SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427526890728",
+      "dealName": "MANUFACTURING - QuantumSolutions SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427840485581",
+      "dealName": "MANUFACTURING - GlobalWorks Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427541246162",
+      "dealName": "MANUFACTURING - GlobalWorks Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427526890699",
+      "dealName": "MANUFACTURING - GlobalWorks Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427840486604",
+      "dealName": "IOT - BetaVision SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526890738",
+      "dealName": "IOT - BetaVision SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427840485620",
+      "dealName": "SMART HOME - AlphaSystems GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526891749",
+      "dealName": "SMART HOME - AlphaSystems GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840485610",
+      "dealName": "SMART HOME - TechSolutions Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526891756",
+      "dealName": "SMART HOME - TechSolutions Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840486633",
+      "dealName": "IOT - NetGroup AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526891721",
+      "dealName": "IOT - NetGroup AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207216874",
+      "dealName": "SMART HOME - CloudWorks Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217881",
+      "dealName": "MANUFACTURING - AlphaConnect Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428070191326",
+      "dealName": "Hellmann Worldwide - Cybersecurity",
+      "email": "d.friedrich@hellmann.com",
+      "contactName": "Dominik Friedrich"
+    },
+    {
+      "dealId": "427526891713",
+      "dealName": "Hellmann Worldwide - Cybersecurity",
+      "email": "s.gross@hellmann.com",
+      "contactName": "Sarah Groß"
+    },
+    {
+      "dealId": "427840988364",
+      "dealName": "ING Deutschland - Cybersecurity",
+      "email": "seidel.max@ing.de",
+      "contactName": "Max Seidel"
+    },
+    {
+      "dealId": "428207217852",
+      "dealName": "SMART HOME - BetaGroup Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217903",
+      "dealName": "SOFTWARE - AlphaSystems SAS",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207217862",
+      "dealName": "SOFTWARE - GlobalSolutions AG",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207217859",
+      "dealName": "IOT - DigitalWorks SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207217876",
+      "dealName": "SMART HOME - EuroGroup SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217865",
+      "dealName": "IOT - NexusWare GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207216882",
+      "dealName": "SMART HOME - SynthWare LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217897",
+      "dealName": "SMART HOME - QuantumDynamics SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207218884",
+      "dealName": "SMART HOME - NexusTechnologies AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840987384",
+      "dealName": "SMART HOME - NexusTechnologies AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217877",
+      "dealName": "MANUFACTURING - CyberWare AG",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428207218885",
+      "dealName": "SMART HOME - SmartTechnologies Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840995566",
+      "dealName": "SMART HOME - SmartTechnologies Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207216881",
+      "dealName": "IOT - BetaConnect BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207217899",
+      "dealName": "MANUFACTURING - PrimeDynamics SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428207216875",
+      "dealName": "SOFTWARE - FlowConnect BV",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207217909",
+      "dealName": "SMART HOME - GlobalVision BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840987366",
+      "dealName": "SMART HOME - GlobalVision BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217884",
+      "dealName": "IOT - CloudConnect Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427840988405",
+      "dealName": "IOT - CloudConnect Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207216878",
+      "dealName": "SMART HOME - NexusSystems GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207217870",
+      "dealName": "IOT - DataVision GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207218882",
+      "dealName": "SOFTWARE - LogicConnect AG",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427541265628",
+      "dealName": "SOFTWARE - OmegaWorks GmbH",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207217902",
+      "dealName": "SOFTWARE - TechGroup LLC",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428102963439",
+      "dealName": "SOFTWARE - TechGroup LLC",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207217893",
+      "dealName": "IOT - TechSolutions SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428032460994",
+      "dealName": "SMART HOME - AlphaTechnologies Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840994531",
+      "dealName": "SMART HOME - AlphaTechnologies Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526891725",
+      "dealName": "SMART HOME - AlphaTechnologies Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428032461003",
+      "dealName": "IOT - HubConnect AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526890736",
+      "dealName": "IOT - HubConnect AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427541265648",
+      "dealName": "SMART HOME - FlowVision SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428032460001",
+      "dealName": "SMART HOME - DigitalDynamics LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427840995550",
+      "dealName": "SMART HOME - DigitalDynamics LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427526891739",
+      "dealName": "SMART HOME - DigitalDynamics LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428032459985",
+      "dealName": "IOT - DataVision SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427840994537",
+      "dealName": "IOT - DataVision SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427526890722",
+      "dealName": "IOT - DataVision SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427541265613",
+      "dealName": "SOFTWARE - DataVision SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427541265626",
+      "dealName": "SMART HOME - OmegaConnect LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427718068456",
+      "dealName": "MANUFACTURING - TechTechnologies SA",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427718068426",
+      "dealName": "IOT - LogicGroup SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427718068466",
+      "dealName": "SMART HOME - DataConnect SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428072483003",
+      "dealName": "SOFTWARE - OmegaVision Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427718067438",
+      "dealName": "SOFTWARE - OmegaLabs SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427417431246",
+      "dealName": "MANUFACTURING - NexusConnect SA",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427417429229",
+      "dealName": "MANUFACTURING - EuroGroup Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427417430202",
+      "dealName": "IOT - LogicSystems Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428250445011",
+      "dealName": "MANUFACTURING - TechWare Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428250445012",
+      "dealName": "IOT - EuroSolutions Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428250445022",
+      "dealName": "MANUFACTURING - QuantumWorks SA",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428250443987",
+      "dealName": "SMART HOME - QuantumWare BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428250445021",
+      "dealName": "SOFTWARE - SmartDynamics SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427841031394",
+      "dealName": "SOFTWARE - SmartDynamics SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428250445025",
+      "dealName": "SMART HOME - DataConnect LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427841031378",
+      "dealName": "SMART HOME - DataConnect LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428246840552",
+      "dealName": "MANUFACTURING - EuroGroup SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428246839497",
+      "dealName": "SOFTWARE - CyberGroup SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428246840536",
+      "dealName": "IOT - CyberWorks Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428246840527",
+      "dealName": "MANUFACTURING - HubTechnologies SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539435743",
+      "dealName": "MANUFACTURING - HubTechnologies SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428246840549",
+      "dealName": "SMART HOME - PrimeSystems SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427539436772",
+      "dealName": "SMART HOME - PrimeSystems SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428246839526",
+      "dealName": "MANUFACTURING - SynthConnect BV",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539436771",
+      "dealName": "MANUFACTURING - SynthConnect BV",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428246839525",
+      "dealName": "MANUFACTURING - FlowSolutions SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539435766",
+      "dealName": "MANUFACTURING - FlowSolutions SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428246839531",
+      "dealName": "SMART HOME - BetaWorks Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428246839507",
+      "dealName": "SMART HOME - PrimeDynamics SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428246839517",
+      "dealName": "IOT - SynthConnect SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428246840528",
+      "dealName": "SOFTWARE - FlowLabs SAS",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428205422796",
+      "dealName": "SOFTWARE - AlphaGroup GmbH",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428205421802",
+      "dealName": "MANUFACTURING - LogicWorks Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428205422795",
+      "dealName": "SMART HOME - HubSolutions SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428205423820",
+      "dealName": "SMART HOME - BetaWare Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428205422839",
+      "dealName": "MANUFACTURING - CyberConnect BV",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427426413802",
+      "dealName": "IOT - DataLabs Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428072544461",
+      "dealName": "SMART HOME - DataWare SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427426414778",
+      "dealName": "MANUFACTURING - OmegaSolutions Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427426413808",
+      "dealName": "SMART HOME - LogicSystems SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428072544500",
+      "dealName": "SMART HOME - QuantumWare Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428072545485",
+      "dealName": "ifm electronic - Smart Building Automation",
+      "email": "moritz.frank@ifm.com",
+      "contactName": "Moritz Frank"
+    },
+    {
+      "dealId": "427417495766",
+      "dealName": "SMART HOME - DigitalWorks LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427417496770",
+      "dealName": "IOT - QuantumSystems Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428103061695",
+      "dealName": "SOFTWARE - PrimeVision Ltd",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428103060721",
+      "dealName": "SMART HOME - EuroWorks GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427417496803",
+      "dealName": "SMART HOME - GlobalLabs SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428103061722",
+      "dealName": "SMART HOME - AlphaSystems SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428103060726",
+      "dealName": "SMART HOME - NexusGroup AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428103060701",
+      "dealName": "IOT - CloudDynamics GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427841093855",
+      "dealName": "SMART HOME - OmegaSystems GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427841093823",
+      "dealName": "MANUFACTURING - EuroSystems SA",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427841092810",
+      "dealName": "SMART HOME - NetWorks BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427841092829",
+      "dealName": "SOFTWARE - DigitalTechnologies SAS",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427841096933",
+      "dealName": "SOFTWARE - CyberSolutions SRL",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428159560919",
+      "dealName": "SOFTWARE - GlobalWorks Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427426458860",
+      "dealName": "SOFTWARE - GlobalWorks Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428159560941",
+      "dealName": "IOT - CyberGroup Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753638133",
+      "dealName": "SMART HOME - SynthSolutions LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427753638111",
+      "dealName": "MANUFACTURING - DataSolutions SA",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427753638129",
+      "dealName": "IOT - SynthSystems AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753639104",
+      "dealName": "IOT - SynthLabs Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753639120",
+      "dealName": "IOT - HubLabs SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753639127",
+      "dealName": "MANUFACTURING - LogicSolutions BV",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427753638099",
+      "dealName": "IOT - GlobalWare Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753638126",
+      "dealName": "SOFTWARE - TechGroup SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427753639107",
+      "dealName": "MANUFACTURING - HubConnect GmbH",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427753639144",
+      "dealName": "IOT - HubWorks SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428025370856",
+      "dealName": "Hella GmbH & Co. KGaA - Cybersecurity",
+      "email": "larsw@hella.com",
+      "contactName": "Lars Weber"
+    },
+    {
+      "dealId": "427753638096",
+      "dealName": "SMART HOME - SmartDynamics GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427753638122",
+      "dealName": "IOT - QuantumSolutions SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427810095295",
+      "dealName": "SMART HOME - NetSolutions Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427810095293",
+      "dealName": "SOFTWARE - DigitalDynamics Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427539542248",
+      "dealName": "MANUFACTURING - OmegaLabs Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539542244",
+      "dealName": "SMART HOME - PrimeWorks AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427539542203",
+      "dealName": "MANUFACTURING - LogicGroup LLC",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427539542227",
+      "dealName": "SMART HOME - OmegaSystems LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427754221806",
+      "dealName": "SMART HOME - AlphaTechnologies LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427754222829",
+      "dealName": "MANUFACTURING - BetaLabs Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427754222816",
+      "dealName": "IOT - LogicSystems AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427754221779",
+      "dealName": "BLG Logistics - Energy Management System",
+      "email": "a.hartmann@blg-logistics.com",
+      "contactName": "Angela Hartmann"
+    },
+    {
+      "dealId": "427426528459",
+      "dealName": "IOT - QuantumGroup GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427426522337",
+      "dealName": "IOT - BetaGroup AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427426522318",
+      "dealName": "SOFTWARE - GlobalWorks SAS",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427426523359",
+      "dealName": "MANUFACTURING - BetaVision Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427426523337",
+      "dealName": "SMART HOME - NetDynamics Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427426528496",
+      "dealName": "SMART HOME - DigitalSystems Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427426529482",
+      "dealName": "SMART HOME - DataWare AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427971576041",
+      "dealName": "IOT - CyberLabs GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427971576027",
+      "dealName": "SOFTWARE - OmegaConnect SRL",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427971577070",
+      "dealName": "MANUFACTURING - TechWorks Corp",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428246858949",
+      "dealName": "IOT - OmegaConnect Inc",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428155965651",
+      "dealName": "SMART HOME - NexusTechnologies Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428457247953",
+      "dealName": "Bauer AG - Cybersecurity",
+      "email": "m.heinrich@bauer.de",
+      "contactName": "Max Heinrich"
+    },
+    {
+      "dealId": "428136028352",
+      "dealName": "SMART HOME - NetWorks GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427753623751",
+      "dealName": "IOT - EuroSolutions GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "426743264480",
+      "dealName": "SMART HOME - TechSystems BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427538966765",
+      "dealName": "IOT - EuroWare LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428070151388",
+      "dealName": "SOFTWARE - CoreWorks Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426725602494",
+      "dealName": "SMART HOME - CloudSystems AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428064774352",
+      "dealName": "MANUFACTURING - NexusTechnologies SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428209043654",
+      "dealName": "SMART HOME - HubConnect Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427971559622",
+      "dealName": "IOT - DataTechnologies SA",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427840508153",
+      "dealName": "SMART HOME - SmartConnect SAS",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428070151384",
+      "dealName": "SOFTWARE - TechLabs SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428025304304",
+      "dealName": "SMART HOME - AlphaSystems Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428105500891",
+      "dealName": "IOT - CyberVision AG",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427416943811",
+      "dealName": "SMART HOME - SynthSolutions Corp",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428259429609",
+      "dealName": "SMART HOME - NetTechnologies GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428205442274",
+      "dealName": "SMART HOME - GlobalLabs GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "426725602490",
+      "dealName": "SMART HOME - QuantumTechnologies BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428157765821",
+      "dealName": "MANUFACTURING - CloudGroup Corp",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428259429608",
+      "dealName": "MANUFACTURING - SmartDynamics GmbH",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428178952441",
+      "dealName": "MANUFACTURING - BetaWorks Ltd",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428070151383",
+      "dealName": "SOFTWARE - FlowSolutions Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "426721980654",
+      "dealName": "IOT - CyberConnect Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "426721980647",
+      "dealName": "IOT - TechConnect GmbH",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428178952439",
+      "dealName": "SMART HOME - CloudWorks AG",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428207238351",
+      "dealName": "IOT - GlobalDynamics Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427753646270",
+      "dealName": "IOT - NetDynamics Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428061193453",
+      "dealName": "SOFTWARE - HubGroup SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427363453126",
+      "dealName": "SMART HOME - BetaConnect SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427363452104",
+      "dealName": "SMART HOME - CyberWare SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427363452101",
+      "dealName": "IOT - SynthGroup SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427363452092",
+      "dealName": "IOT - GlobalSystems Inc",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427363453115",
+      "dealName": "IOT - OmegaSystems LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427363453128",
+      "dealName": "MANUFACTURING - SynthTechnologies SRL",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427363453118",
+      "dealName": "MANUFACTURING - AlphaWorks AG",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427748263103",
+      "dealName": "MANUFACTURING - SynthWorks Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427748263100",
+      "dealName": "SMART HOME - DigitalLabs SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427748262129",
+      "dealName": "IOT - CoreSystems SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159582455",
+      "dealName": "IOT - HubGroup LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159582452",
+      "dealName": "SOFTWARE - NetSolutions BV",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428159583454",
+      "dealName": "SMART HOME - FlowDynamics LLC",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428159582428",
+      "dealName": "IOT - LogicSolutions SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159583437",
+      "dealName": "MANUFACTURING - GlobalSystems Corp",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428159583453",
+      "dealName": "SMART HOME - BetaSystems Ltd",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "428159583432",
+      "dealName": "SOFTWARE - EuroWare BV",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428159582423",
+      "dealName": "MANUFACTURING - HubSystems Corp",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428159583448",
+      "dealName": "SOFTWARE - SmartSolutions LLC",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428159582441",
+      "dealName": "IOT - LogicWare SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159582417",
+      "dealName": "IOT - BetaLabs SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159583468",
+      "dealName": "IOT - AlphaWorks LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428159582450",
+      "dealName": "IOT - DigitalSystems SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "428207241441",
+      "dealName": "SOFTWARE - TechVision SA",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428207241430",
+      "dealName": "SOFTWARE - DataWorks LLC",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "428391164111",
+      "dealName": "IOT - CyberGroup SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926194",
+      "dealName": "IOT - SynthWare LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926198",
+      "dealName": "SOFTWARE - BetaConnect Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427836927186",
+      "dealName": "SOFTWARE - DigitalWare GmbH",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427836926188",
+      "dealName": "SMART HOME - OmegaConnect BV",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427836926167",
+      "dealName": "SOFTWARE - SynthSystems AG",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427836927165",
+      "dealName": "IOT - GlobalSolutions BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836927176",
+      "dealName": "IOT - PrimeSolutions BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926201",
+      "dealName": "SOFTWARE - DataWare Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427836927162",
+      "dealName": "MANUFACTURING - QuantumConnect Inc",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427836926170",
+      "dealName": "IOT - SynthTechnologies Inc",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926179",
+      "dealName": "SMART HOME - DigitalConnect Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427836927164",
+      "dealName": "MANUFACTURING - CloudWare SAS",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427836927178",
+      "dealName": "SOFTWARE - DigitalGroup AG",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427836926200",
+      "dealName": "IOT - SynthWorks LLC",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926175",
+      "dealName": "IOT - CloudDynamics Corp",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836927200",
+      "dealName": "MANUFACTURING - CoreGroup AG",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427836926199",
+      "dealName": "SMART HOME - QuantumConnect GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427836927190",
+      "dealName": "IOT - DataVision SRL",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427836926187",
+      "dealName": "SMART HOME - NetDynamics SA",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427699628260",
+      "dealName": "SMART HOME - AlphaDynamics SRL",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427699629265",
+      "dealName": "SMART HOME - SmartSystems GmbH",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427699628262",
+      "dealName": "SMART HOME - CloudSolutions Inc",
+      "email": "probert@smarthomeag.com",
+      "contactName": "Peter Robert"
+    },
+    {
+      "dealId": "427699628279",
+      "dealName": "IOT - OmegaWare SAS",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427699629257",
+      "dealName": "IOT - DataLabs Ltd",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427699629286",
+      "dealName": "IOT - SynthSystems BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427699628278",
+      "dealName": "SOFTWARE - SynthDynamics Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427699628280",
+      "dealName": "IOT - AlphaTechnologies BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427699629243",
+      "dealName": "SOFTWARE - EuroSystems Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427699629297",
+      "dealName": "IOT - CoreWare BV",
+      "email": "contact@iotinc.com",
+      "contactName": "Pierre Petit"
+    },
+    {
+      "dealId": "427699628276",
+      "dealName": "MANUFACTURING - CoreVision LLC",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427699629290",
+      "dealName": "SOFTWARE - NetTechnologies Inc",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427699629249",
+      "dealName": "SOFTWARE - NetTechnologies Corp",
+      "email": "c.schroder@softwareag.com",
+      "contactName": "Charlotte Schröder"
+    },
+    {
+      "dealId": "427699629242",
+      "dealName": "MANUFACTURING - NexusSystems LLC",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "427699629264",
+      "dealName": "MANUFACTURING - TechDynamics Corp",
+      "email": "jean@manufacturingin.com",
+      "contactName": "Jean Williams"
+    },
+    {
+      "dealId": "428905245903",
+      "dealName": "Exact Software - Smart Home Projekt",
+      "email": "jennifer.krause@exact.com",
+      "contactName": "Jennifer Krause"
+    },
+    {
+      "dealId": "424131077343",
+      "dealName": "[A-CLASS] BUILDING_AUTOMATION - FlexVisions Brüssel Deutschland #MK1QHJILA44W",
+      "email": "seidel.max@ing.de",
+      "contactName": "Max Seidel"
+    }
+  ]
+}

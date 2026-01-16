@@ -1,0 +1,149 @@
+{
+  "timestamp": "2026-01-15T16:46:34.764Z",
+  "results": [
+    {
+      "success": true,
+      "email": "hello@calmstorm.vc",
+      "name": "Calm/Storm Ventures",
+      "messageId": "<bf2bdb8b-2c53-08bd-faef-bb021746eb87@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@femventix.com",
+      "name": "Femventix",
+      "messageId": "<ff332e6b-3caf-5a2b-d6b8-abfc5a6c3070@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "b4i@bosch.com",
+      "name": "B4i (Bosch)",
+      "messageId": "<869ec62c-515e-41fc-bbf5-e9da064bd4d3@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@norrsken.org",
+      "name": "Norrsken",
+      "messageId": "<26845687-5c8e-d721-acb3-aa59c74a7e26@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@business-angels.de",
+      "name": "Business Angels Deutschland",
+      "messageId": "<f7421ddd-9e17-bc92-6a89-47ae5c0bf7c0@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@bacb.de",
+      "name": "BACB Berlin",
+      "messageId": "<c511f102-d7e0-8965-a23a-b5461ce9a538@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@inwi.vc",
+      "name": "INWI Wiesbaden",
+      "messageId": "<b5c37e54-6639-9f36-1feb-6080fa001a70@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@business-angels-aachen.de",
+      "name": "BA Aachen",
+      "messageId": "<4b5b7d6c-4528-2161-7f89-fb64ad491e5b@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@venture-stars.com",
+      "name": "Venture Stars",
+      "messageId": "<63236511-80f5-876e-2c15-b0250b4c272a@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@germanaccelerator.com",
+      "name": "German Accelerator",
+      "messageId": "<911eef08-980a-dabc-63b9-a65b37520ccb@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@pnptc.com",
+      "name": "Plug and Play",
+      "messageId": "<b5f6c76a-fd6d-9601-615a-701a6c839d6d@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@spinlab.co",
+      "name": "SpinLab",
+      "messageId": "<6aa9a6a7-3459-0016-fbf4-c9b961a532e3@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@hubraum.com",
+      "name": "Hub:raum (Telekom)",
+      "messageId": "<c5a5d464-2556-9f4a-6243-e61751be8052@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@main-incubator.com",
+      "name": "Main Incubator",
+      "messageId": "<aae54766-1cd2-e78f-2aae-5f61db85a062@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@axelspringerplugandplay.com",
+      "name": "Axel Springer P&P",
+      "messageId": "<3d93cb48-7f88-4b5f-7d74-8cf8d82f0fdc@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@techfounders.com",
+      "name": "TechFounders",
+      "messageId": "<83421201-b10a-7b92-8801-4be258d350c1@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@unternehmertum.de",
+      "name": "UnternehmerTUM",
+      "messageId": "<a1635d21-68c3-cf0a-9434-746102783b77@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@atlantic-labs.de",
+      "name": "Atlantic Labs",
+      "messageId": "<1472581f-4d92-4bb3-c8b0-0306e8f52439@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@creathor.vc",
+      "name": "Creathor Ventures",
+      "messageId": "<9215a1c3-7e2e-eedb-fdff-771f6b203fb0@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "ventures@eqtpartners.com",
+      "name": "EQT Ventures",
+      "messageId": "<23076cc1-89e2-9cd4-1f15-4c6ecbf76988@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@lakestar.com",
+      "name": "Lakestar",
+      "messageId": "<a6aaf5e4-cc20-7d2e-ed9f-41334ed2e3f7@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@visionaries.club",
+      "name": "Visionaries Club",
+      "messageId": "<7b125542-8c64-850b-80aa-a30765d4abd2@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@target-global.com",
+      "name": "Target Global",
+      "messageId": "<4638475d-9f99-c3fe-f431-78a0b0da12c1@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@senovo.vc",
+      "name": "Senovo",
+      "messageId": "<fa2fcbc7-ffe5-ab98-5f5e-be35e8869a8b@enterprise-universe.com>"
+    }
+  ]
+}

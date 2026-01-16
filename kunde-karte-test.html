@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kundenkarte | West Money Bau CRM</title>
-    <!-- Auth disabled for testing -->
+    <!-- AUTH DISABLED FOR TEST -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -398,6 +398,9 @@
                         </button>
                         <button class="tab-btn" data-tab="timeline">
                             <span class="mr-2">&#128197;</span> Verlauf
+                        </button>
+                        <button class="tab-btn" data-tab="aiplan">
+                            <span class="mr-2">&#129302;</span> AI-Plan
                         </button>
                     </div>
                 </div>
@@ -1028,6 +1031,118 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Tab: AI Plan -->
+                <div class="tab-content" id="tab-aiplan">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- AI Analysis -->
+                        <div class="glass-card p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold flex items-center gap-2">
+                                    <span>&#129302;</span> AI-Analyse
+                                </h3>
+                                <span id="ai-status" class="px-3 py-1 rounded-full text-xs font-medium bg-slate-700 text-slate-400">
+                                    Warte auf Daten
+                                </span>
+                            </div>
+                            <div id="ai-analysis-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Klicken Sie auf "Analyse starten" um die AI-Analyse zu beginnen</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex gap-2">
+                                <button onclick="runAIAnalysis()" class="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium py-2 px-4 rounded-lg transition-all">
+                                    &#9658; Analyse starten
+                                </button>
+                                <button onclick="runExtendedPipeline()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-medium py-2 px-4 rounded-lg transition-all">
+                                    &#9889; Vollstandiger Plan + Subunternehmer
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Project Plan -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                                <span>&#128203;</span> Projektplan
+                            </h3>
+                            <div id="ai-projectplan-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Noch kein Projektplan generiert</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost Estimate -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                                <span>&#128176;</span> Kostenvoranschlag
+                            </h3>
+                            <div id="ai-costestimate-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Noch keine Kostenschatzung verfugbar</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Recommendation -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                                <span>&#9881;</span> Systemempfehlung
+                            </h3>
+                            <div id="ai-systemconfig-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Noch keine Konfigurationsempfehlung</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subcontractor Coordination -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                                <span>&#128119;</span> Subunternehmer-Koordination
+                            </h3>
+                            <div id="ai-subcontractor-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Noch keine Subunternehmer geplant</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Communication Schedule -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <span>&#128222;</span> Kommunikationsplan
+                                </span>
+                                <span id="notifications-badge" class="hidden px-2 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-medium">
+                                    <span id="notifications-count">0</span> Benachrichtigungen geplant
+                                </span>
+                            </h3>
+                            <div id="ai-communication-content" class="space-y-4">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Noch kein Kommunikationsplan erstellt</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Scheduled Notifications -->
+                        <div class="glass-card p-6">
+                            <h3 class="text-lg font-semibold mb-4 flex items-center justify-between">
+                                <span class="flex items-center gap-2">
+                                    <span>&#128276;</span> Geplante Benachrichtigungen
+                                </span>
+                                <button onclick="loadNotifications()" class="text-xs px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+                                    &#8635; Aktualisieren
+                                </button>
+                            </h3>
+                            <div id="notifications-list" class="space-y-3">
+                                <div class="bg-slate-800/50 rounded-lg p-4 text-center text-slate-400">
+                                    <p>Lade Benachrichtigungen...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
@@ -1090,6 +1205,963 @@
                 checkbox.checked = !checkbox.checked;
                 module.classList.toggle('selected', checkbox.checked);
             });
+        });
+
+        // ═══════════════════════════════════════════════════════════
+        // AI PLANNING FUNCTIONS
+        // ═══════════════════════════════════════════════════════════
+
+        // Get customer ID from URL
+        function getCustomerId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('customerId') || params.get('id') || 'demo-customer';
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || '';
+            return div.innerHTML;
+        }
+
+        // Update AI status badge
+        function updateAIStatus(status, color) {
+            const statusEl = document.getElementById('ai-status');
+            const colors = {
+                'slate': 'bg-slate-700 text-slate-400',
+                'blue': 'bg-blue-500/20 text-blue-400',
+                'green': 'bg-green-500/20 text-green-400',
+                'yellow': 'bg-yellow-500/20 text-yellow-400',
+                'red': 'bg-red-500/20 text-red-400'
+            };
+            statusEl.className = 'px-3 py-1 rounded-full text-xs font-medium ' + (colors[color] || colors.slate);
+            statusEl.textContent = status;
+        }
+
+        // Run AI Analysis
+        async function runAIAnalysis() {
+            const customerId = getCustomerId();
+            updateAIStatus('Analysiere...', 'blue');
+
+            try {
+                const response = await fetch('/api/customer/' + customerId + '/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.analysis) {
+                    updateAIStatus('Analysiert', 'green');
+                    renderAnalysis(data.analysis);
+                } else {
+                    throw new Error(data.error || 'Analyse fehlgeschlagen');
+                }
+            } catch (error) {
+                updateAIStatus('Fehler', 'red');
+                console.error('AI Analysis error:', error);
+                alert('Fehler bei der AI-Analyse: ' + error.message);
+            }
+        }
+
+        // Run Full Pipeline
+        async function runFullPipeline() {
+            const customerId = getCustomerId();
+            updateAIStatus('Pipeline lauft...', 'yellow');
+
+            try {
+                const response = await fetch('/api/customer/' + customerId + '/full-pipeline', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    updateAIStatus('Vollstandig', 'green');
+                    if (data.analysis) renderAnalysis(data.analysis);
+                    if (data.projectPlan) renderProjectPlan(data.projectPlan);
+                    if (data.costEstimate) renderCostEstimate(data.costEstimate);
+                    if (data.suggestedConfig) renderSystemConfig(data.suggestedConfig);
+                } else {
+                    throw new Error(data.error || 'Pipeline fehlgeschlagen');
+                }
+            } catch (error) {
+                updateAIStatus('Fehler', 'red');
+                console.error('Full pipeline error:', error);
+                alert('Fehler bei der Pipeline: ' + error.message);
+            }
+        }
+
+        // Run Extended Pipeline (includes subcontractors and communication)
+        async function runExtendedPipeline() {
+            const customerId = getCustomerId();
+            updateAIStatus('Erweiterte Pipeline...', 'yellow');
+
+            try {
+                const response = await fetch('/api/customer/' + customerId + '/extended-pipeline', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    updateAIStatus('Vollstandig', 'green');
+                    if (data.analysis) renderAnalysis(data.analysis);
+                    if (data.projectPlan) renderProjectPlan(data.projectPlan);
+                    if (data.costEstimate) renderCostEstimate(data.costEstimate);
+                    if (data.suggestedConfig) renderSystemConfig(data.suggestedConfig);
+                    if (data.subcontractorPlan) renderSubcontractorPlan(data.subcontractorPlan);
+                    if (data.communicationSchedule) renderCommunicationSchedule(data.communicationSchedule);
+
+                    // Show notifications badge if notifications were scheduled
+                    if (data.notificationsScheduled > 0) {
+                        const badge = document.getElementById('notifications-badge');
+                        const count = document.getElementById('notifications-count');
+                        if (badge && count) {
+                            count.textContent = data.notificationsScheduled;
+                            badge.classList.remove('hidden');
+                        }
+                    }
+                } else {
+                    throw new Error(data.error || 'Extended pipeline fehlgeschlagen');
+                }
+            } catch (error) {
+                updateAIStatus('Fehler', 'red');
+                console.error('Extended pipeline error:', error);
+                alert('Fehler bei der erweiterten Pipeline: ' + error.message);
+            }
+        }
+
+        // Render AI Analysis using safe DOM methods
+        function renderAnalysis(analysis) {
+            const container = document.getElementById('ai-analysis-content');
+            container.textContent = '';
+
+            const feasibilityColors = { high: 'text-green-400', medium: 'text-yellow-400', low: 'text-red-400' };
+            const feasibilityText = { high: 'Hoch', medium: 'Mittel', low: 'Niedrig' };
+
+            // Summary box
+            const summaryBox = document.createElement('div');
+            summaryBox.className = 'bg-slate-800/50 rounded-lg p-4';
+            const summaryTitle = document.createElement('h4');
+            summaryTitle.className = 'font-medium mb-2';
+            summaryTitle.textContent = 'Zusammenfassung';
+            const summaryText = document.createElement('p');
+            summaryText.className = 'text-slate-300 text-sm';
+            summaryText.textContent = analysis.summary || 'Keine Zusammenfassung';
+            summaryBox.appendChild(summaryTitle);
+            summaryBox.appendChild(summaryText);
+            container.appendChild(summaryBox);
+
+            // Stats row
+            const statsRow = document.createElement('div');
+            statsRow.className = 'flex gap-4';
+
+            const feasibilityBox = document.createElement('div');
+            feasibilityBox.className = 'flex-1 bg-slate-800/50 rounded-lg p-3 text-center';
+            const feasLabel = document.createElement('p');
+            feasLabel.className = 'text-xs text-slate-400 mb-1';
+            feasLabel.textContent = 'Machbarkeit';
+            const feasValue = document.createElement('p');
+            feasValue.className = 'font-semibold ' + (feasibilityColors[analysis.feasibility] || 'text-slate-400');
+            feasValue.textContent = feasibilityText[analysis.feasibility] || 'Unbekannt';
+            feasibilityBox.appendChild(feasLabel);
+            feasibilityBox.appendChild(feasValue);
+
+            const challengesBox = document.createElement('div');
+            challengesBox.className = 'flex-1 bg-slate-800/50 rounded-lg p-3 text-center';
+            const chalLabel = document.createElement('p');
+            chalLabel.className = 'text-xs text-slate-400 mb-1';
+            chalLabel.textContent = 'Herausforderungen';
+            const chalValue = document.createElement('p');
+            chalValue.className = 'font-semibold';
+            chalValue.textContent = (analysis.challenges || []).length.toString();
+            challengesBox.appendChild(chalLabel);
+            challengesBox.appendChild(chalValue);
+
+            statsRow.appendChild(feasibilityBox);
+            statsRow.appendChild(challengesBox);
+            container.appendChild(statsRow);
+
+            // Recommendations
+            if (analysis.recommendations && analysis.recommendations.length > 0) {
+                const recBox = document.createElement('div');
+                recBox.className = 'bg-slate-800/50 rounded-lg p-4';
+                const recTitle = document.createElement('h4');
+                recTitle.className = 'font-medium mb-2';
+                recTitle.textContent = 'Empfehlungen';
+                recBox.appendChild(recTitle);
+                const recList = document.createElement('ul');
+                recList.className = 'text-sm text-slate-300 space-y-1';
+                analysis.recommendations.forEach(function(r) {
+                    const li = document.createElement('li');
+                    li.textContent = '\u2022 ' + r;
+                    recList.appendChild(li);
+                });
+                recBox.appendChild(recList);
+                container.appendChild(recBox);
+            }
+        }
+
+        // Render Project Plan using safe DOM methods
+        function renderProjectPlan(plan) {
+            const container = document.getElementById('ai-projectplan-content');
+            container.textContent = '';
+
+            const headerBox = document.createElement('div');
+            headerBox.className = 'bg-slate-800/50 rounded-lg p-4';
+            const title = document.createElement('h4');
+            title.className = 'font-medium mb-2';
+            title.textContent = plan.name || 'Projektplan';
+            headerBox.appendChild(title);
+            if (plan.description) {
+                const desc = document.createElement('p');
+                desc.className = 'text-slate-300 text-sm mb-4';
+                desc.textContent = plan.description;
+                headerBox.appendChild(desc);
+            }
+            container.appendChild(headerBox);
+
+            if (plan.milestones && plan.milestones.length > 0) {
+                const milestonesDiv = document.createElement('div');
+                milestonesDiv.className = 'space-y-3';
+                plan.milestones.forEach(function(m, i) {
+                    const mBox = document.createElement('div');
+                    mBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                    const mHeader = document.createElement('div');
+                    mHeader.className = 'flex justify-between items-center mb-2';
+                    const mTitle = document.createElement('span');
+                    mTitle.className = 'font-medium text-sm';
+                    mTitle.textContent = (i + 1) + '. ' + m.phase;
+                    mHeader.appendChild(mTitle);
+                    mBox.appendChild(mHeader);
+
+                    if (m.tasks && m.tasks.length > 0) {
+                        const taskList = document.createElement('ul');
+                        taskList.className = 'text-xs text-slate-400 space-y-1';
+                        m.tasks.slice(0, 3).forEach(function(t) {
+                            const li = document.createElement('li');
+                            li.textContent = '\u2713 ' + t;
+                            taskList.appendChild(li);
+                        });
+                        mBox.appendChild(taskList);
+                    }
+                    milestonesDiv.appendChild(mBox);
+                });
+                container.appendChild(milestonesDiv);
+            }
+
+            if (plan.keyDeliverables && plan.keyDeliverables.length > 0) {
+                const delBox = document.createElement('div');
+                delBox.className = 'bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3';
+                const delLabel = document.createElement('p');
+                delLabel.className = 'text-xs text-emerald-400 font-medium mb-1';
+                delLabel.textContent = 'Hauptergebnisse';
+                const delText = document.createElement('p');
+                delText.className = 'text-sm';
+                delText.textContent = plan.keyDeliverables.join(', ');
+                delBox.appendChild(delLabel);
+                delBox.appendChild(delText);
+                container.appendChild(delBox);
+            }
+        }
+
+        // Render Cost Estimate using safe DOM methods
+        function renderCostEstimate(estimate) {
+            const container = document.getElementById('ai-costestimate-content');
+            container.textContent = '';
+
+            const formatCurrency = function(val) {
+                return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(val || 0);
+            };
+
+            if (estimate.components && estimate.components.length > 0) {
+                const tableBox = document.createElement('div');
+                tableBox.className = 'bg-slate-800/50 rounded-lg p-4 max-h-48 overflow-y-auto';
+                const table = document.createElement('table');
+                table.className = 'w-full text-sm';
+
+                const thead = document.createElement('thead');
+                thead.className = 'text-slate-400 text-xs';
+                const headerRow = document.createElement('tr');
+                ['Komponente', 'Anzahl', 'Gesamt'].forEach(function(text, idx) {
+                    const th = document.createElement('th');
+                    th.className = idx === 0 ? 'text-left pb-2' : 'text-right pb-2';
+                    th.textContent = text;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+                tbody.className = 'text-slate-300';
+                estimate.components.slice(0, 8).forEach(function(c) {
+                    const row = document.createElement('tr');
+                    row.className = 'border-t border-slate-700';
+
+                    const tdName = document.createElement('td');
+                    tdName.className = 'py-2';
+                    tdName.textContent = c.name;
+                    row.appendChild(tdName);
+
+                    const tdQty = document.createElement('td');
+                    tdQty.className = 'text-right';
+                    tdQty.textContent = c.quantity + 'x';
+                    row.appendChild(tdQty);
+
+                    const tdTotal = document.createElement('td');
+                    tdTotal.className = 'text-right';
+                    tdTotal.textContent = formatCurrency(c.total);
+                    row.appendChild(tdTotal);
+
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+                tableBox.appendChild(table);
+                container.appendChild(tableBox);
+            }
+
+            const statsGrid = document.createElement('div');
+            statsGrid.className = 'grid grid-cols-2 gap-3';
+
+            const laborBox = document.createElement('div');
+            laborBox.className = 'bg-slate-800/50 rounded-lg p-3 text-center';
+            const laborLabel = document.createElement('p');
+            laborLabel.className = 'text-xs text-slate-400';
+            laborLabel.textContent = 'Arbeitskosten';
+            const laborValue = document.createElement('p');
+            laborValue.className = 'font-semibold text-blue-400';
+            laborValue.textContent = formatCurrency(estimate.laborCost);
+            laborBox.appendChild(laborLabel);
+            laborBox.appendChild(laborValue);
+
+            const totalBox = document.createElement('div');
+            totalBox.className = 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg p-3 text-center border border-emerald-500/20';
+            const totalLabel = document.createElement('p');
+            totalLabel.className = 'text-xs text-emerald-400';
+            totalLabel.textContent = 'Gesamtschatzung';
+            const totalValue = document.createElement('p');
+            totalValue.className = 'font-bold text-lg text-emerald-400';
+            totalValue.textContent = formatCurrency(estimate.totalEstimate);
+            totalBox.appendChild(totalLabel);
+            totalBox.appendChild(totalValue);
+
+            statsGrid.appendChild(laborBox);
+            statsGrid.appendChild(totalBox);
+            container.appendChild(statsGrid);
+
+            if (estimate.notes) {
+                const notesBox = document.createElement('div');
+                notesBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                const notesLabel = document.createElement('p');
+                notesLabel.className = 'text-xs text-slate-400 mb-1';
+                notesLabel.textContent = 'Hinweise';
+                const notesText = document.createElement('p');
+                notesText.className = 'text-sm text-slate-300';
+                notesText.textContent = estimate.notes;
+                notesBox.appendChild(notesLabel);
+                notesBox.appendChild(notesText);
+                container.appendChild(notesBox);
+            }
+        }
+
+        // Render System Configuration using safe DOM methods
+        function renderSystemConfig(config) {
+            const container = document.getElementById('ai-systemconfig-content');
+            container.textContent = '';
+
+            const systemColors = {
+                'LOXONE': 'from-green-500 to-emerald-500',
+                'KNX': 'from-red-500 to-orange-500',
+                'HYBRID': 'from-blue-500 to-purple-500',
+                'INDUSTRIE': 'from-yellow-500 to-amber-500'
+            };
+
+            const headerBox = document.createElement('div');
+            headerBox.className = 'bg-gradient-to-r ' + (systemColors[config.recommendedSystem] || 'from-slate-500 to-slate-600') + ' rounded-lg p-4 text-center';
+            const headerLabel = document.createElement('p');
+            headerLabel.className = 'text-xs text-white/70 mb-1';
+            headerLabel.textContent = 'Empfohlenes System';
+            const headerValue = document.createElement('p');
+            headerValue.className = 'text-xl font-bold text-white';
+            headerValue.textContent = config.recommendedSystem || 'HYBRID';
+            headerBox.appendChild(headerLabel);
+            headerBox.appendChild(headerValue);
+            container.appendChild(headerBox);
+
+            if (config.modules && config.modules.length > 0) {
+                const modulesBox = document.createElement('div');
+                modulesBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                const modLabel = document.createElement('p');
+                modLabel.className = 'text-xs text-slate-400 mb-2';
+                modLabel.textContent = 'Module';
+                modulesBox.appendChild(modLabel);
+                const modTags = document.createElement('div');
+                modTags.className = 'flex flex-wrap gap-2';
+                config.modules.forEach(function(m) {
+                    const tag = document.createElement('span');
+                    tag.className = 'px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs';
+                    tag.textContent = m;
+                    modTags.appendChild(tag);
+                });
+                modulesBox.appendChild(modTags);
+                container.appendChild(modulesBox);
+            }
+
+            if (config.integrations && config.integrations.length > 0) {
+                const intBox = document.createElement('div');
+                intBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                const intLabel = document.createElement('p');
+                intLabel.className = 'text-xs text-slate-400 mb-2';
+                intLabel.textContent = 'Integrationen';
+                intBox.appendChild(intLabel);
+                const intTags = document.createElement('div');
+                intTags.className = 'flex flex-wrap gap-2';
+                config.integrations.forEach(function(i) {
+                    const tag = document.createElement('span');
+                    tag.className = 'px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs';
+                    tag.textContent = i;
+                    intTags.appendChild(tag);
+                });
+                intBox.appendChild(intTags);
+                container.appendChild(intBox);
+            }
+
+            if (config.reasoning) {
+                const reasonBox = document.createElement('div');
+                reasonBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                const reasonLabel = document.createElement('p');
+                reasonLabel.className = 'text-xs text-slate-400 mb-1';
+                reasonLabel.textContent = 'Begrundung';
+                const reasonText = document.createElement('p');
+                reasonText.className = 'text-sm text-slate-300';
+                reasonText.textContent = config.reasoning;
+                reasonBox.appendChild(reasonLabel);
+                reasonBox.appendChild(reasonText);
+                container.appendChild(reasonBox);
+            }
+        }
+
+        // Render Subcontractor Plan using safe DOM methods
+        function renderSubcontractorPlan(plan) {
+            const container = document.getElementById('ai-subcontractor-content');
+            container.textContent = '';
+
+            if (!plan || !plan.requiredTrades || plan.requiredTrades.length === 0) {
+                const emptyBox = document.createElement('div');
+                emptyBox.className = 'bg-slate-800/50 rounded-lg p-4 text-center text-slate-400';
+                emptyBox.textContent = 'Keine Subunternehmer-Anforderungen identifiziert';
+                container.appendChild(emptyBox);
+                return;
+            }
+
+            // Header with count
+            const headerBox = document.createElement('div');
+            headerBox.className = 'bg-gradient-to-r from-orange-500/20 to-amber-500/20 rounded-lg p-4 border border-orange-500/20';
+            const headerLabel = document.createElement('p');
+            headerLabel.className = 'text-xs text-orange-400 mb-1';
+            headerLabel.textContent = 'Erforderliche Gewerke';
+            const headerValue = document.createElement('p');
+            headerValue.className = 'text-xl font-bold text-orange-300';
+            headerValue.textContent = plan.requiredTrades.length + ' Gewerke identifiziert';
+            headerBox.appendChild(headerLabel);
+            headerBox.appendChild(headerValue);
+            container.appendChild(headerBox);
+
+            // Required trades with recommendations
+            plan.requiredTrades.forEach(function(trade) {
+                const tradeBox = document.createElement('div');
+                tradeBox.className = 'bg-slate-800/50 rounded-lg p-4';
+
+                const tradeHeader = document.createElement('div');
+                tradeHeader.className = 'flex justify-between items-start mb-3';
+                const tradeName = document.createElement('h4');
+                tradeName.className = 'font-medium text-white';
+                tradeName.textContent = trade.type || trade.trade;
+                tradeHeader.appendChild(tradeName);
+
+                if (trade.priority) {
+                    const priorityBadge = document.createElement('span');
+                    const priorityColors = { high: 'bg-red-500/20 text-red-400', medium: 'bg-yellow-500/20 text-yellow-400', low: 'bg-green-500/20 text-green-400' };
+                    priorityBadge.className = 'px-2 py-1 rounded text-xs ' + (priorityColors[trade.priority] || 'bg-slate-600 text-slate-300');
+                    priorityBadge.textContent = trade.priority === 'high' ? 'Hoch' : trade.priority === 'medium' ? 'Mittel' : 'Niedrig';
+                    tradeHeader.appendChild(priorityBadge);
+                }
+                tradeBox.appendChild(tradeHeader);
+
+                // Tasks
+                if (trade.tasks && trade.tasks.length > 0) {
+                    const taskList = document.createElement('ul');
+                    taskList.className = 'text-sm text-slate-400 mb-3 space-y-1';
+                    trade.tasks.forEach(function(t) {
+                        const li = document.createElement('li');
+                        li.textContent = '\u2022 ' + t;
+                        taskList.appendChild(li);
+                    });
+                    tradeBox.appendChild(taskList);
+                }
+
+                // Recommended subcontractor
+                if (trade.recommended) {
+                    const recBox = document.createElement('div');
+                    recBox.className = 'bg-emerald-500/10 border border-emerald-500/20 rounded p-3';
+                    const recLabel = document.createElement('p');
+                    recLabel.className = 'text-xs text-emerald-400 mb-1';
+                    recLabel.textContent = 'Empfohlener Partner';
+                    const recName = document.createElement('p');
+                    recName.className = 'font-medium text-white';
+                    recName.textContent = trade.recommended.name;
+                    recBox.appendChild(recLabel);
+                    recBox.appendChild(recName);
+
+                    if (trade.recommended.contact) {
+                        const contactInfo = document.createElement('p');
+                        contactInfo.className = 'text-xs text-slate-400 mt-1';
+                        contactInfo.textContent = trade.recommended.contact.name + ' - ' + trade.recommended.contact.phone;
+                        recBox.appendChild(contactInfo);
+                    }
+
+                    if (trade.recommended.rating) {
+                        const ratingBadge = document.createElement('span');
+                        ratingBadge.className = 'inline-block mt-2 px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded text-xs';
+                        ratingBadge.textContent = '\u2605 ' + trade.recommended.rating + ' (' + trade.recommended.completedProjects + ' Projekte)';
+                        recBox.appendChild(ratingBadge);
+                    }
+                    tradeBox.appendChild(recBox);
+                }
+
+                container.appendChild(tradeBox);
+            });
+
+            // Estimated coordination cost
+            if (plan.estimatedCoordinationCost) {
+                const costBox = document.createElement('div');
+                costBox.className = 'bg-slate-800/50 rounded-lg p-3 text-center';
+                const costLabel = document.createElement('p');
+                costLabel.className = 'text-xs text-slate-400';
+                costLabel.textContent = 'Geschatzte Koordinationskosten';
+                const costValue = document.createElement('p');
+                costValue.className = 'font-semibold text-blue-400';
+                costValue.textContent = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(plan.estimatedCoordinationCost);
+                costBox.appendChild(costLabel);
+                costBox.appendChild(costValue);
+                container.appendChild(costBox);
+            }
+        }
+
+        // Render Communication Schedule using safe DOM methods
+        function renderCommunicationSchedule(schedule) {
+            const container = document.getElementById('ai-communication-content');
+            container.textContent = '';
+
+            // Check for data in either format (phases or customerContacts)
+            const hasPhases = schedule && schedule.phases && schedule.phases.length > 0;
+            const hasCustomerContacts = schedule && schedule.customerContacts && schedule.customerContacts.length > 0;
+
+            if (!hasPhases && !hasCustomerContacts) {
+                const emptyBox = document.createElement('div');
+                emptyBox.className = 'bg-slate-800/50 rounded-lg p-4 text-center text-slate-400';
+                emptyBox.textContent = 'Noch kein Kommunikationsplan erstellt';
+                container.appendChild(emptyBox);
+                return;
+            }
+
+            // Summary header
+            const headerBox = document.createElement('div');
+            headerBox.className = 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-4 border border-purple-500/20';
+            const headerLabel = document.createElement('p');
+            headerLabel.className = 'text-xs text-purple-400 mb-1';
+            headerLabel.textContent = 'Kommunikationsplan';
+            const headerValue = document.createElement('p');
+            headerValue.className = 'text-xl font-bold text-purple-300';
+            const contactCount = (schedule.customerContacts || []).length + (schedule.subcontractorContacts || []).length;
+            headerValue.textContent = contactCount + ' Kontaktpunkte geplant';
+            headerBox.appendChild(headerLabel);
+            headerBox.appendChild(headerValue);
+            container.appendChild(headerBox);
+
+            // Customer Contacts Section
+            if (schedule.customerContacts && schedule.customerContacts.length > 0) {
+                const customerSection = document.createElement('div');
+                customerSection.className = 'bg-slate-800/50 rounded-lg p-4';
+                const customerTitle = document.createElement('h4');
+                customerTitle.className = 'font-medium text-white mb-3 flex items-center gap-2';
+                customerTitle.textContent = '\uD83D\uDC64 Kundenkommunikation';
+                customerSection.appendChild(customerTitle);
+
+                schedule.customerContacts.forEach(function(contact, index) {
+                    const contactBox = document.createElement('div');
+                    contactBox.className = 'flex items-start gap-3 mb-3 last:mb-0';
+
+                    const number = document.createElement('span');
+                    number.className = 'w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold flex-shrink-0';
+                    number.textContent = (index + 1).toString();
+                    contactBox.appendChild(number);
+
+                    const content = document.createElement('div');
+                    content.className = 'flex-1';
+
+                    const header = document.createElement('div');
+                    header.className = 'flex justify-between items-start';
+                    const title = document.createElement('p');
+                    title.className = 'font-medium text-sm';
+                    title.textContent = contact.type + ' - ' + contact.purpose;
+                    header.appendChild(title);
+                    const timing = document.createElement('span');
+                    timing.className = 'text-xs text-slate-400';
+                    timing.textContent = contact.timing;
+                    header.appendChild(timing);
+                    content.appendChild(header);
+
+                    const method = document.createElement('p');
+                    method.className = 'text-xs text-slate-400';
+                    method.textContent = contact.method;
+                    content.appendChild(method);
+
+                    if (contact.agenda && contact.agenda.length > 0) {
+                        const agendaList = document.createElement('ul');
+                        agendaList.className = 'text-xs text-slate-500 mt-1';
+                        contact.agenda.slice(0, 3).forEach(function(item) {
+                            const li = document.createElement('li');
+                            li.textContent = '\u2022 ' + item;
+                            agendaList.appendChild(li);
+                        });
+                        content.appendChild(agendaList);
+                    }
+
+                    contactBox.appendChild(content);
+                    customerSection.appendChild(contactBox);
+                });
+
+                container.appendChild(customerSection);
+            }
+
+            // Subcontractor Contacts Section
+            if (schedule.subcontractorContacts && schedule.subcontractorContacts.length > 0) {
+                const subSection = document.createElement('div');
+                subSection.className = 'bg-slate-800/50 rounded-lg p-4';
+                const subTitle = document.createElement('h4');
+                subTitle.className = 'font-medium text-white mb-3 flex items-center gap-2';
+                subTitle.textContent = '\uD83D\uDC77 Subunternehmer-Kontakte';
+                subSection.appendChild(subTitle);
+
+                const subGrid = document.createElement('div');
+                subGrid.className = 'grid grid-cols-1 gap-2';
+
+                schedule.subcontractorContacts.forEach(function(contact) {
+                    const subBox = document.createElement('div');
+                    subBox.className = 'flex justify-between items-center p-2 bg-slate-700/30 rounded';
+
+                    const left = document.createElement('div');
+                    const tradeName = document.createElement('p');
+                    tradeName.className = 'text-sm font-medium';
+                    tradeName.textContent = contact.trade;
+                    left.appendChild(tradeName);
+                    const contactType = document.createElement('p');
+                    contactType.className = 'text-xs text-slate-400';
+                    contactType.textContent = contact.type + ' via ' + contact.method;
+                    left.appendChild(contactType);
+                    subBox.appendChild(left);
+
+                    const timing = document.createElement('span');
+                    timing.className = 'text-xs text-orange-400';
+                    timing.textContent = contact.timing;
+                    subBox.appendChild(timing);
+
+                    subGrid.appendChild(subBox);
+                });
+
+                subSection.appendChild(subGrid);
+                container.appendChild(subSection);
+            }
+
+            // Status updates info
+            if (schedule.statusUpdates) {
+                const statusBox = document.createElement('div');
+                statusBox.className = 'bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3';
+                const statusLabel = document.createElement('p');
+                statusLabel.className = 'text-xs text-emerald-400 mb-1';
+                statusLabel.textContent = 'Regelmassige Updates';
+                const statusValue = document.createElement('p');
+                statusValue.className = 'text-sm text-white';
+                statusValue.textContent = schedule.statusUpdates;
+                statusBox.appendChild(statusLabel);
+                statusBox.appendChild(statusValue);
+                container.appendChild(statusBox);
+            }
+
+            // Escalation path
+            if (schedule.escalationPath && schedule.escalationPath.length > 0) {
+                const escBox = document.createElement('div');
+                escBox.className = 'bg-slate-800/50 rounded-lg p-3';
+                const escLabel = document.createElement('p');
+                escLabel.className = 'text-xs text-slate-400 mb-2';
+                escLabel.textContent = 'Eskalationspfad';
+                escBox.appendChild(escLabel);
+
+                const escTags = document.createElement('div');
+                escTags.className = 'flex flex-wrap gap-2';
+                schedule.escalationPath.forEach(function(s) {
+                    const tag = document.createElement('span');
+                    tag.className = 'px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs';
+                    tag.textContent = s;
+                    escTags.appendChild(tag);
+                });
+                escBox.appendChild(escTags);
+                container.appendChild(escBox);
+            }
+        }
+
+        // Load existing AI plan data on page load
+        async function loadAIPlanData() {
+            const customerId = getCustomerId();
+            try {
+                const response = await fetch('/api/customer/' + customerId + '/plan-data');
+                const data = await response.json();
+
+                if (data.success && data.exists) {
+                    if (data.status === 'planned' || data.status === 'analyzed') {
+                        updateAIStatus(data.status === 'planned' ? 'Geplant' : 'Analysiert', 'green');
+                    } else if (data.status === 'processing') {
+                        updateAIStatus('Verarbeitung...', 'yellow');
+                    }
+
+                    if (data.aiAnalysis) renderAnalysis(data.aiAnalysis);
+                    if (data.projectPlan) renderProjectPlan(data.projectPlan);
+                    if (data.costEstimate) renderCostEstimate(data.costEstimate);
+                    if (data.suggestedConfig) renderSystemConfig(data.suggestedConfig);
+                    if (data.subcontractorPlan) renderSubcontractorPlan(data.subcontractorPlan);
+                    if (data.communicationSchedule) renderCommunicationSchedule(data.communicationSchedule);
+                }
+            } catch (error) {
+                console.log('No existing AI plan data');
+            }
+        }
+
+        // Load and render scheduled notifications
+        async function loadNotifications() {
+            const customerId = getCustomerId();
+            const container = document.getElementById('notifications-list');
+
+            try {
+                const response = await fetch('/api/customer/' + customerId + '/notifications');
+                const data = await response.json();
+
+                // Also fetch sent history
+                const historyResponse = await fetch('/api/notifications/history?customerId=' + customerId);
+                const historyData = await historyResponse.json();
+
+                renderNotifications(data.notifications || [], historyData.history || []);
+
+                // Update badge
+                const badge = document.getElementById('notifications-badge');
+                const count = document.getElementById('notifications-count');
+                if (badge && count && data.notifications) {
+                    count.textContent = data.notifications.length;
+                    if (data.notifications.length > 0) {
+                        badge.classList.remove('hidden');
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+                container.textContent = '';
+                const errorBox = document.createElement('div');
+                errorBox.className = 'bg-slate-800/50 rounded-lg p-4 text-center text-slate-400';
+                errorBox.textContent = 'Fehler beim Laden der Benachrichtigungen';
+                container.appendChild(errorBox);
+            }
+        }
+
+        // Render notifications list using safe DOM methods
+        function renderNotifications(scheduled, sent) {
+            const container = document.getElementById('notifications-list');
+            container.textContent = '';
+
+            const allNotifications = [
+                ...scheduled.map(function(n) { return Object.assign({}, n, { isSent: false }); }),
+                ...sent.map(function(n) { return Object.assign({}, n, { isSent: true }); })
+            ];
+
+            if (allNotifications.length === 0) {
+                const emptyBox = document.createElement('div');
+                emptyBox.className = 'bg-slate-800/50 rounded-lg p-4 text-center text-slate-400';
+                emptyBox.textContent = 'Keine Benachrichtigungen geplant';
+                container.appendChild(emptyBox);
+                return;
+            }
+
+            // Sort by date (scheduled first, then sent)
+            allNotifications.sort(function(a, b) {
+                if (a.isSent !== b.isSent) return a.isSent ? 1 : -1;
+                return new Date(a.scheduledFor) - new Date(b.scheduledFor);
+            });
+
+            // Type icons and colors
+            var typeConfig = {
+                customer: { icon: '\uD83D\uDC64', color: 'blue', label: 'Kunde' },
+                subcontractor: { icon: '\uD83D\uDC77', color: 'orange', label: 'Subunternehmer' },
+                internal: { icon: '\uD83D\uDCE2', color: 'gray', label: 'Intern' }
+            };
+
+            var statusConfig = {
+                scheduled: { icon: '\uD83D\uDCC5', color: 'yellow', label: 'Geplant' },
+                sent: { icon: '\u2705', color: 'green', label: 'Gesendet' },
+                failed: { icon: '\u274C', color: 'red', label: 'Fehlgeschlagen' },
+                cancelled: { icon: '\u26D4', color: 'gray', label: 'Abgebrochen' }
+            };
+
+            // Group by status
+            var scheduledItems = allNotifications.filter(function(n) { return !n.isSent; });
+            var sentItems = allNotifications.filter(function(n) { return n.isSent; });
+
+            // Render scheduled notifications
+            if (scheduledItems.length > 0) {
+                var scheduledHeader = document.createElement('div');
+                scheduledHeader.className = 'flex items-center gap-2 text-sm font-medium text-slate-400 mb-2';
+                scheduledHeader.textContent = '\uD83D\uDCC5 Ausstehend (' + scheduledItems.length + ')';
+                container.appendChild(scheduledHeader);
+
+                scheduledItems.forEach(function(notif) {
+                    container.appendChild(createNotificationCard(notif, typeConfig, statusConfig));
+                });
+            }
+
+            // Render sent notifications
+            if (sentItems.length > 0) {
+                var sentHeader = document.createElement('div');
+                sentHeader.className = 'flex items-center gap-2 text-sm font-medium text-slate-400 mb-2 mt-4';
+                sentHeader.textContent = '\u2705 Gesendet (' + sentItems.length + ')';
+                container.appendChild(sentHeader);
+
+                sentItems.slice(0, 5).forEach(function(notif) {
+                    container.appendChild(createNotificationCard(notif, typeConfig, statusConfig));
+                });
+
+                if (sentItems.length > 5) {
+                    var moreBox = document.createElement('div');
+                    moreBox.className = 'text-center text-xs text-slate-500 py-2';
+                    moreBox.textContent = '+ ' + (sentItems.length - 5) + ' weitere';
+                    container.appendChild(moreBox);
+                }
+            }
+        }
+
+        // Create notification card element
+        function createNotificationCard(notif, typeConfig, statusConfig) {
+            var card = document.createElement('div');
+            var isSent = notif.isSent || notif.status === 'sent';
+            card.className = 'bg-slate-800/50 rounded-lg p-3 ' + (isSent ? 'opacity-70' : '');
+
+            // Header row
+            var header = document.createElement('div');
+            header.className = 'flex items-start justify-between mb-2';
+
+            var leftSide = document.createElement('div');
+            leftSide.className = 'flex items-center gap-2';
+
+            // Type badge
+            var typeInfo = typeConfig[notif.type] || typeConfig.customer;
+            var typeBadge = document.createElement('span');
+            typeBadge.className = 'text-lg';
+            typeBadge.textContent = typeInfo.icon;
+            leftSide.appendChild(typeBadge);
+
+            var titleWrap = document.createElement('div');
+            var title = document.createElement('p');
+            title.className = 'font-medium text-sm';
+            title.textContent = notif.contactType || notif.type;
+            titleWrap.appendChild(title);
+
+            var subtitle = document.createElement('p');
+            subtitle.className = 'text-xs text-slate-400';
+            subtitle.textContent = notif.trade || notif.projectName || '';
+            titleWrap.appendChild(subtitle);
+            leftSide.appendChild(titleWrap);
+            header.appendChild(leftSide);
+
+            // Status badge
+            var statusInfo = statusConfig[notif.status] || statusConfig.scheduled;
+            var statusBadge = document.createElement('span');
+            var statusColors = {
+                yellow: 'bg-yellow-500/20 text-yellow-400',
+                green: 'bg-green-500/20 text-green-400',
+                red: 'bg-red-500/20 text-red-400',
+                gray: 'bg-slate-500/20 text-slate-400'
+            };
+            statusBadge.className = 'px-2 py-0.5 rounded text-xs ' + (statusColors[statusInfo.color] || statusColors.gray);
+            statusBadge.textContent = statusInfo.label;
+            header.appendChild(statusBadge);
+
+            card.appendChild(header);
+
+            // Details row
+            var details = document.createElement('div');
+            details.className = 'flex items-center gap-4 text-xs text-slate-400';
+
+            // Date
+            var dateSpan = document.createElement('span');
+            dateSpan.className = 'flex items-center gap-1';
+            var dateIcon = document.createElement('span');
+            dateIcon.textContent = '\uD83D\uDCC6';
+            dateSpan.appendChild(dateIcon);
+            var dateText = document.createElement('span');
+            var dateValue = isSent ? notif.sentAt : notif.scheduledFor;
+            dateText.textContent = dateValue ? formatNotificationDate(dateValue) : 'TBD';
+            dateSpan.appendChild(dateText);
+            details.appendChild(dateSpan);
+
+            // Recipient
+            if (notif.recipient) {
+                var recipientSpan = document.createElement('span');
+                recipientSpan.className = 'flex items-center gap-1';
+                var emailIcon = document.createElement('span');
+                emailIcon.textContent = '\u2709';
+                recipientSpan.appendChild(emailIcon);
+                var emailText = document.createElement('span');
+                emailText.textContent = notif.recipient.length > 25 ? notif.recipient.substring(0, 22) + '...' : notif.recipient;
+                recipientSpan.appendChild(emailText);
+                details.appendChild(recipientSpan);
+            } else if (!isSent) {
+                var noEmailSpan = document.createElement('span');
+                noEmailSpan.className = 'text-orange-400';
+                noEmailSpan.textContent = '\u26A0 Keine E-Mail';
+                details.appendChild(noEmailSpan);
+            }
+
+            // Method
+            if (notif.method) {
+                var methodSpan = document.createElement('span');
+                methodSpan.textContent = notif.method;
+                details.appendChild(methodSpan);
+            }
+
+            card.appendChild(details);
+
+            return card;
+        }
+
+        // Format date for notifications
+        function formatNotificationDate(dateString) {
+            if (!dateString) return 'TBD';
+            var date = new Date(dateString);
+            var now = new Date();
+            var diffDays = Math.ceil((date - now) / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 0) return 'Heute';
+            if (diffDays === 1) return 'Morgen';
+            if (diffDays === -1) return 'Gestern';
+            if (diffDays < 0) return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+            if (diffDays <= 7) return 'In ' + diffDays + ' Tagen';
+
+            return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' });
+        }
+
+        // Load AI data and notifications when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAIPlanData();
+            loadNotifications();
         });
     </script>
 </body>

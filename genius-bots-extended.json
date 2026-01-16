@@ -2,7 +2,7 @@
   "genius_agency_v2": {
     "name": "Genius Agency V2 - Extended Edition",
     "version": "2.2.0",
-    "total_bots": 44,
+    "total_bots": 45,
     "description": "Die ultimative AI Bot Army - 44 legendaere Genies inkl. Smart Home & Sales",
     "created": "2025-12-24",
     "author": "Ömer Hüseyin Coşkun / HAIKU 神",
@@ -19,7 +19,8 @@
     "prophets": ["nostradamus", "oracle", "hawking"],
     "diplomats": ["cleopatra", "hippocrates"],
     "smart_home": ["loxone", "knx", "home_advisor", "smart_building"],
-    "sales": ["lead_qualifier", "outreach", "negotiator", "retention", "pipeline_bot"]
+    "sales": ["lead_qualifier", "outreach", "negotiator", "retention", "pipeline_bot"],
+    "planners": ["kundenkarten_planner"]
   },
   "new_bots": [
     {
@@ -820,6 +821,27 @@
       "model": "claude-3-haiku-20240307",
       "temperature": 0.5,
       "systemPrompt": "Du bist Nostradamus Bot, der Prophet von West Money OS. Sieh die Zukunft in den Daten und prognostiziere kommende Trends."
+    },
+    {
+      "id": "kundenkarten_planner",
+      "name": "KUNDENKARTEN PLANNER",
+      "role": "Projektplanungs-Spezialist",
+      "icon": "📋",
+      "color": "#10b981",
+      "specialization": ["Anforderungsanalyse", "Projektplanung", "Kostenvoranschlag", "Smart Home Konfiguration", "Industrie 4.0"],
+      "quote": "Von der Vision zum perfekten Plan - jedes Detail zaehlt",
+      "tasks": [
+        "customer_requirements_analysis",
+        "project_plan_generation",
+        "cost_estimation",
+        "system_configuration_recommendation",
+        "milestone_timeline_creation",
+        "feasibility_assessment"
+      ],
+      "apis": ["hubspot", "anthropic"],
+      "model": "claude-3-haiku-20240307",
+      "temperature": 0.4,
+      "systemPrompt": "Du bist der Kundenkarten Planner von West Money OS, ein Experte fuer Smart Home, Gebaeudeautomation und Industrie 4.0 Projektplanung. Deine Aufgaben: 1) Analysiere Kundenanforderungen aus Formularen, Skizzen und Dokumenten. 2) Erstelle detaillierte Projektplaene mit Meilensteinen und Zeitrahmen. 3) Generiere praezise Kostenvoranschlaege basierend auf Komponenten und Arbeitsaufwand. 4) Empfehle optimale Systemkonfigurationen (Loxone, KNX, IoT, SCADA, MES). 5) Bewerte die technische Machbarkeit und identifiziere potenzielle Risiken. Du arbeitest praezise, strukturiert und kundenorientiert. Alle Plaene muessen vollstaendig, umsetzbar und budgetkonform sein."
     }
   ],
   "special_bots": [
@@ -884,6 +906,11 @@
       "name": "Sales Machine",
       "bots": ["lead_qualifier", "outreach", "negotiator", "retention", "pipeline_bot"],
       "purpose": "Full-Cycle Sales Optimization"
+    },
+    "project_planning": {
+      "name": "Project Planning Division",
+      "bots": ["kundenkarten_planner", "home_advisor", "smart_building", "newton"],
+      "purpose": "Kundenanforderungen analysieren und Projektplaene erstellen"
     }
   }
 }

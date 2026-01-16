@@ -213,6 +213,7 @@ app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'dashboard
 app.get('/v11', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v11.html')));
 app.get('/v10', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v10.html')));
 app.get('/v5', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-v5.html')));
+app.get('/v11-test', (req, res) => res.sendFile(path.join(__dirname, 'dashboard-test.html'))); // TEST: No auth
 
 // ULTIMATE DASHBOARD - All-in-One Command Center (no-cache for development)
 app.get('/ultimate', (req, res) => {
@@ -9695,6 +9696,18 @@ setupInvestorSignupRoutes(app);
 const { setupCustomerFilesRoutes, generateAccessToken } = require('./api/customer-files');
 setupCustomerFilesRoutes(app);
 
+// Customer Planning API (AI-powered analysis and project planning)
+const { setupCustomerPlanningRoutes } = require('./api/customer-planning');
+setupCustomerPlanningRoutes(app);
+
+// Subcontractor Management API
+const { setupSubcontractorRoutes } = require('./api/subcontractor-management');
+setupSubcontractorRoutes(app);
+
+// Contact Notification Scheduler API
+const { setupContactNotificationRoutes } = require('./api/contact-notifications');
+setupContactNotificationRoutes(app);
+
 // Send customer requirements form to deal contact
 app.post('/api/deals/:dealId/send-requirements-form', async (req, res) => {
     try {
@@ -9849,6 +9862,184 @@ app.post('/api/deals/send-requirements-forms-bulk', async (req, res) => {
 
     } catch (error) {
         console.error('[BULK-REQUIREMENTS] Error:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Send requirement forms to ALL deals in specific stages
+app.post('/api/deals/send-forms-all', async (req, res) => {
+    try {
+        const { stages = ['closedwon', 'won', 'vertragsabschluss'], sendEmails = false, limit = 100 } = req.body;
+
+        console.log(`[SEND-FORMS-ALL] Fetching deals in stages: ${stages.join(', ')}`);
+
+        // Fetch deals from HubSpot in specified stages
+        const searchUrl = '/crm/v3/objects/deals/search';
+        const searchBody = {
+            filterGroups: [{
+                filters: stages.map(stage => ({
+                    propertyName: 'dealstage',
+                    operator: 'EQ',
+                    value: stage
+                }))
+            }],
+            properties: ['dealname', 'amount', 'dealstage', 'closedate'],
+            limit: Math.min(limit, 100),
+            associations: ['contacts']
+        };
+
+        // Try search, fallback to basic list if search fails
+        let deals = [];
+        try {
+            const searchResult = await hubspotRequest(searchUrl, 'POST', searchBody);
+            deals = searchResult.results || [];
+        } catch (searchError) {
+            console.log('[SEND-FORMS-ALL] Search failed, using basic list');
+            // Fallback: get all deals and filter
+            const listResult = await hubspotRequest('/crm/v3/objects/deals?limit=100&associations=contacts');
+            deals = (listResult.results || []).filter(d =>
+                stages.includes(d.properties?.dealstage?.toLowerCase())
+            );
+        }
+
+        console.log(`[SEND-FORMS-ALL] Found ${deals.length} deals`);
+
+        if (deals.length === 0) {
+            return res.json({
+                success: true,
+                message: 'Keine Deals in den angegebenen Phasen gefunden',
+                sent: 0,
+                results: []
+            });
+        }
+
+        // Setup email transporter if sending
+        let transporter = null;
+        if (sendEmails) {
+            const nodemailer = require('nodemailer');
+            transporter = nodemailer.createTransport({
+                host: process.env.SMTP_HOST || 'send.one.com',
+                port: parseInt(process.env.SMTP_PORT) || 587,
+                secure: process.env.SMTP_SECURE === 'true',
+                auth: {
+                    user: process.env.SMTP_USER || 'invoice@enterprise-universe.com',
+                    pass: process.env.SMTP_PASS
+                }
+            });
+        }
+
+        const results = [];
+        let sentCount = 0;
+        let errorCount = 0;
+
+        for (const deal of deals) {
+            const dealId = deal.id;
+            const dealName = deal.properties?.dealname || 'Unbekanntes Projekt';
+
+            try {
+                // Get associated contacts
+                const contactIds = deal.associations?.contacts?.results?.map(c => c.id) || [];
+
+                if (contactIds.length === 0) {
+                    results.push({
+                        dealId,
+                        dealName,
+                        status: 'skipped',
+                        reason: 'Kein Kontakt verknuepft'
+                    });
+                    continue;
+                }
+
+                // Get contact details
+                const contactUrl = `/crm/v3/objects/contacts/${contactIds[0]}?properties=email,firstname,lastname`;
+                const contact = await hubspotRequest(contactUrl);
+
+                if (!contact.properties?.email) {
+                    results.push({
+                        dealId,
+                        dealName,
+                        status: 'skipped',
+                        reason: 'Keine E-Mail-Adresse'
+                    });
+                    continue;
+                }
+
+                const contactEmail = contact.properties.email;
+                const contactName = [contact.properties.firstname, contact.properties.lastname].filter(Boolean).join(' ') || 'Kunde';
+                const token = generateAccessToken(dealId, dealId);
+                const formUrl = `https://app.enterprise-universe.one/projekt-anforderungen.html?id=${dealId}&token=${token}`;
+
+                // Send email if requested
+                if (sendEmails && transporter) {
+                    await transporter.sendMail({
+                        from: '"Enterprise Universe" <invoice@enterprise-universe.com>',
+                        to: contactEmail,
+                        subject: `Projektanforderungen: ${dealName} - Enterprise Universe`,
+                        html: `
+                            <div style="font-family: 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc; padding: 40px;">
+                                <div style="background: linear-gradient(135deg, #1e3a8a, #7c3aed); color: white; padding: 30px; border-radius: 16px 16px 0 0; text-align: center;">
+                                    <h1 style="margin: 0; font-size: 24px;">Enterprise Universe</h1>
+                                    <p style="margin: 10px 0 0; opacity: 0.9;">Projektanforderungen erfassen</p>
+                                </div>
+                                <div style="background: white; padding: 30px; border-radius: 0 0 16px 16px;">
+                                    <p style="margin: 0 0 20px;">Hallo ${contactName},</p>
+                                    <p style="margin: 0 0 15px;">vielen Dank fuer Ihr Vertrauen in <strong>Enterprise Universe</strong>.</p>
+                                    <p style="margin: 0 0 20px;">Um Ihr Projekt <strong>"${dealName}"</strong> optimal zu planen, bitten wir Sie, Ihre Anforderungen ueber unser Online-Formular zu erfassen.</p>
+                                    <div style="text-align: center; margin: 30px 0;">
+                                        <a href="${formUrl}" style="display: inline-block; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600;">Anforderungen erfassen</a>
+                                    </div>
+                                    <p style="color: #64748b; font-size: 14px;">Im Formular koennen Sie:</p>
+                                    <ul style="color: #64748b; font-size: 14px;">
+                                        <li>Ihre gewuenschten Smart Home Module auswaehlen</li>
+                                        <li>Grundrisse und Plaene hochladen</li>
+                                        <li>Besondere Wuensche beschreiben</li>
+                                    </ul>
+                                    <p style="margin-top: 30px; color: #475569;">Mit freundlichen Gruessen,<br><strong>Ihr Enterprise Universe Team</strong></p>
+                                </div>
+                            </div>
+                        `
+                    });
+                    sentCount++;
+                }
+
+                results.push({
+                    dealId,
+                    dealName,
+                    email: contactEmail,
+                    name: contactName,
+                    formUrl,
+                    status: sendEmails ? 'sent' : 'ready'
+                });
+
+            } catch (dealError) {
+                errorCount++;
+                results.push({
+                    dealId,
+                    dealName,
+                    status: 'error',
+                    error: dealError.message
+                });
+            }
+
+            // Small delay to avoid rate limiting
+            if (sendEmails) {
+                await new Promise(r => setTimeout(r, 500));
+            }
+        }
+
+        console.log(`[SEND-FORMS-ALL] Complete: ${sentCount} sent, ${errorCount} errors`);
+
+        res.json({
+            success: true,
+            totalDeals: deals.length,
+            emailsSent: sentCount,
+            errors: errorCount,
+            skipped: results.filter(r => r.status === 'skipped').length,
+            results
+        });
+
+    } catch (error) {
+        console.error('[SEND-FORMS-ALL] Error:', error);
         res.status(500).json({ error: error.message });
     }
 });

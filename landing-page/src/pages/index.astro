@@ -70,7 +70,7 @@ import Layout from '../layouts/Layout.astro';
           <!-- Status Badge -->
           <div class="hud-frame inline-flex items-center gap-3 px-4 py-2">
             <div class="w-2 h-2 rounded-full bg-[var(--scifi-matrix)] animate-pulse shadow-[0_0_10px_var(--scifi-matrix)]"></div>
-            <span class="text-sm text-[var(--scifi-matrix)] font-mono tracking-wider">SYSTEM ACTIVE // 50+ CLIENTS CONNECTED</span>
+            <span class="text-sm text-[var(--scifi-matrix)] font-mono tracking-wider">LIVE // €3.1 MRD PIPELINE // 3,029 DEALS CLOSED</span>
           </div>
 
           <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
@@ -98,16 +98,20 @@ import Layout from '../layouts/Layout.astro';
           <div class="hud-frame p-6 mt-8">
             <div class="flex flex-wrap gap-8">
               <div class="corner-brackets">
-                <div class="text-3xl font-bold text-[var(--scifi-cyan)] font-mono">50+</div>
-                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">PROJEKTE</div>
+                <div class="text-3xl font-bold text-[var(--scifi-cyan)] font-mono">€3.1B</div>
+                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">WON PIPELINE</div>
               </div>
               <div class="corner-brackets">
-                <div class="text-3xl font-bold text-[var(--scifi-matrix)] font-mono">98%</div>
-                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">ZUFRIEDENHEIT</div>
+                <div class="text-3xl font-bold text-[var(--scifi-matrix)] font-mono">3,029</div>
+                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">DEALS CLOSED</div>
               </div>
               <div class="corner-brackets">
-                <div class="text-3xl font-bold text-[var(--scifi-purple)] font-mono">10+</div>
-                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">JAHRE</div>
+                <div class="text-3xl font-bold text-[var(--scifi-purple)] font-mono">€847K</div>
+                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">REVENUE 2024</div>
+              </div>
+              <div class="corner-brackets">
+                <div class="text-3xl font-bold text-[var(--scifi-orange)] font-mono">12:1</div>
+                <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">LTV:CAC</div>
               </div>
             </div>
           </div>
@@ -429,7 +433,7 @@ import Layout from '../layouts/Layout.astro';
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono">MADE IN GERMANY</h4>
+                <h3 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono text-base">MADE IN GERMANY</h3>
                 <p class="text-sm text-[var(--scifi-text-secondary)]">Deutsche Ingenieurskunst</p>
               </div>
             </div>
@@ -441,7 +445,7 @@ import Layout from '../layouts/Layout.astro';
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono">SCHNELLE UMSETZUNG</h4>
+                <h3 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono text-base">SCHNELLE UMSETZUNG</h3>
                 <p class="text-sm text-[var(--scifi-text-secondary)]">Agile Methoden</p>
               </div>
             </div>
@@ -453,7 +457,7 @@ import Layout from '../layouts/Layout.astro';
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono">EXPERTEN-TEAM</h4>
+                <h3 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono text-base">EXPERTEN-TEAM</h3>
                 <p class="text-sm text-[var(--scifi-text-secondary)]">Zertifizierte Ingenieure</p>
               </div>
             </div>
@@ -465,7 +469,7 @@ import Layout from '../layouts/Layout.astro';
                 </svg>
               </div>
               <div>
-                <h4 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono">24/7 SUPPORT</h4>
+                <h3 class="font-semibold mb-1 text-[var(--scifi-text-primary)] font-mono text-base">24/7 SUPPORT</h3>
                 <p class="text-sm text-[var(--scifi-text-secondary)]">Rund-um-die-Uhr Service</p>
               </div>
             </div>
@@ -475,16 +479,16 @@ import Layout from '../layouts/Layout.astro';
         <!-- Stats Grid -->
         <div class="grid grid-cols-2 gap-6">
           <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50">
-            <div class="text-4xl font-bold text-[var(--scifi-cyan)] font-mono mb-2">50+</div>
-            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">PROJEKTE</div>
+            <div class="text-4xl font-bold text-[var(--scifi-cyan)] font-mono mb-2">€3.1B</div>
+            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">PIPELINE</div>
           </div>
           <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50">
-            <div class="text-4xl font-bold text-[var(--scifi-matrix)] font-mono mb-2">98%</div>
-            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">ZUFRIEDENHEIT</div>
+            <div class="text-4xl font-bold text-[var(--scifi-matrix)] font-mono mb-2">3,029</div>
+            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">DEALS</div>
           </div>
           <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50">
-            <div class="text-4xl font-bold text-[var(--scifi-purple)] font-mono mb-2">10+</div>
-            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">JAHRE</div>
+            <div class="text-4xl font-bold text-[var(--scifi-purple)] font-mono mb-2">€847K</div>
+            <div class="text-[var(--scifi-text-secondary)] text-sm font-mono">REVENUE</div>
           </div>
           <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50">
             <div class="text-4xl font-bold text-[var(--scifi-orange)] font-mono mb-2">24/7</div>
@@ -588,6 +592,65 @@ import Layout from '../layouts/Layout.astro';
             </div>
           ))}
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seed Round Section -->
+  <section id="seed-round" class="py-20 bg-gradient-to-r from-[var(--scifi-purple)]/20 via-[var(--scifi-void)] to-[var(--scifi-cyan)]/20 border-y border-[var(--scifi-purple)]/30 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--scifi-purple)/0.05_1px,transparent_1px),linear-gradient(90deg,var(--scifi-purple)/0.05_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <div class="max-w-7xl mx-auto px-6 relative">
+      <div class="text-center mb-12">
+        <div class="hud-frame inline-flex items-center gap-3 px-6 py-3 mb-6 border-[var(--scifi-purple)]">
+          <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+          <span class="text-sm text-[var(--scifi-purple)] font-mono tracking-[0.3em] uppercase">// SEED ROUND OPEN //</span>
+          <div class="w-2 h-2 rounded-full bg-[var(--scifi-purple)] animate-pulse shadow-[0_0_10px_var(--scifi-purple)]"></div>
+        </div>
+        <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+          <span class="text-[var(--scifi-text-primary)]">Investieren Sie in die </span>
+          <span class="text-[var(--scifi-purple)] drop-shadow-[0_0_20px_var(--scifi-purple)]">Zukunft</span>
+        </h2>
+        <p class="text-lg text-[var(--scifi-text-secondary)] max-w-2xl mx-auto font-mono">
+          €1.5M Seed Round bei €15M Pre-Money Bewertung. Verifizierte €3+ Milliarden Pipeline.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50 group hover:border-[var(--scifi-cyan)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-cyan)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-cyan)]">€3.1B</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">WON PIPELINE</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50 group hover:border-[var(--scifi-matrix)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-matrix)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-matrix)]">3,029</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">CLOSEDWON DEALS</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50 group hover:border-[var(--scifi-purple)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-purple)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-purple)]">€15M</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">PRE-MONEY</div>
+        </div>
+        <div class="hud-frame p-6 text-center bg-[var(--scifi-surface)]/50 group hover:border-[var(--scifi-orange)] transition-all">
+          <div class="text-3xl lg:text-4xl font-bold text-[var(--scifi-orange)] font-mono mb-1 group-hover:drop-shadow-[0_0_20px_var(--scifi-orange)]">12:1</div>
+          <div class="text-xs text-[var(--scifi-text-secondary)] font-mono tracking-wider uppercase">LTV:CAC</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/investoren" class="hud-frame px-10 py-5 bg-[var(--scifi-purple)]/20 text-[var(--scifi-purple)] font-mono tracking-wider text-lg hover:bg-[var(--scifi-purple)]/30 hover:shadow-[0_0_30px_var(--scifi-purple)] transition-all inline-flex items-center gap-3 group border-[var(--scifi-purple)]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+          </svg>
+          <span>INVESTOR DATA ROOM</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+        <a href="mailto:invest@enterprise-universe.one" class="hud-frame px-10 py-5 text-[var(--scifi-text-secondary)] font-mono tracking-wider text-lg hover:text-[var(--scifi-cyan)] hover:border-[var(--scifi-cyan)] transition-all inline-flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+          <span>PITCH DECK ANFORDERN</span>
+        </a>
       </div>
     </div>
   </section>
@@ -734,18 +797,18 @@ import Layout from '../layouts/Layout.astro';
             Ihr Partner für Smart Home, Smart Factory, Industrie 4.0 und maßgeschneiderte Softwareentwicklung im DACH-Raum.
           </p>
           <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)]/30 flex items-center justify-center text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] hover:border-[var(--scifi-cyan)] hover:shadow-[0_0_10px_var(--scifi-cyan)] transition-all">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)]/30 flex items-center justify-center text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] hover:border-[var(--scifi-cyan)] hover:shadow-[0_0_10px_var(--scifi-cyan)] transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-            <a href="#" class="w-10 h-10 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)]/30 flex items-center justify-center text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] hover:border-[var(--scifi-cyan)] hover:shadow-[0_0_10px_var(--scifi-cyan)] transition-all">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            <a href="#" aria-label="GitHub" class="w-10 h-10 rounded-lg bg-[var(--scifi-void)] border border-[var(--scifi-cyan)]/30 flex items-center justify-center text-[var(--scifi-text-secondary)] hover:text-[var(--scifi-cyan)] hover:border-[var(--scifi-cyan)] hover:shadow-[0_0_10px_var(--scifi-cyan)] transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             </a>
           </div>
         </div>
 
         <!-- Services -->
         <div>
-          <h4 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono">SERVICES</h4>
+          <h3 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono text-base">SERVICES</h3>
           <ul class="space-y-3 text-[var(--scifi-text-secondary)] text-sm">
             <li>
               <a href="/smart-home" class="hover:text-[var(--scifi-orange)] text-[var(--scifi-orange)] transition-colors font-mono flex items-center gap-2">
@@ -770,7 +833,7 @@ import Layout from '../layouts/Layout.astro';
 
         <!-- Links -->
         <div>
-          <h4 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono">LINKS</h4>
+          <h3 class="font-semibold mb-6 text-[var(--scifi-text-primary)] font-mono text-base">LINKS</h3>
           <ul class="space-y-3 text-[var(--scifi-text-secondary)] text-sm">
             <li><a href="https://app.enterprise-universe.one/login" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Kundenportal</a></li>
             <li><a href="/ueber-uns" class="hover:text-[var(--scifi-cyan)] transition-colors font-mono">Über uns</a></li>

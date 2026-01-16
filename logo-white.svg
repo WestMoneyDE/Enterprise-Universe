@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Logo Icon Container -->
+  <rect x="5" y="15" width="50" height="50" rx="10" fill="none" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Corner decorations -->
+  <path d="M5 25 L5 15 L15 15" fill="none" stroke="#ffffff" stroke-width="2"/>
+  <path d="M45 65 L55 65 L55 55" fill="none" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- E Letter -->
+  <text x="30" y="52" font-family="monospace" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">E</text>
+
+  <!-- Company Name -->
+  <text x="75" y="38" font-family="monospace" font-size="18" font-weight="700" fill="#ffffff" letter-spacing="3">ENTERPRISE</text>
+  <text x="75" y="58" font-family="monospace" font-size="18" font-weight="400" fill="#ffffff" letter-spacing="3" opacity="0.8">UNIVERSE</text>
+
+  <!-- Decorative line -->
+  <line x1="75" y1="42" x2="220" y2="42" stroke="#ffffff" stroke-width="1" opacity="0.3"/>
+</svg>

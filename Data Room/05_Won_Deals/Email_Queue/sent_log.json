@@ -1,0 +1,106 @@
+{
+  "sent": [
+    {
+      "email": "lorenz.kerstin@clariant.com",
+      "subject": "Enterprise Universe - Projektstart Clariant AG - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:17:43.368Z"
+    },
+    {
+      "email": "bohm.katja@hapag-lloyd.com",
+      "subject": "Enterprise Universe - Projektstart Hapag-Lloyd AG - Industry 4.0 Implementation",
+      "sentAt": "2026-01-15T15:17:48.942Z"
+    },
+    {
+      "email": "susanne.gunther@fuchs.com",
+      "subject": "Enterprise Universe - Projektstart Fuchs Petrolub - Smart Building Automation",
+      "sentAt": "2026-01-15T15:17:54.499Z"
+    },
+    {
+      "email": "markusm@bauer.de",
+      "subject": "Enterprise Universe - Projektstart Bauer AG - IoT Integration",
+      "sentAt": "2026-01-15T15:18:00.054Z"
+    },
+    {
+      "email": "marinab@phoenixcontact.com",
+      "subject": "Enterprise Universe - Projektstart Phoenix Contact - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:18:05.617Z"
+    },
+    {
+      "email": "l.huber@elringklinger.com",
+      "subject": "Enterprise Universe - Projektstart ElringKlinger AG - Process Automation",
+      "sentAt": "2026-01-15T15:18:11.195Z"
+    },
+    {
+      "email": "schwarz.christian@hornbach.de",
+      "subject": "Enterprise Universe - Projektstart Hornbach Baumarkt - Smart Building Automation",
+      "sentAt": "2026-01-15T15:18:16.762Z"
+    },
+    {
+      "email": "carolinl@schulergroup.com",
+      "subject": "Enterprise Universe - Projektstart Schuler AG - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:18:22.270Z"
+    },
+    {
+      "email": "braun.elena@schulergroup.com",
+      "subject": "Enterprise Universe - Projektstart Schuler AG - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:18:27.932Z"
+    },
+    {
+      "email": "moritzs@covestro.com",
+      "subject": "Enterprise Universe - Projektstart Covestro AG - IoT Integration",
+      "sentAt": "2026-01-15T15:18:33.487Z"
+    },
+    {
+      "email": "hartmann.julia@nordex-online.com",
+      "subject": "Enterprise Universe - Projektstart Nordex SE - Process Automation",
+      "sentAt": "2026-01-15T15:23:49.129Z"
+    },
+    {
+      "email": "georgs@bayernlb.de",
+      "subject": "Enterprise Universe - Projektstart BayernLB - Energy Management",
+      "sentAt": "2026-01-15T15:23:54.743Z"
+    },
+    {
+      "email": "marco.maier@union-investment.de",
+      "subject": "Enterprise Universe - Projektstart Union Investment - Cloud Migration",
+      "sentAt": "2026-01-15T15:24:00.400Z"
+    },
+    {
+      "email": "wagner.birgit@rhenus.com",
+      "subject": "Enterprise Universe - Projektstart Rhenus Logistics - Energy Management",
+      "sentAt": "2026-01-15T15:24:05.972Z"
+    },
+    {
+      "email": "stefanieb@dm.de",
+      "subject": "Enterprise Universe - Projektstart dm-drogerie markt - Smart Building Automation",
+      "sentAt": "2026-01-15T15:24:11.545Z"
+    },
+    {
+      "email": "schwarz.christian@draexlmaier.com",
+      "subject": "Enterprise Universe - Projektstart Dräxlmaier Group - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:24:17.113Z"
+    },
+    {
+      "email": "f.schuster@draexlmaier.com",
+      "subject": "Enterprise Universe - Projektstart Dräxlmaier Group - Predictive Maintenance",
+      "sentAt": "2026-01-15T15:24:22.707Z"
+    },
+    {
+      "email": "muller.alexandra@nagarro.com",
+      "subject": "Enterprise Universe - Projektstart Nagarro SE - IoT Integration",
+      "sentAt": "2026-01-15T15:24:28.272Z"
+    },
+    {
+      "email": "melanie.klein@ww-ag.com",
+      "subject": "Enterprise Universe - Projektstart Wüstenrot & Württembergische - Industry 4.0",
+      "sentAt": "2026-01-15T15:24:33.817Z"
+    },
+    {
+      "email": "jager.patrick@enbw.com",
+      "subject": "Enterprise Universe - Projektstart EnBW Energie - Digital Transformation",
+      "sentAt": "2026-01-15T15:24:39.360Z"
+    }
+  ],
+  "failed": [],
+  "lastRun": "2026-01-15T15:24:39.360Z"
+}

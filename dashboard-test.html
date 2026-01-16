@@ -1,0 +1,2396 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enterprise Universe - Business Dashboard for Smart Home & PropTech Solutions">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Enterprise Suite | Business Dashboard</title>
+    <!-- Auth Guard - Requires login -->
+    <!-- AUTH DISABLED FOR TEST -->
+    <script src="/js/dashboard-nav.js"></script>
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <!-- External Stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/styles/dashboard-v11.css" rel="stylesheet">
+
+    <!-- External Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Inline critical CSS for faster initial render -->
+    <style>
+        :root {
+            /* Dark Mode Premium Theme */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-elevated: #22222e;
+            --bg-hover: #2a2a38;
+
+            /* Accent Colors */
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #a855f7;
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+
+            /* Status Colors */
+            --success: #22c55e;
+            --success-glow: rgba(34, 197, 94, 0.2);
+            --warning: #f59e0b;
+            --warning-glow: rgba(245, 158, 11, 0.2);
+            --error: #ef4444;
+            --error-glow: rgba(239, 68, 68, 0.2);
+            --info: #0ea5e9;
+            --info-glow: rgba(14, 165, 233, 0.2);
+
+            /* Text Colors */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-dim: #475569;
+
+            /* Borders & Effects */
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --border-glow: rgba(99, 102, 241, 0.3);
+
+            /* Glassmorphism */
+            --glass-bg: rgba(26, 26, 36, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px);
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar - Dark Theme */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-elevated); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+        }
+        .glass-card {
+            background: rgba(26, 26, 36, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+        .glass-hover:hover {
+            background: rgba(34, 34, 46, 0.8);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Gradient Utilities */
+        .gradient-text {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-border {
+            position: relative;
+            background: var(--bg-card);
+            border: none;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: var(--accent-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* Glow Effects */
+        .glow-primary { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+        .glow-success { box-shadow: 0 0 20px var(--success-glow); }
+        .glow-warning { box-shadow: 0 0 20px var(--warning-glow); }
+        .glow-error { box-shadow: 0 0 20px var(--error-glow); }
+
+        /* Animation System */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.3); } 50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.5); } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+        .animate-slide-up { animation: slideUp 0.4s ease-out; }
+        .animate-slide-down { animation: slideDown 0.4s ease-out; }
+        .animate-scale-in { animation: scaleIn 0.3s ease-out; }
+        .animate-pulse-glow { animation: pulse-glow 2s infinite; }
+
+        /* Stagger Animation Classes */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        /* Sidebar - Dark Glassmorphism */
+        .sidebar {
+            width: 240px;
+            min-width: 240px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+        }
+        .sidebar.collapsed { width: 72px; min-width: 72px; }
+        .sidebar.collapsed .nav-text, .sidebar.collapsed .section-title, .sidebar.collapsed .logo-text { display: none; }
+        .sidebar.collapsed .nav-item { justify-content: center; padding: 0.75rem; }
+
+        /* Navigation - Premium Dark */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--accent-gradient);
+            border-radius: 0 4px 4px 0;
+            transition: height 0.25s ease;
+        }
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .nav-item:hover::before { height: 60%; }
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+            color: var(--text-primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        .nav-item.active::before { height: 70%; }
+
+        /* Section Titles */
+        .section-title {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Cards - Glass Dark */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+        .card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        /* Tabs - Premium */
+        .tab-btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            background: transparent;
+        }
+        .tab-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .tab-btn.active {
+            background: var(--accent-gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+
+        /* Status Indicator - Glow */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px currentColor;
+        }
+        .status-dot.pulse { animation: dot-pulse 2s infinite; }
+        @keyframes dot-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        /* Progress Bar - Gradient */
+        .progress-bar {
+            height: 6px;
+            background: var(--bg-elevated);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: var(--accent-gradient);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Pipeline Stages */
+        .pipeline-stage { min-width: 320px; }
+        .deal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: grab;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-primary);
+        }
+        .deal-card:active { cursor: grabbing; }
+
+        /* KPI Cards - Premium Glass */
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .kpi-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+        }
+        .kpi-card:hover::before { opacity: 1; }
+        .kpi-card.primary { border-top: 3px solid var(--accent-primary); }
+        .kpi-card.primary::before { display: none; }
+        .kpi-card.success { border-top: 3px solid var(--success); }
+        .kpi-card.success::before { display: none; }
+        .kpi-card.warning { border-top: 3px solid var(--warning); }
+        .kpi-card.warning::before { display: none; }
+        .kpi-card.info { border-top: 3px solid var(--info); }
+        .kpi-card.info::before { display: none; }
+        .kpi-card.accent { border-top: 3px solid var(--accent-secondary); }
+        .kpi-card.accent::before { display: none; }
+
+        /* Modal - Glass Effect */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: scaleIn 0.3s ease-out;
+        }
+
+        /* Animations */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-in { animation: slideIn 0.25s ease-out; }
+
+        /* Button Styles - Premium */
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-hover);
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        .btn-ghost:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Input Fields - Dark */
+        .input-field {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            transition: all 0.25s ease;
+            width: 100%;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        .input-field::placeholder { color: var(--text-muted); }
+
+        /* Tables - Dark Theme */
+        .table-dark {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .table-dark th {
+            background: var(--bg-elevated);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .table-dark td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+        .table-dark tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-primary {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+        }
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        .badge-error {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+        }
+
+        /* Sparkline Container */
+        .sparkline-container {
+            height: 40px;
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar { width: 72px; min-width: 72px; }
+            .sidebar .nav-text, .sidebar .section-title, .sidebar .logo-text { display: none; }
+            .sidebar .nav-item { justify-content: center; padding: 0.75rem; }
+        }
+
+        /* Utility Classes for Dark Theme */
+        .bg-dark-primary { background: var(--bg-primary); }
+        .bg-dark-secondary { background: var(--bg-secondary); }
+        .bg-dark-card { background: var(--bg-card); }
+        .bg-dark-elevated { background: var(--bg-elevated); }
+        .text-dark-primary { color: var(--text-primary); }
+        .text-dark-secondary { color: var(--text-secondary); }
+        .text-dark-muted { color: var(--text-muted); }
+        .border-dark { border-color: var(--border); }
+    </style>
+</head>
+<body class="flex">
+    <!-- Sidebar - Premium Dark -->
+    <aside class="sidebar h-screen sticky top-0 flex flex-col" id="sidebar">
+        <!-- Logo Section -->
+        <div class="p-5 border-b border-white/5">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 animate-pulse-glow" style="background: var(--accent-gradient);">
+                    <span class="text-white font-bold text-lg">EU</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="text-sm font-bold gradient-text">Enterprise Suite</h1>
+                    <span class="text-xs text-slate-500">Business Dashboard</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-3 space-y-5">
+            <!-- Übersicht -->
+            <div>
+                <p class="section-title px-3 mb-2">ÜBERSICHT</p>
+                <div class="space-y-1">
+                    <div class="nav-item active" onclick="switchTab('dashboard')"><span class="text-lg">📊</span><span class="nav-text">Dashboard</span></div>
+                    <div class="nav-item" onclick="switchTab('analytics')"><span class="text-lg">📈</span><span class="nav-text">Analytics</span></div>
+                </div>
+            </div>
+
+            <!-- Vertrieb -->
+            <div>
+                <p class="section-title px-3 mb-2">VERTRIEB</p>
+                <div class="space-y-1">
+                    <div class="nav-item" onclick="switchTab('crm')"><span class="text-lg">👥</span><span class="nav-text">Kontakte</span></div>
+                    <div class="nav-item" onclick="switchTab('leads')"><span class="text-lg">🎯</span><span class="nav-text">Leads</span></div>
+                    <div class="nav-item" onclick="switchTab('deals')"><span class="text-lg">💼</span><span class="nav-text">Deals</span></div>
+                </div>
+            </div>
+
+            <!-- Kommunikation -->
+            <div>
+                <p class="section-title px-3 mb-2">KOMMUNIKATION</p>
+                <div class="space-y-1">
+                    <div class="nav-item" onclick="switchTab('email')"><span class="text-lg">📧</span><span class="nav-text">E-Mail</span></div>
+                    <div class="nav-item" onclick="switchTab('whatsapp')"><span class="text-lg">💬</span><span class="nav-text">WhatsApp</span></div>
+                </div>
+            </div>
+
+            <!-- Automatisierung -->
+            <div>
+                <p class="section-title px-3 mb-2">AUTOMATISIERUNG</p>
+                <div class="space-y-1">
+                    <div class="nav-item" onclick="switchTab('agents')"><span class="text-lg">🤖</span><span class="nav-text flex items-center gap-2">AI Assistenten<span class="badge badge-primary">42</span></span></div>
+                    <div class="nav-item" onclick="switchTab('godmode')"><span class="text-lg">⚡</span><span class="nav-text">Workflows</span></div>
+                </div>
+            </div>
+
+            <!-- Finanzen -->
+            <div>
+                <p class="section-title px-3 mb-2">FINANZEN</p>
+                <div class="space-y-1">
+                    <div class="nav-item" onclick="switchTab('invoices')"><span class="text-lg">📄</span><span class="nav-text">Rechnungen</span></div>
+                    <div class="nav-item" onclick="switchTab('payments')"><span class="text-lg">💳</span><span class="nav-text">Payments</span></div>
+                    <div class="nav-item" onclick="switchTab('finance')"><span class="text-lg">💵</span><span class="nav-text">Übersicht</span></div>
+                    <div class="nav-item" onclick="switchTab('reports')"><span class="text-lg">📋</span><span class="nav-text">Berichte</span></div>
+                </div>
+            </div>
+
+            <!-- System -->
+            <div>
+                <p class="section-title px-3 mb-2">SYSTEM</p>
+                <div class="space-y-1">
+                    <div class="nav-item" onclick="switchTab('settings')"><span class="text-lg">⚙️</span><span class="nav-text">Einstellungen</span></div>
+                    <div class="nav-item" onclick="window.location.href='/data-room'"><span class="text-lg">📁</span><span class="nav-text">Dokumente</span></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Live Stats - Glow Effect -->
+        <div class="p-4 border-t border-white/5 bg-black/20">
+            <div class="space-y-3 text-xs">
+                <div class="flex items-center gap-3">
+                    <span class="status-dot pulse" style="background: var(--success); color: var(--success);"></span>
+                    <span class="nav-text text-slate-400" id="sidebarHotLeads">3 Hot Leads</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="status-dot pulse" style="background: var(--accent-primary); color: var(--accent-primary);"></span>
+                    <span class="nav-text text-slate-400" id="sidebarPipeline">€164M Pipeline</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="status-dot pulse" style="background: var(--accent-secondary); color: var(--accent-secondary);"></span>
+                    <span class="nav-text text-slate-400">42 Bots Active</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen overflow-y-auto" style="background: var(--bg-primary);">
+        <!-- Header - Glass Effect -->
+        <header class="sticky top-0 z-40 glass border-b border-white/5">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div>
+                    <h1 class="text-xl font-semibold" style="color: var(--text-primary);" id="pageTitle">Dashboard</h1>
+                    <p class="text-sm" style="color: var(--text-secondary);">Willkommen zurück! Hier ist Ihre Geschäftsübersicht.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Search Bar -->
+                    <button class="hidden md:flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-200" style="background: var(--bg-elevated); color: var(--text-secondary); border: 1px solid var(--border);" onmouseover="this.style.borderColor='var(--border-hover)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span>🔍</span>
+                        <span>Suchen...</span>
+                        <kbd class="px-2 py-1 rounded-md text-xs" style="background: var(--bg-card); border: 1px solid var(--border);">⌘K</kbd>
+                    </button>
+                    <!-- Notifications -->
+                    <button class="relative p-2.5 rounded-xl transition-all duration-200" style="background: var(--bg-elevated);" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-elevated)'" onclick="toggleNotifications()">
+                        <span class="text-xl">🔔</span>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 text-white text-xs rounded-full flex items-center justify-center font-medium" style="background: var(--accent-gradient);" id="notifBadge">5</span>
+                    </button>
+                    <!-- User Avatar -->
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-105" style="background: var(--accent-gradient); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);">
+                        <span class="text-white text-sm font-bold">EU</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Content Container -->
+        <div class="p-6">
+            <!-- DASHBOARD TAB -->
+            <div id="tab-dashboard" class="tab-content active space-y-6">
+                <!-- KPI Cards Row - Premium Dark Design -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                    <!-- Pipeline Value -->
+                    <div class="kpi-card primary animate-slide-up stagger-1">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15);">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                            <span class="badge badge-success">↑ 23%</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--text-primary);" id="kpiPipeline">€5.58 Bio.</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Pipeline Wert</p>
+                        <div class="sparkline-container"><canvas id="sparkPipeline"></canvas></div>
+                    </div>
+                    <!-- Deal Pipeline (Active Deals) -->
+                    <div class="kpi-card info animate-slide-up stagger-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(14, 165, 233, 0.15);">
+                                <span class="text-2xl">📊</span>
+                            </div>
+                            <span class="badge badge-primary">AKTIV</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--info);" id="kpiActiveDeals">3.4 Mio.</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Deal Pipeline</p>
+                        <div class="sparkline-container"><canvas id="sparkActiveDeals"></canvas></div>
+                    </div>
+                    <!-- Won Value -->
+                    <div class="kpi-card success animate-slide-up stagger-3">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(34, 197, 94, 0.15);">
+                                <span class="text-2xl">💵</span>
+                            </div>
+                            <span class="badge badge-success">↑ 18%</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--success);" id="kpiWon">€3.1 Mrd.</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Won Value</p>
+                        <div class="sparkline-container"><canvas id="sparkWon"></canvas></div>
+                    </div>
+                    <!-- Won Deals Count -->
+                    <div class="kpi-card success animate-slide-up stagger-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(34, 197, 94, 0.15);">
+                                <span class="text-2xl">✅</span>
+                            </div>
+                            <span class="badge badge-success">WON</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--success);" id="kpiWonDeals">2.897</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Won Deals</p>
+                        <div class="sparkline-container"><canvas id="sparkWonDeals"></canvas></div>
+                    </div>
+                    <!-- Trefferquote / Win Rate -->
+                    <div class="kpi-card animate-slide-up stagger-1" style="border-top: 3px solid #f59e0b;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(245, 158, 11, 0.15);">
+                                <span class="text-2xl">🎯</span>
+                            </div>
+                            <span class="badge badge-warning" id="kpiWinRateBadge">RATE</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--warning);" id="kpiWinRate">0.09%</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Trefferquote</p>
+                        <div class="sparkline-container"><canvas id="sparkWinRate"></canvas></div>
+                    </div>
+                    <!-- Total Deals -->
+                    <div class="kpi-card accent animate-slide-up stagger-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(139, 92, 246, 0.15);">
+                                <span class="text-2xl">💼</span>
+                            </div>
+                            <span class="badge badge-primary">TOTAL</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--text-primary);" id="kpiDeals">3.4 Mio.</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Total Deals</p>
+                        <div class="sparkline-container"><canvas id="sparkDeals"></canvas></div>
+                    </div>
+                    <!-- Contacts -->
+                    <div class="kpi-card accent animate-slide-up stagger-3">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(139, 92, 246, 0.15);">
+                                <span class="text-2xl">👥</span>
+                            </div>
+                            <span class="badge badge-primary">↑ 8%</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--text-primary);" id="kpiContacts">15.1 Mio.</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Kontakte</p>
+                        <div class="sparkline-container"><canvas id="sparkContacts"></canvas></div>
+                    </div>
+                    <!-- Hot Leads -->
+                    <div class="kpi-card warning animate-slide-up stagger-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(245, 158, 11, 0.15);">
+                                <span class="text-2xl">🔥</span>
+                            </div>
+                            <span class="badge badge-warning">HOT</span>
+                        </div>
+                        <p class="text-2xl font-bold" style="color: var(--warning);" id="kpiHotLeads">3</p>
+                        <p class="text-sm mt-1" style="color: var(--text-secondary);">Hot Leads</p>
+                        <div class="sparkline-container"><canvas id="sparkHotLeads"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- Main Grid - Premium Dark Layout -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- AI Assistants Overview -->
+                    <div class="lg:col-span-2 glass-card p-6">
+                        <div class="flex items-center justify-between mb-5">
+                            <div>
+                                <h2 class="text-lg font-semibold" style="color: var(--text-primary);">AI Assistenten</h2>
+                                <p class="text-sm" style="color: var(--text-secondary);">Automatisierte Workflows</p>
+                            </div>
+                            <button onclick="switchTab('agents')" class="btn btn-secondary text-sm">Alle anzeigen →</button>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4" id="agentGrid">
+                            <!-- Analytics Bot -->
+                            <div class="rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]" style="background: var(--bg-elevated); border: 1px solid var(--border);">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15);">
+                                            <span class="text-xl">📊</span>
+                                        </div>
+                                        <div><h3 class="font-semibold" style="color: var(--text-primary);">Analytics Bot</h3><p class="text-xs" style="color: var(--text-muted);">Datenanalyse</p></div>
+                                    </div>
+                                    <span class="badge badge-success">Aktiv</span>
+                                </div>
+                                <div class="rounded-lg p-3 mb-3" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);">
+                                    <p class="text-sm" style="color: var(--accent-primary);">Analysiert Pipeline-Trends... +23% Potenzial</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs" style="color: var(--text-muted);">
+                                    <span>⚡ 98% Effizienz</span>
+                                    <span>📊 1.250 Tasks</span>
+                                </div>
+                            </div>
+                            <!-- Lead Scorer -->
+                            <div class="rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]" style="background: var(--bg-elevated); border: 1px solid var(--border);">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: rgba(245, 158, 11, 0.15);">
+                                            <span class="text-xl">🎯</span>
+                                        </div>
+                                        <div><h3 class="font-semibold" style="color: var(--text-primary);">Lead Scorer</h3><p class="text-xs" style="color: var(--text-muted);">Lead-Bewertung</p></div>
+                                    </div>
+                                    <span class="badge badge-warning">Arbeitet</span>
+                                </div>
+                                <div class="rounded-lg p-3 mb-3" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);">
+                                    <p class="text-sm" style="color: var(--warning);">2.847 Leads heute bewertet</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs" style="color: var(--text-muted);">
+                                    <span>⚡ 100% Genauigkeit</span>
+                                    <span>📊 50K+ Tasks</span>
+                                </div>
+                            </div>
+                            <!-- ORION Bot -->
+                            <div class="rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]" style="background: var(--bg-elevated); border: 1px solid var(--border);">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: rgba(14, 165, 233, 0.15);">
+                                            <span class="text-2xl">⭐</span>
+                                        </div>
+                                        <div><h3 class="font-semibold" style="color: var(--text-primary);">ORION</h3><p class="text-xs" style="color: var(--text-muted);">Strategy</p></div>
+                                    </div>
+                                    <span class="badge badge-primary">SCANNING</span>
+                                </div>
+                                <div class="rounded-lg p-3 mb-3" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.2);">
+                                    <p class="text-sm italic" style="color: var(--info);">"3 neue Marktchancen identifiziert"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs" style="color: var(--text-muted);">
+                                    <span style="color: var(--success);">⚡ 95%</span>
+                                    <span style="color: var(--info);">⏱ 3.1ms</span>
+                                    <span style="color: var(--accent-secondary);">📊 890</span>
+                                </div>
+                            </div>
+                            <!-- Luna -->
+                            <div class="rounded-xl p-4 transition-all duration-300 hover:scale-[1.02]" style="background: var(--bg-elevated); border: 1px solid var(--border);">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: rgba(139, 92, 246, 0.15);">
+                                            <span class="text-2xl">🌙</span>
+                                        </div>
+                                        <div><h3 class="font-semibold" style="color: var(--text-primary);">LUNA</h3><p class="text-xs" style="color: var(--text-muted);">Security</p></div>
+                                    </div>
+                                    <span class="badge" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-secondary);">WATCHING</span>
+                                </div>
+                                <div class="rounded-lg p-3 mb-3" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2);">
+                                    <p class="text-sm italic" style="color: var(--accent-secondary);">"Alle Systeme sicher - 0 Threats"</p>
+                                </div>
+                                <div class="flex items-center justify-between text-xs" style="color: var(--text-muted);">
+                                    <span style="color: var(--success);">⚡ 100%</span>
+                                    <span style="color: var(--info);">⏱ 0.8ms</span>
+                                    <span style="color: var(--accent-secondary);">📊 24/7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity -->
+                    <div class="glass-card p-6">
+                        <div class="flex items-center justify-between mb-5">
+                            <h2 class="font-semibold flex items-center gap-2" style="color: var(--text-primary);">🔔 Live Activity<span class="w-2 h-2 rounded-full animate-pulse" style="background: var(--success); box-shadow: 0 0 10px var(--success);"></span></h2>
+                        </div>
+                        <div class="space-y-3" id="activityFeed">
+                            <div class="flex gap-3 p-3 rounded-xl animate-slide-in" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2);">
+                                <span class="text-lg">✅</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">Deal gewonnen</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">€2.5M - PropTech GmbH</p>
+                                </div>
+                                <span class="text-xs" style="color: var(--text-muted);">2m</span>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2);">
+                                <span class="text-lg">🧠</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">Einstein analysiert</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">1,250 Leads gescored</p>
+                                </div>
+                                <span class="text-xs" style="color: var(--text-muted);">5m</span>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl" style="background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.2);">
+                                <span class="text-lg">📧</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">Email Kampagne</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">5,000 versendet - 78% Open Rate</p>
+                                </div>
+                                <span class="text-xs" style="color: var(--text-muted);">8m</span>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);">
+                                <span class="text-lg">💬</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">WhatsApp Opt-Ins</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">+89 neue Kontakte</p>
+                                </div>
+                                <span class="text-xs" style="color: var(--text-muted);">12m</span>
+                            </div>
+                            <div class="flex gap-3 p-3 rounded-xl" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);">
+                                <span class="text-lg">🔄</span>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold" style="color: var(--text-primary);">HubSpot Sync</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">3,170 Kontakte synchronisiert</p>
+                                </div>
+                                <span class="text-xs" style="color: var(--text-muted);">15m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6">
+                        <h3 class="font-semibold mb-4" style="color: var(--text-primary);">📈 Pipeline Performance</h3>
+                        <canvas id="pipelineChart" height="200"></canvas>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h3 class="font-semibold mb-4" style="color: var(--text-primary);">🎯 Lead Sources</h3>
+                        <canvas id="sourceChart" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Scheduled Notifications Widget - Sci-Fi Style -->
+                <div class="glass-card p-6 relative overflow-hidden">
+                    <!-- Glow effect background -->
+                    <div class="absolute inset-0 opacity-20" style="background: radial-gradient(ellipse at top right, rgba(99, 102, 241, 0.3) 0%, transparent 50%);"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%); border: 1px solid rgba(99, 102, 241, 0.3);">
+                                    <span class="text-xl">📡</span>
+                                </div>
+                                <div>
+                                    <h2 class="font-semibold flex items-center gap-2" style="color: var(--text-primary);">
+                                        Geplante Kontakte
+                                        <span class="w-2 h-2 rounded-full animate-pulse" style="background: var(--accent-primary); box-shadow: 0 0 10px var(--accent-primary);"></span>
+                                    </h2>
+                                    <p class="text-xs" style="color: var(--text-muted);">Automatische Benachrichtigungen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span id="notificationCount" class="px-3 py-1 rounded-full text-xs font-bold" style="background: rgba(99, 102, 241, 0.2); color: var(--accent-primary); border: 1px solid rgba(99, 102, 241, 0.3);">0 aktiv</span>
+                                <button onclick="loadDashboardNotifications()" class="p-2 rounded-lg transition hover:scale-105" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);" title="Aktualisieren">
+                                    <span class="text-sm">↻</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Notification Stats -->
+                        <div class="grid grid-cols-4 gap-3 mb-5">
+                            <div class="text-center p-3 rounded-xl" style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2);">
+                                <p class="text-lg font-bold" style="color: var(--success);" id="notifSent">0</p>
+                                <p class="text-xs" style="color: var(--text-muted);">Gesendet</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);">
+                                <p class="text-lg font-bold" style="color: var(--accent-primary);" id="notifScheduled">0</p>
+                                <p class="text-xs" style="color: var(--text-muted);">Geplant</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);">
+                                <p class="text-lg font-bold" style="color: var(--warning);" id="notifDueToday">0</p>
+                                <p class="text-xs" style="color: var(--text-muted);">Heute</p>
+                            </div>
+                            <div class="text-center p-3 rounded-xl" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2);">
+                                <p class="text-lg font-bold" style="color: var(--error);" id="notifMissingEmail">0</p>
+                                <p class="text-xs" style="color: var(--text-muted);">Ohne E-Mail</p>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Notifications List -->
+                        <div class="space-y-2" id="upcomingNotifications" style="max-height: 280px; overflow-y: auto;">
+                            <div class="flex items-center justify-center p-6" style="color: var(--text-muted);">
+                                <span class="animate-pulse">Lade Benachrichtigungen...</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="flex gap-2 mt-4 pt-4" style="border-top: 1px solid var(--border);">
+                            <button onclick="window.location.href='/notifications'" class="flex-1 px-3 py-2 rounded-lg text-sm font-medium transition hover:scale-[1.02]" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-primary); border: 1px solid rgba(99, 102, 241, 0.3);">
+                                Alle anzeigen
+                            </button>
+                            <button onclick="triggerNotificationProcessing()" class="flex-1 px-3 py-2 rounded-lg text-sm font-medium transition hover:scale-[1.02]" style="background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.3);">
+                                Jetzt senden
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HubSpot Sync Card -->
+                <div class="card p-5 border-orange-500/30">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                                <span class="text-xl">🔶</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">HubSpot CRM Sync</h3>
+                                <p class="text-xs text-slate-500" id="hubspotSyncStatus">Bereit zum Synchronisieren</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="fetchAllHubSpotData()" class="px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition" title="Alle Daten laden">
+                                📥 Full Import
+                            </button>
+                            <button id="hubspotSyncBtn" onclick="syncHubSpot()" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold text-white transition">
+                                🔄 Sync
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="p-3 bg-white/5 rounded-lg text-center">
+                            <p class="text-xl font-bold text-orange-400" id="hubspotContacts">-</p>
+                            <p class="text-xs text-slate-500">Kontakte</p>
+                        </div>
+                        <div class="p-3 bg-white/5 rounded-lg text-center">
+                            <p class="text-xl font-bold text-green-400" id="hubspotDeals">-</p>
+                            <p class="text-xs text-slate-500">Deals</p>
+                        </div>
+                        <div class="p-3 bg-white/5 rounded-lg text-center">
+                            <p class="text-xl font-bold text-cyan-400" id="hubspotCompanies">-</p>
+                            <p class="text-xs text-slate-500">Companies</p>
+                        </div>
+                        <div class="p-3 bg-white/5 rounded-lg text-center">
+                            <p class="text-sm font-semibold text-slate-500" id="hubspotSyncTime">-</p>
+                            <p class="text-xs text-slate-500">Letzter Sync</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="card p-5">
+                    <h3 class="font-semibold mb-4">🖥️ System Status - 99.99% Uptime</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">HubSpot</p><p class="text-xs text-slate-500">Connected</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">PostgreSQL</p><p class="text-xs text-slate-500">142/400 GB</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">WhatsApp</p><p class="text-xs text-slate-500">Active</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Claude AI</p><p class="text-xs text-slate-500">Opus 4.5</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-yellow-500"></span>
+                            <div><p class="text-sm font-semibold">LOXONE</p><p class="text-xs text-yellow-400">Gold Partner</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">Backend</p><p class="text-xs text-slate-500">2.3ms</p></div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                            <span class="status-dot bg-green-500"></span>
+                            <div><p class="text-sm font-semibold">42 Agents</p><p class="text-xs text-slate-500">All Active</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CRM TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-crm" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold gradient-text">CRM ULTRA</h2>
+                    <div class="flex gap-3">
+                        <button class="btn btn-primary">+ Neuer Kontakt</button>
+                        <button class="btn btn-secondary">Import</button>
+                    </div>
+                </div>
+
+                <!-- CRM Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="glass-card p-5 text-center"><p class="text-2xl font-bold" style="color: var(--info);" id="crmTotalContacts">-</p><p class="text-xs" style="color: var(--text-muted);">Total Contacts</p></div>
+                    <div class="glass-card p-5 text-center"><p class="text-2xl font-bold" style="color: var(--success);" id="crmSynced">100</p><p class="text-xs" style="color: var(--text-muted);">HubSpot Sample</p></div>
+                    <div class="glass-card p-5 text-center"><p class="text-2xl font-bold" style="color: var(--error);" id="crmHotLeads">3</p><p class="text-xs" style="color: var(--text-muted);">Hot Leads</p></div>
+                    <div class="glass-card p-5 text-center"><p class="text-2xl font-bold" style="color: var(--warning);" id="crmWarmLeads">0</p><p class="text-xs" style="color: var(--text-muted);">Warm Leads</p></div>
+                    <div class="glass-card p-5 text-center"><p class="text-2xl font-bold" style="color: var(--accent-secondary);">-</p><p class="text-xs" style="color: var(--text-muted);">Data Quality</p></div>
+                </div>
+
+                <!-- CRM Table -->
+                <div class="glass-card overflow-hidden">
+                    <div class="p-4 flex items-center justify-between" style="border-bottom: 1px solid var(--border);">
+                        <input type="text" placeholder="Suche Kontakte..." class="input-field w-80">
+                        <div class="flex gap-2">
+                            <select class="input-field w-auto" style="width: auto;">
+                                <option>Alle Status</option>
+                                <option>HOT</option>
+                                <option>WARM</option>
+                                <option>COLD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table-dark">
+                        <thead>
+                            <tr>
+                                <th>Kontakt</th>
+                                <th>Company</th>
+                                <th>Score</th>
+                                <th>Status</th>
+                                <th>Last Activity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="crmTable">
+                            <tr>
+                                <td><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white" style="background: var(--accent-gradient);">MK</div><div><p class="font-semibold" style="color: var(--text-primary);">Max König</p><p class="text-xs" style="color: var(--text-muted);">max@proptech.de</p></div></div></td>
+                                <td style="color: var(--text-primary);">PropTech GmbH</td>
+                                <td><span class="badge badge-error font-semibold">98</span></td>
+                                <td><span class="badge badge-error">HOT</span></td>
+                                <td style="color: var(--text-muted);">vor 2 Stunden</td>
+                                <td><button class="btn btn-ghost text-xs" style="color: var(--accent-primary);">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">AS</div><div><p class="font-semibold" style="color: var(--text-primary);">Anna Schmidt</p><p class="text-xs" style="color: var(--text-muted);">anna@smartliving.io</p></div></div></td>
+                                <td style="color: var(--text-primary);">SmartLiving AG</td>
+                                <td><span class="badge badge-warning font-semibold">76</span></td>
+                                <td><span class="badge badge-warning">WARM</span></td>
+                                <td style="color: var(--text-muted);">vor 1 Tag</td>
+                                <td><button class="btn btn-ghost text-xs" style="color: var(--accent-primary);">View</button></td>
+                            </tr>
+                            <tr>
+                                <td><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold text-white" style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6);">TM</div><div><p class="font-semibold" style="color: var(--text-primary);">Thomas Müller</p><p class="text-xs" style="color: var(--text-muted);">t.mueller@immobilien.de</p></div></div></td>
+                                <td style="color: var(--text-primary);">Immobilien Plus</td>
+                                <td><span class="badge badge-error font-semibold">95</span></td>
+                                <td><span class="badge badge-error">HOT</span></td>
+                                <td style="color: var(--text-muted);">vor 30 Min</td>
+                                <td><button class="btn btn-ghost text-xs" style="color: var(--accent-primary);">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- LEADS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-leads" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">LEAD DISCOVERY</h2>
+                    <div class="flex gap-2">
+                        <button onclick="toggleLeadDiscovery()" id="btnLeadDiscovery" class="px-4 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">
+                            🔍 Auto-Discovery starten
+                        </button>
+                        <button onclick="runManualDiscovery()" class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold hover:bg-green-500/30 transition">
+                            ⚡ Jetzt ausführen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Auto Lead Discovery Status -->
+                <div class="glass-card p-5" style="border-color: var(--accent-primary);" id="leadDiscoveryCard">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--accent-gradient);">
+                                <span class="text-2xl">🤖</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold" style="color: var(--text-primary);">Auto Lead Discovery</h3>
+                                <p class="text-sm" id="ldStatus" style="color: var(--text-muted);">Bereit zum Starten</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-gray-500" id="ldStatusDot"></span>
+                            <span class="text-sm" style="color: var(--text-muted);" id="ldNextRun">-</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4 text-center">
+                        <div class="p-3 rounded-lg" style="background: var(--bg-elevated);">
+                            <p class="text-2xl font-bold text-purple-400" id="ldDiscovered">0</p>
+                            <p class="text-xs" style="color: var(--text-muted);">Entdeckt</p>
+                        </div>
+                        <div class="p-3 rounded-lg" style="background: var(--bg-elevated);">
+                            <p class="text-2xl font-bold text-green-400" id="ldQualified">0</p>
+                            <p class="text-xs" style="color: var(--text-muted);">Qualifiziert</p>
+                        </div>
+                        <div class="p-3 rounded-lg" style="background: var(--bg-elevated);">
+                            <p class="text-2xl font-bold text-cyan-400" id="ldCreated">0</p>
+                            <p class="text-xs" style="color: var(--text-muted);">Erstellt</p>
+                        </div>
+                        <div class="p-3 rounded-lg" style="background: var(--bg-elevated);">
+                            <p class="text-2xl font-bold text-yellow-400" id="ldLastRun">-</p>
+                            <p class="text-xs" style="color: var(--text-muted);">Letzte Ausführung</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Lead Scoring -->
+                    <div class="lg:col-span-2 glass-card p-5">
+                        <h3 class="font-semibold mb-4" style="color: var(--text-primary);">🎯 Lead Scoring Distribution</h3>
+                        <div class="grid grid-cols-4 gap-4 mb-6">
+                            <div class="text-center p-4 bg-red-500/10 rounded-lg border border-red-500/30">
+                                <p class="text-3xl font-bold text-red-400" id="leadsHot">0</p>
+                                <p class="text-sm text-red-400/70">🔥 HOT (80-100)</p>
+                            </div>
+                            <div class="text-center p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/30">
+                                <p class="text-3xl font-bold text-yellow-400" id="leadsWarm">0</p>
+                                <p class="text-sm text-yellow-400/70">⚡ WARM (50-79)</p>
+                            </div>
+                            <div class="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/30">
+                                <p class="text-3xl font-bold text-blue-400" id="leadsCold">0</p>
+                                <p class="text-sm text-blue-400/70">❄️ COLD (20-49)</p>
+                            </div>
+                            <div class="text-center p-4 bg-gray-500/10 rounded-lg border border-gray-500/30">
+                                <p class="text-3xl font-bold text-gray-400" id="leadsNew">0</p>
+                                <p class="text-sm text-gray-400/70">💤 NEW (0-19)</p>
+                            </div>
+                        </div>
+                        <canvas id="leadScoreChart" height="150"></canvas>
+                    </div>
+
+                    <!-- Recent Discovered Leads -->
+                    <div class="glass-card p-5">
+                        <h3 class="font-semibold mb-4" style="color: var(--text-primary);">🆕 Neue Leads</h3>
+                        <div class="space-y-2 max-h-80 overflow-y-auto" id="recentLeadsList">
+                            <div class="text-center py-4" style="color: var(--text-muted);">Lade Leads...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid lg:grid-cols-4 gap-4">
+                    <button onclick="callHotLeads()" class="p-4 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-lg text-left transition glass-card">
+                        <div class="flex items-center gap-3"><span class="text-2xl">🔥</span><div><p class="font-semibold">HOT Leads anrufen</p><p class="text-xs" style="color: var(--text-muted);" id="hotLeadsCount">0 Leads warten</p></div></div>
+                    </button>
+                    <button onclick="startAIScoring()" class="p-4 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg text-left transition glass-card">
+                        <div class="flex items-center gap-3"><span class="text-2xl">🧠</span><div><p class="font-semibold">AI Scoring starten</p><p class="text-xs" style="color: var(--text-muted);">Automatisches Scoring</p></div></div>
+                    </button>
+                    <button onclick="startEmailSequence()" class="p-4 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-lg text-left transition glass-card">
+                        <div class="flex items-center gap-3"><span class="text-2xl">📧</span><div><p class="font-semibold">Email Sequence</p><p class="text-xs" style="color: var(--text-muted);">Nurture Campaign</p></div></div>
+                    </button>
+                    <button onclick="syncHubSpot()" class="p-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-lg text-left transition glass-card">
+                        <div class="flex items-center gap-3"><span class="text-2xl">🔄</span><div><p class="font-semibold">HubSpot Sync</p><p class="text-xs" style="color: var(--text-muted);" id="lastSyncTime">Last: -</p></div></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- DEALS PIPELINE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-deals" class="tab-content space-y-6">
+                <!-- Header mit Sync -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="font-orbitron text-2xl font-bold gradient-gold">DEALS PIPELINE</h2>
+                        <p class="text-sm text-slate-500">Letzte Aktualisierung: <span id="dealsLastUpdate">-</span></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="loadDealsFromHubSpot()" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold text-white transition">
+                            🔄 HubSpot Sync
+                        </button>
+                        <button onclick="openNewDealModal()" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neuer Deal</button>
+                    </div>
+                </div>
+
+                <!-- Pipeline KPIs mit Trefferquote -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="card p-4 text-center border-purple-500/30">
+                        <p class="text-2xl font-bold gradient-text" id="dealsTotalCount">3.4M</p>
+                        <p class="text-xs text-slate-500">Gesamt Deals</p>
+                    </div>
+                    <div class="card p-4 text-center border-yellow-500/30">
+                        <p class="text-2xl font-bold text-yellow-400" id="dealsTotalValue">€411B</p>
+                        <p class="text-xs text-slate-500">Pipeline Wert</p>
+                    </div>
+                    <div class="card p-4 text-center border-green-500/30">
+                        <p class="text-2xl font-bold text-green-400" id="dealsWinRate">34.7%</p>
+                        <p class="text-xs text-slate-500">Trefferquote</p>
+                    </div>
+                    <div class="card p-4 text-center border-cyan-500/30">
+                        <p class="text-2xl font-bold text-cyan-400" id="dealsAvgValue">€121K</p>
+                        <p class="text-xs text-slate-500">Ø Deal-Wert</p>
+                    </div>
+                    <div class="card p-4 text-center border-blue-500/30">
+                        <p class="text-2xl font-bold text-blue-400" id="dealsAvgCycle">42</p>
+                        <p class="text-xs text-slate-500">Ø Tage bis Close</p>
+                    </div>
+                    <div class="card p-4 text-center border-red-500/30">
+                        <p class="text-2xl font-bold text-red-400" id="dealsAtRisk">127</p>
+                        <p class="text-xs text-slate-500">At Risk</p>
+                    </div>
+                </div>
+
+                <!-- Lead Demon Status & Pipeline Progress -->
+                <div class="grid lg:grid-cols-3 gap-4">
+                    <!-- Lead Demon Card - Enhanced Dark Mode -->
+                    <div class="glass-card p-4" style="border-color: var(--info);">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--accent-gradient); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);">
+                                    <span class="text-xl">🤖</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold" style="color: var(--text-primary);">Auto Lead Bot</h3>
+                                    <p class="text-xs" style="color: var(--text-muted);" id="leadDemonStatus"><span style="color: var(--success);">✓ Autonom aktiv</span></p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked onchange="toggleLeadDemon()">
+                                <div class="w-9 h-5 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all" style="background: var(--bg-elevated);" class="peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs mb-3">
+                            <div class="p-2 rounded-lg" style="background: var(--bg-elevated);">
+                                <p class="font-bold text-lg" style="color: var(--info);" id="demonProcessed">0</p>
+                                <p style="color: var(--text-muted);">Analysiert</p>
+                            </div>
+                            <div class="p-2 rounded-lg" style="background: var(--bg-elevated);">
+                                <p class="font-bold text-lg" style="color: var(--success);" id="demonUpgraded">0</p>
+                                <p style="color: var(--text-muted);">Aktualisiert</p>
+                            </div>
+                            <div class="p-2 rounded-lg" style="background: var(--bg-elevated);">
+                                <p class="font-bold text-lg" style="color: var(--text-muted);" id="demonDowngraded">0</p>
+                                <p style="color: var(--text-muted);">Optimal</p>
+                            </div>
+                        </div>
+
+                        <!-- Recent Updates Panel -->
+                        <div class="rounded-lg p-2 mb-3 max-h-32 overflow-y-auto" style="background: var(--bg-elevated);" id="leadDemonUpdates">
+                            <p class="text-xs text-center py-2" style="color: var(--text-muted);">Bot arbeitet automatisch...</p>
+                        </div>
+
+                        <p class="text-xs text-center" style="color: var(--text-muted);">
+                            <span class="inline-flex items-center gap-1">
+                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                Letzte Ausführung: <span id="demonLastRun">-</span> | Automatisch alle 2 Min
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Pipeline Progress Bar + Scoring Info -->
+                    <div class="card p-4 lg:col-span-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold">Pipeline Conversion Funnel</span>
+                            <span class="text-xs text-slate-500">Score-basierte Stufen</span>
+                        </div>
+                        <div class="flex h-8 rounded-lg overflow-hidden">
+                            <div class="bg-blue-500 flex items-center justify-center text-xs font-semibold" style="width: 25%" title="Score 0-39">Termin 20%</div>
+                            <div class="bg-cyan-500 flex items-center justify-center text-xs font-semibold" style="width: 20%" title="Score 40-59">Qualifiziert 40%</div>
+                            <div class="bg-purple-500 flex items-center justify-center text-xs font-semibold" style="width: 20%" title="Score 60-74">Präsentation 60%</div>
+                            <div class="bg-yellow-500 flex items-center justify-center text-xs font-semibold text-black" style="width: 20%" title="Score 75-89">Entscheider 80%</div>
+                            <div class="bg-green-500 flex items-center justify-center text-xs font-semibold" style="width: 15%" title="Score 90+">Vertrag 90%</div>
+                        </div>
+
+                        <!-- Scoring Factors -->
+                        <div class="mt-3 grid grid-cols-2 gap-3 text-xs">
+                            <div class="rounded-lg p-2" style="background: var(--bg-elevated);">
+                                <p class="font-semibold text-red-400 mb-1">😈 Lead Scoring Faktoren</p>
+                                <div class="space-y-1" style="color: var(--text-muted);">
+                                    <p>💰 Deal-Wert: €50K+ = +30pts</p>
+                                    <p>⭐ A-Class Deal: +25pts</p>
+                                    <p>🏭 Industry 4.0: +20pts</p>
+                                    <p>🏠 Smart Home: +15pts</p>
+                                </div>
+                            </div>
+                            <div class="rounded-lg p-2" style="background: var(--bg-elevated);">
+                                <p class="font-semibold text-purple-400 mb-1">📊 Stage Thresholds</p>
+                                <div class="space-y-1" style="color: var(--text-muted);">
+                                    <p>90+ → Vertrag gesendet</p>
+                                    <p>75+ → Entscheider</p>
+                                    <p>60+ → Präsentation</p>
+                                    <p>40+ → Qualifiziert</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pipeline Kanban - Dynamisch -->
+                <div class="flex gap-4 overflow-x-auto pb-4" id="pipelineKanban">
+                    <!-- Wird dynamisch geladen -->
+                    <div class="w-full text-center py-10 text-slate-500">
+                        <span class="animate-spin text-2xl">⟳</span>
+                        <p class="mt-2">Lade Deals von HubSpot...</p>
+                    </div>
+                </div>
+
+                <!-- Recent Deals Table mit Lead Scoring -->
+                <div class="glass-card">
+                    <div class="p-4 flex items-center justify-between" style="border-bottom: 1px solid var(--border);">
+                        <h3 class="font-semibold" style="color: var(--text-primary);">📊 Aktuelle Deals mit Lead Score</h3>
+                        <div class="flex gap-2">
+                            <select id="dealsStageFilter" onchange="filterDealsByStage()" class="input-field" style="width: auto;">
+                                <option value="all">Alle Stages</option>
+                                <option value="qualification">Qualification</option>
+                                <option value="meeting">Meeting</option>
+                                <option value="proposal">Proposal</option>
+                                <option value="negotiation">Negotiation</option>
+                                <option value="closedwon">Closed Won</option>
+                                <option value="closedlost">Closed Lost</option>
+                            </select>
+                            <input type="text" id="dealsSearch" onkeyup="searchDeals()" placeholder="Deal suchen..." class="input-field w-48">
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table-dark">
+                            <thead>
+                                <tr>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortDealsTable('name')">Deal Name ↕</th>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortDealsTable('amount')">Betrag ↕</th>
+                                    <th>Stage</th>
+                                    <th>Lead Score</th>
+                                    <th>Kontakt</th>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortDealsTable('closedate')">Close Date ↕</th>
+                                    <th>Wahrscheinlichkeit</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dealsTableBody">
+                                <!-- Wird dynamisch geladen -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 flex items-center justify-between" style="border-top: 1px solid var(--border);">
+                        <p class="text-sm" style="color: var(--text-muted);" id="dealsTableInfo">Lade Deals...</p>
+                        <div class="flex gap-2" id="dealsPagination">
+                            <button class="btn btn-ghost text-sm" onclick="loadDealsPage('prev')">← Prev</button>
+                            <button class="btn btn-primary text-sm">1</button>
+                            <button class="btn btn-ghost text-sm" onclick="loadDealsPage('next')">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deal Analytics Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Deals nach Stage</h3>
+                        <canvas id="dealsByStageChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">💰 Monatlicher Deal-Wert</h3>
+                        <canvas id="dealsValueChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- EMAIL TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-email" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">EMAIL HUB</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">📧 Neue Kampagne</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Templates</button>
+                    </div>
+                </div>
+
+                <!-- Email Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">125,847</p><p class="text-xs text-slate-500">Emails/Monat</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">78%</p><p class="text-xs text-slate-500">Open Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">23%</p><p class="text-xs text-slate-500">Click Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">12%</p><p class="text-xs text-slate-500">Reply Rate</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-red-400">0.8%</p><p class="text-xs text-slate-500">Bounce Rate</p></div>
+                </div>
+
+                <!-- Active Campaigns -->
+                <div class="glass-card p-5">
+                    <h3 class="font-semibold mb-4" style="color: var(--text-primary);">📊 Aktive Kampagnen</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 rounded-lg" style="background: var(--bg-elevated);">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🚀</span>
+                                <div>
+                                    <p class="font-semibold" style="color: var(--text-primary);">Investor Outreach Q1</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">5,000 Recipients • Started vor 2 Tagen</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">82%</p><p class="text-xs" style="color: var(--text-muted);">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">28%</p><p class="text-xs" style="color: var(--text-muted);">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">45</p><p class="text-xs" style="color: var(--text-muted);">Meetings</p></div>
+                                <span class="badge badge-success">Active</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-lg" style="background: var(--bg-elevated);">
+                            <div class="flex items-center gap-4">
+                                <span class="text-2xl">🏠</span>
+                                <div>
+                                    <p class="font-semibold" style="color: var(--text-primary);">LOXONE Partner Nurture</p>
+                                    <p class="text-xs" style="color: var(--text-muted);">2,500 Recipients • Started vor 1 Woche</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <div class="text-center"><p class="text-lg font-bold text-green-400">75%</p><p class="text-xs" style="color: var(--text-muted);">Opened</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-cyan-400">19%</p><p class="text-xs" style="color: var(--text-muted);">Clicked</p></div>
+                                <div class="text-center"><p class="text-lg font-bold text-purple-400">23</p><p class="text-xs" style="color: var(--text-muted);">Meetings</p></div>
+                                <span class="badge badge-success">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- AI AGENTS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-agents" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-text">GENIUS HUB - 42 AI AGENTS</h2>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">🧠 Neuer Agent</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Alle aktivieren</button>
+                    </div>
+                </div>
+
+                <!-- Agent Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-green-400">42</p><p class="text-xs text-slate-500">Active Agents</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-purple-400">1.2M</p><p class="text-xs text-slate-500">Tasks/Day</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-cyan-400">2.1ms</p><p class="text-xs text-slate-500">Avg Response</p></div>
+                    <div class="card p-4 text-center"><p class="text-2xl font-bold text-yellow-400">99.9%</p><p class="text-xs text-slate-500">Uptime</p></div>
+                </div>
+
+                <!-- All Agents Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="allAgentsGrid">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ANALYTICS TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-analytics" class="tab-content space-y-6">
+                <h2 class="font-orbitron text-2xl font-bold gradient-text">ANALYTICS & INSIGHTS</h2>
+
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📈 Revenue Trend</h3>
+                        <canvas id="revenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">🎯 Conversion Funnel</h3>
+                        <canvas id="funnelChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FINANCE TAB -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <div id="tab-finance" class="tab-content space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="font-orbitron text-2xl font-bold gradient-gold">FINANCE & INVOICES HUB</h2>
+                    <div class="flex gap-2">
+                        <button onclick="openModal('invoiceModal')" class="px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg text-sm font-semibold text-black hover:opacity-90 transition">+ Neue Rechnung</button>
+                        <button class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm transition">Export</button>
+                    </div>
+                </div>
+
+                <!-- Finance KPIs -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('all')">
+                        <p class="text-2xl font-bold text-green-400" id="finRevenue">€127M</p>
+                        <p class="text-xs text-slate-500">Revenue YTD</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('paid')">
+                        <p class="text-2xl font-bold text-purple-400" id="finPaid">€89M</p>
+                        <p class="text-xs text-slate-500">Bezahlt</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('pending')">
+                        <p class="text-2xl font-bold text-yellow-400" id="finPending">€28M</p>
+                        <p class="text-xs text-slate-500">Ausstehend</p>
+                    </div>
+                    <div class="card p-4 text-center hover:scale-[1.02] transition-transform cursor-pointer" onclick="filterInvoices('overdue')">
+                        <p class="text-2xl font-bold text-red-400" id="finOverdue">€10M</p>
+                        <p class="text-xs text-slate-500">Überfällig</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-cyan-400">89%</p>
+                        <p class="text-xs text-slate-500">Collection Rate</p>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <p class="text-2xl font-bold text-white">1,247</p>
+                        <p class="text-xs text-slate-500">Total Invoices</p>
+                    </div>
+                </div>
+
+                <!-- Invoices Table -->
+                <div class="glass-card overflow-hidden">
+                    <div class="p-4 flex flex-wrap items-center justify-between gap-4" style="border-bottom: 1px solid var(--border);">
+                        <input type="text" id="invoiceSearch" placeholder="Suche Rechnungen..." class="input-field w-80" onkeyup="searchInvoices()">
+                        <div class="flex gap-2">
+                            <select id="invoiceStatusFilter" class="input-field" style="width: auto;" onchange="filterInvoices(this.value)">
+                                <option value="all">Alle Status</option>
+                                <option value="paid">Bezahlt</option>
+                                <option value="pending">Ausstehend</option>
+                                <option value="overdue">Überfällig</option>
+                                <option value="draft">Entwurf</option>
+                            </select>
+                            <select class="input-field" style="width: auto;">
+                                <option>Letzte 30 Tage</option>
+                                <option>Letzte 90 Tage</option>
+                                <option>Dieses Jahr</option>
+                                <option>Alle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table-dark">
+                            <thead>
+                                <tr>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortInvoices('id')">Rechnung # ↕</th>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortInvoices('customer')">Kunde ↕</th>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortInvoices('amount')">Betrag ↕</th>
+                                    <th>Status</th>
+                                    <th class="cursor-pointer hover:text-white" onclick="sortInvoices('date')">Datum ↕</th>
+                                    <th>Fällig</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoicesTable">
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-001</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-xs font-semibold">PT</div><div><p class="font-semibold">PropTech GmbH</p><p class="text-xs text-slate-500">max@proptech.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€2,450,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">10.01.2024</td>
+                                    <td class="p-4 text-sm text-slate-500">10.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-001')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-002</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-xs font-semibold">SL</div><div><p class="font-semibold">SmartLiving AG</p><p class="text-xs text-slate-500">billing@smartliving.io</p></div></div></td>
+                                    <td class="p-4 font-semibold">€890,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Ausstehend</span></td>
+                                    <td class="p-4 text-sm">08.01.2024</td>
+                                    <td class="p-4 text-sm text-yellow-400">08.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-002')">View</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Remind</button></div></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-003</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-xs font-semibold">RE</div><div><p class="font-semibold">Real Estate Empire</p><p class="text-xs text-slate-500">finance@realestate.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€5,670,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Überfällig</span></td>
+                                    <td class="p-4 text-sm">15.12.2023</td>
+                                    <td class="p-4 text-sm text-red-400">15.01.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-003')">View</button><button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs hover:bg-red-500/30">Urgent</button></div></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-004</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-xs font-semibold">TC</div><div><p class="font-semibold">TechCorp AG</p><p class="text-xs text-slate-500">ap@techcorp.de</p></div></div></td>
+                                    <td class="p-4 font-semibold">€1,250,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Bezahlt</span></td>
+                                    <td class="p-4 text-sm">05.01.2024</td>
+                                    <td class="p-4 text-sm text-slate-500">05.02.2024</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30" onclick="viewInvoice('INV-2024-004')">View</button><button class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs hover:bg-cyan-500/30">PDF</button></div></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-purple-400">#INV-2024-005</td>
+                                    <td class="p-4"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-xs font-semibold">LX</div><div><p class="font-semibold">LOXONE Partner</p><p class="text-xs text-slate-500">partner@loxone.com</p></div></div></td>
+                                    <td class="p-4 font-semibold">€780,000</td>
+                                    <td class="p-4"><span class="px-2 py-1 bg-gray-500/20 text-gray-400 text-xs rounded">Entwurf</span></td>
+                                    <td class="p-4 text-sm">-</td>
+                                    <td class="p-4 text-sm text-slate-500">-</td>
+                                    <td class="p-4"><div class="flex gap-2"><button class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs hover:bg-purple-500/30">Edit</button><button class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs hover:bg-green-500/30">Send</button></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 flex items-center justify-between" style="border-top: 1px solid var(--border);">
+                        <p class="text-sm" style="color: var(--text-muted);">Zeige 1-5 von 1,247 Rechnungen</p>
+                        <div class="flex gap-2">
+                            <button class="btn btn-ghost text-sm">← Prev</button>
+                            <button class="btn btn-primary text-sm">1</button>
+                            <button class="btn btn-ghost text-sm">2</button>
+                            <button class="btn btn-ghost text-sm">3</button>
+                            <button class="btn btn-ghost text-sm">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Charts -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">💰 Monthly Revenue</h3>
+                        <canvas id="financeRevenueChart" height="200"></canvas>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="font-semibold mb-4">📊 Invoice Status Distribution</h3>
+                        <canvas id="invoiceStatusChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp Hub Tab -->
+            <div id="tab-whatsapp" class="tab-content space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold flex items-center gap-3">
+                            <span class="text-3xl">💬</span> WhatsApp Business Hub
+                        </h1>
+                        <p class="text-slate-500 text-sm mt-1">Verbinden Sie WhatsApp mit HubSpot CRM</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="loadWhatsAppStatus()" class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold hover:bg-green-500/30 transition">
+                            🔄 Status prüfen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Connection Status & Stats -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="card p-4 border-green-500/30" id="whatsappStatusCard">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
+                                <span class="text-2xl">📱</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold" id="waConnectionStatus">Prüfe...</p>
+                                <p class="text-xs text-slate-500" id="waPhoneNumber">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-green-400" id="waSentCount">0</p>
+                                <p class="text-xs text-slate-500">Gesendet</p>
+                            </div>
+                            <span class="text-3xl">📤</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-blue-400" id="waDeliveredCount">0</p>
+                                <p class="text-xs text-slate-500">Zugestellt</p>
+                            </div>
+                            <span class="text-3xl">✓✓</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-purple-400" id="waReadCount">0</p>
+                                <p class="text-xs text-slate-500">Gelesen</p>
+                            </div>
+                            <span class="text-3xl">👁️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Send Message Panel -->
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-green-400 mb-4 flex items-center gap-2">
+                            <span>✉️</span> Nachricht senden
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-xs text-slate-500 mb-1 block">Empfänger</label>
+                                <input type="text" id="waRecipient" placeholder="+49 170 1234567"
+                                    class="w-full px-3 py-2 input-field focus:border-green-500">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500 mb-1 block">Typ</label>
+                                <select id="waMessageType" onchange="toggleWaTemplateSelect()"
+                                    class="w-full px-3 py-2 input-field">
+                                    <option value="text">Text</option>
+                                    <option value="template">Template</option>
+                                </select>
+                            </div>
+                            <div id="waTemplateSelect" class="hidden">
+                                <label class="text-xs text-slate-500 mb-1 block">Template</label>
+                                <select id="waTemplate" class="w-full px-3 py-2 input-field"></select>
+                            </div>
+                            <div id="waTextInput">
+                                <label class="text-xs text-slate-500 mb-1 block">Nachricht</label>
+                                <textarea id="waMessage" rows="3" placeholder="Ihre Nachricht..."
+                                    class="w-full px-3 py-2 input-field resize-none"></textarea>
+                            </div>
+                            <button onclick="sendWhatsAppMessage()" class="w-full py-2 bg-green-500 hover:bg-green-600 rounded-lg text-sm font-semibold transition">
+                                📱 Senden
+                            </button>
+                        </div>
+                        <div class="mt-4 pt-4 border-t" style="border-color: var(--border);">
+                            <p class="text-xs text-slate-500 mb-2">Schnell:</p>
+                            <div class="flex flex-wrap gap-1">
+                                <button onclick="sendQuickWA('Hallo! Wie kann ich helfen?')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">👋</button>
+                                <button onclick="sendQuickWA('Vielen Dank!')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">🙏</button>
+                                <button onclick="sendQuickWA('Ich melde mich!')" class="px-2 py-1 bg-white/5 rounded text-xs hover:bg-white/10">⏰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Templates Panel -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-purple-400 flex items-center gap-2">
+                                <span>📋</span> Templates
+                            </h3>
+                            <button onclick="loadWhatsAppTemplates()" class="text-xs text-purple-400 hover:text-purple-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-72 overflow-y-auto" id="waTemplatesList">
+                            <div class="text-center py-4 text-slate-500 text-sm">Templates laden...</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Messages -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-cyan-400 flex items-center gap-2">
+                                <span>💬</span> Letzte Nachrichten
+                            </h3>
+                            <button onclick="loadWhatsAppMessages()" class="text-xs text-cyan-400 hover:text-cyan-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-72 overflow-y-auto" id="waMessagesList">
+                            <div class="text-center py-4 text-slate-500 text-sm">Keine Nachrichten</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bulk & HubSpot -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-yellow-400 mb-4 flex items-center gap-2">
+                            <span>📢</span> Bulk Messaging
+                        </h3>
+                        <div class="space-y-3">
+                            <select id="waBulkSource" class="w-full px-3 py-2 input-field">
+                                <option value="hubspot_hot">Hot Leads (Score 75+)</option>
+                                <option value="hubspot_leads">Alle Leads</option>
+                                <option value="hubspot_all">Alle Kontakte</option>
+                            </select>
+                            <select id="waBulkTemplate" class="w-full px-3 py-2 input-field">
+                                <option value="welcome_message">welcome_message</option>
+                                <option value="follow_up">follow_up</option>
+                                <option value="deal_update">deal_update</option>
+                            </select>
+                            <div class="flex gap-2">
+                                <input type="number" id="waBulkLimit" value="10" min="1" max="100"
+                                    class="w-20 px-3 py-2 input-field">
+                                <button onclick="sendBulkWhatsApp()" class="flex-1 py-2 bg-yellow-500 hover:bg-yellow-600 text-black rounded-lg text-sm font-semibold transition">
+                                    📢 Bulk senden
+                                </button>
+                            </div>
+                            <div id="waBulkProgress" class="hidden">
+                                <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                                    <div id="waBulkProgressBar" class="h-full bg-green-500 transition-all" style="width: 0%"></div>
+                                </div>
+                                <p class="text-xs text-center mt-1" id="waBulkProgressText">0/0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-orange-400 mb-4 flex items-center gap-2">
+                            <span>🔗</span> HubSpot Integration
+                        </h3>
+                        <div class="bg-white/5 rounded-lg p-3 mb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">👥</span>
+                                    <div>
+                                        <p class="font-semibold text-sm">Kontakte mit Telefon</p>
+                                        <p class="text-xs text-slate-500" id="waHubspotContacts">Laden...</p>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-xs">✓ Verbunden</span>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-1">
+                            <label class="flex items-center gap-2 p-2 bg-white/5 rounded cursor-pointer">
+                                <input type="checkbox" id="waAutoWelcome" class="accent-green-500">
+                                <span>Welcome bei neuem Lead</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-2 bg-white/5 rounded cursor-pointer">
+                                <input type="checkbox" id="waAutoFollowup" class="accent-green-500">
+                                <span>Follow-up nach 48h</span>
+                            </label>
+                        </div>
+                        <button onclick="syncWhatsAppHubSpot()" class="w-full mt-3 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-sm font-semibold transition">
+                            🔄 Sync mit HubSpot
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- GOD MODE TAB - Genius Bots Control Center -->
+            <div id="tab-godmode" class="tab-content space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-kanji" style="color: var(--text-primary);">神 GOD MODE</h2>
+                        <p class="text-sm" style="color: var(--text-muted);">HAIKU Activated - Genius Bots Control Center</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="refreshGodMode()" class="btn btn-secondary">🔄 Refresh</button>
+                        <button onclick="executeGodCommand()" class="btn btn-primary">⚡ Execute Command</button>
+                    </div>
+                </div>
+                <!-- Status Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-4 text-center">
+                        <div class="text-3xl font-bold gradient-gold" id="godmode-bots">42</div>
+                        <div class="text-sm text-slate-500">Genius Bots</div>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <div class="text-3xl font-bold text-green-500" id="godmode-active">38</div>
+                        <div class="text-sm text-slate-500">Active Now</div>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <div class="text-3xl font-bold text-blue-500" id="godmode-tasks">1.2M</div>
+                        <div class="text-sm text-slate-500">Tasks Today</div>
+                    </div>
+                    <div class="card p-4 text-center">
+                        <div class="text-3xl font-bold text-purple-500" id="godmode-uptime">99.9%</div>
+                        <div class="text-sm text-slate-500">Uptime</div>
+                    </div>
+                </div>
+                <!-- Bot Grid -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold mb-4">Genius Bots Online</h3>
+                    <div id="godmode-bot-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                        <!-- Bots will be loaded here -->
+                    </div>
+                </div>
+                <!-- Command Center -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold mb-4">⚡ Command Center</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <button onclick="godModeCommand('analyze_all')" class="p-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                            <div class="text-2xl mb-2">🔍</div>
+                            <div class="font-medium">Analyze All</div>
+                        </button>
+                        <button onclick="godModeCommand('sync_crm')" class="p-4 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-lg">
+                            <div class="text-2xl mb-2">🔄</div>
+                            <div class="font-medium">Sync CRM</div>
+                        </button>
+                        <button onclick="godModeCommand('ai_insights')" class="p-4 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg">
+                            <div class="text-2xl mb-2">🧠</div>
+                            <div class="font-medium">AI Insights</div>
+                        </button>
+                        <button onclick="godModeCommand('generate_report')" class="p-4 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 rounded-lg">
+                            <div class="text-2xl mb-2">📊</div>
+                            <div class="font-medium">Generate Report</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROPHECY MODE TAB - AI Predictions -->
+            <div id="tab-prophecy" class="tab-content space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold" style="color: var(--text-primary);">🔮 Prophecy Mode</h2>
+                        <p class="text-sm" style="color: var(--text-muted);">AI-Powered Predictions & Revenue Forecasting</p>
+                    </div>
+                    <button onclick="generateProphecy()" class="btn btn-primary">🔮 Generate Predictions</button>
+                </div>
+                <!-- Prediction Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-3">📈 Revenue Forecast</h3>
+                        <div class="text-3xl font-bold text-green-500 mb-2" id="prophecy-revenue">€1.25M</div>
+                        <p class="text-sm text-slate-500">Projected Q1 2026</p>
+                        <div class="mt-3 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500" style="width: 68%"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">68% confidence</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-3">🎯 Deal Probability</h3>
+                        <div class="text-3xl font-bold text-blue-500 mb-2" id="prophecy-deals">34</div>
+                        <p class="text-sm text-slate-500">High-probability closes</p>
+                        <div class="mt-3 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-500" style="width: 82%"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">82% close rate predicted</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-3">⚠️ At-Risk Deals</h3>
+                        <div class="text-3xl font-bold text-orange-500 mb-2" id="prophecy-risk">7</div>
+                        <p class="text-sm text-slate-500">Need attention</p>
+                        <div class="mt-3 h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-orange-500" style="width: 15%"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Action required</p>
+                    </div>
+                </div>
+                <!-- AI Insights -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold mb-4">🧠 AI Insights</h3>
+                    <div id="prophecy-insights" class="space-y-3">
+                        <div class="p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                            <strong>Opportunity:</strong> Construction sector showing 23% growth - increase focus on Bau clients
+                        </div>
+                        <div class="p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                            <strong>Trend:</strong> Email response rates peak Tuesday-Thursday 10-14h
+                        </div>
+                        <div class="p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
+                            <strong>Action:</strong> 5 deals inactive >14 days - schedule follow-ups
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HAKAI MODE TAB - Cleanup Operations -->
+            <div id="tab-hakai" class="tab-content space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold gradient-fire" style="color: var(--text-primary);">💥 HAKAI MODE</h2>
+                        <p class="text-sm" style="color: var(--text-muted);">Data Cleanup & Maintenance Operations</p>
+                    </div>
+                </div>
+                <div class="card p-6 border-2 border-red-500/30">
+                    <div class="text-center mb-6">
+                        <div class="text-4xl mb-2">⚠️</div>
+                        <h3 class="text-xl font-bold text-red-400">Destructive Operations Zone</h3>
+                        <p class="text-slate-500">These actions cannot be undone. Use with caution.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="hakaiCleanup('duplicates')" class="p-4 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 rounded-lg text-left">
+                            <div class="text-2xl mb-2">🔄</div>
+                            <div class="font-medium">Clean Duplicates</div>
+                            <div class="text-sm text-slate-500">Remove duplicate contacts and deals</div>
+                        </button>
+                        <button onclick="hakaiCleanup('stale')" class="p-4 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 rounded-lg text-left">
+                            <div class="text-2xl mb-2">🗑️</div>
+                            <div class="font-medium">Archive Stale Data</div>
+                            <div class="text-sm text-slate-500">Archive deals inactive >90 days</div>
+                        </button>
+                        <button onclick="hakaiCleanup('cache')" class="p-4 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg text-left">
+                            <div class="text-2xl mb-2">💾</div>
+                            <div class="font-medium">Clear Cache</div>
+                            <div class="text-sm text-slate-500">Reset all cached data</div>
+                        </button>
+                        <button onclick="hakaiCleanup('logs')" class="p-4 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-lg text-left">
+                            <div class="text-2xl mb-2">📋</div>
+                            <div class="font-medium">Truncate Logs</div>
+                            <div class="text-sm text-slate-500">Clear logs older than 30 days</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-reports" class="tab-content"><div class="card p-10 text-center"><h2 class="text-2xl font-bold mb-4">📋 Reports</h2><p class="text-slate-500">Generate & Export Reports</p></div></div>
+
+            <!-- INVOICES TAB -->
+            <div id="tab-invoices" class="tab-content space-y-6">
+                <!-- Invoice Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-semibold" style="color: var(--text-primary);">Rechnungen</h2>
+                        <p class="text-sm" style="color: var(--text-muted);">Verwalten Sie Ihre Rechnungen und automatische Abrechnung</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="openAutoInvoiceSettings()" class="btn btn-secondary flex items-center gap-2">
+                            <span>⚙️</span> Auto-Rechnungen
+                        </button>
+                        <button onclick="openCreateInvoice()" class="btn btn-primary flex items-center gap-2">
+                            <span>➕</span> Neue Rechnung
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Invoice Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card p-4">
+                        <p class="text-sm mb-1" style="color: var(--text-muted);">Gesamt diesen Monat</p>
+                        <p class="text-2xl font-bold" style="color: var(--accent-primary);" id="invoiceTotalMonth">€0</p>
+                        <p class="text-xs text-emerald-400 mt-1">↑ 15% vs. Vormonat</p>
+                    </div>
+                    <div class="glass-card p-4">
+                        <p class="text-sm mb-1" style="color: var(--text-muted);">Bezahlt</p>
+                        <p class="text-2xl font-bold text-emerald-400" id="invoicePaid">€0</p>
+                        <p class="text-xs mt-1" style="color: var(--text-muted);" id="invoicePaidCount">0 Rechnungen</p>
+                    </div>
+                    <div class="glass-card p-4">
+                        <p class="text-sm mb-1" style="color: var(--text-muted);">Ausstehend</p>
+                        <p class="text-2xl font-bold text-amber-400" id="invoicePending">€0</p>
+                        <p class="text-xs mt-1" style="color: var(--text-muted);" id="invoicePendingCount">0 Rechnungen</p>
+                    </div>
+                    <div class="glass-card p-4">
+                        <p class="text-sm mb-1" style="color: var(--text-muted);">Überfällig</p>
+                        <p class="text-2xl font-bold text-red-400" id="invoiceOverdue">€0</p>
+                        <p class="text-xs text-red-400 mt-1" id="invoiceOverdueCount">0 Rechnungen</p>
+                    </div>
+                </div>
+
+                <!-- Auto Invoice Settings Card -->
+                <div class="glass-card p-5" style="border-color: var(--info);">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--accent-gradient); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);">
+                                <span class="text-2xl">🤖</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold" style="color: var(--text-primary);">Automatische Rechnungsstellung</h3>
+                                <p class="text-sm" style="color: var(--text-muted);">Rechnungen werden automatisch bei Deal-Abschluss erstellt</p>
+                            </div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="autoInvoiceToggle" class="sr-only peer" checked onchange="toggleAutoInvoice(this.checked)">
+                            <div class="w-11 h-6 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600" style="background: var(--bg-elevated);"></div>
+                            <span class="ml-2 text-sm font-medium" style="color: var(--text-muted);" id="autoInvoiceStatus">Aktiv</span>
+                        </label>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-4 text-sm">
+                        <div class="rounded-lg p-3" style="background: var(--bg-elevated);">
+                            <p style="color: var(--text-muted);">Diesen Monat erstellt</p>
+                            <p class="text-lg font-semibold" style="color: var(--text-primary);" id="autoInvoiceCount">0</p>
+                        </div>
+                        <div class="rounded-lg p-3" style="background: var(--bg-elevated);">
+                            <p style="color: var(--text-muted);">Automatischer Versand</p>
+                            <p class="text-lg font-semibold text-emerald-400">Aktiviert</p>
+                        </div>
+                        <div class="rounded-lg p-3" style="background: var(--bg-elevated);">
+                            <p style="color: var(--text-muted);">Zahlungsziel</p>
+                            <p class="text-lg font-semibold" style="color: var(--text-primary);">14 Tage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice List -->
+                <div class="glass-card overflow-hidden">
+                    <div class="p-4 flex items-center justify-between" style="border-bottom: 1px solid var(--border);">
+                        <h3 class="font-semibold" style="color: var(--text-primary);">Rechnungsliste</h3>
+                        <div class="flex items-center gap-2">
+                            <select class="input-field" style="width: auto;" id="invoiceFilter" onchange="filterInvoices(this.value)">
+                                <option value="all">Alle anzeigen</option>
+                                <option value="paid">Bezahlt</option>
+                                <option value="pending">Ausstehend</option>
+                                <option value="overdue">Überfällig</option>
+                                <option value="draft">Entwurf</option>
+                            </select>
+                            <button onclick="exportInvoices()" class="btn btn-secondary text-sm">📥 Export</button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Rechnung #</th>
+                                    <th>Kunde</th>
+                                    <th>Deal</th>
+                                    <th>Betrag</th>
+                                    <th>Status</th>
+                                    <th>Datum</th>
+                                    <th>Fällig</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceTableBody">
+                                <!-- Invoice rows will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 flex items-center justify-between text-sm" style="border-top: 1px solid var(--border); color: var(--text-muted);">
+                        <span id="invoiceTableInfo">Lädt...</span>
+                        <div class="flex gap-2">
+                            <button onclick="prevInvoicePage()" class="btn btn-ghost">←</button>
+                            <button onclick="nextInvoicePage()" class="btn btn-ghost">→</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments Tab -->
+            <div id="tab-payments" class="tab-content space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold flex items-center gap-3">
+                            <span class="text-3xl">💳</span> Stripe Payments
+                        </h1>
+                        <p class="text-[var(--text-muted)] text-sm mt-1">Zahlungen, Abonnements & Produkte verwalten</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="loadStripeData()" class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg text-sm font-semibold hover:bg-purple-500/30 transition">
+                            🔄 Aktualisieren
+                        </button>
+                        <a href="https://dashboard.stripe.com" target="_blank" class="px-4 py-2 bg-[#635BFF]/20 text-[#635BFF] rounded-lg text-sm font-semibold hover:bg-[#635BFF]/30 transition">
+                            ↗ Stripe Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="card p-4 border-green-500/30" id="stripeStatusCard">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 rounded-lg bg-[#635BFF]/20 flex items-center justify-center">
+                                <span class="text-xl">💳</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold" id="stripeStatus">Prüfe...</p>
+                                <p class="text-xs text-[var(--text-muted)]" id="stripeMode">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-green-400" id="stripeRevenue">€0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Umsatz (Gesamt)</p>
+                            </div>
+                            <span class="text-3xl">💰</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-blue-400" id="stripePayments">0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Zahlungen</p>
+                            </div>
+                            <span class="text-3xl">✓</span>
+                        </div>
+                    </div>
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-2xl font-bold text-purple-400" id="stripeSubscriptions">0</p>
+                                <p class="text-xs text-[var(--text-muted)]">Aktive Abos</p>
+                            </div>
+                            <span class="text-3xl">🔄</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Products -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-purple-400 flex items-center gap-2">
+                                <span>📦</span> Produkte
+                            </h3>
+                            <span class="text-xs text-[var(--text-muted)]" id="stripeProductCount">0 Produkte</span>
+                        </div>
+                        <div class="space-y-2 max-h-80 overflow-y-auto" id="stripeProductsList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Lade Produkte...</div>
+                        </div>
+                    </div>
+
+                    <!-- Subscriptions -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-blue-400 flex items-center gap-2">
+                                <span>🔄</span> Abonnements
+                            </h3>
+                            <select id="subStatusFilter" onchange="loadStripeSubscriptions()" class="text-xs bg-[var(--bg-elevated)] border border-[var(--border)] rounded px-2 py-1">
+                                <option value="active">Aktiv</option>
+                                <option value="all">Alle</option>
+                                <option value="canceled">Gekündigt</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2 max-h-80 overflow-y-auto" id="stripeSubscriptionsList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Lade Abos...</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Payments -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-green-400 flex items-center gap-2">
+                                <span>💵</span> Letzte Zahlungen
+                            </h3>
+                            <button onclick="loadStripePayments()" class="text-xs text-green-400 hover:text-green-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-80 overflow-y-auto" id="stripePaymentsList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Lade Zahlungen...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <!-- Create Checkout -->
+                    <div class="card p-4">
+                        <h3 class="font-semibold text-yellow-400 mb-4 flex items-center gap-2">
+                            <span>⚡</span> Schnell-Checkout erstellen
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Produkt/Preis</label>
+                                <select id="checkoutPriceId" class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm"></select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-[var(--text-muted)] mb-1 block">Kunden-Email (optional)</label>
+                                <input type="email" id="checkoutEmail" placeholder="kunde@email.de" class="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg text-sm">
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="createCheckoutSession('payment')" class="flex-1 py-2 bg-green-500 hover:bg-green-600 rounded-lg text-sm font-semibold transition">
+                                    💳 Einmalzahlung
+                                </button>
+                                <button onclick="createCheckoutSession('subscription')" class="flex-1 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg text-sm font-semibold transition">
+                                    🔄 Abo starten
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customers -->
+                    <div class="card p-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-cyan-400 flex items-center gap-2">
+                                <span>👥</span> Kunden
+                            </h3>
+                            <button onclick="loadStripeCustomers()" class="text-xs text-cyan-400 hover:text-cyan-300">🔄</button>
+                        </div>
+                        <div class="space-y-2 max-h-52 overflow-y-auto" id="stripeCustomersList">
+                            <div class="text-center py-4 text-[var(--text-muted)] text-sm">Lade Kunden...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="tab-settings" class="tab-content space-y-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold" style="color: var(--text-primary);">⚙️ Einstellungen</h2>
+                        <p class="text-sm" style="color: var(--text-muted);">System-Konfiguration und Integrationen</p>
+                    </div>
+                    <button onclick="saveSettings()" class="btn btn-primary">💾 Speichern</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- System Status -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-4">📊 System Status</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>Server Status</span>
+                                <span class="text-green-500" id="settings-server-status">● Online</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>Email Queue</span>
+                                <span class="text-blue-500" id="settings-queue-status">0 pending</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>HubSpot Connection</span>
+                                <span class="text-green-500" id="settings-hubspot-status">● Connected</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>Stripe Integration</span>
+                                <span class="text-green-500" id="settings-stripe-status">● Live Mode</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auto-Invoice Settings -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-4">📄 Auto-Rechnungen</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span>Auto-Invoice aktiviert</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" id="auto-invoice-toggle" class="sr-only peer" checked onchange="toggleAutoInvoice()">
+                                    <div class="w-11 h-6 bg-slate-700 peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>Nur verifizierte E-Mails</span>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-slate-700 peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-2">Standard Zahlungsziel (Tage)</label>
+                                <input type="number" value="14" class="w-full p-2 bg-slate-800 border border-slate-600 rounded-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Settings -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-4">📧 E-Mail Einstellungen</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm mb-2">Absender E-Mail</label>
+                                <input type="email" value="invoice@enterprise-universe.one" class="w-full p-2 bg-slate-800 border border-slate-600 rounded-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm mb-2">Absender Name</label>
+                                <input type="text" value="Enterprise Universe" class="w-full p-2 bg-slate-800 border border-slate-600 rounded-lg">
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>Email Rate Limiting</span>
+                                <span class="text-blue-500">10 / Minute</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Keys (masked) -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold mb-4">🔑 API Verbindungen</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>HubSpot API</span>
+                                <span class="text-green-500">••••••••••••</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>Stripe API</span>
+                                <span class="text-green-500">sk_live_••••</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>WhatsApp API</span>
+                                <span class="text-green-500">Configured</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
+                                <span>Claude AI</span>
+                                <span class="text-green-500">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- External JavaScript -->
+    <script src="/scripts/dashboard-v11.js"></script>
+</body>
+</html>

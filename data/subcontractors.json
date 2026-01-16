@@ -1,0 +1,215 @@
+{
+  "subcontractors": [
+    {
+      "id": "elec-001",
+      "name": "Elektro Schmidt GmbH",
+      "type": "Elektroinstallation",
+      "specializations": [
+        "KNX",
+        "Loxone",
+        "Verkabelung",
+        "Schaltschrankbau"
+      ],
+      "contact": {
+        "name": "Thomas Schmidt",
+        "phone": "+49 171 1234567",
+        "email": "schmidt@elektro-schmidt.de"
+      },
+      "address": "Industriestr. 45, 80939 Muenchen",
+      "rating": 4.8,
+      "hourlyRate": 65,
+      "availability": "verfuegbar",
+      "certifications": [
+        "KNX Partner",
+        "Loxone Gold Partner"
+      ],
+      "completedProjects": 127,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "hvac-001",
+      "name": "Klima & Heizung Mueller",
+      "type": "HVAC",
+      "specializations": [
+        "Fussbodenheizung",
+        "Klimaanlage",
+        "Lueftung",
+        "Waermepumpe"
+      ],
+      "contact": {
+        "name": "Hans Mueller",
+        "phone": "+49 172 2345678",
+        "email": "info@klimamueller.de"
+      },
+      "address": "Handwerkerweg 12, 80331 Muenchen",
+      "rating": 4.6,
+      "hourlyRate": 58,
+      "availability": "verfuegbar",
+      "certifications": [
+        "Daikin Partner",
+        "Viessmann Partner"
+      ],
+      "completedProjects": 89,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "sec-001",
+      "name": "SecureTech Bayern",
+      "type": "Sicherheitstechnik",
+      "specializations": [
+        "Alarmanlagen",
+        "Videoueberwachung",
+        "Zutrittskontrolle",
+        "Brandschutz"
+      ],
+      "contact": {
+        "name": "Michael Weber",
+        "phone": "+49 173 3456789",
+        "email": "weber@securetech-bayern.de"
+      },
+      "address": "Sicherheitsallee 8, 80687 Muenchen",
+      "rating": 4.9,
+      "hourlyRate": 72,
+      "availability": "verfuegbar",
+      "certifications": [
+        "VdS zertifiziert",
+        "Telenot Partner"
+      ],
+      "completedProjects": 156,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "net-001",
+      "name": "NetWorks IT Solutions",
+      "type": "Netzwerktechnik",
+      "specializations": [
+        "Netzwerkverkabelung",
+        "WLAN",
+        "Server",
+        "IoT-Integration"
+      ],
+      "contact": {
+        "name": "Stefan Bauer",
+        "phone": "+49 174 4567890",
+        "email": "bauer@networks-it.de"
+      },
+      "address": "Technikring 23, 85748 Garching",
+      "rating": 4.7,
+      "hourlyRate": 85,
+      "availability": "eingeschraenkt",
+      "certifications": [
+        "Cisco Partner",
+        "Ubiquiti Partner"
+      ],
+      "completedProjects": 78,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "auto-001",
+      "name": "Industrie Automation Bayern",
+      "type": "Industrieautomation",
+      "specializations": [
+        "SPS-Programmierung",
+        "SCADA",
+        "MES",
+        "Robotik",
+        "OPC UA"
+      ],
+      "contact": {
+        "name": "Dr. Klaus Fischer",
+        "phone": "+49 175 5678901",
+        "email": "fischer@iab-automation.de"
+      },
+      "address": "Automatisierungspark 1, 85622 Feldkirchen",
+      "rating": 4.9,
+      "hourlyRate": 120,
+      "availability": "verfuegbar",
+      "certifications": [
+        "Siemens Solution Partner",
+        "Beckhoff Partner"
+      ],
+      "completedProjects": 45,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "solar-001",
+      "name": "SunPower Energie GmbH",
+      "type": "Photovoltaik",
+      "specializations": [
+        "PV-Anlagen",
+        "Batteriespeicher",
+        "Energiemanagement",
+        "Wallbox"
+      ],
+      "contact": {
+        "name": "Anna Sonnenberg",
+        "phone": "+49 176 6789012",
+        "email": "sonnenberg@sunpower-energie.de"
+      },
+      "address": "Sonnenweg 5, 82031 Gruenwald",
+      "rating": 4.8,
+      "hourlyRate": 68,
+      "availability": "verfuegbar",
+      "certifications": [
+        "SMA Partner",
+        "SolarEdge Partner",
+        "Fronius Partner"
+      ],
+      "completedProjects": 234,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "jalousie-001",
+      "name": "Sonnenschutz Meier",
+      "type": "Sonnenschutz",
+      "specializations": [
+        "Jalousien",
+        "Rolllaeden",
+        "Markisen",
+        "Motorisierung"
+      ],
+      "contact": {
+        "name": "Robert Meier",
+        "phone": "+49 177 7890123",
+        "email": "meier@sonnenschutz-meier.de"
+      },
+      "address": "Fensterstr. 17, 81677 Muenchen",
+      "rating": 4.5,
+      "hourlyRate": 52,
+      "availability": "verfuegbar",
+      "certifications": [
+        "Somfy Partner",
+        "Warema Partner"
+      ],
+      "completedProjects": 312,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    },
+    {
+      "id": "audio-001",
+      "name": "AudioVision Pro",
+      "type": "Multimedia",
+      "specializations": [
+        "Multiroom Audio",
+        "Heimkino",
+        "Beschallung",
+        "Konferenztechnik"
+      ],
+      "contact": {
+        "name": "Markus Ton",
+        "phone": "+49 178 8901234",
+        "email": "ton@audiovision-pro.de"
+      },
+      "address": "Klangweg 9, 80992 Muenchen",
+      "rating": 4.7,
+      "hourlyRate": 78,
+      "availability": "verfuegbar",
+      "certifications": [
+        "Sonos Partner",
+        "Control4 Dealer"
+      ],
+      "completedProjects": 98,
+      "createdAt": "2026-01-15T10:57:01.937Z"
+    }
+  ],
+  "assignments": {}
+}

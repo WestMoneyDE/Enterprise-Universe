@@ -3394,3 +3394,205 @@
         function initPaymentsTab() {
             loadStripeData();
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SCHEDULED NOTIFICATIONS MODULE - Sci-Fi Dashboard Integration
+        // ═══════════════════════════════════════════════════════════════
+
+        async function loadDashboardNotifications() {
+            const container = document.getElementById('upcomingNotifications');
+            const countEl = document.getElementById('notificationCount');
+            const sentEl = document.getElementById('notifSent');
+            const scheduledEl = document.getElementById('notifScheduled');
+            const dueTodayEl = document.getElementById('notifDueToday');
+            const missingEmailEl = document.getElementById('notifMissingEmail');
+
+            if (!container) return;
+
+            try {
+                // Fetch all notifications
+                const [notifRes, historyRes] = await Promise.all([
+                    fetch('/api/notifications'),
+                    fetch('/api/notifications/history')
+                ]);
+
+                const notifData = await notifRes.json();
+                const historyData = await historyRes.json();
+
+                const scheduled = notifData.notifications || [];
+                const sent = historyData.history || [];
+
+                // Calculate stats
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const tomorrow = new Date(today);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+
+                const dueToday = scheduled.filter(n => {
+                    const d = new Date(n.scheduledFor);
+                    return d >= today && d < tomorrow;
+                }).length;
+
+                const missingEmail = scheduled.filter(n => !n.recipient && !n.recipientEmail).length;
+
+                // Update stats using textContent (safe)
+                if (countEl) countEl.textContent = `${scheduled.length} aktiv`;
+                if (sentEl) sentEl.textContent = sent.length;
+                if (scheduledEl) scheduledEl.textContent = scheduled.length;
+                if (dueTodayEl) dueTodayEl.textContent = dueToday;
+                if (missingEmailEl) missingEmailEl.textContent = missingEmail;
+
+                // Sort by date and take next 6
+                const upcoming = [...scheduled]
+                    .sort((a, b) => new Date(a.scheduledFor) - new Date(b.scheduledFor))
+                    .slice(0, 6);
+
+                // Clear container safely
+                container.replaceChildren();
+
+                if (upcoming.length === 0) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.className = 'flex flex-col items-center justify-center p-8 text-center';
+                    emptyDiv.style.color = 'var(--text-muted)';
+
+                    const icon = document.createElement('span');
+                    icon.className = 'text-3xl mb-2 opacity-50';
+                    icon.textContent = '📭';
+
+                    const msg = document.createElement('p');
+                    msg.className = 'text-sm';
+                    msg.textContent = 'Keine Benachrichtigungen geplant';
+
+                    const hint = document.createElement('p');
+                    hint.className = 'text-xs mt-1';
+                    hint.textContent = 'Starte mit einem Kundenprojekt';
+
+                    emptyDiv.appendChild(icon);
+                    emptyDiv.appendChild(msg);
+                    emptyDiv.appendChild(hint);
+                    container.appendChild(emptyDiv);
+                    return;
+                }
+
+                // Render notifications using safe DOM methods
+                upcoming.forEach(n => {
+                    container.appendChild(createNotificationCardElement(n));
+                });
+
+            } catch (err) {
+                console.error('Failed to load notifications:', err);
+                container.replaceChildren();
+                const errDiv = document.createElement('div');
+                errDiv.className = 'flex items-center justify-center p-6';
+                errDiv.style.color = 'var(--error)';
+                const errSpan = document.createElement('span');
+                errSpan.className = 'text-sm';
+                errSpan.textContent = 'Fehler beim Laden';
+                errDiv.appendChild(errSpan);
+                container.appendChild(errDiv);
+            }
+        }
+
+        function createNotificationCardElement(notif) {
+            const typeConfig = {
+                customer: { icon: '👤', color: 'var(--info)', bgColor: 'rgba(14, 165, 233, 0.1)', borderColor: 'rgba(14, 165, 233, 0.2)' },
+                subcontractor: { icon: '👷', color: 'var(--warning)', bgColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' },
+                internal: { icon: '📢', color: 'var(--accent-secondary)', bgColor: 'rgba(139, 92, 246, 0.1)', borderColor: 'rgba(139, 92, 246, 0.2)' }
+            };
+
+            const config = typeConfig[notif.type] || typeConfig.internal;
+            const dateStr = formatNotifDate(notif.scheduledFor);
+            const recipient = notif.recipient || notif.recipientEmail || notif.recipientName || '—';
+            const truncatedRecipient = recipient.length > 20 ? recipient.substring(0, 18) + '...' : recipient;
+
+            // Create card container
+            const card = document.createElement('div');
+            card.className = 'flex items-center gap-3 p-3 rounded-xl transition-all duration-200 hover:scale-[1.01]';
+            card.style.background = config.bgColor;
+            card.style.border = `1px solid ${config.borderColor}`;
+
+            // Icon container
+            const iconWrapper = document.createElement('div');
+            iconWrapper.className = 'w-9 h-9 rounded-lg flex items-center justify-center';
+            iconWrapper.style.background = config.bgColor;
+            iconWrapper.style.border = `1px solid ${config.borderColor}`;
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'text-lg';
+            iconSpan.textContent = config.icon;
+            iconWrapper.appendChild(iconSpan);
+
+            // Content section
+            const content = document.createElement('div');
+            content.className = 'flex-1 min-w-0';
+            const title = document.createElement('p');
+            title.className = 'text-sm font-semibold truncate';
+            title.style.color = 'var(--text-primary)';
+            title.textContent = notif.contactType || '';
+            const subtitle = document.createElement('p');
+            subtitle.className = 'text-xs truncate';
+            subtitle.style.color = 'var(--text-muted)';
+            subtitle.textContent = notif.trade || notif.projectName || '';
+            content.appendChild(title);
+            content.appendChild(subtitle);
+
+            // Date/recipient section
+            const dateSection = document.createElement('div');
+            dateSection.className = 'text-right';
+            const dateP = document.createElement('p');
+            dateP.className = 'text-xs font-medium';
+            dateP.style.color = config.color;
+            dateP.textContent = dateStr;
+            const recipientP = document.createElement('p');
+            recipientP.className = 'text-xs truncate max-w-[100px]';
+            recipientP.style.color = 'var(--text-dim)';
+            recipientP.title = recipient;
+            recipientP.textContent = truncatedRecipient;
+            dateSection.appendChild(dateP);
+            dateSection.appendChild(recipientP);
+
+            // Assemble
+            card.appendChild(iconWrapper);
+            card.appendChild(content);
+            card.appendChild(dateSection);
+
+            return card;
+        }
+
+        function formatNotifDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = date - now;
+            const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 0) return 'Überfällig';
+            if (diffDays === 0) return 'Heute';
+            if (diffDays === 1) return 'Morgen';
+            if (diffDays < 7) return `In ${diffDays} Tagen`;
+
+            return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+        }
+
+        async function triggerNotificationProcessing() {
+            try {
+                showNotification('Verarbeite Benachrichtigungen...', 'info');
+                const res = await fetch('/api/notifications/process', { method: 'POST' });
+                const data = await res.json();
+
+                if (data.success) {
+                    showNotification(`${data.processed} Benachrichtigungen gesendet`, 'success');
+                    loadDashboardNotifications();
+                } else {
+                    throw new Error(data.error || 'Unbekannter Fehler');
+                }
+            } catch (err) {
+                console.error('Notification processing error:', err);
+                showNotification('Fehler: ' + err.message, 'error');
+            }
+        }
+
+        // Auto-load notifications on dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('upcomingNotifications')) {
+                loadDashboardNotifications();
+            }
+        });

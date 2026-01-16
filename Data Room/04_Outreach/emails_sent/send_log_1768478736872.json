@@ -1,0 +1,240 @@
+{
+  "timestamp": "2026-01-15T12:05:36.872Z",
+  "results": [
+    {
+      "success": false,
+      "email": "info@htgf.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (42202f55-f20a-11f0-8ee9-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "office@uvcpartners.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (435da97a-f20a-11f0-93a8-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "team@pointnine.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (449d5cd5-f20a-11f0-a86c-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "venture@nrwbank.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (45a6362c-f20a-11f0-81e3-e90f2b8e16ca)"
+    },
+    {
+      "success": false,
+      "email": "venture-capital@lbbw.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (47a8469a-f20a-11f0-81ea-e90f2b8e16ca)"
+    },
+    {
+      "success": false,
+      "email": "hello@paua.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4931f1f4-f20a-11f0-a58f-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "hello@fly.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4a65b353-f20a-11f0-93b6-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "contact@project-a.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4bde4923-f20a-11f0-93b6-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "hello@motu.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4cca8c37-f20a-11f0-93b6-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@saasgarage.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4e053ce2-f20a-11f0-b625-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "hello@cherry.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (4f28cd0f-f20a-11f0-93bb-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@earlybird.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (50f51e77-f20a-11f0-8b3d-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@hvcapital.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (52008f3f-f20a-11f0-8b75-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "next47@siemens.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (53550ec3-f20a-11f0-a881-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "bosch.ventures@bosch.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5484ee6d-f20a-11f0-b628-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "sap.io@sap.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5666e635-f20a-11f0-8b78-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "info@bmwiventures.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (58153c6c-f20a-11f0-8b8a-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "info@tgfs.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (596a6e70-f20a-11f0-93c4-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@bayernkapital.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (59e1fa03-f20a-11f0-93c4-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@415capital.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5b205543-f20a-11f0-93c5-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@ab-alpha.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5d433a4f-f20a-11f0-8b4a-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@accel.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5eb1efce-f20a-11f0-8f07-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "info@acorda.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (5ff2f878-f20a-11f0-820f-e90f2b8e16ca)"
+    },
+    {
+      "success": false,
+      "email": "info@alstin.capital",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6070c24e-f20a-11f0-8b4b-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "hello@calmstorm.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (61a26294-f20a-11f0-8b4b-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@femventix.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (636caf5b-f20a-11f0-8211-e90f2b8e16ca)"
+    },
+    {
+      "success": false,
+      "email": "b4i@bosch.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (64a6a084-f20a-11f0-8b96-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "hello@norrsken.org",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6681c47e-f20a-11f0-a5c0-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "info@business-angels.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (68303d18-f20a-11f0-b063-d510462faafc)"
+    },
+    {
+      "success": false,
+      "email": "info@bacb.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (69312291-f20a-11f0-b063-d510462faafc)"
+    },
+    {
+      "success": false,
+      "email": "info@inwi.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6a95d0a6-f20a-11f0-93e9-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@business-angels-aachen.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6bc3a93b-f20a-11f0-a5d0-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "hello@venture-stars.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6d0945c1-f20a-11f0-8f25-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "info@germanaccelerator.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6e297d81-f20a-11f0-93f7-fb5fec76084d)"
+    },
+    {
+      "success": false,
+      "email": "info@pnptc.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (6f5e739f-f20a-11f0-8f28-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "info@spinlab.co",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (70c2def3-f20a-11f0-ae2a-c9fa7b04d629)"
+    },
+    {
+      "success": false,
+      "email": "info@hubraum.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (72594f01-f20a-11f0-b075-d510462faafc)"
+    },
+    {
+      "success": false,
+      "email": "info@main-incubator.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (744409a5-f20a-11f0-b077-d510462faafc)"
+    },
+    {
+      "success": false,
+      "email": "info@axelspringerplugandplay.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (74c3cec3-f20a-11f0-b68f-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "info@techfounders.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (768095af-f20a-11f0-8239-e90f2b8e16ca)"
+    },
+    {
+      "success": false,
+      "email": "info@unternehmertum.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (77b07575-f20a-11f0-a5dd-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "hello@atlantic-labs.de",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (79ac4262-f20a-11f0-8b7d-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@creathor.vc",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (7a999a63-f20a-11f0-a5de-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "ventures@eqtpartners.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (7b43cd54-f20a-11f0-a5de-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "info@lakestar.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (7db25933-f20a-11f0-b088-d510462faafc)"
+    },
+    {
+      "success": false,
+      "email": "info@visionaries.club",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (7edd165b-f20a-11f0-a5e2-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "info@target-global.com",
+      "error": "Mail command failed: 550 5.7.1 [M9] User [invoice@enterprise-universe.com] not authorized to send on behalf of <invest@enterprise-universe.one> (80089c1b-f20a-11f0-8bc1-f7376af24660)"
+    }
+  ]
+}

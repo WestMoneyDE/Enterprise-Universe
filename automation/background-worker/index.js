@@ -148,6 +148,18 @@ class BackgroundWorkerManager extends EventEmitter {
             await this.processEmailQueue();
         });
 
+        // Process pending customer requirements every 10 minutes
+        this.scheduleJob('kundenkarten-processor', '*/10 * * * *', async () => {
+            console.log('[BackgroundWorker] Processing pending Kundenkarten');
+            await this.processKundenkarten();
+        });
+
+        // Process due contact notifications every 15 minutes
+        this.scheduleJob('notification-processor', '*/15 * * * *', async () => {
+            console.log('[BackgroundWorker] Processing due notifications');
+            await this.processContactNotifications();
+        });
+
         console.log('[BackgroundWorker] Default jobs initialized');
     }
 
@@ -318,6 +330,187 @@ class BackgroundWorkerManager extends EventEmitter {
         // Process pending emails from queue
         console.log('[BackgroundWorker] Processing email queue');
         // Integration with email-sender.js would happen here
+    }
+
+    /**
+     * Process pending customer requirements with AI
+     * Automatically runs analysis and generates plans for new submissions
+     */
+    async processKundenkarten() {
+        const http = require('http');
+
+        try {
+            // Get list of pending customers
+            const pendingResponse = await new Promise((resolve, reject) => {
+                const req = http.get('http://localhost:3000/api/customers/pending', (res) => {
+                    let data = '';
+                    res.on('data', chunk => data += chunk);
+                    res.on('end', () => {
+                        try {
+                            resolve(JSON.parse(data));
+                        } catch (e) {
+                            reject(new Error('Invalid JSON response'));
+                        }
+                    });
+                });
+                req.on('error', reject);
+                req.setTimeout(10000, () => reject(new Error('Timeout')));
+            });
+
+            if (!pendingResponse.success || !pendingResponse.customers?.length) {
+                console.log('[BackgroundWorker] No pending Kundenkarten to process');
+                return { processed: 0 };
+            }
+
+            console.log(`[BackgroundWorker] Found ${pendingResponse.customers.length} pending Kundenkarten`);
+
+            let processed = 0;
+            let errors = 0;
+
+            // Process each pending customer (max 5 per run to avoid overload)
+            const toProcess = pendingResponse.customers.slice(0, 5);
+
+            for (const customer of toProcess) {
+                // Only process customers that have actual data
+                if (!customer.hasWishes && !customer.hasFiles && !customer.hasFormData) {
+                    continue;
+                }
+
+                try {
+                    console.log(`[BackgroundWorker] Processing Kundenkarte: ${customer.customerId}`);
+
+                    // Run full pipeline via API
+                    await new Promise((resolve, reject) => {
+                        const postData = JSON.stringify({});
+                        const options = {
+                            hostname: 'localhost',
+                            port: 3000,
+                            path: `/api/customer/${customer.customerId}/full-pipeline`,
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Content-Length': Buffer.byteLength(postData)
+                            }
+                        };
+
+                        const req = http.request(options, (res) => {
+                            let data = '';
+                            res.on('data', chunk => data += chunk);
+                            res.on('end', () => {
+                                try {
+                                    const result = JSON.parse(data);
+                                    if (result.success) {
+                                        resolve(result);
+                                    } else {
+                                        reject(new Error(result.error || 'Pipeline failed'));
+                                    }
+                                } catch (e) {
+                                    reject(e);
+                                }
+                            });
+                        });
+
+                        req.on('error', reject);
+                        req.setTimeout(60000, () => reject(new Error('Pipeline timeout')));
+                        req.write(postData);
+                        req.end();
+                    });
+
+                    processed++;
+                    console.log(`[BackgroundWorker] Successfully processed: ${customer.customerId}`);
+
+                    // Emit event for WebSocket notification
+                    this.emit('kundenkarte_processed', {
+                        customerId: customer.customerId,
+                        status: 'planned',
+                        timestamp: new Date().toISOString()
+                    });
+
+                } catch (err) {
+                    errors++;
+                    console.error(`[BackgroundWorker] Error processing ${customer.customerId}:`, err.message);
+                    this.stats.errors++;
+                }
+
+                // Small delay between processing to avoid API overload
+                await new Promise(r => setTimeout(r, 2000));
+            }
+
+            this.stats.tasksCompleted += processed;
+
+            console.log(`[BackgroundWorker] Kundenkarten processing complete: ${processed} processed, ${errors} errors`);
+
+            return { processed, errors, total: toProcess.length };
+
+        } catch (error) {
+            console.error('[BackgroundWorker] Kundenkarten processing error:', error.message);
+            this.stats.errors++;
+            return { processed: 0, error: error.message };
+        }
+    }
+
+    /**
+     * Process due contact notifications
+     * Sends email notifications for scheduled contact points
+     */
+    async processContactNotifications() {
+        const http = require('http');
+
+        try {
+            // Trigger notification processing via API
+            const result = await new Promise((resolve, reject) => {
+                const options = {
+                    hostname: 'localhost',
+                    port: 3015,
+                    path: '/api/notifications/process',
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                };
+
+                const req = http.request(options, (res) => {
+                    let data = '';
+                    res.on('data', chunk => data += chunk);
+                    res.on('end', () => {
+                        try {
+                            resolve(JSON.parse(data));
+                        } catch (e) {
+                            reject(new Error('Invalid JSON response'));
+                        }
+                    });
+                });
+
+                req.on('error', reject);
+                req.setTimeout(30000, () => reject(new Error('Timeout')));
+                req.end();
+            });
+
+            if (result.success) {
+                console.log(`[BackgroundWorker] Processed ${result.processed || 0} contact notifications`);
+
+                // Emit event for each processed notification
+                if (result.notifications?.length > 0) {
+                    result.notifications.forEach(notif => {
+                        this.emit('notification_sent', {
+                            notificationId: notif.id,
+                            customerId: notif.customerId,
+                            type: notif.type,
+                            timestamp: new Date().toISOString()
+                        });
+                    });
+                }
+
+                this.stats.tasksCompleted += result.processed || 0;
+                return result;
+            } else {
+                console.log('[BackgroundWorker] No notifications to process or processing failed');
+                return { processed: 0 };
+            }
+
+        } catch (error) {
+            console.error('[BackgroundWorker] Notification processing error:', error.message);
+            this.stats.errors++;
+            return { processed: 0, error: error.message };
+        }
     }
 
     getDefaultBotAssignments(template) {

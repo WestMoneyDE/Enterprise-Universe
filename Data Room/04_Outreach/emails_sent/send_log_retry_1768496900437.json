@@ -1,0 +1,78 @@
+{
+  "timestamp": "2026-01-15T17:08:20.437Z",
+  "type": "bounce_retry",
+  "results": [
+    {
+      "success": true,
+      "email": "pitch@uvcpartners.com",
+      "name": "UVC Partners",
+      "messageId": "<e0135c53-b5ae-951e-c65f-c137b7004862@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "contact@pointnine.com",
+      "name": "Point Nine Capital",
+      "messageId": "<0b655f04-fa91-9b4e-5514-6ecbf2ad9188@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "beteiligungen@nrwbank.de",
+      "name": "NRW.BANK Beteiligungen",
+      "messageId": "<805a624a-d9c5-61b6-12ba-6f3312618eb3@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "venture-center@nrwbank.de",
+      "name": "NRW.BANK Venture Center",
+      "messageId": "<49d4f056-9cb7-d329-25f1-d378ae59c561@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@squareone.vc",
+      "name": "SquareOne (ex Paua)",
+      "messageId": "<11d76b4a-eb36-10b0-01b5-f4497763d48a@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "founders@cherry.vc",
+      "name": "Cherry Ventures",
+      "messageId": "<42a6bb42-aeec-2ad1-04e0-3ff488c10fca@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "investments@next47.com",
+      "name": "Next47 (Siemens)",
+      "messageId": "<49c16cf2-31e0-22eb-b256-9fcc9682c158@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "rbvc@de.bosch.com",
+      "name": "Robert Bosch Venture Capital",
+      "messageId": "<bacc93e3-a809-34d2-34d7-81cd84bc0091@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "pitch@accel.com",
+      "name": "Accel",
+      "messageId": "<ba835079-69d0-a329-ac1a-d598d0818762@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "kontakt@business-angels.de",
+      "name": "Business Angels Deutschland",
+      "messageId": "<7bd4761d-6ffd-3296-a87f-206534bd9ac8@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "vc@norrsken.org",
+      "name": "Norrsken VC",
+      "messageId": "<fccd2d53-3623-f0fb-1c23-fa8e8354cdbc@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@saasgarage.vc",
+      "name": "SaaSgarage",
+      "messageId": "<44263839-35d4-45b2-97b8-7994b2c02142@enterprise-universe.com>"
+    }
+  ]
+}

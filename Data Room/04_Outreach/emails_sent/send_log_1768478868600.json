@@ -1,0 +1,240 @@
+{
+  "timestamp": "2026-01-15T12:07:48.600Z",
+  "results": [
+    {
+      "success": true,
+      "email": "info@htgf.de",
+      "messageId": "<45e1836b-8e9d-9362-3330-f64b5db118f1@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "office@uvcpartners.com",
+      "messageId": "<36b3406c-7eb4-5661-1592-f457a861bcdc@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "team@pointnine.com",
+      "messageId": "<c0628cc1-8d6e-ac74-2c08-8461fd7b02a8@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "venture@nrwbank.de",
+      "messageId": "<2af9d641-cb1f-67d8-9699-066ad4df1fef@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "venture-capital@lbbw.de",
+      "messageId": "<10518131-907a-1183-70c4-bca99abf22c0@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@paua.vc",
+      "messageId": "<343a3f5b-f3a1-3fed-0008-72f43bff2f58@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@fly.vc",
+      "messageId": "<5995e0e1-fd72-6247-d635-4cb4d3f88245@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "contact@project-a.com",
+      "messageId": "<2f0c100a-6d29-3939-ad4f-eaf0220fd044@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@motu.vc",
+      "messageId": "<0e1969b8-9301-b024-6a60-8a31bbd5b0e0@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@saasgarage.vc",
+      "messageId": "<8b1e8c62-46c2-22a4-9273-bbfee0b7c85c@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "hello@cherry.vc",
+      "messageId": "<655fbb13-10c1-5869-8957-49b9b2deb1fb@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@earlybird.com",
+      "messageId": "<d264bd87-a298-1dd2-b7d4-fcac303a96dd@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@hvcapital.com",
+      "messageId": "<9565dd7c-8f25-75fd-e395-89fbc2bde172@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "next47@siemens.com",
+      "messageId": "<327e71a0-9bd8-5bbf-6b70-3f2cec012bb2@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "bosch.ventures@bosch.com",
+      "messageId": "<1bf3dcdb-a53b-1709-4c77-35301097b2aa@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "sap.io@sap.com",
+      "messageId": "<fe2af2f3-1d75-d888-6bed-a1544f026aba@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@bmwiventures.com",
+      "messageId": "<622bd418-26c5-236f-6db8-aa18a0c173ca@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@tgfs.de",
+      "messageId": "<355b8811-3d14-be62-a1ae-5819647848cc@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@bayernkapital.de",
+      "messageId": "<40f18582-7c86-d59b-2e84-d91456ee6fa8@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@415capital.com",
+      "messageId": "<97e1d2ce-223b-8058-147f-3f1f04732328@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@ab-alpha.de",
+      "messageId": "<29b8e569-0cdd-17c1-1f66-9b7bf6fe137d@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@accel.com",
+      "messageId": "<f39acc55-c1a5-fd1c-e662-4c4a9fc0f20f@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@acorda.de",
+      "messageId": "<dbeaa869-02c3-a035-f7ab-3cdbac32ec15@enterprise-universe.com>"
+    },
+    {
+      "success": true,
+      "email": "info@alstin.capital",
+      "messageId": "<64132dd2-5cc7-ec47-267f-e8449e30d952@enterprise-universe.com>"
+    },
+    {
+      "success": false,
+      "email": "hello@calmstorm.vc",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b067679d-f20a-11f0-a8e2-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "info@femventix.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b195f897-f20a-11f0-b6cf-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "b4i@bosch.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b2b19111-f20a-11f0-b6cf-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "hello@norrsken.org",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b48402f6-f20a-11f0-a60b-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "info@business-angels.de",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b5ad9aab-f20a-11f0-aea0-c9fa7b04d629)"
+    },
+    {
+      "success": false,
+      "email": "info@bacb.de",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b79a32e7-f20a-11f0-8bd1-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@inwi.vc",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (b8d2bb79-f20a-11f0-a8f7-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "info@business-angels-aachen.de",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (ba8324c2-f20a-11f0-a8fe-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "hello@venture-stars.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (bba2bbdb-f20a-11f0-8bf5-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "info@germanaccelerator.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (bc3dbe7e-f20a-11f0-b6eb-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "info@pnptc.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (bd6ea8a1-f20a-11f0-b6ef-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "info@spinlab.co",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (bfdc0d3d-f20a-11f0-8853-f78b1f841584)"
+    },
+    {
+      "success": false,
+      "email": "info@hubraum.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c0c344e0-f20a-11f0-8857-f78b1f841584)"
+    },
+    {
+      "success": false,
+      "email": "info@main-incubator.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c238cc9d-f20a-11f0-8be1-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@axelspringerplugandplay.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c3fd4746-f20a-11f0-a61b-494313b7f784)"
+    },
+    {
+      "success": false,
+      "email": "info@techfounders.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c537fb24-f20a-11f0-8c00-f7376af24660)"
+    },
+    {
+      "success": false,
+      "email": "info@unternehmertum.de",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c5d05fc2-f20a-11f0-8fa8-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "hello@atlantic-labs.de",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c6fa0af1-f20a-11f0-8fa8-81a63d10fb2d)"
+    },
+    {
+      "success": false,
+      "email": "info@creathor.vc",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (c95daab6-f20a-11f0-b6fd-f3c0f7fef5ee)"
+    },
+    {
+      "success": false,
+      "email": "ventures@eqtpartners.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (ca98b76b-f20a-11f0-8bec-632fe8569f3f)"
+    },
+    {
+      "success": false,
+      "email": "info@lakestar.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (cbdd97e1-f20a-11f0-a904-4f541c8bf1cc)"
+    },
+    {
+      "success": false,
+      "email": "info@visionaries.club",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (ccff2d37-f20a-11f0-955b-85eb291bc831)"
+    },
+    {
+      "success": false,
+      "email": "info@target-global.com",
+      "error": "Can't send mail - all recipients were rejected: 451 4.7.1 [R2] Too many mails received from c1j6v0zl0 within the last 5 minutes (cee6f7ae-f20a-11f0-9487-fb5fec76084d)"
+    }
+  ]
+}

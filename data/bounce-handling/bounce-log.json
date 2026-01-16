@@ -1,0 +1,73 @@
+{
+  "processedBounces": [
+    {
+      "email": "anna@test-enterprise.de",
+      "type": "hard",
+      "subject": "Undeliverable: Noch Fragen zu Ihrem security Projekt?",
+      "processedAt": "2026-01-15T15:33:07.398Z"
+    },
+    {
+      "email": "max@test-enterprise.de",
+      "type": "hard",
+      "subject": "Undeliverable: Noch Fragen zu Ihrem loxone Projekt?",
+      "processedAt": "2026-01-15T15:33:08.460Z"
+    },
+    {
+      "email": "anna.mueller@test.de",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-15T15:33:09.661Z"
+    },
+    {
+      "email": "hans.schmidt@example.de",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-15T15:33:10.719Z"
+    },
+    {
+      "email": "peter.weber@test.de",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-15T15:33:11.775Z"
+    },
+    {
+      "email": "m.heinrich@bauer.de",
+      "type": "hard",
+      "subject": "Undeliverable: Rechnung INV-1768470332403-428457247953 - Enterprise Universe GmbH",
+      "processedAt": "2026-01-16T00:00:00.526Z"
+    },
+    {
+      "email": "i.mayer@globus.de",
+      "type": "hard",
+      "subject": "Undeliverable: Rechnung INV-1768470341913-424229661922 - Enterprise Universe GmbH",
+      "processedAt": "2026-01-16T00:00:01.579Z"
+    },
+    {
+      "email": "d.friedrich@hellmann.com",
+      "type": "hard",
+      "subject": "Delivery Status Notification (Failure)",
+      "processedAt": "2026-01-16T00:00:02.921Z"
+    },
+    {
+      "email": "melanie.klein@ww-ag.com",
+      "type": "hard",
+      "subject": "Undeliverable: Rechnung INV-1768471474970-428157806803 - Enterprise Universe GmbH",
+      "processedAt": "2026-01-16T00:00:03.972Z"
+    },
+    {
+      "email": "carolinl@schulergroup.com",
+      "type": "hard",
+      "subject": "Delivery Status Notification (Failure)",
+      "processedAt": "2026-01-16T00:00:05.046Z"
+    }
+  ],
+  "retriedEmails": [],
+  "failedRetries": [],
+  "stats": {
+    "total": 10,
+    "retried": 0,
+    "failed": 3,
+    "permanent": 7
+  },
+  "lastRun": "2026-01-16T03:00:01.405Z"
+}
