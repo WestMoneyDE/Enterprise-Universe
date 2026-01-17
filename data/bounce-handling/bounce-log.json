@@ -59,15 +59,39 @@
       "type": "hard",
       "subject": "Delivery Status Notification (Failure)",
       "processedAt": "2026-01-16T00:00:05.046Z"
+    },
+    {
+      "email": "contact@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung IOT - NetWare LLC",
+      "processedAt": "2026-01-17T00:00:00.625Z"
+    },
+    {
+      "email": "probert@smarthomeag.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-17T00:00:02.219Z"
+    },
+    {
+      "email": "jean@manufacturingin.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-17T00:00:03.854Z"
+    },
+    {
+      "email": "melanie.klein@ww-ag.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Wüstenrot & Württembergische - Energy Management",
+      "processedAt": "2026-01-17T00:15:00.585Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 10,
-    "retried": 0,
+    "total": 14,
+    "retried": 2,
     "failed": 3,
-    "permanent": 7
+    "permanent": 9
   },
-  "lastRun": "2026-01-16T03:00:01.405Z"
+  "lastRun": "2026-01-17T02:45:01.226Z"
 }

@@ -403,6 +403,2259 @@
       "invoiceNumber": "EU-202601-409134",
       "messageId": "<ccb601ae-8f16-b521-4a12-26f729468743@enterprise-universe.com>",
       "sentAt": "2026-01-15T18:30:17.252Z"
+    },
+    "427363410111": {
+      "status": "sent",
+      "email": "melanie.klein@ww-ag.com",
+      "invoiceNumber": "EU-202601-410111",
+      "messageId": "<637e3063-4283-2a2d-355a-86177d5de8a9@enterprise-universe.com>",
+      "sentAt": "2026-01-16T05:20:02.965Z"
+    },
+    "428193317064": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-317064",
+      "messageId": "<35796741-2b93-4ffe-58bd-339a656c7c17@enterprise-universe.com>",
+      "sentAt": "2026-01-16T05:20:06.104Z"
+    },
+    "428178923713": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-923713",
+      "messageId": "<a6e3b82c-bb58-1e89-313a-d76365163e9b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T05:20:09.198Z"
+    },
+    "428178923748": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-923748",
+      "messageId": "<63bc3e53-bd94-dc3f-a4b1-c4dbb20455a1@enterprise-universe.com>",
+      "sentAt": "2026-01-16T05:20:12.381Z"
+    },
+    "428178924730": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-924730",
+      "messageId": "<d2ac69bc-31b1-56f1-6d11-a92e4b114afb@enterprise-universe.com>",
+      "sentAt": "2026-01-16T05:20:15.483Z"
+    },
+    "427840485581": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-485581",
+      "messageId": "<e7cdfcc9-b41e-46f4-8e39-d224cfefc7d7@enterprise-universe.com>",
+      "sentAt": "2026-01-16T06:50:03.041Z"
+    },
+    "427840485583": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T06:50:05.210Z"
+    },
+    "427840485590": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-485590",
+      "messageId": "<4bd9472e-d34a-7f84-b01a-477cb0df0de8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T06:50:06.362Z"
+    },
+    "427840485594": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-485594",
+      "messageId": "<6463eb0b-8352-36c5-8e0f-9451f9ce678a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T06:50:09.488Z"
+    },
+    "427840485610": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-485610",
+      "messageId": "<6645e16c-6417-a618-013e-52b39d69ece7@enterprise-universe.com>",
+      "sentAt": "2026-01-16T06:50:12.642Z"
+    },
+    "427840485612": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-485612",
+      "messageId": "<95db2877-b24f-e83f-8139-fde2d30bc342@enterprise-universe.com>",
+      "sentAt": "2026-01-16T07:40:03.202Z"
+    },
+    "427840485620": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-485620",
+      "messageId": "<23b6b803-f1d4-abcf-c267-e8da4c8da4e8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T07:40:06.362Z"
+    },
+    "427840486603": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-486603",
+      "messageId": "<0eed0f2a-4787-9f2f-e882-85779115f983@enterprise-universe.com>",
+      "sentAt": "2026-01-16T07:40:09.648Z"
+    },
+    "427840486604": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-486604",
+      "messageId": "<92ea860c-db69-eab7-9e85-80739cce3ac3@enterprise-universe.com>",
+      "sentAt": "2026-01-16T07:40:12.888Z"
+    },
+    "427840486609": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T07:40:15.061Z"
+    },
+    "427840486616": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-486616",
+      "messageId": "<d03925bc-2922-7409-b880-e31bd971987a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:10:03.994Z"
+    },
+    "427840486633": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-486633",
+      "messageId": "<a96ddf16-e64c-15bf-1e8a-b98d61e29d03@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:10:07.202Z"
+    },
+    "428207216872": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T08:10:09.372Z"
+    },
+    "428207216874": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-216874",
+      "messageId": "<d0e54bb4-3424-f36c-a2c7-d3c664901857@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:10:10.659Z"
+    },
+    "428207216875": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-216875",
+      "messageId": "<a8f73b83-8ac5-f0d3-6204-a5d799d3dfb4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:10:13.788Z"
+    },
+    "428207216878": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-216878",
+      "messageId": "<93271529-a406-fab7-fafe-1293abba631c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:40:03.330Z"
+    },
+    "428207216881": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-216881",
+      "messageId": "<296fd325-84eb-0905-153d-55ad2aa10b81@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:40:06.459Z"
+    },
+    "428207216882": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-216882",
+      "messageId": "<b2d915b2-a287-a0dc-1831-e0f1b527cee0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:40:09.633Z"
+    },
+    "428207216888": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T08:40:11.811Z"
+    },
+    "428207217852": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-217852",
+      "messageId": "<a88f4f05-03c4-ffe7-0a5b-ed0670afdc76@enterprise-universe.com>",
+      "sentAt": "2026-01-16T08:40:12.999Z"
+    },
+    "428207217858": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T09:10:03.166Z"
+    },
+    "428207217859": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-217859",
+      "messageId": "<a68794a7-f277-56fa-ffc4-793d47028d26@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:10:04.725Z"
+    },
+    "428207217862": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-217862",
+      "messageId": "<5db81dcd-5b10-9d5b-f47e-34fb600c6c42@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:10:08.207Z"
+    },
+    "428207217865": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-217865",
+      "messageId": "<6ca48aeb-faec-04b7-735d-3d0bdc468191@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:10:11.655Z"
+    },
+    "428207217867": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T09:10:13.916Z"
+    },
+    "428207217870": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-217870",
+      "messageId": "<0331c007-94f8-4192-b2dd-4bfcd5a64869@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:20:03.203Z"
+    },
+    "428207217876": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-217876",
+      "messageId": "<dd33da20-eac4-594a-f71c-c4bdffb52da7@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:20:06.362Z"
+    },
+    "428207217877": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-217877",
+      "messageId": "<5dda5ce4-4dec-af51-3a5e-0b57fef4ec05@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:20:09.682Z"
+    },
+    "428207217881": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-217881",
+      "messageId": "<6075cdec-2b91-4534-5220-0550916aa0c5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:20:12.890Z"
+    },
+    "428207217884": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-217884",
+      "messageId": "<487c4695-3a65-e374-f6a2-d86eaf348927@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:20:16.047Z"
+    },
+    "428207217893": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-217893",
+      "messageId": "<4e845b19-892d-fe51-cecf-c33c65d5b365@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:40:03.603Z"
+    },
+    "428207217897": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-217897",
+      "messageId": "<514447d0-f8db-2ef5-e4f3-f58b72319d61@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:40:06.872Z"
+    },
+    "428207217899": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-217899",
+      "messageId": "<be90d256-229e-8084-00da-9fdf843243f1@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:40:10.025Z"
+    },
+    "428207217902": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-217902",
+      "messageId": "<83b2801d-8f3a-334b-b948-6e0c273dff64@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:40:13.238Z"
+    },
+    "428207217903": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-217903",
+      "messageId": "<c703a8d0-ee9b-a34f-fd3f-9341311a69e5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T09:40:16.478Z"
+    },
+    "428207217906": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T10:10:02.658Z"
+    },
+    "428207217909": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-217909",
+      "messageId": "<0b03805f-48c0-0e0a-1d1c-991bd23ccf1e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:10:04.216Z"
+    },
+    "428207217913": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T10:10:06.396Z"
+    },
+    "428207218882": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-218882",
+      "messageId": "<1996393e-6710-1ddd-e956-9a6c3512f46c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:10:07.940Z"
+    },
+    "428207218884": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-218884",
+      "messageId": "<c3a70eef-1f9e-49cd-461d-e82576ab7d3a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:10:11.120Z"
+    },
+    "428207218885": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-218885",
+      "messageId": "<90649c04-5fbc-a121-1360-37a703141739@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:20:03.359Z"
+    },
+    "428032459985": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-459985",
+      "messageId": "<972114bc-0b1b-5ff3-d068-0fc0ddd227d2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:20:06.572Z"
+    },
+    "428032459992": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T10:20:08.749Z"
+    },
+    "428032460001": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-460001",
+      "messageId": "<9eebdfb4-a9f9-c4a7-8542-0a4c9f8c0e34@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:20:10.009Z"
+    },
+    "428032460994": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-460994",
+      "messageId": "<3d24015c-8607-f552-c3bc-26ed90b54370@enterprise-universe.com>",
+      "sentAt": "2026-01-16T10:20:13.148Z"
+    },
+    "428032461003": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-461003",
+      "messageId": "<17154f06-6c85-55c9-7231-ccc0a688b867@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:10:03.646Z"
+    },
+    "428250443987": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-443987",
+      "messageId": "<1d2bda97-07c7-c1e5-eeb9-427098cf8500@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:10:07.279Z"
+    },
+    "428250445011": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-445011",
+      "messageId": "<7782006a-d07f-7c41-b2e3-b9836d6b6484@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:10:10.530Z"
+    },
+    "428250445012": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-445012",
+      "messageId": "<a9557ed5-c85a-ee81-76fa-8412936f8fde@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:10:13.881Z"
+    },
+    "428250445021": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-445021",
+      "messageId": "<39a53d67-aa47-a074-6adf-8d000cda34f4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:10:17.035Z"
+    },
+    "428250445022": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-445022",
+      "messageId": "<c122c3fb-8fe8-92b0-00be-1d5a90e2fe10@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:20:03.753Z"
+    },
+    "428250445025": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-445025",
+      "messageId": "<129ecf3b-795b-75c0-3fb7-5c083b110b2d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:20:07.006Z"
+    },
+    "428246839497": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-839497",
+      "messageId": "<d6fec797-f0f1-4549-15e3-9cc76a4f6544@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:20:10.483Z"
+    },
+    "428246839507": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-839507",
+      "messageId": "<ff9fd19c-571f-6fb4-db91-7e95707f1926@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:20:13.668Z"
+    },
+    "428246839517": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-839517",
+      "messageId": "<7d6e083a-b7c2-ea84-119a-0a88cbc5bdf6@enterprise-universe.com>",
+      "sentAt": "2026-01-16T11:20:16.903Z"
+    },
+    "428246839521": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T12:20:02.546Z"
+    },
+    "428246839525": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-839525",
+      "messageId": "<bacf86bf-1e6d-0207-1f48-da2c53dbe9f4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:20:03.881Z"
+    },
+    "428246839526": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-839526",
+      "messageId": "<7f62ede7-165c-7633-80ed-9b2348ebf41d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:20:07.266Z"
+    },
+    "428246839531": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-839531",
+      "messageId": "<be10c6b0-5136-54aa-ac12-ea1e693e44e8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:20:10.419Z"
+    },
+    "428246840526": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T12:20:12.597Z"
+    },
+    "428246840527": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-840527",
+      "messageId": "<fe64f60b-f4ed-0cc9-89be-88ffbecd7b4b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:40:03.509Z"
+    },
+    "428246840528": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-840528",
+      "messageId": "<ab0665a2-8f32-3a5d-cf73-dbcf0a54fde5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:40:06.660Z"
+    },
+    "428246840531": {
+      "status": "sent",
+      "email": "vanessa.stein@cevalogistics.com",
+      "invoiceNumber": "EU-202601-840531",
+      "messageId": "<b871fb2a-a2f0-6d51-2cc4-4e0e9212f149@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:40:09.916Z"
+    },
+    "428246840536": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-840536",
+      "messageId": "<69f458ae-5536-599c-cc2d-0a2d2f62df35@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:40:13.202Z"
+    },
+    "428246840549": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-840549",
+      "messageId": "<a566a096-8d59-1406-8084-aa885bd750f5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T12:40:16.298Z"
+    },
+    "428246840552": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-840552",
+      "messageId": "<9d958c97-70a1-51ab-69a8-5d0d43a08d98@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:20:03.528Z"
+    },
+    "428246840554": {
+      "status": "sent",
+      "email": "roth.christina@jenoptik.com",
+      "invoiceNumber": "EU-202601-840554",
+      "messageId": "<fee57b53-98d5-0d58-d492-b001a71c84fe@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:20:06.766Z"
+    },
+    "428205421802": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-421802",
+      "messageId": "<2d2ed3e2-af5b-0d52-4153-92eea00cd02a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:20:10.016Z"
+    },
+    "428205422787": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T13:20:12.205Z"
+    },
+    "428205422795": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-422795",
+      "messageId": "<5da67b9b-f4d6-5167-54ac-e6bec2195a1e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:20:13.517Z"
+    },
+    "428205422796": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-422796",
+      "messageId": "<0d1cf9d1-e30a-8967-b689-a81cf2c8bca2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:40:03.390Z"
+    },
+    "428205422803": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T13:40:05.573Z"
+    },
+    "428205422828": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T13:40:05.848Z"
+    },
+    "428205422839": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-422839",
+      "messageId": "<85e6f5c2-6b3a-6ec5-e6dc-023e8215edd1@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:40:07.041Z"
+    },
+    "428205423820": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-423820",
+      "messageId": "<ea93b2e3-9ee0-6cb9-e5e4-65ce4f64570a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T13:40:10.234Z"
+    },
+    "428159560919": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-560919",
+      "messageId": "<dff25e9e-3fd2-9eb9-098b-92b506fa1069@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:10:03.955Z"
+    },
+    "428159560941": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-560941",
+      "messageId": "<02fad3e3-a8c6-8e99-d1fc-fba1197ea75b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:10:07.251Z"
+    },
+    "428155965651": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-965651",
+      "messageId": "<cb248ad7-275d-3232-00dc-5a83ab595423@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:10:10.536Z"
+    },
+    "428246858949": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-858949",
+      "messageId": "<656924b4-283b-2e0f-3299-4baf18b8c866@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:10:13.766Z"
+    },
+    "428207238351": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-238351",
+      "messageId": "<22d8c63b-d931-55fe-8ab0-778f0cc9e8d2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:10:17.571Z"
+    },
+    "428178952439": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-952439",
+      "messageId": "<c71451ba-a080-e27d-94ff-5f4db4519f75@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:40:03.709Z"
+    },
+    "426721980647": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-980647",
+      "messageId": "<847ff8a5-4e6d-d9c6-9259-9910da1fb341@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:40:06.803Z"
+    },
+    "426721980654": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-980654",
+      "messageId": "<1d691493-f57b-e3a8-32f5-9937eea14258@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:40:10.032Z"
+    },
+    "428070151383": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-151383",
+      "messageId": "<100179f9-74b5-1363-1e4e-6336b60c03db@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:40:13.199Z"
+    },
+    "428241472727": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T14:40:15.407Z"
+    },
+    "428178952441": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-952441",
+      "messageId": "<bab4bf16-4e5d-56ae-acf4-03ed1b2b95e9@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:50:03.349Z"
+    },
+    "428259429608": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-429608",
+      "messageId": "<d74ce4b6-1846-7f2a-ce07-2ca88a145371@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:50:06.555Z"
+    },
+    "428157765821": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-765821",
+      "messageId": "<5afe7ea1-5060-4a26-6bbd-eb2c13d14b99@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:50:09.688Z"
+    },
+    "426725602490": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-602490",
+      "messageId": "<a365f76d-a99c-758d-5f9b-d2e79449f76f@enterprise-universe.com>",
+      "sentAt": "2026-01-16T14:50:12.903Z"
+    },
+    "428252259565": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T14:50:15.123Z"
+    },
+    "428205442274": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-442274",
+      "messageId": "<afe4ea72-d943-c088-e7c8-c87a6bcc2e0a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:10:03.452Z"
+    },
+    "428259429609": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-429609",
+      "messageId": "<54a9f04e-f1ab-3144-120d-00b9970818d0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:10:06.340Z"
+    },
+    "428246858974": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T15:10:08.429Z"
+    },
+    "427416943811": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-943811",
+      "messageId": "<b7e99fcf-de6e-98cf-7809-5cbc23f83198@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:10:09.251Z"
+    },
+    "428105500891": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-500891",
+      "messageId": "<399530d1-3096-08f8-967b-08fe4c045a05@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:10:12.202Z"
+    },
+    "428025304304": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-304304",
+      "messageId": "<da243ed7-b0a8-ac9c-ac3a-b402ef244195@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:50:03.481Z"
+    },
+    "428070151384": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-151384",
+      "messageId": "<58ea0f48-7111-f17c-e0eb-31875ea1254d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:50:06.626Z"
+    },
+    "427840508153": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-508153",
+      "messageId": "<411d1cc3-739b-9baf-60fa-9db19abe234b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:50:09.884Z"
+    },
+    "427425909977": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T15:50:12.058Z"
+    },
+    "427971559622": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-559622",
+      "messageId": "<4cf2c79b-2eea-4801-5fea-71b1fb03ca68@enterprise-universe.com>",
+      "sentAt": "2026-01-16T15:50:13.462Z"
+    },
+    "428209043654": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-043654",
+      "messageId": "<7e2b6dc6-700a-54eb-4539-26fb4e4173cc@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:10:03.863Z"
+    },
+    "428064774352": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-774352",
+      "messageId": "<a2e55358-208b-be3c-f2c1-073104557877@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:10:07.178Z"
+    },
+    "426725602494": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-602494",
+      "messageId": "<b23b7b0a-a6f6-6a53-0052-1584958a9b35@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:10:10.405Z"
+    },
+    "428070151388": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-151388",
+      "messageId": "<71650c29-88e0-b364-c8c6-d4634cc791e8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:10:13.875Z"
+    },
+    "428102497475": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:10:16.112Z"
+    },
+    "427538966765": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-966765",
+      "messageId": "<0bdd7315-0daf-55fb-271a-2b176e054f50@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:20:03.240Z"
+    },
+    "427971559625": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:20:05.418Z"
+    },
+    "426743264480": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-264480",
+      "messageId": "<01a59cb8-fdff-deef-203c-0e0c9aac199c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:20:06.640Z"
+    },
+    "428136028351": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:20:08.808Z"
+    },
+    "427753623751": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-623751",
+      "messageId": "<dd1bc1ae-57f7-0eea-8aa6-111d60475776@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:20:09.915Z"
+    },
+    "428136028352": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-028352",
+      "messageId": "<f75df43f-c6b7-1574-8ab2-6666d87c37b8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:40:03.386Z"
+    },
+    "427363452092": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-452092",
+      "messageId": "<755e6212-13d5-01f4-ec60-1d67e017be2a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:40:06.530Z"
+    },
+    "427363452101": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-452101",
+      "messageId": "<4ff6e1b7-fb8a-c098-54fd-d1724fd9cc11@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:40:09.706Z"
+    },
+    "427363452104": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-452104",
+      "messageId": "<676a0299-eaf1-a585-e7df-4935ef060ab5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:40:12.732Z"
+    },
+    "427363452109": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-452109",
+      "messageId": "<9fc5d0a8-eab0-fc15-1248-651f3c513c72@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:40:15.846Z"
+    },
+    "427363452122": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:50:01.994Z"
+    },
+    "427363452133": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:50:02.200Z"
+    },
+    "427363452141": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-452141",
+      "messageId": "<8960f7a8-f385-d419-19ae-148690b7c84a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:50:03.544Z"
+    },
+    "427363452142": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T16:50:05.721Z"
+    },
+    "427363453115": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-453115",
+      "messageId": "<0374bffc-d266-8321-f554-849cf504a21c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T16:50:06.840Z"
+    },
+    "427363453118": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-453118",
+      "messageId": "<c9ba3de0-5e72-f449-2b79-d62151429332@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:20:03.543Z"
+    },
+    "427363453126": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-453126",
+      "messageId": "<e6941920-d319-0940-1dbf-d8e5eaa53151@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:20:06.799Z"
+    },
+    "427363453128": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-453128",
+      "messageId": "<745a73ce-8abe-40d5-3ed4-922e87aab4a3@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:20:10.059Z"
+    },
+    "427363453133": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T17:20:12.276Z"
+    },
+    "427526413544": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T17:20:12.507Z"
+    },
+    "428205442288": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-442288",
+      "messageId": "<eba99ee4-36fc-092b-eee9-959514a12dcd@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:40:03.233Z"
+    },
+    "427748262092": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T17:40:05.421Z"
+    },
+    "427748262129": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-262129",
+      "messageId": "<fe779853-4753-c24a-4173-f3483463dde9@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:40:06.576Z"
+    },
+    "427748262135": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T17:40:08.741Z"
+    },
+    "427748263100": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-263100",
+      "messageId": "<abf3061d-8c73-af03-2e85-575adf50ae28@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:40:09.887Z"
+    },
+    "427748263103": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-263103",
+      "messageId": "<ec65f623-b8b0-13f4-241c-856b05550409@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:50:03.180Z"
+    },
+    "428159582417": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-582417",
+      "messageId": "<ae2282ae-93fd-7f5c-06dc-5e42870e9645@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:50:06.358Z"
+    },
+    "428159582423": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-582423",
+      "messageId": "<46bdbd6b-c7dd-437b-6b07-cadee2e64fcb@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:50:09.501Z"
+    },
+    "428159582425": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T17:50:11.699Z"
+    },
+    "428159582428": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-582428",
+      "messageId": "<5771092f-3f52-17ae-7f6a-74958297bff3@enterprise-universe.com>",
+      "sentAt": "2026-01-16T17:50:12.873Z"
+    },
+    "428159582441": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-582441",
+      "messageId": "<a913e1cb-653a-c2f3-0c82-23d93d9ae797@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:10:03.264Z"
+    },
+    "428159582450": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-582450",
+      "messageId": "<085e9c76-4e4d-20b8-559e-e0dd92dcf844@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:10:06.493Z"
+    },
+    "428159582452": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-582452",
+      "messageId": "<1a29f49f-e34c-a1b8-8504-341f3b191a89@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:10:09.718Z"
+    },
+    "428159582455": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-582455",
+      "messageId": "<8a7850e4-02d6-f181-ce5d-d1012f263436@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:10:13.227Z"
+    },
+    "428159583421": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T18:10:15.427Z"
+    },
+    "428159583432": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-583432",
+      "messageId": "<297858e1-3f5c-b55f-e060-ed348f04bfc4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:20:02.919Z"
+    },
+    "428159583437": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-583437",
+      "messageId": "<f970a26a-e53b-2d91-7c86-e46be3e29d44@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:20:06.175Z"
+    },
+    "428159583447": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T18:20:08.401Z"
+    },
+    "428159583448": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-583448",
+      "messageId": "<af675e05-8981-920e-6026-aaa43b0a87d4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:20:09.567Z"
+    },
+    "428159583453": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-583453",
+      "messageId": "<afa0f566-81f1-d15e-5179-e30965b6f01a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:20:12.739Z"
+    },
+    "428159583454": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-583454",
+      "messageId": "<27d7ec26-18ef-97b4-8213-d5b680c1ab8f@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:50:03.073Z"
+    },
+    "428159583468": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-583468",
+      "messageId": "<be9e88db-6be3-b368-a8f2-76bf6ab8dce5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:50:06.172Z"
+    },
+    "428207241430": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-241430",
+      "messageId": "<8323b7ff-f9b7-2984-986f-118a9866a1ab@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:50:09.370Z"
+    },
+    "428207241441": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-241441",
+      "messageId": "<43c8b5e2-380c-546d-a421-4175c87aca52@enterprise-universe.com>",
+      "sentAt": "2026-01-16T18:50:12.486Z"
+    },
+    "428207242430": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T18:50:14.660Z"
+    },
+    "427537174743": {
+      "status": "sent",
+      "email": "ulrike.schuster@beckhoff.com",
+      "invoiceNumber": "EU-202601-174743",
+      "messageId": "<13531f5d-3961-5681-539a-55f39e8ed914@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:10:03.603Z"
+    },
+    "428027107519": {
+      "status": "sent",
+      "email": "simon.klaus@evotec.com",
+      "invoiceNumber": "EU-202601-107519",
+      "messageId": "<6df48996-bba4-8858-72f6-5e4fcf96496c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:10:06.950Z"
+    },
+    "428027107566": {
+      "status": "sent",
+      "email": "scholz.klaus@helaba.de",
+      "invoiceNumber": "EU-202601-107566",
+      "messageId": "<3d668167-d35a-aa6d-c67d-07016d7396bc@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:10:10.302Z"
+    },
+    "427836926165": {
+      "status": "sent",
+      "email": "marinab@phoenixcontact.com",
+      "invoiceNumber": "EU-202601-926165",
+      "messageId": "<8f87ff2c-dc79-cb84-0302-9efc9ef293bb@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:10:14.001Z"
+    },
+    "427836926167": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-926167",
+      "messageId": "<e2b8ac0f-536e-2ddd-064b-2e30e0483806@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:10:17.234Z"
+    },
+    "427836926170": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-926170",
+      "messageId": "<342ed221-75d9-dadd-0d5f-40fba6bcffed@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:20:03.487Z"
+    },
+    "427836926174": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T19:20:05.682Z"
+    },
+    "427836926175": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-926175",
+      "messageId": "<94820d18-f358-318e-f79b-6579af271ab8@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:20:06.991Z"
+    },
+    "427836926176": {
+      "status": "sent",
+      "email": "roth.christina@jenoptik.com",
+      "invoiceNumber": "EU-202601-926176",
+      "messageId": "<f83dc23e-31f9-d908-f5f9-3cf800df8b5f@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:20:10.172Z"
+    },
+    "427836926179": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-926179",
+      "messageId": "<b19c43ea-05f8-a4da-9eec-413773e3e212@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:20:13.377Z"
+    },
+    "427836926187": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-926187",
+      "messageId": "<b3e4c65a-efba-2f11-31a7-1c91ee3785df@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:50:03.009Z"
+    },
+    "427836926188": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-926188",
+      "messageId": "<444c15a2-ecec-3461-021f-f8c667facd6f@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:50:06.215Z"
+    },
+    "427836926189": {
+      "status": "sent",
+      "email": "markusm@bauer.de",
+      "invoiceNumber": "EU-202601-926189",
+      "messageId": "<ac667e85-025c-2a27-1065-475903ac69ae@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:50:09.391Z"
+    },
+    "427836926194": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-926194",
+      "messageId": "<11294127-709b-71d8-05b3-1a1afe6ee28b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:50:12.542Z"
+    },
+    "427836926198": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-926198",
+      "messageId": "<e3813364-fe9c-f719-208e-c80a8858c3f0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T19:50:15.641Z"
+    },
+    "427836926199": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-926199",
+      "messageId": "<889271d8-e09f-6032-18b6-c6642370efdd@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:10:03.110Z"
+    },
+    "427836926200": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-926200",
+      "messageId": "<0a5dba7a-2ea4-c183-d16f-621a08b0b9d4@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:10:06.287Z"
+    },
+    "427836926201": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-926201",
+      "messageId": "<cdddea5a-809b-d497-bedb-6a4dc0feaa9e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:10:09.519Z"
+    },
+    "427836927162": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-927162",
+      "messageId": "<754ddd39-ed6d-fed7-d57d-605517bb948d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:10:12.652Z"
+    },
+    "427836927164": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-927164",
+      "messageId": "<c1d8554b-fa44-74ec-f7fa-c99bd47f6b11@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:10:15.801Z"
+    },
+    "427836927165": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-927165",
+      "messageId": "<e79f05df-c717-9a39-0d32-690c53afd778@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:20:02.975Z"
+    },
+    "427836927176": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-927176",
+      "messageId": "<ed445972-5916-7d3b-d121-318988b62682@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:20:06.081Z"
+    },
+    "427836927178": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-927178",
+      "messageId": "<ce9e2eca-b3b2-ef50-c8d9-9ae4670b1c9e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:20:09.254Z"
+    },
+    "427836927185": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T20:20:11.416Z"
+    },
+    "427836927186": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-927186",
+      "messageId": "<d6f90cbb-51c0-59b4-bd5c-106157096b38@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:20:12.574Z"
+    },
+    "427836927188": {
+      "status": "sent",
+      "email": "a.meier@lanxess.com",
+      "invoiceNumber": "EU-202601-927188",
+      "messageId": "<78d2d586-c974-7023-b762-eb31192738b2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:50:03.102Z"
+    },
+    "427836927190": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-927190",
+      "messageId": "<5da3b9a5-48aa-01b8-9201-51533dc38e09@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:50:06.238Z"
+    },
+    "427836927195": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T20:50:08.404Z"
+    },
+    "427836927200": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-927200",
+      "messageId": "<d8fce3a8-220b-92eb-d995-c4c0e3eabd2d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T20:50:09.587Z"
+    },
+    "427836927201": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T20:50:11.770Z"
+    },
+    "427836927219": {
+      "status": "sent",
+      "email": "bauer.klaus@dzbank.de",
+      "invoiceNumber": "EU-202601-927219",
+      "messageId": "<8ba37ada-7fb8-88e2-b27a-c3c69efb0765@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:10:03.059Z"
+    },
+    "427699628259": {
+      "status": "sent",
+      "email": "fuchs.martin@atoss.com",
+      "invoiceNumber": "EU-202601-628259",
+      "messageId": "<b266094d-6f3f-a445-f238-e66f379962ef@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:10:06.701Z"
+    },
+    "427699628260": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-628260",
+      "messageId": "<c443e96d-60d5-6108-8d16-5b980c599e4b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:10:09.885Z"
+    },
+    "427699628262": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-628262",
+      "messageId": "<6b71bd7e-727e-3c03-6d62-919b4396d71c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:10:13.068Z"
+    },
+    "427699628269": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T21:10:15.254Z"
+    },
+    "427699628276": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-628276",
+      "messageId": "<da159d75-5359-1fc8-2c51-c3bdca3ce11e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:20:03.091Z"
+    },
+    "427699628278": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-628278",
+      "messageId": "<0d9e934d-bcc3-652d-38f5-0a8da3032c46@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:20:06.233Z"
+    },
+    "427699628279": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-628279",
+      "messageId": "<d44b00a6-d4c3-0170-e3a3-e44e60a2a482@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:20:09.352Z"
+    },
+    "427699628280": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-628280",
+      "messageId": "<cf1d2672-b95a-6a26-744f-7ba89340f068@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:20:12.451Z"
+    },
+    "427699629242": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-629242",
+      "messageId": "<443abfa5-4389-5314-ebf3-66ce07fd809f@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:20:15.523Z"
+    },
+    "427699629243": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-629243",
+      "messageId": "<55d7be3f-3d86-4990-c319-763a31e13ca3@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:40:02.969Z"
+    },
+    "427699629249": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-629249",
+      "messageId": "<62fffa6b-8efc-1457-fa3b-2f7110d704e2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:40:06.145Z"
+    },
+    "427699629257": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-629257",
+      "messageId": "<c5c0ec93-3e48-8f97-e39c-a68339746f0b@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:40:09.284Z"
+    },
+    "427699629259": {
+      "status": "sent",
+      "email": "larsl@vonovia.de",
+      "invoiceNumber": "EU-202601-629259",
+      "messageId": "<fa6f8ac3-a062-fd46-ee08-30ff4a100411@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:40:12.383Z"
+    },
+    "427699629261": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T21:40:14.552Z"
+    },
+    "427699629264": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-629264",
+      "messageId": "<e4cc5c0a-0af1-f426-b867-74010cb10896@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:50:02.911Z"
+    },
+    "427699629265": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-629265",
+      "messageId": "<879d4004-7dfc-ae20-5cda-8b1963ced4c0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:50:06.081Z"
+    },
+    "427699629286": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-629286",
+      "messageId": "<25b11284-2e4e-27ea-386b-3447d6172596@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:50:09.209Z"
+    },
+    "427699629290": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-629290",
+      "messageId": "<2ebb3349-9b34-fabd-81b5-5094db1277a9@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:50:12.352Z"
+    },
+    "427699629297": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-629297",
+      "messageId": "<3614d108-2f9c-0583-9e73-79dcd96afc85@enterprise-universe.com>",
+      "sentAt": "2026-01-16T21:50:15.463Z"
+    },
+    "427699629299": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T22:00:03.135Z"
+    },
+    "427699629260": {
+      "status": "sent",
+      "email": "lars.baumann@rwe.com",
+      "invoiceNumber": "EU-202601-629260",
+      "messageId": "<3b5daf34-6228-a844-e5c9-2391d5fc3be0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:00:04.256Z"
+    },
+    "427699629284": {
+      "status": "sent",
+      "email": "julia.richter@hartmann.info",
+      "invoiceNumber": "EU-202601-629284",
+      "messageId": "<8fc0c8ec-8b22-6abd-1353-f76dd8abf253@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:00:07.668Z"
+    },
+    "427540825307": {
+      "status": "sent",
+      "email": "s.schafer@draeger.com",
+      "invoiceNumber": "EU-202601-825307",
+      "messageId": "<e954edc2-bad4-f2a6-495e-fb4c331ac9d5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:00:10.846Z"
+    },
+    "427540825335": {
+      "status": "sent",
+      "email": "simone.wagner@enercon.de",
+      "invoiceNumber": "EU-202601-825335",
+      "messageId": "<c8171a04-2fbd-58cd-3b7d-596a724dd25d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:00:13.977Z"
+    },
+    "427540826303": {
+      "status": "sent",
+      "email": "b.martin@kuka.com",
+      "invoiceNumber": "EU-202601-826303",
+      "messageId": "<9486e823-f365-4590-9035-ebe68231ad5e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:10:03.058Z"
+    },
+    "427540826324": {
+      "status": "sent",
+      "email": "christina.jager@zueblin.de",
+      "invoiceNumber": "EU-202601-826324",
+      "messageId": "<7a2d4c10-be49-eddb-bc09-12ca92e6f0a2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:10:06.229Z"
+    },
+    "427540826331": {
+      "status": "sent",
+      "email": "d.jager@rossmann.de",
+      "invoiceNumber": "EU-202601-826331",
+      "messageId": "<e8484a9b-cc86-d1ff-f2d5-a99649e43968@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:10:09.405Z"
+    },
+    "427540827322": {
+      "status": "sent",
+      "email": "winkler.julian@instone.de",
+      "invoiceNumber": "EU-202601-827322",
+      "messageId": "<e1909c84-d57f-f464-6f2d-c59391eaffef@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:10:12.537Z"
+    },
+    "428157775089": {
+      "status": "sent",
+      "email": "muller.alexandra@nagarro.com",
+      "invoiceNumber": "EU-202601-775089",
+      "messageId": "<8f4f0824-72b9-1110-0452-1047c1aa6c3c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:10:15.688Z"
+    },
+    "427840521422": {
+      "status": "sent",
+      "email": "larsw@hella.com",
+      "invoiceNumber": "EU-202601-521422",
+      "messageId": "<37e6636c-191f-503c-9cc8-b620ba935694@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:20:03.134Z"
+    },
+    "427840521437": {
+      "status": "sent",
+      "email": "nadine.muller@brose.com",
+      "invoiceNumber": "EU-202601-521437",
+      "messageId": "<e14d2b51-d193-e128-42cc-ffd005509c5e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:20:06.301Z"
+    },
+    "428205457626": {
+      "status": "sent",
+      "email": "albrecht.nicole@dic-asset.de",
+      "invoiceNumber": "EU-202601-457626",
+      "messageId": "<126199f7-2103-719d-e136-8b74febef1ea@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:20:09.418Z"
+    },
+    "427971571944": {
+      "status": "sent",
+      "email": "a.albrecht@voith.com",
+      "invoiceNumber": "EU-202601-571944",
+      "messageId": "<5ff76e8c-6149-a79e-926f-977b07909f5a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:20:12.565Z"
+    },
+    "427971571954": {
+      "status": "sent",
+      "email": "leak@k-plus-s.com",
+      "invoiceNumber": "EU-202601-571954",
+      "messageId": "<9e64872a-f435-644e-8abb-2b845dd23baa@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:20:15.669Z"
+    },
+    "427971572936": {
+      "status": "sent",
+      "email": "kohler.tim@teamviewer.com",
+      "invoiceNumber": "EU-202601-572936",
+      "messageId": "<b3cfd6f4-475e-2d66-9ec6-b618c14c473e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:30:03.142Z"
+    },
+    "428025320691": {
+      "status": "sent",
+      "email": "l.huber@elringklinger.com",
+      "invoiceNumber": "EU-202601-320691",
+      "messageId": "<b13a3f0c-a1f8-fa57-8d0f-8b2ec6e7311a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:30:06.232Z"
+    },
+    "428025320695": {
+      "status": "sent",
+      "email": "schwarz.christian@draexlmaier.com",
+      "invoiceNumber": "EU-202601-320695",
+      "messageId": "<52638878-0c6b-df4f-44f7-cb06c0309b27@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:30:09.363Z"
+    },
+    "427753638096": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-638096",
+      "messageId": "<3e4d8771-5a92-1a20-d8a7-4f922b3ddf93@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:30:12.454Z"
+    },
+    "427753638099": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-638099",
+      "messageId": "<50ba4684-4483-b182-8048-b4821a6f4118@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:30:15.611Z"
+    },
+    "427753638107": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T22:40:01.927Z"
+    },
+    "427753638111": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-638111",
+      "messageId": "<aa2caea0-0889-99a4-9171-1bbd8b06c90a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:40:03.058Z"
+    },
+    "427753638115": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T22:40:05.445Z"
+    },
+    "427753638121": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T22:40:05.787Z"
+    },
+    "427753638122": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-638122",
+      "messageId": "<0011f6d4-c99d-a822-b969-ba0b78f53cba@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:40:06.899Z"
+    },
+    "427753638126": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-638126",
+      "messageId": "<70e8063f-3f7c-f733-25c3-230e53561c61@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:50:02.968Z"
+    },
+    "427753638129": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-638129",
+      "messageId": "<62dcf0b7-7979-26e4-1a20-f0752433f25c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:50:06.100Z"
+    },
+    "427753638133": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-638133",
+      "messageId": "<836f97c6-033c-a3cc-4204-137a445c7898@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:50:09.204Z"
+    },
+    "427753639104": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-639104",
+      "messageId": "<0cdc2c74-cf9b-9d0a-9c2c-db67817e677d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:50:12.253Z"
+    },
+    "427753639106": {
+      "status": "sent",
+      "email": "peters.michael@roehm.com",
+      "invoiceNumber": "EU-202601-639106",
+      "messageId": "<68aaf023-a555-aac8-5a60-bd5aebd0d4a5@enterprise-universe.com>",
+      "sentAt": "2026-01-16T22:50:15.346Z"
+    },
+    "427753639107": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-639107",
+      "messageId": "<b7747854-9978-987f-28d9-3b42c2be6b4d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:00:03.089Z"
+    },
+    "427753639108": {
+      "status": "sent",
+      "email": "sebastian.martin@datev.de",
+      "invoiceNumber": "EU-202601-639108",
+      "messageId": "<ee0e27fe-4d9d-5d65-ed8b-cb5bd7f2d13d@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:00:06.252Z"
+    },
+    "427753639120": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-639120",
+      "messageId": "<53354661-49ac-2210-da65-f5ad7a99df06@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:00:09.402Z"
+    },
+    "427753639127": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-639127",
+      "messageId": "<80b7f5f5-d2c9-e9b0-5af3-abc8e539b51c@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:00:12.695Z"
+    },
+    "427753639139": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T23:00:14.854Z"
+    },
+    "427753639142": {
+      "status": "sent",
+      "email": "a.hartmann@blg-logistics.com",
+      "invoiceNumber": "EU-202601-639142",
+      "messageId": "<9035044e-1a55-f89a-f636-4878a8635406@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:10:02.975Z"
+    },
+    "427753639144": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-639144",
+      "messageId": "<b6ed1f71-31a0-b621-91ad-6ebbe8c844ef@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:10:06.115Z"
+    },
+    "427753639150": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T23:10:08.281Z"
+    },
+    "427753638103": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-16T23:10:08.556Z"
+    },
+    "427810094273": {
+      "status": "sent",
+      "email": "d.friedrich@hellmann.com",
+      "invoiceNumber": "EU-202601-094273",
+      "messageId": "<1a0771ae-285b-4bad-c6c2-ff5a0ce3c91e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:10:09.767Z"
+    },
+    "427810094285": {
+      "status": "sent",
+      "email": "marcob@strabag.com",
+      "invoiceNumber": "EU-202601-094285",
+      "messageId": "<04e2e615-3e6e-24b0-4beb-06c67cd8326a@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:20:03.526Z"
+    },
+    "427810094286": {
+      "status": "sent",
+      "email": "sommer.vanessa@festo.com",
+      "invoiceNumber": "EU-202601-094286",
+      "messageId": "<d9a3fce4-a40d-1af7-b2db-6809e908a241@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:20:06.900Z"
+    },
+    "427810094296": {
+      "status": "sent",
+      "email": "elisabethk@dbschenker.com",
+      "invoiceNumber": "EU-202601-094296",
+      "messageId": "<3dbbc1ae-a4eb-1cfc-d2e7-8bdaa9da2a45@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:20:10.174Z"
+    },
+    "427810095293": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-095293",
+      "messageId": "<ebe372f5-ee2b-180b-d495-c39831ebd466@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:20:13.491Z"
+    },
+    "427810095295": {
+      "status": "sent",
+      "email": "probert@smarthomeag.com",
+      "invoiceNumber": "EU-202601-095295",
+      "messageId": "<0489eaea-992b-087f-f7de-083da72108d0@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:20:16.724Z"
+    },
+    "427810095319": {
+      "status": "sent",
+      "email": "f.peters@heidelberg.com",
+      "invoiceNumber": "EU-202601-095319",
+      "messageId": "<d899318a-32a7-eb53-6121-d4bede9e29fd@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:30:03.101Z"
+    },
+    "428157781224": {
+      "status": "sent",
+      "email": "schwarz.christian@draexlmaier.com",
+      "invoiceNumber": "EU-202601-781224",
+      "messageId": "<026f17f0-4603-bd4f-43e2-547b004c70c2@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:30:06.223Z"
+    },
+    "428157781238": {
+      "status": "sent",
+      "email": "w.martin@goldbeck.de",
+      "invoiceNumber": "EU-202601-781238",
+      "messageId": "<9c3517ee-3308-fa2f-4367-df9218faceed@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:30:09.315Z"
+    },
+    "428071988441": {
+      "status": "sent",
+      "email": "i.winter@obi.de",
+      "invoiceNumber": "EU-202601-988441",
+      "messageId": "<6517835c-b34b-540e-b1e4-50d771565641@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:30:12.354Z"
+    },
+    "428105515239": {
+      "status": "sent",
+      "email": "k.hofmann@mahle.com",
+      "invoiceNumber": "EU-202601-515239",
+      "messageId": "<2400d7b3-e980-d3ba-8105-b71a7341d3d1@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:30:15.595Z"
+    },
+    "428105516241": {
+      "status": "sent",
+      "email": "max.muller@patrizia.ag",
+      "invoiceNumber": "EU-202601-516241",
+      "messageId": "<04c63df1-3895-75cd-2a0f-0224276a60d9@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:40:02.951Z"
+    },
+    "427416957114": {
+      "status": "sent",
+      "email": "s.winter@all-for-one.com",
+      "invoiceNumber": "EU-202601-957114",
+      "messageId": "<6dfe65fe-e88a-4cf0-fccb-f872bccd45dc@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:40:06.121Z"
+    },
+    "427416957139": {
+      "status": "sent",
+      "email": "lars.baumann@rwe.com",
+      "invoiceNumber": "EU-202601-957139",
+      "messageId": "<3c9c15cc-5936-c22a-d659-4d881867259e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:40:09.230Z"
+    },
+    "428252274912": {
+      "status": "sent",
+      "email": "inesm@porr.de",
+      "invoiceNumber": "EU-202601-274912",
+      "messageId": "<150e4529-f679-6bb5-9776-b8118acce9da@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:40:12.337Z"
+    },
+    "428252275905": {
+      "status": "sent",
+      "email": "g.wolf@wago.com",
+      "invoiceNumber": "EU-202601-275905",
+      "messageId": "<873e516d-6927-983d-791a-6dafabf955cf@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:40:15.447Z"
+    },
+    "428252275922": {
+      "status": "sent",
+      "email": "andrea.schwarz@krones.com",
+      "invoiceNumber": "EU-202601-275922",
+      "messageId": "<cd0a88d1-91b0-6389-cabd-800ce3982199@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:50:02.954Z"
+    },
+    "428252275954": {
+      "status": "sent",
+      "email": "klausf@leg-wohnen.de",
+      "invoiceNumber": "EU-202601-275954",
+      "messageId": "<078a67a5-5eb5-29f3-3f3f-bd0e8e6e38e7@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:50:06.173Z"
+    },
+    "427971576028": {
+      "status": "sent",
+      "email": "tobiass@snpgroup.com",
+      "invoiceNumber": "EU-202601-576028",
+      "messageId": "<fc3b6336-5f30-ab95-d29d-855a8bdee419@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:50:09.417Z"
+    },
+    "427971576057": {
+      "status": "sent",
+      "email": "p.meier@dachser.com",
+      "invoiceNumber": "EU-202601-576057",
+      "messageId": "<8558bebe-b55a-d83e-157f-b05e3e4e1706@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:50:12.489Z"
+    },
+    "427971577034": {
+      "status": "sent",
+      "email": "leak@k-plus-s.com",
+      "invoiceNumber": "EU-202601-577034",
+      "messageId": "<522786a3-3189-e106-5e46-2b78e8df9b2e@enterprise-universe.com>",
+      "sentAt": "2026-01-16T23:50:15.578Z"
+    },
+    "427971576027": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-576027",
+      "messageId": "<2009a31e-3985-f4ce-b37b-214c9232c6db@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:00:03.194Z"
+    },
+    "427971576041": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-576041",
+      "messageId": "<0973e8b5-737a-e93d-8602-bfd2036f25b1@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:00:06.705Z"
+    },
+    "427971577052": {
+      "status": "skipped",
+      "reason": "no_email",
+      "processedAt": "2026-01-17T00:00:09.183Z"
+    },
+    "427971577070": {
+      "status": "sent",
+      "email": "jean@manufacturingin.com",
+      "invoiceNumber": "EU-202601-577070",
+      "messageId": "<15961e85-d528-32c8-616c-67353b8d38a2@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:00:10.333Z"
+    },
+    "428136045799": {
+      "status": "sent",
+      "email": "j.hartmann@deichmann.com",
+      "invoiceNumber": "EU-202601-045799",
+      "messageId": "<404d9374-728e-5c2e-5e81-54c792cc509d@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:00:13.448Z"
+    },
+    "428136045810": {
+      "status": "sent",
+      "email": "hartmann.julia@nordex-online.com",
+      "invoiceNumber": "EU-202601-045810",
+      "messageId": "<0488ac77-a43f-4953-0d38-ef55fd14cfc0@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:10:02.986Z"
+    },
+    "428136045815": {
+      "status": "sent",
+      "email": "roth.fabian@symrise.com",
+      "invoiceNumber": "EU-202601-045815",
+      "messageId": "<17289a2a-acaf-0287-05ae-5450ef565e26@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:10:06.101Z"
+    },
+    "428032500948": {
+      "status": "sent",
+      "email": "muller.alexandra@nagarro.com",
+      "invoiceNumber": "EU-202601-500948",
+      "messageId": "<9245af8f-891c-b765-749f-ad12a91ccffe@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:10:09.246Z"
+    },
+    "428032500984": {
+      "status": "sent",
+      "email": "carolinl@schulergroup.com",
+      "invoiceNumber": "EU-202601-500984",
+      "messageId": "<580227ff-72d1-ac6a-7815-543443c2b63a@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:10:12.354Z"
+    },
+    "428043290869": {
+      "status": "sent",
+      "email": "stefanieb@dm.de",
+      "invoiceNumber": "EU-202601-290869",
+      "messageId": "<30477e4e-f3ec-cd1b-eb26-b868dae40331@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:10:15.478Z"
+    },
+    "428043291842": {
+      "status": "sent",
+      "email": "k.hofmann@mahle.com",
+      "invoiceNumber": "EU-202601-291842",
+      "messageId": "<c405508f-ad36-1699-0c0a-664a556141da@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:20:02.979Z"
+    },
+    "427753646270": {
+      "status": "sent",
+      "email": "contact@iotinc.com",
+      "invoiceNumber": "EU-202601-646270",
+      "messageId": "<a76441a1-ba7d-99e6-5845-1a5c7fbda7b9@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:20:06.135Z"
+    },
+    "427753646275": {
+      "status": "sent",
+      "email": "larsl@vonovia.de",
+      "invoiceNumber": "EU-202601-646275",
+      "messageId": "<8d80a8c2-c441-b911-85b2-5638bff3b3a4@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:20:09.254Z"
+    },
+    "427753646284": {
+      "status": "sent",
+      "email": "max.lehmann@adesso.de",
+      "invoiceNumber": "EU-202601-646284",
+      "messageId": "<04a51093-b768-fc83-0571-d30ca3ea32d0@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:20:12.372Z"
+    },
+    "427753646308": {
+      "status": "sent",
+      "email": "marco.maier@union-investment.de",
+      "invoiceNumber": "EU-202601-646308",
+      "messageId": "<fcba0ebf-635d-7977-f406-e38094d1ecbb@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:20:15.503Z"
+    },
+    "428061192431": {
+      "status": "sent",
+      "email": "susanne.gunther@fuchs.com",
+      "invoiceNumber": "EU-202601-192431",
+      "messageId": "<35edc654-3027-8c89-f4c4-9b9376a510bd@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:30:03.101Z"
+    },
+    "428061193439": {
+      "status": "sent",
+      "email": "i.winter@obi.de",
+      "invoiceNumber": "EU-202601-193439",
+      "messageId": "<2ee46928-4a19-0ee6-b4a1-0bb5acdf0535@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:30:06.174Z"
+    },
+    "428061193450": {
+      "status": "sent",
+      "email": "georgs@bayernlb.de",
+      "invoiceNumber": "EU-202601-193450",
+      "messageId": "<b10b9025-2fd5-ef80-8d03-667ea091b256@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:30:09.314Z"
+    },
+    "428061193453": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-193453",
+      "messageId": "<8a6f2374-9897-07f6-bd3a-78cf15ec2c2b@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:30:12.469Z"
+    },
+    "428105521376": {
+      "status": "sent",
+      "email": "melanie.klein@ww-ag.com",
+      "invoiceNumber": "EU-202601-521376",
+      "messageId": "<42399e69-d1a3-1b7c-0f5e-358a2fd9f86e@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:30:15.533Z"
+    },
+    "428105522382": {
+      "status": "sent",
+      "email": "p.meier@dachser.com",
+      "invoiceNumber": "EU-202601-522382",
+      "messageId": "<b4b9bdc8-1c65-f0d9-63e9-05d62bcff1b9@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:40:02.974Z"
+    },
+    "428105522387": {
+      "status": "sent",
+      "email": "bohm.katja@hapag-lloyd.com",
+      "invoiceNumber": "EU-202601-522387",
+      "messageId": "<64f8242c-9a56-f416-cd9e-c2eccaf03da4@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:40:06.072Z"
+    },
+    "428088170740": {
+      "status": "sent",
+      "email": "christina.schroder@dmgmori.com",
+      "invoiceNumber": "EU-202601-170740",
+      "messageId": "<7ce27842-a7ae-6d32-0045-2a3ecd059fce@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:40:09.184Z"
+    },
+    "428088171706": {
+      "status": "sent",
+      "email": "melanie.klein@ww-ag.com",
+      "invoiceNumber": "EU-202601-171706",
+      "messageId": "<36f4b6b8-2bfa-ff53-346a-20866fe5c286@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:40:12.263Z"
+    },
+    "428088171715": {
+      "status": "sent",
+      "email": "s.hoffmann@noratis.de",
+      "invoiceNumber": "EU-202601-171715",
+      "messageId": "<0e7f2f5c-2eeb-0783-c137-0923825d5d72@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:40:15.388Z"
+    },
+    "428088171761": {
+      "status": "sent",
+      "email": "l.schmitz@merckgroup.com",
+      "invoiceNumber": "EU-202601-171761",
+      "messageId": "<01d80235-f257-e8e6-ca4d-ab0c885db0a4@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:50:02.922Z"
+    },
+    "428088172745": {
+      "status": "sent",
+      "email": "bauer.klaus@dzbank.de",
+      "invoiceNumber": "EU-202601-172745",
+      "messageId": "<c74824ba-0d37-7fa2-06d4-a71f856aa1ca@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:50:06.026Z"
+    },
+    "428088172754": {
+      "status": "sent",
+      "email": "schwarz.christian@draexlmaier.com",
+      "invoiceNumber": "EU-202601-172754",
+      "messageId": "<6078fc8c-73dd-8b05-6f5e-af57d88a9207@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:50:09.096Z"
+    },
+    "427753648354": {
+      "status": "sent",
+      "email": "lorenz.kerstin@clariant.com",
+      "invoiceNumber": "EU-202601-648354",
+      "messageId": "<9754e170-eb00-816a-5487-e6b5e46d6c77@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:50:12.264Z"
+    },
+    "427753649354": {
+      "status": "sent",
+      "email": "simon.ursula@mediamarktsaturn.com",
+      "invoiceNumber": "EU-202601-649354",
+      "messageId": "<ad6ce67c-95ef-3537-b332-db9e062304e9@enterprise-universe.com>",
+      "sentAt": "2026-01-17T00:50:15.405Z"
+    },
+    "428250486995": {
+      "status": "sent",
+      "email": "s.schafer@draeger.com",
+      "invoiceNumber": "EU-202601-486995",
+      "messageId": "<3bb64fce-b88a-fc08-6bb9-7b132c6f114f@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:00:03.126Z"
+    },
+    "428250486998": {
+      "status": "sent",
+      "email": "simone.wagner@enercon.de",
+      "invoiceNumber": "EU-202601-486998",
+      "messageId": "<6246012d-deeb-6737-4f74-85bbe14026ec@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:00:06.320Z"
+    },
+    "428250487008": {
+      "status": "sent",
+      "email": "claudiav@wolff-mueller.de",
+      "invoiceNumber": "EU-202601-487008",
+      "messageId": "<05413846-dfe9-6f42-6cf8-f8f5b3d5f42b@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:00:09.914Z"
+    },
+    "428250488011": {
+      "status": "sent",
+      "email": "markusn@pilz.com",
+      "invoiceNumber": "EU-202601-488011",
+      "messageId": "<69f8dcb5-d63a-6b40-3e95-493921875500@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:00:13.065Z"
+    },
+    "428207268047": {
+      "status": "sent",
+      "email": "nicolew@endress.com",
+      "invoiceNumber": "EU-202601-268047",
+      "messageId": "<4250ac46-d83d-d1e1-3049-d38be348161e@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:00:16.174Z"
+    },
+    "428207268050": {
+      "status": "sent",
+      "email": "peters.michael@roehm.com",
+      "invoiceNumber": "EU-202601-268050",
+      "messageId": "<faba09e3-78a2-3ab2-7fbc-c6ff03ab2f08@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:10:02.979Z"
+    },
+    "427540838645": {
+      "status": "sent",
+      "email": "ines.jager@altana.com",
+      "invoiceNumber": "EU-202601-838645",
+      "messageId": "<b05563fd-29bf-2818-62cc-82b9bd30c1d7@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:10:06.024Z"
+    },
+    "427540839614": {
+      "status": "sent",
+      "email": "max.lehmann@adesso.de",
+      "invoiceNumber": "EU-202601-839614",
+      "messageId": "<9d7c60cb-1466-6e45-a604-9d0fcd62ae7b@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:10:09.133Z"
+    },
+    "427540839630": {
+      "status": "sent",
+      "email": "leak@k-plus-s.com",
+      "invoiceNumber": "EU-202601-839630",
+      "messageId": "<b107b224-05c6-fd51-170b-4d421f909201@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:10:12.262Z"
+    },
+    "427540839635": {
+      "status": "sent",
+      "email": "c.schroder@softwareag.com",
+      "invoiceNumber": "EU-202601-839635",
+      "messageId": "<4e2b2695-2ad1-68fe-290d-42bd65a1524c@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:10:15.386Z"
+    },
+    "427753658584": {
+      "status": "sent",
+      "email": "friedrich.matthias@sick.com",
+      "invoiceNumber": "EU-202601-658584",
+      "messageId": "<28f27837-769a-b4eb-c28d-3cb152b5daa9@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:20:03.070Z"
+    },
+    "427753658612": {
+      "status": "sent",
+      "email": "j.schmidt@zf.com",
+      "invoiceNumber": "EU-202601-658612",
+      "messageId": "<cb09e38b-e974-4604-4349-7a874bf10b3f@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:20:06.177Z"
+    },
+    "427753658615": {
+      "status": "sent",
+      "email": "ulrike.schuster@beckhoff.com",
+      "invoiceNumber": "EU-202601-658615",
+      "messageId": "<be69f8aa-34e5-e329-317e-812450862730@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:20:09.314Z"
+    },
+    "427753659596": {
+      "status": "sent",
+      "email": "katja.stein@fresenius.com",
+      "invoiceNumber": "EU-202601-659596",
+      "messageId": "<8696051e-5e2b-d282-2905-bf7b2af594ab@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:20:12.424Z"
+    },
+    "427753659621": {
+      "status": "sent",
+      "email": "janav@leonhard-weiss.de",
+      "invoiceNumber": "EU-202601-659621",
+      "messageId": "<4e299bd5-ddba-c0a5-d42c-0ca5fabb9f79@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:20:15.554Z"
+    },
+    "427753659627": {
+      "status": "sent",
+      "email": "elisabethk@dbschenker.com",
+      "invoiceNumber": "EU-202601-659627",
+      "messageId": "<efb6860c-192e-667e-3d8a-8e34aec0f3b4@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:40:02.986Z"
+    },
+    "427172329691": {
+      "status": "sent",
+      "email": "katja.stein@fresenius.com",
+      "invoiceNumber": "EU-202601-329691",
+      "messageId": "<30d8ef27-562a-47d4-63ae-3910bf2e1382@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:40:06.112Z"
+    },
+    "427172329698": {
+      "status": "sent",
+      "email": "lars.baumann@rwe.com",
+      "invoiceNumber": "EU-202601-329698",
+      "messageId": "<79c646f9-4c75-4592-b35e-477381b39cd7@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:40:09.147Z"
+    },
+    "427172329703": {
+      "status": "sent",
+      "email": "h.martin@dhl.com",
+      "invoiceNumber": "EU-202601-329703",
+      "messageId": "<4d6c0c6c-5445-63f2-c024-f5b50249a0ea@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:40:12.613Z"
+    },
+    "427172329712": {
+      "status": "sent",
+      "email": "schwarz.christian@draexlmaier.com",
+      "invoiceNumber": "EU-202601-329712",
+      "messageId": "<68f511d6-d5d3-0cfe-f150-355b2413e994@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:40:15.708Z"
+    },
+    "426725632240": {
+      "status": "sent",
+      "email": "tobias.konig@implenia.com",
+      "invoiceNumber": "EU-202601-632240",
+      "messageId": "<fcf4952c-1f29-e92f-ec51-782dfdd471fc@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:50:03.000Z"
+    },
+    "426725633232": {
+      "status": "sent",
+      "email": "j.schmidt@zf.com",
+      "invoiceNumber": "EU-202601-633232",
+      "messageId": "<efb44c48-290e-e036-2017-739e5bc81582@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:50:06.149Z"
+    },
+    "426725633238": {
+      "status": "sent",
+      "email": "d.jager@rossmann.de",
+      "invoiceNumber": "EU-202601-633238",
+      "messageId": "<16bc6530-9d48-3259-daee-e0490b9d9321@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:50:09.201Z"
+    },
+    "426725633268": {
+      "status": "sent",
+      "email": "l.huber@elringklinger.com",
+      "invoiceNumber": "EU-202601-633268",
+      "messageId": "<bf1eb3f7-4e92-08c1-f0b6-1ba2550f5f0a@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:50:12.277Z"
+    },
+    "426725634254": {
+      "status": "sent",
+      "email": "s.schafer@draeger.com",
+      "invoiceNumber": "EU-202601-634254",
+      "messageId": "<ee182900-f11b-4da9-dbe9-d9642c069ed3@enterprise-universe.com>",
+      "sentAt": "2026-01-17T01:50:15.402Z"
+    },
+    "426918040764": {
+      "status": "sent",
+      "email": "albrecht.nicole@dic-asset.de",
+      "invoiceNumber": "EU-202601-040764",
+      "messageId": "<89054af9-bde6-bea1-3626-a5f0f111fe7e@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:10:02.900Z"
+    },
+    "426918040766": {
+      "status": "sent",
+      "email": "c.seidel@lbbw.de",
+      "invoiceNumber": "EU-202601-040766",
+      "messageId": "<9015b198-bb9a-d077-7117-55632b690466@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:10:06.019Z"
+    },
+    "426918040768": {
+      "status": "sent",
+      "email": "l.schmitz@merckgroup.com",
+      "invoiceNumber": "EU-202601-040768",
+      "messageId": "<43b8fe52-08e9-e426-09f1-2339571beda5@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:10:09.112Z"
+    },
+    "426918040825": {
+      "status": "sent",
+      "email": "sarahs@sma.de",
+      "invoiceNumber": "EU-202601-040825",
+      "messageId": "<60cbf141-de78-95c8-79d7-0391a2caf5fa@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:10:12.200Z"
+    },
+    "428043303145": {
+      "status": "sent",
+      "email": "susanne.gunther@fuchs.com",
+      "invoiceNumber": "EU-202601-303145",
+      "messageId": "<94898c10-0db1-dafd-46c6-7b9b8ba65b3d@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:10:15.288Z"
+    },
+    "428043303161": {
+      "status": "sent",
+      "email": "h.martin@dhl.com",
+      "invoiceNumber": "EU-202601-303161",
+      "messageId": "<5f829c09-a23c-f4be-22f6-11c89c210200@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:20:02.881Z"
+    },
+    "428043304147": {
+      "status": "sent",
+      "email": "carolinl@schulergroup.com",
+      "invoiceNumber": "EU-202601-304147",
+      "messageId": "<21a1aa81-11ce-5ed1-e96f-c31766243902@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:20:05.994Z"
+    },
+    "428027137258": {
+      "status": "sent",
+      "email": "katharinas@metroag.de",
+      "invoiceNumber": "EU-202601-137258",
+      "messageId": "<dd9cfa69-8869-9d22-afaf-bdd01258b427@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:20:09.134Z"
+    },
+    "428027138236": {
+      "status": "sent",
+      "email": "s.hoffmann@noratis.de",
+      "invoiceNumber": "EU-202601-138236",
+      "messageId": "<0a9a135d-7626-2ba9-004e-bea68546f6ff@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:20:12.243Z"
+    },
+    "428027138237": {
+      "status": "sent",
+      "email": "b.martin@kuka.com",
+      "invoiceNumber": "EU-202601-138237",
+      "messageId": "<277ab5a0-b378-3914-4cc4-9845b726e669@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:20:15.326Z"
+    },
+    "428027138245": {
+      "status": "sent",
+      "email": "s.hoffmann@noratis.de",
+      "invoiceNumber": "EU-202601-138245",
+      "messageId": "<8a88cd22-cbca-a433-c4ff-bd2a1cfdea96@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:40:03.047Z"
+    },
+    "428205480127": {
+      "status": "sent",
+      "email": "d.friedrich@hellmann.com",
+      "invoiceNumber": "EU-202601-480127",
+      "messageId": "<aa987eb4-f7de-1275-14f9-069e453ee608@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:40:06.089Z"
+    },
+    "428205480139": {
+      "status": "sent",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "invoiceNumber": "EU-202601-480139",
+      "messageId": "<72af18a0-53ab-f7dd-9d48-9aa9f887ad51@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:40:09.203Z"
+    },
+    "428205480146": {
+      "status": "sent",
+      "email": "larsw@hella.com",
+      "invoiceNumber": "EU-202601-480146",
+      "messageId": "<c7d9375b-1f4d-21bf-f708-dec9c07cd9d3@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:40:12.280Z"
+    },
+    "428205480148": {
+      "status": "sent",
+      "email": "kohler.tim@teamviewer.com",
+      "invoiceNumber": "EU-202601-480148",
+      "messageId": "<702e8113-2d66-bf99-9913-aa5bbcb825a7@enterprise-universe.com>",
+      "sentAt": "2026-01-17T02:40:15.416Z"
     }
   },
   "sentEmails": [
@@ -665,14 +2918,1459 @@
       "dealId": "427363409134",
       "email": "wagner.birgit@rhenus.com",
       "sentAt": "2026-01-15T18:30:17.252Z"
+    },
+    {
+      "dealId": "427363410111",
+      "email": "melanie.klein@ww-ag.com",
+      "sentAt": "2026-01-16T05:20:02.965Z"
+    },
+    {
+      "dealId": "428193317064",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T05:20:06.104Z"
+    },
+    {
+      "dealId": "428178923713",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T05:20:09.198Z"
+    },
+    {
+      "dealId": "428178923748",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T05:20:12.381Z"
+    },
+    {
+      "dealId": "428178924730",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T05:20:15.483Z"
+    },
+    {
+      "dealId": "427840485581",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T06:50:03.041Z"
+    },
+    {
+      "dealId": "427840485590",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T06:50:06.362Z"
+    },
+    {
+      "dealId": "427840485594",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T06:50:09.488Z"
+    },
+    {
+      "dealId": "427840485610",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T06:50:12.642Z"
+    },
+    {
+      "dealId": "427840485612",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T07:40:03.203Z"
+    },
+    {
+      "dealId": "427840485620",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T07:40:06.362Z"
+    },
+    {
+      "dealId": "427840486603",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T07:40:09.648Z"
+    },
+    {
+      "dealId": "427840486604",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T07:40:12.888Z"
+    },
+    {
+      "dealId": "427840486616",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T08:10:03.994Z"
+    },
+    {
+      "dealId": "427840486633",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T08:10:07.202Z"
+    },
+    {
+      "dealId": "428207216874",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T08:10:10.659Z"
+    },
+    {
+      "dealId": "428207216875",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T08:10:13.788Z"
+    },
+    {
+      "dealId": "428207216878",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T08:40:03.330Z"
+    },
+    {
+      "dealId": "428207216881",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T08:40:06.459Z"
+    },
+    {
+      "dealId": "428207216882",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T08:40:09.633Z"
+    },
+    {
+      "dealId": "428207217852",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T08:40:12.999Z"
+    },
+    {
+      "dealId": "428207217859",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T09:10:04.725Z"
+    },
+    {
+      "dealId": "428207217862",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T09:10:08.207Z"
+    },
+    {
+      "dealId": "428207217865",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T09:10:11.655Z"
+    },
+    {
+      "dealId": "428207217870",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T09:20:03.203Z"
+    },
+    {
+      "dealId": "428207217876",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T09:20:06.362Z"
+    },
+    {
+      "dealId": "428207217877",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T09:20:09.682Z"
+    },
+    {
+      "dealId": "428207217881",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T09:20:12.890Z"
+    },
+    {
+      "dealId": "428207217884",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T09:20:16.047Z"
+    },
+    {
+      "dealId": "428207217893",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T09:40:03.603Z"
+    },
+    {
+      "dealId": "428207217897",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T09:40:06.872Z"
+    },
+    {
+      "dealId": "428207217899",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T09:40:10.025Z"
+    },
+    {
+      "dealId": "428207217902",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T09:40:13.238Z"
+    },
+    {
+      "dealId": "428207217903",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T09:40:16.478Z"
+    },
+    {
+      "dealId": "428207217909",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T10:10:04.216Z"
+    },
+    {
+      "dealId": "428207218882",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T10:10:07.940Z"
+    },
+    {
+      "dealId": "428207218884",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T10:10:11.120Z"
+    },
+    {
+      "dealId": "428207218885",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T10:20:03.359Z"
+    },
+    {
+      "dealId": "428032459985",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T10:20:06.572Z"
+    },
+    {
+      "dealId": "428032460001",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T10:20:10.009Z"
+    },
+    {
+      "dealId": "428032460994",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T10:20:13.148Z"
+    },
+    {
+      "dealId": "428032461003",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T11:10:03.646Z"
+    },
+    {
+      "dealId": "428250443987",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T11:10:07.279Z"
+    },
+    {
+      "dealId": "428250445011",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T11:10:10.530Z"
+    },
+    {
+      "dealId": "428250445012",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T11:10:13.881Z"
+    },
+    {
+      "dealId": "428250445021",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T11:10:17.035Z"
+    },
+    {
+      "dealId": "428250445022",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T11:20:03.753Z"
+    },
+    {
+      "dealId": "428250445025",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T11:20:07.006Z"
+    },
+    {
+      "dealId": "428246839497",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T11:20:10.483Z"
+    },
+    {
+      "dealId": "428246839507",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T11:20:13.669Z"
+    },
+    {
+      "dealId": "428246839517",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T11:20:16.903Z"
+    },
+    {
+      "dealId": "428246839525",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T12:20:03.881Z"
+    },
+    {
+      "dealId": "428246839526",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T12:20:07.266Z"
+    },
+    {
+      "dealId": "428246839531",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T12:20:10.419Z"
+    },
+    {
+      "dealId": "428246840527",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T12:40:03.509Z"
+    },
+    {
+      "dealId": "428246840528",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T12:40:06.660Z"
+    },
+    {
+      "dealId": "428246840531",
+      "email": "vanessa.stein@cevalogistics.com",
+      "sentAt": "2026-01-16T12:40:09.916Z"
+    },
+    {
+      "dealId": "428246840536",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T12:40:13.202Z"
+    },
+    {
+      "dealId": "428246840549",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T12:40:16.298Z"
+    },
+    {
+      "dealId": "428246840552",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T13:20:03.528Z"
+    },
+    {
+      "dealId": "428246840554",
+      "email": "roth.christina@jenoptik.com",
+      "sentAt": "2026-01-16T13:20:06.766Z"
+    },
+    {
+      "dealId": "428205421802",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T13:20:10.016Z"
+    },
+    {
+      "dealId": "428205422795",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T13:20:13.517Z"
+    },
+    {
+      "dealId": "428205422796",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T13:40:03.390Z"
+    },
+    {
+      "dealId": "428205422839",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T13:40:07.041Z"
+    },
+    {
+      "dealId": "428205423820",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T13:40:10.234Z"
+    },
+    {
+      "dealId": "428159560919",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T14:10:03.955Z"
+    },
+    {
+      "dealId": "428159560941",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T14:10:07.251Z"
+    },
+    {
+      "dealId": "428155965651",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T14:10:10.536Z"
+    },
+    {
+      "dealId": "428246858949",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T14:10:13.766Z"
+    },
+    {
+      "dealId": "428207238351",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T14:10:17.571Z"
+    },
+    {
+      "dealId": "428178952439",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T14:40:03.709Z"
+    },
+    {
+      "dealId": "426721980647",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T14:40:06.803Z"
+    },
+    {
+      "dealId": "426721980654",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T14:40:10.032Z"
+    },
+    {
+      "dealId": "428070151383",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T14:40:13.199Z"
+    },
+    {
+      "dealId": "428178952441",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T14:50:03.349Z"
+    },
+    {
+      "dealId": "428259429608",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T14:50:06.555Z"
+    },
+    {
+      "dealId": "428157765821",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T14:50:09.688Z"
+    },
+    {
+      "dealId": "426725602490",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T14:50:12.903Z"
+    },
+    {
+      "dealId": "428205442274",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T15:10:03.452Z"
+    },
+    {
+      "dealId": "428259429609",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T15:10:06.340Z"
+    },
+    {
+      "dealId": "427416943811",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T15:10:09.251Z"
+    },
+    {
+      "dealId": "428105500891",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T15:10:12.202Z"
+    },
+    {
+      "dealId": "428025304304",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T15:50:03.481Z"
+    },
+    {
+      "dealId": "428070151384",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T15:50:06.626Z"
+    },
+    {
+      "dealId": "427840508153",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T15:50:09.884Z"
+    },
+    {
+      "dealId": "427971559622",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T15:50:13.462Z"
+    },
+    {
+      "dealId": "428209043654",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T16:10:03.863Z"
+    },
+    {
+      "dealId": "428064774352",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T16:10:07.178Z"
+    },
+    {
+      "dealId": "426725602494",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T16:10:10.405Z"
+    },
+    {
+      "dealId": "428070151388",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T16:10:13.875Z"
+    },
+    {
+      "dealId": "427538966765",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T16:20:03.240Z"
+    },
+    {
+      "dealId": "426743264480",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T16:20:06.640Z"
+    },
+    {
+      "dealId": "427753623751",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T16:20:09.915Z"
+    },
+    {
+      "dealId": "428136028352",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T16:40:03.386Z"
+    },
+    {
+      "dealId": "427363452092",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T16:40:06.530Z"
+    },
+    {
+      "dealId": "427363452101",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T16:40:09.706Z"
+    },
+    {
+      "dealId": "427363452104",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T16:40:12.732Z"
+    },
+    {
+      "dealId": "427363452109",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T16:40:15.846Z"
+    },
+    {
+      "dealId": "427363452141",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T16:50:03.544Z"
+    },
+    {
+      "dealId": "427363453115",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T16:50:06.840Z"
+    },
+    {
+      "dealId": "427363453118",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T17:20:03.543Z"
+    },
+    {
+      "dealId": "427363453126",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T17:20:06.800Z"
+    },
+    {
+      "dealId": "427363453128",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T17:20:10.059Z"
+    },
+    {
+      "dealId": "428205442288",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T17:40:03.233Z"
+    },
+    {
+      "dealId": "427748262129",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T17:40:06.576Z"
+    },
+    {
+      "dealId": "427748263100",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T17:40:09.887Z"
+    },
+    {
+      "dealId": "427748263103",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T17:50:03.180Z"
+    },
+    {
+      "dealId": "428159582417",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T17:50:06.358Z"
+    },
+    {
+      "dealId": "428159582423",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T17:50:09.501Z"
+    },
+    {
+      "dealId": "428159582428",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T17:50:12.873Z"
+    },
+    {
+      "dealId": "428159582441",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T18:10:03.264Z"
+    },
+    {
+      "dealId": "428159582450",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T18:10:06.493Z"
+    },
+    {
+      "dealId": "428159582452",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T18:10:09.718Z"
+    },
+    {
+      "dealId": "428159582455",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T18:10:13.227Z"
+    },
+    {
+      "dealId": "428159583432",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T18:20:02.919Z"
+    },
+    {
+      "dealId": "428159583437",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T18:20:06.175Z"
+    },
+    {
+      "dealId": "428159583448",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T18:20:09.567Z"
+    },
+    {
+      "dealId": "428159583453",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T18:20:12.739Z"
+    },
+    {
+      "dealId": "428159583454",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T18:50:03.073Z"
+    },
+    {
+      "dealId": "428159583468",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T18:50:06.172Z"
+    },
+    {
+      "dealId": "428207241430",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T18:50:09.370Z"
+    },
+    {
+      "dealId": "428207241441",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T18:50:12.486Z"
+    },
+    {
+      "dealId": "427537174743",
+      "email": "ulrike.schuster@beckhoff.com",
+      "sentAt": "2026-01-16T19:10:03.603Z"
+    },
+    {
+      "dealId": "428027107519",
+      "email": "simon.klaus@evotec.com",
+      "sentAt": "2026-01-16T19:10:06.950Z"
+    },
+    {
+      "dealId": "428027107566",
+      "email": "scholz.klaus@helaba.de",
+      "sentAt": "2026-01-16T19:10:10.302Z"
+    },
+    {
+      "dealId": "427836926165",
+      "email": "marinab@phoenixcontact.com",
+      "sentAt": "2026-01-16T19:10:14.001Z"
+    },
+    {
+      "dealId": "427836926167",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T19:10:17.234Z"
+    },
+    {
+      "dealId": "427836926170",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T19:20:03.487Z"
+    },
+    {
+      "dealId": "427836926175",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T19:20:06.991Z"
+    },
+    {
+      "dealId": "427836926176",
+      "email": "roth.christina@jenoptik.com",
+      "sentAt": "2026-01-16T19:20:10.172Z"
+    },
+    {
+      "dealId": "427836926179",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T19:20:13.377Z"
+    },
+    {
+      "dealId": "427836926187",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T19:50:03.009Z"
+    },
+    {
+      "dealId": "427836926188",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T19:50:06.215Z"
+    },
+    {
+      "dealId": "427836926189",
+      "email": "markusm@bauer.de",
+      "sentAt": "2026-01-16T19:50:09.391Z"
+    },
+    {
+      "dealId": "427836926194",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T19:50:12.542Z"
+    },
+    {
+      "dealId": "427836926198",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T19:50:15.641Z"
+    },
+    {
+      "dealId": "427836926199",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T20:10:03.110Z"
+    },
+    {
+      "dealId": "427836926200",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T20:10:06.288Z"
+    },
+    {
+      "dealId": "427836926201",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T20:10:09.519Z"
+    },
+    {
+      "dealId": "427836927162",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T20:10:12.652Z"
+    },
+    {
+      "dealId": "427836927164",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T20:10:15.801Z"
+    },
+    {
+      "dealId": "427836927165",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T20:20:02.975Z"
+    },
+    {
+      "dealId": "427836927176",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T20:20:06.081Z"
+    },
+    {
+      "dealId": "427836927178",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T20:20:09.254Z"
+    },
+    {
+      "dealId": "427836927186",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T20:20:12.574Z"
+    },
+    {
+      "dealId": "427836927188",
+      "email": "a.meier@lanxess.com",
+      "sentAt": "2026-01-16T20:50:03.102Z"
+    },
+    {
+      "dealId": "427836927190",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T20:50:06.238Z"
+    },
+    {
+      "dealId": "427836927200",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T20:50:09.587Z"
+    },
+    {
+      "dealId": "427836927219",
+      "email": "bauer.klaus@dzbank.de",
+      "sentAt": "2026-01-16T21:10:03.059Z"
+    },
+    {
+      "dealId": "427699628259",
+      "email": "fuchs.martin@atoss.com",
+      "sentAt": "2026-01-16T21:10:06.701Z"
+    },
+    {
+      "dealId": "427699628260",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T21:10:09.885Z"
+    },
+    {
+      "dealId": "427699628262",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T21:10:13.068Z"
+    },
+    {
+      "dealId": "427699628276",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T21:20:03.091Z"
+    },
+    {
+      "dealId": "427699628278",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T21:20:06.233Z"
+    },
+    {
+      "dealId": "427699628279",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T21:20:09.352Z"
+    },
+    {
+      "dealId": "427699628280",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T21:20:12.451Z"
+    },
+    {
+      "dealId": "427699629242",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T21:20:15.523Z"
+    },
+    {
+      "dealId": "427699629243",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T21:40:02.969Z"
+    },
+    {
+      "dealId": "427699629249",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T21:40:06.145Z"
+    },
+    {
+      "dealId": "427699629257",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T21:40:09.284Z"
+    },
+    {
+      "dealId": "427699629259",
+      "email": "larsl@vonovia.de",
+      "sentAt": "2026-01-16T21:40:12.383Z"
+    },
+    {
+      "dealId": "427699629264",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T21:50:02.911Z"
+    },
+    {
+      "dealId": "427699629265",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T21:50:06.081Z"
+    },
+    {
+      "dealId": "427699629286",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T21:50:09.209Z"
+    },
+    {
+      "dealId": "427699629290",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T21:50:12.352Z"
+    },
+    {
+      "dealId": "427699629297",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T21:50:15.463Z"
+    },
+    {
+      "dealId": "427699629260",
+      "email": "lars.baumann@rwe.com",
+      "sentAt": "2026-01-16T22:00:04.256Z"
+    },
+    {
+      "dealId": "427699629284",
+      "email": "julia.richter@hartmann.info",
+      "sentAt": "2026-01-16T22:00:07.668Z"
+    },
+    {
+      "dealId": "427540825307",
+      "email": "s.schafer@draeger.com",
+      "sentAt": "2026-01-16T22:00:10.846Z"
+    },
+    {
+      "dealId": "427540825335",
+      "email": "simone.wagner@enercon.de",
+      "sentAt": "2026-01-16T22:00:13.977Z"
+    },
+    {
+      "dealId": "427540826303",
+      "email": "b.martin@kuka.com",
+      "sentAt": "2026-01-16T22:10:03.058Z"
+    },
+    {
+      "dealId": "427540826324",
+      "email": "christina.jager@zueblin.de",
+      "sentAt": "2026-01-16T22:10:06.229Z"
+    },
+    {
+      "dealId": "427540826331",
+      "email": "d.jager@rossmann.de",
+      "sentAt": "2026-01-16T22:10:09.405Z"
+    },
+    {
+      "dealId": "427540827322",
+      "email": "winkler.julian@instone.de",
+      "sentAt": "2026-01-16T22:10:12.537Z"
+    },
+    {
+      "dealId": "428157775089",
+      "email": "muller.alexandra@nagarro.com",
+      "sentAt": "2026-01-16T22:10:15.688Z"
+    },
+    {
+      "dealId": "427840521422",
+      "email": "larsw@hella.com",
+      "sentAt": "2026-01-16T22:20:03.134Z"
+    },
+    {
+      "dealId": "427840521437",
+      "email": "nadine.muller@brose.com",
+      "sentAt": "2026-01-16T22:20:06.301Z"
+    },
+    {
+      "dealId": "428205457626",
+      "email": "albrecht.nicole@dic-asset.de",
+      "sentAt": "2026-01-16T22:20:09.418Z"
+    },
+    {
+      "dealId": "427971571944",
+      "email": "a.albrecht@voith.com",
+      "sentAt": "2026-01-16T22:20:12.565Z"
+    },
+    {
+      "dealId": "427971571954",
+      "email": "leak@k-plus-s.com",
+      "sentAt": "2026-01-16T22:20:15.669Z"
+    },
+    {
+      "dealId": "427971572936",
+      "email": "kohler.tim@teamviewer.com",
+      "sentAt": "2026-01-16T22:30:03.142Z"
+    },
+    {
+      "dealId": "428025320691",
+      "email": "l.huber@elringklinger.com",
+      "sentAt": "2026-01-16T22:30:06.232Z"
+    },
+    {
+      "dealId": "428025320695",
+      "email": "schwarz.christian@draexlmaier.com",
+      "sentAt": "2026-01-16T22:30:09.363Z"
+    },
+    {
+      "dealId": "427753638096",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T22:30:12.454Z"
+    },
+    {
+      "dealId": "427753638099",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T22:30:15.611Z"
+    },
+    {
+      "dealId": "427753638111",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T22:40:03.058Z"
+    },
+    {
+      "dealId": "427753638122",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T22:40:06.899Z"
+    },
+    {
+      "dealId": "427753638126",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T22:50:02.968Z"
+    },
+    {
+      "dealId": "427753638129",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T22:50:06.100Z"
+    },
+    {
+      "dealId": "427753638133",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T22:50:09.204Z"
+    },
+    {
+      "dealId": "427753639104",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T22:50:12.253Z"
+    },
+    {
+      "dealId": "427753639106",
+      "email": "peters.michael@roehm.com",
+      "sentAt": "2026-01-16T22:50:15.346Z"
+    },
+    {
+      "dealId": "427753639107",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T23:00:03.089Z"
+    },
+    {
+      "dealId": "427753639108",
+      "email": "sebastian.martin@datev.de",
+      "sentAt": "2026-01-16T23:00:06.252Z"
+    },
+    {
+      "dealId": "427753639120",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T23:00:09.402Z"
+    },
+    {
+      "dealId": "427753639127",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-16T23:00:12.695Z"
+    },
+    {
+      "dealId": "427753639142",
+      "email": "a.hartmann@blg-logistics.com",
+      "sentAt": "2026-01-16T23:10:02.975Z"
+    },
+    {
+      "dealId": "427753639144",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-16T23:10:06.115Z"
+    },
+    {
+      "dealId": "427810094273",
+      "email": "d.friedrich@hellmann.com",
+      "sentAt": "2026-01-16T23:10:09.767Z"
+    },
+    {
+      "dealId": "427810094285",
+      "email": "marcob@strabag.com",
+      "sentAt": "2026-01-16T23:20:03.526Z"
+    },
+    {
+      "dealId": "427810094286",
+      "email": "sommer.vanessa@festo.com",
+      "sentAt": "2026-01-16T23:20:06.900Z"
+    },
+    {
+      "dealId": "427810094296",
+      "email": "elisabethk@dbschenker.com",
+      "sentAt": "2026-01-16T23:20:10.174Z"
+    },
+    {
+      "dealId": "427810095293",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-16T23:20:13.491Z"
+    },
+    {
+      "dealId": "427810095295",
+      "email": "probert@smarthomeag.com",
+      "sentAt": "2026-01-16T23:20:16.724Z"
+    },
+    {
+      "dealId": "427810095319",
+      "email": "f.peters@heidelberg.com",
+      "sentAt": "2026-01-16T23:30:03.101Z"
+    },
+    {
+      "dealId": "428157781224",
+      "email": "schwarz.christian@draexlmaier.com",
+      "sentAt": "2026-01-16T23:30:06.223Z"
+    },
+    {
+      "dealId": "428157781238",
+      "email": "w.martin@goldbeck.de",
+      "sentAt": "2026-01-16T23:30:09.315Z"
+    },
+    {
+      "dealId": "428071988441",
+      "email": "i.winter@obi.de",
+      "sentAt": "2026-01-16T23:30:12.354Z"
+    },
+    {
+      "dealId": "428105515239",
+      "email": "k.hofmann@mahle.com",
+      "sentAt": "2026-01-16T23:30:15.595Z"
+    },
+    {
+      "dealId": "428105516241",
+      "email": "max.muller@patrizia.ag",
+      "sentAt": "2026-01-16T23:40:02.951Z"
+    },
+    {
+      "dealId": "427416957114",
+      "email": "s.winter@all-for-one.com",
+      "sentAt": "2026-01-16T23:40:06.121Z"
+    },
+    {
+      "dealId": "427416957139",
+      "email": "lars.baumann@rwe.com",
+      "sentAt": "2026-01-16T23:40:09.230Z"
+    },
+    {
+      "dealId": "428252274912",
+      "email": "inesm@porr.de",
+      "sentAt": "2026-01-16T23:40:12.337Z"
+    },
+    {
+      "dealId": "428252275905",
+      "email": "g.wolf@wago.com",
+      "sentAt": "2026-01-16T23:40:15.447Z"
+    },
+    {
+      "dealId": "428252275922",
+      "email": "andrea.schwarz@krones.com",
+      "sentAt": "2026-01-16T23:50:02.954Z"
+    },
+    {
+      "dealId": "428252275954",
+      "email": "klausf@leg-wohnen.de",
+      "sentAt": "2026-01-16T23:50:06.173Z"
+    },
+    {
+      "dealId": "427971576028",
+      "email": "tobiass@snpgroup.com",
+      "sentAt": "2026-01-16T23:50:09.417Z"
+    },
+    {
+      "dealId": "427971576057",
+      "email": "p.meier@dachser.com",
+      "sentAt": "2026-01-16T23:50:12.489Z"
+    },
+    {
+      "dealId": "427971577034",
+      "email": "leak@k-plus-s.com",
+      "sentAt": "2026-01-16T23:50:15.578Z"
+    },
+    {
+      "dealId": "427971576027",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-17T00:00:03.194Z"
+    },
+    {
+      "dealId": "427971576041",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-17T00:00:06.705Z"
+    },
+    {
+      "dealId": "427971577070",
+      "email": "jean@manufacturingin.com",
+      "sentAt": "2026-01-17T00:00:10.333Z"
+    },
+    {
+      "dealId": "428136045799",
+      "email": "j.hartmann@deichmann.com",
+      "sentAt": "2026-01-17T00:00:13.448Z"
+    },
+    {
+      "dealId": "428136045810",
+      "email": "hartmann.julia@nordex-online.com",
+      "sentAt": "2026-01-17T00:10:02.986Z"
+    },
+    {
+      "dealId": "428136045815",
+      "email": "roth.fabian@symrise.com",
+      "sentAt": "2026-01-17T00:10:06.101Z"
+    },
+    {
+      "dealId": "428032500948",
+      "email": "muller.alexandra@nagarro.com",
+      "sentAt": "2026-01-17T00:10:09.246Z"
+    },
+    {
+      "dealId": "428032500984",
+      "email": "carolinl@schulergroup.com",
+      "sentAt": "2026-01-17T00:10:12.354Z"
+    },
+    {
+      "dealId": "428043290869",
+      "email": "stefanieb@dm.de",
+      "sentAt": "2026-01-17T00:10:15.478Z"
+    },
+    {
+      "dealId": "428043291842",
+      "email": "k.hofmann@mahle.com",
+      "sentAt": "2026-01-17T00:20:02.979Z"
+    },
+    {
+      "dealId": "427753646270",
+      "email": "contact@iotinc.com",
+      "sentAt": "2026-01-17T00:20:06.135Z"
+    },
+    {
+      "dealId": "427753646275",
+      "email": "larsl@vonovia.de",
+      "sentAt": "2026-01-17T00:20:09.254Z"
+    },
+    {
+      "dealId": "427753646284",
+      "email": "max.lehmann@adesso.de",
+      "sentAt": "2026-01-17T00:20:12.372Z"
+    },
+    {
+      "dealId": "427753646308",
+      "email": "marco.maier@union-investment.de",
+      "sentAt": "2026-01-17T00:20:15.503Z"
+    },
+    {
+      "dealId": "428061192431",
+      "email": "susanne.gunther@fuchs.com",
+      "sentAt": "2026-01-17T00:30:03.101Z"
+    },
+    {
+      "dealId": "428061193439",
+      "email": "i.winter@obi.de",
+      "sentAt": "2026-01-17T00:30:06.174Z"
+    },
+    {
+      "dealId": "428061193450",
+      "email": "georgs@bayernlb.de",
+      "sentAt": "2026-01-17T00:30:09.314Z"
+    },
+    {
+      "dealId": "428061193453",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-17T00:30:12.469Z"
+    },
+    {
+      "dealId": "428105521376",
+      "email": "melanie.klein@ww-ag.com",
+      "sentAt": "2026-01-17T00:30:15.533Z"
+    },
+    {
+      "dealId": "428105522382",
+      "email": "p.meier@dachser.com",
+      "sentAt": "2026-01-17T00:40:02.974Z"
+    },
+    {
+      "dealId": "428105522387",
+      "email": "bohm.katja@hapag-lloyd.com",
+      "sentAt": "2026-01-17T00:40:06.072Z"
+    },
+    {
+      "dealId": "428088170740",
+      "email": "christina.schroder@dmgmori.com",
+      "sentAt": "2026-01-17T00:40:09.184Z"
+    },
+    {
+      "dealId": "428088171706",
+      "email": "melanie.klein@ww-ag.com",
+      "sentAt": "2026-01-17T00:40:12.263Z"
+    },
+    {
+      "dealId": "428088171715",
+      "email": "s.hoffmann@noratis.de",
+      "sentAt": "2026-01-17T00:40:15.388Z"
+    },
+    {
+      "dealId": "428088171761",
+      "email": "l.schmitz@merckgroup.com",
+      "sentAt": "2026-01-17T00:50:02.922Z"
+    },
+    {
+      "dealId": "428088172745",
+      "email": "bauer.klaus@dzbank.de",
+      "sentAt": "2026-01-17T00:50:06.026Z"
+    },
+    {
+      "dealId": "428088172754",
+      "email": "schwarz.christian@draexlmaier.com",
+      "sentAt": "2026-01-17T00:50:09.096Z"
+    },
+    {
+      "dealId": "427753648354",
+      "email": "lorenz.kerstin@clariant.com",
+      "sentAt": "2026-01-17T00:50:12.264Z"
+    },
+    {
+      "dealId": "427753649354",
+      "email": "simon.ursula@mediamarktsaturn.com",
+      "sentAt": "2026-01-17T00:50:15.405Z"
+    },
+    {
+      "dealId": "428250486995",
+      "email": "s.schafer@draeger.com",
+      "sentAt": "2026-01-17T01:00:03.126Z"
+    },
+    {
+      "dealId": "428250486998",
+      "email": "simone.wagner@enercon.de",
+      "sentAt": "2026-01-17T01:00:06.320Z"
+    },
+    {
+      "dealId": "428250487008",
+      "email": "claudiav@wolff-mueller.de",
+      "sentAt": "2026-01-17T01:00:09.914Z"
+    },
+    {
+      "dealId": "428250488011",
+      "email": "markusn@pilz.com",
+      "sentAt": "2026-01-17T01:00:13.065Z"
+    },
+    {
+      "dealId": "428207268047",
+      "email": "nicolew@endress.com",
+      "sentAt": "2026-01-17T01:00:16.174Z"
+    },
+    {
+      "dealId": "428207268050",
+      "email": "peters.michael@roehm.com",
+      "sentAt": "2026-01-17T01:10:02.979Z"
+    },
+    {
+      "dealId": "427540838645",
+      "email": "ines.jager@altana.com",
+      "sentAt": "2026-01-17T01:10:06.024Z"
+    },
+    {
+      "dealId": "427540839614",
+      "email": "max.lehmann@adesso.de",
+      "sentAt": "2026-01-17T01:10:09.133Z"
+    },
+    {
+      "dealId": "427540839630",
+      "email": "leak@k-plus-s.com",
+      "sentAt": "2026-01-17T01:10:12.262Z"
+    },
+    {
+      "dealId": "427540839635",
+      "email": "c.schroder@softwareag.com",
+      "sentAt": "2026-01-17T01:10:15.386Z"
+    },
+    {
+      "dealId": "427753658584",
+      "email": "friedrich.matthias@sick.com",
+      "sentAt": "2026-01-17T01:20:03.070Z"
+    },
+    {
+      "dealId": "427753658612",
+      "email": "j.schmidt@zf.com",
+      "sentAt": "2026-01-17T01:20:06.177Z"
+    },
+    {
+      "dealId": "427753658615",
+      "email": "ulrike.schuster@beckhoff.com",
+      "sentAt": "2026-01-17T01:20:09.314Z"
+    },
+    {
+      "dealId": "427753659596",
+      "email": "katja.stein@fresenius.com",
+      "sentAt": "2026-01-17T01:20:12.424Z"
+    },
+    {
+      "dealId": "427753659621",
+      "email": "janav@leonhard-weiss.de",
+      "sentAt": "2026-01-17T01:20:15.554Z"
+    },
+    {
+      "dealId": "427753659627",
+      "email": "elisabethk@dbschenker.com",
+      "sentAt": "2026-01-17T01:40:02.986Z"
+    },
+    {
+      "dealId": "427172329691",
+      "email": "katja.stein@fresenius.com",
+      "sentAt": "2026-01-17T01:40:06.112Z"
+    },
+    {
+      "dealId": "427172329698",
+      "email": "lars.baumann@rwe.com",
+      "sentAt": "2026-01-17T01:40:09.147Z"
+    },
+    {
+      "dealId": "427172329703",
+      "email": "h.martin@dhl.com",
+      "sentAt": "2026-01-17T01:40:12.613Z"
+    },
+    {
+      "dealId": "427172329712",
+      "email": "schwarz.christian@draexlmaier.com",
+      "sentAt": "2026-01-17T01:40:15.708Z"
+    },
+    {
+      "dealId": "426725632240",
+      "email": "tobias.konig@implenia.com",
+      "sentAt": "2026-01-17T01:50:03.000Z"
+    },
+    {
+      "dealId": "426725633232",
+      "email": "j.schmidt@zf.com",
+      "sentAt": "2026-01-17T01:50:06.149Z"
+    },
+    {
+      "dealId": "426725633238",
+      "email": "d.jager@rossmann.de",
+      "sentAt": "2026-01-17T01:50:09.201Z"
+    },
+    {
+      "dealId": "426725633268",
+      "email": "l.huber@elringklinger.com",
+      "sentAt": "2026-01-17T01:50:12.277Z"
+    },
+    {
+      "dealId": "426725634254",
+      "email": "s.schafer@draeger.com",
+      "sentAt": "2026-01-17T01:50:15.402Z"
+    },
+    {
+      "dealId": "426918040764",
+      "email": "albrecht.nicole@dic-asset.de",
+      "sentAt": "2026-01-17T02:10:02.900Z"
+    },
+    {
+      "dealId": "426918040766",
+      "email": "c.seidel@lbbw.de",
+      "sentAt": "2026-01-17T02:10:06.019Z"
+    },
+    {
+      "dealId": "426918040768",
+      "email": "l.schmitz@merckgroup.com",
+      "sentAt": "2026-01-17T02:10:09.112Z"
+    },
+    {
+      "dealId": "426918040825",
+      "email": "sarahs@sma.de",
+      "sentAt": "2026-01-17T02:10:12.200Z"
+    },
+    {
+      "dealId": "428043303145",
+      "email": "susanne.gunther@fuchs.com",
+      "sentAt": "2026-01-17T02:10:15.288Z"
+    },
+    {
+      "dealId": "428043303161",
+      "email": "h.martin@dhl.com",
+      "sentAt": "2026-01-17T02:20:02.881Z"
+    },
+    {
+      "dealId": "428043304147",
+      "email": "carolinl@schulergroup.com",
+      "sentAt": "2026-01-17T02:20:05.994Z"
+    },
+    {
+      "dealId": "428027137258",
+      "email": "katharinas@metroag.de",
+      "sentAt": "2026-01-17T02:20:09.134Z"
+    },
+    {
+      "dealId": "428027138236",
+      "email": "s.hoffmann@noratis.de",
+      "sentAt": "2026-01-17T02:20:12.243Z"
+    },
+    {
+      "dealId": "428027138237",
+      "email": "b.martin@kuka.com",
+      "sentAt": "2026-01-17T02:20:15.326Z"
+    },
+    {
+      "dealId": "428027138245",
+      "email": "s.hoffmann@noratis.de",
+      "sentAt": "2026-01-17T02:40:03.047Z"
+    },
+    {
+      "dealId": "428205480127",
+      "email": "d.friedrich@hellmann.com",
+      "sentAt": "2026-01-17T02:40:06.089Z"
+    },
+    {
+      "dealId": "428205480139",
+      "email": "schafer.christian@thyssenkrupp.com",
+      "sentAt": "2026-01-17T02:40:09.203Z"
+    },
+    {
+      "dealId": "428205480146",
+      "email": "larsw@hella.com",
+      "sentAt": "2026-01-17T02:40:12.280Z"
+    },
+    {
+      "dealId": "428205480148",
+      "email": "kohler.tim@teamviewer.com",
+      "sentAt": "2026-01-17T02:40:15.416Z"
     }
   ],
   "failedEmails": [],
   "stats": {
-    "total": 60,
-    "sent": 52,
+    "total": 395,
+    "sent": 341,
     "failed": 0,
-    "skipped": 8
+    "skipped": 54
   },
-  "lastRun": "2026-01-16T03:00:00.245Z"
+  "lastRun": "2026-01-17T03:00:00.566Z"
 }
