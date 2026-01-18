@@ -83,15 +83,75 @@
       "type": "hard",
       "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Wüstenrot & Württembergische - Energy Management",
       "processedAt": "2026-01-17T00:15:00.585Z"
+    },
+    {
+      "email": "j.hartmann@deichmann.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Deichmann SE - Industry 4.0",
+      "processedAt": "2026-01-18T00:00:00.622Z"
+    },
+    {
+      "email": "c.schroder@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Enterprise Universe - Projektbestätigung SOFTWARE - OmegaConnect SRL",
+      "processedAt": "2026-01-18T00:00:01.916Z"
+    },
+    {
+      "email": "hartmann.julia@nordex-online.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Nordex SE - Smart Building Automation",
+      "processedAt": "2026-01-18T00:00:02.968Z"
+    },
+    {
+      "email": "roth.fabian@symrise.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Symrise AG - Cloud Migration",
+      "processedAt": "2026-01-18T00:00:04.020Z"
+    },
+    {
+      "email": "muller.alexandra@nagarro.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung Nagarro SE - Energy Management",
+      "processedAt": "2026-01-18T00:00:05.071Z"
+    },
+    {
+      "email": "carolinl@schulergroup.com",
+      "type": "hard",
+      "subject": "Delivery Status Notification (Failure)",
+      "processedAt": "2026-01-18T00:00:06.151Z"
+    },
+    {
+      "email": "stefanieb@dm.de",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung dm-drogerie markt - IoT Integration",
+      "processedAt": "2026-01-18T00:00:07.203Z"
+    },
+    {
+      "email": "peter.weber@test.de",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-18T00:00:08.258Z"
+    },
+    {
+      "email": "anna.mueller@test.de",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-18T00:00:09.310Z"
+    },
+    {
+      "email": "contact@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: Enterprise Universe - Projektbestätigung IOT - CyberLabs GmbH",
+      "processedAt": "2026-01-18T00:15:00.611Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 14,
+    "total": 24,
     "retried": 2,
-    "failed": 3,
-    "permanent": 9
+    "failed": 5,
+    "permanent": 17
   },
-  "lastRun": "2026-01-17T02:45:01.226Z"
+  "lastRun": "2026-01-18T03:00:01.406Z"
 }
