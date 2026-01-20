@@ -4,7 +4,504 @@
 
         const API_BASE = '/api/v1';
 
-        // Tab Switching
+        // ═══════════════════════════════════════════════════════════════
+        // ENHANCED ERROR HANDLING & API SERVICE
+        // ═══════════════════════════════════════════════════════════════
+
+        class ApiService {
+            static async fetch(endpoint, options = {}) {
+                const controller = new AbortController();
+                const timeout = options.timeout || 15000;
+                const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+                const defaultOptions = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    signal: controller.signal
+                };
+
+                try {
+                    const response = await fetch(endpoint, { ...defaultOptions, ...options });
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new ApiError(
+                            errorData.message || `HTTP ${response.status}`,
+                            response.status,
+                            errorData
+                        );
+                    }
+
+                    return await response.json();
+                } catch (error) {
+                    clearTimeout(timeoutId);
+
+                    if (error.name === 'AbortError') {
+                        throw new ApiError('Zeitüberschreitung der Anfrage', 408);
+                    }
+                    if (error instanceof ApiError) throw error;
+                    throw new ApiError(error.message || 'Netzwerkfehler', 0);
+                }
+            }
+
+            static async fetchWithRetry(endpoint, options = {}, retries = 2) {
+                for (let attempt = 0; attempt <= retries; attempt++) {
+                    try {
+                        return await this.fetch(endpoint, options);
+                    } catch (error) {
+                        if (attempt === retries || error.status === 401 || error.status === 403) {
+                            throw error;
+                        }
+                        await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+                    }
+                }
+            }
+        }
+
+        class ApiError extends Error {
+            constructor(message, status, data = {}) {
+                super(message);
+                this.name = 'ApiError';
+                this.status = status;
+                this.data = data;
+            }
+
+            getUserMessage() {
+                const messages = {
+                    0: 'Keine Verbindung zum Server. Bitte prüfen Sie Ihre Internetverbindung.',
+                    400: 'Ungültige Anfrage. Bitte überprüfen Sie Ihre Eingaben.',
+                    401: 'Sitzung abgelaufen. Bitte erneut anmelden.',
+                    403: 'Keine Berechtigung für diese Aktion.',
+                    404: 'Die angeforderten Daten wurden nicht gefunden.',
+                    408: 'Zeitüberschreitung. Der Server antwortet nicht.',
+                    429: 'Zu viele Anfragen. Bitte warten Sie einen Moment.',
+                    500: 'Serverfehler. Bitte versuchen Sie es später erneut.',
+                    502: 'Server nicht erreichbar. Bitte versuchen Sie es später erneut.',
+                    503: 'Service vorübergehend nicht verfügbar.'
+                };
+                return messages[this.status] || this.message || 'Ein unbekannter Fehler ist aufgetreten.';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // LOADING STATE MANAGER - Visual Feedback for Data Operations
+        // ═══════════════════════════════════════════════════════════════
+
+        const LoadingState = {
+            activeLoaders: new Map(),
+            minDisplayTime: 300, // Prevent flickering for fast loads
+
+            // CSS styles for loading components (injected once)
+            _stylesInjected: false,
+            injectStyles() {
+                if (this._stylesInjected) return;
+                const style = document.createElement('style');
+                style.textContent = `
+                    .loading-overlay {
+                        position: absolute;
+                        top: 0; left: 0; right: 0; bottom: 0;
+                        background: rgba(10, 10, 18, 0.85);
+                        backdrop-filter: blur(4px);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 100;
+                        border-radius: inherit;
+                        transition: opacity 0.3s ease;
+                    }
+                    .loading-overlay.fade-out { opacity: 0; pointer-events: none; }
+                    .loading-spinner {
+                        width: 40px; height: 40px;
+                        border: 3px solid rgba(139, 92, 246, 0.2);
+                        border-top-color: #8b5cf6;
+                        border-radius: 50%;
+                        animation: spin 0.8s linear infinite;
+                    }
+                    .loading-spinner.small { width: 20px; height: 20px; border-width: 2px; }
+                    .loading-spinner.large { width: 60px; height: 60px; border-width: 4px; }
+                    .loading-text {
+                        margin-top: 12px;
+                        color: #a78bfa;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                    @keyframes spin { to { transform: rotate(360deg); } }
+                    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.7; } }
+                    .skeleton {
+                        background: linear-gradient(90deg, rgba(139,92,246,0.1) 25%, rgba(139,92,246,0.2) 50%, rgba(139,92,246,0.1) 75%);
+                        background-size: 200% 100%;
+                        animation: skeleton-shimmer 1.5s infinite;
+                        border-radius: 8px;
+                    }
+                    @keyframes skeleton-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+                    .skeleton-text { height: 16px; margin-bottom: 8px; }
+                    .skeleton-text.short { width: 40%; }
+                    .skeleton-text.medium { width: 70%; }
+                    .skeleton-text.full { width: 100%; }
+                    .skeleton-card { height: 100px; width: 100%; }
+                    .skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; }
+                    .skeleton-stat { height: 48px; width: 80px; }
+                    .btn-loading {
+                        position: relative;
+                        color: transparent !important;
+                        pointer-events: none;
+                    }
+                    .btn-loading::after {
+                        content: '';
+                        position: absolute;
+                        width: 18px; height: 18px;
+                        top: 50%; left: 50%;
+                        margin: -9px 0 0 -9px;
+                        border: 2px solid rgba(255,255,255,0.3);
+                        border-top-color: white;
+                        border-radius: 50%;
+                        animation: spin 0.6s linear infinite;
+                    }
+                `;
+                document.head.appendChild(style);
+                this._stylesInjected = true;
+            },
+
+            // Show loading overlay on a container
+            show(containerId, message = 'Laden...') {
+                this.injectStyles();
+                const container = typeof containerId === 'string'
+                    ? document.getElementById(containerId)
+                    : containerId;
+                if (!container) return null;
+
+                // Ensure container has position for absolute overlay
+                const pos = getComputedStyle(container).position;
+                if (pos === 'static') container.style.position = 'relative';
+
+                // Remove existing overlay if any
+                this.hide(containerId);
+
+                const overlay = document.createElement('div');
+                overlay.className = 'loading-overlay';
+                overlay.dataset.loadingId = typeof containerId === 'string' ? containerId : container.id || 'anon';
+
+                const spinner = document.createElement('div');
+                spinner.className = 'loading-spinner';
+                overlay.appendChild(spinner);
+
+                if (message) {
+                    const text = document.createElement('div');
+                    text.className = 'loading-text';
+                    text.textContent = message;
+                    overlay.appendChild(text);
+                }
+
+                container.appendChild(overlay);
+                const startTime = Date.now();
+                this.activeLoaders.set(overlay.dataset.loadingId, { overlay, startTime });
+                return overlay;
+            },
+
+            // Hide loading overlay with minimum display time
+            async hide(containerId) {
+                const id = typeof containerId === 'string' ? containerId : (containerId?.id || 'anon');
+                const loader = this.activeLoaders.get(id);
+                if (!loader) return;
+
+                const elapsed = Date.now() - loader.startTime;
+                if (elapsed < this.minDisplayTime) {
+                    await new Promise(r => setTimeout(r, this.minDisplayTime - elapsed));
+                }
+
+                loader.overlay.classList.add('fade-out');
+                setTimeout(() => loader.overlay.remove(), 300);
+                this.activeLoaders.delete(id);
+            },
+
+            // Set button to loading state
+            buttonLoading(button, loading = true) {
+                if (typeof button === 'string') button = document.getElementById(button);
+                if (!button) return;
+
+                if (loading) {
+                    button.classList.add('btn-loading');
+                    button.dataset.originalText = button.textContent;
+                    button.disabled = true;
+                } else {
+                    button.classList.remove('btn-loading');
+                    if (button.dataset.originalText) {
+                        button.textContent = button.dataset.originalText;
+                    }
+                    button.disabled = false;
+                }
+            },
+
+            // Create skeleton loader for lists
+            createSkeletonList(count = 3, container) {
+                this.injectStyles();
+                const wrapper = document.createElement('div');
+                for (let i = 0; i < count; i++) {
+                    const item = document.createElement('div');
+                    item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px;margin-bottom:8px;';
+
+                    const avatar = document.createElement('div');
+                    avatar.className = 'skeleton skeleton-avatar';
+                    item.appendChild(avatar);
+
+                    const textContainer = document.createElement('div');
+                    textContainer.style.flex = '1';
+
+                    const line1 = document.createElement('div');
+                    line1.className = 'skeleton skeleton-text medium';
+                    textContainer.appendChild(line1);
+
+                    const line2 = document.createElement('div');
+                    line2.className = 'skeleton skeleton-text short';
+                    textContainer.appendChild(line2);
+
+                    item.appendChild(textContainer);
+                    wrapper.appendChild(item);
+                }
+
+                if (container) {
+                    if (typeof container === 'string') container = document.getElementById(container);
+                    if (container) {
+                        container.innerHTML = '';
+                        container.appendChild(wrapper);
+                    }
+                }
+                return wrapper;
+            },
+
+            // Create skeleton for stat cards
+            createSkeletonStats(count = 4, container) {
+                this.injectStyles();
+                const wrapper = document.createElement('div');
+                wrapper.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;';
+
+                for (let i = 0; i < count; i++) {
+                    const card = document.createElement('div');
+                    card.style.cssText = 'padding:20px;background:rgba(255,255,255,0.03);border-radius:12px;';
+
+                    const label = document.createElement('div');
+                    label.className = 'skeleton skeleton-text short';
+                    label.style.marginBottom = '12px';
+                    card.appendChild(label);
+
+                    const value = document.createElement('div');
+                    value.className = 'skeleton skeleton-stat';
+                    card.appendChild(value);
+
+                    wrapper.appendChild(card);
+                }
+
+                if (container) {
+                    if (typeof container === 'string') container = document.getElementById(container);
+                    if (container) {
+                        container.innerHTML = '';
+                        container.appendChild(wrapper);
+                    }
+                }
+                return wrapper;
+            },
+
+            // Inline spinner for text elements
+            inlineSpinner(size = 'small') {
+                this.injectStyles();
+                const spinner = document.createElement('span');
+                spinner.className = `loading-spinner ${size}`;
+                spinner.style.display = 'inline-block';
+                spinner.style.verticalAlign = 'middle';
+                spinner.style.marginLeft = '8px';
+                return spinner;
+            }
+        };
+
+        // Helper function: wrap async operations with loading state
+        async function withLoading(containerId, asyncFn, message = 'Laden...') {
+            LoadingState.show(containerId, message);
+            try {
+                return await asyncFn();
+            } finally {
+                await LoadingState.hide(containerId);
+            }
+        }
+
+        // Helper function: wrap button click with loading state
+        async function withButtonLoading(button, asyncFn) {
+            LoadingState.buttonLoading(button, true);
+            try {
+                return await asyncFn();
+            } finally {
+                LoadingState.buttonLoading(button, false);
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // REFRESH MANAGER - Consolidated Interval Management
+        // ═══════════════════════════════════════════════════════════════
+
+        const RefreshManager = {
+            intervals: new Map(),
+            isPaused: false,
+
+            tasks: {
+                dashboard: { fn: 'loadDashboardData', interval: 30000 },
+                notifications: { fn: 'loadNotifications', interval: 60000 },
+                activities: { fn: 'loadActivities', interval: 15000 },
+                hubspot: { fn: 'loadHubSpotStats', interval: 60000 },
+                leadDiscovery: { fn: 'loadLeadDiscoveryStatus', interval: 30000 },
+                activeDeals: { fn: 'loadActiveDeals', interval: 60000 }
+            },
+
+            start() {
+                Object.entries(this.tasks).forEach(([name, task]) => {
+                    if (this.intervals.has(name)) return;
+                    const intervalId = setInterval(() => {
+                        if (!this.isPaused && typeof window[task.fn] === 'function') {
+                            window[task.fn]().catch(e => console.warn(`[RefreshManager] ${name} error:`, e.message));
+                        }
+                    }, task.interval);
+                    this.intervals.set(name, intervalId);
+                });
+                console.log('[RefreshManager] Started with', this.intervals.size, 'tasks');
+            },
+
+            stop() {
+                this.intervals.forEach((id, name) => {
+                    clearInterval(id);
+                    console.log(`[RefreshManager] Stopped: ${name}`);
+                });
+                this.intervals.clear();
+            },
+
+            pause() {
+                this.isPaused = true;
+                console.log('[RefreshManager] Paused');
+            },
+
+            resume() {
+                this.isPaused = false;
+                console.log('[RefreshManager] Resumed');
+            },
+
+            refreshNow(taskName) {
+                const task = this.tasks[taskName];
+                if (task && typeof window[task.fn] === 'function') {
+                    return window[task.fn]();
+                }
+            }
+        };
+
+        // Pause refreshes when tab is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                RefreshManager.pause();
+            } else {
+                RefreshManager.resume();
+                // Refresh critical data when returning
+                RefreshManager.refreshNow('dashboard');
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // KEYBOARD SHORTCUTS
+        // ═══════════════════════════════════════════════════════════════
+
+        const KeyboardShortcuts = {
+            shortcuts: {
+                // Tab navigation: Alt + Number
+                'Alt+1': () => switchTab('dashboard'),
+                'Alt+2': () => switchTab('crm'),
+                'Alt+3': () => switchTab('leads'),
+                'Alt+4': () => switchTab('deals'),
+                'Alt+5': () => switchTab('email'),
+                'Alt+6': () => switchTab('agents'),
+                'Alt+7': () => switchTab('analytics'),
+                'Alt+8': () => switchTab('finance'),
+                'Alt+9': () => switchTab('settings'),
+
+                // Actions
+                'Alt+r': () => refreshCurrentTab(),      // Refresh current tab
+                'Alt+n': () => toggleNotifications(), // Toggle notifications
+                'Alt+s': () => {
+                    // Focus the search input in the current active tab
+                    const activeTab = document.querySelector('.tab-content.active');
+                    const searchInput = activeTab?.querySelector('input[type="text"][id*="earch"], input[type="search"]');
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+                }, // Focus search in current tab
+                'Alt+w': () => switchTab('whatsapp'),   // WhatsApp
+                'Alt+p': () => switchTab('payments'),   // Payments
+                'Alt+i': () => switchTab('invoices'),   // Invoices
+
+                // Power modes
+                'Alt+g': () => switchTab('godmode'),    // GOD Mode
+                'Alt+h': () => switchTab('hakai'),      // HAKAI Mode
+                'Alt+y': () => switchTab('prophecy'),   // Prophecy
+
+                // Escape closes panels
+                'Escape': () => {
+                    document.getElementById('notificationsPanel')?.remove();
+                    document.querySelector('.modal-backdrop')?.remove();
+                }
+            },
+
+            init() {
+                document.addEventListener('keydown', (e) => {
+                    // Don't trigger shortcuts when typing in inputs
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                        if (e.key === 'Escape') {
+                            e.target.blur();
+                        }
+                        return;
+                    }
+
+                    // Build key combination string
+                    let key = '';
+                    if (e.altKey) key += 'Alt+';
+                    if (e.ctrlKey) key += 'Ctrl+';
+                    if (e.shiftKey) key += 'Shift+';
+                    key += e.key;
+
+                    const handler = this.shortcuts[key];
+                    if (handler) {
+                        e.preventDefault();
+                        handler();
+                    }
+                });
+
+                console.log('[Shortcuts] Initialized - Press Alt+? for help');
+            },
+
+            showHelp() {
+                const helpContent = [
+                    { key: 'Alt + 1-9', action: 'Schneller Tab-Wechsel' },
+                    { key: 'Alt + R', action: 'Tab aktualisieren' },
+                    { key: 'Alt + N', action: 'Benachrichtigungen' },
+                    { key: 'Alt + S', action: 'Suche fokussieren' },
+                    { key: 'Alt + G', action: 'GOD Mode' },
+                    { key: 'Alt + H', action: 'HAKAI Mode' },
+                    { key: 'Alt + Y', action: 'Prophecy' },
+                    { key: 'Escape', action: 'Panels schließen' }
+                ];
+                console.table(helpContent);
+                return helpContent;
+            }
+        };
+
+        // Initialize shortcuts on load
+        document.addEventListener('DOMContentLoaded', () => KeyboardShortcuts.init());
+
+        // ═══════════════════════════════════════════════════════════════
+        // TAB SWITCHING
+        // ═══════════════════════════════════════════════════════════════
+
+        // Track which tabs have been initialized (for lazy loading)
+        const initializedTabs = new Set(['dashboard']); // Dashboard loads on page init
+
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -35,17 +532,114 @@
                 'analytics': 'Analytics',
                 'finance': 'Finance Hub',
                 'reports': 'Reports',
+                'invoices': 'Rechnungen',
                 'settings': 'Settings'
             };
             document.getElementById('pageTitle').textContent = titleMap[tabId] || tabId.charAt(0).toUpperCase() + tabId.slice(1);
 
-            // Tab-specific initialization
-            if (tabId === 'whatsapp') {
+            // Tab-specific initialization (lazy loading)
+            initializeTab(tabId);
+        }
+
+        // Lazy loading initializers for each tab
+        const tabInitializers = {
+            dashboard: async () => {
+                await loadDashboardData();
+            },
+            crm: async () => {
+                await Promise.all([loadHubSpotStats(), loadActivities()]);
+            },
+            leads: async () => {
+                await Promise.all([loadLeadDiscoveryStatus(), loadRecentLeads()]);
+            },
+            deals: async () => {
+                await loadDealsFromHubSpot();
+            },
+            email: async () => {
+                // Email tab uses loadActivities which is loaded on init
+                if (typeof loadEmailStats === 'function') await loadEmailStats();
+            },
+            agents: async () => {
+                generateAgents();
+            },
+            analytics: async () => {
+                // Analytics uses same data as dashboard
+                await loadDashboardData();
+            },
+            finance: async () => {
+                if (typeof loadFinanceData === 'function') await loadFinanceData();
+            },
+            whatsapp: async () => {
                 initWhatsAppTab();
-            } else if (tabId === 'deals') {
-                loadDealsFromHubSpot();
-            } else if (tabId === 'payments') {
+            },
+            godmode: async () => {
+                // GOD Mode loads on demand
+            },
+            prophecy: async () => {
+                // Prophecy generates when clicked
+            },
+            hakai: async () => {
+                // Hakai mode - special
+            },
+            reports: async () => {
+                // Reports generate on demand
+            },
+            invoices: async () => {
+                await loadInvoices();
+            },
+            payments: async () => {
                 initPaymentsTab();
+            },
+            settings: async () => {
+                await loadSettingsStatus();
+            }
+        };
+
+        async function initializeTab(tabId) {
+            // Skip if already initialized (lazy loading)
+            if (initializedTabs.has(tabId)) return;
+
+            const initializer = tabInitializers[tabId];
+            if (initializer) {
+                const tabContainer = document.getElementById('tab-' + tabId);
+                const loadingMessages = {
+                    dashboard: 'Dashboard laden...',
+                    crm: 'CRM Daten laden...',
+                    leads: 'Leads laden...',
+                    deals: 'Deals laden...',
+                    email: 'E-Mail Daten laden...',
+                    agents: 'Agenten initialisieren...',
+                    analytics: 'Analytics laden...',
+                    finance: 'Finanzdaten laden...',
+                    whatsapp: 'WhatsApp verbinden...',
+                    invoices: 'Rechnungen laden...',
+                    payments: 'Zahlungen laden...',
+                    settings: 'Einstellungen laden...'
+                };
+
+                try {
+                    console.log(`[Tab] Initializing: ${tabId}`);
+                    LoadingState.show(tabContainer, loadingMessages[tabId] || 'Laden...');
+                    await initializer();
+                    initializedTabs.add(tabId);
+                } catch (error) {
+                    console.warn(`[Tab] ${tabId} init error:`, error.message);
+                    showNotification(`Fehler beim Laden von ${tabId}: ${error.message}`, 'error');
+                    // Don't add to initializedTabs so it can retry
+                } finally {
+                    await LoadingState.hide(tabContainer);
+                }
+            }
+        }
+
+        // Force refresh current tab data
+        async function refreshCurrentTab() {
+            const activeTab = document.querySelector('.tab-content.active');
+            if (activeTab) {
+                const tabId = activeTab.id.replace('tab-', '');
+                initializedTabs.delete(tabId); // Clear so it reloads
+                await initializeTab(tabId);
+                showNotification(`${tabId} aktualisiert`, 'success', 2000);
             }
         }
 
@@ -1220,38 +1814,151 @@
             }
         }
 
-        function showNotification(message, type = 'info') {
-            const colors = {
-                success: 'bg-emerald-50 border-emerald-200 text-emerald-700',
-                error: 'bg-red-50 border-red-200 text-red-700',
-                warning: 'bg-amber-50 border-amber-200 text-amber-700',
-                info: 'bg-blue-50 border-blue-200 text-blue-700'
+        // Notification container for stacking
+        let notificationContainer = null;
+
+        function getNotificationContainer() {
+            if (!notificationContainer || !document.body.contains(notificationContainer)) {
+                notificationContainer = document.createElement('div');
+                notificationContainer.id = 'notification-container';
+                notificationContainer.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:99999;display:flex;flex-direction:column-reverse;gap:10px;max-height:80vh;overflow-y:auto;pointer-events:none;';
+                document.body.appendChild(notificationContainer);
+            }
+            return notificationContainer;
+        }
+
+        function showNotification(messageOrError, type = 'info', duration = 4000) {
+            // Handle ApiError objects
+            let message = messageOrError;
+            if (messageOrError instanceof ApiError) {
+                message = messageOrError.getUserMessage();
+                type = messageOrError.status >= 500 ? 'error' :
+                       messageOrError.status === 401 ? 'warning' : 'error';
+            } else if (messageOrError instanceof Error) {
+                message = messageOrError.message;
+                type = 'error';
+            }
+
+            // Dark theme styles matching dashboard glassmorphism
+            const styles = {
+                success: { bg: 'rgba(16, 185, 129, 0.15)', border: 'rgba(16, 185, 129, 0.4)', text: '#34d399', icon: '✓' },
+                error: { bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(239, 68, 68, 0.4)', text: '#f87171', icon: '✕' },
+                warning: { bg: 'rgba(245, 158, 11, 0.15)', border: 'rgba(245, 158, 11, 0.4)', text: '#fbbf24', icon: '⚠' },
+                info: { bg: 'rgba(99, 102, 241, 0.15)', border: 'rgba(99, 102, 241, 0.4)', text: '#818cf8', icon: 'ℹ' }
             };
 
-            const notification = document.createElement('div');
-            notification.className = `fixed bottom-4 right-4 px-4 py-3 rounded-lg border shadow-lg ${colors[type]} animate-slide-in z-50`;
-            notification.innerHTML = `<p class="text-sm font-medium">${message}</p>`;
-            document.body.appendChild(notification);
+            const style = styles[type] || styles.info;
+            const container = getNotificationContainer();
 
-            setTimeout(() => {
+            // Create notification using safe DOM methods
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                background: ${style.bg};
+                backdrop-filter: blur(10px);
+                border: 1px solid ${style.border};
+                border-radius: 12px;
+                padding: 14px 18px;
+                color: ${style.text};
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 14px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                transform: translateX(120%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+                pointer-events: auto;
+                max-width: 380px;
+            `;
+
+            // Icon (safe - hardcoded values only)
+            const iconSpan = document.createElement('span');
+            iconSpan.style.cssText = 'font-size:18px;flex-shrink:0;';
+            iconSpan.textContent = style.icon;
+            notification.appendChild(iconSpan);
+
+            // Message (safe - using textContent)
+            const msgSpan = document.createElement('span');
+            msgSpan.style.cssText = 'flex:1;line-height:1.4;';
+            msgSpan.textContent = message;
+            notification.appendChild(msgSpan);
+
+            // Close button
+            const closeBtn = document.createElement('button');
+            closeBtn.style.cssText = 'background:none;border:none;color:inherit;cursor:pointer;opacity:0.7;font-size:16px;padding:4px;';
+            closeBtn.textContent = '✕';
+            closeBtn.onclick = () => notification.remove();
+            notification.appendChild(closeBtn);
+
+            container.appendChild(notification);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                notification.style.transform = 'translateX(0)';
+            });
+
+            // Auto-remove after duration
+            const timeoutId = setTimeout(() => {
                 notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s';
+                notification.style.transform = 'translateX(120%)';
                 setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            }, duration);
+
+            // Clear timeout if manually closed
+            closeBtn.addEventListener('click', () => clearTimeout(timeoutId));
+
+            return notification;
+        }
+
+        // Helper for error notifications with logging
+        function showError(error, context = '') {
+            if (error instanceof ApiError) {
+                showNotification(error, 'error');
+                console.error(`[${context || 'Error'}]`, error.status, error.message);
+            } else {
+                const msg = context ? `${context}: ${error.message || 'Fehler'}` : (error.message || 'Ein Fehler ist aufgetreten');
+                showNotification(msg, 'error');
+                console.error(`[${context || 'Error'}]`, error);
+            }
         }
 
         // ═══════════════════════════════════════════════════════════════
         // DATABASE API INTEGRATION
         // ═══════════════════════════════════════════════════════════════
 
-        async function fetchFromDB(endpoint) {
+        /**
+         * Fetch data from API with enhanced error handling
+         * @param {string} endpoint - API endpoint (without base URL)
+         * @param {Object} options - Additional fetch options
+         * @param {boolean} options.silent - Don't show error notifications (default: true for background refreshes)
+         * @param {boolean} options.retry - Use retry logic (default: false)
+         * @returns {Promise<any|null>} - Response data or null on error
+         */
+        async function fetchFromDB(endpoint, options = {}) {
+            const { silent = true, retry = false, ...fetchOptions } = options;
             try {
-                const res = await fetch(`${API_BASE}/${endpoint}`);
-                if (res.ok) return await res.json();
-            } catch (e) {
-                console.log(`API ${endpoint} not available:`, e);
+                const fetchMethod = retry ? ApiService.fetchWithRetry : ApiService.fetch;
+                return await fetchMethod.call(ApiService, `${API_BASE}/${endpoint}`, fetchOptions);
+            } catch (error) {
+                // Log all errors for debugging
+                console.warn(`[API] ${endpoint}:`, error.message || error);
+
+                // Show user notification for non-silent errors (user-initiated actions)
+                if (!silent && error instanceof ApiError) {
+                    showError(error, endpoint);
+                }
+
+                return null;
             }
-            return null;
+        }
+
+        /**
+         * Fetch with user feedback - shows loading state and error notifications
+         * Use for user-initiated actions (button clicks, form submissions)
+         */
+        async function fetchWithFeedback(endpoint, options = {}) {
+            return fetchFromDB(endpoint, { ...options, silent: false, retry: true });
         }
 
         async function loadDashboardData() {
@@ -1825,19 +2532,20 @@
                 return;
             }
 
-            showNotification('Erstelle Zahlungslinks...', 'info');
+            // Show loading overlay on the invoices tab
+            const tabContainer = document.getElementById('tab-invoices');
+            LoadingState.show(tabContainer, 'Rechnung wird versendet...');
 
-            // Generate payment links
-            const [stripeUrl, paypalUrl] = await Promise.all([
-                createStripePayment(invoice.hubspotId, invoice.amount, invoice.customer, invoice.email),
-                createPayPalPayment(invoice.hubspotId, invoice.amount, invoice.customer)
-            ]);
-
-            // Send invoice via API
             try {
-                const response = await fetch(`/api/v1/invoices/${invoice.hubspotId}/send`, {
+                // Generate payment links
+                const [stripeUrl, paypalUrl] = await Promise.all([
+                    createStripePayment(invoice.hubspotId, invoice.amount, invoice.customer, invoice.email),
+                    createPayPalPayment(invoice.hubspotId, invoice.amount, invoice.customer)
+                ]);
+
+                // Send invoice via API
+                const response = await ApiService.fetch(`/api/v1/invoices/${invoice.hubspotId}/send`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: invoice.email,
                         include_stripe: !!stripeUrl,
@@ -1845,14 +2553,12 @@
                     })
                 });
 
-                if (response.ok) {
-                    showNotification(`Rechnung an ${invoice.email} gesendet`, 'success');
-                    loadInvoices(); // Refresh list
-                } else {
-                    throw new Error('Fehler beim Senden');
-                }
+                showNotification(`Rechnung an ${invoice.email} gesendet`, 'success');
+                loadInvoices(); // Refresh list
             } catch (error) {
-                showNotification('Fehler beim Senden der Rechnung', 'error');
+                showError(error, 'Rechnung senden');
+            } finally {
+                await LoadingState.hide(tabContainer);
             }
         }
 
@@ -2771,42 +3477,51 @@
         // INITIALIZE
         // ═══════════════════════════════════════════════════════════════
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             console.log('🚀 Enterprise Suite - Professional Dashboard Initialized');
+
+            // Phase 1: Initialize UI Components (no API calls)
             initCharts();
             initFinanceCharts();
             generateAgents();
-            loadDashboardData();
-            loadActivities();
-            loadHubSpotStats();
-            loadNotifications();
-            loadInvoices();
+
+            // Phase 2: Load initial data with error handling
+            const loadInitialData = async () => {
+                const loadTasks = [
+                    { name: 'Dashboard', fn: loadDashboardData },
+                    { name: 'Activities', fn: loadActivities },
+                    { name: 'HubSpot', fn: loadHubSpotStats },
+                    { name: 'Notifications', fn: loadNotifications },
+                    { name: 'Invoices', fn: loadInvoices }
+                ];
+
+                const results = await Promise.allSettled(loadTasks.map(t => t.fn()));
+                results.forEach((result, i) => {
+                    if (result.status === 'rejected') {
+                        console.warn(`[Init] ${loadTasks[i].name} failed:`, result.reason?.message || result.reason);
+                    }
+                });
+            };
+
+            await loadInitialData();
+
+            // Phase 3: Secondary data and features
             connectWebSocket();
-
-            // Auto-sync HubSpot on load
             autoSyncHubSpot();
-
-            // Load Deals Pipeline
             loadSampleDeals();
-
-            // Start Lead Demon
             initLeadDemon();
 
-            // Load Lead Discovery Status
-            loadLeadDiscoveryStatus();
-            loadRecentLeads();
-            loadActiveDeals();
+            // Phase 4: Load Lead Discovery data
+            await Promise.allSettled([
+                loadLeadDiscoveryStatus(),
+                loadRecentLeads(),
+                loadActiveDeals()
+            ]);
 
-            // Refresh data every 30 seconds
-            setInterval(loadDashboardData, 30000);
+            // Phase 5: Start RefreshManager for automatic updates
+            RefreshManager.start();
 
-            // Refresh notifications every 60 seconds
-            setInterval(loadNotifications, 60000);
-            setInterval(loadActivities, 15000);
-            setInterval(loadHubSpotStats, 60000);
-            setInterval(loadLeadDiscoveryStatus, 30000);
-            setInterval(loadActiveDeals, 60000);
-            // Lead Bot runs automatically every 2 minutes (configured in initLeadDemon)
+            console.log('✅ Enterprise Suite - All systems initialized');
         });
 
         // Auto-sync HubSpot data on page load

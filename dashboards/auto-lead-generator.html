@@ -1497,17 +1497,48 @@ info@west-money-bau.de`);
             showToast('E-Mail-Client geöffnet', 'success');
         }
 
-        function addToHubSpot(index) {
+        async function addToHubSpot(index) {
             const lead = foundLeads[index];
-            const token = localStorage.getItem('hubspot_token');
-            
-            if (!token) {
-                showToast('HubSpot nicht verbunden - API Token erforderlich', 'error');
-                return;
-            }
 
-            // Simulate HubSpot API call
-            showToast(`${lead.name} zu HubSpot hinzugefügt!`, 'success');
+            showLoading(`Füge ${lead.name} zu HubSpot hinzu...`);
+
+            try {
+                const response = await fetch('/api/leads/sync-to-hubspot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        leads: [{
+                            name: lead.name,
+                            firstname: lead.name?.split(' ')[0] || '',
+                            lastname: lead.name?.split(' ').slice(1).join(' ') || '',
+                            company: lead.company,
+                            companyName: lead.company,
+                            email: lead.email,
+                            phone: lead.phone,
+                            score: lead.score,
+                            estimatedValue: lead.potential?.replace(/[€K.]/g, '') || '0',
+                            source: 'Auto Lead Generator'
+                        }]
+                    })
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (result.success && result.summary.created > 0) {
+                    const ownerName = result.results?.success?.[0]?.ownerName || 'Team';
+                    showToast(`${lead.name} hinzugefügt! Zugewiesen an: ${ownerName}`, 'success');
+                } else if (result.summary?.duplicates > 0) {
+                    showToast(`${lead.name} existiert bereits in HubSpot`, 'warning');
+                } else {
+                    showToast(`Fehler: ${result.error || 'Konnte nicht hinzufügen'}`, 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                showToast(`Fehler: ${error.message}`, 'error');
+            }
         }
 
         async function syncToHubSpot() {
@@ -1517,10 +1548,66 @@ info@west-money-bau.de`);
                 return;
             }
 
+            // Prepare leads for sync
+            const leadsToSync = selected.map(index => {
+                const lead = foundLeads[index];
+                return {
+                    name: lead.name,
+                    firstname: lead.name?.split(' ')[0] || '',
+                    lastname: lead.name?.split(' ').slice(1).join(' ') || '',
+                    company: lead.company,
+                    companyName: lead.company,
+                    email: lead.email,
+                    phone: lead.phone,
+                    score: lead.score,
+                    estimatedValue: lead.potential?.replace(/[€K.]/g, '') || '0',
+                    source: 'Auto Lead Generator'
+                };
+            });
+
             showLoading(`Sync ${selected.length} Leads zu HubSpot...`);
-            await delay(2000);
-            hideLoading();
-            showToast(`${selected.length} Leads zu HubSpot synchronisiert!`, 'success');
+
+            try {
+                const response = await fetch('/api/leads/sync-to-hubspot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ leads: leadsToSync })
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (result.success) {
+                    const { summary } = result;
+                    let message = `✓ ${summary.created} Leads erstellt`;
+                    if (summary.duplicates > 0) {
+                        message += `, ${summary.duplicates} Duplikate übersprungen`;
+                    }
+                    if (summary.failed > 0) {
+                        message += `, ${summary.failed} fehlgeschlagen`;
+                    }
+                    showToast(message, summary.failed > 0 ? 'warning' : 'success');
+
+                    // Show owner assignment details
+                    if (result.results?.success?.length > 0) {
+                        const owners = [...new Set(result.results.success.map(r => r.ownerName))];
+                        console.log('[Lead Sync] Zugewiesene Owner:', owners);
+                    }
+
+                    // Clear selection after successful sync
+                    selectedLeads.clear();
+                    document.querySelectorAll('#resultsBody input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    document.getElementById('selectAllBox').checked = false;
+                } else {
+                    showToast(`Fehler: ${result.error || 'Unbekannter Fehler'}`, 'error');
+                }
+            } catch (error) {
+                hideLoading();
+                console.error('[Lead Sync] Error:', error);
+                showToast(`Sync fehlgeschlagen: ${error.message}`, 'error');
+            }
         }
 
         function toggleSelect(index) {

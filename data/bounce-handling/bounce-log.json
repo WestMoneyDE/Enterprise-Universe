@@ -167,15 +167,27 @@
       "type": "hard",
       "subject": "Undeliverable: Rechnung INV-1768735182712-426721980647 - Enterprise Universe GmbH",
       "processedAt": "2026-01-19T00:15:00.723Z"
+    },
+    {
+      "email": "probert@smarthomeag.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-20T00:00:01.204Z"
+    },
+    {
+      "email": "jean@manufacturingin.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-20T00:00:03.194Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 28,
-    "retried": 2,
+    "total": 30,
+    "retried": 4,
     "failed": 5,
     "permanent": 21
   },
-  "lastRun": "2026-01-19T02:00:01.542Z"
+  "lastRun": "2026-01-20T02:00:01.241Z"
 }

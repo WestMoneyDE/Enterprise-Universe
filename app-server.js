@@ -262,6 +262,7 @@ app.get('/cashflow', (req, res) => res.sendFile(path.join(__dirname, 'dashboards
 app.get('/investoren', (req, res) => res.sendFile(path.join(__dirname, 'dashboards/INVESTOREN_DASHBOARD.html')));
 app.get('/investor-portal', (req, res) => res.sendFile(path.join(__dirname, 'INVESTOR_PORTAL.html')));
 app.get('/customer-portal', (req, res) => res.sendFile(path.join(__dirname, 'CUSTOMER_PORTAL.html')));
+app.get('/bauherren-pass', (req, res) => res.sendFile(path.join(__dirname, 'dashboards/BAUHERREN_PASS.html')));
 
 // Customer Requirements & Internal Tools
 app.get('/projekt-anforderungen', (req, res) => res.sendFile(path.join(__dirname, 'projekt-anforderungen.html')));
@@ -2044,6 +2045,183 @@ app.get('/api/hubspot/presentations', async (req, res) => {
         console.error('Presentations fetch error:', error);
         res.status(500).json({ error: error.message });
     }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// LEAD SYNC API - Auto Lead Generator Integration
+// ═══════════════════════════════════════════════════════════════
+
+// Owner cache for round-robin assignment
+let ownerCache = { owners: [], lastFetch: 0, currentIndex: 0 };
+const OWNER_CACHE_TTL = 1000 * 60 * 30; // 30 minutes
+
+// Get all HubSpot owners
+app.get('/api/hubspot/owners', async (req, res) => {
+    try {
+        const data = await hubspotRequest('/crm/v3/owners?limit=100');
+        const activeOwners = (data.results || []).filter(o => !o.archived);
+
+        // Update cache
+        ownerCache.owners = activeOwners;
+        ownerCache.lastFetch = Date.now();
+
+        res.json({
+            owners: activeOwners,
+            total: activeOwners.length
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Helper: Get next owner for round-robin assignment
+async function getNextOwnerForAssignment() {
+    // Refresh cache if expired
+    if (ownerCache.owners.length === 0 || Date.now() - ownerCache.lastFetch > OWNER_CACHE_TTL) {
+        const data = await hubspotRequest('/crm/v3/owners?limit=100');
+        ownerCache.owners = (data.results || []).filter(o => !o.archived);
+        ownerCache.lastFetch = Date.now();
+    }
+
+    if (ownerCache.owners.length === 0) {
+        return null;
+    }
+
+    const owner = ownerCache.owners[ownerCache.currentIndex];
+    ownerCache.currentIndex = (ownerCache.currentIndex + 1) % ownerCache.owners.length;
+    return owner;
+}
+
+// Bulk sync leads to HubSpot with automatic owner assignment
+app.post('/api/leads/sync-to-hubspot', async (req, res) => {
+    try {
+        const { leads } = req.body;
+
+        if (!leads || !Array.isArray(leads) || leads.length === 0) {
+            return res.status(400).json({ error: 'No leads provided' });
+        }
+
+        const results = {
+            success: [],
+            failed: [],
+            duplicates: []
+        };
+
+        for (const lead of leads) {
+            try {
+                // Check for duplicate by email
+                if (lead.email) {
+                    const dupeSearch = await hubspotRequest('/crm/v3/objects/contacts/search', {
+                        method: 'POST',
+                        body: {
+                            filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: lead.email }] }],
+                            properties: ['firstname', 'lastname', 'email'],
+                            limit: 1
+                        }
+                    });
+
+                    if (dupeSearch?.results?.length) {
+                        results.duplicates.push({
+                            lead,
+                            existingId: dupeSearch.results[0].id,
+                            message: 'Kontakt existiert bereits'
+                        });
+                        continue;
+                    }
+                }
+
+                // Get owner for assignment
+                const owner = await getNextOwnerForAssignment();
+
+                // Create contact
+                const contactProps = {
+                    firstname: lead.firstname || lead.name?.split(' ')[0] || '',
+                    lastname: lead.lastname || lead.name?.split(' ').slice(1).join(' ') || '',
+                    email: lead.email || '',
+                    phone: lead.phone || '',
+                    company: lead.company || lead.companyName || '',
+                    lifecyclestage: 'lead',
+                    hs_lead_status: 'NEW',
+                    lead_source: 'Auto Lead Generator',
+                    lead_score: lead.score?.toString() || '0'
+                };
+
+                // Add owner if available
+                if (owner) {
+                    contactProps.hubspot_owner_id = owner.id.toString();
+                }
+
+                const contact = await hubspotRequest('/crm/v3/objects/contacts', {
+                    method: 'POST',
+                    body: { properties: contactProps }
+                });
+
+                // Create deal associated with the contact
+                const dealProps = {
+                    dealname: `${lead.company || lead.companyName || 'Neuer Lead'} - Erstkontakt`,
+                    dealstage: 'appointmentscheduled',
+                    pipeline: 'default',
+                    amount: lead.estimatedValue || '0'
+                };
+
+                if (owner) {
+                    dealProps.hubspot_owner_id = owner.id.toString();
+                }
+
+                const deal = await hubspotRequest('/crm/v3/objects/deals', {
+                    method: 'POST',
+                    body: {
+                        properties: dealProps,
+                        associations: [{
+                            to: { id: contact.id },
+                            types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 3 }]
+                        }]
+                    }
+                });
+
+                results.success.push({
+                    lead,
+                    contactId: contact.id,
+                    dealId: deal.id,
+                    ownerId: owner?.id,
+                    ownerName: owner ? `${owner.firstName} ${owner.lastName}` : 'Nicht zugewiesen'
+                });
+
+                // Rate limiting - 100ms between requests
+                await new Promise(r => setTimeout(r, 100));
+
+            } catch (error) {
+                results.failed.push({
+                    lead,
+                    error: error.message
+                });
+            }
+        }
+
+        console.log(`[Lead Sync] Synced ${results.success.length}/${leads.length} leads to HubSpot`);
+
+        res.json({
+            success: true,
+            summary: {
+                total: leads.length,
+                created: results.success.length,
+                duplicates: results.duplicates.length,
+                failed: results.failed.length
+            },
+            results
+        });
+
+    } catch (error) {
+        console.error('[Lead Sync] Error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get lead sync status (for progress tracking)
+let leadSyncStatus = { running: false, progress: 0, total: 0, lastRun: null };
+
+app.get('/api/leads/sync-status', (req, res) => {
+    res.json(leadSyncStatus);
 });
 
 // ═══════════════════════════════════════════════════════════════

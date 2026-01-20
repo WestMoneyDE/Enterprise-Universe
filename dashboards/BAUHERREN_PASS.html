@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bauherren Pass | Enterprise Universe</title>
+    <!-- Auth Guard - Requires login -->
+    <script src="/js/auth-guard.js"></script>
+    <script src="/js/dashboard-nav.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --primary-light: rgba(245, 158, 11, 0.15);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --dark-bg: #0a0a12;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, var(--primary-light), rgba(217, 119, 6, 0.1));
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .header-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 16px;
+        }
+
+        .customer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(245, 158, 11, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        .customer-badge span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Project Status */
+        .project-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .section-title span {
+            font-size: 24px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), rgba(245, 158, 11, 0.2));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -26px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--dark-bg);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-marker.completed {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .timeline-marker.current {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .timeline-marker.pending {
+            background: var(--dark-bg);
+            border-color: #444;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .timeline-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Documents */
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .doc-card:hover {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.4);
+            transform: translateX(5px);
+        }
+
+        .doc-icon {
+            font-size: 40px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .doc-info h4 {
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .doc-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .doc-status {
+            margin-left: auto;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .doc-status.available {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+        }
+
+        .doc-status.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .doc-status.required {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        /* Contact Card */
+        .contact-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .contact-person {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--info), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .contact-info h4 {
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .contact-info p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-btn.email {
+            background: rgba(59, 130, 246, 0.3);
+            color: var(--info);
+        }
+
+        .contact-btn.phone {
+            background: rgba(34, 197, 94, 0.3);
+            color: var(--success);
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Messages */
+        .messages-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .message-item:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .message-item.unread {
+            border-left: 3px solid var(--primary);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .message-from {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .message-date {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .message-subject {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .message-preview {
+            font-size: 13px;
+            color: #888;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        .action-btn span {
+            font-size: 22px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .progress-value {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header { padding: 25px 20px; }
+            .header h1 { font-size: 24px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-card { grid-template-columns: 1fr; }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-icon">🏠</div>
+        <h1>Bauherren Pass</h1>
+        <p>Ihr persönliches Kundenportal für Ihr Bauprojekt</p>
+        <div class="customer-badge">
+            <span>👤</span>
+            <span id="customerName">Laden...</span>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-value" id="projectPhase">Phase 2</div>
+            <div class="stat-label">Aktuelle Phase</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-value" id="daysRemaining">45</div>
+            <div class="stat-label">Tage bis Fertigstellung</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📄</div>
+            <div class="stat-value" id="documentsCount">8</div>
+            <div class="stat-label">Dokumente</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💬</div>
+            <div class="stat-value" id="messagesCount">3</div>
+            <div class="stat-label">Neue Nachrichten</div>
+        </div>
+    </div>
+
+    <!-- Project Progress -->
+    <div class="project-section">
+        <div class="section-header">
+            <div class="section-title">
+                <span>📊</span>
+                Projektfortschritt
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-label">Gesamtfortschritt</span>
+                <span class="progress-value" id="progressPercent">65%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 65%"></div>
+            </div>
+        </div>
+
+        <div class="timeline" style="margin-top: 30px;">
+            <div class="timeline-item">
+                <div class="timeline-marker completed"></div>
+                <div class="timeline-content">
+                    <h4>✅ Vertrag & Planung</h4>
+                    <p>Vertragsunterzeichnung und Projektplanung abgeschlossen</p>
+                    <div class="timeline-date">Abgeschlossen am 15.12.2025</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker completed"></div>
+                <div class="timeline-content">
+                    <h4>✅ Genehmigung</h4>
+                    <p>Baugenehmigung erteilt, alle Unterlagen eingereicht</p>
+                    <div class="timeline-date">Abgeschlossen am 05.01.2026</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker current"></div>
+                <div class="timeline-content">
+                    <h4>🔄 Installation & Montage</h4>
+                    <p>Technische Installation läuft - aktuell bei 60%</p>
+                    <div class="timeline-date">In Arbeit - Geplant bis 15.02.2026</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker pending"></div>
+                <div class="timeline-content">
+                    <h4>⏳ Inbetriebnahme</h4>
+                    <p>Systemtest und Übergabe</p>
+                    <div class="timeline-date">Geplant: 01.03.2026</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker pending"></div>
+                <div class="timeline-content">
+                    <h4>⏳ Abnahme & Übergabe</h4>
+                    <p>Finale Abnahme und Projektabschluss</p>
+                    <div class="timeline-date">Geplant: 15.03.2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-card">
+        <div class="contact-person">
+            <div class="contact-avatar">MP</div>
+            <div class="contact-info">
+                <h4>Max Projektleiter</h4>
+                <p>Ihr Projektleiter</p>
+                <div class="contact-actions">
+                    <button class="contact-btn email" onclick="sendEmail('max@enterprise-universe.de')">
+                        📧 E-Mail
+                    </button>
+                    <button class="contact-btn phone" onclick="makeCall('+49123456789')">
+                        📞 Anrufen
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="contact-person">
+            <div class="contact-avatar">TB</div>
+            <div class="contact-info">
+                <h4>Thomas Bauleiter</h4>
+                <p>Technische Leitung</p>
+                <div class="contact-actions">
+                    <button class="contact-btn email" onclick="sendEmail('thomas@enterprise-universe.de')">
+                        📧 E-Mail
+                    </button>
+                    <button class="contact-btn phone" onclick="makeCall('+49123456790')">
+                        📞 Anrufen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents -->
+    <div class="project-section">
+        <div class="section-header">
+            <div class="section-title">
+                <span>📁</span>
+                Ihre Dokumente
+            </div>
+        </div>
+
+        <div class="documents-grid" id="documentsGrid">
+            <div class="doc-card" onclick="downloadDocument('vertrag')">
+                <div class="doc-icon">📝</div>
+                <div class="doc-info">
+                    <h4>Projektvertrag</h4>
+                    <p>PDF • 2.4 MB • 15.12.2025</p>
+                </div>
+                <div class="doc-status available">Verfügbar</div>
+            </div>
+            <div class="doc-card" onclick="downloadDocument('rechnung')">
+                <div class="doc-icon">💰</div>
+                <div class="doc-info">
+                    <h4>Rechnung #1</h4>
+                    <p>PDF • 156 KB • 20.12.2025</p>
+                </div>
+                <div class="doc-status available">Verfügbar</div>
+            </div>
+            <div class="doc-card" onclick="downloadDocument('planung')">
+                <div class="doc-icon">📐</div>
+                <div class="doc-info">
+                    <h4>Technische Planung</h4>
+                    <p>PDF • 5.8 MB • 02.01.2026</p>
+                </div>
+                <div class="doc-status available">Verfügbar</div>
+            </div>
+            <div class="doc-card" onclick="downloadDocument('genehmigung')">
+                <div class="doc-icon">✅</div>
+                <div class="doc-info">
+                    <h4>Baugenehmigung</h4>
+                    <p>PDF • 890 KB • 05.01.2026</p>
+                </div>
+                <div class="doc-status available">Verfügbar</div>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">📊</div>
+                <div class="doc-info">
+                    <h4>Zwischenbericht</h4>
+                    <p>Wird erstellt...</p>
+                </div>
+                <div class="doc-status pending">In Arbeit</div>
+            </div>
+            <div class="doc-card">
+                <div class="doc-icon">🏆</div>
+                <div class="doc-info">
+                    <h4>Abnahmeprotokoll</h4>
+                    <p>Nach Fertigstellung</p>
+                </div>
+                <div class="doc-status pending">Ausstehend</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="project-section">
+        <div class="section-header">
+            <div class="section-title">
+                <span>💬</span>
+                Nachrichten
+            </div>
+        </div>
+
+        <div class="messages-list" id="messagesList">
+            <div class="message-item unread" onclick="openMessage(1)">
+                <div class="message-header">
+                    <span class="message-from">Max Projektleiter</span>
+                    <span class="message-date">Heute, 14:30</span>
+                </div>
+                <div class="message-subject">Update: Installation läuft planmäßig</div>
+                <div class="message-preview">Guten Tag! Ich wollte Sie informieren, dass die Installation wie geplant voranschreitet...</div>
+            </div>
+            <div class="message-item unread" onclick="openMessage(2)">
+                <div class="message-header">
+                    <span class="message-from">Thomas Bauleiter</span>
+                    <span class="message-date">Gestern, 16:45</span>
+                </div>
+                <div class="message-subject">Fotos vom aktuellen Baufortschritt</div>
+                <div class="message-preview">Anbei finden Sie aktuelle Fotos vom Baufortschritt. Bei Fragen stehe ich gerne zur Verfügung...</div>
+            </div>
+            <div class="message-item" onclick="openMessage(3)">
+                <div class="message-header">
+                    <span class="message-from">Enterprise Universe</span>
+                    <span class="message-date">18.01.2026</span>
+                </div>
+                <div class="message-subject">Willkommen im Bauherren Pass!</div>
+                <div class="message-preview">Herzlich willkommen in Ihrem persönlichen Kundenportal. Hier finden Sie alle wichtigen...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="action-btn" onclick="requestCallback()">
+            <span>📞</span>
+            Rückruf anfordern
+        </button>
+        <button class="action-btn" onclick="scheduleVisit()">
+            <span>📅</span>
+            Besichtigung planen
+        </button>
+        <button class="action-btn" onclick="askQuestion()">
+            <span>❓</span>
+            Frage stellen
+        </button>
+        <button class="action-btn" onclick="reportIssue()">
+            <span>⚠️</span>
+            Problem melden
+        </button>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Load customer data
+        async function loadCustomerData() {
+            try {
+                // Get user from localStorage
+                const userStr = localStorage.getItem('eu_user');
+                if (userStr) {
+                    const user = JSON.parse(userStr);
+                    const name = user.firstName && user.lastName
+                        ? user.firstName + ' ' + user.lastName
+                        : user.email?.split('@')[0] || 'Kunde';
+                    document.getElementById('customerName').textContent = name;
+                }
+
+                // Load project data from API
+                const token = localStorage.getItem('eu_token');
+                if (token) {
+                    const response = await fetch('/api/v1/customer/project', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+
+                    if (response.ok) {
+                        const project = await response.json();
+                        updateProjectData(project);
+                    }
+                }
+            } catch (error) {
+                console.log('Using demo data:', error.message);
+            }
+        }
+
+        function updateProjectData(project) {
+            if (project.phase) {
+                document.getElementById('projectPhase').textContent = 'Phase ' + project.phase;
+            }
+            if (project.daysRemaining !== undefined) {
+                document.getElementById('daysRemaining').textContent = project.daysRemaining;
+            }
+            if (project.progress !== undefined) {
+                document.getElementById('progressPercent').textContent = project.progress + '%';
+                document.getElementById('progressFill').style.width = project.progress + '%';
+            }
+            if (project.documents !== undefined) {
+                document.getElementById('documentsCount').textContent = project.documents;
+            }
+            if (project.messages !== undefined) {
+                document.getElementById('messagesCount').textContent = project.messages;
+            }
+        }
+
+        // Document download
+        function downloadDocument(docType) {
+            showToast('📥 Dokument wird heruntergeladen...');
+            // In production, this would trigger actual download
+            setTimeout(() => {
+                showToast('✅ Download abgeschlossen');
+            }, 1500);
+        }
+
+        // Contact functions
+        function sendEmail(email) {
+            window.location.href = 'mailto:' + email;
+        }
+
+        function makeCall(phone) {
+            window.location.href = 'tel:' + phone;
+        }
+
+        // Message functions
+        function openMessage(id) {
+            showToast('💬 Nachricht wird geöffnet...');
+            // In production, this would open a message detail view
+        }
+
+        // Quick action functions
+        function requestCallback() {
+            showToast('📞 Rückrufanfrage gesendet! Wir melden uns in Kürze.');
+        }
+
+        function scheduleVisit() {
+            showToast('📅 Bitte kontaktieren Sie Ihren Projektleiter für einen Termin.');
+        }
+
+        function askQuestion() {
+            showToast('❓ Nachrichtenfenster wird geöffnet...');
+        }
+
+        function reportIssue() {
+            showToast('⚠️ Problemformular wird geöffnet...');
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadCustomerData);
+    </script>
+</body>
+</html>

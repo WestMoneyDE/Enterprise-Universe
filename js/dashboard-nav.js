@@ -31,6 +31,7 @@
         { name: 'Cashflow Tracker', icon: '💵', url: '/cashflow', category: 'biz' },
         { name: 'Investoren', icon: '👔', url: '/investoren', category: 'biz' },
         { divider: true, label: 'Portals' },
+        { name: 'Bauherren Pass', icon: '🏠', url: '/bauherren-pass', category: 'portal' },
         { name: 'Investor Portal', icon: '🏦', url: '/investor-portal', category: 'portal' },
         { name: 'Customer Portal', icon: '👥', url: '/customer-portal', category: 'portal' },
         { divider: true, label: 'System' },
