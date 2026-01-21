@@ -179,15 +179,27 @@
       "type": "unknown",
       "retried": true,
       "processedAt": "2026-01-20T00:00:03.194Z"
+    },
+    {
+      "email": "probert@smarthomeag.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-21T00:00:01.802Z"
+    },
+    {
+      "email": "jean@manufacturingin.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-21T00:15:01.271Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 30,
-    "retried": 4,
+    "total": 32,
+    "retried": 6,
     "failed": 5,
     "permanent": 21
   },
-  "lastRun": "2026-01-20T02:00:01.241Z"
+  "lastRun": "2026-01-21T02:00:01.134Z"
 }
