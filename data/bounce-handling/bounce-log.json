@@ -191,15 +191,63 @@
       "type": "unknown",
       "retried": true,
       "processedAt": "2026-01-21T00:15:01.271Z"
+    },
+    {
+      "email": "hans.miller@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: Herzlichen Glückwunsch! Deal gewonnen: IOT - DataVision Ltd",
+      "processedAt": "2026-01-22T00:00:00.554Z"
+    },
+    {
+      "email": "nmoreau@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: Herzlichen Glückwunsch! Deal gewonnen: IOT - DataVision Ltd",
+      "processedAt": "2026-01-22T00:00:01.600Z"
+    },
+    {
+      "email": "contact@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: Herzlichen Glückwunsch! Deal gewonnen: IOT - DataVision Ltd",
+      "processedAt": "2026-01-22T00:00:02.646Z"
+    },
+    {
+      "email": "fischer.p@smarthomecorp.com",
+      "type": "hard",
+      "subject": "Undeliverable: Herzlichen Glückwunsch! Deal gewonnen: SMART HOME - PrimeConnect BV",
+      "processedAt": "2026-01-22T00:00:03.718Z"
+    },
+    {
+      "email": "sanjay.brahmawar@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Herzlichen Glückwunsch! Deal gewonnen: SOFTWARE - CyberWorks SAS",
+      "processedAt": "2026-01-22T00:00:05.028Z"
+    },
+    {
+      "email": "m.koch@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Herzlichen Glückwunsch! Deal gewonnen: SOFTWARE - CyberWorks SAS",
+      "processedAt": "2026-01-22T00:00:06.208Z"
+    },
+    {
+      "email": "philippf@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Herzlichen Glückwunsch! Deal gewonnen: SOFTWARE - CyberWorks SAS",
+      "processedAt": "2026-01-22T00:00:07.399Z"
+    },
+    {
+      "email": "gabrielew@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Herzlichen Glückwunsch! Deal gewonnen: SOFTWARE - CyberWorks SAS",
+      "processedAt": "2026-01-22T00:00:08.576Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 32,
+    "total": 40,
     "retried": 6,
     "failed": 5,
-    "permanent": 21
+    "permanent": 29
   },
-  "lastRun": "2026-01-21T02:00:01.134Z"
+  "lastRun": "2026-01-22T02:00:01.669Z"
 }
