@@ -239,15 +239,75 @@
       "type": "hard",
       "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] Herzlichen Glückwunsch! Deal gewonnen: SOFTWARE - CyberWorks SAS",
       "processedAt": "2026-01-22T00:00:08.576Z"
+    },
+    {
+      "email": "patrick.otto@tag-ag.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: TAG Immobilien AG - Smart Home Projekt - Ihre Provision: €14.153,41",
+      "processedAt": "2026-01-23T00:00:00.606Z"
+    },
+    {
+      "email": "andreas@tag-ag.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: TAG Immobilien AG - Smart Home Projekt - Ihre Provision: €14.153,41",
+      "processedAt": "2026-01-23T00:00:01.658Z"
+    },
+    {
+      "email": "schmitz.felix@tag-ag.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: TAG Immobilien AG - Smart Home Projekt - Ihre Provision: €14.153,41",
+      "processedAt": "2026-01-23T00:00:02.719Z"
+    },
+    {
+      "email": "jennifer.krause@exact.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Exact Software - Smart Home Projekt - Ihre Provision: €4.982,81",
+      "processedAt": "2026-01-23T00:00:03.770Z"
+    },
+    {
+      "email": "oweber@exact.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Exact Software - Smart Home Projekt - Ihre Provision: €4.982,81",
+      "processedAt": "2026-01-23T00:00:04.820Z"
+    },
+    {
+      "email": "drichter@exact.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Exact Software - Smart Home Projekt - Ihre Provision: €4.982,81",
+      "processedAt": "2026-01-23T00:00:05.870Z"
+    },
+    {
+      "email": "jonathanlang@exact.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Exact Software - Smart Home Projekt - Ihre Provision: €4.982,81",
+      "processedAt": "2026-01-23T00:00:06.957Z"
+    },
+    {
+      "email": "adrian.keller@exact.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Exact Software - Smart Home Projekt - Ihre Provision: €4.982,81",
+      "processedAt": "2026-01-23T00:00:08.005Z"
+    },
+    {
+      "email": "f.hartmann@sma.de",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: SMA Solar Technology - Smart Home Projekt - Ihre Provision: €10.944,78",
+      "processedAt": "2026-01-23T00:00:09.101Z"
+    },
+    {
+      "email": "e.schubert@sma.de",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: SMA Solar Technology - Smart Home Projekt - Ihre Provision: €10.944,78",
+      "processedAt": "2026-01-23T00:00:10.147Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 40,
+    "total": 50,
     "retried": 6,
     "failed": 5,
-    "permanent": 29
+    "permanent": 39
   },
-  "lastRun": "2026-01-22T02:00:01.669Z"
+  "lastRun": "2026-01-23T02:00:01.288Z"
 }
