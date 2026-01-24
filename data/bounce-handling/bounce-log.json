@@ -299,15 +299,57 @@
       "type": "hard",
       "subject": "Undeliverable: 🎉 Deal gewonnen: SMA Solar Technology - Smart Home Projekt - Ihre Provision: €10.944,78",
       "processedAt": "2026-01-23T00:00:10.147Z"
+    },
+    {
+      "email": "sandral@commerzbank.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-24T00:00:00.592Z"
+    },
+    {
+      "email": "probert@smarthomeag.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-24T00:00:01.889Z"
+    },
+    {
+      "email": "hans.miller@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: IOT - NetGroup AG - Ihre Provision: €6.896,65",
+      "processedAt": "2026-01-24T00:00:02.942Z"
+    },
+    {
+      "email": "contact@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: IOT - DigitalWorks SRL - Ihre Provision: €6.891,96",
+      "processedAt": "2026-01-24T00:00:03.999Z"
+    },
+    {
+      "email": "c.schroder@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - OmegaVision Inc - Ihre Provision: €6.912,78",
+      "processedAt": "2026-01-24T00:00:05.254Z"
+    },
+    {
+      "email": "m.koch@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - NetVision Corp - Ihre Provision: €6.924,3",
+      "processedAt": "2026-01-24T00:00:06.692Z"
+    },
+    {
+      "email": "charles.schneider@iotgmbh.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-24T00:00:07.975Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 50,
+    "total": 57,
     "retried": 6,
-    "failed": 5,
-    "permanent": 39
+    "failed": 8,
+    "permanent": 43
   },
-  "lastRun": "2026-01-23T02:00:01.288Z"
+  "lastRun": "2026-01-24T01:45:01.774Z"
 }
