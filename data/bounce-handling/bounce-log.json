@@ -341,15 +341,63 @@
       "type": "unknown",
       "retried": false,
       "processedAt": "2026-01-24T00:00:07.975Z"
+    },
+    {
+      "email": "dominiklang@linde-engineering.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-25T00:00:00.559Z"
+    },
+    {
+      "email": "probert@smarthomeag.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-25T00:00:02.403Z"
+    },
+    {
+      "email": "jean@manufacturingin.com",
+      "type": "unknown",
+      "retried": true,
+      "processedAt": "2026-01-25T00:00:04.071Z"
+    },
+    {
+      "email": "contact@iotinc.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: IOT - FlowSolutions GmbH - Ihre Provision: €6.914,01",
+      "processedAt": "2026-01-25T00:00:05.116Z"
+    },
+    {
+      "email": "fabianb@mainova.de",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Mainova AG - Smart Factory Setup [HS-111001] - Ihre Provision: €83.422,08",
+      "processedAt": "2026-01-25T00:00:06.226Z"
+    },
+    {
+      "email": "c.schroder@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - TechTechnologies SAS - Ihre Provision: €6.977,32",
+      "processedAt": "2026-01-25T00:00:07.440Z"
+    },
+    {
+      "email": "wolfgang.wolf@commerzbank.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Commerzbank AG - Predictive Maintenance - Ihre Provision: €6.953",
+      "processedAt": "2026-01-25T00:00:08.490Z"
+    },
+    {
+      "email": "charles.schneider@iotgmbh.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-25T00:15:01.097Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 57,
-    "retried": 6,
-    "failed": 8,
-    "permanent": 43
+    "total": 65,
+    "retried": 8,
+    "failed": 10,
+    "permanent": 47
   },
-  "lastRun": "2026-01-24T01:45:01.774Z"
+  "lastRun": "2026-01-25T01:45:01.549Z"
 }
