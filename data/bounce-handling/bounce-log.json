@@ -389,15 +389,75 @@
       "type": "unknown",
       "retried": false,
       "processedAt": "2026-01-25T00:15:01.097Z"
+    },
+    {
+      "email": "klausb@heidelberg.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Heidelberger Druckmaschinen - Predictive Maintenance - Ihre Provision: €8.448,9",
+      "processedAt": "2026-01-26T00:00:00.679Z"
+    },
+    {
+      "email": "philipp.weber@heidelberg.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Heidelberger Druckmaschinen - Predictive Maintenance - Ihre Provision: €8.448,9",
+      "processedAt": "2026-01-26T00:00:01.732Z"
+    },
+    {
+      "email": "elena.fuchs@heidelberg.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Heidelberger Druckmaschinen - Predictive Maintenance - Ihre Provision: €8.448,9",
+      "processedAt": "2026-01-26T00:00:02.781Z"
+    },
+    {
+      "email": "claudias@heidelberg.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Heidelberger Druckmaschinen - Predictive Maintenance - Ihre Provision: €8.448,9",
+      "processedAt": "2026-01-26T00:00:03.827Z"
+    },
+    {
+      "email": "f.peters@heidelberg.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Heidelberger Druckmaschinen - Predictive Maintenance - Ihre Provision: €8.448,9",
+      "processedAt": "2026-01-26T00:00:04.875Z"
+    },
+    {
+      "email": "k.schmitz@patrizia.ag",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-26T00:00:05.925Z"
+    },
+    {
+      "email": "elenak@patrizia.ag",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-26T00:00:06.975Z"
+    },
+    {
+      "email": "jager.philipp@patrizia.ag",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-26T00:00:08.023Z"
+    },
+    {
+      "email": "davidr@patrizia.ag",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-26T00:00:09.073Z"
+    },
+    {
+      "email": "max.muller@patrizia.ag",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-26T00:00:10.426Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 65,
+    "total": 75,
     "retried": 8,
-    "failed": 10,
-    "permanent": 47
+    "failed": 15,
+    "permanent": 52
   },
-  "lastRun": "2026-01-25T01:45:01.549Z"
+  "lastRun": "2026-01-26T02:00:01.349Z"
 }
