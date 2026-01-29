@@ -521,15 +521,69 @@
       "type": "hard",
       "subject": "Undeliverable: 🎉 Deal gewonnen: B. Braun Melsungen - Digital Transformation - Ihre Provision: €45.228,3",
       "processedAt": "2026-01-27T23:00:10.214Z"
+    },
+    {
+      "email": "sanjay.brahmawar@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - SynthDynamics Inc - Ihre Provision: €6.252,4",
+      "processedAt": "2026-01-28T23:00:00.878Z"
+    },
+    {
+      "email": "m.koch@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - SynthDynamics Inc - Ihre Provision: €6.252,4",
+      "processedAt": "2026-01-28T23:00:02.146Z"
+    },
+    {
+      "email": "philippf@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - SynthDynamics Inc - Ihre Provision: €6.252,4",
+      "processedAt": "2026-01-28T23:00:03.404Z"
+    },
+    {
+      "email": "gabrielew@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - SynthDynamics Inc - Ihre Provision: €6.252,4",
+      "processedAt": "2026-01-28T23:00:04.640Z"
+    },
+    {
+      "email": "c.schroder@softwareag.com",
+      "type": "hard",
+      "subject": "Undeliverable: [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] [Possible SPAM/PHISHING] 🎉 Deal gewonnen: SOFTWARE - SynthDynamics Inc - Ihre Provision: €6.252,4",
+      "processedAt": "2026-01-28T23:00:05.886Z"
+    },
+    {
+      "email": "fischer.p@smarthomecorp.com",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: SMART HOME - CloudSolutions Inc - Ihre Provision: €6.258,7",
+      "processedAt": "2026-01-28T23:00:06.932Z"
+    },
+    {
+      "email": "phartmann@atoss.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-28T23:00:08.043Z"
+    },
+    {
+      "email": "lukasschmitz@atoss.com",
+      "type": "unknown",
+      "retried": false,
+      "processedAt": "2026-01-28T23:00:09.089Z"
+    },
+    {
+      "email": "e.schmid@bauer.de",
+      "type": "hard",
+      "subject": "Undeliverable: 🎉 Deal gewonnen: Bauer AG - Industry 4.0 Implementation - Ihre Provision: €30.422,46",
+      "processedAt": "2026-01-28T23:00:10.134Z"
     }
   ],
   "retriedEmails": [],
   "failedRetries": [],
   "stats": {
-    "total": 87,
+    "total": 96,
     "retried": 10,
-    "failed": 15,
-    "permanent": 62
+    "failed": 17,
+    "permanent": 69
   },
-  "lastRun": "2026-01-28T01:45:05.097Z"
+  "lastRun": "2026-01-29T01:45:01.943Z"
 }
