@@ -5,12 +5,16 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { db, sql } from "@nexus/db";
+import { cacheGetOrSet, CacheKeys, CacheTTL } from "../cache";
 
 export const dashboardRouter = createTRPCRouter({
   // ═══════════════════════════════════════════════════════════════════════════
-  // GET DASHBOARD STATS - Public aggregate counts
+  // GET DASHBOARD STATS - Public aggregate counts (cached 30s)
   // ═══════════════════════════════════════════════════════════════════════════
   getStats: publicProcedure.query(async () => {
+    return cacheGetOrSet(
+      CacheKeys.DASHBOARD_STATS,
+      async () => {
     try {
       // Get counts from database
       const result = await db.execute(sql`
@@ -60,12 +64,18 @@ export const dashboardRouter = createTRPCRouter({
         _message: "Demo data - run database migrations to enable live data",
       };
     }
+      },
+      { ttl: CacheTTL.SHORT, tags: ["dashboard"] }
+    );
   }),
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GET MODULE STATUS - Check all system connections
+  // GET MODULE STATUS - Check all system connections (cached 30s)
   // ═══════════════════════════════════════════════════════════════════════════
   getModuleStatus: publicProcedure.query(async () => {
+    return cacheGetOrSet(
+      CacheKeys.MODULE_STATUS,
+      async () => {
     try {
       // Check database for counts
       const result = await db.execute(sql`
@@ -110,12 +120,18 @@ export const dashboardRouter = createTRPCRouter({
         _demo: true,
       };
     }
+      },
+      { ttl: CacheTTL.SHORT, tags: ["dashboard"] }
+    );
   }),
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GET NEXUS TASKS COUNT - Aggregate task count for Nexus CC
+  // GET NEXUS TASKS COUNT - Aggregate task count for Nexus CC (cached 30s)
   // ═══════════════════════════════════════════════════════════════════════════
   getNexusTasks: publicProcedure.query(async () => {
+    return cacheGetOrSet(
+      "nexus:dashboard:tasks",
+      async () => {
     try {
       const result = await db.execute(sql`
         SELECT
@@ -139,5 +155,8 @@ export const dashboardRouter = createTRPCRouter({
         _demo: true,
       };
     }
+      },
+      { ttl: CacheTTL.SHORT, tags: ["dashboard"] }
+    );
   }),
 });

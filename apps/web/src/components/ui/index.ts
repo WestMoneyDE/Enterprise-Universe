@@ -65,8 +65,13 @@ export { EmptyState } from "./empty-state";
 
 // Feedback
 export { Toaster, toast } from "./toast";
-export { NotificationCenter, useNotifications } from "./notification-center";
-export type { Notification } from "./notification-center";
+export {
+  NotificationCenter,
+  useNotifications,
+  NotificationProvider,
+  useNotificationContext,
+} from "./notification-center";
+export type { Notification, NotificationType } from "./notification-center";
 
 // Navigation
 export { BottomNavigation } from "./bottom-navigation";
@@ -83,3 +88,6 @@ export { ErrorBoundary, SuspenseErrorBoundary, useErrorBoundary } from "./error-
 // Export
 export { ExportButton } from "./export-button";
 export type { ExportButtonProps, ExportFormat, ExportColumn, ExportOptions } from "./export-button";
+
+// Shortcuts
+export { ShortcutsHelp, ShortcutsHelpTrigger } from "./shortcuts-help";
