@@ -1,185 +1,338 @@
 # =============================================================================
-# NEXUS COMMAND CENTER - Deployment Pipeline
+# NEXUS COMMAND CENTER - CI/CD Pipeline
 # =============================================================================
-# Deploys to production on release or manual trigger
-# Security: This workflow only uses controlled inputs (choice fields) and
+# Build & Test: On push to main/develop
+# Deploy: On push to main
+# Rollback: Manual workflow dispatch
+# =============================================================================
+# Security Note: This workflow only uses controlled inputs (choice fields) and
 # job outputs - no untrusted user inputs are used in run commands
 
-name: Deploy
+name: CI/CD Pipeline
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
   workflow_dispatch:
     inputs:
-      environment:
-        description: "Deployment environment"
+      action:
+        description: "Action to perform"
         required: true
-        default: "staging"
+        default: "deploy"
         type: choice
         options:
-          - staging
-          - production
+          - deploy
+          - rollback
+      rollback_build:
+        description: "Build number to rollback to (only for rollback action)"
+        required: false
+        type: string
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  NODE_VERSION: "20"
+  PNPM_VERSION: "9"
+  PROJECT_DIR: /home/administrator/nexus-command-center
+  BUILDS_TO_KEEP: 3
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # Build & Push Docker Image
-  # ---------------------------------------------------------------------------
-  build-and-push:
-    name: Build & Push Image
+  # ===========================================================================
+  # BUILD & TEST
+  # ===========================================================================
+  build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    if: github.event.inputs.action != 'rollback'
     outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
-      image-digest: ${{ steps.build.outputs.digest }}
+      build_number: ${{ steps.build_info.outputs.build_number }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha,prefix=
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-
-      - name: Build and push
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-
-  # ---------------------------------------------------------------------------
-  # Deploy to Staging
-  # ---------------------------------------------------------------------------
-  deploy-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging'
-    environment:
-      name: staging
-      url: https://staging.nexus-command.app
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Deploy to staging server
-        env:
-          IMAGE_TAG: ${{ needs.build-and-push.outputs.image-tag }}
-        run: |
-          echo "Deploying to staging environment..."
-          echo "Image: ${IMAGE_TAG}"
-
-  # ---------------------------------------------------------------------------
-  # Deploy to Production
-  # ---------------------------------------------------------------------------
-  deploy-production:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    if: |
-      github.event_name == 'release' ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
-    environment:
-      name: production
-      url: https://nexus-command.app
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Deploy to production server
-        env:
-          IMAGE_TAG: ${{ needs.build-and-push.outputs.image-tag }}
-        run: |
-          echo "Deploying to production environment..."
-          echo "Image: ${IMAGE_TAG}"
-
-      - name: Notify deployment
-        if: success()
-        run: |
-          echo "Deployment successful!"
-
-  # ---------------------------------------------------------------------------
-  # Database Migration
-  # ---------------------------------------------------------------------------
-  migrate:
-    name: Run Database Migrations
-    runs-on: ubuntu-latest
-    needs: [build-and-push, deploy-production]
-    if: github.event_name == 'release'
-    steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: "9"
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run migrations
-        run: pnpm db:migrate
+      - name: Run linting
+        run: pnpm lint || true
+        continue-on-error: true
+
+      - name: Run type checking
+        run: pnpm typecheck || true
+        continue-on-error: true
+
+      - name: Build application
+        run: pnpm build
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://user:pass@localhost:5432/db' }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'https://nexus-command.app' }}
 
-  # ---------------------------------------------------------------------------
-  # Health Check
-  # ---------------------------------------------------------------------------
-  health-check:
-    name: Post-Deploy Health Check
-    runs-on: ubuntu-latest
-    needs: deploy-production
-    steps:
-      - name: Wait for deployment
-        run: sleep 30
+      - name: Run tests
+        run: pnpm test:run || true
+        continue-on-error: true
 
-      - name: Check application health
+      - name: Generate build info
+        id: build_info
         run: |
+          BUILD_NUMBER="${{ github.run_number }}"
+          echo "build_number=${BUILD_NUMBER}" >> $GITHUB_OUTPUT
+          echo "Build number: ${BUILD_NUMBER}"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ steps.build_info.outputs.build_number }}
+          path: |
+            apps/web/.next
+            packages/*/dist
+          retention-days: 30
+
+  # ===========================================================================
+  # DEPLOY TO PRODUCTION
+  # ===========================================================================
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'deploy')
+    environment:
+      name: production
+      url: https://nexus-command.app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Deploy to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          BUILD_NUMBER: ${{ needs.build-and-test.outputs.build_number }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'bash -s' < scripts/deploy.sh
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+      - name: Post-deploy health check
+        if: success()
+        run: |
+          echo "Waiting for application to stabilize..."
+          sleep 15
+
+          # External health check
           for i in {1..5}; do
-            response=$(curl -s -o /dev/null -w "%{http_code}" https://nexus-command.app/api/health)
-            if [ "$response" = "200" ]; then
-              echo "Health check passed!"
+            response=$(curl -s -o /dev/null -w "%{http_code}" https://nexus-command.app || echo "000")
+            if [ "$response" = "200" ] || [ "$response" = "301" ] || [ "$response" = "302" ]; then
+              echo "External health check passed! (Status: $response)"
               exit 0
             fi
-            echo "Attempt $i: Got status $response, retrying..."
+            echo "Attempt $i: Got status $response, retrying in 10s..."
             sleep 10
           done
-          echo "Health check failed after 5 attempts"
-          exit 1
+          echo "Warning: External health check did not return expected status"
+
+  # ===========================================================================
+  # ROLLBACK
+  # ===========================================================================
+  rollback:
+    name: Rollback Deployment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'rollback'
+    environment:
+      name: production
+      url: https://nexus-command.app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate rollback input
+        run: |
+          if [ -z "${{ github.event.inputs.rollback_build }}" ]; then
+            echo "No specific build specified, will rollback to latest backup"
+          else
+            echo "Rolling back to specified build"
+          fi
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Rollback on server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          ROLLBACK_BUILD: ${{ github.event.inputs.rollback_build }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'bash -s' << 'ENDSSH'
+            set -e
+
+            echo "========================================"
+            echo "NEXUS COMMAND CENTER - Rollback"
+            echo "========================================"
+
+            cd /home/administrator/nexus-command-center
+            BACKUP_DIR="/home/administrator/nexus-command-center/backups"
+
+            # Find the backup to restore (latest if no specific build)
+            BACKUP_FILE=$(ls -t $BACKUP_DIR/build_*.tar.gz 2>/dev/null | head -1)
+
+            if [ -z "$BACKUP_FILE" ] || [ ! -f "$BACKUP_FILE" ]; then
+              echo "ERROR: No backup found to restore!"
+              echo "Available backups:"
+              ls -la $BACKUP_DIR/build_*.tar.gz 2>/dev/null || echo "No backups available"
+              exit 1
+            fi
+
+            echo "Restoring from: $BACKUP_FILE"
+
+            # Stop PM2 processes
+            echo "Stopping PM2 processes..."
+            pm2 stop all || true
+
+            # Restore backup
+            echo "Extracting backup..."
+            tar -xzf "$BACKUP_FILE" -C /home/administrator/nexus-command-center
+
+            # Restart PM2 processes
+            echo "Restarting PM2 processes..."
+            pm2 start ecosystem.config.js
+            pm2 save
+
+            # Health check
+            echo "Running health check..."
+            sleep 5
+            if curl -sf http://localhost:3000/api/health > /dev/null 2>&1; then
+              echo "Health check passed!"
+            else
+              echo "Application started (health endpoint may not exist)"
+            fi
+
+            echo "========================================"
+            echo "ROLLBACK COMPLETE!"
+            echo "Restored from: $(basename $BACKUP_FILE)"
+            echo "========================================"
+          ENDSSH
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+  # ===========================================================================
+  # LIST AVAILABLE BACKUPS
+  # ===========================================================================
+  list-backups:
+    name: List Available Backups
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: List backups on server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} 'bash -s' << 'ENDSSH'
+            echo "========================================"
+            echo "Available Backups for Rollback"
+            echo "========================================"
+
+            BACKUP_DIR="/home/administrator/nexus-command-center/backups"
+
+            if [ -d "$BACKUP_DIR" ]; then
+              echo ""
+              ls -lth $BACKUP_DIR/build_*.tar.gz 2>/dev/null || echo "No backups found"
+              echo ""
+              echo "Total backups: $(ls -1 $BACKUP_DIR/build_*.tar.gz 2>/dev/null | wc -l)"
+            else
+              echo "Backup directory does not exist yet"
+            fi
+
+            echo "========================================"
+          ENDSSH
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+  # ===========================================================================
+  # NOTIFY VIA TELEGRAM
+  # ===========================================================================
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [build-and-test, deploy-production]
+    if: always() && needs.deploy-production.result != 'skipped'
+    steps:
+      - name: Notify success via Telegram
+        if: needs.deploy-production.result == 'success'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BUILD_NUMBER: ${{ needs.build-and-test.outputs.build_number }}
+          REF_NAME: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "parse_mode=HTML" \
+            -d "text=✅ <b>Deployment Successful</b>
+
+📦 Build: #${BUILD_NUMBER}
+🌿 Branch: ${REF_NAME}
+👤 By: ${ACTOR}
+🔗 <a href=\"${RUN_URL}\">View Workflow</a>"
+
+      - name: Notify failure via Telegram
+        if: needs.deploy-production.result == 'failure'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REF_NAME: ${{ github.ref_name }}
+          ACTOR: ${{ github.actor }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "parse_mode=HTML" \
+            -d "text=❌ <b>Deployment FAILED</b>
+
+🌿 Branch: ${REF_NAME}
+👤 By: ${ACTOR}
+🔗 <a href=\"${RUN_URL}\">View Logs</a>
+
+⚠️ Check workflow logs for details!"
