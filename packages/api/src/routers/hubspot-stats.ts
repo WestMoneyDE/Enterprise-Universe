@@ -505,17 +505,20 @@ export const hubspotStatsRouter = createTRPCRouter({
   /**
    * Get won deals for Bauherren-Pass
    * Returns deals with closedwon stage including contact info
+   * Set calculateTotalRevenue=true to paginate through ALL won deals for accurate total
    */
   getWonDeals: publicProcedure
     .input(
       z.object({
         limit: z.number().min(1).max(100).default(20),
         since: z.date().optional(), // Only deals closed after this date
+        calculateTotalRevenue: z.boolean().default(false), // Paginate to get true total
       }).optional()
     )
     .query(async ({ input }) => {
       try {
         const limit = input?.limit ?? 20;
+        const calculateTotal = input?.calculateTotalRevenue ?? false;
 
         const filters: Array<{
           propertyName: string;
@@ -537,14 +540,15 @@ export const hubspotStatsRouter = createTRPCRouter({
           });
         }
 
-        const deals = await hubspotRequest<HubSpotSearchResponse>(
+        // First request to get total count and initial deals
+        const deals = await hubspotRequest<HubSpotSearchResponse & { paging?: { next?: { after: string } } }>(
           "/crm/v3/objects/deals/search",
           {
             method: "POST",
             body: JSON.stringify({
-              limit,
+              limit: calculateTotal ? 100 : limit,
               filterGroups: [{ filters }],
-              sorts: [{ propertyName: "closedate", direction: "DESCENDING" }],
+              sorts: [{ propertyName: "amount", direction: "DESCENDING" }],
               properties: [
                 "dealname",
                 "amount",
@@ -561,7 +565,71 @@ export const hubspotStatsRouter = createTRPCRouter({
         // Calculate commission based on tier (3.5% Gold default)
         const COMMISSION_RATE = 0.035;
 
-        const wonDeals = deals.results.map(deal => {
+        // If calculateTotalRevenue is true, paginate through ALL won deals
+        let allTotalValue = 0;
+        let allDealsProcessed = 0;
+
+        if (calculateTotal && deals.total > 100) {
+          // Sum from first page
+          allTotalValue = deals.results.reduce((sum, deal) => {
+            return sum + parseFloat(deal.properties.amount || "0");
+          }, 0);
+          allDealsProcessed = deals.results.length;
+
+          // Paginate through remaining deals
+          let cursor = deals.paging?.next?.after;
+          const maxPages = 50; // Safety limit
+          let pageCount = 0;
+
+          while (cursor && pageCount < maxPages) {
+            // Rate limit protection - HubSpot allows ~10 req/sec, use 300ms to be safe
+            await delay(300);
+
+            let nextPage: HubSpotSearchResponse & { paging?: { next?: { after: string } } };
+            let retries = 0;
+            const maxRetries = 3;
+
+            while (retries < maxRetries) {
+              try {
+                nextPage = await hubspotRequest<HubSpotSearchResponse & { paging?: { next?: { after: string } } }>(
+                  "/crm/v3/objects/deals/search",
+                  {
+                    method: "POST",
+                    body: JSON.stringify({
+                      limit: 100,
+                      after: cursor,
+                      filterGroups: [{ filters }],
+                      properties: ["amount"],
+                    }),
+                  }
+                );
+                break; // Success, exit retry loop
+              } catch (error) {
+                const errorStr = String(error);
+                if (errorStr.includes("429") || errorStr.includes("RATE_LIMIT")) {
+                  retries++;
+                  if (retries < maxRetries) {
+                    // Exponential backoff: 1s, 2s, 4s
+                    await delay(1000 * Math.pow(2, retries - 1));
+                    continue;
+                  }
+                }
+                throw error; // Re-throw non-rate-limit errors
+              }
+            }
+
+            allTotalValue += nextPage!.results.reduce((sum, deal) => {
+              return sum + parseFloat(deal.properties.amount || "0");
+            }, 0);
+            allDealsProcessed += nextPage!.results.length;
+
+            cursor = nextPage!.paging?.next?.after;
+            pageCount++;
+          }
+        }
+
+        // Map displayed deals
+        const wonDeals = deals.results.slice(0, limit).map(deal => {
           const amount = parseFloat(deal.properties.amount || "0");
           return {
             id: deal.id,
@@ -574,8 +642,12 @@ export const hubspotStatsRouter = createTRPCRouter({
           };
         });
 
-        const totalValue = wonDeals.reduce((sum, d) => sum + d.value, 0);
-        const totalCommission = wonDeals.reduce((sum, d) => sum + d.commission, 0);
+        // Use paginated total if calculated, otherwise sum displayed deals
+        const totalValue = calculateTotal && deals.total > 100
+          ? allTotalValue
+          : wonDeals.reduce((sum, d) => sum + d.value, 0);
+
+        const totalCommission = Math.round(totalValue * COMMISSION_RATE * 100) / 100;
 
         return {
           success: true,
@@ -583,9 +655,11 @@ export const hubspotStatsRouter = createTRPCRouter({
             deals: wonDeals,
             count: deals.total,
             displayedCount: wonDeals.length,
+            processedCount: calculateTotal ? allDealsProcessed : wonDeals.length,
             totalValue,
             totalCommission,
             commissionRate: COMMISSION_RATE * 100,
+            isAccurateTotal: calculateTotal || deals.total <= 100,
           },
         };
       } catch (error) {

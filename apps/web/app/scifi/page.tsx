@@ -52,8 +52,11 @@ export default function CommandDeckPage() {
   // Recent deals from HubSpot
   const { data: recentDealsData, isLoading: dealsLoading } = api.hubspotStats.getRecentDeals.useQuery({ limit: 10 });
 
-  // Won deals for revenue
-  const { data: wonDealsData, isLoading: wonDealsLoading } = api.hubspotStats.getWonDeals.useQuery({ limit: 100 });
+  // Won deals for revenue - calculateTotalRevenue paginates through ALL won deals
+  const { data: wonDealsData, isLoading: wonDealsLoading } = api.hubspotStats.getWonDeals.useQuery({
+    limit: 10,
+    calculateTotalRevenue: true, // Get accurate total from all 3K+ won deals
+  });
 
   // Extract HubSpot data
   const totalContacts = hubspotStats?.data?.totalContacts ?? 0;
