@@ -41,30 +41,38 @@ export default function CommandDeckPage() {
   }), []);
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // REAL-TIME tRPC DATA QUERIES
+  // REAL-TIME tRPC DATA QUERIES - Using HubSpot Live Data
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Contacts (Active Users)
-  const { data: contactsData, isLoading: contactsLoading } = api.contacts.list.useQuery({
-    pagination: { page: 1, limit: 1 },
+  // HubSpot Dashboard Stats (main data source)
+  const { data: hubspotStats, isLoading: hubspotLoading } = api.hubspotStats.getDashboardStats.useQuery(undefined, {
+    refetchInterval: 30000,
   });
 
-  // Deals (Open Deals & Revenue)
-  const { data: dealsData, isLoading: dealsLoading } = api.deals.list.useQuery({
-    filters: { stage: "negotiation" },
-    pagination: { page: 1, limit: 100 },
-  });
+  // Recent deals from HubSpot
+  const { data: recentDealsData, isLoading: dealsLoading } = api.hubspotStats.getRecentDeals.useQuery({ limit: 10 });
 
-  // All deals for revenue calculation
-  const { data: allDealsData } = api.deals.list.useQuery({
-    filters: { stage: "won" },
-    pagination: { page: 1, limit: 100 },
-  });
+  // Won deals for revenue
+  const { data: wonDealsData, isLoading: wonDealsLoading } = api.hubspotStats.getWonDeals.useQuery({ limit: 100 });
 
-  // Conversations (Messages)
-  const { data: conversationsData, isLoading: messagingLoading } = api.messaging.listConversations.useQuery({
-    pagination: { page: 1, limit: 1 },
-  });
+  // Extract HubSpot data
+  const totalContacts = hubspotStats?.data?.totalContacts ?? 0;
+  const totalDeals = hubspotStats?.data?.totalDeals ?? 0;
+  const totalValue = hubspotStats?.data?.totalValue ?? 0;
+  const avgDealValue = hubspotStats?.data?.avgDealValue ?? 0;
+  const dealsByStage = hubspotStats?.data?.dealsByStage ?? {};
+
+  // Calculate open deals (not won/lost)
+  const openDealsCount = useMemo(() => {
+    if (!dealsByStage) return 0;
+    const closedWon = dealsByStage["closedwon"]?.count ?? 0;
+    const closedLost = dealsByStage["closedlost"]?.count ?? 0;
+    return totalDeals - closedWon - closedLost;
+  }, [dealsByStage, totalDeals]);
+
+  // Won deals revenue
+  const wonRevenue = wonDealsData?.data?.totalValue ?? 0;
+  const wonDealsCount = wonDealsData?.data?.count ?? 0;
 
   // AI Agent Stats (using stable dateRange to prevent hydration mismatch)
   const { data: aiStats, isLoading: aiLoading } = api.aiAgent.getStats.useQuery({
@@ -78,64 +86,77 @@ export default function CommandDeckPage() {
   // Project Stats
   const { data: projectStats, isLoading: projectsLoading } = api.projects.stats.useQuery({});
 
-  // Activity Feed - Real-time activity from audit logs
-  const { data: activityFeed } = api.activity.recent.useQuery({ limit: 5 });
+  // Activity Feed - Use recent deals as activity
+  const activityFeed = useMemo(() => {
+    if (!recentDealsData?.data) return [];
+    return recentDealsData.data.slice(0, 5).map((deal) => ({
+      id: deal.id,
+      icon: "◆",
+      title: deal.name,
+      description: `€${deal.amount.toLocaleString()} • ${deal.stage || "New"}`,
+      timestamp: deal.createdAt || new Date().toISOString(),
+      action: "create" as const,
+    }));
+  }, [recentDealsData]);
 
   // Notifications
   const { data: notificationsData } = api.notifications.unread.useQuery({ limit: 5 });
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // COMPUTED DASHBOARD STATS
+  // COMPUTED DASHBOARD STATS - Using HubSpot Data
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const isDataLoading = contactsLoading || dealsLoading || messagingLoading;
+  const isDataLoading = hubspotLoading || dealsLoading;
 
-  // Calculate total revenue from won deals
-  const totalRevenue = useMemo(() => {
-    if (!allDealsData?.items) return 0;
-    return allDealsData.items.reduce((sum, deal) => {
-      return sum + parseFloat(deal.amount || "0");
-    }, 0);
-  }, [allDealsData]);
+  // Format large numbers
+  const formatValue = (value: number): string => {
+    if (value >= 1_000_000_000) return `€${(value / 1_000_000_000).toFixed(1)}B`;
+    if (value >= 1_000_000) return `€${(value / 1_000_000).toFixed(1)}M`;
+    if (value >= 1_000) return `€${(value / 1_000).toFixed(0)}K`;
+    return `€${value.toFixed(0)}`;
+  };
 
-  // Calculate open deals count
-  const openDealsCount = dealsData?.total ?? 0;
+  const formatCount = (count: number): string => {
+    if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1)}M`;
+    if (count >= 1_000) return `${(count / 1_000).toFixed(1)}K`;
+    return count.toString();
+  };
 
-  // Dashboard stats from real API data
+  // Dashboard stats from HubSpot API data
   const dashboardStats: StatItem[] = useMemo(() => [
     {
-      id: "users",
-      label: "Active Contacts",
-      value: contactsData?.total?.toLocaleString() ?? "—",
+      id: "contacts",
+      label: "Total Contacts",
+      value: totalContacts > 0 ? formatCount(totalContacts) : "—",
       trend: "up",
-      trendValue: "+12.5%",
-      status: contactsLoading ? "warning" : "online",
+      trendValue: "HubSpot Live",
+      status: hubspotLoading ? "warning" : totalContacts > 0 ? "online" : "warning",
     },
     {
       id: "revenue",
       label: "Revenue (Won)",
-      value: totalRevenue > 0 ? `€${totalRevenue.toLocaleString()}` : "—",
+      value: wonRevenue > 0 ? formatValue(wonRevenue) : "—",
       trend: "up",
-      trendValue: "+8.2%",
-      status: dealsLoading ? "warning" : "online",
+      trendValue: `${formatCount(wonDealsCount)} deals`,
+      status: wonDealsLoading ? "warning" : wonRevenue > 0 ? "online" : "warning",
     },
     {
-      id: "messages",
-      label: "Conversations",
-      value: conversationsData?.total?.toLocaleString() ?? "—",
+      id: "pipeline",
+      label: "Pipeline Value",
+      value: totalValue > 0 ? formatValue(totalValue) : "—",
       trend: "up",
-      trendValue: "+23.1%",
-      status: messagingLoading ? "warning" : "online",
+      trendValue: "Estimated",
+      status: hubspotLoading ? "warning" : "online",
     },
     {
       id: "deals",
       label: "Open Deals",
-      value: openDealsCount.toString(),
+      value: openDealsCount > 0 ? formatCount(openDealsCount) : "0",
       trend: openDealsCount > 0 ? "up" : "neutral",
-      trendValue: openDealsCount > 0 ? `${openDealsCount} active` : "±0%",
-      status: dealsLoading ? "warning" : openDealsCount > 10 ? "online" : "warning",
+      trendValue: openDealsCount > 0 ? `${formatCount(totalDeals)} total` : "±0%",
+      status: hubspotLoading ? "warning" : openDealsCount > 10 ? "online" : "warning",
     },
-  ], [contactsData, totalRevenue, conversationsData, openDealsCount, contactsLoading, dealsLoading, messagingLoading]);
+  ], [totalContacts, wonRevenue, wonDealsCount, totalValue, openDealsCount, totalDeals, hubspotLoading, wonDealsLoading]);
 
   // Boot sequence simulation
   useEffect(() => {
@@ -188,10 +209,9 @@ export default function CommandDeckPage() {
             type: "output",
             content: `Available commands:
   status    - Show system status
-  modules   - List active modules
-  stats     - Display statistics (LIVE DATA)
-  leads     - Show lead distribution
-  ai        - AI agent performance
+  stats     - Display HubSpot statistics
+  pipeline  - Show pipeline stages
+  revenue   - Revenue analytics
   clear     - Clear terminal
   god       - Activate God Mode 神
   ultra     - Activate Ultra Instinct 極`,
@@ -202,7 +222,7 @@ export default function CommandDeckPage() {
           response = {
             id: `output-${Date.now()}`,
             type: "success",
-            content: `All systems operational. ${contactsData?.total ?? 0} contacts | ${conversationsData?.total ?? 0} conversations | ${openDealsCount} deals`,
+            content: `All systems operational. ${formatCount(totalContacts)} contacts | ${formatCount(totalDeals)} deals | ${formatValue(wonRevenue)} won`,
             timestamp: new Date(),
           };
           break;
@@ -210,42 +230,43 @@ export default function CommandDeckPage() {
           response = {
             id: `output-${Date.now()}`,
             type: "output",
-            content: `📊 LIVE STATISTICS
-  Contacts:      ${contactsData?.total?.toLocaleString() ?? "Loading..."}
-  Conversations: ${conversationsData?.total?.toLocaleString() ?? "Loading..."}
-  Open Deals:    ${openDealsCount}
-  Revenue:       €${totalRevenue.toLocaleString()}
-  AI Responses:  ${aiStats?.totalResponses ?? "N/A"}
-  Projects:      ${projectStats?.total ?? "N/A"}`,
+            content: `📊 HUBSPOT LIVE STATISTICS
+  Total Contacts:  ${formatCount(totalContacts)}
+  Total Deals:     ${formatCount(totalDeals)}
+  Open Deals:      ${formatCount(openDealsCount)}
+  Won Deals:       ${formatCount(wonDealsCount)}
+  Won Revenue:     ${formatValue(wonRevenue)}
+  Pipeline Value:  ${formatValue(totalValue)}
+  Avg Deal:        ${formatValue(avgDealValue)}`,
             timestamp: new Date(),
           };
           break;
         case "leads":
-          const gradeA = leadDistribution?.A ?? 0;
-          const gradeB = leadDistribution?.B ?? 0;
-          const gradeC = leadDistribution?.C ?? 0;
-          const gradeD = leadDistribution?.D ?? 0;
+        case "pipeline":
           response = {
             id: `output-${Date.now()}`,
             type: "output",
-            content: `🎯 LEAD SCORING DISTRIBUTION
-  Grade A (Hot):   ${gradeA} leads
-  Grade B (Warm):  ${gradeB} leads
-  Grade C (Cool):  ${gradeC} leads
-  Grade D (Cold):  ${gradeD} leads
-  Total Scored:    ${leadDistribution?.total ?? 0}`,
+            content: `🎯 HUBSPOT PIPELINE STAGES
+  Won:             ${formatCount(dealsByStage["closedwon"]?.count ?? 0)} deals
+  Contract Sent:   ${formatCount(dealsByStage["contractsent"]?.count ?? 0)} deals
+  Qualified:       ${formatCount(dealsByStage["qualifiedtobuy"]?.count ?? 0)} deals
+  Appointment:     ${formatCount(dealsByStage["appointmentscheduled"]?.count ?? 0)} deals
+  Lost:            ${formatCount(dealsByStage["closedlost"]?.count ?? 0)} deals
+  Total Pipeline:  ${formatCount(totalDeals)} deals`,
             timestamp: new Date(),
           };
           break;
         case "ai":
+        case "revenue":
           response = {
             id: `output-${Date.now()}`,
             type: "output",
-            content: `🤖 AI AGENT PERFORMANCE (30 days)
-  Total Responses: ${aiStats?.totalResponses ?? 0}
-  Success Rate:    ${((aiStats?.successRate ?? 0) * 100).toFixed(1)}%
-  Escalation Rate: ${((aiStats?.escalationRate ?? 0) * 100).toFixed(1)}%
-  Avg Confidence:  ${((aiStats?.averageConfidence ?? 0) * 100).toFixed(1)}%`,
+            content: `💰 REVENUE ANALYTICS
+  Won Revenue:     ${formatValue(wonRevenue)}
+  Won Deals:       ${formatCount(wonDealsCount)}
+  Win Rate:        ${totalDeals > 0 ? ((wonDealsCount / totalDeals) * 100).toFixed(1) : 0}%
+  Pipeline Value:  ${formatValue(totalValue)}
+  Avg Deal Size:   ${formatValue(avgDealValue)}`,
             timestamp: new Date(),
           };
           break;
@@ -319,99 +340,99 @@ export default function CommandDeckPage() {
       <div className="grid grid-cols-12 gap-6">
         {/* Left Column - Metrics */}
         <div className="col-span-12 lg:col-span-4 space-y-6">
-          {/* System Health - Real AI & Lead Metrics */}
+          {/* Pipeline Health - HubSpot Metrics */}
           <HoloCard
-            title="AI PERFORMANCE"
-            subtitle="Real-time metrics"
+            title="PIPELINE HEALTH"
+            subtitle="HubSpot Live Metrics"
             icon="◈"
             variant="cyan"
           >
             <div className="flex justify-around py-4">
               <MetricRing
-                value={Math.round((aiStats?.successRate ?? 0) * 100)}
-                label="Success"
+                value={totalDeals > 0 ? Math.round((wonDealsCount / totalDeals) * 100) : 0}
+                label="Win Rate"
                 color="green"
                 size="md"
               />
               <MetricRing
-                value={Math.round((aiStats?.averageConfidence ?? 0) * 100)}
-                label="Confidence"
+                value={totalDeals > 0 ? Math.round((openDealsCount / totalDeals) * 100) : 0}
+                label="Open"
                 color="cyan"
                 size="md"
               />
               <MetricRing
-                value={100 - Math.round((aiStats?.escalationRate ?? 0) * 100)}
-                label="Handled"
+                value={hubspotStats?.success ? 100 : 0}
+                label="Synced"
                 color="purple"
                 size="md"
               />
             </div>
             <div className="text-center text-xs text-white/40 font-mono">
-              {aiStats?.totalResponses ?? 0} AI responses (30 days)
+              {formatCount(totalDeals)} deals tracked in HubSpot
             </div>
           </HoloCard>
 
-          {/* Module Status - Real Loading States */}
+          {/* Module Status - HubSpot Live Data */}
           <HoloCard
             title="MODULE STATUS"
-            subtitle="Live API connections"
+            subtitle="HubSpot Live Connections"
             icon="◆"
             variant="purple"
           >
             <div className="space-y-3">
               <ActivityIndicator
-                status={messagingLoading ? "idle" : (conversationsData?.total ?? 0) > 0 ? "active" : "warning"}
-                label={`WhatsApp Console (${conversationsData?.total ?? 0})`}
+                status={hubspotLoading ? "idle" : totalContacts > 0 ? "active" : "warning"}
+                label={`Contacts (${formatCount(totalContacts)})`}
               />
               <ActivityIndicator
-                status={contactsLoading ? "idle" : (contactsData?.total ?? 0) > 0 ? "active" : "warning"}
-                label={`CRM Nexus (${contactsData?.total ?? 0})`}
+                status={hubspotLoading ? "idle" : totalDeals > 0 ? "active" : "warning"}
+                label={`CRM Deals (${formatCount(totalDeals)})`}
               />
               <ActivityIndicator
-                status={aiLoading ? "idle" : (aiStats?.totalResponses ?? 0) > 0 ? "active" : "warning"}
-                label={`AI Agent (${aiStats?.totalResponses ?? 0} resp)`}
+                status={wonDealsLoading ? "idle" : wonDealsCount > 0 ? "active" : "warning"}
+                label={`Won Deals (${formatCount(wonDealsCount)})`}
               />
               <ActivityIndicator
-                status={leadLoading ? "idle" : (leadDistribution?.total ?? 0) > 0 ? "active" : "warning"}
-                label={`Lead Scoring (${leadDistribution?.total ?? 0})`}
+                status={hubspotLoading ? "idle" : openDealsCount > 0 ? "active" : "warning"}
+                label={`Open Pipeline (${formatCount(openDealsCount)})`}
               />
               <ActivityIndicator
-                status={projectsLoading ? "idle" : (projectStats?.total ?? 0) > 0 ? "active" : "warning"}
-                label={`West Money Bau (${projectStats?.total ?? 0})`}
+                status={hubspotStats?.success ? "active" : "warning"}
+                label={`HubSpot API (${hubspotStats?.success ? "Connected" : "Offline"})`}
               />
             </div>
           </HoloCard>
 
-          {/* Lead Distribution - Real Data */}
-          <HoloCard title="LEAD GRADES" icon="◇" variant="gold">
+          {/* Pipeline Distribution - HubSpot Data */}
+          <HoloCard title="PIPELINE STAGES" icon="◇" variant="gold">
             <div className="space-y-4">
               <DataBar
-                label="Grade A (Hot)"
-                value={leadDistribution?.A ?? 0}
-                max={Math.max(leadDistribution?.total ?? 100, 1)}
+                label="Won"
+                value={dealsByStage["closedwon"]?.count ?? 0}
+                max={Math.max(totalDeals, 1)}
                 color="green"
               />
               <DataBar
-                label="Grade B (Warm)"
-                value={leadDistribution?.B ?? 0}
-                max={Math.max(leadDistribution?.total ?? 100, 1)}
+                label="Contract Sent"
+                value={dealsByStage["contractsent"]?.count ?? 0}
+                max={Math.max(totalDeals, 1)}
                 color="cyan"
               />
               <DataBar
-                label="Grade C (Cool)"
-                value={leadDistribution?.C ?? 0}
-                max={Math.max(leadDistribution?.total ?? 100, 1)}
-                color="orange"
+                label="Qualified"
+                value={dealsByStage["qualifiedtobuy"]?.count ?? 0}
+                max={Math.max(totalDeals, 1)}
+                color="purple"
               />
               <DataBar
-                label="Grade D (Cold)"
-                value={leadDistribution?.D ?? 0}
-                max={Math.max(leadDistribution?.total ?? 100, 1)}
+                label="Lost"
+                value={dealsByStage["closedlost"]?.count ?? 0}
+                max={Math.max(totalDeals, 1)}
                 color="red"
               />
             </div>
             <div className="mt-3 text-center text-xs text-white/40 font-mono">
-              {leadDistribution?.total ?? 0} total scored leads
+              {formatCount(totalDeals)} total deals in HubSpot
             </div>
           </HoloCard>
         </div>
@@ -455,7 +476,7 @@ export default function CommandDeckPage() {
 
         {/* Right Column - AI & Widgets */}
         <div className="col-span-12 lg:col-span-3 space-y-6">
-          {/* AI Assistants - Real Stats */}
+          {/* AI Assistants - HubSpot Stats */}
           <HoloCard
             title="AI AGENTS"
             subtitle="Neural Network Status"
@@ -465,34 +486,30 @@ export default function CommandDeckPage() {
           >
             <div className="space-y-4">
               <AIAssistantCard
-                name="MAX"
-                role="WhatsApp Agent"
-                status={(aiStats?.totalResponses ?? 0) > 0 ? "active" : "standby"}
-                tasks={aiStats?.totalResponses ?? 0}
+                name="CRM SYNC"
+                role="HubSpot Agent"
+                status={hubspotStats?.success ? "active" : "standby"}
+                tasks={totalDeals}
                 avatar="神"
               />
               <AIAssistantCard
-                name="LEAD AI"
-                role="Scoring Engine"
-                status={(leadDistribution?.total ?? 0) > 0 ? "active" : "standby"}
-                tasks={leadDistribution?.total ?? 0}
+                name="DEAL AI"
+                role="Pipeline Engine"
+                status={openDealsCount > 0 ? "active" : "standby"}
+                tasks={openDealsCount}
                 avatar="★"
               />
               <AIAssistantCard
                 name="NEXUS"
                 role="Command Center"
                 status="processing"
-                tasks={
-                  (contactsData?.total ?? 0) +
-                  (conversationsData?.total ?? 0) +
-                  openDealsCount
-                }
+                tasks={totalContacts + totalDeals + wonDealsCount}
                 avatar="極"
               />
             </div>
             <div className="mt-3 text-center">
               <span className="text-xs text-white/40 font-mono">
-                {((aiStats?.successRate ?? 0) * 100).toFixed(0)}% success rate
+                {formatValue(wonRevenue)} won revenue
               </span>
             </div>
           </HoloCard>
