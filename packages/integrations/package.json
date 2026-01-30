@@ -1,0 +1,27 @@
+{
+  "name": "@nexus/integrations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./webhooks": "./src/webhooks/index.ts",
+    "./n8n": "./src/n8n/index.ts",
+    "./slack": "./src/slack/index.ts",
+    "./telegram": "./src/telegram/index.ts",
+    "./hubspot": "./src/hubspot/index.ts",
+    "./stripe": "./src/stripe/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "ioredis": "^5.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.12",
+    "typescript": "^5.7.2"
+  }
+}
