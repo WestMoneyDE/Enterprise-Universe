@@ -4,7 +4,7 @@
 // API endpoints for spam scanning HubSpot contacts
 
 import { z } from "zod";
-import { router, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { verifyEmail, VerificationResult } from "../services/email-verifier";
 import { TRPCError } from "@trpc/server";
 
@@ -139,7 +139,7 @@ async function fetchHubSpotContacts(
 // ROUTER
 // =============================================================================
 
-export const spamScannerRouter = router({
+export const spamScannerRouter = createTRPCRouter({
   // Quick scan - sample of contacts
   quickScan: protectedProcedure
     .input(z.object({
