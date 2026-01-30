@@ -20,8 +20,12 @@ const MAIL_ENGINE_URL = process.env.MAIL_ENGINE_URL || 'http://localhost:3006';
 const STATE_FILE = '/home/administrator/nexus-command-center/.auto-commission-state.json';
 const LOG_FILE = '/home/administrator/nexus-command-center/logs/auto-commission.log';
 
-// Stripe Configuration
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '${STRIPE_SECRET_KEY}';
+// Stripe Configuration - key must be set via STRIPE_SECRET_KEY env var
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_SECRET_KEY) {
+  console.error('STRIPE_SECRET_KEY environment variable is required');
+  process.exit(1);
+}
 const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 // Rate limits - Moderate mode (15s delay for stability)

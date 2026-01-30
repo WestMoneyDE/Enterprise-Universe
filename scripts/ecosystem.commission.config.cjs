@@ -1,6 +1,17 @@
 // PM2 Ecosystem Config - Auto Commission Service
 // Führt den Deal-Finder und Email-Sender alle 15 Minuten aus
 
+// Load environment variables from shell
+const HUBSPOT_TOKEN = process.env.HUBSPOT_ACCESS_TOKEN;
+const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
+
+if (!HUBSPOT_TOKEN || !STRIPE_KEY) {
+  console.error('Required environment variables not set:');
+  if (!HUBSPOT_TOKEN) console.error('  - HUBSPOT_ACCESS_TOKEN');
+  if (!STRIPE_KEY) console.error('  - STRIPE_SECRET_KEY');
+  console.error('Please set them in ~/.bashrc and source it before starting PM2');
+}
+
 module.exports = {
   apps: [
     {
@@ -15,11 +26,12 @@ module.exports = {
       // Sofort ausführen beim Start
       autorestart: false,
 
-      // Environment
+      // Environment - pass actual values from shell env
       env: {
         NODE_ENV: 'production',
-        HUBSPOT_ACCESS_TOKEN: '${HUBSPOT_ACCESS_TOKEN}',
-        MAIL_ENGINE_URL: 'http://localhost:3006',
+        HUBSPOT_ACCESS_TOKEN: HUBSPOT_TOKEN,
+        STRIPE_SECRET_KEY: STRIPE_KEY,
+        MAIL_ENGINE_URL: process.env.MAIL_ENGINE_URL || 'http://localhost:3006',
       },
 
       // Logging
