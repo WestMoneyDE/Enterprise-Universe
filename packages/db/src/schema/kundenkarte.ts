@@ -12,7 +12,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { kundenkarteStatusEnum, subsidiaryEnum } from "./enums";
+import { kundenkarteStatusEnum, kundenkarteTierEnum, subsidiaryEnum } from "./enums";
 import { organizations, users } from "./auth";
 import { contacts } from "./contacts";
 import { projects } from "./projects";
@@ -40,6 +40,23 @@ export const kundenkarten = pgTable(
     contactId: uuid("contact_id").references(() => contacts.id, { onDelete: "set null" }),
     kundenNummer: varchar("kunden_nummer", { length: 50 }).notNull(),
     subsidiary: subsidiaryEnum("subsidiary").default("west_money_bau"),
+
+    // Bauherren-Pass Link
+    bauherrenPassId: uuid("bauherren_pass_id"), // FK constraint added via migration, not import (avoids circular dependency)
+
+    // Loyalty Card Fields
+    cardNumber: varchar("card_number", { length: 50 }).unique(),
+    qrCodeData: text("qr_code_data"),
+    tier: kundenkarteTierEnum("tier").default("bronze"),
+    points: integer("points").default(0),
+    pointsHistory: jsonb("points_history").$type<Array<{
+      date: string;
+      points: number;
+      type: "earned" | "redeemed" | "adjusted" | "expired";
+      description: string;
+      balanceAfter: number;
+      referenceId?: string;
+    }>>(),
 
     // Status & Workflow
     status: kundenkarteStatusEnum("status").default("draft").notNull(),
@@ -185,6 +202,9 @@ export const kundenkarten = pgTable(
     statusIdx: index("kundenkarten_status_idx").on(table.status),
     assignedToIdx: index("kundenkarten_assigned_to_idx").on(table.assignedTo),
     emailIdx: index("kundenkarten_email_idx").on(table.email),
+    bauherrenPassIdx: index("kundenkarten_bauherren_pass_idx").on(table.bauherrenPassId),
+    cardNumberIdx: index("kundenkarten_card_number_idx").on(table.cardNumber),
+    tierIdx: index("kundenkarten_tier_idx").on(table.tier),
   })
 );
 
@@ -268,6 +288,8 @@ export const kundenkartenRelations = relations(kundenkarten, ({ one, many }) => 
     fields: [kundenkarten.contactId],
     references: [contacts.id],
   }),
+  // Note: bauherrenPass relation removed to avoid circular dependency with bauherrenPass.ts
+  // The link is maintained via bauherrenPassId FK field
   approvedByUser: one(users, {
     fields: [kundenkarten.approvedBy],
     references: [users.id],

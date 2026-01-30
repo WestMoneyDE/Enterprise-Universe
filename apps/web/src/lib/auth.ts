@@ -25,10 +25,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.organizationId = user.organizationId;
+      }
+      // Refresh organizationId on session update
+      if (trigger === "update" && token.id) {
+        const dbUser = await db.query.users.findFirst({
+          where: eq(users.id, token.id as string),
+        });
+        if (dbUser) {
+          token.organizationId = dbUser.organizationId;
+        }
       }
       return token;
     },
@@ -36,6 +46,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
+        session.user.organizationId = token.organizationId as string | null;
       }
       return session;
     },
@@ -98,6 +109,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: `${user.firstName} ${user.lastName}`.trim() || user.email,
           image: user.avatarUrl ?? undefined,
           role: user.role ?? undefined,
+          organizationId: user.organizationId ?? null,
         };
       },
     }),
@@ -156,6 +168,7 @@ async function verifyPassword(
 declare module "next-auth" {
   interface User {
     role?: string;
+    organizationId?: string | null;
   }
 
   interface Session {
@@ -165,6 +178,7 @@ declare module "next-auth" {
       email: string;
       name?: string | null;
       image?: string | null;
+      organizationId: string | null;
     };
   }
 }

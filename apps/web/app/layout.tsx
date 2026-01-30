@@ -3,13 +3,31 @@
 // =============================================================================
 
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono, Orbitron, Rajdhani } from "next/font/google";
 import { TRPCProvider } from "@/trpc/client";
+import { ThemeProvider } from "@/lib/design-system";
+import { Toaster } from "@/components/ui/toast";
 import "@/styles/globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+});
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-orbitron",
+});
+
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-rajdhani",
 });
 
 export const metadata: Metadata = {
@@ -45,8 +63,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans`}>
-        <TRPCProvider>{children}</TRPCProvider>
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable} ${rajdhani.variable} font-sans`}
+      >
+        <ThemeProvider defaultTheme="dark">
+          <TRPCProvider>{children}</TRPCProvider>
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

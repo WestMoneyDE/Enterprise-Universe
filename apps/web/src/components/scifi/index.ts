@@ -44,8 +44,8 @@ export {
 } from "./PowerModeContext";
 export type { PowerMode } from "./PowerModeContext";
 
-// Command Palette - disabled pending cmdk package installation
-// export { default as CommandPalette } from "./CommandPalette";
+// Command Palette
+export { default as CommandPalette } from "./CommandPalette";
 
 // AI Chat
 export { default as AIChat } from "./AIChat";

@@ -68,6 +68,9 @@ export const users = pgTable("users", {
   avatarUrl: varchar("avatar_url", { length: 500 }),
   phone: varchar("phone", { length: 50 }),
 
+  // Organization
+  organizationId: uuid("organization_id").references(() => organizations.id, { onDelete: "set null" }),
+
   // Role
   role: varchar("role", { length: 20 }).default("user"),
 
@@ -77,8 +80,20 @@ export const users = pgTable("users", {
 
   // Status
   status: varchar("status", { length: 20 }).default("pending"),
+  isActive: boolean("is_active").default(true),
   lastLoginAt: timestamp("last_login_at"),
-  lastActivityAt: timestamp("last_activity_at"),
+  lastActiveAt: timestamp("last_active_at"),
+
+  // Preferences
+  preferences: jsonb("preferences").$type<{
+    theme?: "light" | "dark" | "system";
+    notifications?: {
+      email?: boolean;
+      push?: boolean;
+      sms?: boolean;
+    };
+    dashboardLayout?: string;
+  }>(),
 
   // Timestamps
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -173,17 +188,162 @@ export const apiKeys = pgTable("api_keys", {
 });
 
 // =============================================================================
-// RELATIONS
+// USER ROLES (RBAC)
+// =============================================================================
+
+/**
+ * Role permissions structure for JSONB storage
+ */
+export interface RolePermissions {
+  // System-level permissions
+  system?: {
+    settings?: boolean;
+    users?: boolean;
+    organizations?: boolean;
+    apiKeys?: boolean;
+    audit?: boolean;
+  };
+  // CRM permissions
+  contacts?: {
+    create?: boolean;
+    read?: boolean | "own";
+    update?: boolean | "own";
+    delete?: boolean | "own";
+    export?: boolean;
+    import?: boolean;
+  };
+  deals?: {
+    create?: boolean;
+    read?: boolean | "own";
+    update?: boolean | "own";
+    delete?: boolean | "own";
+    assign?: boolean;
+  };
+  // Marketing permissions
+  campaigns?: {
+    create?: boolean;
+    read?: boolean;
+    update?: boolean;
+    delete?: boolean;
+    send?: boolean;
+  };
+  leadScoring?: {
+    view?: boolean;
+    configure?: boolean;
+  };
+  // Finance permissions
+  commissions?: {
+    view?: boolean | "own";
+    approve?: boolean;
+    configure?: boolean;
+  };
+  reports?: {
+    view?: boolean;
+    export?: boolean;
+    financial?: boolean;
+  };
+  // Projects permissions
+  projects?: {
+    create?: boolean;
+    read?: boolean;
+    update?: boolean;
+    delete?: boolean;
+  };
+  // Partner-specific permissions
+  partner?: {
+    leads?: boolean;
+    commission?: boolean;
+    dashboard?: boolean;
+  };
+}
+
+export const userRoles = pgTable("user_roles", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: varchar("name", { length: 50 }).notNull().unique(),
+  displayName: varchar("display_name", { length: 100 }).notNull(),
+  description: text("description"),
+  permissions: jsonb("permissions").$type<RolePermissions>().notNull(),
+  isSystem: boolean("is_system").default(false).notNull(), // System roles cannot be deleted
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// =============================================================================
+// USER ROLE ASSIGNMENTS
+// =============================================================================
+
+export const userRoleAssignments = pgTable(
+  "user_role_assignments",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    roleId: uuid("role_id")
+      .notNull()
+      .references(() => userRoles.id, { onDelete: "cascade" }),
+    organizationId: uuid("organization_id")
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    assignedBy: uuid("assigned_by")
+      .references(() => users.id, { onDelete: "set null" }),
+    assignedAt: timestamp("assigned_at").defaultNow().notNull(),
+    expiresAt: timestamp("expires_at"), // Optional role expiration
+  },
+  (table) => ({
+    // Ensure a user can only have one assignment of the same role per organization
+    uniqueUserRoleOrg: primaryKey({
+      columns: [table.userId, table.roleId, table.organizationId],
+    }),
+  })
+);
+
+// =============================================================================
+// ROLE RELATIONS
+// =============================================================================
+
+export const userRolesRelations = relations(userRoles, ({ many }) => ({
+  assignments: many(userRoleAssignments),
+}));
+
+export const userRoleAssignmentsRelations = relations(userRoleAssignments, ({ one }) => ({
+  user: one(users, {
+    fields: [userRoleAssignments.userId],
+    references: [users.id],
+  }),
+  role: one(userRoles, {
+    fields: [userRoleAssignments.roleId],
+    references: [userRoles.id],
+  }),
+  organization: one(organizations, {
+    fields: [userRoleAssignments.organizationId],
+    references: [organizations.id],
+  }),
+  assignedByUser: one(users, {
+    fields: [userRoleAssignments.assignedBy],
+    references: [users.id],
+    relationName: "assignedByUser",
+  }),
+}));
+
+// =============================================================================
+// AUTH RELATIONS (defined after all tables)
 // =============================================================================
 
 export const organizationsRelations = relations(organizations, ({ many }) => ({
+  users: many(users),
   apiKeys: many(apiKeys),
+  roleAssignments: many(userRoleAssignments),
 }));
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
+  organization: one(organizations, {
+    fields: [users.organizationId],
+    references: [organizations.id],
+  }),
   sessions: many(sessions),
   accounts: many(accounts),
   apiKeys: many(apiKeys),
+  roleAssignments: many(userRoleAssignments),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -210,3 +370,262 @@ export const apiKeysRelations = relations(apiKeys, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+// =============================================================================
+// DEFAULT ROLE DEFINITIONS
+// =============================================================================
+
+export const DEFAULT_ROLES: Array<{
+  name: string;
+  displayName: string;
+  description: string;
+  permissions: RolePermissions;
+}> = [
+  {
+    name: "super_admin",
+    displayName: "Super Administrator",
+    description: "Full system access including system settings and configuration",
+    permissions: {
+      system: {
+        settings: true,
+        users: true,
+        organizations: true,
+        apiKeys: true,
+        audit: true,
+      },
+      contacts: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        export: true,
+        import: true,
+      },
+      deals: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        assign: true,
+      },
+      campaigns: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        send: true,
+      },
+      leadScoring: {
+        view: true,
+        configure: true,
+      },
+      commissions: {
+        view: true,
+        approve: true,
+        configure: true,
+      },
+      reports: {
+        view: true,
+        export: true,
+        financial: true,
+      },
+      projects: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+      },
+    },
+  },
+  {
+    name: "admin",
+    displayName: "Administrator",
+    description: "Full access except system settings",
+    permissions: {
+      system: {
+        users: true,
+        organizations: true,
+        apiKeys: true,
+        audit: true,
+      },
+      contacts: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        export: true,
+        import: true,
+      },
+      deals: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        assign: true,
+      },
+      campaigns: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        send: true,
+      },
+      leadScoring: {
+        view: true,
+        configure: true,
+      },
+      commissions: {
+        view: true,
+        approve: true,
+        configure: true,
+      },
+      reports: {
+        view: true,
+        export: true,
+        financial: true,
+      },
+      projects: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+      },
+    },
+  },
+  {
+    name: "sales_manager",
+    displayName: "Sales Manager",
+    description: "Manage deals, contacts, commissions, and view reports",
+    permissions: {
+      contacts: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        export: true,
+        import: true,
+      },
+      deals: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        assign: true,
+      },
+      commissions: {
+        view: true,
+        approve: true,
+      },
+      reports: {
+        view: true,
+        export: true,
+        financial: true,
+      },
+    },
+  },
+  {
+    name: "sales_rep",
+    displayName: "Sales Representative",
+    description: "Manage own deals and contacts only",
+    permissions: {
+      contacts: {
+        create: true,
+        read: "own",
+        update: "own",
+        delete: false,
+      },
+      deals: {
+        create: true,
+        read: "own",
+        update: "own",
+        delete: false,
+      },
+      commissions: {
+        view: "own",
+      },
+      reports: {
+        view: true,
+      },
+    },
+  },
+  {
+    name: "marketing",
+    displayName: "Marketing",
+    description: "Manage campaigns and lead scoring configuration",
+    permissions: {
+      contacts: {
+        read: true,
+        export: true,
+      },
+      deals: {
+        read: true,
+      },
+      campaigns: {
+        create: true,
+        read: true,
+        update: true,
+        delete: true,
+        send: true,
+      },
+      leadScoring: {
+        view: true,
+        configure: true,
+      },
+      reports: {
+        view: true,
+        export: true,
+      },
+    },
+  },
+  {
+    name: "viewer",
+    displayName: "Viewer",
+    description: "Read-only access to all data",
+    permissions: {
+      contacts: {
+        read: true,
+      },
+      deals: {
+        read: true,
+      },
+      campaigns: {
+        read: true,
+      },
+      leadScoring: {
+        view: true,
+      },
+      commissions: {
+        view: true,
+      },
+      reports: {
+        view: true,
+      },
+      projects: {
+        read: true,
+      },
+    },
+  },
+  {
+    name: "partner",
+    displayName: "Partner",
+    description: "Access to own leads and commission information only",
+    permissions: {
+      contacts: {
+        create: true,
+        read: "own",
+        update: "own",
+      },
+      deals: {
+        read: "own",
+      },
+      commissions: {
+        view: "own",
+      },
+      partner: {
+        leads: true,
+        commission: true,
+        dashboard: true,
+      },
+    },
+  },
+];

@@ -56,3 +56,9 @@ export * from "./dealContacts";
 
 // Presentations & Money Machine Workflow
 export * from "./presentations";
+
+// GDPR Consent Management
+export * from "./consent";
+
+// Provisions (Commission Tracking)
+export * from "./provision";

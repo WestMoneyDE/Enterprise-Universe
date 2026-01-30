@@ -11,7 +11,10 @@ import {
   shouldBlockEmail,
   type EmailValidationResult,
 } from "../services/email-validator";
-import { db, dealContacts, eq, and, desc } from "@nexus/db";
+import { db, dealContacts, bauherrenPaesse, eq, and, desc, sql, isNull, isNotNull } from "@nexus/db";
+
+// Commission rate constant - 2.5%
+const COMMISSION_RATE = 0.025;
 
 // =============================================================================
 // BAUHERREN PASS ROUTER - VIP Commission & Tier System
@@ -1518,7 +1521,7 @@ export const bauherrenPassRouter = createTRPCRouter({
         }
 
         const results: Array<{
-          dealId: string;
+          dealId: string | null;
           dealName: string | null;
           email: string;
           status: "sent" | "would_send" | "failed";
@@ -1630,5 +1633,420 @@ export const bauherrenPassRouter = createTRPCRouter({
           results: [],
         };
       }
+    }),
+
+  // ===========================================================================
+  // COMMISSION TRACKING (2.5% of deal revenue)
+  // ===========================================================================
+
+  /**
+   * Calculate commission for a Bauherren-Pass based on deal value
+   * Uses the standard 2.5% commission rate
+   */
+  calculateCommission: publicProcedure
+    .input(
+      z.object({
+        bauherrenPassId: z.string().uuid(),
+        revenue: z.number().positive(),
+        isEstimate: z.boolean().default(true),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        // Calculate 2.5% commission
+        const commissionAmount = Math.round(input.revenue * COMMISSION_RATE * 100) / 100;
+
+        // Get current record
+        const [existing] = await db
+          .select()
+          .from(bauherrenPaesse)
+          .where(eq(bauherrenPaesse.id, input.bauherrenPassId))
+          .limit(1);
+
+        if (!existing) {
+          return {
+            success: false,
+            error: "Bauherren-Pass nicht gefunden",
+          };
+        }
+
+        // Update the record with commission data
+        const updateData = input.isEstimate
+          ? {
+              estimatedRevenue: input.revenue.toString(),
+              commissionRate: COMMISSION_RATE.toString(),
+              commissionAmount: commissionAmount.toString(),
+              commissionStatus: "pending" as const,
+              updatedAt: new Date(),
+            }
+          : {
+              actualRevenue: input.revenue.toString(),
+              commissionRate: COMMISSION_RATE.toString(),
+              commissionAmount: commissionAmount.toString(),
+              commissionStatus: "qualified" as const,
+              updatedAt: new Date(),
+            };
+
+        await db
+          .update(bauherrenPaesse)
+          .set(updateData)
+          .where(eq(bauherrenPaesse.id, input.bauherrenPassId));
+
+        return {
+          success: true,
+          bauherrenPassId: input.bauherrenPassId,
+          revenue: input.revenue,
+          commissionRate: COMMISSION_RATE,
+          commissionRatePercent: `${COMMISSION_RATE * 100}%`,
+          commissionAmount,
+          isEstimate: input.isEstimate,
+          status: input.isEstimate ? "pending" : "qualified",
+        };
+      } catch (error) {
+        console.error("[Calculate Commission] Error:", error);
+        return {
+          success: false,
+          error: String(error),
+        };
+      }
+    }),
+
+  /**
+   * Update commission status (pending -> qualified -> approved -> paid)
+   */
+  updateCommissionStatus: publicProcedure
+    .input(
+      z.object({
+        bauherrenPassId: z.string().uuid(),
+        status: z.enum(["pending", "qualified", "approved", "paid"]),
+        payoutMethod: z.enum(["stripe", "sepa"]).optional(),
+        payoutReference: z.string().optional(),
+        actualRevenue: z.number().positive().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        // Get current record
+        const [existing] = await db
+          .select()
+          .from(bauherrenPaesse)
+          .where(eq(bauherrenPaesse.id, input.bauherrenPassId))
+          .limit(1);
+
+        if (!existing) {
+          return {
+            success: false,
+            error: "Bauherren-Pass nicht gefunden",
+          };
+        }
+
+        // Validate status transition
+        const validTransitions: Record<string, string[]> = {
+          pending: ["qualified"],
+          qualified: ["approved", "pending"],
+          approved: ["paid", "qualified"],
+          paid: [], // Final state
+        };
+
+        const currentStatus = existing.commissionStatus || "pending";
+        if (!validTransitions[currentStatus]?.includes(input.status) && input.status !== currentStatus) {
+          return {
+            success: false,
+            error: `Ungültiger Statusübergang: ${currentStatus} -> ${input.status}`,
+            currentStatus,
+            allowedTransitions: validTransitions[currentStatus],
+          };
+        }
+
+        // Build update data
+        const updateData: Record<string, unknown> = {
+          commissionStatus: input.status,
+          updatedAt: new Date(),
+        };
+
+        // If actual revenue provided, recalculate commission
+        if (input.actualRevenue) {
+          const commissionAmount = Math.round(input.actualRevenue * COMMISSION_RATE * 100) / 100;
+          updateData.actualRevenue = input.actualRevenue.toString();
+          updateData.commissionAmount = commissionAmount.toString();
+        }
+
+        // If marking as paid, record payout details
+        if (input.status === "paid") {
+          updateData.commissionPaidAt = new Date();
+          if (input.payoutMethod) {
+            updateData.payoutMethod = input.payoutMethod;
+          }
+          if (input.payoutReference) {
+            updateData.payoutReference = input.payoutReference;
+          }
+        }
+
+        await db
+          .update(bauherrenPaesse)
+          .set(updateData)
+          .where(eq(bauherrenPaesse.id, input.bauherrenPassId));
+
+        // Calculate final commission amount for response
+        const finalRevenue = input.actualRevenue ||
+          (existing.actualRevenue ? parseFloat(existing.actualRevenue) : null) ||
+          (existing.estimatedRevenue ? parseFloat(existing.estimatedRevenue) : 0);
+        const finalCommission = Math.round(finalRevenue * COMMISSION_RATE * 100) / 100;
+
+        return {
+          success: true,
+          bauherrenPassId: input.bauherrenPassId,
+          previousStatus: currentStatus,
+          newStatus: input.status,
+          commissionAmount: finalCommission,
+          payoutMethod: input.payoutMethod,
+          payoutReference: input.payoutReference,
+          paidAt: input.status === "paid" ? new Date() : null,
+        };
+      } catch (error) {
+        console.error("[Update Commission Status] Error:", error);
+        return {
+          success: false,
+          error: String(error),
+        };
+      }
+    }),
+
+  /**
+   * Get commission summary (total pending, qualified, approved, paid)
+   */
+  getCommissionSummary: publicProcedure
+    .input(
+      z.object({
+        organizationId: z.string().uuid().optional(),
+      }).optional()
+    )
+    .query(async ({ input }) => {
+      try {
+        // Build base query
+        const baseConditions = input?.organizationId
+          ? and(
+              eq(bauherrenPaesse.organizationId, input.organizationId),
+              isNotNull(bauherrenPaesse.commissionAmount)
+            )
+          : isNotNull(bauherrenPaesse.commissionAmount);
+
+        // Get all records with commission data
+        const records = await db
+          .select({
+            id: bauherrenPaesse.id,
+            passNummer: bauherrenPaesse.passNummer,
+            bauvorhabenBezeichnung: bauherrenPaesse.bauvorhabenBezeichnung,
+            estimatedRevenue: bauherrenPaesse.estimatedRevenue,
+            actualRevenue: bauherrenPaesse.actualRevenue,
+            commissionRate: bauherrenPaesse.commissionRate,
+            commissionAmount: bauherrenPaesse.commissionAmount,
+            commissionStatus: bauherrenPaesse.commissionStatus,
+            commissionPaidAt: bauherrenPaesse.commissionPaidAt,
+            payoutMethod: bauherrenPaesse.payoutMethod,
+            payoutReference: bauherrenPaesse.payoutReference,
+          })
+          .from(bauherrenPaesse)
+          .where(baseConditions);
+
+        // Calculate summary by status
+        const summary = {
+          pending: { count: 0, totalRevenue: 0, totalCommission: 0 },
+          qualified: { count: 0, totalRevenue: 0, totalCommission: 0 },
+          approved: { count: 0, totalRevenue: 0, totalCommission: 0 },
+          paid: { count: 0, totalRevenue: 0, totalCommission: 0 },
+        };
+
+        const commissionDetails: Array<{
+          id: string;
+          passNummer: string;
+          bezeichnung: string | null;
+          revenue: number;
+          commissionAmount: number;
+          status: string;
+          paidAt: Date | null;
+        }> = [];
+
+        for (const record of records) {
+          const status = record.commissionStatus || "pending";
+          const revenue = record.actualRevenue
+            ? parseFloat(record.actualRevenue)
+            : record.estimatedRevenue
+              ? parseFloat(record.estimatedRevenue)
+              : 0;
+          const commission = record.commissionAmount
+            ? parseFloat(record.commissionAmount)
+            : 0;
+
+          if (status in summary) {
+            summary[status as keyof typeof summary].count++;
+            summary[status as keyof typeof summary].totalRevenue += revenue;
+            summary[status as keyof typeof summary].totalCommission += commission;
+          }
+
+          commissionDetails.push({
+            id: record.id,
+            passNummer: record.passNummer,
+            bezeichnung: record.bauvorhabenBezeichnung,
+            revenue,
+            commissionAmount: commission,
+            status,
+            paidAt: record.commissionPaidAt,
+          });
+        }
+
+        // Calculate totals
+        const totals = {
+          totalRecords: records.length,
+          totalRevenue: Object.values(summary).reduce((sum, s) => sum + s.totalRevenue, 0),
+          totalCommission: Object.values(summary).reduce((sum, s) => sum + s.totalCommission, 0),
+          totalPending: summary.pending.totalCommission + summary.qualified.totalCommission,
+          totalApproved: summary.approved.totalCommission,
+          totalPaid: summary.paid.totalCommission,
+        };
+
+        // Round all amounts
+        for (const key of Object.keys(summary) as Array<keyof typeof summary>) {
+          summary[key].totalRevenue = Math.round(summary[key].totalRevenue * 100) / 100;
+          summary[key].totalCommission = Math.round(summary[key].totalCommission * 100) / 100;
+        }
+        totals.totalRevenue = Math.round(totals.totalRevenue * 100) / 100;
+        totals.totalCommission = Math.round(totals.totalCommission * 100) / 100;
+        totals.totalPending = Math.round(totals.totalPending * 100) / 100;
+        totals.totalApproved = Math.round(totals.totalApproved * 100) / 100;
+        totals.totalPaid = Math.round(totals.totalPaid * 100) / 100;
+
+        return {
+          success: true,
+          commissionRate: COMMISSION_RATE,
+          commissionRatePercent: `${COMMISSION_RATE * 100}%`,
+          summary,
+          totals,
+          details: commissionDetails.sort((a, b) => b.commissionAmount - a.commissionAmount),
+        };
+      } catch (error) {
+        console.error("[Get Commission Summary] Error:", error);
+        return {
+          success: false,
+          error: String(error),
+          summary: null,
+          totals: null,
+          details: [],
+        };
+      }
+    }),
+
+  /**
+   * Bulk calculate commissions for multiple Bauherren-Pass records
+   */
+  bulkCalculateCommissions: publicProcedure
+    .input(
+      z.object({
+        bauherrenPassIds: z.array(z.string().uuid()).min(1).max(100),
+        useGesamtbaukosten: z.boolean().default(true),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const results: Array<{
+        id: string;
+        passNummer: string;
+        revenue: number;
+        commission: number;
+        status: "calculated" | "skipped" | "error";
+        error?: string;
+      }> = [];
+
+      for (const id of input.bauherrenPassIds) {
+        try {
+          const [record] = await db
+            .select()
+            .from(bauherrenPaesse)
+            .where(eq(bauherrenPaesse.id, id))
+            .limit(1);
+
+          if (!record) {
+            results.push({
+              id,
+              passNummer: "N/A",
+              revenue: 0,
+              commission: 0,
+              status: "error",
+              error: "Nicht gefunden",
+            });
+            continue;
+          }
+
+          // Get revenue from gesamtbaukosten or finanzierungssumme
+          let revenue = 0;
+          if (input.useGesamtbaukosten && record.gesamtbaukosten) {
+            revenue = parseFloat(record.gesamtbaukosten);
+          } else if (record.finanzierungssumme) {
+            revenue = parseFloat(record.finanzierungssumme);
+          }
+
+          if (revenue <= 0) {
+            results.push({
+              id,
+              passNummer: record.passNummer,
+              revenue: 0,
+              commission: 0,
+              status: "skipped",
+              error: "Keine Umsatzdaten vorhanden",
+            });
+            continue;
+          }
+
+          const commission = Math.round(revenue * COMMISSION_RATE * 100) / 100;
+
+          await db
+            .update(bauherrenPaesse)
+            .set({
+              estimatedRevenue: revenue.toString(),
+              commissionRate: COMMISSION_RATE.toString(),
+              commissionAmount: commission.toString(),
+              commissionStatus: "pending",
+              updatedAt: new Date(),
+            })
+            .where(eq(bauherrenPaesse.id, id));
+
+          results.push({
+            id,
+            passNummer: record.passNummer,
+            revenue,
+            commission,
+            status: "calculated",
+          });
+        } catch (error) {
+          results.push({
+            id,
+            passNummer: "N/A",
+            revenue: 0,
+            commission: 0,
+            status: "error",
+            error: error instanceof Error ? error.message : "Unbekannt",
+          });
+        }
+      }
+
+      const summary = {
+        total: results.length,
+        calculated: results.filter((r) => r.status === "calculated").length,
+        skipped: results.filter((r) => r.status === "skipped").length,
+        errors: results.filter((r) => r.status === "error").length,
+        totalRevenue: results
+          .filter((r) => r.status === "calculated")
+          .reduce((sum, r) => sum + r.revenue, 0),
+        totalCommission: results
+          .filter((r) => r.status === "calculated")
+          .reduce((sum, r) => sum + r.commission, 0),
+      };
+
+      return {
+        success: true,
+        commissionRate: COMMISSION_RATE,
+        commissionRatePercent: `${COMMISSION_RATE * 100}%`,
+        results,
+        summary,
+      };
     }),
 });

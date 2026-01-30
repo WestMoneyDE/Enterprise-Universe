@@ -2,6 +2,7 @@ import { createTRPCRouter } from "../trpc";
 import { authRouter } from "./auth";
 import { contactsRouter } from "./contacts";
 import { dealsRouter, pipelinesRouter } from "./deals";
+import { dealContactsRouter } from "./deal-contacts";
 import { projectsRouter } from "./projects";
 import { campaignsRouter, emailTemplatesRouter } from "./campaigns";
 import { organizationsRouter } from "./organizations";
@@ -22,6 +23,11 @@ import { notificationsRouter } from "./notifications";
 import { systemRouter } from "./system";
 import { integrationsRouter } from "./integrations";
 import { dashboardRouter } from "./dashboard";
+import { backupRouter } from "./backup";
+import { leadGeneratorRouter } from "./lead-generator";
+import { rolesRouter } from "./roles";
+import { provisionRouter } from "./provision";
+import { gdprRouter } from "./gdpr";
 
 // =============================================================================
 // APP ROUTER
@@ -54,6 +60,7 @@ export const appRouter = createTRPCRouter({
   // CRM - Deals & Pipelines
   deals: dealsRouter,
   pipelines: pipelinesRouter,
+  dealContacts: dealContactsRouter,
 
   // West Money Bau - Construction Projects
   projects: projectsRouter,
@@ -108,6 +115,21 @@ export const appRouter = createTRPCRouter({
 
   // Dashboard - Public dashboard statistics
   dashboard: dashboardRouter,
+
+  // Backup - Database backup management
+  backup: backupRouter,
+
+  // Lead Generator - Multi-source lead generation (Web Forms, HubSpot, Google Places)
+  leadGenerator: leadGeneratorRouter,
+
+  // Roles & Permissions - RBAC system for user access control
+  roles: rolesRouter,
+
+  // Provision - Commission tracking and payout management
+  provision: provisionRouter,
+
+  // GDPR - Consent management, data export, deletion requests
+  gdpr: gdprRouter,
 });
 
 // =============================================================================

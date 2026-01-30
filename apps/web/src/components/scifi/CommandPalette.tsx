@@ -47,7 +47,7 @@ interface CommandItem {
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const router = useRouter();
-  const { powerMode } = usePowerMode();
+  const { mode: powerMode } = usePowerMode();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const isGodMode = powerMode === "god";

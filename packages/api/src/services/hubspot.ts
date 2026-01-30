@@ -64,6 +64,8 @@ export interface HubSpotDeal {
     closedate?: string;
     description?: string;
     hs_deal_stage_probability?: string;
+    hs_lastmodifieddate?: string;
+    createdate?: string;
     // Custom properties
     deal_type?: string;
     construction_type?: string;
@@ -73,6 +75,9 @@ export interface HubSpotDeal {
     contacts?: { results: Array<{ id: string }> };
     companies?: { results: Array<{ id: string }> };
   };
+  // Derived timestamps
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface HubSpotCompany {

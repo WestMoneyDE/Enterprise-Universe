@@ -30,6 +30,7 @@ export { dealsRouter, pipelinesRouter } from "./routers/deals";
 export { projectsRouter } from "./routers/projects";
 export { campaignsRouter, emailTemplatesRouter } from "./routers/campaigns";
 export { organizationsRouter } from "./routers/organizations";
+export { provisionRouter } from "./routers/provision";
 
 // =============================================================================
 // tRPC EXPORTS

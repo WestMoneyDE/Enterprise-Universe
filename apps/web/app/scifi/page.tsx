@@ -86,6 +86,11 @@ export default function CommandDeckPage() {
   // Lead Scoring Distribution
   const { data: leadDistribution, isLoading: leadLoading } = api.leadScoring.getDistribution.useQuery();
 
+  // Lead Scoring Leaderboard (top 3 for today's display)
+  const { data: leadLeaderboard, isLoading: leaderboardLoading } = api.leadScoring.getLeaderboard.useQuery({
+    limit: 3,
+  });
+
   // Project Stats
   const { data: projectStats, isLoading: projectsLoading } = api.projects.stats.useQuery({});
 
@@ -571,6 +576,236 @@ export default function CommandDeckPage() {
           </HoloCard>
         </div>
       </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* NEW SECTIONS - Lead Scoring, Auto Lead Generator, Provision */}
+      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+
+      <div className="grid grid-cols-12 gap-6">
+        {/* LEAD SCORING LIVE */}
+        <div className="col-span-12 lg:col-span-4">
+          <HoloCard
+            title="LEAD SCORING LIVE"
+            subtitle="AI-Powered Qualification"
+            icon="★"
+            variant="cyan"
+            glow
+          >
+            {/* Grade Distribution */}
+            <div className="space-y-3 mb-4">
+              <div className="text-xs text-white/50 font-mono uppercase tracking-wider mb-2">
+                Grade Distribution
+              </div>
+              <GradeDistributionBar
+                grade="A"
+                count={leadDistribution?.A ?? 0}
+                total={leadDistribution?.total ?? 1}
+                color="green"
+              />
+              <GradeDistributionBar
+                grade="B"
+                count={leadDistribution?.B ?? 0}
+                total={leadDistribution?.total ?? 1}
+                color="cyan"
+              />
+              <GradeDistributionBar
+                grade="C"
+                count={leadDistribution?.C ?? 0}
+                total={leadDistribution?.total ?? 1}
+                color="gold"
+              />
+              <GradeDistributionBar
+                grade="D"
+                count={leadDistribution?.D ?? 0}
+                total={leadDistribution?.total ?? 1}
+                color="orange"
+              />
+            </div>
+
+            {/* Top 3 Leads Today */}
+            <div className="border-t border-white/10 pt-4">
+              <div className="text-xs text-white/50 font-mono uppercase tracking-wider mb-3">
+                Top Leads Today
+              </div>
+              <div className="space-y-2">
+                {leaderboardLoading ? (
+                  <div className="text-center py-4 text-white/30 text-xs font-mono">
+                    Loading leads...
+                  </div>
+                ) : leadLeaderboard && leadLeaderboard.length > 0 ? (
+                  leadLeaderboard.map((lead, index) => (
+                    <TopLeadCard
+                      key={lead.contactId}
+                      rank={index + 1}
+                      name={lead.contactName}
+                      score={lead.score}
+                      grade={lead.grade}
+                      isBauherrenPassReady={lead.grade === "A"}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-4 text-white/30 text-xs font-mono">
+                    No scored leads yet
+                  </div>
+                )}
+              </div>
+            </div>
+          </HoloCard>
+        </div>
+
+        {/* AUTO LEAD GENERATOR STATUS */}
+        <div className="col-span-12 lg:col-span-4">
+          <HoloCard
+            title="AUTO LEAD GENERATOR"
+            subtitle="Automated Lead Capture"
+            icon="⚡"
+            variant="purple"
+          >
+            {/* Sources Table */}
+            <div className="space-y-3 mb-4">
+              <div className="text-xs text-white/50 font-mono uppercase tracking-wider mb-2">
+                Lead Sources
+              </div>
+              <div className="overflow-hidden rounded-lg border border-white/10">
+                <table className="w-full text-xs font-mono">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-white/5">
+                      <th className="text-left px-3 py-2 text-white/50">Source</th>
+                      <th className="text-right px-2 py-2 text-white/50">Today</th>
+                      <th className="text-right px-2 py-2 text-white/50">Week</th>
+                      <th className="text-right px-2 py-2 text-white/50">Month</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-white/5 hover:bg-white/5">
+                      <td className="px-3 py-2 text-white">Web Forms</td>
+                      <td className="px-2 py-2 text-right text-neon-green">12</td>
+                      <td className="px-2 py-2 text-right text-neon-cyan">84</td>
+                      <td className="px-2 py-2 text-right text-white/70">312</td>
+                    </tr>
+                    <tr className="border-b border-white/5 hover:bg-white/5">
+                      <td className="px-3 py-2 text-white">HubSpot Sync</td>
+                      <td className="px-2 py-2 text-right text-neon-green">8</td>
+                      <td className="px-2 py-2 text-right text-neon-cyan">56</td>
+                      <td className="px-2 py-2 text-right text-white/70">245</td>
+                    </tr>
+                    <tr className="hover:bg-white/5">
+                      <td className="px-3 py-2 text-white">External API</td>
+                      <td className="px-2 py-2 text-right text-neon-green">5</td>
+                      <td className="px-2 py-2 text-right text-neon-cyan">32</td>
+                      <td className="px-2 py-2 text-right text-white/70">128</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Verification Stats */}
+            <div className="border-t border-white/10 pt-4">
+              <div className="text-xs text-white/50 font-mono uppercase tracking-wider mb-3">
+                Verification Status
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <VerificationStatCard
+                  label="Valid"
+                  value={428}
+                  icon="✓"
+                  color="green"
+                />
+                <VerificationStatCard
+                  label="Rejected"
+                  value={47}
+                  icon="✗"
+                  color="red"
+                />
+                <VerificationStatCard
+                  label="Pending"
+                  value={25}
+                  icon="◐"
+                  color="orange"
+                />
+              </div>
+            </div>
+
+            {/* Status Indicator */}
+            <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+              <ActivityIndicator status="active" label="Generator Online" pulse />
+              <span className="text-[10px] text-white/30 font-mono">Last sync: 2m ago</span>
+            </div>
+          </HoloCard>
+        </div>
+
+        {/* PROVISION */}
+        <div className="col-span-12 lg:col-span-4">
+          <HoloCard
+            title="PROVISION"
+            subtitle="Commission Tracking"
+            icon="◈"
+            variant="gold"
+            glow
+          >
+            {/* Total Provision Stat */}
+            <div className="mb-4 p-4 rounded-lg bg-neon-gold/10 border border-neon-gold/30">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-white/50 font-mono uppercase tracking-wider">
+                    Total Provision (2.5%)
+                  </div>
+                  <div className="text-3xl font-display font-bold text-neon-gold mt-1">
+                    {formatValue(wonRevenue * 0.025)}
+                  </div>
+                  <div className="text-xs text-white/40 font-mono mt-1">
+                    Based on {formatValue(wonRevenue)} won revenue
+                  </div>
+                </div>
+                <div className="text-4xl text-neon-gold/50">◈</div>
+              </div>
+            </div>
+
+            {/* Active Bauherren-Passes */}
+            <div className="mb-4 p-3 rounded-lg bg-neon-green/10 border border-neon-green/30 flex items-center justify-between">
+              <div>
+                <div className="text-xs text-white/50 font-mono uppercase">
+                  Active Bauherren-Passes
+                </div>
+                <div className="text-2xl font-display font-bold text-neon-green">
+                  {leadDistribution?.A ?? 0}
+                </div>
+              </div>
+              <div className="w-12 h-12 rounded-lg bg-neon-green/20 flex items-center justify-center">
+                <span className="text-2xl text-neon-green">✓</span>
+              </div>
+            </div>
+
+            {/* Recent Conversions */}
+            <div className="border-t border-white/10 pt-4">
+              <div className="text-xs text-white/50 font-mono uppercase tracking-wider mb-3">
+                Recent Conversions
+              </div>
+              <div className="space-y-2">
+                <ConversionItem
+                  name="Schmidt Baugruppe"
+                  value={85000}
+                  provision={2125}
+                  time="2h ago"
+                />
+                <ConversionItem
+                  name="Weber Immobilien"
+                  value={120000}
+                  provision={3000}
+                  time="5h ago"
+                />
+                <ConversionItem
+                  name="Muller & Partner"
+                  value={65000}
+                  provision={1625}
+                  time="1d ago"
+                />
+              </div>
+            </div>
+          </HoloCard>
+        </div>
+      </div>
     </div>
   );
 }
@@ -701,5 +936,175 @@ function QuickActionButton({ icon, label, color }: QuickActionButtonProps) {
       <span className="text-lg">{icon}</span>
       <span className="text-[10px] font-mono uppercase">{label}</span>
     </button>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LEAD SCORING COMPONENTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+interface GradeDistributionBarProps {
+  grade: "A" | "B" | "C" | "D";
+  count: number;
+  total: number;
+  color: "green" | "cyan" | "gold" | "orange";
+}
+
+function GradeDistributionBar({ grade, count, total, color }: GradeDistributionBarProps) {
+  const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+
+  const colorStyles = {
+    green: { bg: "bg-neon-green", text: "text-neon-green" },
+    cyan: { bg: "bg-neon-cyan", text: "text-neon-cyan" },
+    gold: { bg: "bg-neon-gold", text: "text-neon-gold" },
+    orange: { bg: "bg-neon-orange", text: "text-neon-orange" },
+  };
+
+  return (
+    <div className="flex items-center gap-3">
+      <div className={cn(
+        "w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-sm",
+        `${colorStyles[color].bg}/20`,
+        colorStyles[color].text
+      )}>
+        {grade}
+      </div>
+      <div className="flex-1">
+        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div
+            className={cn("h-full rounded-full transition-all duration-500", colorStyles[color].bg)}
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+      </div>
+      <div className="text-right min-w-[60px]">
+        <span className={cn("text-sm font-mono font-bold", colorStyles[color].text)}>
+          {count}
+        </span>
+        <span className="text-xs text-white/40 font-mono ml-1">
+          ({percentage}%)
+        </span>
+      </div>
+    </div>
+  );
+}
+
+interface TopLeadCardProps {
+  rank: number;
+  name: string;
+  score: number;
+  grade: string;
+  isBauherrenPassReady: boolean;
+}
+
+function TopLeadCard({ rank, name, score, grade, isBauherrenPassReady }: TopLeadCardProps) {
+  const gradeColors: Record<string, string> = {
+    A: "text-neon-green bg-neon-green/20",
+    B: "text-neon-cyan bg-neon-cyan/20",
+    C: "text-neon-gold bg-neon-gold/20",
+    D: "text-neon-orange bg-neon-orange/20",
+  };
+
+  return (
+    <div className={cn(
+      "p-3 rounded-lg border transition-all",
+      isBauherrenPassReady
+        ? "bg-neon-green/10 border-neon-green/30"
+        : "bg-white/5 border-white/10"
+    )}>
+      <div className="flex items-center gap-3">
+        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-mono text-white/50">
+          #{rank}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-display text-white truncate">{name}</div>
+          {isBauherrenPassReady && (
+            <div className="flex items-center gap-1 mt-0.5">
+              <span className="text-[10px] text-neon-green font-mono">Bauherren-Pass Ready</span>
+              <span className="text-neon-green">✓</span>
+            </div>
+          )}
+        </div>
+        <div className="text-right">
+          <div className={cn(
+            "text-lg font-mono font-bold",
+            score >= 80 ? "text-neon-green" : score >= 60 ? "text-neon-cyan" : "text-neon-gold"
+          )}>
+            {score}
+          </div>
+        </div>
+        <div className={cn(
+          "w-7 h-7 rounded flex items-center justify-center text-xs font-bold",
+          gradeColors[grade] || gradeColors["D"]
+        )}>
+          {grade}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// AUTO LEAD GENERATOR COMPONENTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+interface VerificationStatCardProps {
+  label: string;
+  value: number;
+  icon: string;
+  color: "green" | "red" | "orange";
+}
+
+function VerificationStatCard({ label, value, icon, color }: VerificationStatCardProps) {
+  const colorStyles = {
+    green: { bg: "bg-neon-green/10", border: "border-neon-green/30", text: "text-neon-green" },
+    red: { bg: "bg-neon-red/10", border: "border-neon-red/30", text: "text-neon-red" },
+    orange: { bg: "bg-neon-orange/10", border: "border-neon-orange/30", text: "text-neon-orange" },
+  };
+
+  return (
+    <div className={cn(
+      "p-3 rounded-lg border text-center",
+      colorStyles[color].bg,
+      colorStyles[color].border
+    )}>
+      <div className={cn("text-lg mb-1", colorStyles[color].text)}>{icon}</div>
+      <div className={cn("text-xl font-display font-bold", colorStyles[color].text)}>
+        {value}
+      </div>
+      <div className="text-[10px] text-white/50 font-mono uppercase">{label}</div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PROVISION COMPONENTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+interface ConversionItemProps {
+  name: string;
+  value: number;
+  provision: number;
+  time: string;
+}
+
+function ConversionItem({ name, value, provision, time }: ConversionItemProps) {
+  return (
+    <div className="p-3 rounded-lg bg-white/5 border border-white/10 hover:border-neon-gold/30 transition-colors">
+      <div className="flex items-center justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-display text-white truncate">{name}</div>
+          <div className="text-[10px] text-white/40 font-mono">
+            Deal: €{value.toLocaleString("de-DE")}
+          </div>
+        </div>
+        <div className="text-right ml-3">
+          <div className="text-sm font-mono font-bold text-neon-gold">
+            +€{provision.toLocaleString("de-DE")}
+          </div>
+          <div className="text-[10px] text-white/30 font-mono">{time}</div>
+        </div>
+      </div>
+    </div>
   );
 }

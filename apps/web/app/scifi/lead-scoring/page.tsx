@@ -386,7 +386,7 @@ interface LeadCardProps {
     contactEmail?: string | null;
     score: number;
     grade: string;
-    lastCalculated: Date;
+    lastCalculated: Date | null;
   };
   rank: number;
   isSelected: boolean;
@@ -396,7 +396,7 @@ interface LeadCardProps {
 function LeadCard({ lead, rank, isSelected, onClick }: LeadCardProps) {
   const grade = lead.grade as Grade;
   const colors = GRADE_COLORS[grade] ?? GRADE_COLORS.D;
-  const timeAgo = formatTimeAgo(new Date(lead.lastCalculated));
+  const timeAgo = lead.lastCalculated ? formatTimeAgo(new Date(lead.lastCalculated)) : "Never";
 
   return (
     <button

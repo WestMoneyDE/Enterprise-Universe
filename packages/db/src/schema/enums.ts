@@ -25,6 +25,7 @@ export const consentStatusEnum = pgEnum("consent_status", [
   "pending",
   "granted",
   "revoked",
+  "confirmed",
 ]);
 
 export const emailStatusEnum = pgEnum("email_status", [
@@ -102,6 +103,12 @@ export const kundenkarteStatusEnum = pgEnum("kundenkarte_status", [
   "on_hold",
   "completed",
   "archived",
+]);
+
+export const kundenkarteTierEnum = pgEnum("kundenkarte_tier", [
+  "bronze",
+  "silver",
+  "gold",
 ]);
 
 export const bauherrenPassStatusEnum = pgEnum("bauherren_pass_status", [
@@ -272,4 +279,35 @@ export const messageStatusEnumV2 = pgEnum("message_status_v2", [
   "read",
   "failed",
   "bounced",
+]);
+
+// =============================================================================
+// COMMISSION ENUMS
+// =============================================================================
+
+export const commissionStatusEnum = pgEnum("commission_status", [
+  "pending",
+  "qualified",
+  "approved",
+  "paid",
+]);
+
+// =============================================================================
+// PROVISION (COMMISSION TRACKING) ENUMS
+// =============================================================================
+
+export const provisionStatusEnum = pgEnum("provision_status", [
+  "pending_payment",      // Waiting for customer payment
+  "payment_confirmed",    // Customer paid, ready for payout
+  "payout_initiated",     // Payout process started
+  "payout_processing",    // Payout being processed
+  "paid",                 // Commission paid out
+  "failed",               // Payout failed
+  "cancelled",            // Cancelled/voided
+]);
+
+export const provisionPayoutMethodEnum = pgEnum("provision_payout_method", [
+  "stripe_connect",       // Stripe Connect transfer
+  "sepa",                 // SEPA bank transfer
+  "manual",               // Manual/offline payment
 ]);

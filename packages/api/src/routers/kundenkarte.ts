@@ -6,6 +6,7 @@ import {
   kundenkarten,
   kundenkarteDocuments,
   kundenkarteActivities,
+  bauherrenPaesse,
   eq,
   and,
   desc,
@@ -30,6 +31,21 @@ const kundenkarteStatusEnum = z.enum([
   "completed",
   "archived",
 ]);
+
+const kundenkarteTierEnum = z.enum([
+  "bronze",
+  "silver",
+  "gold",
+]);
+
+const pointsHistoryEntrySchema = z.object({
+  date: z.string(),
+  points: z.number(),
+  type: z.enum(["earned", "redeemed", "adjusted", "expired"]),
+  description: z.string(),
+  balanceAfter: z.number(),
+  referenceId: z.string().optional(),
+});
 
 const smartHomeFeaturesSchema = z.object({
   lighting: z.boolean().optional(),
@@ -164,6 +180,33 @@ function generateKundenNummer(): string {
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
   return `WMB-${year}${month}-${random}`;
+}
+
+// Generate unique card number for loyalty program
+function generateCardNumber(): string {
+  const date = new Date();
+  const year = date.getFullYear().toString().slice(-2);
+  const random = Math.random().toString(36).substring(2, 10).toUpperCase();
+  return `KK-${year}-${random}`;
+}
+
+// Generate QR code data containing card information
+function generateQRCodeData(cardNumber: string, kundenkarteId: string): string {
+  const payload = {
+    type: "KUNDENKARTE",
+    cardNumber,
+    kundenkarteId,
+    issuedAt: new Date().toISOString(),
+    version: 1,
+  };
+  return Buffer.from(JSON.stringify(payload)).toString("base64");
+}
+
+// Calculate tier based on points
+function calculateTier(points: number): "bronze" | "silver" | "gold" {
+  if (points >= 10000) return "gold";
+  if (points >= 5000) return "silver";
+  return "bronze";
 }
 
 // =============================================================================
@@ -632,5 +675,656 @@ export const kundenkarteRouter = createTRPCRouter({
         .limit(20);
 
       return results;
+    }),
+
+  // =========================================================================
+  // BAUHERREN-PASS INTEGRATION
+  // =========================================================================
+
+  // -------------------------------------------------------------------------
+  // CREATE FROM BAUHERREN-PASS - Create Kundenkarte linked to Bauherren-Pass
+  // -------------------------------------------------------------------------
+  createFromBauherrenPass: publicProcedure
+    .input(
+      z.object({
+        bauherrenPassId: z.string().uuid(),
+        organizationId: z.string().uuid(),
+        // Personal Data
+        anrede: z.string().optional(),
+        titel: z.string().optional(),
+        vorname: z.string().min(1, "Vorname ist erforderlich"),
+        nachname: z.string().min(1, "Nachname ist erforderlich"),
+        email: z.string().email("Gueltige E-Mail erforderlich"),
+        telefon: z.string().optional(),
+        telefonMobil: z.string().optional(),
+        // Address
+        strasseHausnummer: z.string().optional(),
+        plz: z.string().optional(),
+        ort: z.string().optional(),
+        land: z.string().optional(),
+        // Initial tier
+        initialTier: kundenkarteTierEnum.optional(),
+        initialPoints: z.number().min(0).optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { bauherrenPassId, initialTier, initialPoints, ...customerData } = input;
+
+      // Verify Bauherren-Pass exists
+      const bauherrenPass = await db
+        .select({
+          id: bauherrenPaesse.id,
+          passNummer: bauherrenPaesse.passNummer,
+          grundstueckAdresse: bauherrenPaesse.grundstueckAdresse,
+          grundstueckPlz: bauherrenPaesse.grundstueckPlz,
+          grundstueckOrt: bauherrenPaesse.grundstueckOrt,
+        })
+        .from(bauherrenPaesse)
+        .where(eq(bauherrenPaesse.id, bauherrenPassId))
+        .limit(1);
+
+      if (!bauherrenPass[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Bauherren-Pass nicht gefunden",
+        });
+      }
+
+      // Generate identifiers
+      const kundenNummer = generateKundenNummer();
+      const cardNumber = generateCardNumber();
+      const points = initialPoints ?? 0;
+      const tier = initialTier ?? calculateTier(points);
+
+      // Create initial points history if points provided
+      const pointsHistory = points > 0
+        ? [{
+            date: new Date().toISOString(),
+            points,
+            type: "earned" as const,
+            description: "Initiale Punkte bei Erstellung aus Bauherren-Pass",
+            balanceAfter: points,
+            referenceId: bauherrenPassId,
+          }]
+        : [];
+
+      // Create Kundenkarte
+      const result = await db
+        .insert(kundenkarten)
+        .values({
+          ...customerData,
+          kundenNummer,
+          bauherrenPassId,
+          cardNumber,
+          tier,
+          points,
+          pointsHistory,
+          // Copy property address from Bauherren-Pass if not provided
+          grundstueckAdresse: bauherrenPass[0].grundstueckAdresse,
+          grundstueckVorhanden: true,
+          status: "draft",
+        } as any)
+        .returning();
+
+      // Generate QR code data
+      const qrCodeData = generateQRCodeData(cardNumber, result[0].id);
+
+      // Update with QR code
+      await db
+        .update(kundenkarten)
+        .set({ qrCodeData })
+        .where(eq(kundenkarten.id, result[0].id));
+
+      // Update Bauherren-Pass with link back to Kundenkarte
+      await db
+        .update(bauherrenPaesse)
+        .set({
+          kundenkarteId: result[0].id,
+          updatedAt: new Date(),
+        })
+        .where(eq(bauherrenPaesse.id, bauherrenPassId));
+
+      // Log activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId: result[0].id,
+        activityType: "status_change",
+        title: "Kundenkarte aus Bauherren-Pass erstellt",
+        description: `Kundenkarte ${kundenNummer} wurde aus Bauherren-Pass ${bauherrenPass[0].passNummer} erstellt`,
+        newStatus: "draft",
+        metadata: {
+          bauherrenPassId,
+          bauherrenPassNummer: bauherrenPass[0].passNummer,
+          cardNumber,
+          initialTier: tier,
+          initialPoints: points,
+        },
+      });
+
+      return {
+        ...result[0],
+        qrCodeData,
+        cardNumber,
+      };
+    }),
+
+  // -------------------------------------------------------------------------
+  // LINK TO BAUHERREN-PASS - Link existing Kundenkarte to Bauherren-Pass
+  // -------------------------------------------------------------------------
+  linkToBauherrenPass: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        bauherrenPassId: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { kundenkarteId, bauherrenPassId } = input;
+
+      // Verify Kundenkarte exists
+      const kundenkarte = await db
+        .select({
+          id: kundenkarten.id,
+          kundenNummer: kundenkarten.kundenNummer,
+          bauherrenPassId: kundenkarten.bauherrenPassId,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!kundenkarte[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      if (kundenkarte[0].bauherrenPassId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Kundenkarte ist bereits mit einem Bauherren-Pass verknuepft",
+        });
+      }
+
+      // Verify Bauherren-Pass exists and is not linked to another Kundenkarte
+      const bauherrenPass = await db
+        .select({
+          id: bauherrenPaesse.id,
+          passNummer: bauherrenPaesse.passNummer,
+          kundenkarteId: bauherrenPaesse.kundenkarteId,
+        })
+        .from(bauherrenPaesse)
+        .where(eq(bauherrenPaesse.id, bauherrenPassId))
+        .limit(1);
+
+      if (!bauherrenPass[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Bauherren-Pass nicht gefunden",
+        });
+      }
+
+      if (bauherrenPass[0].kundenkarteId && bauherrenPass[0].kundenkarteId !== kundenkarteId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Bauherren-Pass ist bereits mit einer anderen Kundenkarte verknuepft",
+        });
+      }
+
+      // Update Kundenkarte with Bauherren-Pass link
+      const result = await db
+        .update(kundenkarten)
+        .set({
+          bauherrenPassId,
+          updatedAt: new Date(),
+        })
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .returning();
+
+      // Update Bauherren-Pass with link back to Kundenkarte
+      await db
+        .update(bauherrenPaesse)
+        .set({
+          kundenkarteId,
+          updatedAt: new Date(),
+        })
+        .where(eq(bauherrenPaesse.id, bauherrenPassId));
+
+      // Log activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId,
+        activityType: "note",
+        title: "Mit Bauherren-Pass verknuepft",
+        description: `Kundenkarte wurde mit Bauherren-Pass ${bauherrenPass[0].passNummer} verknuepft`,
+        metadata: {
+          bauherrenPassId,
+          bauherrenPassNummer: bauherrenPass[0].passNummer,
+        },
+      });
+
+      return result[0];
+    }),
+
+  // =========================================================================
+  // LOYALTY POINTS MANAGEMENT
+  // =========================================================================
+
+  // -------------------------------------------------------------------------
+  // ADD POINTS - Add loyalty points to customer
+  // -------------------------------------------------------------------------
+  addPoints: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        points: z.number().min(1, "Punkte muessen positiv sein"),
+        description: z.string().min(1, "Beschreibung ist erforderlich"),
+        referenceId: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { kundenkarteId, points, description, referenceId } = input;
+
+      // Get current Kundenkarte
+      const current = await db
+        .select({
+          id: kundenkarten.id,
+          points: kundenkarten.points,
+          pointsHistory: kundenkarten.pointsHistory,
+          tier: kundenkarten.tier,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!current[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      const currentPoints = current[0].points ?? 0;
+      const newPoints = currentPoints + points;
+      const newTier = calculateTier(newPoints);
+
+      // Create history entry
+      const historyEntry = {
+        date: new Date().toISOString(),
+        points,
+        type: "earned" as const,
+        description,
+        balanceAfter: newPoints,
+        referenceId,
+      };
+
+      const currentHistory = (current[0].pointsHistory as any[]) ?? [];
+      const newHistory = [...currentHistory, historyEntry];
+
+      // Update Kundenkarte
+      const result = await db
+        .update(kundenkarten)
+        .set({
+          points: newPoints,
+          pointsHistory: newHistory,
+          tier: newTier,
+          updatedAt: new Date(),
+        })
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .returning();
+
+      // Log tier upgrade if applicable
+      if (newTier !== current[0].tier) {
+        await db.insert(kundenkarteActivities).values({
+          kundenkarteId,
+          activityType: "note",
+          title: `Tier-Upgrade: ${current[0].tier} -> ${newTier}`,
+          description: `Kunde wurde auf ${newTier} hochgestuft durch ${points} neue Punkte`,
+          metadata: {
+            previousTier: current[0].tier,
+            newTier,
+            pointsAdded: points,
+            totalPoints: newPoints,
+          },
+        });
+      }
+
+      // Log points activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId,
+        activityType: "note",
+        title: `${points} Punkte hinzugefuegt`,
+        description,
+        metadata: {
+          pointsAdded: points,
+          totalPoints: newPoints,
+          referenceId,
+        },
+      });
+
+      return {
+        ...result[0],
+        pointsAdded: points,
+        previousPoints: currentPoints,
+        newPoints,
+        tierChanged: newTier !== current[0].tier,
+        previousTier: current[0].tier,
+        newTier,
+      };
+    }),
+
+  // -------------------------------------------------------------------------
+  // REDEEM POINTS - Redeem loyalty points
+  // -------------------------------------------------------------------------
+  redeemPoints: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        points: z.number().min(1, "Punkte muessen positiv sein"),
+        description: z.string().min(1, "Beschreibung ist erforderlich"),
+        referenceId: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { kundenkarteId, points, description, referenceId } = input;
+
+      // Get current Kundenkarte
+      const current = await db
+        .select({
+          id: kundenkarten.id,
+          points: kundenkarten.points,
+          pointsHistory: kundenkarten.pointsHistory,
+          tier: kundenkarten.tier,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!current[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      const currentPoints = current[0].points ?? 0;
+
+      if (currentPoints < points) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Nicht genuegend Punkte. Verfuegbar: ${currentPoints}, Angefordert: ${points}`,
+        });
+      }
+
+      const newPoints = currentPoints - points;
+      // Note: Tier does NOT downgrade on redemption, only upgrades on earning
+
+      // Create history entry
+      const historyEntry = {
+        date: new Date().toISOString(),
+        points: -points,
+        type: "redeemed" as const,
+        description,
+        balanceAfter: newPoints,
+        referenceId,
+      };
+
+      const currentHistory = (current[0].pointsHistory as any[]) ?? [];
+      const newHistory = [...currentHistory, historyEntry];
+
+      // Update Kundenkarte
+      const result = await db
+        .update(kundenkarten)
+        .set({
+          points: newPoints,
+          pointsHistory: newHistory,
+          updatedAt: new Date(),
+        })
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .returning();
+
+      // Log activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId,
+        activityType: "note",
+        title: `${points} Punkte eingeloest`,
+        description,
+        metadata: {
+          pointsRedeemed: points,
+          totalPoints: newPoints,
+          referenceId,
+        },
+      });
+
+      return {
+        ...result[0],
+        pointsRedeemed: points,
+        previousPoints: currentPoints,
+        newPoints,
+      };
+    }),
+
+  // -------------------------------------------------------------------------
+  // GENERATE QR CODE - Generate or regenerate QR code for Kundenkarte
+  // -------------------------------------------------------------------------
+  generateQRCode: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        regenerate: z.boolean().optional().default(false),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { kundenkarteId, regenerate } = input;
+
+      // Get current Kundenkarte
+      const current = await db
+        .select({
+          id: kundenkarten.id,
+          cardNumber: kundenkarten.cardNumber,
+          qrCodeData: kundenkarten.qrCodeData,
+          kundenNummer: kundenkarten.kundenNummer,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!current[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      // Check if QR code exists and regeneration not requested
+      if (current[0].qrCodeData && !regenerate) {
+        return {
+          kundenkarteId,
+          cardNumber: current[0].cardNumber,
+          qrCodeData: current[0].qrCodeData,
+          regenerated: false,
+        };
+      }
+
+      // Generate card number if not exists
+      let cardNumber = current[0].cardNumber;
+      if (!cardNumber) {
+        cardNumber = generateCardNumber();
+      }
+
+      // Generate new QR code data
+      const qrCodeData = generateQRCodeData(cardNumber, kundenkarteId);
+
+      // Update Kundenkarte
+      await db
+        .update(kundenkarten)
+        .set({
+          cardNumber,
+          qrCodeData,
+          updatedAt: new Date(),
+        })
+        .where(eq(kundenkarten.id, kundenkarteId));
+
+      // Log activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId,
+        activityType: "note",
+        title: regenerate ? "QR-Code regeneriert" : "QR-Code erstellt",
+        description: `QR-Code fuer Kartennummer ${cardNumber} wurde ${regenerate ? "regeneriert" : "erstellt"}`,
+        metadata: {
+          cardNumber,
+          regenerated: regenerate,
+        },
+      });
+
+      return {
+        kundenkarteId,
+        cardNumber,
+        qrCodeData,
+        regenerated: regenerate,
+      };
+    }),
+
+  // -------------------------------------------------------------------------
+  // GET BY CARD NUMBER - Get Kundenkarte by card number (for scanning)
+  // -------------------------------------------------------------------------
+  getByCardNumber: publicProcedure
+    .input(z.object({ cardNumber: z.string() }))
+    .query(async ({ input }) => {
+      const result = await db
+        .select({
+          id: kundenkarten.id,
+          kundenNummer: kundenkarten.kundenNummer,
+          cardNumber: kundenkarten.cardNumber,
+          vorname: kundenkarten.vorname,
+          nachname: kundenkarten.nachname,
+          email: kundenkarten.email,
+          tier: kundenkarten.tier,
+          points: kundenkarten.points,
+          status: kundenkarten.status,
+          bauherrenPassId: kundenkarten.bauherrenPassId,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.cardNumber, input.cardNumber))
+        .limit(1);
+
+      if (!result[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      return result[0];
+    }),
+
+  // -------------------------------------------------------------------------
+  // UPDATE TIER - Manually update customer tier
+  // -------------------------------------------------------------------------
+  updateTier: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        tier: kundenkarteTierEnum,
+        reason: z.string().min(1, "Begruendung ist erforderlich"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { kundenkarteId, tier, reason } = input;
+
+      // Get current Kundenkarte
+      const current = await db
+        .select({
+          id: kundenkarten.id,
+          tier: kundenkarten.tier,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!current[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      const previousTier = current[0].tier;
+
+      // Update tier
+      const result = await db
+        .update(kundenkarten)
+        .set({
+          tier,
+          updatedAt: new Date(),
+        })
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .returning();
+
+      // Log activity
+      await db.insert(kundenkarteActivities).values({
+        kundenkarteId,
+        activityType: "note",
+        title: `Tier manuell geaendert: ${previousTier} -> ${tier}`,
+        description: reason,
+        metadata: {
+          previousTier,
+          newTier: tier,
+          manualChange: true,
+        },
+      });
+
+      return {
+        ...result[0],
+        previousTier,
+        newTier: tier,
+      };
+    }),
+
+  // -------------------------------------------------------------------------
+  // GET POINTS HISTORY - Get detailed points history for Kundenkarte
+  // -------------------------------------------------------------------------
+  getPointsHistory: publicProcedure
+    .input(
+      z.object({
+        kundenkarteId: z.string().uuid(),
+        limit: z.number().min(1).max(100).optional().default(50),
+        offset: z.number().min(0).optional().default(0),
+      })
+    )
+    .query(async ({ input }) => {
+      const { kundenkarteId, limit, offset } = input;
+
+      const result = await db
+        .select({
+          id: kundenkarten.id,
+          points: kundenkarten.points,
+          pointsHistory: kundenkarten.pointsHistory,
+          tier: kundenkarten.tier,
+        })
+        .from(kundenkarten)
+        .where(eq(kundenkarten.id, kundenkarteId))
+        .limit(1);
+
+      if (!result[0]) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Kundenkarte nicht gefunden",
+        });
+      }
+
+      const history = (result[0].pointsHistory as any[]) ?? [];
+      // Sort by date descending (newest first)
+      const sortedHistory = [...history].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
+      const paginatedHistory = sortedHistory.slice(offset, offset + limit);
+
+      return {
+        currentPoints: result[0].points ?? 0,
+        currentTier: result[0].tier,
+        history: paginatedHistory,
+        total: history.length,
+        hasMore: offset + limit < history.length,
+      };
     }),
 });

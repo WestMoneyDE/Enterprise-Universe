@@ -14,12 +14,12 @@ import {
 } from "drizzle-orm/pg-core";
 import {
   bauherrenPassStatusEnum,
+  commissionStatusEnum,
   documentCategoryEnum,
   subsidiaryEnum,
 } from "./enums";
 import { organizations, users } from "./auth";
 import { projects } from "./projects";
-import { kundenkarten } from "./kundenkarte";
 
 // =============================================================================
 // BAUHERREN-PASS (CONSTRUCTION OWNER PASSPORT)
@@ -42,7 +42,7 @@ export const bauherrenPaesse = pgTable(
 
     // References
     projectId: uuid("project_id").references(() => projects.id, { onDelete: "set null" }),
-    kundenkarteId: uuid("kundenkarte_id").references(() => kundenkarten.id, { onDelete: "set null" }),
+    kundenkarteId: uuid("kundenkarte_id"), // FK constraint added via migration, not import (avoids circular dependency)
 
     // Identification
     passNummer: varchar("pass_nummer", { length: 50 }).notNull(),
@@ -123,6 +123,16 @@ export const bauherrenPaesse = pgTable(
     nebenkosten: decimal("nebenkosten", { precision: 14, scale: 2 }),
     finanzierungssumme: decimal("finanzierungssumme", { precision: 14, scale: 2 }),
 
+    // Commission Tracking (2.5% of deal revenue)
+    estimatedRevenue: decimal("estimated_revenue", { precision: 14, scale: 2 }),
+    actualRevenue: decimal("actual_revenue", { precision: 14, scale: 2 }),
+    commissionRate: decimal("commission_rate", { precision: 5, scale: 4 }).default("0.025"),
+    commissionAmount: decimal("commission_amount", { precision: 14, scale: 2 }),
+    commissionStatus: commissionStatusEnum("commission_status").default("pending"),
+    commissionPaidAt: timestamp("commission_paid_at", { mode: "date" }),
+    payoutMethod: varchar("payout_method", { length: 50 }), // stripe, sepa
+    payoutReference: varchar("payout_reference", { length: 255 }),
+
     // Notes & Comments
     bemerkungen: text("bemerkungen"),
     internNotizen: text("intern_notizen"),
@@ -144,6 +154,7 @@ export const bauherrenPaesse = pgTable(
     passNummerIdx: index("bauherren_paesse_pass_nummer_idx").on(table.passNummer),
     statusIdx: index("bauherren_paesse_status_idx").on(table.status),
     kundenkarteIdx: index("bauherren_paesse_kundenkarte_idx").on(table.kundenkarteId),
+    commissionStatusIdx: index("bauherren_paesse_commission_status_idx").on(table.commissionStatus),
   })
 );
 
@@ -310,10 +321,7 @@ export const bauherrenPaesseRelations = relations(bauherrenPaesse, ({ one, many 
     fields: [bauherrenPaesse.projectId],
     references: [projects.id],
   }),
-  kundenkarte: one(kundenkarten, {
-    fields: [bauherrenPaesse.kundenkarteId],
-    references: [kundenkarten.id],
-  }),
+  // Note: kundenkarte relation defined in kundenkarte.ts to avoid circular dependency
   lastReviewedByUser: one(users, {
     fields: [bauherrenPaesse.lastReviewedBy],
     references: [users.id],
