@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   BarChart3,
   TrendingUp,
@@ -17,6 +17,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Sparkles,
+  RefreshCw,
 } from "lucide-react";
 import {
   HoloCard,
@@ -28,6 +29,8 @@ import {
   LiveCounter,
   usePowerMode,
 } from "@/components/scifi";
+import { Skeleton } from "@/components/ui";
+import { api } from "@/trpc";
 
 // Analytics data types
 interface MetricData {
@@ -51,42 +54,96 @@ interface TrafficSource {
   trend: "up" | "down" | "neutral";
 }
 
-// Sample analytics data
-const conversionMetrics: MetricData[] = [
-  { label: "Besucher → Leads", value: 24, max: 100, color: "cyan" },
-  { label: "Leads → Kunden", value: 18, max: 100, color: "purple" },
-  { label: "Wiederkehrende", value: 67, max: 100, color: "green" },
-  { label: "Absprungrate", value: 32, max: 100, color: "red" },
-];
-
-const funnelSteps: FunnelStep[] = [
-  { name: "Seitenaufrufe", value: 125000, percentage: 100, color: "var(--neon-cyan)" },
-  { name: "Engagement", value: 89000, percentage: 71, color: "var(--neon-purple)" },
-  { name: "Leads", value: 30000, percentage: 24, color: "var(--neon-green)" },
-  { name: "Conversions", value: 5400, percentage: 4.3, color: "var(--neon-gold)" },
-];
-
-const trafficSources: TrafficSource[] = [
-  { source: "Organische Suche", visitors: 45000, percentage: 36, trend: "up" },
-  { source: "Direkter Traffic", visitors: 32000, percentage: 26, trend: "up" },
-  { source: "Social Media", visitors: 28000, percentage: 22, trend: "down" },
-  { source: "Referrals", visitors: 12000, percentage: 10, trend: "neutral" },
-  { source: "Email Marketing", visitors: 8000, percentage: 6, trend: "up" },
-];
-
-const realtimeStats = {
-  activeUsers: 1247,
-  pageViews: 3891,
-  avgSessionTime: "4:32",
-  bounceRate: 32.4,
-};
-
 export default function SciFiAnalyticsPage() {
   const { mode } = usePowerMode();
   const [selectedTimeRange, setSelectedTimeRange] = useState<"24h" | "7d" | "30d" | "90d">("7d");
 
+  // Fetch real data from APIs
+  const { data: stats, isLoading: statsLoading, refetch: refetchStats } = api.dashboard.getStats.useQuery();
+  const { data: distribution, isLoading: distLoading, refetch: refetchDist } = api.leadScoring.getDistribution.useQuery();
+  const { data: moduleStatus, isLoading: moduleLoading } = api.dashboard.getModuleStatus.useQuery();
+
+  const isLoading = statsLoading || distLoading;
+
   const isGodMode = mode === "god";
   const isUltraMode = mode === "ultra";
+
+  // Compute conversion metrics from real data
+  const conversionMetrics: MetricData[] = useMemo(() => {
+    if (!distribution) {
+      return [
+        { label: "Grade A Leads", value: 0, max: 100, color: "cyan" },
+        { label: "Grade B Leads", value: 0, max: 100, color: "purple" },
+        { label: "Grade C Leads", value: 0, max: 100, color: "green" },
+        { label: "Avg Score", value: 0, max: 100, color: "gold" },
+      ];
+    }
+    const total = distribution.total || 1;
+    return [
+      { label: "Grade A Leads", value: Math.round((distribution.A / total) * 100), max: 100, color: "cyan" },
+      { label: "Grade B Leads", value: Math.round((distribution.B / total) * 100), max: 100, color: "purple" },
+      { label: "Grade C Leads", value: Math.round((distribution.C / total) * 100), max: 100, color: "green" },
+      { label: "Avg Score", value: Math.round(distribution.averageScore), max: 100, color: "gold" },
+    ];
+  }, [distribution]);
+
+  // Compute funnel from real data
+  const funnelSteps: FunnelStep[] = useMemo(() => {
+    if (!stats || !distribution) {
+      return [
+        { name: "Total Contacts", value: 0, percentage: 100, color: "var(--neon-cyan)" },
+        { name: "Scored Leads", value: 0, percentage: 0, color: "var(--neon-purple)" },
+        { name: "High Quality (A/B)", value: 0, percentage: 0, color: "var(--neon-green)" },
+        { name: "Won Deals", value: 0, percentage: 0, color: "var(--neon-gold)" },
+      ];
+    }
+    const contacts = stats.contacts || 1;
+    const scored = distribution.total || 0;
+    const highQuality = (distribution.A || 0) + (distribution.B || 0);
+    const won = stats.wonDeals || 0;
+
+    return [
+      { name: "Total Contacts", value: contacts, percentage: 100, color: "var(--neon-cyan)" },
+      { name: "Scored Leads", value: scored, percentage: Math.round((scored / contacts) * 100), color: "var(--neon-purple)" },
+      { name: "High Quality (A/B)", value: highQuality, percentage: Math.round((highQuality / contacts) * 100), color: "var(--neon-green)" },
+      { name: "Won Deals", value: won, percentage: Math.round((won / contacts) * 100), color: "var(--neon-gold)" },
+    ];
+  }, [stats, distribution]);
+
+  // Traffic sources - derive from module status
+  const trafficSources: TrafficSource[] = useMemo(() => {
+    if (!moduleStatus) {
+      return [
+        { source: "CRM Contacts", visitors: 0, percentage: 0, trend: "neutral" as const },
+        { source: "WhatsApp Chats", visitors: 0, percentage: 0, trend: "neutral" as const },
+        { source: "Projects", visitors: 0, percentage: 0, trend: "neutral" as const },
+        { source: "AI Processed", visitors: 0, percentage: 0, trend: "neutral" as const },
+      ];
+    }
+    const total = (moduleStatus.modules.crm.count || 0) + (moduleStatus.modules.whatsapp.count || 0) +
+                  (moduleStatus.modules.westMoneyBau.count || 0) + (moduleStatus.modules.aiAgent.count || 0);
+    const calcPct = (count: number) => total > 0 ? Math.round((count / total) * 100) : 0;
+
+    return [
+      { source: "CRM Contacts", visitors: moduleStatus.modules.crm.count, percentage: calcPct(moduleStatus.modules.crm.count), trend: moduleStatus.modules.crm.status === "online" ? "up" as const : "neutral" as const },
+      { source: "WhatsApp Chats", visitors: moduleStatus.modules.whatsapp.count, percentage: calcPct(moduleStatus.modules.whatsapp.count), trend: moduleStatus.modules.whatsapp.status === "online" ? "up" as const : "neutral" as const },
+      { source: "Projects", visitors: moduleStatus.modules.westMoneyBau.count, percentage: calcPct(moduleStatus.modules.westMoneyBau.count), trend: moduleStatus.modules.westMoneyBau.status === "online" ? "up" as const : "neutral" as const },
+      { source: "AI Processed", visitors: moduleStatus.modules.aiAgent.count, percentage: calcPct(moduleStatus.modules.aiAgent.count), trend: "up" as const },
+    ];
+  }, [moduleStatus]);
+
+  // Realtime stats from actual data
+  const realtimeStats = useMemo(() => ({
+    activeUsers: distribution?.total || 0,
+    pageViews: stats?.conversations || 0,
+    avgSessionTime: distribution ? `${Math.round(distribution.averageScore)}pts` : "0pts",
+    bounceRate: distribution ? Math.round(((distribution.D || 0) / (distribution.total || 1)) * 100) : 0,
+  }), [stats, distribution]);
+
+  const handleRefresh = () => {
+    refetchStats();
+    refetchDist();
+  };
 
   const getGlowClass = () => {
     if (isGodMode) return "shadow-[0_0_30px_rgba(255,215,0,0.3)]";
@@ -110,25 +167,42 @@ export default function SciFiAnalyticsPage() {
           </div>
         </div>
 
-        {/* Time Range Selector */}
-        <div className="flex gap-2">
-          {(["24h", "7d", "30d", "90d"] as const).map((range) => (
-            <button
-              key={range}
-              onClick={() => setSelectedTimeRange(range)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                selectedTimeRange === range
-                  ? isGodMode
-                    ? "bg-god-primary text-black"
-                    : isUltraMode
-                    ? "bg-ultra-secondary text-black"
-                    : "bg-neon-cyan text-black"
-                  : "bg-gray-800/50 text-gray-400 hover:bg-gray-700/50"
-              }`}
-            >
-              {range}
-            </button>
-          ))}
+        {/* Time Range Selector & Refresh */}
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2">
+            {(["24h", "7d", "30d", "90d"] as const).map((range) => (
+              <button
+                key={range}
+                onClick={() => setSelectedTimeRange(range)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  selectedTimeRange === range
+                    ? isGodMode
+                      ? "bg-god-primary text-black"
+                      : isUltraMode
+                      ? "bg-ultra-secondary text-black"
+                      : "bg-neon-cyan text-black"
+                    : "bg-gray-800/50 text-gray-400 hover:bg-gray-700/50"
+                }`}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={handleRefresh}
+            disabled={isLoading}
+            className={`p-2 rounded-lg transition-all ${
+              isLoading
+                ? "bg-gray-800/30 text-gray-600 cursor-not-allowed"
+                : isGodMode
+                ? "bg-god-primary/20 text-god-primary hover:bg-god-primary/30"
+                : isUltraMode
+                ? "bg-ultra-secondary/20 text-ultra-secondary hover:bg-ultra-secondary/30"
+                : "bg-neon-cyan/20 text-neon-cyan hover:bg-neon-cyan/30"
+            }`}
+          >
+            <RefreshCw className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`} />
+          </button>
         </div>
       </div>
 
@@ -174,42 +248,53 @@ export default function SciFiAnalyticsPage() {
 
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="Gesamtumsatz"
-          value="€847.234"
-          trend="up"
-          trendValue="+12.5%"
-          icon={<DollarSign className="h-5 w-5" />}
-          status="online"
-          variant={isGodMode ? "god" : isUltraMode ? "ultra" : "default"}
-        />
-        <StatCard
-          label="Neue Kunden"
-          value="2.847"
-          trend="up"
-          trendValue="+8.3%"
-          icon={<Users className="h-5 w-5" />}
-          status="online"
-          variant={isGodMode ? "god" : isUltraMode ? "ultra" : "cyan"}
-        />
-        <StatCard
-          label="Bestellungen"
-          value="12.453"
-          trend="down"
-          trendValue="-3.2%"
-          icon={<ShoppingCart className="h-5 w-5" />}
-          status="warning"
-          variant={isGodMode ? "god" : isUltraMode ? "ultra" : "purple"}
-        />
-        <StatCard
-          label="Conversion Rate"
-          value="4.32%"
-          trend="up"
-          trendValue="+0.8%"
-          icon={<Target className="h-5 w-5" />}
-          status="online"
-          variant={isGodMode ? "god" : isUltraMode ? "ultra" : "gold"}
-        />
+        {isLoading ? (
+          <>
+            <Skeleton className="h-32 rounded-lg bg-gray-800/50" />
+            <Skeleton className="h-32 rounded-lg bg-gray-800/50" />
+            <Skeleton className="h-32 rounded-lg bg-gray-800/50" />
+            <Skeleton className="h-32 rounded-lg bg-gray-800/50" />
+          </>
+        ) : (
+          <>
+            <StatCard
+              label="Total Revenue"
+              value={`€${((stats?.revenue || 0) / 100).toLocaleString("de-DE", { minimumFractionDigits: 0 })}`}
+              trend="up"
+              trendValue={stats?.revenue ? "+12.5%" : "Live"}
+              icon={<DollarSign className="h-5 w-5" />}
+              status="online"
+              variant={isGodMode ? "god" : isUltraMode ? "ultra" : "default"}
+            />
+            <StatCard
+              label="Total Contacts"
+              value={(stats?.contacts || 0).toLocaleString("de-DE")}
+              trend="up"
+              trendValue={`${distribution?.total || 0} scored`}
+              icon={<Users className="h-5 w-5" />}
+              status="online"
+              variant={isGodMode ? "god" : isUltraMode ? "ultra" : "cyan"}
+            />
+            <StatCard
+              label="Active Deals"
+              value={(stats?.deals || 0).toLocaleString("de-DE")}
+              trend={stats?.openDeals && stats.openDeals > 10 ? "up" : "down"}
+              trendValue={`${stats?.openDeals || 0} open`}
+              icon={<ShoppingCart className="h-5 w-5" />}
+              status={stats?.openDeals && stats.openDeals > 0 ? "online" : "warning"}
+              variant={isGodMode ? "god" : isUltraMode ? "ultra" : "purple"}
+            />
+            <StatCard
+              label="Won Deals"
+              value={(stats?.wonDeals || 0).toLocaleString("de-DE")}
+              trend="up"
+              trendValue={stats?.deals ? `${Math.round(((stats?.wonDeals || 0) / (stats?.deals || 1)) * 100)}% rate` : "0%"}
+              icon={<Target className="h-5 w-5" />}
+              status="online"
+              variant={isGodMode ? "god" : isUltraMode ? "ultra" : "gold"}
+            />
+          </>
+        )}
       </div>
 
       {/* Conversion Metrics & Funnel */}
@@ -321,34 +406,52 @@ export default function SciFiAnalyticsPage() {
         {/* Performance Score */}
         <HoloCard
           variant={isGodMode ? "god" : isUltraMode ? "ultra" : "gold"}
-          title="Performance Score"
-          subtitle="Gesamtbewertung"
+          title="Lead Score Health"
+          subtitle="Overall Quality"
           icon={<Sparkles className={`h-5 w-5 ${isGodMode ? "text-god-primary" : isUltraMode ? "text-ultra-secondary" : "text-neon-gold"}`} />}
           glow
         >
           <div className="p-6 flex flex-col items-center justify-center">
-            <MetricRing
-              value={87}
-              max={100}
-              size="xl"
-              color={isGodMode ? "gold" : isUltraMode ? "purple" : "gold"}
-              animated
-              label="87%"
-              sublabel="Score"
-            />
+            {isLoading ? (
+              <Skeleton className="h-32 w-32 rounded-full bg-gray-800/50" />
+            ) : (
+              <MetricRing
+                value={Math.round(distribution?.averageScore || 0)}
+                max={100}
+                size="xl"
+                color={isGodMode ? "gold" : isUltraMode ? "purple" : "gold"}
+                animated
+                label={`${Math.round(distribution?.averageScore || 0)}%`}
+                sublabel="Avg Score"
+              />
+            )}
             <div className="mt-6 grid grid-cols-2 gap-4 w-full text-center">
               <div>
-                <p className="text-2xl font-bold text-neon-green">A+</p>
-                <p className="text-xs text-gray-400">SEO Rating</p>
+                <p className={`text-2xl font-bold ${
+                  (distribution?.A || 0) > (distribution?.D || 0) ? "text-neon-green" : "text-neon-gold"
+                }`}>
+                  {distribution?.A || 0}
+                </p>
+                <p className="text-xs text-gray-400">Grade A Leads</p>
               </div>
               <div>
-                <p className="text-2xl font-bold text-neon-cyan">98%</p>
-                <p className="text-xs text-gray-400">Uptime</p>
+                <p className="text-2xl font-bold text-neon-cyan">{distribution?.total || 0}</p>
+                <p className="text-xs text-gray-400">Total Scored</p>
               </div>
             </div>
           </div>
         </HoloCard>
       </div>
+
+      {/* Data Source Indicator */}
+      {stats && (
+        <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+          <div className={`w-2 h-2 rounded-full ${(stats as { _demo?: boolean })._demo ? "bg-yellow-500" : "bg-neon-green"} animate-pulse`} />
+          <span>
+            {(stats as { _demo?: boolean })._demo ? "Demo Data - Run migrations for live data" : `Live Data - Updated ${new Date(stats.timestamp).toLocaleTimeString()}`}
+          </span>
+        </div>
+      )}
 
       {/* AI Insights */}
       <HoloCard

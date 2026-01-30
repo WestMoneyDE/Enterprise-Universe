@@ -226,3 +226,183 @@ export const adminProcedure = t.procedure
   .use(errorLoggingMiddleware)
   .use(timingMiddleware)
   .use(isAdmin);
+
+// =============================================================================
+// ROW-LEVEL SECURITY (RLS) UTILITIES
+// =============================================================================
+
+/**
+ * RLS context with organization filtering capabilities
+ */
+export interface RLSContext {
+  organizationId: string;
+  userId: string;
+  userRole: string;
+
+  /**
+   * Add organization filter to a where clause
+   * Returns the filter object to spread into queries
+   */
+  orgFilter: () => { organization_id: string };
+
+  /**
+   * Validate that a resource belongs to the user's organization
+   * Throws FORBIDDEN error if not owned
+   */
+  validateOwnership: (resource: { organization_id?: string | null } | null) => void;
+
+  /**
+   * Validate that the user owns a resource (by user_id)
+   * Throws FORBIDDEN error if not owner
+   */
+  validateUserOwnership: (resource: { user_id?: string | null } | null) => void;
+
+  /**
+   * Check if user can access a resource (org match or super_admin)
+   */
+  canAccess: (resource: { organization_id?: string | null } | null) => boolean;
+}
+
+/**
+ * Row-Level Security middleware
+ * Provides automatic organization-scoped filtering for queries
+ * Ensures users can only access data within their organization
+ */
+const withRLS = t.middleware(({ ctx, next }) => {
+  if (!ctx.session || !ctx.user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Authentication required for this resource",
+    });
+  }
+
+  if (!ctx.organizationId) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Organization membership required for this resource",
+    });
+  }
+
+  const rls: RLSContext = {
+    organizationId: ctx.organizationId,
+    userId: ctx.user.id,
+    userRole: ctx.user.role,
+
+    orgFilter: () => ({
+      organization_id: ctx.organizationId as string,
+    }),
+
+    validateOwnership: (resource) => {
+      if (!resource) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Resource not found",
+        });
+      }
+
+      // Super admins can access any resource
+      if (ctx.user?.role === "super_admin") {
+        return;
+      }
+
+      if (resource.organization_id !== ctx.organizationId) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You do not have access to this resource",
+        });
+      }
+    },
+
+    validateUserOwnership: (resource) => {
+      if (!resource) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Resource not found",
+        });
+      }
+
+      // Admins can access org resources
+      if (ctx.user?.role === "admin" || ctx.user?.role === "super_admin") {
+        return;
+      }
+
+      if (resource.user_id !== ctx.user?.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You do not have permission to modify this resource",
+        });
+      }
+    },
+
+    canAccess: (resource) => {
+      if (!resource) return false;
+      if (ctx.user?.role === "super_admin") return true;
+      return resource.organization_id === ctx.organizationId;
+    },
+  };
+
+  return next({
+    ctx: {
+      ...ctx,
+      session: ctx.session,
+      user: ctx.user,
+      organizationId: ctx.organizationId as string,
+      rls,
+    },
+  });
+});
+
+/**
+ * RLS-protected procedure
+ * Provides automatic organization filtering and ownership validation
+ * Use ctx.rls.orgFilter() in queries, ctx.rls.validateOwnership() for mutations
+ */
+export const rlsProcedure = t.procedure
+  .use(errorLoggingMiddleware)
+  .use(timingMiddleware)
+  .use(withRLS);
+
+/**
+ * Helper function to create organization-scoped queries
+ * Automatically adds organization_id filter
+ */
+export function withOrgScope<T extends Record<string, unknown>>(
+  ctx: { organizationId: string | null },
+  query: T
+): T & { organization_id: string } {
+  if (!ctx.organizationId) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Organization context required",
+    });
+  }
+
+  return {
+    ...query,
+    organization_id: ctx.organizationId,
+  };
+}
+
+/**
+ * Helper to validate and extract organization-scoped data
+ * Strips organization_id from input to prevent spoofing
+ */
+export function sanitizeOrgInput<T extends Record<string, unknown>>(
+  ctx: { organizationId: string | null },
+  input: T
+): Omit<T, "organization_id"> & { organization_id: string } {
+  if (!ctx.organizationId) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Organization context required",
+    });
+  }
+
+  // Remove any client-provided organization_id to prevent injection
+  const { organization_id: _, ...sanitized } = input as T & { organization_id?: unknown };
+
+  return {
+    ...sanitized,
+    organization_id: ctx.organizationId,
+  } as Omit<T, "organization_id"> & { organization_id: string };
+}

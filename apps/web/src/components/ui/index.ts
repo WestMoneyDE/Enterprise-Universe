@@ -79,3 +79,7 @@ export { OptimizedImage, AvatarImage, BackgroundImage } from "./optimized-image"
 
 // Error Handling
 export { ErrorBoundary, SuspenseErrorBoundary, useErrorBoundary } from "./error-boundary";
+
+// Export
+export { ExportButton } from "./export-button";
+export type { ExportButtonProps, ExportFormat, ExportColumn, ExportOptions } from "./export-button";

@@ -1,0 +1,56 @@
+# =============================================================================
+# NEXUS COMMAND CENTER - Docker Ignore
+# =============================================================================
+
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs
+.next
+**/dist
+**/*.tsbuildinfo
+
+# Development
+.git
+.gitignore
+*.md
+!README.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.development
+.env.production.local
+
+# Test
+coverage
+**/__tests__
+**/*.test.ts
+**/*.spec.ts
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+docker/
+
+# Backups
+backups/
+*.backup
+*.bak
