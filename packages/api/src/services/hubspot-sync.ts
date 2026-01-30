@@ -10,6 +10,7 @@ import {
   HubSpotDeal,
   getHubSpotService,
 } from "./hubspot";
+import { analyzeEmail, DISPOSABLE_DOMAINS } from "../routers/spam-scanner";
 
 // =============================================================================
 // TYPES & INTERFACES
@@ -627,10 +628,11 @@ export class HubSpotSyncService {
     return { synced: totalSynced, conflicts: totalConflicts, errors: totalErrors };
   }
 
-  private async pullContactsFromHubSpot(): Promise<{ synced: number; conflicts: number; errors: number }> {
+  private async pullContactsFromHubSpot(): Promise<{ synced: number; conflicts: number; errors: number; spamSkipped?: number }> {
     let synced = 0;
     let conflicts = 0;
     let errors = 0;
+    let spamSkipped = 0;
 
     try {
       // Get recently updated contacts from HubSpot
@@ -638,6 +640,17 @@ export class HubSpotSyncService {
 
       for (const hsContact of hubspotContacts) {
         try {
+          // Spam check: Skip high-confidence spam contacts
+          const email = hsContact.properties.email;
+          if (email) {
+            const spamAnalysis = analyzeEmail(email);
+            if (spamAnalysis.score >= 50) {
+              console.log(`[HubSpot Sync] Skipping spam contact: ${email} (score: ${spamAnalysis.score}, reasons: ${spamAnalysis.reasons.join(", ")})`);
+              spamSkipped++;
+              continue;
+            }
+          }
+
           // Find local contact by HubSpot ID or email
           let localContact = await db.query.contacts.findFirst({
             where: and(

@@ -28,6 +28,7 @@ import { leadGeneratorRouter } from "./lead-generator";
 import { rolesRouter } from "./roles";
 import { provisionRouter } from "./provision";
 import { gdprRouter } from "./gdpr";
+import { spamScannerRouter } from "./spam-scanner";
 
 // =============================================================================
 // APP ROUTER
@@ -130,6 +131,9 @@ export const appRouter = createTRPCRouter({
 
   // GDPR - Consent management, data export, deletion requests
   gdpr: gdprRouter,
+
+  // Spam Scanner - HubSpot contact spam detection & cleanup
+  spamScanner: spamScannerRouter,
 });
 
 // =============================================================================
