@@ -27,15 +27,16 @@ Sentry.init({
   // Only enable in production
   enabled: process.env.NODE_ENV === "production" && !!SENTRY_DSN,
 
+  // Trace propagation targets (moved to top level in Sentry v8)
+  tracePropagationTargets: ["localhost", /^https:\/\/.*\.nexus\.app/],
+
   // Integration configuration
   integrations: [
     Sentry.replayIntegration({
       maskAllText: true,
       blockAllMedia: true,
     }),
-    Sentry.browserTracingIntegration({
-      tracePropagationTargets: ["localhost", /^https:\/\/.*\.nexus\.app/],
-    }),
+    Sentry.browserTracingIntegration(),
   ],
 
   // Filter out certain errors

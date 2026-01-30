@@ -1,9 +1,201 @@
 {
-  "lastDealCheck": "2026-01-30T12:15:16.413Z",
+  "lastDealCheck": "2026-01-30T18:00:03.388Z",
   "totalDealsFound": 0,
   "totalContactsImported": 0,
   "totalEmailsSent": 8683,
   "runs": [
+    {
+      "startTime": "2026-01-30T18:00:01.599Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T18:00:03.388Z"
+    },
+    {
+      "startTime": "2026-01-30T17:45:00.969Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T17:45:01.766Z"
+    },
+    {
+      "startTime": "2026-01-30T17:30:01.034Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T17:30:01.764Z"
+    },
+    {
+      "startTime": "2026-01-30T17:15:01.163Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 8,
+      "endTime": "2026-01-30T17:17:05.943Z"
+    },
+    {
+      "startTime": "2026-01-30T17:00:00.836Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T17:00:01.334Z"
+    },
+    {
+      "startTime": "2026-01-30T16:45:00.720Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T16:45:01.195Z"
+    },
+    {
+      "startTime": "2026-01-30T16:30:01.317Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T16:30:01.838Z"
+    },
+    {
+      "startTime": "2026-01-30T16:15:00.770Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T16:15:01.306Z"
+    },
+    {
+      "startTime": "2026-01-30T16:00:00.713Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 8,
+      "endTime": "2026-01-30T16:02:05.088Z"
+    },
+    {
+      "startTime": "2026-01-30T15:45:00.702Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T15:45:01.136Z"
+    },
+    {
+      "startTime": "2026-01-30T15:30:00.612Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T15:30:01.355Z"
+    },
+    {
+      "startTime": "2026-01-30T15:15:00.541Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T15:15:00.959Z"
+    },
+    {
+      "startTime": "2026-01-30T15:00:00.583Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T15:00:01.537Z"
+    },
+    {
+      "startTime": "2026-01-30T14:51:30.541Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 4,
+      "endTime": "2026-01-30T14:52:32.999Z"
+    },
+    {
+      "startTime": "2026-01-30T14:45:00.538Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 1,
+      "endTime": "2026-01-30T14:45:16.627Z"
+    },
+    {
+      "startTime": "2026-01-30T14:30:00.709Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T14:30:01.087Z"
+    },
+    {
+      "startTime": "2026-01-30T14:15:00.479Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T14:15:00.825Z"
+    },
+    {
+      "startTime": "2026-01-30T14:00:00.592Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T14:00:01.000Z"
+    },
+    {
+      "startTime": "2026-01-30T13:45:00.665Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 7,
+      "endTime": "2026-01-30T13:46:49.273Z"
+    },
+    {
+      "startTime": "2026-01-30T13:30:00.735Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 1,
+      "endTime": "2026-01-30T13:30:16.914Z"
+    },
+    {
+      "startTime": "2026-01-30T13:15:00.680Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T13:15:01.076Z"
+    },
+    {
+      "startTime": "2026-01-30T13:00:00.671Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T13:00:01.002Z"
+    },
+    {
+      "startTime": "2026-01-30T12:45:00.390Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 0,
+      "endTime": "2026-01-30T12:45:00.765Z"
+    },
+    {
+      "startTime": "2026-01-30T12:30:00.675Z",
+      "newDeals": 0,
+      "newContacts": 0,
+      "emailsSent": 0,
+      "emailsFailed": 7,
+      "endTime": "2026-01-30T12:31:48.961Z"
+    },
     {
       "startTime": "2026-01-30T12:15:00.483Z",
       "newDeals": 0,
@@ -611,198 +803,6 @@
       "emailsSent": 0,
       "emailsFailed": 1,
       "endTime": "2026-01-29T17:30:16.276Z"
-    },
-    {
-      "startTime": "2026-01-29T17:15:00.418Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T17:15:00.788Z"
-    },
-    {
-      "startTime": "2026-01-29T17:00:00.412Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T17:00:00.845Z"
-    },
-    {
-      "startTime": "2026-01-29T16:45:00.356Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T16:45:00.729Z"
-    },
-    {
-      "startTime": "2026-01-29T16:30:00.374Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 7,
-      "endTime": "2026-01-29T16:31:48.841Z"
-    },
-    {
-      "startTime": "2026-01-29T16:15:00.442Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 1,
-      "endTime": "2026-01-29T16:15:16.425Z"
-    },
-    {
-      "startTime": "2026-01-29T16:00:00.348Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T16:00:01.003Z"
-    },
-    {
-      "startTime": "2026-01-29T15:45:00.381Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T15:45:00.779Z"
-    },
-    {
-      "startTime": "2026-01-29T15:30:00.394Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T15:30:00.754Z"
-    },
-    {
-      "startTime": "2026-01-29T15:15:00.472Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 7,
-      "endTime": "2026-01-29T15:16:48.980Z"
-    },
-    {
-      "startTime": "2026-01-29T15:00:00.402Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 1,
-      "endTime": "2026-01-29T15:00:16.441Z"
-    },
-    {
-      "startTime": "2026-01-29T14:45:00.358Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T14:45:00.890Z"
-    },
-    {
-      "startTime": "2026-01-29T14:30:00.407Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T14:30:00.899Z"
-    },
-    {
-      "startTime": "2026-01-29T14:15:00.392Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T14:15:00.971Z"
-    },
-    {
-      "startTime": "2026-01-29T14:00:00.451Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 7,
-      "endTime": "2026-01-29T14:01:48.910Z"
-    },
-    {
-      "startTime": "2026-01-29T13:45:00.352Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 1,
-      "endTime": "2026-01-29T13:45:16.361Z"
-    },
-    {
-      "startTime": "2026-01-29T13:30:00.403Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T13:30:00.770Z"
-    },
-    {
-      "startTime": "2026-01-29T13:15:00.418Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T13:15:00.833Z"
-    },
-    {
-      "startTime": "2026-01-29T13:00:00.359Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T13:00:00.706Z"
-    },
-    {
-      "startTime": "2026-01-29T12:45:00.413Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 7,
-      "endTime": "2026-01-29T12:46:48.823Z"
-    },
-    {
-      "startTime": "2026-01-29T12:30:00.415Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 1,
-      "endTime": "2026-01-29T12:30:16.293Z"
-    },
-    {
-      "startTime": "2026-01-29T12:15:00.504Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T12:15:00.905Z"
-    },
-    {
-      "startTime": "2026-01-29T12:00:00.407Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T12:00:00.832Z"
-    },
-    {
-      "startTime": "2026-01-29T11:45:00.411Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 0,
-      "endTime": "2026-01-29T11:45:00.796Z"
-    },
-    {
-      "startTime": "2026-01-29T11:30:00.393Z",
-      "newDeals": 0,
-      "newContacts": 0,
-      "emailsSent": 0,
-      "emailsFailed": 7,
-      "endTime": "2026-01-29T11:31:48.882Z"
     }
   ]
 }

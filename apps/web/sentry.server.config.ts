@@ -23,11 +23,8 @@ Sentry.init({
   // Only enable in production
   enabled: process.env.NODE_ENV === "production" && !!SENTRY_DSN,
 
-  // Integration configuration
-  integrations: [
-    // Add profiling for performance insights
-    Sentry.nodeProfilingIntegration(),
-  ],
+  // Integration configuration (profiling requires separate @sentry/profiling-node package)
+  integrations: [],
 
   // Filter out certain errors
   beforeSend(event, hint) {

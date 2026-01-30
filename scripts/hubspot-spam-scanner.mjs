@@ -368,17 +368,8 @@ function formatDuration(ms) {
 // MAIN SCANNER
 // =============================================================================
 
-async function runFullScan() {
+async function runFullScan(resumeScanId = null) {
   const startTime = Date.now();
-  const scanId = new Date().toISOString().replace(/[:.]/g, '-');
-
-  console.log('='.repeat(60));
-  console.log('  HUBSPOT SPAM SCANNER - Full Database Scan');
-  console.log('='.repeat(60));
-  console.log(`  Scan ID: ${scanId}`);
-  console.log(`  Started: ${new Date().toISOString()}`);
-  console.log('='.repeat(60));
-  console.log();
 
   // Create output directory
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
@@ -388,6 +379,42 @@ async function runFullScan() {
   let totalSpam = 0;
   let after = undefined;
   let batchCount = 0;
+  let scanId;
+
+  // Check for resume mode
+  if (resumeScanId) {
+    const progressFile = path.join(OUTPUT_DIR, `progress-${resumeScanId}.json`);
+    try {
+      const progressData = JSON.parse(await fs.readFile(progressFile, 'utf-8'));
+      scanId = resumeScanId;
+      after = progressData.lastAfter;
+      totalScanned = progressData.totalScanned || 0;
+      totalSpam = progressData.totalSpam || 0;
+
+      console.log('='.repeat(60));
+      console.log('  HUBSPOT SPAM SCANNER - RESUMING SCAN');
+      console.log('='.repeat(60));
+      console.log(`  Scan ID: ${scanId}`);
+      console.log(`  Resuming from: ${formatNumber(totalScanned)} contacts`);
+      console.log(`  Spam found so far: ${formatNumber(totalSpam)}`);
+      console.log(`  Cursor: ${after}`);
+      console.log('='.repeat(60));
+      console.log();
+    } catch (err) {
+      console.error(`Cannot resume scan ${resumeScanId}: ${err.message}`);
+      process.exit(1);
+    }
+  } else {
+    scanId = new Date().toISOString().replace(/[:.]/g, '-');
+
+    console.log('='.repeat(60));
+    console.log('  HUBSPOT SPAM SCANNER - Full Database Scan');
+    console.log('='.repeat(60));
+    console.log(`  Scan ID: ${scanId}`);
+    console.log(`  Started: ${new Date().toISOString()}`);
+    console.log('='.repeat(60));
+    console.log();
+  }
 
   // Spam results storage
   const spamContacts = [];
@@ -608,7 +635,31 @@ async function runFullScan() {
 // RUN
 // =============================================================================
 
-runFullScan()
+// Parse command line arguments
+const args = process.argv.slice(2);
+let resumeScanId = null;
+
+const resumeIndex = args.indexOf('--resume');
+if (resumeIndex !== -1 && args[resumeIndex + 1]) {
+  resumeScanId = args[resumeIndex + 1];
+}
+
+// Also support: node script.mjs <scan-id> (shorthand for --resume)
+if (!resumeScanId && args[0] && !args[0].startsWith('-')) {
+  resumeScanId = args[0];
+}
+
+if (args.includes('--help') || args.includes('-h')) {
+  console.log('Usage: node hubspot-spam-scanner.mjs [--resume <scan-id>]');
+  console.log('       node hubspot-spam-scanner.mjs <scan-id>  (shorthand for --resume)');
+  console.log();
+  console.log('Options:');
+  console.log('  --resume <scan-id>   Resume a previous scan from its last checkpoint');
+  console.log('  -h, --help          Show this help message');
+  process.exit(0);
+}
+
+runFullScan(resumeScanId)
   .then(result => {
     console.log('Scan finished successfully.');
     process.exit(0);
