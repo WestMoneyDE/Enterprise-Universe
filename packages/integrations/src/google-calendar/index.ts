@@ -141,6 +141,9 @@ export class GoogleCalendarIntegration {
     this.accessToken = data.access_token;
     this.tokenExpiresAt = Date.now() + (data.expires_in * 1000);
 
+    if (!this.accessToken) {
+      throw new Error("Failed to obtain access token");
+    }
     return this.accessToken;
   }
 
@@ -196,7 +199,7 @@ export class GoogleCalendarIntegration {
     if (result.success && result.data) {
       return { success: true, data: result.data.items };
     }
-    return result as GoogleCalendarResponse<CalendarListEntry[]>;
+    return { success: false, error: result.error };
   }
 
   /**
@@ -240,7 +243,7 @@ export class GoogleCalendarIntegration {
     if (result.success && result.data) {
       return { success: true, data: result.data.items || [] };
     }
-    return result as GoogleCalendarResponse<CalendarEvent[]>;
+    return { success: false, error: result.error };
   }
 
   /**
@@ -356,7 +359,7 @@ export class GoogleCalendarIntegration {
       );
       return { success: true, data: freeBusyInfo };
     }
-    return result as GoogleCalendarResponse<FreeBusyInfo[]>;
+    return { success: false, error: result.error };
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
