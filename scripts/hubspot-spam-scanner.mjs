@@ -46,6 +46,29 @@ const DISPOSABLE_DOMAINS = new Set([
   "getnada.com", "tempail.com", "emailondeck.com", "fakemailgenerator.com",
 ]);
 
+// Freemail providers - not B2B quality contacts
+const FREEMAIL_DOMAINS = new Set([
+  // International
+  "gmail.com", "googlemail.com", "yahoo.com", "yahoo.de", "yahoo.at", "yahoo.ch",
+  "hotmail.com", "hotmail.de", "hotmail.ch", "hotmail.at",
+  "outlook.com", "outlook.de", "live.com", "live.de", "msn.com",
+  "aol.com", "aol.de", "mail.com", "email.com", "protonmail.com", "proton.me",
+  "icloud.com", "me.com", "mac.com", "zoho.com",
+  // German
+  "gmx.de", "gmx.at", "gmx.ch", "gmx.net", "gmx.com",
+  "web.de", "t-online.de", "freenet.de", "arcor.de", "vodafone.de",
+  "1und1.de", "online.de", "email.de", "mail.de", "posteo.de",
+  "tutanota.com", "tutanota.de", "mailbox.org",
+  // Swiss
+  "bluewin.ch", "sunrise.ch", "hispeed.ch",
+  // Austrian
+  "chello.at", "aon.at", "a1.net",
+]);
+
+// Track seen emails for duplicate detection
+const emailsSeen = new Map(); // email -> { count, firstContactId }
+let totalDuplicates = 0;
+
 // Department/Role emails - NOT individual people
 const ROLE_EMAIL_PATTERNS = [
   /^info$/i, /^kontakt$/i, /^contact$/i, /^service$/i, /^support$/i,
@@ -156,6 +179,25 @@ async function analyzeEmail(email, contact = null) {
     reasons.push('Disposable domain');
     score += 60;
     category = 'disposable';
+  }
+
+  // 1b. Check freemail (not B2B quality)
+  if (FREEMAIL_DOMAINS.has(domain)) {
+    reasons.push(`Freemail address (${domain})`);
+    score += 35;
+    if (category === 'clean') category = 'freemail';
+  }
+
+  // 1c. Check for duplicates
+  const existingEntry = emailsSeen.get(normalized);
+  if (existingEntry) {
+    existingEntry.count++;
+    totalDuplicates++;
+    reasons.push(`Duplicate email (#${existingEntry.count} occurrence)`);
+    score += 40;
+    if (category === 'clean') category = 'duplicate';
+  } else {
+    emailsSeen.set(normalized, { count: 1, firstContactId: contact?.id });
   }
 
   // 2. Check system/automated emails (NOT real contacts)
@@ -490,6 +532,13 @@ async function runFullScan() {
     console.log(`    Invalid MX:           ${formatNumber(mxChecksFailed)} (${((mxChecksFailed / mxChecksTotal) * 100).toFixed(1)}%)`);
     console.log(`    Cache Size:           ${formatNumber(mxCache.size)} domains`);
   }
+
+  // Duplicate & Freemail Stats
+  console.log('\n  DUPLICATES & FREEMAIL:');
+  console.log(`    Unique Emails:        ${formatNumber(emailsSeen.size)}`);
+  console.log(`    Duplicate Entries:    ${formatNumber(totalDuplicates)}`);
+  const freemailCount = categoryStats.get('freemail') || 0;
+  console.log(`    Freemail Addresses:   ${formatNumber(freemailCount)}`);
 
   // Category breakdown
   const categories = [...categoryStats.entries()]
