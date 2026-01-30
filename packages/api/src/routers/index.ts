@@ -29,6 +29,7 @@ import { rolesRouter } from "./roles";
 import { provisionRouter } from "./provision";
 import { gdprRouter } from "./gdpr";
 import { spamScannerRouter } from "./spam-scanner";
+import { commentsRouter } from "./comments";
 
 // =============================================================================
 // APP ROUTER
@@ -134,6 +135,9 @@ export const appRouter = createTRPCRouter({
 
   // Spam Scanner - HubSpot contact spam detection & cleanup
   spamScanner: spamScannerRouter,
+
+  // Comments - Comments and notes for entities (contacts, deals, projects)
+  comments: commentsRouter,
 });
 
 // =============================================================================

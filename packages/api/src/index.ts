@@ -32,6 +32,7 @@ export { campaignsRouter, emailTemplatesRouter } from "./routers/campaigns";
 export { organizationsRouter } from "./routers/organizations";
 export { provisionRouter } from "./routers/provision";
 export { activityRouter } from "./routers/activity";
+export { commentsRouter } from "./routers/comments";
 
 // =============================================================================
 // ACTIVITY LOG SERVICE EXPORTS

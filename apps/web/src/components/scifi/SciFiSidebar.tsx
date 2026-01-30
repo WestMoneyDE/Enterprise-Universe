@@ -27,6 +27,7 @@ const NEXUS_MODULES: NavModule[] = [
   { id: "nexus-code", name: "NEXUS CODE", icon: "▣", route: "/scifi/nexus-code", badge: "DEV", status: "online" },
   { id: "whatsapp", name: "WHATSAPP CONSOLE", icon: "◉", route: "/scifi/whatsapp", status: "online" },
   { id: "crm", name: "CRM NEXUS", icon: "◆", route: "/scifi/crm" },
+  { id: "calendar", name: "CALENDAR", icon: "◐", route: "/scifi/calendar", badge: "NEW" },
   { id: "construction", name: "WEST MONEY BAU", icon: "⬡", route: "/scifi/construction", badge: "NEW" },
   { id: "bauherren-pass", name: "BAUHERREN PASS", icon: "◈", route: "/scifi/bauherren-pass", badge: "VIP", status: "online" },
   { id: "kundenkarte", name: "KUNDENKARTE", icon: "◎", route: "/scifi/kundenkarte", badge: "NEU", status: "online" },
@@ -41,6 +42,7 @@ const NEXUS_MODULES: NavModule[] = [
   { id: "power", name: "POWER MODE", icon: "⚡", route: "/scifi/power", badge: "神極", status: "online" },
   { id: "ai", name: "MAX AI AGENT", icon: "◎", route: "/scifi/ai", badge: "AI", status: "online" },
   { id: "lead-scoring", name: "LEAD SCORING", icon: "★", route: "/scifi/lead-scoring", badge: "AI" },
+  { id: "import", name: "DATA IMPORT", icon: "↑", route: "/scifi/import", badge: "NEW" },
   { id: "settings", name: "SETTINGS", icon: "⚙", route: "/scifi/settings" },
 ];
 

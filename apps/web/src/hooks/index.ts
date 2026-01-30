@@ -11,3 +11,8 @@ export * from "./use-saved-views";
 export * from "./use-email-templates";
 export * from "./use-user-preferences";
 export * from "./use-infinite-query";
+export * from "./use-file-attachments";
+export * from "./use-comments";
+export * from "./use-tags";
+export * from "./use-calendar-events";
+export * from "./use-import";
