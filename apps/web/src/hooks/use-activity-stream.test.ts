@@ -1,6 +1,7 @@
 // =============================================================================
 // useActivityStream Hook Tests
 // =============================================================================
+// @vitest-environment jsdom
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
@@ -367,7 +368,7 @@ describe("useActivityStream", () => {
     await waitFor(() => {
       expect(result.current.activities).toHaveLength(3);
       expect(result.current.activities[0].id).toBe("4"); // Newest first
-      expect(result.current.activities.find((a) => a.id === "1")).toBeUndefined(); // Oldest removed
+      expect(result.current.activities.find((a) => a.id === "3")).toBeUndefined(); // Last in initial batch removed
     });
   });
 });

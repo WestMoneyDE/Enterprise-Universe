@@ -1,10 +1,12 @@
 import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
+  plugins: [react()],
   test: {
-    // Use Node environment for API tests
-    environment: "node",
+    // Use jsdom environment for React component tests
+    environment: "jsdom",
 
     // Global test utilities
     globals: true,
@@ -55,6 +57,13 @@ export default defineConfig({
 
   resolve: {
     alias: {
+      // Web app aliases
+      "@/test": path.resolve(__dirname, "./apps/web/src/test"),
+      "@/components": path.resolve(__dirname, "./apps/web/src/components"),
+      "@/lib": path.resolve(__dirname, "./apps/web/src/lib"),
+      "@/hooks": path.resolve(__dirname, "./apps/web/src/hooks"),
+      "@": path.resolve(__dirname, "./apps/web/src"),
+      // Package aliases
       "@nexus/api": path.resolve(__dirname, "./packages/api/src"),
       "@nexus/db": path.resolve(__dirname, "./packages/db/src"),
       "@nexus/integrations": path.resolve(__dirname, "./packages/integrations/src"),
