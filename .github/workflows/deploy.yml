@@ -307,15 +307,11 @@ jobs:
           ACTOR: ${{ github.actor }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          MESSAGE="✅ <b>Deployment Successful</b>%0A%0A📦 Build: #${BUILD_NUMBER}%0A🌿 Branch: ${REF_NAME}%0A👤 By: ${ACTOR}%0A🔗 <a href=\"${RUN_URL}\">View Workflow</a>"
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "parse_mode=HTML" \
-            -d "text=✅ <b>Deployment Successful</b>
-
-📦 Build: #${BUILD_NUMBER}
-🌿 Branch: ${REF_NAME}
-👤 By: ${ACTOR}
-🔗 <a href=\"${RUN_URL}\">View Workflow</a>"
+            -d "text=${MESSAGE}"
 
       - name: Notify failure via Telegram
         if: needs.deploy-production.result == 'failure'
@@ -326,13 +322,8 @@ jobs:
           ACTOR: ${{ github.actor }}
           RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
+          MESSAGE="❌ <b>Deployment FAILED</b>%0A%0A🌿 Branch: ${REF_NAME}%0A👤 By: ${ACTOR}%0A🔗 <a href=\"${RUN_URL}\">View Logs</a>%0A%0A⚠️ Check workflow logs for details!"
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "parse_mode=HTML" \
-            -d "text=❌ <b>Deployment FAILED</b>
-
-🌿 Branch: ${REF_NAME}
-👤 By: ${ACTOR}
-🔗 <a href=\"${RUN_URL}\">View Logs</a>
-
-⚠️ Check workflow logs for details!"
+            -d "text=${MESSAGE}"

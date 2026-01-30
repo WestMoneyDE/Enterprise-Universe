@@ -205,12 +205,8 @@ jobs:
           [ "$DOCKER_RESULT" == "failure" ] && FAILED_JOBS="$FAILED_JOBS Docker"
           [ "$SECURITY_RESULT" == "failure" ] && FAILED_JOBS="$FAILED_JOBS Security"
 
+          MESSAGE="🔴 <b>CI Pipeline Failed</b>%0A%0A🌿 Branch: ${REF_NAME}%0A👤 By: ${ACTOR}%0A❌ Failed:${FAILED_JOBS}%0A🔗 <a href=\"${RUN_URL}\">View Logs</a>"
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "parse_mode=HTML" \
-            -d "text=🔴 <b>CI Pipeline Failed</b>
-
-🌿 Branch: ${REF_NAME}
-👤 By: ${ACTOR}
-❌ Failed:${FAILED_JOBS}
-🔗 <a href=\"${RUN_URL}\">View Logs</a>"
+            -d "text=${MESSAGE}"
