@@ -41,6 +41,7 @@ const NEXUS_MODULES: NavModule[] = [
   { id: "power", name: "POWER MODE", icon: "⚡", route: "/scifi/power", badge: "神極", status: "online" },
   { id: "ai", name: "MAX AI AGENT", icon: "◎", route: "/scifi/ai", badge: "AI", status: "online" },
   { id: "lead-scoring", name: "LEAD SCORING", icon: "★", route: "/scifi/lead-scoring", badge: "AI" },
+  { id: "settings", name: "SETTINGS", icon: "⚙", route: "/scifi/settings" },
 ];
 
 export interface SciFiSidebarProps {

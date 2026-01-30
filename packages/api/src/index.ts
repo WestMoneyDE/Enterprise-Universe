@@ -31,6 +31,35 @@ export { projectsRouter } from "./routers/projects";
 export { campaignsRouter, emailTemplatesRouter } from "./routers/campaigns";
 export { organizationsRouter } from "./routers/organizations";
 export { provisionRouter } from "./routers/provision";
+export { activityRouter } from "./routers/activity";
+
+// =============================================================================
+// ACTIVITY LOG SERVICE EXPORTS
+// =============================================================================
+
+export {
+  ActivityType,
+  EntityType,
+  logActivity,
+  getActivityLog,
+  getActivityById,
+  getActivitiesByEntity,
+  getActivitiesByUser,
+  getActivityStats,
+  clearOldActivities,
+  getStoreSize,
+  logCreate,
+  logUpdate,
+  logDelete,
+  logView,
+  logExport,
+  logLogin,
+  logLogout,
+  type ActivityLogEntry,
+  type LogActivityInput,
+  type ActivityLogFilters,
+  type ActivityLogResult,
+} from "./services/activity-log";
 
 // =============================================================================
 // tRPC EXPORTS

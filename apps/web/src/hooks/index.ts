@@ -7,3 +7,7 @@ export * from "./use-global-shortcuts";
 export * from "./use-auto-save";
 export * from "./use-optimistic-mutation";
 export * from "./use-activity-stream";
+export * from "./use-saved-views";
+export * from "./use-email-templates";
+export * from "./use-user-preferences";
+export * from "./use-infinite-query";

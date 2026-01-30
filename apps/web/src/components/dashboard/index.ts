@@ -17,3 +17,7 @@ export {
   loadLayoutFromStorage,
 } from "./grid-layout";
 export type { DashboardWidget } from "./grid-layout";
+
+// Customizable Dashboard with drag-and-drop widgets
+export { CustomizableDashboard } from "./customizable-dashboard";
+export type { WidgetType, WidgetConfig } from "./customizable-dashboard";

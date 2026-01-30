@@ -91,3 +91,21 @@ export type { ExportButtonProps, ExportFormat, ExportColumn, ExportOptions } fro
 
 // Shortcuts
 export { ShortcutsHelp, ShortcutsHelpTrigger } from "./shortcuts-help";
+
+// Virtual Scrolling
+// NOTE: These components require @tanstack/react-virtual to be installed.
+// Run: pnpm add @tanstack/react-virtual --filter @nexus/web
+export { VirtualList, VirtualListItem, useVirtualList } from "./virtual-list";
+export type {
+  VirtualListProps,
+  VirtualListItemProps,
+  UseVirtualListOptions,
+} from "./virtual-list";
+
+export { VirtualTable } from "./virtual-table";
+export type {
+  VirtualTableColumn,
+  VirtualTableProps,
+  BulkAction as VirtualTableBulkAction,
+  BulkActionType as VirtualTableBulkActionType,
+} from "./virtual-table";
