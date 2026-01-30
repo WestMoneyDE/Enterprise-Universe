@@ -44,6 +44,22 @@ export {
   type N8nWebhookResponse,
 } from "./n8n";
 
+// Google Calendar Integration
+export {
+  GoogleCalendarIntegration,
+  getGoogleCalendarIntegration,
+  resetGoogleCalendarIntegration,
+  type GoogleCalendarConfig,
+  type CalendarEvent,
+  type EventDateTime,
+  type EventAttendee,
+  type EventReminders,
+  type ConferenceData,
+  type CalendarListEntry,
+  type FreeBusyInfo,
+  type GoogleCalendarResponse,
+} from "./google-calendar";
+
 // Webhook Dispatch System
 export {
   WebhookDispatcher,

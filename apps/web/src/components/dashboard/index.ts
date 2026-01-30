@@ -9,7 +9,7 @@ export {
   LineChartWidget,
   PieChartWidget,
 } from "./charts";
-export { ActivityFeedWidget } from "./activity-feed-widget";
+export { ActivityFeedWidget, RealtimeActivityFeed } from "./activity-feed-widget";
 export { QuickActionsWidget } from "./quick-actions-widget";
 export {
   DashboardGridLayout,

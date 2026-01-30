@@ -76,3 +76,6 @@ export { MobileSidebar, ResponsiveSidebar, useIsMobile } from "./mobile-sidebar"
 // Performance
 export { LazyComponent, withLazyLoading, LazyLoad } from "./lazy-component";
 export { OptimizedImage, AvatarImage, BackgroundImage } from "./optimized-image";
+
+// Error Handling
+export { ErrorBoundary, SuspenseErrorBoundary, useErrorBoundary } from "./error-boundary";
