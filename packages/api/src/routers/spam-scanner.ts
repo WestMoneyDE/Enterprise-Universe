@@ -12,7 +12,7 @@ import { TRPCError } from "@trpc/server";
 // TYPES
 // =============================================================================
 
-interface SpamCandidate {
+export interface SpamCandidate {
   contactId: string;
   email: string;
   firstName?: string;
@@ -23,7 +23,7 @@ interface SpamCandidate {
   verificationResult?: VerificationResult;
 }
 
-interface ScanProgress {
+export interface ScanProgress {
   phase: "fetching" | "scanning" | "complete";
   current: number;
   total: number;
